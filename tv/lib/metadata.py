@@ -100,6 +100,7 @@ class MetadataStatus(database.DDBObject):
         self.mutagen_thinks_drm = False
         self.echonest_id = None
         self.max_entry_priority = -1
+        self.current_processor = u'mutagen'
         self._add_to_cache()
 
     @classmethod
@@ -167,6 +168,7 @@ class MetadataStatus(database.DDBObject):
             if entry.file_type != u'audio':
                 self.echonest_status = self.STATUS_SKIP
         self.max_entry_priority = max(self.max_entry_priority, entry.priority)
+        self._set_current_processor()
         self.signal_change()
 
     def _should_skip_movie_data(self, entry):
@@ -190,7 +192,20 @@ class MetadataStatus(database.DDBObject):
             # bother sending it to the ENMFP.  If we can't get the code, then
             # we have to skip echonest.
             self.echonest_status = self.STATUS_SKIP
+        self._set_current_processor()
         self.signal_change()
+
+    def _set_current_processor(self):
+        """Calculate and set the current_processor attribute """
+        # check what the next processor we should run is
+        if self.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
+            self.current_processor = u'mutagen'
+        elif self.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
+            self.current_processor = u'movie-data'
+        elif self.echonest_status == MetadataStatus.STATUS_NOT_RUN:
+            self.current_processor = u'echonest'
+        else:
+            self.current_processor = None
 
     def set_net_lookup_enabled(self, enabled):
         self.net_lookup_enabled = enabled
@@ -198,6 +213,7 @@ class MetadataStatus(database.DDBObject):
             self.echonest_status = self.STATUS_NOT_RUN
         elif not enabled and self.echonest_status == self.STATUS_NOT_RUN:
             self.echonest_status = self.STATUS_SKIP
+        self._set_current_processor()
         self.signal_change()
 
     def rename(self, new_path):
@@ -208,22 +224,8 @@ class MetadataStatus(database.DDBObject):
         self.signal_change()
 
     @classmethod
-    def needs_mutagen_select(cls, columns):
-        return cls.select(columns, 'mutagen_status=?', (cls.STATUS_NOT_RUN,))
-
-    @classmethod
-    def needs_moviedata_select(cls, columns):
-        return cls.select(columns,
-                          'mutagen_status != ? AND moviedata_status=?',
-                          (cls.STATUS_NOT_RUN, cls.STATUS_NOT_RUN))
-
-    @classmethod
-    def needs_echonest_select(cls, columns):
-        return cls.select(columns,
-                          'mutagen_status != ? AND moviedata_status != ? AND '
-                          'echonest_status = ?',
-                          (cls.STATUS_NOT_RUN, cls.STATUS_NOT_RUN,
-                           cls.STATUS_NOT_RUN))
+    def was_running_select(cls, columns):
+        return cls.select(columns, 'current_processor IS NOT NULL')
 
 class MetadataEntry(database.DDBObject):
     """Stores metadata from a single source.
@@ -878,7 +880,9 @@ class MetadataManager(signals.SignalEmitter):
 
     def set_net_lookup_enabled(self, paths, enabled):
         """Set if we should do an internet lookup for a list of paths"""
-        refresh_paths = []
+        paths_to_refresh = []
+        paths_to_cancel = []
+        paths_to_start = []
         app.bulk_sql_manager.start()
         try:
             for path in paths:
@@ -888,18 +892,29 @@ class MetadataManager(signals.SignalEmitter):
                     logging.warn("set_net_lookup_enabled() "
                                  "path not in system: %s", path)
                     continue
+                old_current_processor = status.current_processor
                 status.set_net_lookup_enabled(enabled)
                 if MetadataEntry.set_disabled('echonest', path, not enabled):
-                    refresh_paths.append(path)
+                    paths_to_refresh.append(path)
                 # Changing the net_lookup value may mean we have to send the
                 # path through echonest
-                if not self.count_tracker.file_being_processed(path):
-                    self.run_next_processor(status)
+                if (old_current_processor is None and
+                    status.current_processor == 'echonest'):
+                    paths_to_start.append(status.path)
+                elif (status.current_processor is None and
+                      old_current_processor == 'echonest'):
+                    paths_to_cancel.append(status.path)
         finally:
             app.bulk_sql_manager.finish()
 
-        if refresh_paths:
-            self.refresh_metadata_for_paths(refresh_paths)
+        if paths_to_cancel:
+            self.echonest_processor.remove_tasks_for_paths(paths_to_cancel)
+
+        for path in paths_to_start:
+            self._run_echonest(path)
+
+        if paths_to_refresh:
+            self.refresh_metadata_for_paths(paths_to_refresh)
 
     def set_net_lookup_enabled_for_all(self, enabled):
         """Set if we should do an internet lookup for all current paths"""
@@ -913,51 +928,23 @@ class MetadataManager(signals.SignalEmitter):
         doing any work until restart_incomplete() is called.  So we just save
         the IDs of the rows to restart.
         """
-        self.restart_mutagen_ids = [row[0] for row in
-                                    MetadataStatus.needs_mutagen_select(['id'])]
-        self.restart_moviedata_ids = [row[0] for row in
-                                      MetadataStatus.needs_moviedata_select(['id'])]
-        self.restart_echonest_ids = [row[0] for row in
-                                      MetadataStatus.needs_echonest_select(['id'])]
+        self.restart_ids = [row[0] for row in
+                            MetadataStatus.was_running_select(['id'])]
 
     def restart_incomplete(self):
         """Restart extractors for files with incomplete metadata
 
         This method queues calls to mutagen, movie data, etc.
         """
-        for id_ in self.restart_mutagen_ids:
+        for id_ in self.restart_ids:
             try:
                 status = MetadataStatus.get_by_id(id_)
             except database.ObjectNotFoundError:
                 pass # just ignore deleted objects
-            self._run_mutagen(status.path)
-            # Add file to our _ProcessingCountTracker, but don't call
-            # get_metadata().  If we need mutagen, it's safe to say we don't
-            # have any metadata
+            self.run_next_processor(status)
             self.count_tracker.file_started(status.path)
 
-        for id_ in self.restart_moviedata_ids:
-            try:
-                status = MetadataStatus.get_by_id(id_)
-            except database.ObjectNotFoundError:
-                pass # just ignore deleted objects
-            self._run_movie_data(status.path)
-            # Add file to our _ProcessingCountTracker.
-            self.count_tracker.file_started(status.path,
-                                            self.get_metadata(status.path))
-
-        for id_ in self.restart_echonest_ids:
-            try:
-                status = MetadataStatus.get_by_id(id_)
-            except database.ObjectNotFoundError:
-                pass # just ignore deleted objects
-            self._run_echonest(status.path)
-            # Add file to our _ProcessingCountTracker.
-            self.count_tracker.file_started(status.path,
-                                            self.get_metadata(status.path))
-        self.restart_mutagen_ids = []
-        self.restart_moviedata_ids = []
-        self.restart_echonest_ids = []
+        del self.restart_ids
         self._schedule_update()
 
     def _get_status_for_path(self, path):
@@ -1092,11 +1079,11 @@ class MetadataManager(signals.SignalEmitter):
         """Called after both success and failure of a metadata processor
         """
         # check what the next processor we should run is
-        if status.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
+        if status.current_processor == u'mutagen':
             self._run_mutagen(status.path)
-        elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
+        elif status.current_processor == u'movie-data':
             self._run_movie_data(status.path)
-        elif status.echonest_status == MetadataStatus.STATUS_NOT_RUN:
+        elif status.current_processor == u'echonest':
             self._run_echonest(status.path)
         else:
             self.count_tracker.file_finished(status.path)

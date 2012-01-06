@@ -3662,3 +3662,27 @@ def upgrade170(cursor):
     cursor.execute("ALTER TABLE item "
                    "ADD COLUMN net_lookup_enabled integer")
     cursor.execute("UPDATE item SET net_lookup_enabled=0")
+
+def upgrade171(cursor):
+    """Add current_processor and calculate its value."""
+
+    cursor.execute("ALTER TABLE metadata_status "
+                   "ADD COLUMN current_processor TEXT")
+    STATUS_NOT_RUN = 'N'
+
+    cursor.execute("UPDATE metadata_status SET current_processor=? "
+                   "WHERE mutagen_status == ?", (u'mutagen', STATUS_NOT_RUN))
+
+    cursor.execute("UPDATE metadata_status SET current_processor=? "
+                   "WHERE mutagen_status != ? AND moviedata_status == ?",
+                   (u'movie-data', STATUS_NOT_RUN, STATUS_NOT_RUN))
+
+    cursor.execute("UPDATE metadata_status SET current_processor=? "
+                   "WHERE mutagen_status != ? AND moviedata_status != ? AND "
+                   "echonest_status == ?", (u'echonest', STATUS_NOT_RUN,
+                                            STATUS_NOT_RUN, STATUS_NOT_RUN))
+
+    cursor.execute("DROP INDEX metadata_mutagen")
+    cursor.execute("DROP INDEX metadata_moviedata")
+    cursor.execute("CREATE INDEX metadata_processor "
+                   "ON metadata_status (current_processor)")
