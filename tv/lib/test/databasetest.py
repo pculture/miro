@@ -154,14 +154,6 @@ class ViewTrackerTest(DatabaseTestCase):
         self.assertEquals(self.remove_callbacks, [])
         self.assertEquals(self.change_callbacks, [])
 
-    def test_reset(self):
-        database.setup_managers()
-        self.feed2.set_title(u"booya")
-        self.feed.revert_title()
-        self.assertEquals(self.add_callbacks, [])
-        self.assertEquals(self.remove_callbacks, [])
-        self.assertEquals(self.change_callbacks, [])
-
     def test_check_all_item_not_loaded(self):
         tracker = self.view.make_tracker()
         self.clear_ddb_object_cache()

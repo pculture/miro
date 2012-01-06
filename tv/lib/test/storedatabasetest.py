@@ -325,6 +325,7 @@ class DiskTest(FakeSchemaTest):
         self.reload_test_database()
         self.check_database()
         # check deleting the different class
+        im_special = self.reload_object(im_special)
         im_special.remove()
         self.db.pop()
         self.reload_test_database()
@@ -338,6 +339,7 @@ class DiskTest(FakeSchemaTest):
         self.setup_new_database(self.save_path, schema_version=0,
                 object_schemas=self.OBJECT_SCHEMAS)
         app.db.upgrade_database()
+        database.initialize()
         self.check_database()
 
     def test_upgrade(self):
@@ -350,12 +352,13 @@ class DiskTest(FakeSchemaTest):
         self.assertRaises(databaseupgrade.DatabaseTooNewError,
                 self.reload_test_database, version=0)
 
-    def test_last_id(self):
-        correct_last_id = database.DDBObject.lastID
-        database.DDBObject.lastID = 0
+    def test_make_new_id(self):
+        # Check that when we reload the database, the id counter stays the
+        # same
+        org_id = app.db_info.make_new_id()
+        # reload the database 
         self.reload_test_database()
-        self.assert_(database.DDBObject.lastID > 0)
-        self.assertEquals(database.DDBObject.lastID, correct_last_id)
+        self.assertEquals(app.db_info.make_new_id(), org_id)
 
     def check_reload_error(self, **reload_args):
         corrupt_path = os.path.join(os.path.dirname(self.save_path),

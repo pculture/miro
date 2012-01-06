@@ -42,6 +42,12 @@ renderers = []
 # database object
 db = None
 
+# BulkSQLManager for the main miro database
+bulk_sql_manager = None
+
+# DBInfo object for the main miro database
+db_info = None
+
 # stores ItemInfo objects so we can quickly fetch them
 item_info_cache = None
 

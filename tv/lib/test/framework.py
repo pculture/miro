@@ -287,7 +287,6 @@ class MiroTestCase(unittest.TestCase):
         self.platform = app.config.get(prefs.APP_PLATFORM)
         self.set_temp_support_directory()
         database.set_thread(threading.currentThread())
-        database.setup_managers()
         self.raise_db_load_errors = True
         app.db = None
         self.allow_db_upgrade_error_dialog = False
@@ -351,7 +350,6 @@ class MiroTestCase(unittest.TestCase):
         # Remove any leftover database
         app.db.close()
         app.db = None
-        database.setup_managers()
 
         # Remove anything that may have been accidentally queued up
         eventloop._eventloop = eventloop.EventLoop()
@@ -470,7 +468,7 @@ class MiroTestCase(unittest.TestCase):
                 # normal case: use _upgrade_database() because we want
                 # exceptions to keep propagating
                 app.db._upgrade_database()
-            database.update_last_id()
+        database.initialize()
 
     def clear_ddb_object_cache(self):
         app.db._ids_loaded = set()

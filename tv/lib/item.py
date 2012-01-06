@@ -811,11 +811,15 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
 
     @classmethod
-    def update_folder_trackers(cls):
+    def update_folder_trackers(cls, db_info=None):
         """Update each view tracker that care's about the item's
         folder (both playlist and channel folders).
         """
-        for tracker in app.view_tracker_manager.trackers_for_ddb_class(cls):
+        if db_info is None:
+            view_tracker_manager = app.db_info.view_tracker_manager
+        else:
+            view_tracker_manager = db_info.view_tracker_manager
+        for tracker in view_tracker_manager.trackers_for_ddb_class(cls):
             # bit of a hack here.  We only need to update ViewTrackers
             # that care about the item's folder.  This seems like a
             # safe way to check if that's true.

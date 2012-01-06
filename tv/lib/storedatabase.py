@@ -730,21 +730,7 @@ class LiveStorage:
             sql.write(" LIMIT %s" % limit)
         return sql.getvalue()
 
-    def query(self, klass, where, values=None, order_by=None, joins=None,
-            limit=None):
-        schema = self._schema_map[klass]
-        id_list = list(self.query_ids(schema.table_name, where, values,
-            order_by, joins,
-            limit))
-        t = app.db.table_name(klass)
-        if self.ensure_objects_loaded(klass, id_list):
-            # sometimes objects will call remove() in setup_restored().
-            # We need to filter those out.
-            id_list = [i for i in id_list if (i, t) in self._object_map]
-        for id_ in id_list:
-            yield self._object_map[(id_, t)]
-
-    def ensure_objects_loaded(self, klass, id_list):
+    def ensure_objects_loaded(self, klass, id_list, db_info):
         """Ensure that a list of ids are loaded into memory.
 
         :returns: True iff we needed to load objects
@@ -754,7 +740,7 @@ class LiveStorage:
         if unrestored_ids:
             # restore any objects that we don't already have in memory.
             schema = self._schema_map[klass]
-            self._restore_objects(schema, unrestored_ids)
+            self._restore_objects(schema, unrestored_ids, db_info)
             return True
         return False
 
@@ -767,7 +753,7 @@ class LiveStorage:
         self.cursor.execute(sql.getvalue(), values)
         return (row[0] for row in self.cursor.fetchall())
 
-    def _restore_objects(self, schema, id_set):
+    def _restore_objects(self, schema, id_set, db_info):
         column_names = ['%s.%s' % (schema.table_name, f[0])
                 for f in schema.fields]
 
@@ -782,9 +768,9 @@ class LiveStorage:
 
             self.cursor.execute(sql.getvalue(), id_list_chunk)
             for row in self.cursor.fetchall():
-                self._restore_object_from_row(schema, row)
+                self._restore_object_from_row(schema, row, db_info)
 
-    def _restore_object_from_row(self, schema, db_row):
+    def _restore_object_from_row(self, schema, db_row, db_info):
         restored_data = {}
         columns_to_update = []
         values_to_update = []
@@ -819,7 +805,7 @@ class LiveStorage:
                     ', '.join(setters), restored_data['id'])
             self._execute(sql, values_to_update)
         klass = schema.get_ddb_class(restored_data)
-        return klass(restored_data=restored_data)
+        return klass(restored_data=restored_data, db_info=db_info)
 
     def persistent_object_count(self):
         return len(self._object_map)
