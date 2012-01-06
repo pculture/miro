@@ -181,6 +181,105 @@ class DatabaseObjectCache(object):
             if key[0] == category:
                 del self._objects[key]
 
+class LiveStorageErrorHandler(object):
+    """Handle database errors for LiveStorage.
+    """
+    ACTION_QUIT = 0
+    ACTION_SUBMIT_REPORT = 1
+    ACTION_START_FRESH = 2
+    ACTION_RETRY = 3
+
+    def handle_load_error(self):
+        """Handle an error loading the database.
+
+        When LiveStorage hits a load error, it always deletes the database and
+        starts fresh.  The only thing to to here is inform the user
+        """
+        title = _("%(appname)s database corrupt.",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _(
+            "Your %(appname)s database is corrupt.  It will be "
+            "backed up in your Miro database directory and a new "
+            "database will be created now.",
+            {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        dialogs.MessageBoxDialog(title, description).run_blocking()
+
+    def handle_upgrade_error(self):
+        """Handle an error upgrading the database.
+
+        Returns one of the class attribute constants:
+        - ACTION_QUIT -- close miro immediately
+        - ACTION_SUBMIT_REPORT -- send a crash report, then close
+        - ACTION_START_FRESH -- start with a fresh database
+        """
+        title = _("%(appname)s database upgrade failed",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _(
+            "We're sorry, %(appname)s was unable to upgrade your database "
+            "due to errors.\n\n"
+            "Check to see if your disk is full.  If it is full, then quit "
+            "%(appname)s, free up some space, and start %(appname)s "
+            "again.\n\n"
+            "If your disk is not full, help us understand the problem by "
+            "reporting a bug to our crash database.\n\n"
+            "Finally, you can start fresh and your damaged database will be "
+            "removed, but you will have to re-add your podcasts and media "
+            "files.", {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+            )
+        d = dialogs.ThreeChoiceDialog(title, description,
+                dialogs.BUTTON_QUIT, dialogs.BUTTON_SUBMIT_REPORT,
+                dialogs.BUTTON_START_FRESH)
+        choice = d.run_blocking()
+        if choice == dialogs.BUTTON_START_FRESH:
+            return self.ACTION_START_FRESH
+        elif choice == dialogs.BUTTON_SUBMIT_REPORT:
+            return self.ACTION_SUBMIT_REPORT
+        else:
+            return self.ACTION_QUIT
+
+    def handle_save_error(self, error_text):
+        """Handle an error when trying to save the database.
+
+        Returns one of the class attribute constants:
+        - ACTION_QUIT -- close miro immediately
+        - ACTION_RETRY -- try running the statement again
+        """
+
+        title = _("%(appname)s database save failed",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _(
+            "%(appname)s was unable to save its database.\n\n"
+            "If your disk is full, we suggest freeing up some space and "
+            "retrying.  If your disk is not full, it's possible that "
+            "retrying will work.\n\n"
+            "If retrying did not work, please quit %(appname)s and restart.  "
+            "Recent changes may be lost.\n\n"
+            "If you see this error often while downloading, we suggest "
+            "you reduce the number of simultaneous downloads in the Options "
+            "dialog in the Download tab.\n\n"
+            "Error: %(error_text)s\n\n",
+            {"appname": app.config.get(prefs.SHORT_APP_NAME),
+             "error_text": error_text}
+            )
+        d = dialogs.ChoiceDialog(title, description,
+                dialogs.BUTTON_RETRY, dialogs.BUTTON_QUIT)
+        if d.run_blocking() == dialogs.BUTTON_RETRY:
+            return self.ACTION_RETRY
+        else:
+            return self.ACTION_QUIT
+
+    def handle_save_succeeded(self):
+        """Handle a successful save after retrying
+
+        This will only be called if handle_save_error return ACTION_RETRY.
+        """
+
+        title = _("%(appname)s database save succeeded",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _("The database has been successfully saved. "
+                "It is now safe to quit without losing any data.")
+        dialogs.MessageBoxDialog(title, description).run()
+
 class LiveStorage:
     """Handles the storage of DDBObjects.
 
@@ -193,9 +292,12 @@ class LiveStorage:
 
     - cache -- DatabaseObjectCache object
     """
-    def __init__(self, path=None, object_schemas=None, schema_version=None):
+    def __init__(self, path=None, error_handler=None, object_schemas=None,
+                 schema_version=None):
         if path is None:
             path = app.config.get(prefs.SQLITE_PATHNAME)
+        if error_handler is None:
+            error_handler = LiveStorageErrorHandler()
         if object_schemas is None:
             object_schemas = schema.object_schemas
         if schema_version is None:
@@ -214,6 +316,7 @@ class LiveStorage:
             logging.info("sqlite3 has no version attribute.")
 
         db_existed = os.path.exists(path)
+        self.error_handler = error_handler
         self.cache = DatabaseObjectCache()
         self.raise_load_errors = False # only gets set in unittests
         self._dc = None
@@ -256,7 +359,7 @@ class LiveStorage:
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
         except sqlite3.DatabaseError:
             msg = "Error running 'PRAGMA journal_mode=PERSIST'"
-            self._show_corrupt_db_dialog()
+            self.error_handler.handle_load_error()
             self._handle_load_error(msg)
             # rerun the command with our fresh database
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
@@ -326,28 +429,11 @@ class LiveStorage:
 
     def _handle_upgrade_error(self):
         self._backup_failed_upgrade_db()
-        title = _("%(appname)s database upgrade failed",
-                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        description = _(
-            "We're sorry, %(appname)s was unable to upgrade your database "
-            "due to errors.\n\n"
-            "Check to see if your disk is full.  If it is full, then quit "
-            "%(appname)s, free up some space, and start %(appname)s "
-            "again.\n\n"
-            "If your disk is not full, help us understand the problem by "
-            "reporting a bug to our crash database.\n\n"
-            "Finally, you can start fresh and your damaged database will be "
-            "removed, but you will have to re-add your podcasts and media "
-            "files.", {"appname": app.config.get(prefs.SHORT_APP_NAME)}
-            )
-        d = dialogs.ThreeChoiceDialog(title, description,
-                dialogs.BUTTON_QUIT, dialogs.BUTTON_SUBMIT_REPORT,
-                dialogs.BUTTON_START_FRESH)
-        choice = d.run_blocking()
-        if choice == dialogs.BUTTON_START_FRESH:
+        action = self.error_handler.handle_upgrade_error()
+        if action == LiveStorageErrorHandler.ACTION_START_FRESH:
             self._handle_load_error("Error upgrading database")
             self.startup_version = self.current_version = self._get_version()
-        elif choice == dialogs.BUTTON_SUBMIT_REPORT:
+        elif action == LiveStorageErrorHandler.ACTION_SUBMIT_REPORT:
             report = crashreport.format_crash_report("Upgrading Database",
                     exc_info=sys.exc_info(), details=None)
             raise UpgradeErrorSendCrashReport(report)
@@ -601,7 +687,7 @@ class LiveStorage:
         except databaseupgrade.DatabaseTooNewError:
             raise
         except StandardError:
-            self._show_corrupt_db_dialog()
+            self.error_handler.handle_load_error()
             self._handle_load_error("Error calculating last id")
             return self._get_last_id()
 
@@ -821,11 +907,7 @@ class LiveStorage:
                 raise
 
         if failed and not self._quitting_from_operational_error:
-            title = _("%(appname)s database save succeeded",
-                      {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-            description = _("The database has been successfully saved. "
-                    "It is now safe to quit without losing any data.")
-            dialogs.MessageBoxDialog(title, description).run()
+            self.error_handler.handle_save_succeeded()
         if is_update:
             return None
         else:
@@ -884,26 +966,8 @@ class LiveStorage:
                 break
 
     def _show_save_error_dialog(self, error_text):
-        title = _("%(appname)s database save failed",
-                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        description = _(
-            "%(appname)s was unable to save its database.\n\n"
-            "If your disk is full, we suggest freeing up some space and "
-            "retrying.  If your disk is not full, it's possible that "
-            "retrying will work.\n\n"
-            "If retrying did not work, please quit %(appname)s and restart.  "
-            "Recent changes may be lost.\n\n"
-            "If you see this error often while downloading, we suggest "
-            "you reduce the number of simultaneous downloads in the Options "
-            "dialog in the Download tab.\n\n"
-            "Error: %(error_text)s\n\n",
-            {"appname": app.config.get(prefs.SHORT_APP_NAME),
-             "error_text": error_text}
-            )
-        d = dialogs.ChoiceDialog(title, description,
-                dialogs.BUTTON_RETRY, dialogs.BUTTON_QUIT)
-        choice = d.run_blocking()
-        if choice == dialogs.BUTTON_QUIT:
+        action = self.error_handler.handle_save_error(error_text)
+        if action == LiveStorageErrorHandler.ACTION_QUIT:
             self._quitting_from_operational_error = True
             messages.FrontendQuit().send_to_frontend()
         else:
@@ -980,16 +1044,6 @@ class LiveStorage:
         self.save_invalid_db()
         self.open_connection()
         self._init_database()
-
-    def _show_corrupt_db_dialog(self):
-        title = _("%(appname)s database corrupt.",
-                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        description = _(
-            "Your %(appname)s database is corrupt.  It will be "
-            "backed up in your Miro database directory and a new "
-            "database will be created now.",
-            {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        dialogs.MessageBoxDialog(title, description).run_blocking()
 
     def _handle_load_error(self, message):
         """Handle errors happening when we try to load the database.  Our
