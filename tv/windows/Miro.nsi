@@ -76,6 +76,7 @@ Var ZUGO_TERMS
 !include "WinMessages.nsh"
 !include Locate.nsh
 !include nsDialogs.nsh
+!include OpenInstallUtils.nsh	;(OPENINSTALL)
 
 !insertmacro TrimNewLines
 !insertmacro WordFind
@@ -1048,7 +1049,7 @@ Function .onInit
   StrCpy $SIMPLE_INSTALL "1"
   StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
   StrCpy $PROJECT_URL "${CONFIG_PROJECT_URL}"
-  StrCpy $ZUGO_PROVIDER "Bing™"
+  StrCpy $ZUGO_PROVIDER "BingT"
   StrCpy $ZUGO_TERMS "http://www.startnow.com/terms/bing/"
 
   ; If it's already installed, change install dir to the current installation directroy.
@@ -1075,7 +1076,6 @@ SkipChangingInstDir:
   IfErrors +3 0
   StrCpy $ZUGO_COUNTRY "SW"
   ClearErrors
-
 
   ; get the country Zugo thinks we're in
   StrCmp $ZUGO_COUNTRY "" 0 +8
@@ -1280,7 +1280,6 @@ SkipLanguageDLL:
   SectionSetFlags ${SecRegisterTorrent} $0
 
 DoneTorrentRegistration:
-
   !insertmacro checkExtensionHandled ".miro" ${SecRegisterMiro}
   !insertmacro checkExtensionHandled ".democracy" ${SecRegisterDemocracy}
   !insertmacro checkExtensionHandled ".avi" ${SecRegisterAvi}
@@ -1315,6 +1314,55 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".anx" ${SecRegisterAnx}
   !insertmacro checkExtensionHandled ".xvid" ${SecRegisterXvid}
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
+
+
+;-- get the start menu name from the command line (OPENINSTALL)
+  ${GetParameters} $R0
+  ${GetOptions} "$R0" "/_STARTMENU=" $STARTMENU_FOLDER
+
+;-- force enable/disable section by command line option (OPENINSTALL)
+  StrCpy $R1 ""
+  StrCpy $R2 ""
+  ${GetOptions} "$R0" "/_SECSON=" $R1
+  ${GetOptions} "$R0" "/_SECSOFF=" $R2
+
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "iDesk" 	${SecDesktop}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "iQL"		${SecQuickLaunch}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "miro" ${SecRegisterMiro}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "democracy" ${SecRegisterDemocracy}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "avi" ${SecRegisterAvi}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "m4v" ${SecRegisterMpg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mpg" ${SecRegisterMpg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mpeg" ${SecRegisterMpg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mp2" ${SecRegisterMpg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mp4" ${SecRegisterMpg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mpe" ${SecRegisterMpg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mpv" ${SecRegisterMpg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mpv2" ${SecRegisterMpg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mp3" ${SecRegisterMp3}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mpa" ${SecRegisterMp3}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mov" ${SecRegisterMov}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "qa" ${SecRegisterMov}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "asf" ${SecRegisterAsf}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "wmv" ${SecRegisterWmv}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "dts" ${SecRegisterDts}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "ogg" ${SecRegisterOgg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "ogm" ${SecRegisterOgg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "oga" ${SecRegisterOgg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "ogv" ${SecRegisterOgg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "ogx" ${SecRegisterOgg}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mkv" ${SecRegisterMkv}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mka" ${SecRegisterMkv}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "mks" ${SecRegisterMkv}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "3gp" ${SecRegister3gp}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "3g2" ${SecRegister3g2}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "flv" ${SecRegisterFlv}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "nsv" ${SecRegisterNsv}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "pva" ${SecRegisterPva}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "anx" ${SecRegisterAnx}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "xvid" ${SecRegisterXvid}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "3ivx" ${SecRegisterXvid}
+
 FunctionEnd
 
 Function .onInstSuccess
