@@ -280,7 +280,7 @@ class LiveStorageErrorHandler(object):
                 "It is now safe to quit without losing any data.")
         dialogs.MessageBoxDialog(title, description).run()
 
-class LiveStorageErrorHandlerDevice(LiveStorageErrorHandler):
+class DeviceLiveStorageErrorHandler(LiveStorageErrorHandler):
     """Handle database errors for LiveStorage on a device.
     """
     def __init__(self, name):

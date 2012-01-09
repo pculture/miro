@@ -478,6 +478,9 @@ class _EchonestProcessor(_MetadataProcessor):
     _EchonestProcessor stops calling the codegen processor once a certain
     buffer of codes to be sent to echonest is built up.
     """
+    # NOTE: _EchonestProcessor dosen't inherity from _TaskProcessor because it
+    # handles it's work using httpclient rather than making tasks and sending
+    # them to workerprocess.
 
     def __init__(self, code_buffer_size, cover_art_dir):
         _MetadataProcessor.__init__(self, u'echonest')
@@ -1174,7 +1177,10 @@ class DeviceMetadataManager(MetadataManager):
     def _untranslate_path(self, path):
         """Translate a path value from the db to a filesystem path.
         """
-        return os.path.relpath(path, self.mount)
+        if path.startswith(self.mount):
+            return os.path.relpath(path, self.mount)
+        else:
+            raise ValueError("%s is not relative to %s" % (path, self.mount))
 
     def _send_progress_updates(self):
         count = total = 0

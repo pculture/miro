@@ -15,6 +15,7 @@ from miro import devices
 from miro import echonest
 from miro import item
 from miro import httpclient
+from miro import messages
 from miro import models
 from miro import prefs
 from miro import schema
@@ -951,18 +952,20 @@ class DeviceMetadataTest(EventLoopTest):
         self.db[u'video'] = {}
         self.db[u'other'] = {}
         # setup a device object
-        self.device = mock.Mock()
-        self.device.database = self.db
-        self.device.mount = self.tempdir + "/"
-        self.device.remaining = 0
-        os.makedirs(os.path.join(self.device.mount, '.miro'))
-        self.device.id = 123
+        device_info = mock.Mock()
+        device_info.name = 'DeviceName'
+        mount = self.tempdir + "/"
+        device_id = 123
+        os.makedirs(os.path.join(mount, '.miro'))
         self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
         os.makedirs(self.cover_art_dir)
-        self.device.sqlite_db = devices.load_sqlite_database(
+        sqlite_db = devices.load_sqlite_database(
             ':memory:', self.db, 'DeviceName')
-        self.device.metadata_manager = devices.make_metadata_manager(
-            self.tempdir, self.device.sqlite_db, self.device.id)
+        metadata_manager = devices.make_metadata_manager(
+            self.tempdir, sqlite_db, device_id)
+        self.device = messages.DeviceInfo(device_id, device_info, mount,
+                                          self.db, sqlite_db,
+                                          metadata_manager, 1000, 0)
         # copy a file to our device
         src = resources.path('testdata/Wikipedia_Song_by_teddy.ogg')
         dest = os.path.join(self.tempdir, 'test-song.ogg')
@@ -984,7 +987,7 @@ class DeviceMetadataTest(EventLoopTest):
         app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
 
     def tearDown(self):
-        del app.device_manager
+        app.device_manager = None
         EventLoopTest.tearDown(self)
 
     def make_device_item(self):
@@ -1092,7 +1095,7 @@ class DeviceMetadataTest(EventLoopTest):
         patcher = mock.patch('miro.workerprocess.send', mock_send)
         with patcher:
             self.device.metadata_manager = devices.make_metadata_manager(
-                self.tempdir, self.device.sqlite_db, self.device.id)
+                self.tempdir, self.device.sqlite_database, self.device.id)
         self.assertEquals(mock_send.call_count, 1)
         task = mock_send.call_args[0][0]
         self.assertEquals(task.source_path,

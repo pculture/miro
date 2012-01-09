@@ -340,7 +340,7 @@ class DeviceDatabaseTest(MiroTestCase):
         self.assertEquals(self.device.sqlite_database.__class__,
                           storedatabase.LiveStorage)
         self.assertEquals(self.device.sqlite_database.error_handler.__class__,
-                          storedatabase.LiveStorageErrorHandlerDevice)
+                          storedatabase.DeviceLiveStorageErrorHandler)
 
     def test_reload(self):
         self.open_database()
@@ -361,7 +361,7 @@ class DeviceDatabaseTest(MiroTestCase):
         mock_integrity_check.side_effect = sqlite3.DatabaseError("Error")
         self.open_database()
         # check that we displayed an error dialog
-        self.assertEquals(mock_dialog_run.call_count, 1)
+        mock_dialog_run.assert_called_once_with()
         # check that our corrupt database logic ran
         dir_contents = os.listdir(os.path.join(self.device.mount, '.miro'))
         self.assert_('corrupt_database' in dir_contents)

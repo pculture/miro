@@ -1306,7 +1306,7 @@ def load_sqlite_database(mount, json_db, device_name):
         path = os.path.join(directory, 'sqlite')
         if not os.path.exists(directory):
             fileutil.makedirs(directory)
-    error_handler = storedatabase.LiveStorageErrorHandlerDevice(device_name)
+    error_handler = storedatabase.DeviceLiveStorageErrorHandler(device_name)
     object_schemas = [
         schema.MetadataEntrySchema,
         schema.MetadataStatusSchema,

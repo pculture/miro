@@ -837,12 +837,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     _path_count_tracker = _ItemsForPathCountTracker()
 
-    @staticmethod
-    def have_item_for_path(path):
+    @classmethod
+    def have_item_for_path(cls, path):
         """Check if we have an item for a path.
 
         This method is optimized to avoid DB queries if at all possible.
         """
+        # NOTE: use Item here rather than cls, since FileItem and Item share
+        # the same _path_count_tracker.
         return Item._path_count_tracker.get_count(path) > 0
 
     def _look_for_downloader(self):
