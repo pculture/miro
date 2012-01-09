@@ -2490,41 +2490,6 @@ class DeviceItem(object):
         else:
             return resources.path("images/thumb-default-video.png")
 
-    def _migrate_image_field(self, field_name):
-        value = getattr(self, field_name)
-        icon_cache_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
-        cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
-        if value is not None:
-            if (value.startswith(icon_cache_directory) or
-                value.startswith(cover_art_directory)):
-                # migrate the screenshot onto the device
-                basename = os.path.basename(value)
-                try:
-                    new_path = os.path.join(self.device.mount, '.miro',
-                                            basename)
-                    shutil.copyfile(value, new_path)
-                except (IOError, OSError):
-                    # error copying the thumbnail, just erase it
-                    setattr(self, field_name, None)
-                else:
-                    extracted = os.path.join(icon_cache_directory, 'extracted')
-                    if (value.startswith(extracted) or
-                        value.startswith(cover_art_directory)):
-                        # moviedata extracted this for us, so we can remove it
-                        try:
-                            os.unlink(value)
-                        except OSError:
-                            pass
-                    setattr(self, field_name,
-                            os.path.join('.miro', basename))
-            elif value.startswith(resources.root()):
-                setattr(self, field_name, None) # don't save a default
-                                                # thumbnail
-
-    def _migrate_thumbnail(self):
-        self._migrate_image_field('screenshot_path')
-        self._migrate_image_field('cover_art_path')
-
     def remove(self, save=True):
         for file_type in [u'video', u'audio', u'other']:
             if self.video_path in self.device.database[file_type]:
@@ -2556,7 +2521,6 @@ class DeviceItem(object):
                 was_removed = True
                 break
 
-        self._migrate_thumbnail()
         if self.file_type:
             db = self.device.database
             db[self.file_type][self.id] =  self.to_dict()

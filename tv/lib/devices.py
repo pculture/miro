@@ -1092,7 +1092,6 @@ class DeviceSyncManager(object):
                 auto_sync=getattr(item_info, 'auto_sync', False),
                 local_path=item_info.video_path,
                 )
-            device_item._migrate_thumbnail()
             database = self.device.database
             database.setdefault(device_item.file_type, {})
             database[device_item.file_type][device_item.id] = \
