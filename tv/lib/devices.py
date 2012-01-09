@@ -1345,8 +1345,8 @@ def on_new_metadata(metadata_manager, new_metadata, device_id):
             if 'file_type' in metadata:
                 file_type = metadata.pop('file_type')
             # combine the old data with the new data for the device item
-            all_data = metadata.copy()
-            all_data.update(item_data)
+            all_data = item_data.copy()
+            all_data.update(metadata)
             # FIXME: can we avoid building a new DeviceItem here?
             device_item = item.DeviceItem(video_path=path,
                                           device=device,

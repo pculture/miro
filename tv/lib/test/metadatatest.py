@@ -973,7 +973,10 @@ class DeviceMetadataTest(EventLoopTest):
             'album': u'Album',
         }
         self.moviedata_metadata = { 'duration': 100 }
-        self.echonest_metadata = { 'artist': u'Artist' }
+        self.echonest_metadata = { 
+            'title': u'BetterTitle',
+            'artist': u'Artist',
+        }
         # make a device manager
         app.device_manager = mock.Mock()
         app.device_manager.connected = {self.device.id: self.device}
@@ -1030,7 +1033,7 @@ class DeviceMetadataTest(EventLoopTest):
         # check data in MetadataManager
         self.assertDictEquals(self.get_metadata_for_item(), {
             'file_type': u'audio',
-            'title': u'Title',
+            'title': u'BetterTitle',
             'album': u'Album',
             'duration': 100,
             'artist': 'Artist',
@@ -1039,7 +1042,7 @@ class DeviceMetadataTest(EventLoopTest):
         })
         # check data in the json database
         item_data = self.device.database[u'audio'][u'test-song.ogg']
-        self.assertEquals(item_data[u'title'], u'Title')
+        self.assertEquals(item_data[u'title'], u'BetterTitle')
         self.assertEquals(item_data[u'artist'], u'Artist')
         self.assertEquals(item_data[u'album'], u'Album')
         # check the item-changed signal.  We should have gotten 3 calls, one
@@ -1047,7 +1050,7 @@ class DeviceMetadataTest(EventLoopTest):
         # data from the last emission
         self.assertEquals(item_changed_handler.call_count, 3)
         device_item = item_changed_handler.call_args[0][1]
-        self.assertEquals(device_item.title, u'Title')
+        self.assertEquals(device_item.title, u'BetterTitle')
         self.assertEquals(device_item.artist, u'Artist')
         self.assertEquals(device_item.album, u'Album')
 
