@@ -356,10 +356,12 @@ def get_echoprint_executable_path():
     # path.
     return os.path.join(miro_exec_prefix, 'echoprint-codegen')
 
-def get_enmfp_executable_path():
+def get_enmfp_executable_info():
     # NB: Since this was installed using distutils this should give the right
     # path.
-    return os.path.join(miro_exec_prefix, 'codegen.Linux-i686')
+    return {
+        'path': os.path.join(miro_exec_prefix, 'codegen.Linux-i686'),
+    }
 
 def get_transcode_video_options():   
     # Linux ffmpeg may not have fancy pants encoders so leave to use default.

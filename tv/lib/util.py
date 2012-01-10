@@ -629,15 +629,18 @@ def call_command(*args, **kwargs):
         then this returns (retcode, stdout, stderr).  This implies
         ignore_stderr is True, so you don't need to explicitly state
         that, too.
+    :param env: dict.  Environment to pass to subprocess.Popen
     """
     ignore_stderr = kwargs.pop('ignore_stderr', False)
     return_everything = kwargs.pop('return_everything', False)
+    env = kwargs.pop('env', None)
 
     if kwargs:
         raise TypeError('extra keyword arguments: %s' % kwargs)
 
     pipe = Popen(args, stdout=subprocess.PIPE,
-                 stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+                 stdin=subprocess.PIPE, stderr=subprocess.PIPE,
+                 env=env)
     stdout, stderr = pipe.communicate()
     if return_everything:
         return (pipe.returncode, stdout, stderr)

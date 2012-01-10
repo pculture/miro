@@ -53,7 +53,7 @@ from miro import prefs
 from miro import signals
 from miro import workerprocess
 from miro.plat.utils import (filename_to_unicode,
-                             get_enmfp_executable_path)
+                             get_enmfp_executable_info)
 
 attribute_names = set([
     'file_type', 'duration', 'album', 'album_artist', 'album_tracks',
@@ -490,7 +490,7 @@ class _EchonestProcessor(_MetadataProcessor):
         self._echonest_queue = _EchonestQueue()
         self._running_codegen = False
         self._querying_echonest = False
-        self._codegen_path = get_enmfp_executable_path()
+        self._codegen_info = get_enmfp_executable_info()
         self._metadata_for_path = {}
 
     def add_path(self, path, current_metadata):
@@ -499,7 +499,7 @@ class _EchonestProcessor(_MetadataProcessor):
         self._process_queue()
 
     def _run_codegen(self, path):
-        echonest.exec_codegen(self._codegen_path, path, self._codegen_callback,
+        echonest.exec_codegen(self._codegen_info, path, self._codegen_callback,
                                 self._codegen_errback)
         self._running_codegen = True
 

@@ -24,7 +24,7 @@ from miro import metadata
 from miro import workerprocess
 from miro.plat import resources
 from miro.plat.utils import (PlatformFilenameType,
-                             get_enmfp_executable_path,
+                             get_enmfp_executable_info,
                              utf8_to_filename, unicode_to_filename)
 
 class MockMetadataProcessor(object):
@@ -90,7 +90,7 @@ class MockMetadataProcessor(object):
         else:
             raise TypeError(task)
 
-    def exec_codegen(self, codegen_path, path, callback, errback):
+    def exec_codegen(self, codegen_info, path, callback, errback):
         task_data = (callback, errback)
         self.add_task_data(path, 'echonest-codegen', task_data)
 
@@ -1212,7 +1212,7 @@ class TestCodegen(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         self.callback_data = self.errback_data = None
-        self.codegen_path = get_enmfp_executable_path()
+        self.codegen_info = get_enmfp_executable_info()
 
     def callback(self, *args):
         self.callback_data = args
@@ -1223,7 +1223,7 @@ class TestCodegen(EventLoopTest):
         self.stopEventLoop(abnormal=False)
 
     def run_codegen(self, song_path):
-        echonest.exec_codegen(self.codegen_path, song_path,
+        echonest.exec_codegen(self.codegen_info, song_path,
                               self.callback, self.errback)
         self.processThreads()
         self.runEventLoop()

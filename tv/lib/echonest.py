@@ -56,7 +56,7 @@ class CodegenError(StandardError):
 class ResponseParsingError(StandardError):
     """Error parsing an echonest/7digital response."""
 
-def exec_codegen(codegen_path, media_path, callback, errback):
+def exec_codegen(codegen_info, media_path, callback, errback):
     """Run an echonest codegen in a worker thread.
 
     This method should work for both ENMFP and echoprint.
@@ -65,8 +65,10 @@ def exec_codegen(codegen_path, media_path, callback, errback):
 
     On error, errback(media_path, exception) will be called.
     """
+    codegen_path = codegen_info['path']
+    codegen_env = codegen_info.get('env')
     def thread_function():
-        stdout = util.call_command(codegen_path, media_path)
+        stdout = util.call_command(codegen_path, media_path, env=codegen_env)
         results = json.loads(stdout)
         # not sure why the code generator always returns a 1-element list, but
         # it does

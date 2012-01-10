@@ -594,10 +594,13 @@ def on_run_echoprint():
     print '-' * 50
 
 @action_handler("RunENMFP")
-def on_run_echoprint():
+def on_run_enmfp():
+    enmfp_info = utils.get_enmfp_executable_info()
     print 'Running enmfp-codegen'
+    if 'env' in enmfp_info:
+        print 'env: %s' % enmfp_info['env']
     print '-' * 50
-    subprocess.call([utils.get_enmfp_executable_path()])
+    subprocess.call([enmfp_info['path']], env=enmfp_info.get('env'))
     print '-' * 50
 
 @action_handler("RunDonatePopup")
