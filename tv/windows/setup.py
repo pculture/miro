@@ -111,6 +111,7 @@ LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
 WINSPARKLE_PATH = os.path.join(BINARY_KIT_ROOT, 'winsparkle')
 
+ENMFP_PATH = os.path.join(BINARY_KIT_ROOT, 'enmfp-codegen')
 SEGMENTER_PATH = os.path.join(BINARY_KIT_ROOT, 'segmenter')
 FFMPEG_PATH = os.path.join(
     BINARY_KIT_ROOT, 'ffmpeg', 'libav-win32-20111229')
@@ -315,6 +316,8 @@ data_files.append(('', [os.path.join(WINSPARKLE_PATH, 'WinSparkle.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
             os.path.join(SEGMENTER_PATH, 'miro-segmenter.exe'),
+            os.path.join(ENMFP_PATH, 'codegen.windows.exe'),
+            os.path.join(ENMFP_PATH, 'codegen.dll'),
             os.path.join(FFMPEG_PATH, 'usr', 'bin', 'ffmpeg.exe'),
             os.path.join(FFMPEG2THEORA_PATH, 'bin', 'ffmpeg2theora.exe')]))
 data_files.append(('', glob(os.path.join(FFMPEG_PATH, 'usr', 'bin', '*.dll'))))
