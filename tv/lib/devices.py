@@ -1304,18 +1304,22 @@ def load_sqlite_database(mount, json_db, device_name):
     else:
         directory = os.path.join(mount, '.miro')
         path = os.path.join(directory, 'sqlite')
-        if not os.path.exists(directory):
-            fileutil.makedirs(directory)
     error_handler = storedatabase.DeviceLiveStorageErrorHandler(device_name)
     object_schemas = [
         schema.MetadataEntrySchema,
         schema.MetadataStatusSchema,
     ]
-    live_storage = storedatabase.LiveStorage(path, error_handler,
-                                             object_schemas=object_schemas)
-    live_storage.integrity_check()
-    if not json_db.created_new and live_storage.created_new:
-        devicedatabaseupgrade.upgrade(live_storage, json_db, mount)
+    try:
+        live_storage = storedatabase.LiveStorage(path, error_handler,
+                                                 object_schemas=object_schemas)
+        live_storage.integrity_check()
+        if not json_db.created_new and live_storage.created_new:
+            devicedatabaseupgrade.upgrade(live_storage, json_db, mount)
+    except StandardError, e:
+        logging.warn("Error opening device database.  Opening an in-memory "
+                     "database.  No changes will be saved to disk")
+        live_storage = storedatabase.LiveStorage(':memory:', error_handler,
+                                                 object_schemas=object_schemas)
     return live_storage
 
 def make_metadata_manager(mount, sqlite_db, device_id):

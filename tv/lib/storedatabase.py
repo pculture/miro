@@ -379,6 +379,10 @@ class LiveStorage:
     def open_connection(self, path=None):
         if path is None:
             path = self.path
+        # Even if we are creating a new database we need the directory to
+        # exist at least.
+        if path != ':memory:' and not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
         logging.info("opening database %s", path)
         self.connection = sqlite3.connect(path,
                 isolation_level=None,
