@@ -845,7 +845,7 @@ class MetadataEntrySchema(DDBObjectSchema):
     klass = MetadataEntry
     table_name = 'metadata'
     fields = DDBObjectSchema.fields + [
-        ('path', SchemaFilename()),
+        ('status_id', SchemaInt()),
         ('source', SchemaString()),
         ('priority', SchemaInt()),
         ('file_type', SchemaString(noneOk=True)),
@@ -871,14 +871,14 @@ class MetadataEntrySchema(DDBObjectSchema):
     ]
 
     indexes = (
-        ('metadata_entry_path', ('path',)),
+        ('metadata_entry_status', ('status_id',)),
     )
 
     unique_indexes = (
-        ('metadata_entry_path_and_source', ('path', 'source')),
+        ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 171
+VERSION = 172
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

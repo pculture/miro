@@ -103,7 +103,7 @@ def do_upgrade(cursor, json_db, mount):
         ('kind', 'kind'),
     ]
 
-    insert_columns = ['id', 'path', 'file_type', 'source', 'priority',
+    insert_columns = ['id', 'status_id', 'file_type', 'source', 'priority',
                       'disabled']
 
     filenames_seen = set()
@@ -119,23 +119,6 @@ def do_upgrade(cursor, json_db, mount):
             continue
         else:
             filenames_seen.add(path)
-        # Make an entry in the metadata table with the metadata that was
-        # stored.  We don't know if it came from mutagen, movie data, torrent
-        # data or wherever, so we use "old-item" as the source and give it a
-        # low priority.
-        values = [next_id, path, file_type, 'old-item', 10, False]
-        for new_name, old_name in column_map:
-            value = old_item.get(old_name)
-            if value == '':
-                value = None
-            values.append(value)
-
-        sql = "INSERT INTO metadata (%s) VALUES (%s)" % (
-            ', '.join(insert_columns),
-            ', '.join('?' for i in xrange(len(insert_columns))))
-        cursor.execute(sql, values)
-        next_id += 1
-
         OLD_ITEM_PRIORITY = 10
         # Make an entry in the metadata_status table.  We're not sure if
         # mutagen completed successfully or not, so we just call its status
@@ -153,7 +136,26 @@ def do_upgrade(cursor, json_db, mount):
         cursor.execute(sql, (next_id, path, current_processor, 'S',
                              moviedata_status, 'N', False, has_drm,
                              OLD_ITEM_PRIORITY))
+        status_id = next_id
         next_id += 1
+
+        # Make an entry in the metadata table with the metadata that was
+        # stored.  We don't know if it came from mutagen, movie data, torrent
+        # data or wherever, so we use "old-item" as the source and give it a
+        # low priority.
+        values = [next_id, status_id, file_type, 'old-item', 10, False]
+        for new_name, old_name in column_map:
+            value = old_item.get(old_name)
+            if value == '':
+                value = None
+            values.append(value)
+
+        sql = "INSERT INTO metadata (%s) VALUES (%s)" % (
+            ', '.join(insert_columns),
+            ', '.join('?' for i in xrange(len(insert_columns))))
+        cursor.execute(sql, values)
+        next_id += 1
+
 
         # We need to alter the device info to:
         #   - drop the columns now handled by metadata_status

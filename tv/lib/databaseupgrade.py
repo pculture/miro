@@ -3686,3 +3686,26 @@ def upgrade171(cursor):
     cursor.execute("DROP INDEX metadata_moviedata")
     cursor.execute("CREATE INDEX metadata_processor "
                    "ON metadata_status (current_processor)")
+
+def upgrade172(cursor):
+    """Remove the path column from the metadata table."""
+    # Create new column and set it based on the old path column
+    cursor.execute("ALTER TABLE metadata ADD COLUMN status_id integer")
+    cursor.execute("UPDATE metadata SET status_id = "
+                   "(SELECT metadata_status.id FROM metadata_status "
+                   "WHERE metadata_status.path=metadata.path)")
+    # Delete any rows that don't have an associated metadata_status.  This
+    # shouldn't be any, but delete just in case
+    cursor.execute("DELETE FROM metadata "
+                   "WHERE NOT EXISTS "
+                   "(SELECT metadata_status.id FROM metadata_status "
+                   "WHERE metadata_status.path=metadata.path)")
+    # Fix indexes
+    cursor.execute("DROP INDEX metadata_entry_path")
+    cursor.execute("DROP INDEX metadata_entry_path_and_source")
+    cursor.execute("CREATE INDEX metadata_entry_status "
+                   "ON metadata (status_id)")
+    cursor.execute("CREATE UNIQUE INDEX metadata_entry_status_and_source "
+                   "ON metadata (status_id, source)")
+    # drop old column
+    remove_column(cursor, 'metadata', 'path')

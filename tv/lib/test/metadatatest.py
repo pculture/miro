@@ -1133,7 +1133,7 @@ class DeviceMetadataTest(EventLoopTest):
         # test that we made MetadataEntry rows
         for source in (u'mutagen', u'movie-data', u'echonest'):
             # this will raise an exception if the entry is not there
-            metadata.MetadataEntry.get_entry(source, copied_item_path,
+            metadata.MetadataEntry.get_entry(source, status,
                                              device_db_info)
         # the device item should have the original items metadata
         device_item_metadata = self.device.metadata_manager.get_metadata(
@@ -1187,8 +1187,9 @@ class DeviceMetadataUpgradeTest(MiroTestCase):
         self.assertEquals(status.net_lookup_enabled, False)
 
     def check_migrated_entries(self, filename, item_data, device_db_info):
-        entries = metadata.MetadataEntry.metadata_for_path(filename,
-                                                           device_db_info)
+        status = metadata.MetadataStatus.get_by_path(filename, device_db_info)
+        entries = metadata.MetadataEntry.metadata_for_status(status,
+                                                             device_db_info)
         entries = list(entries)
         self.assertEquals(len(entries), 1)
         entry = entries[0]

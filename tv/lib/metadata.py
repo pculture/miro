@@ -270,8 +270,8 @@ class MetadataEntry(database.DDBObject):
     # album name
     metadata_columns.discard('cover_art_path')
 
-    def setup_new(self, path, source, data):
-        self.path = path
+    def setup_new(self, status, source, data):
+        self.status_id = status.id
         self.source = source
         self.priority = MetadataEntry.source_priority_map[source]
         self.disabled = False
@@ -300,27 +300,27 @@ class MetadataEntry(database.DDBObject):
         self.signal_change()
 
     @classmethod
-    def metadata_for_path(cls, path, db_info=None):
-        return cls.make_view('path=? AND NOT disabled',
-                             (filename_to_unicode(path),),
+    def metadata_for_status(cls, status, db_info=None):
+        return cls.make_view('status_id=? AND NOT disabled',
+                             (status.id,),
                              order_by='priority ASC',
                              db_info=db_info)
 
     @classmethod
-    def get_entry(cls, source, path, db_info=None):
-        view = cls.make_view('source=? AND path=?',
-                             (source, filename_to_unicode(path)),
+    def get_entry(cls, source, status, db_info=None):
+        view = cls.make_view('source=? AND status_id=?',
+                             (source, status.id),
                              db_info=db_info)
         return view.get_singleton()
 
     @classmethod
-    def set_disabled(cls, source, path, disabled, db_info=None):
+    def set_disabled(cls, source, status, disabled, db_info=None):
         """Set/Unset the disabled flag for metadata entry.
 
         :returns: True if there was an entry to change
         """
         try:
-            entry = cls.get_entry(source, path, db_info=None)
+            entry = cls.get_entry(source, status, db_info=None)
         except database.ObjectNotFoundError:
             return False
         else:
@@ -760,12 +760,13 @@ class MetadataManager(signals.SignalEmitter):
         initial_metadata = self._get_metadata_from_filename(path)
         initial_metadata['net_lookup_enabled'] = status.net_lookup_enabled
         if local_path is not None:
+            local_status = MetadataStatus.get_by_path(local_path)
             status.copy_status(MetadataStatus.get_by_path(local_path))
             self.run_next_processor(status)
-            for entry in MetadataEntry.metadata_for_path(local_path):
+            for entry in MetadataEntry.metadata_for_status(local_status):
                 entry_metadata = entry.get_metadata()
                 initial_metadata.update(entry_metadata)
-                MetadataEntry(path, entry.source, entry_metadata,
+                MetadataEntry(status, entry.source, entry_metadata,
                               db_info=self.db_info)
         else:
             self._run_mutagen(path)
@@ -811,9 +812,11 @@ class MetadataManager(signals.SignalEmitter):
         """Does the work for remove_file and remove_files"""
         self._cancel_processing_paths(paths)
         for path in paths:
-            self._get_status_for_path(path).remove()
-            for entry in MetadataEntry.metadata_for_path(path, self.db_info):
+            status = self._get_status_for_path(path)
+            for entry in MetadataEntry.metadata_for_status(status,
+                                                           self.db_info):
                 entry.remove()
+            status.remove()
             self.count_tracker.file_finished(path)
         self._schedule_update()
 
@@ -851,8 +854,6 @@ class MetadataManager(signals.SignalEmitter):
             return
 
         status.rename(new_path)
-        for entry in MetadataEntry.metadata_for_path(old_path, self.db_info):
-            entry.rename(new_path)
         if status.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
             self._run_mutagen(new_path)
         elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
@@ -870,7 +871,7 @@ class MetadataManager(signals.SignalEmitter):
         status = self._get_status_for_path(path)
 
         metadata = self._get_metadata_from_filename(path)
-        for entry in MetadataEntry.metadata_for_path(path, self.db_info):
+        for entry in MetadataEntry.metadata_for_status(status, self.db_info):
             entry_metadata = entry.get_metadata()
             metadata.update(entry_metadata)
         metadata['has_drm'] = status.get_has_drm()
@@ -915,12 +916,12 @@ class MetadataManager(signals.SignalEmitter):
         status = self._get_status_for_path(path)
         try:
             # try to update the current entry
-            current_entry = MetadataEntry.get_entry(u'user-data', path,
+            current_entry = MetadataEntry.get_entry(u'user-data', status,
                                                     self.db_info)
             current_entry.update_metadata(user_data)
         except database.ObjectNotFoundError:
             # make a new entry if none exists
-            MetadataEntry(path, u'user-data', user_data, db_info=self.db_info)
+            MetadataEntry(status, u'user-data', user_data, db_info=self.db_info)
 
     def set_net_lookup_enabled(self, paths, enabled):
         """Set if we should do an internet lookup for a list of paths"""
@@ -938,7 +939,7 @@ class MetadataManager(signals.SignalEmitter):
                     continue
                 old_current_processor = status.current_processor
                 status.set_net_lookup_enabled(enabled)
-                if MetadataEntry.set_disabled('echonest', path, not enabled,
+                if MetadataEntry.set_disabled('echonest', status, not enabled,
                                               self.db_info):
                     paths_to_refresh.append(path)
                 # Changing the net_lookup value may mean we have to send the
@@ -1097,7 +1098,7 @@ class MetadataManager(signals.SignalEmitter):
         self.metadata_finished = []
 
     def _make_new_metadata_entry(self, status, processor, path, result):
-        entry = MetadataEntry(path, processor.source_name, result,
+        entry = MetadataEntry(status, processor.source_name, result,
                               db_info=self.db_info)
         if entry.priority >= status.max_entry_priority:
             # If this entry is going to overwrite all other metadata, then
