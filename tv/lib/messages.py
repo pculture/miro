@@ -924,6 +924,16 @@ class ForceFeedparserProcessing(BackendMessage):
     """
     pass
 
+class ForceDBSaveError(BackendMessage):
+    """Simulate an error running an INSERT/UPDATE statement on the main DB.
+    """
+
+class ForceDeviceDBSaveError(BackendMessage):
+    """Simulate an error running an INSERT/UPDATE statement on a device DB.
+    """
+    def __init__(self, device_info):
+        self.device_info = device_info
+
 # Frontend Messages
 class DownloaderSyncCommandComplete(FrontendMessage):
     """Tell the frontend that the pause/resume all command are complete,

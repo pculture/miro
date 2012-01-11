@@ -232,7 +232,11 @@ def _make_cover_art_file(album_name, objects, cover_art_directory):
         # no attached image is definitively cover art. use the first one.
         cover_image = images[0]
 
-    cover_image.write_to_file(path)
+    try:
+        cover_image.write_to_file(path)
+    except IOError:
+        logging.warn("Couldn't write cover art file: {0}".format(path))
+        return None
     return path
 
 MUTAGEN_ERRORS = None

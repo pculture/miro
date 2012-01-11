@@ -1977,6 +1977,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 f.actualFeed.signal_change()
                 f.update()
 
+    def handle_force_dbsave_error(self, message):
+        app.db.simulate_db_save_error()
+
+    def handle_force_device_dbsave_error(self, message):
+        app.device_manager.force_db_save_error(message.device_info)
+
     def handle_set_net_lookup_enabled(self, message):
         paths = set()
         if message.item_ids is None:

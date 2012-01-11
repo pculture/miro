@@ -43,6 +43,7 @@ from miro import conversions
 from miro.frontends.widgets.keyboard import (Shortcut, CTRL, ALT, SHIFT, CMD,
      MOD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE,
      BKSPACE, ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12)
+from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.widgetconst import COLUMN_LABELS
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat.frontends.widgets import widgetset
@@ -278,7 +279,11 @@ def get_app_menu():
                 MenuItem(_("Clog Backend"), "ClogBackend"),
                 MenuItem(_("Run Echoprint"), "RunEchoprint"),
                 MenuItem(_("Run ENMFP"), "RunENMFP"),
-                MenuItem(_("Run Donate Popup"), "RunDonatePopup")
+                MenuItem(_("Run Donate Popup"), "RunDonatePopup"),
+                MenuItem(_("Force Main DB Save Error"),
+                         "ForceMainDBSaveError"),
+                MenuItem(_("Force Device DB Save Error"),
+                         "ForceDeviceDBSaveError"),
                 ])
         )
     return all_menus
@@ -606,6 +611,22 @@ def on_run_enmfp():
 @action_handler("RunDonatePopup")
 def on_run_donate_poupup():
     app.widgetapp.show_donate_popup()
+
+@action_handler("ForceMainDBSaveError")
+def on_force_device_db_save_error():
+    messages.ForceDBSaveError().send_to_backend()
+
+@action_handler("ForceDeviceDBSaveError")
+def on_force_device_db_save_error():
+    selection_type, selected_tabs = app.tabs.selection
+    if (selection_type != 'connect' or
+        len(selected_tabs) != 1 or
+        not isinstance(selected_tabs[0], messages.DeviceInfo)):
+        dialogs.show_message("Usage",
+                             "You must have a device tab selected to "
+                             "force a device database error")
+        return
+    messages.ForceDeviceDBSaveError(selected_tabs[0]).send_to_backend()
 
 class LegacyMenuUpdater(object):
     """This class contains the logic to update the menus based on enabled

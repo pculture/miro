@@ -47,6 +47,8 @@ except ImportError:
         def __init__(self, *args, **kwargs):
             super(Counter, self).__init__(int, *args, **kwargs)
 
+import sqlite3
+
 from miro import app
 from miro import database
 from miro import devicedatabaseupgrade
@@ -318,6 +320,13 @@ class DeviceManager(object):
         # FIXME - need this
         pass
 
+    def force_db_save_error(self, device_info):
+        if device_info.sqlite_database is None:
+            logging.warn("force_db_save_error: sqlite_database is None "
+                         "is the device connected?")
+            return
+        device_info.sqlite_database.simulate_db_save_error()
+
     def startup(self):
         # load devices
         self.load_devices(resources.path('devices/*.py'))
@@ -421,7 +430,7 @@ class DeviceManager(object):
             mount = kwargs['mount']
             db = load_database(mount)
             device_name = db.get(u'device_name', kwargs.get('device_name'))
-            sqlite_db = load_sqlite_database(mount, db, device_name)
+            sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'))
             metadata_manager = make_metadata_manager(mount, sqlite_db, id_)
         else:
             device_name = None
@@ -1293,7 +1302,7 @@ def load_database(mount, countdown=0):
     ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
 
-def load_sqlite_database(mount, json_db, device_name):
+def load_sqlite_database(mount, json_db, device_size):
     """
     Returns a LiveStorage object for an sqlite database on the device
 
@@ -1301,20 +1310,33 @@ def load_sqlite_database(mount, json_db, device_name):
     """
     if mount == ':memory:': # special case for the unittests
         path = ':memory:'
+        preallocate = None
     else:
         directory = os.path.join(mount, '.miro')
         path = os.path.join(directory, 'sqlite')
-    error_handler = storedatabase.DeviceLiveStorageErrorHandler(device_name)
+        preallocate = calc_sqlite_preallocate_size(device_size)
+    error_handler = storedatabase.DeviceLiveStorageErrorHandler(mount)
     object_schemas = [
         schema.MetadataEntrySchema,
         schema.MetadataStatusSchema,
     ]
     live_storage = storedatabase.LiveStorage(path, error_handler,
+                                             preallocate=preallocate,
                                              object_schemas=object_schemas)
-    live_storage.integrity_check()
     if not json_db.created_new and live_storage.created_new:
         devicedatabaseupgrade.upgrade(live_storage, json_db, mount)
     return live_storage
+
+def calc_sqlite_preallocate_size(device_size):
+    """Calculate the size we should preallocate for our sqlite database.  """
+    # Estimate that the device can store 1 item per megabyte and each item
+    # takes 400 bytes in the database.
+    max_items_estimate = device_size / (2 ** 20)
+    size = max_items_estimate * 400
+    # force the size to be between 512K and 10M
+    size = max(size, 512 * (2 ** 10))
+    size = min(size, 20 * (2 ** 10))
+    return size
 
 def make_metadata_manager(mount, sqlite_db, device_id):
     """

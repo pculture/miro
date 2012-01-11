@@ -318,12 +318,13 @@ class DeviceDatabaseTest(MiroTestCase):
         self.device.mount = self.tempdir
         self.device.id = 123
         self.device.name = 'Device'
+        self.device.size = 1024000
         os.makedirs(os.path.join(self.device.mount, '.miro'))
 
     def open_database(self):
         sqlite_db = devices.load_sqlite_database(self.device.mount,
                                                  self.device.database,
-                                                 self.device.name)
+                                                 self.device.size)
         metadata_manager = devices.make_metadata_manager(self.device.mount,
                                                          sqlite_db,
                                                          self.device.id)
@@ -355,10 +356,18 @@ class DeviceDatabaseTest(MiroTestCase):
         paths = [r[0] for r in cursor.fetchall()]
         self.assertSameSet(paths, ['foo.mp3', 'bar.mp3'])
 
-    @mock.patch('miro.storedatabase.LiveStorage._integrity_check')
     @mock.patch('miro.dialogs.MessageBoxDialog.run_blocking')
-    def test_load_error(self, mock_dialog_run, mock_integrity_check):
-        mock_integrity_check.side_effect = sqlite3.DatabaseError("Error")
+    def test_load_error(self, mock_dialog_run):
+        # Test an error loading the device database
+        def mock_get_last_id():
+            if not self.faked_get_last_id_error:
+                self.faked_get_last_id_error = True
+                raise sqlite3.DatabaseError("Error")
+            else:
+                return 0
+        self.faked_get_last_id_error = False
+        self.patch_function('miro.storedatabase.LiveStorage._get_last_id',
+                            mock_get_last_id)
         self.open_database()
         # check that we displayed an error dialog
         mock_dialog_run.assert_called_once_with()

@@ -85,8 +85,6 @@ def process_file(source_path, image_directory):
     :param image_directory: directory to put screenshut files
     :returns: dictionary with metadata info
     """
-    if not os.path.exists(image_directory):
-        fileutil.makedirs(image_directory)
     screenshot_path, fp = _make_screenshot_path(source_path, image_directory)
     result = run_media_metadata_extractor(source_path, screenshot_path)
     # we can close the file now, since MDP has written to it

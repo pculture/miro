@@ -662,10 +662,7 @@ class MetadataManager(signals.SignalEmitter):
         self.cover_art_dir = cover_art_dir
         self.screenshot_dir = screenshot_dir
         self.echonest_cover_art_dir = os.path.join(cover_art_dir, 'echonest')
-        if not fileutil.exists(self.echonest_cover_art_dir):
-            fileutil.makedirs(self.echonest_cover_art_dir)
-        if not fileutil.exists(self.screenshot_dir):
-            fileutil.makedirs(self.screenshot_dir)
+        self.check_image_directories(log_warnings=True)
         self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
         self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
         self.echonest_processor = _EchonestProcessor(
@@ -694,6 +691,31 @@ class MetadataManager(signals.SignalEmitter):
 
     def _reset_new_metadata(self):
         self.new_metadata = collections.defaultdict(dict)
+
+    def check_image_directories(self, log_warnings=False):
+        """Check that our echonest and screenshot directories exist
+
+        If they don't, we will try to create them.
+
+        This method should be called often so that we recover quickly.  The
+        current policy is to call it before adding a task that might need to
+        write to the directories.
+
+        :param log_warnings: should we print errors out to the log file?
+        """
+        directories = (
+            self.cover_art_dir, 
+            self.echonest_cover_art_dir,
+            self.screenshot_dir,
+        )
+        for path in directories:
+            if not fileutil.exists(path):
+                try:
+                    fileutil.makedirs(path)
+                except EnvironmentError, e:
+                    if log_warnings:
+                        logging.warn("MetadataManager: error creating: %s" 
+                                     "(%s)", path, e)
 
     def _setup_path_placeholders(self):
         """Add None values to the cache for all MetadataStatus objects
@@ -1003,6 +1025,7 @@ class MetadataManager(signals.SignalEmitter):
 
     def _run_mutagen(self, path):
         """Run mutagen on a path."""
+        self.check_image_directories()
         path = self._translate_path(path)
         task = workerprocess.MutagenTask(path, self.cover_art_dir)
         if not self.in_bulk_add():
@@ -1012,11 +1035,14 @@ class MetadataManager(signals.SignalEmitter):
 
     def _run_movie_data(self, path):
         """Run the movie data program on a path."""
+        self.check_image_directories()
         path = self._translate_path(path)
         task = workerprocess.MovieDataProgramTask(path, self.screenshot_dir)
         self.moviedata_processor.add_task(task)
 
     def _run_echonest(self, path):
+        """Run echonest and other internet queries on a path."""
+        self.check_image_directories()
         # FIXME: calling get_metadata() probably slows things down
         metadata = self.get_metadata(path)
         # make sure to get metadata that we just created but haven't saved yet

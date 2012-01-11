@@ -959,8 +959,7 @@ class DeviceMetadataTest(EventLoopTest):
         os.makedirs(os.path.join(mount, '.miro'))
         self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
         os.makedirs(self.cover_art_dir)
-        sqlite_db = devices.load_sqlite_database(
-            ':memory:', self.db, 'DeviceName')
+        sqlite_db = devices.load_sqlite_database(':memory:', self.db, 1024)
         metadata_manager = devices.make_metadata_manager(
             self.tempdir, sqlite_db, device_id)
         self.device = messages.DeviceInfo(device_id, device_info, mount,
@@ -1158,8 +1157,7 @@ class DeviceMetadataUpgradeTest(MiroTestCase):
 
     def test_upgrade(self):
         # Test the upgrade from pre-metadata device databases
-        sqlite_db = devices.load_sqlite_database(':memory:', self.db,
-                                                 'DeviceName')
+        sqlite_db = devices.load_sqlite_database(':memory:', self.db, 1024)
         # load_sqlite_database should have converted the old data to metadata
         # entries
         metadata_manager = devices.make_metadata_manager(self.tempdir,

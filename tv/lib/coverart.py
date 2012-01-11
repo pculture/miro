@@ -129,16 +129,11 @@ class Image(object):
 
     def write_to_file(self, path):
         """Creates a new file containing this image's data.
-        Returns the file's path.
+
+        :raises IOError: error writing cover art file
         """
-        try:
-            file_handle = fileutil.open_file(path, 'wb')
-            file_handle.write(self.data) 
-        except IOError:
-            logging.warn(
-                "Couldn't write cover art file: {0}".format(path))
-            return None
-        return path
+        file_handle = fileutil.open_file(path, 'wb')
+        file_handle.write(self.data) 
 
     def _set_extension_by_mime(self, raw_mime):
         """If a subclasss can determine its data's mime type, this function will
