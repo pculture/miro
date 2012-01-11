@@ -422,8 +422,6 @@ def get_ffmpeg_executable_path():
 
 def customize_ffmpeg_parameters(params):
     from miro.plat.specialfolders import get_short_path_name
-    # move -strict experimental to just before the output
-    params = params[2:-1] + params[:2] + params[-1:]
     # look for -i input
     ind = params.index("-i")
     if ind != -1 and len(params) > ind + 2:
