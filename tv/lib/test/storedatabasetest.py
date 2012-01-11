@@ -1,7 +1,11 @@
 from datetime import datetime
 import os
 import unittest
+import string
+import random
 import time
+
+import sqlite3
 
 from miro import app
 from miro import database
@@ -23,7 +27,9 @@ from miro import storedatabase
 from miro.plat import resources
 from miro.plat.utils import PlatformFilenameType
 
-from miro.test.framework import EventLoopTest, skip_for_platforms
+from miro.test import mock
+from miro.test.framework import (MiroTestCase, EventLoopTest,
+                                 skip_for_platforms, MatchAny)
 from miro.schema import (SchemaString, SchemaInt, SchemaFloat,
                          SchemaReprContainer, SchemaList, SchemaDict,
                          SchemaBool, SchemaFilename,
@@ -695,6 +701,141 @@ class BadTabOrderTest(StoreDatabaseTest):
         # true
         self.screw_with_tab_order(self.f1.id, self.f2.id, self.folder.id)
         self.check_order(self.f2.id, self.folder.id, self.f1.id)
+
+class PreallocateTest(MiroTestCase):
+    def check_preallocate_size(self, path, preallocate_size):
+        disk_size = os.stat(path).st_size
+        # allow some variance for the disk size, we just need to be in the
+        # ballpark
+        if disk_size > preallocate_size * 1.1:
+            raise AssertionError("database size too large: %s (should be %s)"
+                                 % (disk_size, preallocate_size))
+        if disk_size < preallocate_size * 0.9:
+            raise AssertionError("database size too small: %s (should be %s)"
+                                 % (disk_size, preallocate_size))
+
+    def test_preallocate(self):
+        # test preallocating space
+        preallocate = 512 * 1024 # 512KB
+        path = os.path.join(self.tempdir, 'testdb')
+        storage = storedatabase.LiveStorage(path, preallocate=preallocate)
+        # check while open
+        self.check_preallocate_size(path, preallocate)
+        # check that it remains that big after close
+        storage.close()
+        self.check_preallocate_size(path, preallocate)
+
+class TemporaryModeTest(MiroTestCase):
+    # test getting an error when opening a new database and using an
+    # in-memory database to work around it
+
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.save_path = os.path.join(self.tempdir, 'test-db')
+        # set up an error handler that tells LiveStorage to use temporary
+        # storage if it fails to open a new database
+        use_temp = storedatabase.LiveStorageErrorHandler.ACTION_USE_TEMPORARY
+        self.error_handler = mock.Mock()
+        self.error_handler.handle_open_error.return_value = use_temp
+
+        self.row_data = []
+
+        self.mock_add_timeout = mock.Mock()
+        self.patch_function('miro.eventloop.add_timeout',
+                            self.mock_add_timeout)
+
+        self.real_sqlite3_connect = sqlite3.connect
+        self.patch_function('sqlite3.connect', self.mock_sqlite3_connect)
+
+    def force_temporary_database(self):
+        """Open a new database and force it to fail.
+
+        After this we should be using an in-memory database and trying to save
+        it to disk every so often.
+        """
+
+        self.force_next_connect_to_fail = True
+        self.reload_database(self.save_path,
+                             object_schemas=test_object_schemas,
+                             error_handler=self.error_handler)
+
+    def test_error_handler_called(self):
+        # Test that our error handler was called when storedatabase could'nt
+        # open the database
+        handle_open_error = self.error_handler.handle_open_error
+        self.force_temporary_database()
+        handle_open_error.assert_called_once_with()
+
+    def test_use_memory(self):
+        # Test that we use an in-memory database after failing to open a real
+        # one
+        self.force_temporary_database()
+        self.assertEquals(self.last_connect_path, ':memory:')
+        self.assert_(not os.path.exists(self.save_path))
+
+    def test_try_save_scheduling(self):
+        # test that we call add_timeout to schedule trying to save to the
+        # database
+        self.force_temporary_database()
+        delay = 300
+        self.mock_add_timeout.assert_called_once_with(
+            delay, app.db._try_save_temp_to_disk, MatchAny())
+        # Make the timeout run and fail.  Check that we schedule another try
+        self.mock_add_timeout.reset_mock()
+        self.force_next_connect_to_fail = True
+        app.db._try_save_temp_to_disk()
+        self.mock_add_timeout.assert_called_once_with(
+            delay, app.db._try_save_temp_to_disk, MatchAny())
+        # make the timeout succeed.  Check that we don't schedule anymore
+        self.mock_add_timeout.reset_mock()
+        app.db._try_save_temp_to_disk()
+        self.assertEquals(self.mock_add_timeout.called, False)
+
+    def add_data(self, row_count):
+        for i in range(row_count):
+            age = 40
+            meters_tall = 2.5
+            name = u"Name-%s" % i
+            password = u"x" * i
+            Human(name, age, meters_tall, [], password=password)
+            self.row_data.append((name, age, meters_tall, password))
+
+    def check_data(self):
+        view = Human.make_view(order_by="name")
+        self.row_data.sort() # name is the 1st column, so this sorts by name
+        self.assertEquals(view.count(), len(self.row_data))
+        for i, h in enumerate(view):
+            self.assertEquals(h.name, self.row_data[i][0])
+            self.assertEquals(h.age, self.row_data[i][1])
+            self.assertEquals(h.meters_tall, self.row_data[i][2])
+            self.assertEquals(h.stuff, {'password': self.row_data[i][3]})
+
+    def test_data(self):
+        # test storing data in the temp database
+        self.force_temporary_database()
+        # add a bunch of fake data to the database
+        self.add_data(100)
+        # make the database save to its real path
+        app.db._try_save_temp_to_disk()
+        # check that the data got saved to disk
+        self.assertEquals(self.last_connect_path, self.save_path)
+        self.assert_(os.path.exists(self.save_path))
+        # test that the data is correct immediately after change_path
+        self.check_data()
+        # add some more data
+        self.add_data(100)
+        # re-open the database and check that everything is correct
+        self.reload_database(self.save_path, object_schemas=test_object_schemas)
+        self.check_data()
+
+    def mock_sqlite3_connect(self, path, *args, **kwargs):
+        """Force the next call to sqlite3.connect to raise an exception.  """
+        if self.force_next_connect_to_fail:
+            self.force_next_connect_to_fail = False
+            raise sqlite3.OperationalError()
+        else:
+            self.last_connect_path = path
+            return self.real_sqlite3_connect(path, *args, **kwargs)
 
 if __name__ == '__main__':
     unittest.main()

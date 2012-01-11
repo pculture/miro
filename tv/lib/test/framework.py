@@ -49,6 +49,14 @@ util.setup_logging()
 
 import sys
 
+class MatchAny(object):
+    """Object that matches anything.
+
+    Useful for creating a wildcard when calling Mock.assert_called_with().
+    """
+    def __eq__(self, other):
+        return True
+
 VALID_PLATFORMS = ['linux', 'win32', 'osx']
 PLATFORM_MAP = {
     'osx': 'osx',
@@ -458,10 +466,9 @@ class MiroTestCase(unittest.TestCase):
     def check_failed_soft_count(self, count):
         self.assertEquals(app.controller.failed_soft_count, count)
 
-    def reload_database(self, path=':memory:', schema_version=None,
-                        object_schemas=None, upgrade=True):
+    def reload_database(self, path=':memory:', upgrade=True, **kwargs):
         self.shutdown_database()
-        self.setup_new_database(path, schema_version, object_schemas)
+        self.setup_new_database(path, **kwargs)
         if upgrade:
             if self.allow_db_upgrade_error_dialog:
                 # this means that exceptions in the upgrade will be sent to a
@@ -479,10 +486,8 @@ class MiroTestCase(unittest.TestCase):
         app.db._object_map = {}
         app.db.cache = storedatabase.DatabaseObjectCache()
 
-    def setup_new_database(self, path, schema_version, object_schemas):
-        app.db = storedatabase.LiveStorage(path,
-                                           schema_version=schema_version,
-                                           object_schemas=object_schemas)
+    def setup_new_database(self, path, **kwargs):
+        app.db = storedatabase.LiveStorage(path, **kwargs)
         app.db.raise_load_errors = self.raise_db_load_errors
 
     def allow_db_load_errors(self, allow):

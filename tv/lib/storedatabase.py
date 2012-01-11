@@ -188,6 +188,8 @@ class LiveStorageErrorHandler(object):
     ACTION_SUBMIT_REPORT = 1
     ACTION_START_FRESH = 2
     ACTION_RETRY = 3
+    ACTION_USE_TEMPORARY = 4
+    ACTION_RERAISE = 5
 
     def handle_load_error(self):
         """Handle an error loading the database.
@@ -203,6 +205,16 @@ class LiveStorageErrorHandler(object):
             "database will be created now.",
             {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         dialogs.MessageBoxDialog(title, description).run_blocking()
+
+    def handle_open_error(self):
+        """Handle an error opening a new database
+
+        This method should return one of the following:
+        - ACTION_RERAISE -- Just re-raise the error
+        - ACTION_USE_TEMPORARY -- Use an in-memory database for now and try to
+        save the database to disk every so often.
+        """
+        return ACTION_RERAISE
 
     def handle_upgrade_error(self):
         """Handle an error upgrading the database.
@@ -286,6 +298,9 @@ class DeviceLiveStorageErrorHandler(LiveStorageErrorHandler):
     def __init__(self, name):
         self.name = name
 
+    def handle_open_error(self):
+        return self.ACTION_USE_TEMPORARY
+
     def handle_load_error(self):
         title = _("database for device %(name)s corrupt.",
                   {'name' : self.name})
@@ -320,8 +335,19 @@ class LiveStorage:
 
     - cache -- DatabaseObjectCache object
     """
-    def __init__(self, path=None, error_handler=None, object_schemas=None,
-                 schema_version=None):
+    def __init__(self, path=None, error_handler=None, preallocate=None,
+                 object_schemas=None, schema_version=None):
+        """Create a LiveStorage for a database
+
+        :param path: path to the database (or ":memory:")
+        :param error_handler: LiveStorageErrorHandler to use
+        :param preallocate: Ensure that approximately at least this much space
+            is allocated for the database file
+        :param object_schemas: list of schemas to use.  Defaults to
+           schema.object_schemas
+        :param schema_version: current version of the schema for upgrading
+           purposes.  Defaults to schema.VERSION.
+        """
         if path is None:
             path = app.config.get(prefs.SQLITE_PATHNAME)
         if error_handler is None:
@@ -343,8 +369,8 @@ class LiveStorage:
         except AttributeError:
             logging.info("sqlite3 has no version attribute.")
 
-        db_existed = os.path.exists(path)
-        self.created_new = False
+        self.created_new = not os.path.exists(path)
+        self.preallocate = preallocate
         self.error_handler = error_handler
         self.cache = DatabaseObjectCache()
         self.raise_load_errors = False # only gets set in unittests
@@ -373,20 +399,34 @@ class LiveStorage:
 
         self.open_connection()
 
-        if not db_existed:
+        if self.created_new:
             self._init_database()
+        if self.preallocate:
+            self._preallocate_space()
 
     def open_connection(self, path=None):
         if path is None:
             path = self.path
-        # Even if we are creating a new database we need the directory to
-        # exist at least.
-        if path != ':memory:' and not os.path.exists(os.path.dirname(path)):
-            os.makedirs(os.path.dirname(path))
+        self._ensure_database_directory_exists(path)
         logging.info("opening database %s", path)
-        self.connection = sqlite3.connect(path,
-                isolation_level=None,
-                detect_types=sqlite3.PARSE_DECLTYPES)
+        try:
+            self.connection = sqlite3.connect(path,
+                    isolation_level=None,
+                    detect_types=sqlite3.PARSE_DECLTYPES)
+        except sqlite3.Error, e:
+            logging.warn("Error opening sqlite database: %s", e)
+            action = self.error_handler.handle_open_error()
+            if action == LiveStorageErrorHandler.ACTION_RERAISE:
+                raise
+            elif action == LiveStorageErrorHandler.ACTION_USE_TEMPORARY:
+                logging.warn("Error opening database %s.  Opening an "
+                             "in-memory database instead", path)
+                self._switch_to_temp_mode()
+            else:
+                logging.warn("Bad return value for handle_open_error: %s",
+                             action)
+                raise
+
         self.cursor = self.connection.cursor()
         try:
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
@@ -396,6 +436,80 @@ class LiveStorage:
             self._handle_load_error(msg)
             # rerun the command with our fresh database
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
+
+    def _ensure_database_directory_exists(self, path):
+        if path != ':memory:' and not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
+
+    def _switch_to_temp_mode(self):
+        """Switch to temporary mode.
+
+        In temporary mode, we use an in-memory database and try to save it to
+        disk every 5 minutes.  Temporary mode is used to handle errors when
+        trying to open a database file.
+        """
+        self.connection = sqlite3.connect(':memory:',
+                                          isolation_level=None,
+                                          detect_types=sqlite3.PARSE_DECLTYPES)
+        self.created_new = True
+        eventloop.add_timeout(300,
+                              self._try_save_temp_to_disk,
+                              "write in-memory sqlite database to disk")
+
+    def _try_save_temp_to_disk(self):
+        try:
+            self._change_path(self.path)
+        except StandardError, e:
+            logging.warn("_try_save_temp_to_disk failed: %s (path: %s)", e,
+                         self.path)
+            eventloop.add_timeout(300,
+                                  self._try_save_temp_to_disk,
+                                  "write in-memory sqlite database to disk")
+        else:
+            logging.warn("Sucessfully wrote database to %s.  Changes "
+                         "will now be saved as normal.", self.path)
+
+    def _change_path(self, new_path):
+        """Change the path of our database.
+
+        This method copies the entire current database to new_path, then opens
+        a connection to it.
+        """
+        self.finish_transaction()
+        # add the database at new_path to our current connection
+        self._ensure_database_directory_exists(new_path)
+        self.cursor.execute("ATTACH ? as newdb", (new_path,))
+        # copy current schema
+        self.cursor.execute("SELECT name, sql FROM main.sqlite_master "
+                            "WHERE type='table'")
+        table_info = self.cursor.fetchall()
+        for table, sql in table_info:
+            sql = sql.replace("TABLE %s" % table,
+                              "TABLE newdb.%s" % table)
+            self.cursor.execute(sql)
+            self.cursor.execute("SELECT name, sql FROM sqlite_master "
+                                "WHERE type='index' AND tbl_name=?",
+                                (table,))
+            for index, sql in self.cursor.fetchall():
+                if index.startswith('sqlite_autoindex'):
+                    continue
+                sql = sql.replace("INDEX %s" % index,
+                                  "INDEX newdb.%s" % index)
+                self.cursor.execute(sql)
+        # preallocate space now.  We want to fail fast if the disk is full
+        if self.preallocate:
+            self._preallocate_space(db_name='newdb')
+
+        # copy data
+        for table, sql in table_info:
+            self.cursor.execute("INSERT INTO newdb.%s SELECT * FROM main.%s" %
+                                (table, table))
+
+        # Looks like everything worked.  Change to using a connection to the
+        # new database
+        self.path = new_path
+        self.connection.close()
+        self.open_connection()
 
     def integrity_check(self):
         """Run an integrity check on our database and fix any issues """
@@ -419,10 +533,13 @@ class LiveStorage:
 
         # the unittests run in memory and vacuum causes a segfault if
         # the db is in memory.
-        if self.path != ":memory:" and self.connection and self.cursor:
+        if (self.path != ":memory:" and
+            self.preallocate is None and
+            self.connection and
+            self.cursor):
             logging.info("Vacuuming the db before shutting down.")
             try:
-                self.cursor.execute("vacuum")
+                self.cursor.execute("VACUUM")
             except sqlite3.DatabaseError, sdbe:
                 if ignore_vacuum_error:
                     msg = "... Vacuuming failed with DatabaseError: %s"
@@ -483,8 +600,12 @@ class LiveStorage:
             report = crashreport.format_crash_report("Upgrading Database",
                     exc_info=sys.exc_info(), details=None)
             raise UpgradeErrorSendCrashReport(report)
-        else:
+        elif action == LiveStorageErrorHandler.ACTION_QUIT:
             raise UpgradeError()
+        else:
+            logging.warn("Bad return value for handle_upgrade_error: %s",
+                         action)
+            raise
 
     def _change_database_file(self, ver):
         """Switches the sqlitedb file that we have open
@@ -586,12 +707,13 @@ class LiveStorage:
             raise KeyError(name)
         return cPickle.loads(str(row[0]))
 
-    def set_variable(self, name, value):
+    def set_variable(self, name, value, db_name='main'):
         # we only store one variable and it's easier to deal with if we store
         # it using ASCII-base protocol.
         db_value = buffer(cPickle.dumps(value, 0))
-        self.cursor.execute("REPLACE INTO dtv_variables "
-                "(name, serialized_value) VALUES (?,?)", (name, db_value))
+        self.cursor.execute("REPLACE INTO %s.dtv_variables "
+                            "(name, serialized_value) VALUES (?,?)" % db_name,
+                            (name, db_value))
 
     def _create_variables_table(self):
         self.cursor.execute("""CREATE TABLE dtv_variables(
@@ -1005,8 +1127,11 @@ class LiveStorage:
         if action == LiveStorageErrorHandler.ACTION_QUIT:
             self._quitting_from_operational_error = True
             messages.FrontendQuit().send_to_frontend()
-        else:
+        elif action == LiveStorageErrorHandler.ACTION_RETRY:
             logging.warn("Re-running SQL statement")
+        else:
+            logging.warn("Bad return value for handle_save_error: %s", action)
+            raise
 
     def _check_time(self, sql, query_time):
         SINGLE_QUERY_LIMIT = 0.5
@@ -1047,17 +1172,48 @@ class LiveStorage:
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
         self._set_version()
-        self.created_new = True
+
+    def _get_size_info(self):
+        """Get info about the database size
+
+        returns the tuple (page_size, page_count, freelist_count)
+        """
+        rv = []
+        for name in ('page_size', 'page_count', 'freelist_count'):
+            self.cursor.execute('PRAGMA %s' % name)
+            rv.append(self.cursor.fetchone()[0])
+        return rv
+
+    def _preallocate_space(self, db_name='main'):
+        if db_name == 'main':
+            page_size, page_count, freelist_count = self._get_size_info()
+            current_size = page_size * (page_count + freelist_count)
+        else:
+            # HACK: We can't get size counts for attached databases so we just
+            # assume that the database is empty of content
+            current_size = 0
+        size = self.preallocate - current_size
+        if size > 0:
+            # make a row that's big enough so that our database will be
+            # approximately preallocate bytes large
+            self.cursor.execute("REPLACE INTO %s.dtv_variables "
+                                "(name, serialized_value) "
+                                "VALUES ('preallocate', zeroblob(%s))" %
+                                (db_name, size))
+            # delete the row, sqlite will keep the space allocate until the
+            # VACUUM command.  And we won't ever send a VACUUM.
+            self.cursor.execute("DELETE FROM %s.dtv_variables "
+                                "WHERE name='preallocate'" % (db_name,))
 
     def _get_version(self):
         return self.get_variable(VERSION_KEY)
 
-    def _set_version(self, version=None):
+    def _set_version(self, version=None, db_name='main'):
         """Set the database version to the current schema version."""
 
         if version is None:
             version = self._schema_version
-        self.set_variable(VERSION_KEY, version)
+        self.set_variable(VERSION_KEY, version, db_name)
 
     def _calc_sqlite_types(self, object_schema):
         """What datatype should we use for the attributes of an object schema?
@@ -1079,7 +1235,7 @@ class LiveStorage:
         self.connection.close()
         self.save_invalid_db()
         self.open_connection()
-        self._init_database()
+        self.created_new = True
 
     def _handle_load_error(self, message):
         """Handle errors happening when we try to load the database.  Our
