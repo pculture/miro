@@ -1042,8 +1042,8 @@ class FFMpegConversionTask(ConversionTask):
         default_parameters = build_parameters(
             self.input_path, self.temp_output_path, self.converter_info, media_info)
         # insert -strict experimental
-        default_parameters.insert(0, 'experimental')
-        default_parameters.insert(0, '-strict')
+        default_parameters.insert(-1, 'experimental')
+        default_parameters.insert(-2, '-strict')
         return utils.customize_ffmpeg_parameters(default_parameters)
 
     def check_for_errors(self, line):
