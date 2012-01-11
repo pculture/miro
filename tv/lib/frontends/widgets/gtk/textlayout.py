@@ -85,7 +85,9 @@ class TextLayout(object):
 
     def line_height(self):
         metrics = self.get_font_metrics()
-        return pango.PIXELS(metrics.get_ascent() + metrics.get_descent())
+        # add 1px to the ascent/descent to include space for the baseline
+        # (see #17539)
+        return pango.PIXELS(metrics.get_ascent() + metrics.get_descent()) + 1
 
     def set_width(self, width):
         if width is not None:
