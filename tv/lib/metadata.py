@@ -139,7 +139,8 @@ class MetadataStatus(database.DDBObject):
                           '(SELECT status_id FROM metadata WHERE '
                           'album=? AND priority='
                           '(SELECT MAX(priority) FROM metadata '
-                          'WHERE status_id=status_id AND album IS NOT NULL))',
+                          'WHERE status_id=status_id AND '
+                          'NOT disabled AND album IS NOT NULL))',
                           (album,), db_info=db_info)
         return [r[0] for r in rows]
 
