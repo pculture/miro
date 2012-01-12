@@ -452,11 +452,15 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._look_for_downloader()
         self.setup_common()
         self.split_item()
-        Item._path_count_tracker.add_item(self)
 
     def setup_restored(self):
         self.setup_common()
         self.setup_links()
+        if (self.filename is not None and
+            not app.local_metadata_manager.path_in_system(self.filename)):
+            logging.warn("Path for item not in MetadataManager (%s).  "
+                         "Adding it now." % (self.filename))
+            app.local_metadata_manager.add_file(self.filename)
 
     def setup_common(self):
         self.selected = False
@@ -464,6 +468,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expiring = None
         self.showMoreInfo = False
         self.playing = False
+        Item._path_count_tracker.add_item(self)
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
