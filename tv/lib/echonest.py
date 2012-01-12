@@ -291,6 +291,7 @@ class _EchonestQuery(object):
         # we don't care about the data sent back, since grab_url wrote our
         # file for us
         self.metadata['cover_art_path'] = self.grab_url_dest
+        self.metadata['created_cover_art'] = True
         self.invoke_callback()
 
     def cover_art_errback(self, error):

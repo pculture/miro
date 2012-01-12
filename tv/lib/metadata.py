@@ -132,6 +132,17 @@ class MetadataStatus(database.DDBObject):
                                  db_info=db_info)
             return view.get_singleton()
 
+    @classmethod
+    def paths_for_album(cls, album, db_info=None):
+        rows = cls.select(['path',],
+                          'id IN '
+                          '(SELECT status_id FROM metadata WHERE '
+                          'album=? AND priority='
+                          '(SELECT MAX(priority) FROM metadata '
+                          'WHERE status_id=status_id AND album IS NOT NULL))',
+                          (album,), db_info=db_info)
+        return [r[0] for r in rows]
+
     def setup_restored(self):
         self.db_info.db.cache.set('metadata', self.path, self)
 
@@ -305,7 +316,6 @@ class MetadataEntry(database.DDBObject):
                              (status.id,),
                              order_by='priority ASC',
                              db_info=db_info)
-
     @classmethod
     def get_entry(cls, source, status, db_info=None):
         view = cls.make_view('source=? AND status_id=?',
@@ -1124,6 +1134,8 @@ class MetadataManager(signals.SignalEmitter):
         self.metadata_finished = []
 
     def _make_new_metadata_entry(self, status, processor, path, result):
+        # pop off created_cover_art, that's for us not the MetadataEntry
+        created_cover_art = result.pop('created_cover_art', False)
         entry = MetadataEntry(status, processor.source_name, result,
                               db_info=self.db_info)
         if entry.priority >= status.max_entry_priority:
@@ -1138,6 +1150,12 @@ class MetadataManager(signals.SignalEmitter):
             self.new_metadata[path].update(result)
         else:
             self.new_metadata[path] = self.get_metadata(path)
+        # add cover-art-path for other items in the same album
+        if created_cover_art and 'album' in self.new_metadata[path]:
+            album = self.new_metadata[path]['album']
+            cover_art_path = self.new_metadata[path]['cover_art_path']
+            for path in MetadataStatus.paths_for_album(album, self.db_info):
+                self.new_metadata[path]['cover_art_path'] = cover_art_path
 
     def _process_metadata_errors(self):
         for (processor, path) in self.metadata_errors:

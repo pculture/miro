@@ -47,6 +47,7 @@ class FileTagsTest(MiroTestCase):
             # cover art should be stored using the album name as its file
             correct_path = path.join(self.tempdir, results['album'])
             self.assertEquals(results.pop('cover_art_path'), correct_path)
+            self.assertEquals(results.pop('created_cover_art'), True)
         else:
             self.assert_('cover_art_path' not in results)
         # for the rest, we just compare the dicts

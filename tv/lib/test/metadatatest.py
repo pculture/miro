@@ -178,6 +178,10 @@ class MetadataManagerTest(MiroTestCase):
             cover_art_path = self.cover_art_for_album(metadata['album'])
             if cover_art_path:
                 metadata['cover_art_path'] = cover_art_path
+        # created_cover_art is used by MetadataManager, but it's not saved to
+        # the metadata table
+        if 'created_cover_art' in metadata:
+            del metadata['created_cover_art']
         return metadata
 
     def check_set_net_lookup_enabled(self, filename, enabled):
@@ -269,9 +273,12 @@ class MetadataManagerTest(MiroTestCase):
             mutagen_data['album'] = unicode(album)
         mutagen_data['drm'] = drm
         if cover_art and album is not None:
-            mutagen_data['cover_art_path'] = self.cover_art_path(album)
-            # simulate read_metadata() writing the mutagen_data file
-            open(mutagen_data['cover_art_path'], 'wb').write("FAKE FILE")
+            cover_art_path = self.cover_art_path(album)
+            mutagen_data['cover_art_path'] = cover_art_path
+            if not os.path.exists(cover_art_path):
+                # simulate read_metadata() writing the mutagen_data file
+                open(cover_art_path, 'wb').write("FAKE FILE")
+                mutagen_data['created_cover_art'] = True
         self.mutagen_data[path] = mutagen_data
         self.processor.run_mutagen_callback(path, mutagen_data)
         self.check_metadata(path)
@@ -383,9 +390,12 @@ class MetadataManagerTest(MiroTestCase):
             echonest_data['artist'] = unicode(artist)
         if album is not None:
             echonest_data['album'] = unicode(album)
-            echonest_data['cover_art_path'] = self.cover_art_path(album, True)
+            cover_art_path = self.cover_art_path(album, True)
+            echonest_data['cover_art_path'] = cover_art_path
             # simulate grab_url() writing the mutagen_data file
-            open(echonest_data['cover_art_path'], 'wb').write("FAKE FILE")
+            if not os.path.exists(cover_art_path):
+                open(cover_art_path, 'wb').write("FAKE FILE")
+                echonest_data['created_cover_art'] = True
         self.echonest_data[path] = echonest_data
         self.processor.run_echonest_callback(path, echonest_data)
         self.check_metadata(path)
@@ -611,6 +621,61 @@ class MetadataManagerTest(MiroTestCase):
         self.assertEquals(self.get_metadata('foo2.avi')['has_drm'], False)
         self.check_run_movie_data('foo2.avi', 'audio', 100, True)
         self.assertEquals(self.get_metadata('foo2.avi')['has_drm'], False)
+
+    def test_cover_art_and_new_metadata(self):
+        # Test that when we get cover art for one item, we update it for all
+        # items for that album
+        self.check_add_file('foo.mp3')
+        self.check_add_file('foo-2.mp3')
+        self.check_add_file('foo-3.mp3')
+        self.check_add_file('foo-4.mp3')
+        self.check_add_file('foo-5.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights',
+                               cover_art=False)
+        self.check_run_mutagen('foo-2.mp3', 'audio', 200, 'Bar', 'Fights',
+                               cover_art=False)
+        self.check_run_mutagen('foo-3.mp3', 'audio', 200, 'Bar',
+                               'DifferentAlbum', cover_art=False)
+        # send new-metadata for all of the current changes
+        self.metadata_manager._run_updates()
+        # set up a signal handle to handle the next new-metadata signal
+        signal_handler = mock.Mock()
+        self.metadata_manager.connect("new-metadata", signal_handler)
+        # Simulate mutagen getting cover art.  We should send new-metadata for
+        # all items in the album
+        self.check_run_mutagen('foo-4.mp3', 'audio', 200, 'Bar', 'Fights',
+                               cover_art=True)
+
+        # make our metadata manager send the new-metadata signal and check the
+        # result
+        self.metadata_manager._run_updates()
+        self.assertEquals(signal_handler.call_count, 1)
+        args = signal_handler.call_args[0]
+        self.assertEquals(args[0], self.metadata_manager)
+        new_metadata = args[1]
+        self.assertSameSet(new_metadata.keys(), [
+            self.make_path('foo.mp3'),
+            self.make_path('foo-2.mp3'),
+            self.make_path('foo-4.mp3'),
+        ])
+        for filename in ('foo.mp3', 'foo-2.mp3'):
+            cover_art_path = self.cover_art_for_album('Fights')
+            self.assertEquals(new_metadata[self.make_path(filename)], {
+                'cover_art_path': cover_art_path,
+            })
+        # test that if we get more cover art for the same file, we don't
+        # re-update the other items
+        signal_handler.reset_mock()
+        self.check_run_mutagen('foo-5.mp3', 'audio', 200, 'Bar', 'Fights',
+                               cover_art=True)
+        self.metadata_manager._run_updates()
+        self.assertEquals(signal_handler.call_count, 1)
+        args = signal_handler.call_args[0]
+        self.assertEquals(args[0], self.metadata_manager)
+        new_metadata = args[1]
+        self.assertSameSet(new_metadata.keys(), [
+            self.make_path('foo-5.mp3'),
+        ])
 
     def test_restart_incomplete(self):
         # Test restarting incomplete 
@@ -1399,6 +1464,7 @@ class TestEchonestQueries(MiroTestCase):
             self.reply_metadata['album'] = 'Bossanova'
             self.reply_metadata['cover_art_path'] = os.path.join(
                 self.album_art_dir, 'Bossanova')
+            self.reply_metadata['created_cover_art'] = True
             self.album_art_url = (
                 'http://cdn.7static.com/static/img/sleeveart/'
                 '00/001/898/0000189844_350.jpg')
@@ -1473,6 +1539,7 @@ class TestEchonestQueries(MiroTestCase):
         # we shouldn't have cover_art_path in the reply, since the request
         # failed
         del self.reply_metadata['cover_art_path']
+        del self.reply_metadata['created_cover_art']
         self.check_callback()
 
     def test_not_found(self):
@@ -1546,6 +1613,7 @@ class TestEchonestQueries(MiroTestCase):
         # we shouldn't call grab_URL
         self.check_grab_url_not_called()
         self.reply_metadata = old_metadata
+        del self.reply_metadata['created_cover_art']
         self.check_callback()
 
     def test_avoid_redownloading_album_art(self):
@@ -1560,6 +1628,7 @@ class TestEchonestQueries(MiroTestCase):
         # we shouldn't try to download the album art, since that file is
         # already there
         self.check_grab_url_not_called()
+        del self.reply_metadata['created_cover_art']
         self.check_callback()
 
     def test_query_encoding(self):

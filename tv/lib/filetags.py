@@ -194,11 +194,12 @@ def _track_from_filename(full_path):
 def _make_cover_art_file(album_name, objects, cover_art_directory):
     """Given an iterable of mutagen cover art objects, returns the path to a
     newly-created file created from one of the objects. If given more than one
-    object, uses the one most likely to be cover art. If none of the objects are
-    usable, returns None.
+    object, uses the one most likely to be cover art.
+
+    :returns: tuple (path, newly_created) or None if we didn't create a path
     """
     if album_name is None:
-        return
+        return None
     if cover_art_directory is None:
         cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
     # quote the album so that the filename doesn't have any illegal characters
@@ -207,7 +208,7 @@ def _make_cover_art_file(album_name, objects, cover_art_directory):
     path = os.path.join(cover_art_directory, dest_filename)
     if os.path.exists(path):
         # already made cover art, no need to make it again
-        return path
+        return path, False
     if not isinstance(objects, list):
         objects = [objects]
 
@@ -221,7 +222,7 @@ def _make_cover_art_file(album_name, objects, cover_art_directory):
         else:
             images.append(image)
     if not images:
-        return
+        return None
 
     cover_image = None
     for candidate in images:
@@ -237,7 +238,7 @@ def _make_cover_art_file(album_name, objects, cover_art_directory):
     except IOError:
         logging.warn("Couldn't write cover art file: {0}".format(path))
         return None
-    return path
+    return path, True
 
 MUTAGEN_ERRORS = None
 def _setup_mutagen_errors():
@@ -365,16 +366,16 @@ def _parse_mutagen(filename, muta, cover_art_directory):
         if guessed_track:
             data['track'] = guessed_track
 
-    cover_art_path = None
+    cover_art_info = None
     if hasattr(muta, 'pictures'):
         image_data = muta.pictures
-        cover_art_path = _make_cover_art_file(data.get('album'), image_data,
+        cover_art_info = _make_cover_art_file(data.get('album'), image_data,
                                               cover_art_directory)
     elif 'cover_art' in data:
         image_data = data['cover_art']
-        cover_art_path = _make_cover_art_file(data.get('album'), image_data,
+        cover_art_info = _make_cover_art_file(data.get('album'), image_data,
                                               cover_art_directory)
         del data['cover_art']
-    if cover_art_path is not None:
-        data['cover_art_path'] = cover_art_path
+    if cover_art_info is not None:
+        data['cover_art_path'], data['created_cover_art'] = cover_art_info
     return data
