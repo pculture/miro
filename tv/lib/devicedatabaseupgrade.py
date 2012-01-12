@@ -36,24 +36,30 @@ import shutil
 from miro import app
 from miro import databaseupgrade
 from miro import prefs
+from miro import storedatabase
 
-def upgrade(live_storage, json_db, mount):
-    """Upgrade from a pre-sqlite database to an sqlite one.
+def import_from_json(live_storage, json_db, mount):
+    """Import data from a JSON DB for a newly created sqlite DB
 
-    This method basically does upgrades 166 through 171
+    This method basically does upgrades 166 through 172
+
+    How to handle upgrades after this?  Who knows.  We're just worrying about
+    making version 5.0 work at this point.
     """
     live_storage.cursor.execute("BEGIN TRANSACTION")
     try:
-        do_upgrade(live_storage.cursor, json_db, mount)
+        _do_import(live_storage.cursor, json_db, mount)
     except StandardError, e:
-        live_storage.error_handler.handle_upgrade_error()
-        # NOTE: we ignore the return value of handle_upgrade_error() because
-        # it always returns ACTION_START_FRESH
+        action = live_storage.error_handler.handle_upgrade_error()
+        # Our error handle should always return ACTION_START_FRESH
+        if action != storedatabase.LiveStorageErrorHandler.ACTION_START_FRESH:
+            logging.warn("Unexpected return value from the error handler for "
+                         "a device database: %s" % action)
         handle_failed_upgrade(live_storage.cursor, json_db)
     finally:
         live_storage.cursor.execute("COMMIT TRANSACTION")
 
-def do_upgrade(cursor, json_db, mount):
+def _do_import(cursor, json_db, mount):
     # FIXME: this code is tied to the 4.5 release and may not work for future
     # versions
 

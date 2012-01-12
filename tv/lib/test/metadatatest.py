@@ -194,7 +194,7 @@ class MetadataManagerTest(MiroTestCase):
                 metadata['album'] == album_name):
                 if (mutagen_cover_art_path is not None and
                     metadata['cover_art_path'] != mutagen_cover_art_path):
-                    raise AssertionError("Different mutagen cover_part_paths "
+                    raise AssertionError("Different mutagen cover_art_path "
                                          "for " + album_name)
                 mutagen_cover_art_path = metadata['cover_art_path']
         for metadata in self.echonest_data.values():
@@ -202,7 +202,7 @@ class MetadataManagerTest(MiroTestCase):
                 metadata['album'] == album_name):
                 if (echonest_cover_art_path is not None and
                     metadata['cover_art_path'] != echonest_cover_art_path):
-                    raise AssertionError("Different mutagen cover_part_paths "
+                    raise AssertionError("Different mutagen cover_art_path "
                                          "for " + album_name)
                 echonest_cover_art_path = metadata['cover_art_path']
         if echonest_cover_art_path:

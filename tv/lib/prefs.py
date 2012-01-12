@@ -195,7 +195,7 @@ TRANSLATE_URL     = Pref(key='TranslateURL', default=u"http://develop.participat
 PLANET_URL        = Pref(key='PlanetURL', default=u"http://planet.getmiro.com/",
                          platformSpecific=False)
 # TODO: should be set to False by default
-NET_LOOKUP_BY_DEFAULT  = Pref(key='UseInternetLookupForNew', default=True,
+NET_LOOKUP_BY_DEFAULT  = Pref(key='UseInternetLookupForNew', default=False,
                               platformSpecific=False)
 
 # These can be safely ignored on platforms without minimize to tray

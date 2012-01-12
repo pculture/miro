@@ -1324,7 +1324,7 @@ def load_sqlite_database(mount, json_db, device_size):
                                              preallocate=preallocate,
                                              object_schemas=object_schemas)
     if not json_db.created_new and live_storage.created_new:
-        devicedatabaseupgrade.upgrade(live_storage, json_db, mount)
+        devicedatabaseupgrade.import_from_json(live_storage, json_db, mount)
     return live_storage
 
 def calc_sqlite_preallocate_size(device_size):

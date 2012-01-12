@@ -3614,10 +3614,10 @@ def upgrade167(cursor):
     # Move all current cover art so that it's in at the path
     # <support-dir>/cover-art/<album-name>
     already_moved = set()
-    cursor.execute("SELECT album, cover_art_path from metadata "
+    cursor.execute("SELECT path, album, cover_art_path from metadata "
                    "WHERE cover_art_path IS NOT NULL AND "
                       "album IS NOT NULL")
-    for (album, cover_art_path) in cursor.fetchall():
+    for (path, album, cover_art_path) in cursor.fetchall():
         if album in already_moved:
             try:
                 os.remove(cover_art_path)
@@ -3632,6 +3632,14 @@ def upgrade167(cursor):
         except StandardError:
             logging.warn("upgrade167: Error moving %s -> %s", cover_art_path,
                          dest_path)
+            # update item table
+            cursor.execute("UPDATE item SET cover_art_path=NULL "
+                           "WHERE filename=?", (path,))
+        else:
+            # update item table
+            cursor.execute("UPDATE item SET cover_art_path=? "
+                           "WHERE filename=?", (dest_path, path))
+
         already_moved.add(album)
 
     # Now that the cover art is in the correct place, we don't need to store
@@ -3645,9 +3653,19 @@ def upgrade168(cursor):
                    "ADD COLUMN echonest_status text")
     cursor.execute("ALTER TABLE metadata_status "
                    "ADD COLUMN echonest_id text")
-    # set echonest_status to STATUS_NOT_RUN
-    cursor.execute("UPDATE metadata_status "
-                   "SET echonest_status='N'")
+    # set echonest_status to STATUS_NOT_RUN for audio items and STATUS_SKIPPED
+    # for other items
+    cursor.execute("SELECT filename, file_type FROM item "
+                   "WHERE filename IS NOT NULL")
+    for filename, file_type in cursor.fetchall():
+        if file_type == u'audio':
+            cursor.execute("UPDATE metadata_status "
+                           "SET echonest_status='N' "
+                           "WHERE path=?", (filename,))
+        else:
+            cursor.execute("UPDATE metadata_status "
+                           "SET echonest_status='S' "
+                           "WHERE path=?", (filename,))
 
 def upgrade169(cursor):
     """Add disabled to metadata."""
