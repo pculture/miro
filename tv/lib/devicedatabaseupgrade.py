@@ -192,11 +192,15 @@ def upgrade_cover_art(device_item, cover_art_dir):
                                  safe=' ,.')
     dest_path = os.path.join(cover_art_dir, dest_filename)
     if not os.path.exists(dest_path):
+        if not os.path.exists(cover_art_path):
+            logging.warn("upgrade_cover_art: Error moving cover art, "
+                         "source path doesn't exist: %s", cover_art_path)
+            return
         try:
             shutil.move(cover_art_path, dest_path)
         except StandardError:
-            logging.warn("upgrade167: Error moving %s -> %s", cover_art_path,
-                         dest_path)
+            logging.warn("upgrade_cover_art: Error moving %s -> %s", 
+                         cover_art_path, dest_path)
 
 def handle_failed_upgrade(cursor, json_db):
     # make a metadata_status row for each item in the database as if they were

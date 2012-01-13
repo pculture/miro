@@ -3627,6 +3627,10 @@ def upgrade167(cursor):
         # filetags.calc_cover_art_filename()
         dest_filename = urllib.quote(album.encode('utf-8'), safe=' ,.')
         dest_path = os.path.join(cover_art_dir, dest_filename)
+        if not os.path.exists(cover_art_path):
+            logging.warn("upgrade167: Error moving cover art.  Source path "
+                         "doesn't exist: %s", cover_art_path)
+            continue
         try:
             shutil.move(cover_art_path, dest_path)
         except StandardError:
@@ -3640,7 +3644,7 @@ def upgrade167(cursor):
             cursor.execute("UPDATE item SET cover_art_path=? "
                            "WHERE filename=?", (dest_path, path))
 
-        already_moved.add(album)
+            already_moved.add(album)
 
     # Now that the cover art is in the correct place, we don't need to store
     # it in the database anymore.
