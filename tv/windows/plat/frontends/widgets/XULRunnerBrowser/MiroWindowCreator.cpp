@@ -34,10 +34,18 @@
 #include "xulrunnerbrowser.h"
 #include "nsIWebBrowserChrome.h"
 #include "nsIWindowWatcher.h"
+#include "nsIInterfaceRequestorUtils.h"
+#include "nsIXULWindow.h"
+#include "nsAppShellCID.h"
+#include "nsWidgetsCID.h"
+#include "nsIAppShellService.h"
+#include "nsIAppShell.h"
 #include "nsIURI.h"
 #include "nsServiceManagerUtils.h"
 
 NS_IMPL_ISUPPORTS2(MiroWindowCreator, nsIWindowCreator, nsIWindowCreator2)
+
+NS_DEFINE_CID(kAppShellCID, NS_APPSHELL_CID);
 
 MiroWindowCreator::MiroWindowCreator()
 {
@@ -82,6 +90,8 @@ NS_IMETHODIMP MiroWindowCreator::CreateChromeWindow2(
 {
     nsCAutoString specString;
     if((chromeFlags & nsIWebBrowserChrome::CHROME_OPENAS_CHROME) == 0) {
+      *cancel = PR_TRUE;
+      *_retval = nsnull;
         if(uri) {
             uri->GetSpec(specString);
             if(mWindowCallback) {
@@ -90,9 +100,25 @@ NS_IMETHODIMP MiroWindowCreator::CreateChromeWindow2(
         } else {
             log_warning("Trying to open window with no URI");
         }
+    } else {
+      nsCOMPtr <nsIAppShellService> appShellService(do_GetService(NS_APPSHELLSERVICE_CONTRACTID));
+      if (!appShellService) {
+	return NS_ERROR_FAILURE;
+      }
+      nsCOMPtr <nsIXULWindow> newWindow;
+      nsCOMPtr <nsIAppShell> appShell(do_GetService(kAppShellCID));
+      appShellService->CreateTopLevelWindow(0, 0, chromeFlags,
+					    nsIAppShellService::SIZE_TO_CONTENT,
+					    nsIAppShellService::SIZE_TO_CONTENT,
+					    appShell, getter_AddRefs(newWindow));
+      if (newWindow) {
+	newWindow->SetContextFlags(contextFlags);
+	nsCOMPtr<nsIInterfaceRequestor> thing(do_QueryInterface(newWindow));
+	if (thing) {
+	  CallGetInterface(thing.get(), _retval);
+	}
+      }
     }
 
-    *cancel = PR_TRUE;
-    *_retval = nsnull;
     return NS_OK;
 }
