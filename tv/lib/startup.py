@@ -298,6 +298,7 @@ def finish_startup(obj, thread):
         util.db_mem_usage_test()
         mem_usage_test_event.set()
 
+    item.setup_metadata_manager()
     app.item_info_cache = iteminfocache.ItemInfoCache()
     app.item_info_cache.load()
     dbupgradeprogress.upgrade_end()
@@ -320,8 +321,6 @@ def finish_startup(obj, thread):
 
     app.download_state_manager = downloader.DownloadStateManager()
     app.download_state_manager.init_controller()
-
-    item.setup_metadata_manager()
 
     # Call this late, after the message handlers have been installed.
     app.sharing_tracker = sharing.SharingTracker()
