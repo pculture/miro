@@ -60,7 +60,7 @@ def import_from_json(live_storage, json_db, mount):
         live_storage.cursor.execute("COMMIT TRANSACTION")
 
 def _do_import(cursor, json_db, mount):
-    # FIXME: this code is tied to the 4.5 release and may not work for future
+    # FIXME: this code is tied to the 5.0 release and may not work for future
     # versions
 
     cover_art_dir = os.path.join(mount, '.miro', 'cover-art')

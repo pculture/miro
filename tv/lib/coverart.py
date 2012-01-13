@@ -130,7 +130,7 @@ class Image(object):
     def write_to_file(self, path):
         """Creates a new file containing this image's data.
 
-        :raises IOError: error writing cover art file
+        :raises EnvironmentError: error writing cover art file
         """
         file_handle = fileutil.open_file(path, 'wb')
         file_handle.write(self.data) 

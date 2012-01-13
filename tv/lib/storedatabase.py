@@ -184,12 +184,9 @@ class DatabaseObjectCache(object):
 class LiveStorageErrorHandler(object):
     """Handle database errors for LiveStorage.
     """
-    ACTION_QUIT = 0
-    ACTION_SUBMIT_REPORT = 1
-    ACTION_START_FRESH = 2
-    ACTION_RETRY = 3
-    ACTION_USE_TEMPORARY = 4
-    ACTION_RERAISE = 5
+
+    ( ACTION_QUIT, ACTION_SUBMIT_REPORT, ACTION_START_FRESH, ACTION_RETRY,
+     ACTION_USE_TEMPORARY, ACTION_RERAISE, ) = range(6)
 
     def handle_load_error(self):
         """Handle an error loading the database.
@@ -556,8 +553,9 @@ class LiveStorage:
             return self.cursor.fetchall() == [
                 ('ok',),
             ]
-        except sqlite3.Error, e:
-            logging.warn("error running PRAGMA integrity_check: %s", e)
+        except sqlite3.Error:
+            logging.warn("error running PRAGMA integrity_check: %s",
+                         exc_info=True)
             return False
 
     def close(self, ignore_vacuum_error=True):

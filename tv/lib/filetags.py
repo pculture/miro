@@ -235,7 +235,7 @@ def _make_cover_art_file(album_name, objects, cover_art_directory):
 
     try:
         cover_image.write_to_file(path)
-    except IOError:
+    except EnvironmentError:
         logging.warn("Couldn't write cover art file: {0}".format(path))
         return None
     return path, True
