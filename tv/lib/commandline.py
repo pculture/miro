@@ -226,6 +226,7 @@ def parse_command_line_args(args):
               or arg.startswith('https:')
               or arg.startswith('feed:')
               or arg.startswith('feeds:')
+              or arg.startswith('miroit:')
               or is_magnet_uri(arg)):
             singleclick.add_download(filename_to_unicode(arg))
         elif os.path.exists(arg):
