@@ -358,6 +358,14 @@
 		</dict>
 		<dict>
 			<key>CFBundleURLName</key>
+			<string>Miro URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>miroit</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
 			<string>Democracy URL</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
