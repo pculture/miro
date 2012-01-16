@@ -1392,18 +1392,24 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.confirm_db_thread()
         if self.cover_art:
             path = self.cover_art
-            return resources.path(fileutil.expand_filename(path))
-        elif self.icon_cache is not None and self.icon_cache.is_valid():
+            path = resources.path(fileutil.expand_filename(path))
+            if fileutil.exists(path):
+                return path
+        if self.icon_cache is not None and self.icon_cache.is_valid():
+            # is_valid() verifies that the path exists
             path = self.icon_cache.get_filename()
             return resources.path(fileutil.expand_filename(path))
-        elif self.screenshot:
+        if self.screenshot:
             path = self.screenshot
-            return resources.path(fileutil.expand_filename(path))
-        elif self.isContainerItem:
+            path = resources.path(fileutil.expand_filename(path))
+            if fileutil.exists(path):
+                return path
+        if self.isContainerItem:
             return resources.path("images/thumb-default-folder.png")
         else:
             feed = self.get_feed()
             if feed.thumbnail_valid():
+                # thumbnail_valid() also verifies the path exists
                 return feed.get_thumbnail_path()
             elif (self.get_filename()
                   and filetypes.is_audio_filename(self.get_filename())):
@@ -2262,7 +2268,7 @@ filename was %s""", stringify(self.filename))
                     new_filename, fp = next_free_filename(new_filename)
                     fp.close() # clean up if we called next_free_filename()
             except ValueError:
-                func = 'next_free_directory' if isdir else 'next_free_filename'
+                func = 'next_free_directory' if is_dir else 'next_free_filename'
                 logging.warn('migrate_file: %s failed.  Filename %r '
                              'candidate %r', func, src, new_filename)
             else:
