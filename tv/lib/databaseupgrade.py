@@ -3657,19 +3657,10 @@ def upgrade168(cursor):
                    "ADD COLUMN echonest_status text")
     cursor.execute("ALTER TABLE metadata_status "
                    "ADD COLUMN echonest_id text")
-    # set echonest_status to STATUS_NOT_RUN for audio items and STATUS_SKIPPED
-    # for other items
-    cursor.execute("SELECT filename, file_type FROM item "
-                   "WHERE filename IS NOT NULL")
-    for filename, file_type in cursor.fetchall():
-        if file_type == u'audio':
-            cursor.execute("UPDATE metadata_status "
-                           "SET echonest_status='N' "
-                           "WHERE path=?", (filename,))
-        else:
-            cursor.execute("UPDATE metadata_status "
-                           "SET echonest_status='S' "
-                           "WHERE path=?", (filename,))
+    # Set status to SKIPPED since the user didn't opt-in to internet
+    # lookups
+    cursor.execute("UPDATE metadata_status "
+                   "SET echonest_status='S'")
 
 def upgrade169(cursor):
     """Add disabled to metadata."""
