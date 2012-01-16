@@ -506,8 +506,21 @@ class _EchonestProcessor(_MetadataProcessor):
 
     def add_path(self, path, current_metadata):
         self._metadata_for_path[path] = current_metadata
-        self._codegen_queue.add(path)
+        if not self.should_skip_codegen(current_metadata):
+            self._codegen_queue.add(path)
+        else:
+            self._echonest_queue.add((path, None))
         self._process_queue()
+
+    def should_skip_codegen(self, metadata):
+        """Determine if a file can skip the code generator.
+
+        This is true when we have enough metadata to send to echonest.
+        """
+        # This check is actually pretty easy.  If we have a title, then
+        # there's a good chance for a match.  If we don't then there's no
+        # chance.
+        return 'title' in metadata
 
     def _run_codegen(self, path):
         echonest.exec_codegen(self._codegen_info, path, self._codegen_callback,

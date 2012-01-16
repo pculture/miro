@@ -86,6 +86,7 @@ def exec_codegen(codegen_info, media_path, callback, errback):
     def thread_errback(error):
         errback(media_path, error)
 
+    logging.debug("Invoking echonest codegen on %s", media_path)
     eventloop.call_in_thread(thread_callback, thread_errback, thread_function,
                              'exec echonest codegen')
 
@@ -127,7 +128,11 @@ class _EchonestQuery(object):
         self.seven_digital_results = []
         self.callback = callback
         self.errback = errback
-        self.query_echonest(code, version, metadata)
+        self.code = code
+        if code is not None:
+            self.query_echonest_with_code(code, version, metadata)
+        else:
+            self.query_echonest_with_tags(metadata)
 
     def invoke_callback(self):
         trapcall.trap_call('query_echonest callback', self.callback,
@@ -137,7 +142,7 @@ class _EchonestQuery(object):
         trapcall.trap_call('query_echonest errback', self.errback,
                            self.path, error)
 
-    def query_echonest(self, code, version, metadata):
+    def query_echonest_with_code(self, code, version, metadata):
         post_vars = {
             'api_key': ECHO_NEST_API_KEY,
             'bucket': ['tracks', 'id:7digital'],
@@ -147,6 +152,20 @@ class _EchonestQuery(object):
         httpclient.grab_url(url,
                             self.echonest_callback, self.echonest_errback,
                             post_vars=post_vars)
+
+    def query_echonest_with_tags(self, metadata):
+        url_data = [
+            ('api_key', ECHO_NEST_API_KEY),
+            ('bucket', 'tracks'),
+            ('bucket', 'id:7digital'),
+        ]
+        for key in ('title', 'artist'):
+            if key in metadata:
+                url_data.append((key, metadata[key]))
+        url = ('http://developer.echonest.com/api/v4/song/search?' +
+                urllib.urlencode(url_data))
+        httpclient.grab_url(url, self.echonest_callback,
+                            self.echonest_errback)
 
     def _make_echonest_query(self, code, version, metadata):
         echonest_metadata = {'version': version}
@@ -178,10 +197,15 @@ class _EchonestQuery(object):
         # TODO: check status code
         songs = response['songs']
         if len(songs) != 1:
-            if len(songs) == 0:
-                logging.warn("Echonest code matched no songs")
+            if self.code is not None:
+                query_type = "Echonest code"
             else:
-                logging.warn("Echonest code matched multiple songs")
+                query_type = "Metadata to echonest"
+            if len(songs) == 0:
+                logging.warn("%s matched no songs", query_type)
+            else:
+                logging.warn("%s Echonest code matched multiple songs",
+                             query_type)
             # What can we do here?  Just return an empty metadata dict to our
             # callback
             self.invoke_callback()

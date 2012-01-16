@@ -432,13 +432,23 @@ class MetadataManagerTest(MiroTestCase):
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
+        self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
+
+    def test_audio_without_tags(self):
+        # Test audio files without any metadata for echonest
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, None, None)
+        self.check_movie_data_not_scheduled('foo.mp3')
+        # Since there wasn't any metadata to send echonest, we should have
+        # scheduled running the codegen
         self.check_run_echonest_codegen('foo.mp3')
+        # After we run the codegen, we should run an echonest_query
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
 
     def test_echonest_codegen_error(self):
         # Test audio files that echonest_codegen bails on
         self.check_add_file('foo.mp3')
-        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, None)
         self.check_movie_data_not_scheduled('foo.mp3')
         self.check_echonest_codegen_error('foo.mp3')
 
@@ -457,7 +467,6 @@ class MetadataManagerTest(MiroTestCase):
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
-        self.check_run_echonest_codegen('foo.mp3')
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
         self.check_set_net_lookup_enabled('foo.mp3', False)
         self.check_set_net_lookup_enabled('foo.mp3', True)
@@ -488,14 +497,12 @@ class MetadataManagerTest(MiroTestCase):
         self.check_echonest_not_scheduled('foo.mp3')
         # test that it starts running if we set the value to true
         self.check_set_net_lookup_enabled('foo.mp3', True)
-        self.check_run_echonest_codegen('foo.mp3')
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights2')
 
     def test_net_lookup_enabled_signals(self):
         # test that we don't run the echonest processor if if it's not enabled
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
-        self.check_run_echonest_codegen('foo.mp3')
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights2')
         # test that we get the new-metadata signal when we set/unset the
         # set_lookup_enabled flag
@@ -531,7 +538,6 @@ class MetadataManagerTest(MiroTestCase):
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
-        self.check_run_echonest_codegen('foo.mp3')
         self.check_echonest_error('foo.mp3')
 
     def test_audio_shares_cover_art(self):
@@ -552,7 +558,6 @@ class MetadataManagerTest(MiroTestCase):
         # Because mutagen failed to get the duration, we should have a movie
         # data call scheduled
         self.check_run_movie_data('foo.mp3', 'audio', 100, False)
-        self.check_run_echonest_codegen('foo.mp3')
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
 
     def test_audio_no_duration2(self):
@@ -683,7 +688,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_mutagen('foo.avi', 'video', 100, 'Foo')
         self.check_add_file('bar.avi')
         self.check_add_file('baz.mp3')
-        self.check_run_mutagen('baz.mp3', 'audio', 100, 'Foo', 'Fighters')
+        self.check_run_mutagen('baz.mp3', 'audio', 100, None)
         self.check_add_file('qux.avi')
         self.check_run_mutagen('qux.avi', 'video', 100, 'Foo')
         self.check_run_movie_data('qux.avi', 'video', 100, True)
@@ -708,9 +713,11 @@ class MetadataManagerTest(MiroTestCase):
         self.check_queued_mutagen_calls(['bar.avi'])
         self.check_queued_echonest_codegen_calls(['baz.mp3'])
         # Theck that when things finish, we get other incomplete metadata
-        self.check_run_mutagen('bar.avi', 'audio', None, 'Foo')
+        self.check_run_mutagen('bar.avi', 'audio', None, None)
+        # None for both duration and title will cause bar.avi to go through
+        # both movie data and the echonest codegen
         self.check_queued_moviedata_calls(['foo.avi', 'bar.avi'])
-        self.check_run_movie_data('bar.avi', 'audio', 100, 'Foo')
+        self.check_run_movie_data('bar.avi', 'audio', 100, None)
         self.check_run_echonest_codegen('baz.mp3')
         self.check_run_echonest('baz.mp3', 'Foo')
         self.check_queued_echonest_codegen_calls(['bar.avi'])
@@ -765,7 +772,8 @@ class MetadataManagerTest(MiroTestCase):
             filename = 'in-echonest-%i.mp3' % x
             files_in_echonest.append(self.make_path(filename))
             self.check_add_file(filename)
-            self.check_run_mutagen(filename, 'audio', 100, 'Foo')
+            # Use None for title to force the files to go through the codegen
+            self.check_run_mutagen(filename, 'audio', 100, None)
 
         files_finished = []
         for x in range(10):
@@ -810,7 +818,6 @@ class MetadataManagerTest(MiroTestCase):
         self.check_add_file('foo.mp3')
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
-        self.check_run_echonest_codegen('foo.mp3')
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
         # reload our database to force restoring metadata items
         self.reload_database(db_path)
@@ -840,7 +847,8 @@ class MetadataManagerTest(MiroTestCase):
                 # for this file
                 metadata = {
                     'file_type': u'audio',
-                    'title': u'Title',
+                    # Don't send title to force items to go through the
+                    # echonest codegen
                     'album': u'Album',
                     'drm': False,
                 }
@@ -1353,13 +1361,23 @@ class TestEchonestQueries(MiroTestCase):
     def errback(self, *args):
         self.errback_data = args
 
-    def start_query(self):
-        """Call echonest.query_echonest()."""
+    def start_query_with_tags(self):
+        """Send ID3 tags echonest.query_echonest()."""
         # This tracks the metadata we expect to see back from query_echonest()
         self.reply_metadata = {}
         echonest.query_echonest(self.path, self.album_art_dir,
-                                self.echonest_code, 3.15,
-                                self.query_metadata,
+                                None, 3.15, self.query_metadata,
+                                self.callback, self.errback)
+
+    def start_query_with_code(self):
+        """Send a generated code to echonest.query_echonest()."""
+        # This tracks the metadata we expect to see back from query_echonest()
+        self.reply_metadata = {}
+        # we only call echonest codegen if we don't have a lot of metadata
+        del self.query_metadata['title']
+        del self.query_metadata['album']
+        echonest.query_echonest(self.path, self.album_art_dir,
+                                self.echonest_code, 3.15, self.query_metadata,
                                 self.callback, self.errback)
 
     def check_grab_url(self, url, query_dict=None, post_vars=None,
@@ -1395,8 +1413,19 @@ class TestEchonestQueries(MiroTestCase):
             self.assertEquals(grabbed_url.query, '')
 
     def check_echonest_grab_url_call(self):
+        search_url = 'http://developer.echonest.com/api/v4/song/search'
+        query_dict = {
+            'api_key': [echonest.ECHO_NEST_API_KEY],
+            # NOTE: either order of the bucket params is okay
+            'bucket': ['tracks', 'id:7digital'],
+            'artist': [self.query_metadata['artist'].encode('utf-8')],
+            'title': [self.query_metadata['title'].encode('utf-8')],
+        }
+        self.check_grab_url(search_url, query_dict)
+
+    def check_echonest_grab_url_call_with_code(self):
         """Check the url sent to grab_url to perform our echonest query."""
-        echonest_url = 'http://developer.echonest.com/api/v4/song/identify'
+        identify_url = 'http://developer.echonest.com/api/v4/song/identify'
         post_vars = {
             'api_key': echonest.ECHO_NEST_API_KEY,
             # NOTE: either order of the bucket params is okay
@@ -1404,15 +1433,13 @@ class TestEchonestQueries(MiroTestCase):
             'query': {
                 'code': self.echonest_code,
                 'metadata': {
-                    'artist': self.query_metadata['artist'].encode('utf-8'),
-                    'title': self.query_metadata['title'].encode('utf-8'),
-                    'release': self.query_metadata['album'].encode('utf-8'),
-                    'duration': self.query_metadata['duration'] // 1000,
                     'version': 3.15,
+                    'artist': self.query_metadata['artist'].encode('utf-8'),
+                    'duration': self.query_metadata['duration'] // 1000,
                 },
             },
         }
-        self.check_grab_url(echonest_url, post_vars=post_vars)
+        self.check_grab_url(identify_url, post_vars=post_vars)
 
     def send_echonest_reply(self, response_file):
         """Send a reply back from echonest.
@@ -1516,10 +1543,21 @@ class TestEchonestQueries(MiroTestCase):
         error = httpclient.UnexpectedStatusCode(404)
         errback(error)
 
-    def test_normal_query(self):
+    def test_query_with_tags(self):
         # test normal operations
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.send_7digital_reply(self.bossanova_release_id)
+        self.check_album_art_grab_url_call()
+        self.send_album_art_reply()
+        self.check_callback()
+
+    def test_query_with_code(self):
+        # test normal operations
+        self.start_query_with_code()
+        self.check_echonest_grab_url_call_with_code()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_call(self.bossanova_release_id)
         self.send_7digital_reply(self.bossanova_release_id)
@@ -1529,7 +1567,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def test_album_art_error(self):
         # test normal operations
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_call(self.bossanova_release_id)
@@ -1544,14 +1582,14 @@ class TestEchonestQueries(MiroTestCase):
 
     def test_not_found(self):
         # test echonest not finding our song
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('no-match')
         self.check_callback()
 
     def test_echonest_http_error(self):
         # test http errors with echonest
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_http_error()
         mock_grab_url.reset_mock()
@@ -1560,7 +1598,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def test_no_releases(self):
         # test no releases for a song
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('no-releases')
         self.check_grab_url_not_called()
@@ -1568,7 +1606,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def test_7digital_http_error(self):
         # test http errors with 7digital
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_call(self.bossanova_release_id)
@@ -1577,7 +1615,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def test_7digital_no_match(self):
         # test 7digital not matching our release id
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_call(self.bossanova_release_id)
@@ -1586,7 +1624,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def test_multiple_releases(self):
         # test multple releases when one matches our ID3 tag
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('billie-jean')
         # When we have multiple releases, we don't have a good way of finding
@@ -1596,7 +1634,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def test_7digital_caching(self):
         # test that we cache 7digital results
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_call(self.bossanova_release_id)
@@ -1607,7 +1645,7 @@ class TestEchonestQueries(MiroTestCase):
         old_metadata = self.reply_metadata
         # start a new query that results in the same release id.
         self.echonest_code = 'fake-code-2'
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
         # we shouldn't call grab_URL
@@ -1620,7 +1658,7 @@ class TestEchonestQueries(MiroTestCase):
         # test that we don't download album art that we already have
         album_art_path = os.path.join(self.album_art_dir, 'Bossanova')
         open(album_art_path, 'w').write('FAKE DATA')
-        self.start_query()
+        self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_call(self.bossanova_release_id)
@@ -1636,4 +1674,4 @@ class TestEchonestQueries(MiroTestCase):
         self.query_metadata['artist'] = "M\u0129chael jackson"
         self.query_metadata['album'] = "Thr\u0129ller"
         self.query_metadata['title'] = u"B\u0129llie jean"
-        self.test_normal_query()
+        self.test_query_with_tags()
