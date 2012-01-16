@@ -34,6 +34,7 @@
 #include "xulrunnerbrowser.h"
 #include "nsIWebBrowserChrome.h"
 #include "nsIWindowWatcher.h"
+#include "nsIInterfaceRequestor.h"
 #include "nsIInterfaceRequestorUtils.h"
 #include "nsIXULWindow.h"
 #include "nsAppShellCID.h"
@@ -113,10 +114,11 @@ NS_IMETHODIMP MiroWindowCreator::CreateChromeWindow2(
 					    appShell, getter_AddRefs(newWindow));
       if (newWindow) {
 	newWindow->SetContextFlags(contextFlags);
-	nsCOMPtr<nsIInterfaceRequestor> thing(do_QueryInterface(newWindow));
-	if (thing) {
-	  CallGetInterface(thing.get(), _retval);
-	}
+	 nsCOMPtr<nsIInterfaceRequestor> thing(do_QueryInterface(newWindow));
+	 if (thing) {
+	   CallGetInterface(thing.get(), _retval);
+	   NS_IF_ADDREF(*_retval);
+         }
       }
     }
 
