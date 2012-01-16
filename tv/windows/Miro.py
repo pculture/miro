@@ -39,9 +39,13 @@ def startup(argv):
     # plugins.  Do this early before any code is run to prevent any import
     # of gst missing this!
     from miro.plat import resources
+    from miro.plat import config
     GST_PLUGIN_PATH = os.path.join(resources.app_root(), 'gstreamer-0.10')
     os.environ["GST_PLUGIN_PATH"] = GST_PLUGIN_PATH
     os.environ["GST_PLUGIN_SYSTEM_PATH"] = GST_PLUGIN_PATH
+    # normally we'd use app.config to get this, but we're starting up
+    os.environ["GST_REGISTRY"] = os.path.join(config._get_support_directory(),
+                                              'gst_registry.bin')
 
     theme = None
     # Should have code to figure out the theme.
