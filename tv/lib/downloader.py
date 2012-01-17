@@ -714,9 +714,9 @@ class RemoteDownloader(DDBObject):
         rates = self._get_rates()
         app.download_state_manager.total_down_rate -= rates[0]
         app.download_state_manager.total_up_rate -= rates[1]
-        self.stop(self.delete_files)
         if self.is_finished():
             app.local_metadata_manager.remove_file(self.get_filename())
+        self.stop(self.delete_files)
         DDBObject.remove(self)
 
     def get_type(self):
