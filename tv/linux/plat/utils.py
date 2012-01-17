@@ -28,21 +28,23 @@
 # statement from all source files in the program, then also delete it here.
 
 import errno
-import signal
-import os
-import statvfs
-from miro import app
-from miro import prefs
+import locale
 import logging
 import logging.handlers
-import locale
-import urllib
+import os
+import platform
+import signal
+import statvfs
 import subprocess
 import sys
 import time
+import urllib
+
+from miro import app
+from miro import prefs
+from miro.plat import options
 from miro.util import returns_unicode, returns_binary, check_u, check_b
 import miro
-from miro.plat import options
 
 PlatformFilenameType = str
 
@@ -359,8 +361,11 @@ def get_echoprint_executable_path():
 def get_enmfp_executable_info():
     # NB: Since this was installed using distutils this should give the right
     # path.
+
+    filename = 'codegen.Linux-%s' % platform.machine()
+
     return {
-        'path': os.path.join(miro_exec_prefix, 'codegen.Linux-i686'),
+        'path': os.path.join(miro_exec_prefix, filename)
     }
 
 def get_transcode_video_options():   
