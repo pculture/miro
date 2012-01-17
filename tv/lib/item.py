@@ -997,6 +997,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.update_from_metadata(metadata_dict)
         self.signal_change()
 
+    def set_rating(self, rating):
+        self.rating = rating
+        self.signal_change()
+
     def matches_search(self, search_string):
         if search_string is None or search_string == '':
             return True

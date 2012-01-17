@@ -166,6 +166,15 @@ class ItemRatingTest(MiroTestCase):
         item.skip_count = 0
         self.assertEquals(item.get_auto_rating(), 5)
 
+    def test_set_rating(self):
+        feed = Feed(u'http://example.com/1')
+        item = Item(fp_values_for_url(u'http://example.com/1/item1'),
+                feed_id=feed.id)
+        item.set_rating(5)
+        self.assertEquals(item.rating, 5)
+        item.set_rating(3)
+        self.assertEquals(item.rating, 3)
+
 class ItemRemoveTest(MiroTestCase):
     def test_watched_time_reset(self):
         feed = Feed(u'http://example.com/1')
