@@ -523,12 +523,5 @@ by-nd/1.0</creativeCommons:license>
         self.save_then_restore_db()
         self.assertEquals(self.item.get_rss_id(), None)
 
-    def test_change_title(self):
-        entry = self.parsed_feed.entries[0]
-        self.item.set_title(u"new title")
-        self.save_then_restore_db()
-        self.assertEquals(self.item.get_title(), "new title")
-
-
 if __name__ == "__main__":
     unittest.main()

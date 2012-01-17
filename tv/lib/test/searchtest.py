@@ -129,7 +129,8 @@ class ItemSearcherTest(MiroTestCase):
         self.check_empty_result('miro')
 
     def test_update(self):
-        self.item1.set_title(u'my new title')
+        self.item1.entry_title = u'my new title'
+        self.item1.signal_change()
         self.searcher.update_item(self.make_info(self.item1))
         self.check_search_results('my', self.item1, self.item2)
         self.check_search_results('item', self.item2)

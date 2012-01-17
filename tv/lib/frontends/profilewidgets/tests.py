@@ -205,7 +205,6 @@ class ProfileItemView(ProfiledCode):
          'duration': 0,
          'size': 328195214,
          'album': u'',
-         'media_type_checked': False,
          'can_be_saved': False,
          'file_format': u'.mov',
          'video_path': None,

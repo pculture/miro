@@ -46,6 +46,7 @@ The hope is that it will be human readable.  We use the type
 ``pythonrepr`` to label these columns.
 """
 
+import collections
 import glob
 import shutil
 import cPickle
@@ -120,18 +121,263 @@ def split_values_for_sqlite(value_list):
     for start in xrange(0, len(value_list), CHUNK_SIZE):
         yield value_list[start:start+CHUNK_SIZE]
 
+class DatabaseObjectCache(object):
+    """Handles caching objects for a database.
+
+    This class implements a generic caching system for DDBObjects.  Other
+    components can use it reduce the number of database queries they run.
+    """
+    def __init__(self):
+        # map (category, cache_key) to objects
+        self._objects = {}
+
+    def set(self, category, cache_key, obj):
+        """Add an object to the cache
+
+        category is an arbitrary name used to separate different caches.  Each
+        component that uses DatabaseObjectCache should use a different
+        category.
+
+        :param category: unique string
+        :param key: key to retrieve the object with
+        :param obj: object to add
+        """
+        self._objects[(category, cache_key)] = obj
+
+    def get(self, category, cache_key):
+        """Get an object from the cache
+
+        :param category: category from set
+        :param key: key from set
+        :returns: object passed in with set
+        :raises KeyError: object not in cache
+        """
+        return self._objects[(category, cache_key)]
+
+    def key_exists(self, category, cache_key):
+        """Test if an object is in the cache
+
+        :param category: category from set
+        :param key: key from set
+        :returns: if an object is present with that key
+        """
+        return (category, cache_key) in self._objects
+
+    def remove(self, category, cache_key):
+        """Remove an object from the cache
+
+        :param category: category from set
+        :param key: key from set
+        :raises KeyError: object not in cache
+        """
+        del self._objects[(category, cache_key)]
+
+    def clear(self, category):
+        """Clear all objects in a category.
+
+        :param category: category to clear
+        """
+        for key in objects.keys():
+            if key[0] == category:
+                del self._objects[key]
+
+class LiveStorageErrorHandler(object):
+    """Handle database errors for LiveStorage.
+    """
+
+    ( ACTION_QUIT, ACTION_SUBMIT_REPORT, ACTION_START_FRESH, ACTION_RETRY,
+     ACTION_USE_TEMPORARY, ACTION_RERAISE, ) = range(6)
+
+    def handle_load_error(self):
+        """Handle an error loading the database.
+
+        When LiveStorage hits a load error, it always deletes the database and
+        starts fresh.  The only thing to to here is inform the user
+        """
+        title = _("%(appname)s database corrupt.",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _(
+            "Your %(appname)s database is corrupt.  It will be "
+            "backed up in your Miro database directory and a new "
+            "database will be created now.",
+            {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        dialogs.MessageBoxDialog(title, description).run_blocking()
+
+    def handle_open_error(self):
+        """Handle an error opening a new database
+
+        This method should return one of the following:
+        - ACTION_RERAISE -- Just re-raise the error
+        - ACTION_USE_TEMPORARY -- Use an in-memory database for now and try to
+        save the database to disk every so often.
+        """
+        return ACTION_RERAISE
+
+    def handle_upgrade_error(self):
+        """Handle an error upgrading the database.
+
+        Returns one of the class attribute constants:
+        - ACTION_QUIT -- close miro immediately
+        - ACTION_SUBMIT_REPORT -- send a crash report, then close
+        - ACTION_START_FRESH -- start with a fresh database
+        """
+        title = _("%(appname)s database upgrade failed",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _(
+            "We're sorry, %(appname)s was unable to upgrade your database "
+            "due to errors.\n\n"
+            "Check to see if your disk is full.  If it is full, then quit "
+            "%(appname)s, free up some space, and start %(appname)s "
+            "again.\n\n"
+            "If your disk is not full, help us understand the problem by "
+            "reporting a bug to our crash database.\n\n"
+            "Finally, you can start fresh and your damaged database will be "
+            "removed, but you will have to re-add your podcasts and media "
+            "files.", {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+            )
+        d = dialogs.ThreeChoiceDialog(title, description,
+                dialogs.BUTTON_QUIT, dialogs.BUTTON_SUBMIT_REPORT,
+                dialogs.BUTTON_START_FRESH)
+        choice = d.run_blocking()
+        if choice == dialogs.BUTTON_START_FRESH:
+            return self.ACTION_START_FRESH
+        elif choice == dialogs.BUTTON_SUBMIT_REPORT:
+            return self.ACTION_SUBMIT_REPORT
+        else:
+            return self.ACTION_QUIT
+
+    def handle_save_error(self, error_text, integrity_check_passed):
+        """Handle an error when trying to save the database.
+
+        Returns one of the class attribute constants:
+        - ACTION_QUIT -- close miro immediately
+        - ACTION_RETRY -- try running the statement again
+        - ACTION_USE_TEMPORARY -- start fresh using a temporary database
+        """
+
+        title = _("%(appname)s database save failed",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _(
+            "%(appname)s was unable to save its database.\n\n"
+            "If your disk is full, we suggest freeing up some space and "
+            "retrying.  If your disk is not full, it's possible that "
+            "retrying will work.\n\n"
+            "If retrying did not work, please quit %(appname)s and restart.  "
+            "Recent changes may be lost.\n\n"
+            "If you see this error often while downloading, we suggest "
+            "you reduce the number of simultaneous downloads in the Options "
+            "dialog in the Download tab.\n\n"
+            "Error: %(error_text)s\n\n",
+            {"appname": app.config.get(prefs.SHORT_APP_NAME),
+             "error_text": error_text}
+            )
+        d = dialogs.ChoiceDialog(title, description,
+                dialogs.BUTTON_RETRY, dialogs.BUTTON_QUIT)
+        if d.run_blocking() == dialogs.BUTTON_RETRY:
+            return self.ACTION_RETRY
+        else:
+            return self.ACTION_QUIT
+
+    def handle_save_succeeded(self):
+        """Handle a successful save after retrying
+
+        This will only be called if handle_save_error return ACTION_RETRY.
+        """
+
+        title = _("%(appname)s database save succeeded",
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        description = _("The database has been successfully saved. "
+                "It is now safe to quit without losing any data.")
+        dialogs.MessageBoxDialog(title, description).run()
+
+class DeviceLiveStorageErrorHandler(LiveStorageErrorHandler):
+    """Handle database errors for LiveStorage on a device.
+    """
+    def __init__(self, name):
+        self.name = name
+
+    def handle_open_error(self):
+        return self.ACTION_USE_TEMPORARY
+
+    def handle_load_error(self):
+        title = _("database for device %(name)s corrupt.",
+                  {'name' : self.name})
+        description = _(
+            "The %(appname)s database on your device is corrupt and a "
+            "new one will be created.",
+            {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+        dialogs.MessageBoxDialog(title, description).run_blocking()
+
+    def handle_upgrade_error(self):
+        self.handle_load_error()
+        return self.ACTION_START_FRESH
+
+    def handle_save_error(self, error_text, integrity_check_passed):
+        if not integrity_check_passed:
+            # If the database is corrupt, just start over
+            logging.warn("Database for %s is corrupt.  Using temporary "
+                         "database", self.name)
+            return self.ACTION_USE_TEMPORARY
+
+
+        title = _("Database save failed for device %(name)s.",
+                  {'name' : self.name})
+        description = _(
+            "%(appname)s was unable to save its database on %(device)s.\n\n"
+            "If your device is full, we suggest freeing up some space and "
+            "retrying.  If your disk is not full, it's possible that "
+            "retrying will work.\n\n"
+            "If retrying does not work select start fresh to reset the "
+            "database to a new one.", {
+                "appname": app.config.get(prefs.SHORT_APP_NAME),
+                "device": self.name,
+            })
+        d = dialogs.ChoiceDialog(title, description,
+                dialogs.BUTTON_RETRY, dialogs.BUTTON_START_FRESH)
+        if d.run_blocking() == dialogs.BUTTON_START_FRESH:
+            # we return ACTION_USE_TEMPORARY because we will create a
+            # temporary database to start fresh, since it's very likely that
+            # loading a new database will fail.  With a temporary database we
+            # will try to save it to the disk every so often anyways.
+            return self.ACTION_USE_TEMPORARY
+        else:
+            return self.ACTION_RETRY
+
+    def handle_save_succeeded(self):
+        title = _("Device database save succeeded")
+        description = _("The database for %(device)s has been successfully "
+                        "saved. ", {'device': self.name})
+        dialogs.MessageBoxDialog(title, description).run()
 
 class LiveStorage:
     """Handles the storage of DDBObjects.
 
     This class does basically two things:
 
-    1. Loads the initial object list (and runs database upgrades)
-    2. Handles updating the database based on changes to DDBObjects.
+    - Loads the initial object list (and runs database upgrades)
+    - Handles updating the database based on changes to DDBObjects.
+
+    Attributes:
+
+    - cache -- DatabaseObjectCache object
     """
-    def __init__(self, path=None, object_schemas=None, schema_version=None):
+    def __init__(self, path=None, error_handler=None, preallocate=None,
+                 object_schemas=None, schema_version=None):
+        """Create a LiveStorage for a database
+
+        :param path: path to the database (or ":memory:")
+        :param error_handler: LiveStorageErrorHandler to use
+        :param preallocate: Ensure that approximately at least this much space
+            is allocated for the database file
+        :param object_schemas: list of schemas to use.  Defaults to
+           schema.object_schemas
+        :param schema_version: current version of the schema for upgrading
+           purposes.  Defaults to schema.VERSION.
+        """
         if path is None:
             path = app.config.get(prefs.SQLITE_PATHNAME)
+        if error_handler is None:
+            error_handler = LiveStorageErrorHandler()
         if object_schemas is None:
             object_schemas = schema.object_schemas
         if schema_version is None:
@@ -149,7 +395,10 @@ class LiveStorage:
         except AttributeError:
             logging.info("sqlite3 has no version attribute.")
 
-        db_existed = os.path.exists(path)
+        self.created_new = not os.path.exists(path)
+        self.preallocate = preallocate
+        self.error_handler = error_handler
+        self.cache = DatabaseObjectCache()
         self.raise_load_errors = False # only gets set in unittests
         self._dc = None
         self._query_times = {}
@@ -176,25 +425,138 @@ class LiveStorage:
 
         self.open_connection()
 
-        if not db_existed:
+        if self.created_new:
             self._init_database()
+        if self.preallocate:
+            self._preallocate_space()
 
     def open_connection(self, path=None):
         if path is None:
             path = self.path
+        self._ensure_database_directory_exists(path)
         logging.info("opening database %s", path)
-        self.connection = sqlite3.connect(path,
-                isolation_level=None,
-                detect_types=sqlite3.PARSE_DECLTYPES)
+        try:
+            self.connection = sqlite3.connect(path,
+                    isolation_level=None,
+                    detect_types=sqlite3.PARSE_DECLTYPES)
+        except sqlite3.Error, e:
+            logging.warn("Error opening sqlite database: %s", e)
+            action = self.error_handler.handle_open_error()
+            if action == LiveStorageErrorHandler.ACTION_RERAISE:
+                raise
+            elif action == LiveStorageErrorHandler.ACTION_USE_TEMPORARY:
+                logging.warn("Error opening database %s.  Opening an "
+                             "in-memory database instead", path)
+                self._switch_to_temp_mode()
+                self.created_new = True
+            else:
+                logging.warn("Bad return value for handle_open_error: %s",
+                             action)
+                raise
+
         self.cursor = self.connection.cursor()
         try:
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
         except sqlite3.DatabaseError:
             msg = "Error running 'PRAGMA journal_mode=PERSIST'"
-            self._show_corrupt_db_dialog()
-            self._handle_load_error(msg)
+            self.error_handler.handle_load_error()
+            self._handle_load_error(msg, init_db=False)
+            self.created_new = True
             # rerun the command with our fresh database
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
+
+    def _ensure_database_directory_exists(self, path):
+        if path != ':memory:' and not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
+
+    def _switch_to_temp_mode(self):
+        """Switch to temporary mode.
+
+        In temporary mode, we use an in-memory database and try to save it to
+        disk every 5 minutes.  Temporary mode is used to handle errors when
+        trying to open a database file.
+        """
+        self.connection = sqlite3.connect(':memory:',
+                                          isolation_level=None,
+                                          detect_types=sqlite3.PARSE_DECLTYPES)
+        self.created_new = True
+        eventloop.add_timeout(300,
+                              self._try_save_temp_to_disk,
+                              "write in-memory sqlite database to disk")
+
+    def _try_save_temp_to_disk(self):
+        try:
+            self._change_path(self.path)
+        except StandardError, e:
+            logging.warn("_try_save_temp_to_disk failed: %s (path: %s)", e,
+                         self.path)
+            eventloop.add_timeout(300,
+                                  self._try_save_temp_to_disk,
+                                  "write in-memory sqlite database to disk")
+        else:
+            logging.warn("Sucessfully wrote database to %s.  Changes "
+                         "will now be saved as normal.", self.path)
+
+    def _change_path(self, new_path):
+        """Change the path of our database.
+
+        This method copies the entire current database to new_path, then opens
+        a connection to it.
+        """
+        self.finish_transaction()
+        # add the database at new_path to our current connection
+        self._ensure_database_directory_exists(new_path)
+        # delete any data currently at new_path
+        if os.path.exists(new_path):
+            os.remove(new_path)
+        self.cursor.execute("ATTACH ? as newdb", (new_path,))
+        # copy current schema
+        self.cursor.execute("SELECT name, sql FROM main.sqlite_master "
+                            "WHERE type='table'")
+        table_info = self.cursor.fetchall()
+        for table, sql in table_info:
+            sql = sql.replace("TABLE %s" % table,
+                              "TABLE newdb.%s" % table)
+            self.cursor.execute(sql)
+            self.cursor.execute("SELECT name, sql FROM sqlite_master "
+                                "WHERE type='index' AND tbl_name=?",
+                                (table,))
+            for index, sql in self.cursor.fetchall():
+                if index.startswith('sqlite_autoindex'):
+                    continue
+                sql = sql.replace("INDEX %s" % index,
+                                  "INDEX newdb.%s" % index)
+                self.cursor.execute(sql)
+        # preallocate space now.  We want to fail fast if the disk is full
+        if self.preallocate:
+            self._preallocate_space(db_name='newdb')
+
+        # copy data
+        for table, sql in table_info:
+            self.cursor.execute("INSERT INTO newdb.%s SELECT * FROM main.%s" %
+                                (table, table))
+
+        # Looks like everything worked.  Change to using a connection to the
+        # new database
+        self.path = new_path
+        self.connection.close()
+        self.open_connection()
+
+    def check_integrity(self):
+        """Run an integrity check on our database
+
+        :returns True if the integrity check passed.
+        """
+
+        try:
+            self.cursor.execute("PRAGMA integrity_check")
+            return self.cursor.fetchall() == [
+                ('ok',),
+            ]
+        except sqlite3.Error:
+            logging.warn("error running PRAGMA integrity_check: %s",
+                         exc_info=True)
+            return False
 
     def close(self, ignore_vacuum_error=True):
         logging.info("closing database")
@@ -205,10 +567,13 @@ class LiveStorage:
 
         # the unittests run in memory and vacuum causes a segfault if
         # the db is in memory.
-        if self.path != ":memory:" and self.connection and self.cursor:
+        if (self.path != ":memory:" and
+            self.preallocate is None and
+            self.connection and
+            self.cursor):
             logging.info("Vacuuming the db before shutting down.")
             try:
-                self.cursor.execute("vacuum")
+                self.cursor.execute("VACUUM")
             except sqlite3.DatabaseError, sdbe:
                 if ignore_vacuum_error:
                     msg = "... Vacuuming failed with DatabaseError: %s"
@@ -261,33 +626,20 @@ class LiveStorage:
 
     def _handle_upgrade_error(self):
         self._backup_failed_upgrade_db()
-        title = _("%(appname)s database upgrade failed",
-                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        description = _(
-            "We're sorry, %(appname)s was unable to upgrade your database "
-            "due to errors.\n\n"
-            "Check to see if your disk is full.  If it is full, then quit "
-            "%(appname)s, free up some space, and start %(appname)s "
-            "again.\n\n"
-            "If your disk is not full, help us understand the problem by "
-            "reporting a bug to our crash database.\n\n"
-            "Finally, you can start fresh and your damaged database will be "
-            "removed, but you will have to re-add your podcasts and media "
-            "files.", {"appname": app.config.get(prefs.SHORT_APP_NAME)}
-            )
-        d = dialogs.ThreeChoiceDialog(title, description,
-                dialogs.BUTTON_QUIT, dialogs.BUTTON_SUBMIT_REPORT,
-                dialogs.BUTTON_START_FRESH)
-        choice = d.run_blocking()
-        if choice == dialogs.BUTTON_START_FRESH:
+        action = self.error_handler.handle_upgrade_error()
+        if action == LiveStorageErrorHandler.ACTION_START_FRESH:
             self._handle_load_error("Error upgrading database")
             self.startup_version = self.current_version = self._get_version()
-        elif choice == dialogs.BUTTON_SUBMIT_REPORT:
+        elif action == LiveStorageErrorHandler.ACTION_SUBMIT_REPORT:
             report = crashreport.format_crash_report("Upgrading Database",
                     exc_info=sys.exc_info(), details=None)
             raise UpgradeErrorSendCrashReport(report)
-        else:
+        elif action == LiveStorageErrorHandler.ACTION_QUIT:
             raise UpgradeError()
+        else:
+            logging.warn("Bad return value for handle_upgrade_error: %s",
+                         action)
+            raise
 
     def _change_database_file(self, ver):
         """Switches the sqlitedb file that we have open
@@ -389,17 +741,47 @@ class LiveStorage:
             raise KeyError(name)
         return cPickle.loads(str(row[0]))
 
-    def set_variable(self, name, value):
+    def set_variable(self, name, value, db_name='main'):
         # we only store one variable and it's easier to deal with if we store
         # it using ASCII-base protocol.
         db_value = buffer(cPickle.dumps(value, 0))
-        self.cursor.execute("REPLACE INTO dtv_variables "
-                "(name, serialized_value) VALUES (?,?)", (name, db_value))
+        self._execute("REPLACE INTO %s.dtv_variables "
+                      "(name, serialized_value) VALUES (?,?)" % db_name,
+                      (name, db_value),
+                      is_update=True)
+        self.finish_transaction()
+
+    def unset_variable(self, name, db_name='main'):
+        self._execute("DELETE FROM %s.dtv_variables "
+                      "WHERE name=?" % db_name,
+                      (name,), is_update=True)
+        self.finish_transaction()
 
     def _create_variables_table(self):
         self.cursor.execute("""CREATE TABLE dtv_variables(
         name TEXT PRIMARY KEY NOT NULL,
         serialized_value BLOB NOT NULL);""")
+
+    def simulate_db_save_error(self):
+        """Simulate trying to save something to the database and getting an
+        Operational Error.
+        """
+        # The below code is fairly dirty, but it's only executed from a devel
+        # menu item, so it should be okay
+        # Make it so that the next attempt (and only that attempt) to execute
+        # a query results in an error.
+        from miro.test import mock
+        mock_time_execute = mock.Mock()
+        patcher = mock.patch.object(self, '_time_execute', mock_time_execute)
+        patcher.start()
+        def time_execute_intercept(*args, **kwargs):
+            patcher.stop()
+            raise sqlite3.OperationalError()
+        mock_time_execute.side_effect = time_execute_intercept
+        # force the db to execute sql
+        self._execute("REPLACE INTO dtv_variables "
+                      "(name, serialized_value) VALUES (?,?)",
+                      ('simulate_db_save_error', 1), is_update=True)
 
     def remember_object(self, obj):
         key = (obj.id, app.db.table_name(obj.__class__))
@@ -533,10 +915,8 @@ class LiveStorage:
     def get_last_id(self):
         try:
             return self._get_last_id()
-        except databaseupgrade.DatabaseTooNewError:
-            raise
         except StandardError:
-            self._show_corrupt_db_dialog()
+            self.error_handler.handle_load_error()
             self._handle_load_error("Error calculating last id")
             return self._get_last_id()
 
@@ -562,6 +942,9 @@ class LiveStorage:
     def table_name(self, klass):
         return self._schema_map[klass].table_name
 
+    def schema_fields(self, klass):
+        return self._schema_map[klass].fields
+
     def object_from_class_table(self, obj, klass):
         return self._schema_map[klass] is self._schema_map[obj.__class__]
 
@@ -579,21 +962,7 @@ class LiveStorage:
             sql.write(" LIMIT %s" % limit)
         return sql.getvalue()
 
-    def query(self, klass, where, values=None, order_by=None, joins=None,
-            limit=None):
-        schema = self._schema_map[klass]
-        id_list = list(self.query_ids(schema.table_name, where, values,
-            order_by, joins,
-            limit))
-        t = app.db.table_name(klass)
-        if self.ensure_objects_loaded(klass, id_list):
-            # sometimes objects will call remove() in setup_restored().
-            # We need to filter those out.
-            id_list = [i for i in id_list if (i, t) in self._object_map]
-        for id_ in id_list:
-            yield self._object_map[(id_, t)]
-
-    def ensure_objects_loaded(self, klass, id_list):
+    def ensure_objects_loaded(self, klass, id_list, db_info):
         """Ensure that a list of ids are loaded into memory.
 
         :returns: True iff we needed to load objects
@@ -603,7 +972,7 @@ class LiveStorage:
         if unrestored_ids:
             # restore any objects that we don't already have in memory.
             schema = self._schema_map[klass]
-            self._restore_objects(schema, unrestored_ids)
+            self._restore_objects(schema, unrestored_ids, db_info)
             return True
         return False
 
@@ -616,7 +985,7 @@ class LiveStorage:
         self.cursor.execute(sql.getvalue(), values)
         return (row[0] for row in self.cursor.fetchall())
 
-    def _restore_objects(self, schema, id_set):
+    def _restore_objects(self, schema, id_set, db_info):
         column_names = ['%s.%s' % (schema.table_name, f[0])
                 for f in schema.fields]
 
@@ -631,9 +1000,9 @@ class LiveStorage:
 
             self.cursor.execute(sql.getvalue(), id_list_chunk)
             for row in self.cursor.fetchall():
-                self._restore_object_from_row(schema, row)
+                self._restore_object_from_row(schema, row, db_info)
 
-    def _restore_object_from_row(self, schema, db_row):
+    def _restore_object_from_row(self, schema, db_row, db_info):
         restored_data = {}
         columns_to_update = []
         values_to_update = []
@@ -668,7 +1037,7 @@ class LiveStorage:
                     ', '.join(setters), restored_data['id'])
             self._execute(sql, values_to_update)
         klass = schema.get_ddb_class(restored_data)
-        return klass(restored_data=restored_data)
+        return klass(restored_data=restored_data, db_info=db_info)
 
     def persistent_object_count(self):
         return len(self._object_map)
@@ -748,19 +1117,8 @@ class LiveStorage:
                 # Make sure we re-run our SELECT statement so that the call to
                 # fetchall() at the end of this method works. (#12885)
                 self._current_select_statement = (sql, values, many)
-            self._handle_operational_error(e)
-            if self._quitting_from_operational_error and not is_update:
-                # This is a very bad state to be in because code calling
-                # us expects a return value.  I think the best we can do
-                # is re-raise the exception (BDK)
-                raise
+            self._handle_operational_error(e, is_update)
 
-        if failed and not self._quitting_from_operational_error:
-            title = _("%(appname)s database save succeeded",
-                      {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-            description = _("The database has been successfully saved. "
-                    "It is now safe to quit without losing any data.")
-            dialogs.MessageBoxDialog(title, description).run()
         if is_update:
             return None
         else:
@@ -802,9 +1160,10 @@ class LiveStorage:
                 return False
         return True
 
-    def _handle_operational_error(self, e):
+    def _handle_operational_error(self, e, is_update):
         if self._quitting_from_operational_error:
             return
+        succeeded = False
         while True:
             # try to rollback our old transaction if SQLite hasn't done it
             # automatically
@@ -812,37 +1171,49 @@ class LiveStorage:
                 self.cursor.execute("ROLLBACK TRANSACTION")
             except sqlite3.OperationalError:
                 pass
-            self._show_save_error_dialog(str(e))
-            if self._quitting_from_operational_error:
-                return
+            retry = self._handle_query_error(str(e))
+            if not retry:
+                break
             if self._try_rerunning_transaction():
+                succeeded = True
                 break
 
-    def _show_save_error_dialog(self, error_text):
-        title = _("%(appname)s database save failed",
-                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        description = _(
-            "%(appname)s was unable to save its database.\n\n"
-            "If your disk is full, we suggest freeing up some space and "
-            "retrying.  If your disk is not full, it's possible that "
-            "retrying will work.\n\n"
-            "If retrying did not work, please quit %(appname)s and restart.  "
-            "Recent changes may be lost.\n\n"
-            "If you see this error often while downloading, we suggest "
-            "you reduce the number of simultaneous downloads in the Options "
-            "dialog in the Download tab.\n\n"
-            "Error: %(error_text)s\n\n",
-            {"appname": app.config.get(prefs.SHORT_APP_NAME),
-             "error_text": error_text}
-            )
-        d = dialogs.ChoiceDialog(title, description,
-                dialogs.BUTTON_RETRY, dialogs.BUTTON_QUIT)
-        choice = d.run_blocking()
-        if choice == dialogs.BUTTON_QUIT:
+        if not succeeded and not is_update:
+            logging.warn("re-raising SQL error because it was not an update")
+            # This is a very bad state to be in because code calling
+            # us expects a return value.  I think the best we can do
+            # is re-raise the exception (BDK)
+            raise
+
+        if succeeded:
+            self.error_handler.handle_save_succeeded()
+
+    def _handle_query_error(self, error_text):
+        """Handle an error running an SQL query.
+
+        :returns: True if we should try to re-run the query
+        """
+        integrity_check_passed = self.check_integrity()
+        action = self.error_handler.handle_save_error(error_text,
+                                                      integrity_check_passed)
+        if action == LiveStorageErrorHandler.ACTION_QUIT:
             self._quitting_from_operational_error = True
             messages.FrontendQuit().send_to_frontend()
-        else:
+            return False
+        elif action == LiveStorageErrorHandler.ACTION_RETRY:
             logging.warn("Re-running SQL statement")
+            return True
+        elif action == LiveStorageErrorHandler.ACTION_USE_TEMPORARY:
+            self._switch_to_temp_mode()
+            # reset _statements_in_transaction.  The data for the old DB is
+            # now lost
+            self._statements_in_transaction = []
+            self.cursor = self.connection.cursor()
+            self._init_database()
+            return False
+        else:
+            logging.warn("Bad return value for handle_save_error: %s", action)
+            raise
 
     def _check_time(self, sql, query_time):
         SINGLE_QUERY_LIMIT = 0.5
@@ -877,19 +1248,54 @@ class LiveStorage:
             for name, columns in schema.indexes:
                 self.cursor.execute("CREATE INDEX %s ON %s (%s)" %
                         (name, schema.table_name, ', '.join(columns)))
+            for name, columns in schema.unique_indexes:
+                self.cursor.execute("CREATE UNIQUE INDEX %s ON %s (%s)" %
+                        (name, schema.table_name, ', '.join(columns)))
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
         self._set_version()
 
+    def _get_size_info(self):
+        """Get info about the database size
+
+        returns the tuple (page_size, page_count, freelist_count)
+        """
+        rv = []
+        for name in ('page_size', 'page_count', 'freelist_count'):
+            self.cursor.execute('PRAGMA %s' % name)
+            rv.append(self.cursor.fetchone()[0])
+        return rv
+
+    def _preallocate_space(self, db_name='main'):
+        if db_name == 'main':
+            page_size, page_count, freelist_count = self._get_size_info()
+            current_size = page_size * (page_count + freelist_count)
+        else:
+            # HACK: We can't get size counts for attached databases so we just
+            # assume that the database is empty of content
+            current_size = 0
+        size = self.preallocate - current_size
+        if size > 0:
+            # make a row that's big enough so that our database will be
+            # approximately preallocate bytes large
+            self.cursor.execute("REPLACE INTO %s.dtv_variables "
+                                "(name, serialized_value) "
+                                "VALUES ('preallocate', zeroblob(%s))" %
+                                (db_name, size))
+            # delete the row, sqlite will keep the space allocate until the
+            # VACUUM command.  And we won't ever send a VACUUM.
+            self.cursor.execute("DELETE FROM %s.dtv_variables "
+                                "WHERE name='preallocate'" % (db_name,))
+
     def _get_version(self):
         return self.get_variable(VERSION_KEY)
 
-    def _set_version(self, version=None):
+    def _set_version(self, version=None, db_name='main'):
         """Set the database version to the current schema version."""
 
         if version is None:
             version = self._schema_version
-        self.set_variable(VERSION_KEY, version)
+        self.set_variable(VERSION_KEY, version, db_name)
 
     def _calc_sqlite_types(self, object_schema):
         """What datatype should we use for the attributes of an object schema?
@@ -911,19 +1317,9 @@ class LiveStorage:
         self.connection.close()
         self.save_invalid_db()
         self.open_connection()
-        self._init_database()
+        self.created_new = True
 
-    def _show_corrupt_db_dialog(self):
-        title = _("%(appname)s database corrupt.",
-                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        description = _(
-            "Your %(appname)s database is corrupt.  It will be "
-            "backed up in your Miro database directory and a new "
-            "database will be created now.",
-            {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        dialogs.MessageBoxDialog(title, description).run_blocking()
-
-    def _handle_load_error(self, message):
+    def _handle_load_error(self, message, init_db=True):
         """Handle errors happening when we try to load the database.  Our
         basic strategy is to log the error, save the current database then
         start fresh with an empty database.
@@ -933,6 +1329,8 @@ class LiveStorage:
         if util.chatter:
             logging.exception(message)
         self.reset_database()
+        if init_db:
+            self._init_database()
 
     def save_invalid_db(self):
         target_path = os.path.dirname(self.path)

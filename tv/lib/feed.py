@@ -237,7 +237,9 @@ def run_feedparser(html, callback, errback):
         else:
             callback(rv)
     else:
-        workerprocess.run_feedparser(html, callback, errback)
+        workerprocess.send(workerprocess.FeedparserTask(html),
+                           lambda msg, result: callback(result),
+                           lambda msg, error: errback(result))
 
 # Wait X seconds before updating the feeds at startup
 INITIAL_FEED_UPDATE_DELAY = 5.0
@@ -701,7 +703,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change(needs_save=False)
         for item in self.items:
             if not item.icon_cache or not (item.icon_cache.is_valid() or
-                    item.screenshot or
+                    item.screenshot_path or
                     item.isContainerItem):
                 item.signal_change(needs_save=False)
 
@@ -2117,14 +2119,15 @@ class DirectoryScannerImplBase(FeedImpl):
                     return
                 start = time.time()
         # commit changes
-        app.bulk_sql_manager.start()
-        try:
-            for item in to_remove:
-                item.remove()
-            for path in to_add:
-                self._make_child(path)
-        finally:
-            app.bulk_sql_manager.finish()
+        with app.local_metadata_manager.bulk_add():
+            app.bulk_sql_manager.start()
+            try:
+                for item in to_remove:
+                    item.remove()
+                for path in to_add:
+                    self._make_child(path)
+            finally:
+                app.bulk_sql_manager.finish()
         # cleanup and prepare for the next change
         self._watcher_paths_deleted = set()
         self._watcher_paths_added = set()
@@ -2235,12 +2238,6 @@ class DirectoryScannerImplBase(FeedImpl):
                         return
                     start = time.time()
 
-            app.metadata_progress_updater.will_process_paths(to_add)
-            # since we've now called will_process_paths(), we should make sure
-            # we call path_processed() if we halt early
-            def halt_early_cleanup():
-                for path in path_iter:
-                    app.metadata_progress_updater.path_processed(path)
             # Keep track of the paths we will add in case we get directory
             # watcher updates.  In that case, we want these paths to be in
             # known_files.  It's very important that the next line come before
@@ -2250,14 +2247,13 @@ class DirectoryScannerImplBase(FeedImpl):
             finished = False
             yield # yield after doing prep work
             if should_halt_early():
-                halt_early_cleanup()
                 return
-            while not finished:
-                finished = self._add_batch_of_videos(path_iter, 0.1)
-                yield # yield after each batch
-                if should_halt_early():
-                    halt_early_cleanup()
-                    return
+            with app.local_metadata_manager.bulk_add():
+                while not finished:
+                    finished = self._add_batch_of_videos(path_iter, 0.1)
+                    yield # yield after each batch
+                    if should_halt_early():
+                        return
         self._after_update()
         self.updating = False
         self.pending_paths_to_add = []

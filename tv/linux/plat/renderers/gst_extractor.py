@@ -74,6 +74,7 @@ class Extractor:
         self.doing_thumbnailing = False
         self.success = False
         self.duration = -1
+        self.media_type = None
         self.buffer_probes = {}
         self.audio_only = False
         self.saw_video_tag = self.saw_audio_tag = False

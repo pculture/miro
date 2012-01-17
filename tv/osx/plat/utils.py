@@ -503,6 +503,22 @@ def get_ffmpeg2theora_executable_path():
 
 def customize_ffmpeg2theora_parameters(default_parameters):
     return default_parameters
+
+def get_enmfp_executable_info():
+    bundle_path = NSBundle.mainBundle().bundlePath()
+    # XXX Unicode kludge.  This wouldn't be a problem once we switch to 
+    # Python 3.
+    helpers_dir = os.path.join(bundle_path, "Contents", "Helpers")
+    exe_path = os.path.join(helpers_dir, "codegen.Darwin").encode('utf-8')
+    env = os.environ.copy()
+    if 'PATH' in env:
+        env['PATH'] = ':'.join([helpers_dir.encode('utf-8'), env['PATH']])
+    else:
+        env['PATH'] = helpers_dir.encode('utf-8')
+    return {
+        'path': exe_path,
+        'env': env,
+    }
     
 def get_logical_cpu_count():
     try:

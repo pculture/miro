@@ -47,19 +47,25 @@ except ImportError:
         def __init__(self, *args, **kwargs):
             super(Counter, self).__init__(int, *args, **kwargs)
 
+import sqlite3
+
 from miro import app
 from miro import database
+from miro import devicedatabaseupgrade
 from miro import eventloop
 from miro import item
 from miro import itemsource
 from miro import feed
 from miro import fileutil
 from miro import filetypes
+from miro import metadata
 from miro import prefs
 from miro import playlist
 from miro.gtcache import gettext as _
 from miro import messages
+from miro import schema
 from miro import signals
+from miro import storedatabase
 from miro import conversions
 from miro.util import check_u
 
@@ -314,6 +320,13 @@ class DeviceManager(object):
         # FIXME - need this
         pass
 
+    def force_db_save_error(self, device_info):
+        if device_info.sqlite_database is None:
+            logging.warn("force_db_save_error: sqlite_database is None "
+                         "is the device connected?")
+            return
+        device_info.sqlite_database.simulate_db_save_error()
+
     def startup(self):
         # load devices
         self.load_devices(resources.path('devices/*.py'))
@@ -414,11 +427,15 @@ class DeviceManager(object):
 
     def _set_connected(self, id_, kwargs):
         if kwargs.get('mount'):
-            db = load_database(kwargs['mount'])
-            device_name = db.get(u'device_name',
-                                       kwargs.get('device_name'))
+            mount = kwargs['mount']
+            db = load_database(mount)
+            device_name = db.get(u'device_name', kwargs.get('device_name'))
+            sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'))
+            metadata_manager = make_metadata_manager(mount, sqlite_db, id_)
         else:
             device_name = None
+            sqlite_db = None
+            metadata_manager = None
             db = DeviceDatabase()
         if 'name' in kwargs:
             try:
@@ -444,7 +461,7 @@ class DeviceManager(object):
                 'info': info})
 
         info = self.connected[id_] = messages.DeviceInfo(
-            id_, info, kwargs.get('mount'), db,
+            id_, info, kwargs.get('mount'), db, sqlite_db, metadata_manager,
             kwargs.get('size'), kwargs.get('remaining'))
 
         return info
@@ -1074,20 +1091,16 @@ class DeviceSyncManager(object):
                 file_format=item_info.file_format,
                 license=item_info.license,
                 url=item_info.file_url,
-                media_type_checked=item_info.media_type_checked,
                 mime_type=item_info.mime_type,
                 creation_time=time.mktime(item_info.date_added.timetuple()),
-                title_tag=item_info.title_tag,
                 artist=item_info.artist,
                 album=item_info.album,
                 track=item_info.track,
                 year=item_info.year,
                 genre=item_info.genre,
-                metadata_version=item_info.metadata_version,
-                mdp_state=item_info.mdp_state,
-                auto_sync=getattr(item_info, 'auto_sync', False)
+                auto_sync=getattr(item_info, 'auto_sync', False),
+                local_path=item_info.video_path,
                 )
-            device_item._migrate_thumbnail()
             database = self.device.database
             database.setdefault(device_item.file_type, {})
             database[device_item.file_type][device_item.id] = \
@@ -1162,8 +1175,10 @@ class DeviceDatabase(dict, signals.SignalEmitter):
     def __init__(self, data=None, parent=None):
         if data:
             dict.__init__(self, data)
+            self.created_new = False
         else:
             dict.__init__(self)
+            self.created_new = True
         signals.SignalEmitter.__init__(self, 'changed', 'item-added',
                                        'item-changed', 'item-removed')
         self.parent = parent
@@ -1226,6 +1241,17 @@ class DeviceDatabase(dict, signals.SignalEmitter):
                 return True
         return False
 
+    def _find_item_data(self, path):
+        """Find the data for an item in the database
+
+        Returns (item_data, file_type) tuple
+        """
+
+        for file_type in (u'audio', u'video', u'other'):
+            if file_type in self and path in self[file_type]:
+                return (self[file_type][path], file_type)
+        raise KeyError(path)
+
 class DatabaseWriteManager(object):
     """
     Keeps track of writing a database periodically.
@@ -1275,6 +1301,79 @@ def load_database(mount, countdown=0):
     ddb = DeviceDatabase(db)
     ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
+
+def load_sqlite_database(mount, json_db, device_size):
+    """
+    Returns a LiveStorage object for an sqlite database on the device
+
+    The database lives at [MOUNT]/.miro/sqlite
+    """
+    if mount == ':memory:': # special case for the unittests
+        path = ':memory:'
+        preallocate = None
+    else:
+        directory = os.path.join(mount, '.miro')
+        path = os.path.join(directory, 'sqlite')
+        preallocate = calc_sqlite_preallocate_size(device_size)
+    error_handler = storedatabase.DeviceLiveStorageErrorHandler(mount)
+    object_schemas = [
+        schema.MetadataEntrySchema,
+        schema.MetadataStatusSchema,
+    ]
+    live_storage = storedatabase.LiveStorage(path, error_handler,
+                                             preallocate=preallocate,
+                                             object_schemas=object_schemas)
+    if not json_db.created_new and live_storage.created_new:
+        devicedatabaseupgrade.import_from_json(live_storage, json_db, mount)
+    return live_storage
+
+def calc_sqlite_preallocate_size(device_size):
+    """Calculate the size we should preallocate for our sqlite database.  """
+    # Estimate that the device can store 1 item per megabyte and each item
+    # takes 400 bytes in the database.
+    max_items_estimate = device_size / (2 ** 20)
+    size = max_items_estimate * 400
+    # force the size to be between 512K and 10M
+    size = max(size, 512 * (2 ** 10))
+    size = min(size, 20 * (2 ** 10))
+    return size
+
+def make_metadata_manager(mount, sqlite_db, device_id):
+    """
+    Get a MetadataManager for a device.
+    """
+    db_info = database.DBInfo(sqlite_db)
+    manager = metadata.DeviceMetadataManager(db_info, device_id, mount)
+    manager.connect("new-metadata", on_new_metadata, device_id)
+    return manager
+
+def on_new_metadata(metadata_manager, new_metadata, device_id):
+    device = app.device_manager.connected[device_id]
+
+    device.database.set_bulk_mode(True)
+    try:
+        for path, metadata in new_metadata.iteritems():
+            path = filename_to_unicode(path)
+            try:
+                item_data, file_type = device.database._find_item_data(path)
+            except KeyError:
+                logging.warn("Can't find device item for metadata: %s" %
+                             path)
+                continue
+            # check if we got a new file type
+            if 'file_type' in metadata:
+                file_type = metadata.pop('file_type')
+            # combine the old data with the new data for the device item
+            all_data = item_data.copy()
+            all_data.update(metadata)
+            # FIXME: can we avoid building a new DeviceItem here?
+            device_item = item.DeviceItem(video_path=path,
+                                          device=device,
+                                          file_type=file_type,
+                                          **all_data)
+            device_item.signal_change()
+    finally:
+        device.database.set_bulk_mode(False)
 
 def write_database(db, mount):
     """
@@ -1370,8 +1469,6 @@ def scan_device_for_files(device):
             item_data.append((ufilename, item_type))
             filenames.append(filename)
         if time.time() - start > 0.3:
-            app.metadata_progress_updater.will_process_paths(filenames,
-                                                             device)
             yield # let other stuff run
             if _stop():
                 break
@@ -1391,11 +1488,7 @@ def scan_device_for_files(device):
         device.database.set_bulk_mode(True)
         start = time.time()
         for ufilename, item_type in item_data:
-            i = item.DeviceItem(video_path=ufilename,
-                           file_type=item_type,
-                           device=device)
-            device.database[item_type][ufilename] = i.to_dict()
-            device.database.emit('item-added', i)
+            create_item_for_file(device, ufilename, item_type)
             if time.time() - start > 0.4:
                 device.database.set_bulk_mode(False) # save the database
                 yield # let other idle functions run
@@ -1405,3 +1498,11 @@ def scan_device_for_files(device):
                 start = time.time()
 
         device.database.set_bulk_mode(False)
+
+def create_item_for_file(device, video_path, file_type):
+    i = item.DeviceItem(video_path=video_path,
+                        file_type=file_type,
+                        device=device)
+    device.database[file_type][video_path] = i.to_dict()
+    device.database.emit('item-added', i)
+    return i

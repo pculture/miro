@@ -274,5 +274,4 @@ def item_file_type_for_filename(filename):
         return u'video'
     if ext in AUDIO_EXTENSIONS:
         return u'audio'
-    if ext in OTHER_EXTENSIONS:
-        return u'other'
+    return u'other'

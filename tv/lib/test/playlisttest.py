@@ -2,7 +2,7 @@ import shutil
 import os
 
 from miro.feed import Feed
-from miro.item import Item, FeedParserValues
+from miro.item import Item, FeedParserValues, setup_metadata_manager
 from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.folder import PlaylistFolder, PlaylistFolderItemMap
 from miro import app
@@ -179,6 +179,8 @@ class Upgrade88TestCase(MiroTestCase):
         shutil.copyfile(old_db_path, self.tmp_path)
         self.reload_database(self.tmp_path)
         app.db.upgrade_database()
+        # reload the metadata manager since we now have a new DB
+        setup_metadata_manager(self.tempdir)
         # figure out which maps were created
         folder_maps = set()
         playlist_maps = set()

@@ -42,6 +42,12 @@ renderers = []
 # database object
 db = None
 
+# BulkSQLManager for the main miro database
+bulk_sql_manager = None
+
+# DBInfo object for the main miro database
+db_info = None
+
 # stores ItemInfo objects so we can quickly fetch them
 item_info_cache = None
 
@@ -79,9 +85,6 @@ download_state_manager = None
 
 # movie data updater
 movie_data_updater = None
-
-# sends MetadataProgressUpdate messages to the frontend
-metadata_progress_updater = None
 
 # debugmode adds a bunch of computation that's useful for development
 # and debugging.  initalized to None; set to True/False depending on

@@ -175,7 +175,7 @@ class Application:
                 itemlistcontroller.ItemListControllerManager()
         app.playback_manager = playback.PlaybackManager()
         app.menu_manager = menus.MenuManager()
-        menus.setup_menubar(self.menubar)
+        app.menu_manager.setup_menubar(self.menubar)
         app.search_manager = search.SearchManager()
         app.inline_search_memory = search.InlineSearchMemory()
         app.tabs = tablistmanager.TabListManager()

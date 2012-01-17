@@ -94,11 +94,9 @@ from miro.test.idleiteratetest import *
 if app.config.get(prefs.APP_PLATFORM) == "linux":
     from miro.test.gtcachetest import *
     from miro.test.downloadertest import *
-    from miro.test.moviedatatest import *
 else:
     framework.skipped_tests.append("miro.test.gtcachetest tests: not linux")
     framework.skipped_tests.append("miro.test.downloadertest tests: not linux")
-    framework.skipped_tests.append("miro.test.moviedatatest tests: not linux")
 
 if app.config.get(prefs.APP_PLATFORM) == "osx":
     from miro.test.osxsparkletest import *

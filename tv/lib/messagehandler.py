@@ -1542,14 +1542,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         for handler, info_list in infos_per_handler.iteritems():
             handler.bulk_delete(info_list)
 
-    def handle_rename_video(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-        except database.ObjectNotFoundError:
-            logging.warn("RenameVideo: Item not found -- %s", message.id)
-        else:
-            item_.set_title(message.new_name)
-
     def handle_edit_items(self, message):
         changes = message.change_dict
         for id_ in message.item_ids:
@@ -1558,7 +1550,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             except database.ObjectNotFoundError:
                 logging.warn("EditItems: Item not found -- %s", id_)
                 continue
-            item_.set_metadata_from_iteminfo(changes)
+            item_.set_user_metadata(changes)
 
     def handle_revert_feed_title(self, message):
         try:
@@ -1672,6 +1664,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         last_progress_time = 0
         title = _('Migrating Files')
         messages.ProgressDialogStart(title).send_to_frontend()
+        app.local_metadata_manager.will_move_files([d.get_filename() for d in
+                                                    to_migrate])
         for i, download in enumerate(to_migrate):
             current_time = time.time()
             if current_time > last_progress_time + 0.5:
@@ -1982,3 +1976,43 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 f.actualFeed.modified = {}
                 f.actualFeed.signal_change()
                 f.update()
+
+    def handle_force_dbsave_error(self, message):
+        app.db.simulate_db_save_error()
+
+    def handle_force_device_dbsave_error(self, message):
+        app.device_manager.force_db_save_error(message.device_info)
+
+    def handle_set_net_lookup_enabled(self, message):
+        paths = set()
+        if message.item_ids is None:
+            app.local_metadata_manager.set_net_lookup_enabled_for_all(
+                message.enabled)
+            return
+
+        for item_id in message.item_ids:
+            try:
+                i = item.Item.get_by_id(item_id)
+            except ObjectNotFoundError:
+                logging.warn("handle_force_run_echonest: id not found: %s",
+                             item_id)
+            else:
+                paths.add(i.get_filename())
+        # Remove any None values in case an item didn't have a path
+        paths.discard(None)
+        app.local_metadata_manager.set_net_lookup_enabled(paths,
+                                                          message.enabled)
+
+    def handle_remove_echonest_data(self, message):
+        paths = set()
+        for item_id in message.item_ids:
+            try:
+                i = item.Item.get_by_id(item_id)
+            except ObjectNotFoundError:
+                logging.warn("handle_force_run_echonest: id not found: %s",
+                             item_id)
+            else:
+                paths.append(i.get_filename())
+        # Remove any None values in case an item didn't have a path
+        paths.discard(None)
+        app.local_metadata_manager.remove_echonest_data(paths)

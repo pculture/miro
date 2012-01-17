@@ -213,7 +213,9 @@ class MenuItem(MenuItemBase):
 class CheckMenuItem(MenuItem):
     """See the GTK version of this method for the current docstring."""
     def set_state(self, active):
-        if active:
+        if active is None:
+            state = NSMixedState
+        elif active:
             state = NSOnState
         else:
             state = NSOffState

@@ -30,6 +30,7 @@
 """``miro.item`` -- Holds ``Item`` class and related things.
 """
 
+import collections
 from datetime import datetime, timedelta
 import locale
 import os.path
@@ -61,7 +62,6 @@ from miro import eventloop
 from miro import prefs
 from miro.plat import resources
 from miro import util
-from miro import moviedata
 from miro import filetypes
 from miro import searchengines
 from miro import fileutil
@@ -347,11 +347,59 @@ class FileFeedParserValues(FeedParserValues):
             'releaseDateObj': datetime.min,
         }
 
-class CheckMediaError(StandardError):
-    """Error when trying to call read_metadata on an item."""
-    pass
+class _ItemsForPathCountTracker(object):
+    """Helps Item implement have_item_for_path
 
-class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
+    This class tracks how many items we have for a given path.  It's optimized
+    pretty agressively.  We call it many times when importing new files.
+    """
+
+    def get_count(self, path):
+        try:
+            counts = self.count_for_paths
+        except AttributeError:
+            counts = self._init_counts_for_paths()
+        return counts[self._count_key(path)]
+
+    def _init_counts_for_paths(self):
+        # Use a raw DB query for this one, since we want to be as fast as
+        # possible
+        counts = collections.defaultdict(int)
+        app.db.cursor.execute("SELECT lower(filename), COUNT(*) "
+                              "FROM item "
+                              "GROUP BY filename")
+        counts.update(app.db.cursor)
+        self.count_for_paths = counts
+        return counts
+
+    def _count_key(self, path):
+        # normalize paths so that they match whats in the database, and work
+        # case-insensitively
+        return filename_to_unicode(path).lower()
+
+    def reset(self):
+        try:
+            del self.count_for_paths
+        except AttributeError:
+            pass
+
+    def add_item(self, item):
+        if item.filename is None:
+            return
+        try:
+            self.count_for_paths[self._count_key(item.filename)] += 1
+        except AttributeError:
+            return # counts not created yet we can just ignore
+
+    def remove_item(self, item):
+        if item.filename is None:
+            return
+        try:
+            self.count_for_paths[self._count_key(item.filename)] -= 1
+        except AttributeError:
+            return # counts not created yet we can just ignore
+
+class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
     """
@@ -363,7 +411,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     def setup_new(self, fp_values, linkNumber=0, feed_id=None, parent_id=None,
             eligibleForAutoDownload=True, channel_title=None):
-        metadata.Store.setup_new(self)
+        for attr in metadata.attribute_names:
+            setattr(self, attr, None)
         self.is_file_item = False
         self.feed_id = feed_id
         self.parent_id = parent_id
@@ -375,13 +424,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.downloadedTime = None
         self.watchedTime = self.lastWatched = None
         self.pendingReason = u""
+        entry_title = self.torrent_title = None
         fp_values.update_item(self)
         self.expired = False
         self.keep = False
         self.filename = None
         self.eligibleForAutoDownload = eligibleForAutoDownload
         self.duration = None
-        self.screenshot = None
+        self.screenshot_path = None
         self.resumeTime = 0
         self.channelTitle = None
         self.downloader_id = None
@@ -390,6 +440,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.setup_new_icon_cache()
         self.play_count = 0
         self.skip_count = 0
+        self.net_lookup_enabled = False
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
 
@@ -405,6 +456,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     def setup_restored(self):
         self.setup_common()
         self.setup_links()
+        if (self.filename is not None and
+            not app.local_metadata_manager.path_in_system(self.filename)):
+            logging.warn("Path for item not in MetadataManager (%s).  "
+                         "Adding it now." % (self.filename))
+            app.local_metadata_manager.add_file(self.filename)
 
     def setup_common(self):
         self.selected = False
@@ -412,6 +468,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.expiring = None
         self.showMoreInfo = False
         self.playing = False
+        Item._path_count_tracker.add_item(self)
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
@@ -759,11 +816,15 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
 
     @classmethod
-    def update_folder_trackers(cls):
+    def update_folder_trackers(cls, db_info=None):
         """Update each view tracker that care's about the item's
         folder (both playlist and channel folders).
         """
-        for tracker in app.view_tracker_manager.trackers_for_ddb_class(cls):
+        if db_info is None:
+            view_tracker_manager = app.db_info.view_tracker_manager
+        else:
+            view_tracker_manager = db_info.view_tracker_manager
+        for tracker in view_tracker_manager.trackers_for_ddb_class(cls):
             # bit of a hack here.  We only need to update ViewTrackers
             # that care about the item's folder.  This seems like a
             # safe way to check if that's true.
@@ -771,14 +832,30 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                 tracker.check_all_objects()
 
     @classmethod
+    def items_with_path_view(cls, path):
+        return cls.make_view('lower(filename)=?',
+                             (filename_to_unicode(path).lower(),))
+
+    @classmethod
     def downloader_view(cls, dler_id):
         return cls.make_view("downloader_id=?", (dler_id,))
+
+    _path_count_tracker = _ItemsForPathCountTracker()
+
+    @classmethod
+    def have_item_for_path(cls, path):
+        """Check if we have an item for a path.
+
+        This method is optimized to avoid DB queries if at all possible.
+        """
+        # NOTE: use Item here rather than cls, since FileItem and Item share
+        # the same _path_count_tracker.
+        return Item._path_count_tracker.get_count(path) > 0
 
     def _look_for_downloader(self):
         self.set_downloader(downloader.lookup_downloader(self.get_url()))
         if self.has_downloader() and self.downloader.is_finished():
             self.set_filename(self.downloader.get_filename())
-            self.check_media_file()
 
     getSelected, setSelected = make_simple_get_set(
         u'selected', change_needs_save=False)
@@ -898,7 +975,27 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.signal_change()
 
     def set_filename(self, filename):
+        Item._path_count_tracker.remove_item(self)
         self.filename = filename
+        if not app.local_metadata_manager.path_in_system(filename):
+            metadata = app.local_metadata_manager.add_file(filename)
+        else:
+            metadata = app.local_metadata_manager.get_metadata(filename)
+        self.update_from_metadata(metadata)
+        Item._path_count_tracker.add_item(self)
+
+    def update_from_metadata(self, metadata_dict):
+        """Update our attributes from a metadata dictionary."""
+        self._bulk_update_db_values(metadata_dict)
+
+    def set_user_metadata(self, metadata_dict):
+        if not self.filename:
+            logging.warn("No file to set metadata for in "
+                         "set_metadata_from_iteminfo")
+            return
+        app.local_metadata_manager.set_user_data(self.filename, metadata_dict)
+        self.update_from_metadata(metadata_dict)
+        self.signal_change()
 
     def matches_search(self, search_string):
         if search_string is None or search_string == '':
@@ -944,24 +1041,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     def on_signal_change(self):
         self.expiring = None
-        self._sync_title()
         if hasattr(self, "_state"):
             del self._state
         if hasattr(self, "_size"):
             del self._size
-
-    def _sync_title(self):
-        # for torrents that aren't from a feed, we use the filename
-        # as the title.
-        if ((self.is_external()
-             and self.has_downloader()
-             and self.downloader.get_type() == "bittorrent"
-             and self.downloader.get_state() == "downloading")):
-            filename = os.path.basename(self.downloader.get_filename())
-            if self.title != filename:
-                # we skip set_title() since we're already in the DB
-                # thread/signal_change()
-                self.title = filename_to_unicode(filename)
 
     def recalc_feed_counts(self):
         self.get_feed().recalc_counts()
@@ -1094,11 +1177,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
                     item.make_deleted()
                     item.remove()
             self.delete_files()
-            self.delete_external_metadata()
             self.expired = True
             self.seen = self.keep = self.pendingManualDL = False
             self.filename = None
-            self.mdp_state = moviedata.State.UNSEEN
             self.file_type = self.watchedTime = self.lastWatched = None
             self.duration = None
             self.isContainerItem = None
@@ -1390,8 +1471,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         to signal the right set of items.
         """
         self.confirm_db_thread()
-        if self.cover_art:
-            path = self.cover_art
+        if self.cover_art_path:
+            path = self.cover_art_path
             path = resources.path(fileutil.expand_filename(path))
             if fileutil.exists(path):
                 return path
@@ -1399,8 +1480,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             # is_valid() verifies that the path exists
             path = self.icon_cache.get_filename()
             return resources.path(fileutil.expand_filename(path))
-        if self.screenshot:
-            path = self.screenshot
+        if self.screenshot_path:
+            path = self.screenshot_path
             path = resources.path(fileutil.expand_filename(path))
             if fileutil.exists(path):
                 return path
@@ -1425,13 +1506,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
     def get_title(self):
         """Returns the title of the item.
         """
-        stored = metadata.Store.get_title(self)
-        if stored:
-            return stored
+        if self.title:
+            return self.title
+        if self.torrent_title is not None:
+            return self.torrent_title
         if self.entry_title is not None:
             return self.entry_title
-        if self.get_filename() is not None:
-            return filename_to_title(self.get_filename())
+        if self.filename:
+            return filename_to_unicode(os.path.basename(self.filename))
         return _('no title')
 
     def set_channel_title(self, title):
@@ -1523,10 +1605,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
 
     def _update_title_from_torrent_callback(self, info):
         try:
-            self.title = util.get_name_from_torrent_metadata(info['body'])
+            title = util.get_name_from_torrent_metadata(info['body'])
         except ValueError:
             logging.exception("Error setting torrent name")
         else:
+            self.torrent_title = title
             self.signal_change()
         self._update_title_from_torrent_client = None
 
@@ -1828,7 +1911,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         self.split_item()
         self.signal_change()
         self._replace_file_items()
-        self.check_media_file()
         signals.system.download_complete(self)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
@@ -1836,73 +1918,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             other.set_downloader(self.downloader)
         self.recalc_feed_counts()
 
-    def check_media_file(self):
-        """Begin metadata extraction for this item; runs mutagen synchonously,
-        if applicable, and then adds the item to mdp's queue.
-        """
-        if self.isContainerItem:
-            self.file_type = u'other'
-            self.signal_change()
-            return # this is OK because incomplete_mdp_view knows about it
-        # NOTE: it is very important (#7993) that there is no way to leave this
-        # method without either:
-        # - calling app.movie_data_updater.request_update(self)
-        # - calling _handle_invalid_media_file
-        try:
-            self._check_media_file()
-        except IOError, e:
-            # shouldn't generally happen, but probably something we have no
-            # control over; likely another process has moved or deleted our file
-            logging.warn("check_media_file failed: %s", e)
-            self._handle_invalid_media_file()
-        except CheckMediaError, e:
-            # filename is None - this should never happen
-            app.controller.failed_soft("check_media_file", str(e), True)
-            self._handle_invalid_media_file()
-        else:
-            app.movie_data_updater.request_update(self)
-            if self.file_type is None:
-                # if this is not overridden by movie_data_updater,
-                # neither mutagen nor MDP could identify it
-                self.file_type = u'other'
-            self.signal_change()
-
-    def _handle_invalid_media_file(self):
-        """Failed to process a file in check_media_file; when this happens we:
-        - inform the metadata_progress_updater that we're done with the item
-        - make sure we don't try to process it again
-        - check whether the file no longer exists
-        """
-        # call path_processed since the movie data program won't run on us
-        path = self.get_filename()
-        if path is not None:
-            app.metadata_progress_updater.path_processed(path)
-        # Set our state to SKIPPED so we don't request another update.
-        self.mdp_state = moviedata.State.SKIPPED
-        self.file_type = u'other'
-        self.signal_change()
-        # The file may no longer be around.  Call check_delete() in an
-        # idle callback to handle this.  We don't want to call
-        # check_delete() now because it's not safe if we're called inside
-        # setup_new().  See #17344
-        _deleted_file_checker.schedule_check(self)
-
-    def _check_media_file(self):
-        """Does the work for check_media_file()
-
-        :raises: CheckMediaError if we aren't able to check it
-        """
-        # NOTE: it is very important (#7993) that there is no way to leave this
-        # method without either:
-        # - calling app.movie_data_updater.request_update(self)
-        # - changing this item so that not self.in_incomplete_mdp_view
-        filename = self.get_filename()
-        if filename is None:
-            raise CheckMediaError("item has no filename")
-        self.file_type = filetypes.item_file_type_for_filename(filename)
-        self.read_metadata()
-
     def on_downloader_migrated(self, old_filename, new_filename):
+        app.local_metadata_manager.file_moved(old_filename, new_filename)
         self.set_filename(new_filename)
         self.signal_change()
         if self.isContainerItem:
@@ -1967,20 +1984,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             for item in self.get_children():
                 item.migrate(newdir)
 
-    def delete_external_metadata(self):
-        if self.screenshot:
-            try:
-                fileutil.remove(self.screenshot)
-            except StandardError:
-                pass
-            self.screenshot = None
-        self.delete_cover_art()
-
     def remove(self):
+        Item._path_count_tracker.remove_item(self)
         if self.has_downloader():
             self.set_downloader(None)
         self.remove_icon_cache()
-        self.delete_external_metadata()
         if self.isContainerItem:
             for item in self.get_children():
                 item.remove()
@@ -1997,14 +2005,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
             # deleted, so we were removed as well.  (#11979)
             return
         _deleted_file_checker.schedule_check(self)
-        if self.screenshot and not fileutil.exists(self.screenshot):
-            logging.warn("file disappeared: %s", self.screenshot)
-            self.screenshot = None
-            self.signal_change()
-        if self.cover_art and not fileutil.exists(self.cover_art):
-            logging.warn("file disappeared: %s", self.cover_art)
-            self.cover_art = None
-            self.signal_change()
 
     def check_deleted(self):
         """Check whether the item's file has been deleted outside of miro.
@@ -2026,9 +2026,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, metadata.Store):
         try:
             return self._downloader
         except AttributeError:
-            dler = downloader.get_existing_downloader(self)
-            if dler is not None:
-                dler.add_item(self)
+            if self.downloader_id is None:
+                dler = None
+            else:
+                dler = downloader.get_existing_downloader(self)
+                if dler is not None:
+                    dler.add_item(self)
             self._downloader = dler
             return dler
     downloader = property(_get_downloader)
@@ -2094,8 +2097,6 @@ class FileItem(Item):
             # not a container item.  Note that the opposite isn't true in the
             # case where we are a directory with only 1 file inside.
             self.isContainerItem = False
-        if not self.deleted:
-            self.check_media_file()
         self.split_item()
 
     # FileItem downloaders are always None
@@ -2156,6 +2157,11 @@ class FileItem(Item):
     def is_external(self):
         return self.parent_id is None
 
+    def _look_for_downloader(self):
+        # we don't need a database query to know that there's no downloader
+        # for us.
+        return
+
     def expire(self):
         self.confirm_db_thread()
         if self.has_parent():
@@ -2181,9 +2187,9 @@ class FileItem(Item):
                 self.make_deleted()
         if old_parent is not None and old_parent.get_children().count() == 0:
             old_parent.expire()
+        app.local_metadata_manager.remove_file(self.filename)
 
     def make_deleted(self):
-        self.delete_external_metadata()
         self._remove_from_playlists()
         self.downloadedTime = None
         # Move to the manual feed, since from Miro's point of view the file is
@@ -2191,13 +2197,10 @@ class FileItem(Item):
         self.parent_id = None
         self.feed_id = models.Feed.get_manual_feed().id
         self.deleted = True
-        self.mdp_state = moviedata.State.UNSEEN
         self.signal_change()
 
     def make_undeleted(self):
         self.deleted = False
-        self.mdp_state = moviedata.State.UNSEEN
-        self.check_media_file()
         self.signal_change()
 
     def delete_files(self):
@@ -2219,9 +2222,6 @@ class FileItem(Item):
 
     def download(self, autodl=False):
         self.make_undeleted()
-
-    def set_filename(self, filename):
-        Item.set_filename(self, filename)
 
     def set_release_date(self):
         try:
@@ -2312,18 +2312,6 @@ def filename_to_title(filename):
 def fp_values_for_file(filename, title=None, description=None):
     return FileFeedParserValues(filename, title, description)
 
-@eventloop.idle_iterator
-def update_incomplete_movie_data():
-    """Finds local Items that have not been examined by MDP, and queues them.
-    The metadata update request runs asynchronously and also it handles
-    duplicate items being added, so we need not worry slurping in the entire
-    thing.
-    """
-    for item in Item.incomplete_mdp_view():
-        if item.id_exists():
-            item.check_media_file()
-        yield
-
 class DeletedFileChecker(object):
     """Utility class that manages calling Item.check_deleted().
 
@@ -2383,7 +2371,7 @@ class DeletedFileChecker(object):
             if self.items_to_check:
                 self._ensure_run_checks_scheduled()
 
-class DeviceItem(metadata.Store):
+class DeviceItem(object):
     """
     An item which lives on a device.  There's a separate, per-device JSON
     database, so this implements the necessary Item logic for those files.
@@ -2402,14 +2390,20 @@ class DeviceItem(metadata.Store):
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = None
-        self.duration = self.screenshot = self.thumbnail_url = None
+        self.duration = self.screenshot_path = self.thumbnail_url = None
         self.resumeTime = 0
         self.subtitle_encoding = self.enclosure_type = None
         self.auto_sync = False
         self.file_type = None
         self.creation_time = None
         self.is_playing = False
-        metadata.Store.setup_new(self)
+        for attr in metadata.attribute_names:
+            setattr(self, attr, None)
+        if 'local_path' in kwargs:
+            local_path = kwargs.pop('local_path')
+        else:
+            local_path = None
+        self._fix_paths_from_database(kwargs)
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
@@ -2418,10 +2412,6 @@ class DeviceItem(metadata.Store):
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         else:
             self.id = filename_to_unicode(self.video_path)
-        if isinstance(self.screenshot, unicode):
-            self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
-        if isinstance(self.cover_art, unicode):
-            self.cover_art = utf8_to_filename(self.cover_art.encode('utf8'))
         if self.file_format is None:
             self.file_format = filename_to_unicode(
                 os.path.splitext(self.video_path)[1])
@@ -2437,22 +2427,27 @@ class DeviceItem(metadata.Store):
                     self.release_date = ctime
                 if self.creation_time is None:
                     self.creation_time = ctime
-            if not self.metadata_version:
-                # haven't run read_metadata yet.  We don't check the actual
-                # version because upgrading metadata isn't supported.
-                self.read_metadata()
-                if not self.get_title():
-                    self.title = filename_to_unicode(
-                        os.path.basename(self.video_path))
-
         except (OSError, IOError):
             # if there was an error reading the data from the filesystem, don't
             # bother continuing with other FS operations or starting moviedata
             logging.debug('error reading %s', self.id, exc_info=True)
-        else:
-            if self.mdp_state is None: # haven't run MDP yet
-                app.movie_data_updater.request_update(self)
+        self.add_to_metadata_manager(local_path)
         self.__initialized = True
+
+    def _fix_paths_from_database(self, data):
+        """Make screenshot_path and cover_art_path the correct type.
+        """
+        for key in ('screenshot_path', 'cover_art_path'):
+            if key in data and isinstance(data[key], unicode):
+                data[key] = utf8_to_filename(data[key].encode('utf-8'))
+
+    def add_to_metadata_manager(self, local_path):
+        metadata_manager = self.device.metadata_manager
+        if not metadata_manager.path_in_system(self.video_path):
+            initial_metadata = metadata_manager.add_file(self.video_path,
+                                                         local_path)
+            # update ourself based on the initial metadata
+            self.__dict__.update(initial_metadata)
 
     @staticmethod
     def id_exists():
@@ -2465,7 +2460,6 @@ class DeviceItem(metadata.Store):
             logging.warn('DeviceItem: release date %s invalid',
                           self.release_date)
             return datetime.now()
-           
 
     def get_creation_time(self):
         try:
@@ -2482,53 +2476,26 @@ class DeviceItem(metadata.Store):
     def get_url(self):
         return self.url or u''
 
+    @returns_unicode
+    def get_title(self):
+        """Returns the title of the item.
+        """
+        if self.title:
+            return self.title
+        return os.path.basename(self.id)
+
     @returns_filename
     def get_thumbnail(self):
-        if self.cover_art:
+        if self.cover_art_path:
             return os.path.join(self.device.mount,
-                                self.cover_art)
-        elif self.screenshot:
+                                self.cover_art_path)
+        elif self.screenshot_path:
             return os.path.join(self.device.mount,
-                                self.screenshot)
+                                self.screenshot_path)
         elif self.file_type == 'audio':
             return resources.path("images/thumb-default-audio.png")
         else:
             return resources.path("images/thumb-default-video.png")
-
-    def _migrate_image_field(self, field_name):
-        value = getattr(self, field_name)
-        icon_cache_directory = app.config.get(prefs.ICON_CACHE_DIRECTORY)
-        cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
-        if value is not None:
-            if (value.startswith(icon_cache_directory) or
-                value.startswith(cover_art_directory)):
-                # migrate the screenshot onto the device
-                basename = os.path.basename(value)
-                try:
-                    new_path = os.path.join(self.device.mount, '.miro',
-                                            basename)
-                    shutil.copyfile(value, new_path)
-                except (IOError, OSError):
-                    # error copying the thumbnail, just erase it
-                    setattr(self, field_name, None)
-                else:
-                    extracted = os.path.join(icon_cache_directory, 'extracted')
-                    if (value.startswith(extracted) or
-                        value.startswith(cover_art_directory)):
-                        # moviedata extracted this for us, so we can remove it
-                        try:
-                            os.unlink(value)
-                        except OSError:
-                            pass
-                    setattr(self, field_name,
-                            os.path.join('.miro', basename))
-            elif value.startswith(resources.root()):
-                setattr(self, field_name, None) # don't save a default
-                                                # thumbnail
-
-    def _migrate_thumbnail(self):
-        self._migrate_image_field('screenshot')
-        self._migrate_image_field('cover_art')
 
     def remove(self, save=True):
         for file_type in [u'video', u'audio', u'other']:
@@ -2536,6 +2503,7 @@ class DeviceItem(metadata.Store):
                 del self.device.database[file_type][self.id]
         if save:
             self.device.database.emit('item-removed', self)
+            self.device.metadata_manager.remove_file(self.video_path)
 
     def signal_change(self):
         if not self.__initialized:
@@ -2560,7 +2528,6 @@ class DeviceItem(metadata.Store):
                 was_removed = True
                 break
 
-        self._migrate_thumbnail()
         if self.file_type:
             db = self.device.database
             db[self.file_type][self.id] =  self.to_dict()
@@ -2573,7 +2540,7 @@ class DeviceItem(metadata.Store):
         for k, v in self.__dict__.items():
             if v is not None and k not in (u'device', u'file_type', u'id',
                                            u'video_path', u'_deferred_update'):
-                if ((k == u'screenshot' or k == u'cover_art')):
+                if ((k == u'screenshot_path' or k == u'cover_art_path')):
                     v = filename_to_unicode(v)
                 data[k] = v
         return data
@@ -2623,3 +2590,24 @@ def move_orphaned_items():
     if parentless_items:
         databaselog.info("Moved items to manual feed because their parent was "
                 "gone: %s", ', '.join(parentless_items))
+
+def setup_metadata_manager(cover_art_dir=None, screenshot_dir=None):
+    """Setup the MetadataManager for Items and FileItems."""
+    if cover_art_dir is None:
+        cover_art_dir = app.config.get(prefs.COVER_ART_DIRECTORY)
+    if screenshot_dir is None:
+        icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
+        screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
+    app.local_metadata_manager = metadata.MetadataManager(cover_art_dir,
+                                                          screenshot_dir)
+    app.local_metadata_manager.connect('new-metadata', on_new_metadata)
+
+def on_new_metadata(metadata_manager, new_metadata):
+    for path, metadata in new_metadata.iteritems():
+        for item in Item.items_with_path_view(path):
+            item.update_from_metadata(metadata)
+            item.signal_change()
+
+def update_incomplete_metadata():
+    """Restart medata updates for our items.  """
+    app.local_metadata_manager.restart_incomplete()

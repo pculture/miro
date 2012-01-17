@@ -3,6 +3,7 @@ import time
 import Queue
 
 from miro import app
+from miro import moviedata
 from miro import subprocessmanager
 from miro import workerprocess
 from miro.plat import resources
@@ -71,6 +72,12 @@ class Pong(subprocessmanager.SubprocessResponse):
 class SawEvent(subprocessmanager.SubprocessResponse):
     def __init__(self, event):
         self.event = event
+
+class SlowRunningTask(workerprocess.TaskMessage):
+    """Task sent to the worker process that should do nothing except take a
+    bunch of time.
+    """
+    priority = -10
 
 # Actual tests go below here
 
@@ -202,6 +209,10 @@ class UnittestWorkerProcessHandler(workerprocess.WorkerProcessHandler):
             return workerprocess.WorkerProcessHandler.handle_feedparser_task(
                     self, msg)
 
+    def handle_slow_running_task(self, msg):
+        time.sleep(0.5)
+        return None
+
 class WorkerProcessTest(EventLoopTest):
     """Test our worker process."""
     def setUp(self):
@@ -209,26 +220,32 @@ class WorkerProcessTest(EventLoopTest):
         # override the normal handler class with our own
         workerprocess._subprocess_manager.handler_class = (
                 UnittestWorkerProcessHandler)
+        self.reset_results()
+
+    def reset_results(self):
         self.result = self.error = None
 
-    def callback(self, result):
+    def callback(self, msg, result):
         self.result = result
         self.stopEventLoop(abnormal=False)
 
-    def errback(self, error):
+    def errback(self, msg, error):
         self.error = error
         self.stopEventLoop(abnormal=False)
 
+class FeedParserTest(WorkerProcessTest):
     def send_feedparser_task(self):
         # send feedparser successfully parsing a feed
         path = os.path.join(resources.path("testdata/feedparsertests/feeds"),
             "http___feeds_miroguide_com_miroguide_featured.xml")
         html = open(path).read()
-        workerprocess.run_feedparser(html, self.callback, self.errback)
+        msg = workerprocess.FeedparserTask(html)
+        workerprocess.send(msg, self.callback, self.errback)
 
     def check_successful_result(self):
+        if self.error is not None:
+            raise self.error
         self.assertNotEquals(self.result, None)
-        self.assertEquals(self.error, None)
         # just do some very basic test to see if the result is correct
         if self.result['bozo']:
             raise AssertionError("Feedparser parse error: %s",
@@ -244,8 +261,8 @@ class WorkerProcessTest(EventLoopTest):
     def test_feedparser_error(self):
         # test feedparser failing to parse a feed
         workerprocess.startup()
-        workerprocess.run_feedparser('FORCE EXCEPTION', self.callback,
-                self.errback)
+        msg = workerprocess.FeedparserTask('FORCE EXCEPTION')
+        workerprocess.send(msg, self.callback, self.errback)
         self.runEventLoop(4.0)
         self.assertEquals(self.result, None)
         self.assert_(isinstance(self.error, ValueError))
@@ -271,3 +288,82 @@ class WorkerProcessTest(EventLoopTest):
         workerprocess.startup()
         self.runEventLoop(4.0)
         self.check_successful_result()
+
+class MovieDataTest(WorkerProcessTest):
+    def check_successful_result(self):
+        # just do some very basic test to see if the result is correct
+        if self.error is not None:
+            raise self.error
+        if not isinstance(self.result, dict):
+            raise TypeError(self.result)
+
+    def check_movie_data_call(self, filename, file_type, duration):
+        source_path = resources.path("testdata/metadata/" + filename)
+        msg = workerprocess.MovieDataProgramTask(source_path, self.tempdir)
+        workerprocess.send(msg, self.callback, self.errback)
+        self.runEventLoop(4.0)
+        self.check_successful_result()
+        self.assertEquals(self.result['source_path'], source_path)
+        if file_type is not None:
+            self.assertEquals(self.result['file_type'], file_type)
+        else:
+            self.assert_('file_type' not in self.result)
+        if duration is not None:
+            self.assertEquals(self.result['duration'], duration)
+        else:
+            self.assert_('duration' not in self.result)
+        if file_type == 'video':
+            screenshot_name = os.path.basename(source_path) + '.png'
+            self.assertEquals(self.result['screenshot_path'],
+                              os.path.join(self.tempdir, screenshot_name))
+        else:
+            self.assert_('screenshot_path' not in self.result)
+        self.reset_results()
+
+    def test_movie_data_worker_process(self):
+        workerprocess.startup()
+        self.check_movie_data_call('mp3-0.mp3', 'audio', 1044)
+        self.check_movie_data_call('mp3-1.mp3', 'audio', 1044)
+        self.check_movie_data_call('mp3-2.mp3', 'audio', 1044)
+        self.check_movie_data_call('webm-0.webm', 'video', 434)
+        self.check_movie_data_call('drm.m4v', None, None)
+
+class MutagenTest(WorkerProcessTest):
+    def check_successful_result(self):
+        # just do some very basic test to see if the result is correct
+        if self.error is not None:
+            raise self.error
+        if not isinstance(self.result, dict):
+            raise TypeError(self.result)
+
+    def check_mutagen_call(self, filename, file_type, duration, title,
+                           has_cover_art):
+        source_path = resources.path("testdata/metadata/" + filename)
+        msg = workerprocess.MutagenTask(source_path, self.tempdir)
+        workerprocess.send(msg, self.callback, self.errback)
+        self.runEventLoop(4.0)
+        self.check_successful_result()
+        self.assertEquals(self.result['file_type'], file_type)
+        self.assertEquals(self.result['duration'], duration)
+        self.assertEquals(self.result['title'], title)
+        if has_cover_art:
+            self.assertNotEquals(self.result['cover_art_path'], None)
+        else:
+            self.assert_('cover_art_path' not in self.result)
+        self.reset_results()
+
+    def test_mutagen_worker_process(self):
+        workerprocess.startup()
+        self.check_mutagen_call('mp3-0.mp3', 'audio', 1055,
+                                   'Invisible Walls', False)
+        self.check_mutagen_call('mp3-1.mp3', 'audio', 1055, 'Race Lieu',
+                                False)
+        self.check_mutagen_call('mp3-2.mp3', 'audio', 1066,
+                                   '#426: Tough Room 2011', False)
+        self.check_mutagen_call('drm.m4v', 'video', 2668832, 'Thinkers',
+                                True)
+
+
+# TODO:
+#   Test task priority system in worker process
+#   Test that the CancelFileOperations message is handled properly
