@@ -365,6 +365,7 @@ class ObjectSchema(object):
         return cls.klass
 
     indexes = ()
+    unique_indexes = ()
 
 class MultiClassObjectSchema(ObjectSchema):
     """ObjectSchema where rows will be restored to different python
@@ -390,6 +391,7 @@ from miro.folder import (HideableTab, ChannelFolder, PlaylistFolder,
 from miro.guide import ChannelGuide
 from miro.item import Item, FileItem
 from miro.iconcache import IconCache
+from miro.metadata import MetadataStatus, MetadataEntry
 from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.tabs import TabOrder
 from miro.theme import ThemeHistory
@@ -448,13 +450,14 @@ class ItemSchema(MultiClassObjectSchema):
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
-        ('screenshot', SchemaFilename(noneOk=True)),
+        ('screenshot_path', SchemaFilename(noneOk=True)),
         ('resumeTime', SchemaInt()),
         ('channelTitle', SchemaString(noneOk=True)),
         ('license', SchemaString(noneOk=True)),
         ('rss_id', SchemaString(noneOk=True)),
         ('thumbnail_url', SchemaURL(noneOk=True)),
         ('entry_title', SchemaString(noneOk=True)),
+        ('torrent_title', SchemaString(noneOk=True)),
         ('entry_description', SchemaString(noneOk=False)),
         ('link', SchemaURL(noneOk=False)),
         ('payment_link', SchemaURL(noneOk=False)),
@@ -470,12 +473,9 @@ class ItemSchema(MultiClassObjectSchema):
         ('offsetPath', SchemaFilename(noneOk=True)),
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
-        ('cover_art', SchemaFilename(noneOk=True)),
-        ('mdp_state', SchemaInt(noneOk=True)),
         # metadata:
-        ('metadata_version', SchemaInt()),
+        ('cover_art_path', SchemaFilename(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
-        ('title_tag', SchemaString(noneOk=True)),
         ('description', SchemaString(noneOk=True)),
         ('album', SchemaString(noneOk=True)),
         ('album_artist', SchemaString(noneOk=True)),
@@ -492,6 +492,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('episode_number', SchemaInt(noneOk=True)),
         ('season_number', SchemaInt(noneOk=True)),
         ('kind', SchemaString(noneOk=True)),
+        ('net_lookup_enabled', SchemaBool()),
     ]
 
     indexes = (
@@ -501,6 +502,7 @@ class ItemSchema(MultiClassObjectSchema):
             ('item_downloader', ('downloader_id',)),
             ('item_feed_downloader', ('feed_id', 'downloader_id',)),
             ('item_file_type', ('file_type',)),
+            ('item_filename', ('filename',)),
     )
 
 class FeedSchema(DDBObjectSchema):
@@ -816,8 +818,67 @@ class ViewStateSchema(DDBObjectSchema):
     def handle_malformed_column_widths(value):
         return None
 
+class MetadataStatusSchema(DDBObjectSchema):
+    klass = MetadataStatus
+    table_name = 'metadata_status'
+    fields = DDBObjectSchema.fields + [
+        ('path', SchemaFilename()),
+        ('current_processor', SchemaString(noneOk=True)),
+        ('mutagen_status', SchemaString()),
+        ('moviedata_status', SchemaString()),
+        ('echonest_status', SchemaString()),
+        ('echonest_id', SchemaString(noneOk=True)),
+        ('net_lookup_enabled', SchemaBool()),
+        ('mutagen_thinks_drm', SchemaBool()),
+        ('max_entry_priority', SchemaInt()),
+    ]
 
-VERSION = 165
+    indexes = (
+        ('metadata_processor', ('current_processor',)),
+    )
+
+    unique_indexes = (
+        ('metadata_path', ('path',)),
+    )
+
+class MetadataEntrySchema(DDBObjectSchema):
+    klass = MetadataEntry
+    table_name = 'metadata'
+    fields = DDBObjectSchema.fields + [
+        ('status_id', SchemaInt()),
+        ('source', SchemaString()),
+        ('priority', SchemaInt()),
+        ('file_type', SchemaString(noneOk=True)),
+        ('duration', SchemaInt(noneOk=True)),
+        ('album', SchemaString(noneOk=True)),
+        ('album_artist', SchemaString(noneOk=True)),
+        ('album_tracks', SchemaInt(noneOk=True)),
+        ('artist', SchemaString(noneOk=True)),
+        ('screenshot_path', SchemaFilename(noneOk=True)),
+        ('drm', SchemaBool(noneOk=True)),
+        ('genre', SchemaString(noneOk=True)),
+        ('title', SchemaString(noneOk=True)),
+        ('track', SchemaInt(noneOk=True)),
+        ('year', SchemaInt(noneOk=True)),
+        ('description', SchemaString(noneOk=True)),
+        ('rating', SchemaInt(noneOk=True)),
+        ('show', SchemaString(noneOk=True)),
+        ('episode_id', SchemaString(noneOk=True)),
+        ('episode_number', SchemaInt(noneOk=True)),
+        ('season_number', SchemaInt(noneOk=True)),
+        ('kind', SchemaString(noneOk=True)),
+        ('disabled', SchemaBool()),
+    ]
+
+    indexes = (
+        ('metadata_entry_status', ('status_id',)),
+    )
+
+    unique_indexes = (
+        ('metadata_entry_status_and_source', ('status_id', 'source')),
+    )
+
+VERSION = 172
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
@@ -829,5 +890,6 @@ object_schemas = [
     PlaylistSchema, HideableTabSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
     TabOrderSchema, ThemeHistorySchema, DisplayStateSchema, GlobalStateSchema,
-    DBLogEntrySchema, ViewStateSchema,
+    DBLogEntrySchema, ViewStateSchema, MetadataStatusSchema,
+    MetadataEntrySchema
 ]

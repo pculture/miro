@@ -43,11 +43,11 @@ import copy
 import logging
 
 from miro.gtcache import gettext as _
-from miro.folder import ChannelFolder, PlaylistFolder
 from miro.messagetools import Message, MessageHandler
 from miro.plat import resources
 from miro import app
 from miro import displaytext
+from miro import models
 from miro import guide
 from miro import search
 from miro import prefs
@@ -901,6 +901,17 @@ class RateItem(BackendMessage):
         self.info = info
         self.rating = rating
 
+class SetNetLookupEnabled(BackendMessage):
+    """Enable/disable internet lookups for a set of items.  """
+    def __init__(self, item_ids, enabled):
+        """Create a new message
+
+        :param item_ids: list of item ids or None for all current items
+        :param boolean enabled: enable/disable flag
+        """
+        self.item_ids = item_ids
+        self.enabled = enabled
+
 class ClogBackend(BackendMessage):
     """Dev message: intentionally clog the backend for a specified number of 
     seconds.
@@ -912,6 +923,16 @@ class ForceFeedparserProcessing(BackendMessage):
     """Force the backend to do a bunch of feedparser updates
     """
     pass
+
+class ForceDBSaveError(BackendMessage):
+    """Simulate an error running an INSERT/UPDATE statement on the main DB.
+    """
+
+class ForceDeviceDBSaveError(BackendMessage):
+    """Simulate an error running an INSERT/UPDATE statement on a device DB.
+    """
+    def __init__(self, device_info):
+        self.device_info = device_info
 
 # Frontend Messages
 class DownloaderSyncCommandComplete(FrontendMessage):
@@ -1039,7 +1060,7 @@ class ChannelInfo(object):
             self.search_term = channel_obj.searchTerm
         else:
             self.search_term = None
-        if not isinstance(channel_obj, ChannelFolder):
+        if not isinstance(channel_obj, models.ChannelFolder):
             self.has_original_title = channel_obj.has_original_title()
             self.is_updating = channel_obj.is_updating()
             self.parent_id = channel_obj.folder_id
@@ -1081,7 +1102,7 @@ class PlaylistInfo(object):
     def __init__(self, playlist_obj):
         self.name = playlist_obj.get_title()
         self.id = playlist_obj.id
-        self.is_folder = isinstance(playlist_obj, PlaylistFolder)
+        self.is_folder = isinstance(playlist_obj, models.PlaylistFolder)
         if self.is_folder:
             self.parent_id = None
         else:
@@ -1660,10 +1681,13 @@ class SharingEject(BackendMessage):
 class DeviceInfo(object):
     """Tracks the state of an attached device.
     """
-    def __init__(self, id_, device_info, mount, database, size, remaining):
+    def __init__(self, id_, device_info, mount, database, sqlite_database,
+                 metadata_manager, size, remaining):
         self.id = id_
         self.mount = mount
         self.database = database
+        self.sqlite_database = sqlite_database
+        self.metadata_manager = metadata_manager
         self.size = size
         self.remaining = remaining
         self.info = device_info

@@ -27,6 +27,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import itertools
 import logging
 import traceback
 import threading
@@ -140,24 +141,26 @@ class ViewObjectFetcher(object):
         pass
 
 class DDBObjectFetcher(ViewObjectFetcher):
-    def __init__(self, klass):
+    def __init__(self, klass, db_info):
         self.klass = klass
+        self.db_info = db_info
 
     def fetch_obj(self, id_):
-        return app.db.get_obj_by_id(id_, self.klass)
+        return self.db_info.db.get_obj_by_id(id_, self.klass)
 
     def fetch_obj_for_ddb_object(self, ddb_object):
         return ddb_object
 
     def table_name(self):
-        return app.db.table_name(self.klass)
+        return self.db_info.db.table_name(self.klass)
 
     def prepare_objects(self, id_list):
-        if app.db.ensure_objects_loaded(self.klass, id_list):
+        if self.db_info.db.ensure_objects_loaded(self.klass, id_list,
+                                                 self.db_info):
             # sometimes objects will call remove() in setup_restored().
             # We need to filter those out.
             new_id_list = [i for i in id_list
-                           if app.db.id_alive(i, self.klass)]
+                           if self.db_info.db.id_alive(i, self.klass)]
             if len(new_id_list) < id_list:
                 id_list[:] = new_id_list # update id_list in-place
 
@@ -177,7 +180,7 @@ class IDOnlyFetcher(ViewObjectFetcher):
         return item.id
 
 class View(object):
-    def __init__(self, fetcher, where, values, order_by, joins, limit):
+    def __init__(self, fetcher, where, values, order_by, joins, limit, db_info):
         self.fetcher = fetcher
         self.table_name = fetcher.table_name()
         self.where = where
@@ -185,6 +188,7 @@ class View(object):
         self.order_by = order_by
         self.joins = joins
         self.limit = limit
+        self.db_info = db_info
 
     def _query(self):
         id_list = self._query_ids()
@@ -193,12 +197,14 @@ class View(object):
             yield self.fetcher.fetch_obj(id_)
 
     def _query_ids(self):
-        return list(app.db.query_ids(self.table_name, self.where, self.values,
-            self.order_by, self.joins, self.limit))
+        return list(self.db_info.db.query_ids(self.table_name, self.where,
+                                              self.values, self.order_by,
+                                              self.joins, self.limit))
 
     def _query_count(self):
-        return app.db.query_count(self.table_name, self.where, self.values,
-                self.joins, self.limit)
+        return self.db_info.db.query_count(self.table_name, self.where,
+                                           self.values, self.joins,
+                                           self.limit)
 
     def __iter__(self):
         return self._query()
@@ -221,10 +227,12 @@ class View(object):
     def make_tracker(self):
         if self.limit is not None:
             raise ValueError("tracking views with limits not supported")
-        return ViewTracker(self.fetcher, self.where, self.values, self.joins)
+        return ViewTracker(self.fetcher, self.where, self.values, self.joins,
+                          self.db_info)
 
 class ViewTrackerManager(object):
-    def __init__(self):
+    def __init__(self, db):
+        self.db = db
         # maps table_name to trackers
         self.table_to_tracker = {}
         # maps joined tables to trackers
@@ -238,7 +246,7 @@ class ViewTrackerManager(object):
             return self.table_to_tracker[table_name]
 
     def trackers_for_ddb_class(self, klass):
-        return self.trackers_for_table(app.db.table_name(klass))
+        return self.trackers_for_table(self.db.table_name(klass))
 
     def update_view_trackers(self, obj):
         """Update view trackers based on an object change."""
@@ -261,7 +269,7 @@ class ViewTrackerManager(object):
             tracker.remove_object(obj)
 
 class ViewTracker(signals.SignalEmitter):
-    def __init__(self, fetcher, where, values, joins):
+    def __init__(self, fetcher, where, values, joins, db_info):
         signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed',
                 'bulk-added', 'bulk-removed', 'bulk-changed')
         self.fetcher = fetcher
@@ -271,13 +279,14 @@ class ViewTracker(signals.SignalEmitter):
             raise TypeError("values must be a tuple")
         self.values = values
         self.joins = joins
+        self.db_info = db_info
         self.bulk_mode = False
         self.current_ids = self._view_object_ids()
-        vt_manager = app.view_tracker_manager
+        vt_manager = self.db_info.view_tracker_manager
         vt_manager.trackers_for_table(self.table_name).add(self)
 
     def unlink(self):
-        vt_manager = app.view_tracker_manager
+        vt_manager = self.db_info.view_tracker_manager
         vt_manager.trackers_for_table(self.table_name).discard(self)
 
     def set_bulk_mode(self, bulk_mode):
@@ -296,13 +305,14 @@ class ViewTracker(signals.SignalEmitter):
             where += ' AND (%s)' % (self.where,)
 
         values = (obj.id,) + self.values
-        return app.db.query_count(self.table_name, where, values,
+        return self.db_info.db.query_count(self.table_name, where, values,
                 self.joins) > 0
 
     def _view_object_ids(self):
         """Get all object ids in our view."""
-        return set(app.db.query_ids(self.table_name,
-                                    self.where, self.values, joins=self.joins))
+        return set(self.db_info.db.query_ids(self.table_name,
+                                             self.where, self.values,
+                                             joins=self.joins))
 
     def object_changed(self, obj):
         self.check_object(obj)
@@ -366,7 +376,9 @@ class ViewTracker(signals.SignalEmitter):
 
 
 class BulkSQLManager(object):
-    def __init__(self):
+    def __init__(self, db, view_tracker_manager):
+        self.db = db
+        self.view_tracker_manager = view_tracker_manager
         self.active = False
         self.to_insert = {}
         self.to_remove = {}
@@ -398,7 +410,7 @@ class BulkSQLManager(object):
         # Normally if we throw an exception, we want to rollback.  However, if
         # we are in the middle of bulk inserting/removing, then we should try
         # to commit the objects that didn't throw anything see (#16341)
-        app.db.finish_transaction()
+        self.db.finish_transaction()
 
     def commit(self):
         for x in range(100):
@@ -424,13 +436,13 @@ class BulkSQLManager(object):
     def _commit_sql(self, to_insert, to_remove):
         for table_name, objects in to_insert.items():
             logging.debug('bulk insert: %s %s', table_name, len(objects))
-            app.db.bulk_insert(objects)
+            self.db.bulk_insert(objects)
             for obj in objects:
                 obj.inserted_into_db()
 
         for table_name, objects in to_remove.items():
             logging.debug('bulk remove: %s %s', table_name, len(objects))
-            app.db.bulk_remove(objects)
+            self.db.bulk_remove(objects)
             for obj in objects:
                 obj.removed_from_db()
 
@@ -454,8 +466,7 @@ class BulkSQLManager(object):
         This method is the fastest when there are not a lot of changed objects
         """
         for obj in changed_objs:
-            app.view_tracker_manager.update_view_trackers(obj)
-
+            self.view_tracker_manager.update_view_trackers(obj)
 
     def _update_view_trackers_by_table(self, to_insert, to_remove):
         """Update view trackers by checking each table
@@ -463,17 +474,17 @@ class BulkSQLManager(object):
         This method is fastest when there are many changed objects
         """
         for table_name in to_insert:
-            app.view_tracker_manager.bulk_update_view_trackers(table_name)
+            self.view_tracker_manager.bulk_update_view_trackers(table_name)
 
         for table_name, objects in to_remove.items():
             if table_name in to_insert:
                 # already updated the view above
                 continue
-            app.view_tracker_manager.bulk_remove_from_view_trackers(
+            self.view_tracker_manager.bulk_remove_from_view_trackers(
                 table_name, objects)
 
     def add_insert(self, obj):
-        table_name = app.db.table_name(obj.__class__)
+        table_name = self.db.table_name(obj.__class__)
         try:
             inserts_for_table = self.to_insert[table_name]
         except KeyError:
@@ -489,11 +500,11 @@ class BulkSQLManager(object):
         return id_ in self.pending_removes
 
     def add_remove(self, obj):
-        table_name = app.db.table_name(obj.__class__)
+        table_name = self.db.table_name(obj.__class__)
         if self.will_insert(obj.id):
             self.to_insert[table_name].remove(obj)
             self.pending_inserts.remove(obj.id)
-            app.db.forget_object(obj)
+            self.db.forget_object(obj)
             return
         try:
             removes_for_table = self.to_remove[table_name]
@@ -532,14 +543,17 @@ class AttributeUpdateTracker(object):
 class DDBObject(signals.SignalEmitter):
     """Dynamic Database object
     """
-    #The last ID used in this class
-    lastID = 0
 
     def __init__(self, *args, **kwargs):
         self.confirm_db_thread()
         self.in_db_init = True
         signals.SignalEmitter.__init__(self, 'removed')
         self.changed_attributes = set()
+
+        if 'db_info' in kwargs:
+            self.db_info = kwargs.pop('db_info')
+        else:
+            self.db_info = app.db_info
 
         if len(args) == 0 and kwargs.keys() == ['restored_data']:
             restoring = True
@@ -548,16 +562,16 @@ class DDBObject(signals.SignalEmitter):
 
         if restoring:
             self.__dict__.update(kwargs['restored_data'])
-            app.db.remember_object(self)
+            self.db_info.db.remember_object(self)
             self.setup_restored()
             # handle setup_restored() calling remove()
             if not self.id_exists():
                 return
         else:
-            self.id = DDBObject.lastID = DDBObject.lastID + 1
+            self.id = self.db_info.make_new_id()
             # call remember_object so that id_exists will return True
             # when setup_new() is being run
-            app.db.remember_object(self)
+            self.db_info.db.remember_object(self)
             self.setup_new(*args, **kwargs)
             self.after_setup_new()
             if not self.id_exists():
@@ -572,12 +586,12 @@ class DDBObject(signals.SignalEmitter):
             self._insert_into_db()
 
     def _insert_into_db(self):
-        if not app.bulk_sql_manager.active:
-            app.db.insert_obj(self)
+        if not self.db_info.bulk_sql_manager.active:
+            self.db_info.db.insert_obj(self)
             self.inserted_into_db()
-            app.view_tracker_manager.update_view_trackers(self)
+            self.db_info.view_tracker_manager.update_view_trackers(self)
         else:
-            app.bulk_sql_manager.add_insert(self)
+            self.db_info.bulk_sql_manager.add_insert(self)
 
     def inserted_into_db(self):
         self.check_constraints()
@@ -585,18 +599,24 @@ class DDBObject(signals.SignalEmitter):
 
     @classmethod
     def make_view(cls, where=None, values=None, order_by=None, joins=None,
-            limit=None):
+            limit=None, db_info=None):
         if values is None:
             values = ()
-        fetcher = DDBObjectFetcher(cls)
-        return View(fetcher, where, values, order_by, joins, limit)
+        if db_info is None:
+            db_info = app.db_info
+        fetcher = DDBObjectFetcher(cls, db_info)
+        return View(fetcher, where, values, order_by, joins, limit, db_info)
 
     @classmethod
-    def get_by_id(cls, id_):
+    def get_by_id(cls, id_, db_info=None):
+        if db_info is None:
+            db = app.db
+        else:
+            db = db_info.db
         try:
             # try memory first before going to sqlite.
-            obj = app.db.get_obj_by_id(id_, cls)
-            if app.db.object_from_class_table(obj, cls):
+            obj = db.get_obj_by_id(id_, cls)
+            if db.object_from_class_table(obj, cls):
                 return obj
             else:
                 raise ObjectNotFoundError(id_)
@@ -604,12 +624,21 @@ class DDBObject(signals.SignalEmitter):
             return cls.make_view('id=?', (id_,)).get_singleton()
 
     @classmethod
-    def delete(cls, where, values=None):
-        return app.db.delete(cls, where, values)
+    def delete(cls, where, values=None, db_info=None):
+        if db_info is None:
+            db = app.db
+        else:
+            db = db_info.db
+        return db.delete(cls, where, values)
 
     @classmethod
-    def select(cls, columns, where=None, values=None, convert=True):
-        return app.db.select(cls, columns, where, values, convert=convert)
+    def select(cls, columns, where=None, values=None, convert=True,
+               db_info=None):
+        if db_info is None:
+            db = app.db
+        else:
+            db = db_info.db
+        return db.select(cls, columns, where, values, convert=convert)
 
     def setup_new(self):
         """Initialize a newly created object."""
@@ -655,6 +684,21 @@ class DDBObject(signals.SignalEmitter):
     def reset_changed_attributes(self):
         self.changed_attributes = set()
 
+    def _bulk_update_db_values(self, dct):
+        """Safely update many DB values at a time.
+
+        _bulk_update_db_values is needed because if you just call
+        self.__dict__.update(), then changed_attributes won't be updated so we
+        won't save the new values to the DB in signal_change()
+
+        _bulk_update_db_values can only be used on attributes that map to
+        database columns.
+
+        :param dct: dict of new values for our database attributes
+        """
+        self.__dict__.update(dct)
+        self.changed_attributes.update(dct.keys())
+
     def get_id(self):
         """Returns unique integer associated with this object
         """
@@ -662,7 +706,7 @@ class DDBObject(signals.SignalEmitter):
 
     def id_exists(self):
         try:
-            self.get_by_id(self.id)
+            self.get_by_id(self.id, self.db_info)
         except ObjectNotFoundError:
             return False
         else:
@@ -671,12 +715,12 @@ class DDBObject(signals.SignalEmitter):
     def remove(self):
         """Call this after you've removed all references to the object
         """
-        if not app.bulk_sql_manager.active:
-            app.db.remove_obj(self)
+        if not self.db_info.bulk_sql_manager.active:
+            self.db_info.db.remove_obj(self)
             self.removed_from_db()
-            app.view_tracker_manager.remove_from_view_trackers(self)
+            self.db_info.view_tracker_manager.remove_from_view_trackers(self)
         else:
-            app.bulk_sql_manager.add_remove(self)
+            self.db_info.bulk_sql_manager.add_remove(self)
 
     def removed_from_db(self):
         self.emit('removed')
@@ -711,25 +755,39 @@ class DDBObject(signals.SignalEmitter):
             raise DatabaseConstraintError, msg
         self.on_signal_change()
         self.check_constraints()
-        if app.bulk_sql_manager.will_insert(self.id):
+        if self.db_info.bulk_sql_manager.will_insert(self.id):
             # Don't need to send an UPDATE SQL command, or check the
             # view trackers in this case.  Both will be done when the
             # BulkSQLManager.finish() is called.
             return
         if needs_save:
-            app.db.update_obj(self)
-        app.view_tracker_manager.update_view_trackers(self)
+            self.db_info.db.update_obj(self)
+        self.db_info.view_tracker_manager.update_view_trackers(self)
 
     def on_signal_change(self):
         pass
 
-def update_last_id():
-    DDBObject.lastID = app.db.get_last_id()
+class DBInfo(object):
+    """Stores per-database info for DDBObject and friends.
 
-def setup_managers():
-    app.view_tracker_manager = ViewTrackerManager()
-    app.bulk_sql_manager = BulkSQLManager()
+    Attributes:
+    - db -- LiveStorage object
+    - view_tracker_manager -- ViewTrackerManager
+    - bulk_sql_manager -- BulkSQLManager
+    """
+    def __init__(self, db):
+        self.db = db
+        self.view_tracker_manager = ViewTrackerManager(db)
+        self.bulk_sql_manager = BulkSQLManager(db, self.view_tracker_manager)
+        self.update_last_id()
+
+    def update_last_id(self):
+        last_id = self.db.get_last_id()
+        self.id_counter = itertools.count(last_id + 1)
+
+    def make_new_id(self):
+        return self.id_counter.next()
 
 def initialize():
-    update_last_id()
-    setup_managers()
+    app.db_info = DBInfo(app.db)
+    app.bulk_sql_manager = app.db_info.bulk_sql_manager

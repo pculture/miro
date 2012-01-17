@@ -67,27 +67,19 @@ _started_up = False
 _command_line_videos = None
 _command_line_view = None
 
-def _item_exists_for_path(path):
-    # in SQLite, LIKE is case insensitive, so we can use it to only look at
-    # filenames that possibly will match
-    for item_ in item.Item.make_view('filename LIKE ?',
-            (filename_to_unicode(path),)):
-        if samefile(item_.filename, path):
-            return item_
-    return False
-
 def add_video(path, manual_feed=None):
     """Add a new video
 
     :returns: True if we create a new Item object.
     """
     path = os.path.abspath(path)
-    item_for_path = _item_exists_for_path(path)
-    if item_for_path:
-        if item_for_path.deleted:
-            item_for_path.make_undeleted()
+    if item.Item.have_item_for_path(path):
         logging.debug("Not adding duplicate video: %s",
                       path.decode('ascii', 'ignore'))
+        # get the first item and undelete it
+        item_for_path = list(item.Item.items_with_path_view(path))[0]
+        if item_for_path.deleted:
+            item_for_path.make_undeleted()
         if _command_line_videos is not None:
             _command_line_videos.add(item_for_path)
         return False
@@ -103,14 +95,13 @@ def add_video(path, manual_feed=None):
 def add_videos(paths):
     # filter out non-existent paths
     paths = [p for p in paths if fileutil.exists(p)]
-    for path in paths:
-        app.metadata_progress_updater.will_process_path(path)
     path_iter = iter(paths)
     finished = False
     yield # yield after doing prep work
-    while not finished:
-        finished = _add_batch_of_videos(path_iter, 0.1)
-        yield # yield after each batch
+    with app.local_metadata_manager.bulk_add():
+        while not finished:
+            finished = _add_batch_of_videos(path_iter, 0.1)
+            yield # yield after each batch
 
 def _add_batch_of_videos(path_iter, max_time):
     """Add a batch of videos for add_video()
@@ -125,9 +116,7 @@ def _add_batch_of_videos(path_iter, max_time):
     app.bulk_sql_manager.start()
     try:
         for path in path_iter:
-            if not add_video(path, manual_feed=manual_feed):
-                # video was a duplicate, undo the will_process_path() call
-                app.metadata_progress_updater.path_processed(path)
+            add_video(path, manual_feed=manual_feed)
             if time.time() - start_time > max_time:
                 return False
         return True

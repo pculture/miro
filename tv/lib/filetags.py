@@ -33,10 +33,12 @@ import os.path
 import logging
 import struct
 import mutagen
+import urllib
 
 from miro import coverart
 from miro import filetypes
 from miro import app
+from miro.plat.utils import PlatformFilenameType
 
 # increment this after adding to TAGS_FOR_ATTRIBUTE or changing read_metadata() in a way
 # that will increase data identified (will not change values already extracted)
@@ -189,12 +191,24 @@ def _track_from_filename(full_path):
         number = ''.join(initial_int[-2:]) # e.g. '204' is disc 2, track 04
         return int(number)
 
-def _make_cover_art_file(track_path, objects):
+def _make_cover_art_file(album_name, objects, cover_art_directory):
     """Given an iterable of mutagen cover art objects, returns the path to a
     newly-created file created from one of the objects. If given more than one
-    object, uses the one most likely to be cover art. If none of the objects are
-    usable, returns None.
+    object, uses the one most likely to be cover art.
+
+    :returns: tuple (path, newly_created) or None if we didn't create a path
     """
+    if album_name is None:
+        return None
+    if cover_art_directory is None:
+        cover_art_directory = app.config.get(prefs.COVER_ART_DIRECTORY)
+    # quote the album so that the filename doesn't have any illegal characters
+    # in it.
+    dest_filename = calc_cover_art_filename(album_name)
+    path = os.path.join(cover_art_directory, dest_filename)
+    if os.path.exists(path):
+        # already made cover art, no need to make it again
+        return path, False
     if not isinstance(objects, list):
         objects = [objects]
 
@@ -208,7 +222,7 @@ def _make_cover_art_file(track_path, objects):
         else:
             images.append(image)
     if not images:
-        return
+        return None
 
     cover_image = None
     for candidate in images:
@@ -219,8 +233,12 @@ def _make_cover_art_file(track_path, objects):
         # no attached image is definitively cover art. use the first one.
         cover_image = images[0]
 
-    path = cover_image.write_to_file(track_path)
-    return path
+    try:
+        cover_image.write_to_file(path)
+    except EnvironmentError:
+        logging.warn("Couldn't write cover art file: {0}".format(path))
+        return None
+    return path, True
 
 MUTAGEN_ERRORS = None
 def _setup_mutagen_errors():
@@ -232,19 +250,26 @@ def _setup_mutagen_errors():
             oggtheora.error, oggvorbis.error, trueaudio.error, _vorbis.error)
 _setup_mutagen_errors()
 
-def read_metadata(filename, test=False):
-    """This is the external interface of the filetags module. Given a filename,
-    this function returns a tuple of (mediatype [a string], duration [integer
-    number of milliseconds(?)], data [dict of attributes to set on the item],
-    cover_art [filename]).
+def calc_cover_art_filename(album_name):
+    """Get the filename we will use to store cover art for an album.
 
-    Both the interface and the implementation are in need of substantial
-    reworking. I have a replacement in the works (with write support!) but have
-    pushed it off for 4.1 since this is generally functional. The root of the
-    problem is that I have tried to write one function that handles all the
-    different mutagen metadata objects; the new approach will be to wrap each
-    mutagen object in a different wrapper subclass, with all the wrappers
-    sharing a common interface. --KCW
+    :returns: PlatformFilenameType
+    """
+
+    # quote the album name to avoid characters that are unsafe for the
+    # filesystem.  Chars that are safe on all platforms shouldn't be touched
+    # though
+    ascii_filename = urllib.quote(album_name.encode('utf-8'), safe=' ,.')
+    # since the filename is ASCII it should be safe to convert to any platform
+    # filename type
+    return PlatformFilenameType(ascii_filename)
+
+def process_file(filename, cover_art_directory):
+    """Send a file through mutagen
+
+    :param filename: path to the media file
+    :param cover_art_directory: directory to store cover art in
+    :returns: dict of metadata
     """
     try:
         muta = mutagen.File(filename)
@@ -288,9 +313,10 @@ def read_metadata(filename, test=False):
                 with_exception=True)
     else:
         if muta:
-            return _parse_mutagen(filename, muta, test)
+            return _parse_mutagen(filename, muta, cover_art_directory)
+    return {}
 
-def _parse_mutagen(filename, muta, test):    
+def _parse_mutagen(filename, muta, cover_art_directory):
     meta = muta.__dict__
     tags = meta['tags']
     if hasattr(tags, '__dict__') and '_DictProxy__dict' in tags.__dict__:
@@ -301,10 +327,11 @@ def _parse_mutagen(filename, muta, test):
     if hasattr(muta, 'info'):
         info = muta.info.__dict__
 
-    duration = _get_duration(muta, info)
-    mediatype = _get_mediatype(muta, filename, info, tags)
 
-    data = {}
+    data = {
+        'duration': _get_duration(muta, info),
+        'file_type': _get_mediatype(muta, filename, info, tags),
+    }
     for file_tag, value in tags.iteritems():
         try:
             file_tag = _sanitize_key(file_tag)
@@ -339,18 +366,16 @@ def _parse_mutagen(filename, muta, test):
         if guessed_track:
             data['track'] = guessed_track
 
-    cover_art = None
+    cover_art_info = None
     if hasattr(muta, 'pictures'):
         image_data = muta.pictures
-        if test:
-            cover_art = True
-        else:
-            cover_art = _make_cover_art_file(filename, image_data)
+        cover_art_info = _make_cover_art_file(data.get('album'), image_data,
+                                              cover_art_directory)
     elif 'cover_art' in data:
         image_data = data['cover_art']
-        if test:
-            cover_art = True
-        else:
-            cover_art = _make_cover_art_file(filename, image_data)
+        cover_art_info = _make_cover_art_file(data.get('album'), image_data,
+                                              cover_art_directory)
         del data['cover_art']
-    return mediatype, duration, data, cover_art
+    if cover_art_info is not None:
+        data['cover_art_path'], data['created_cover_art'] = cover_art_info
+    return data

@@ -33,11 +33,16 @@ try:
 except ImportError:
     import json
 
+import sqlite3
+
 from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType
 from miro.test.framework import MiroTestCase
+from miro.test import mock
 
 from miro import devices
+from miro import item
+from miro import storedatabase
 
 class DeviceManagerTest(MiroTestCase):
     def build_config_file(self, filename, data):
@@ -302,3 +307,97 @@ class GlobSetTest(MiroTestCase):
         self.assertTrue(gs & set('ab'))
         self.assertTrue(gs & set('bc'))
         self.assertFalse(gs & set('cd'))
+
+class DeviceDatabaseTest(MiroTestCase):
+    "Test sqlite databases on devices."""
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.device = mock.Mock()
+        self.device.database = devices.DeviceDatabase()
+        self.device.database[u'audio'] = {}
+        self.device.mount = self.tempdir
+        self.device.id = 123
+        self.device.name = 'Device'
+        self.device.size = 1024000
+        os.makedirs(os.path.join(self.device.mount, '.miro'))
+
+    def open_database(self):
+        sqlite_db = devices.load_sqlite_database(self.device.mount,
+                                                 self.device.database,
+                                                 self.device.size)
+        metadata_manager = devices.make_metadata_manager(self.device.mount,
+                                                         sqlite_db,
+                                                         self.device.id)
+        self.device.sqlite_database = sqlite_db
+        self.device.metadata_manager = metadata_manager
+
+    def make_device_items(self, *filenames):
+        for filename in filenames:
+            filename = unicode(filename)
+            devices.create_item_for_file(self.device, filename, u'audio')
+
+    def test_open(self):
+        self.open_database()
+        self.assertEquals(self.device.sqlite_database.__class__,
+                          storedatabase.LiveStorage)
+        self.assertEquals(self.device.sqlite_database.error_handler.__class__,
+                          storedatabase.DeviceLiveStorageErrorHandler)
+
+    def test_reload(self):
+        self.open_database()
+        self.make_device_items('foo.mp3', 'bar.mp3')
+        # close, then reopen the database
+        self.device.sqlite_database.finish_transaction()
+        self.open_database()
+        # test that the database is still intact by checking the
+        # metadata_status table
+        cursor = self.device.sqlite_database.cursor
+        cursor.execute("SELECT path FROM metadata_status")
+        paths = [r[0] for r in cursor.fetchall()]
+        self.assertSameSet(paths, ['foo.mp3', 'bar.mp3'])
+
+    @mock.patch('miro.dialogs.MessageBoxDialog.run_blocking')
+    def test_load_error(self, mock_dialog_run):
+        # Test an error loading the device database
+        def mock_get_last_id():
+            if not self.faked_get_last_id_error:
+                self.faked_get_last_id_error = True
+                raise sqlite3.DatabaseError("Error")
+            else:
+                return 0
+        self.faked_get_last_id_error = False
+        self.patch_function('miro.storedatabase.LiveStorage._get_last_id',
+                            mock_get_last_id)
+        self.open_database()
+        # check that we displayed an error dialog
+        mock_dialog_run.assert_called_once_with()
+        # check that our corrupt database logic ran
+        dir_contents = os.listdir(os.path.join(self.device.mount, '.miro'))
+        self.assert_('corrupt_database' in dir_contents)
+
+    @mock.patch('miro.dialogs.MessageBoxDialog.run_blocking')
+    def test_upgrade_error(self, mock_dialog_run):
+        self.open_database()
+        self.make_device_items('foo.mp3', 'bar.mp3')
+        devices.write_database(self.device.database, self.device.mount)
+        # Force our upgrade code to run and throw an exception.
+        os.remove(os.path.join(self.device.mount, '.miro', 'sqlite'))
+        mock_do_import = mock.Mock()
+        patcher = mock.patch('miro.devicedatabaseupgrade._do_import',
+                             mock_do_import)
+        mock_do_import.side_effect = sqlite3.DatabaseError("Error")
+        self.device.database.created_new = False
+        with patcher:
+            self.open_database()
+        # check that we popup up an error dialog
+        self.assertEquals(mock_dialog_run.call_count, 1)
+        # check that we created a new sqlite database and added new metadata
+        # status rows for the device items
+        cursor = self.device.sqlite_database.cursor
+        cursor.execute("SELECT path FROM metadata_status")
+        paths = [r[0] for r in cursor.fetchall()]
+        self.assertSameSet(paths, ['foo.mp3', 'bar.mp3'])
+
+    def test_save_error(self):
+        # FIXME: what should we do if we have an error saving to the device?
+        pass

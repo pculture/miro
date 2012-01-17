@@ -171,7 +171,7 @@ class ThreadPool(object):
     instead is call them in a separate thread and return the result in
     a callback that executes in the event loop.
     """
-    THREADS = 3
+    THREADS = 4
 
     def __init__(self, event_loop):
         self.event_loop = event_loop

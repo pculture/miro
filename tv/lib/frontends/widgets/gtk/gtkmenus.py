@@ -187,7 +187,12 @@ class CheckMenuItem(MenuItem):
         # prevent the activate signal from fireing in response to us manually
         # changing a value
         self._widget.handler_block(self.activate_id)
-        self._widget.set_active(active)
+        if active is not None:
+            self._widget.set_inconsistent(False)
+            self._widget.set_active(active)
+        else:
+            self._widget.set_inconsistent(True)
+            self._widget.set_active(False)
         self._widget.handler_unblock(self.activate_id)
 
     def get_state(self):

@@ -475,7 +475,14 @@ def pack_extras(vbox, panel):
 class GeneralPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox(8)
+        self.pack_startup_shutdown_section(v)
+        self.pack_sidebar_section(v)
+        self.pack_language_section(v)
+        self.pack_echonest_section(v)
+        pack_extras(v, "general")
+        return v
 
+    def pack_startup_shutdown_section(self, v):
         startup_shutdown_heading = dialogwidgets.heading(
                                        _('Startup / Shutdown'))
         v.pack_start(startup_shutdown_heading)
@@ -505,6 +512,7 @@ class GeneralPanel(PanelBuilder):
                        prefs.WARN_IF_CONVERTING_ON_QUIT)
         v.pack_start(warn_if_converting_cbx)
 
+    def pack_sidebar_section(self, v):
         sidebar_heading = dialogwidgets.heading(_('Sidebar'))
         v.pack_start(sidebar_heading)
 
@@ -518,6 +526,7 @@ class GeneralPanel(PanelBuilder):
         attach_boolean(cbx, prefs.SHOW_PODCASTS_IN_MUSIC)
         v.pack_start(cbx)
 
+    def pack_language_section(self, v):
         # FIXME - need to automatically generate list of available
         # languages in correct language
         lang_options = gtcache.get_languages()
@@ -540,9 +549,36 @@ class GeneralPanel(PanelBuilder):
             widgetutil.build_control_line((
                         widgetset.Label(_('Display in:')), lang_option_menu))))
 
-        pack_extras(v, "general")
+    def pack_echonest_section(self, v):
+        heading = dialogwidgets.heading(
+            _("Music Album Art and Info Cleanup"))
+        v.pack_start(heading)
 
-        return v
+        help_text = _('Online lookup can find matching album art and song '
+                      'info for all your audio files (via Echonest and '
+                      '7Digital).')
+        v.pack_start(widgetset.Label(help_text))
+
+        run_button = widgetset.Button(
+            _('Run Online Lookup for All Current Music'))
+        run_button.connect('clicked', self.on_run_online_lookup)
+        remove_button = widgetset.Button(_("Remove All Lookup data"))
+        remove_button.connect('clicked', self.on_remove_lookup_data)
+
+        v.pack_start(widgetutil.build_control_line(
+            (run_button, remove_button)))
+
+        cb_text = _('Automatically run online lookup for any new audio files '
+                    'that I add to Miro.')
+        cbx = widgetset.Checkbox(cb_text)
+        attach_boolean(cbx, prefs.NET_LOOKUP_BY_DEFAULT)
+        v.pack_start(cbx)
+
+    def on_run_online_lookup(self, button):
+        messages.SetNetLookupEnabled(None, True).send_to_backend()
+
+    def on_remove_lookup_data(self, button):
+        messages.SetNetLookupEnabled(None, False).send_to_backend()
 
 class PodcastsPanel(PanelBuilder):
     def build_widget(self):

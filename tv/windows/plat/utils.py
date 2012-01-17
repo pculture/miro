@@ -399,6 +399,12 @@ def get_logical_cpu_count():
 def get_segmenter_executable_path():
     return os.path.join(resources.app_root(), "miro-segmenter.exe")
 
+def get_enmfp_executable_info():
+    return {
+        'path': os.path.join(resources.app_root(), "codegen.windows.exe")
+    }
+
+
 def get_transcode_video_options():
     has_video_args = ['-vcodec', 'libx264', '-vpre', 'ipod320',
                       '-vpre', 'ultrafast', '-threads', '0', '-s', '480x360',

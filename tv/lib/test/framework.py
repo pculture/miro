@@ -18,9 +18,10 @@ from miro import httpauth
 from miro import httpclient
 from miro import item
 from miro import iteminfocache
-from miro import moviedata
+from miro import itemsource
 from miro import util
 from miro import prefs
+from miro import schema
 from miro import searchengines
 from miro import signals
 from miro import storedatabase
@@ -28,6 +29,7 @@ from time import sleep
 from miro import models
 from miro import workerprocess
 
+from miro.test import mock
 from miro.test import testhttpserver
 
 util.setup_logging()
@@ -46,6 +48,14 @@ util.setup_logging()
 # is handled transparently through one of these test cases
 
 import sys
+
+class MatchAny(object):
+    """Object that matches anything.
+
+    Useful for creating a wildcard when calling Mock.assert_called_with().
+    """
+    def __eq__(self, other):
+        return True
 
 VALID_PLATFORMS = ['linux', 'win32', 'osx']
 PLATFORM_MAP = {
@@ -181,6 +191,8 @@ class DummyController:
     def failed_soft(self, when, details, with_exception=False):
         # FIXME: should have some way to make this turn into an exception
         if not self.failed_soft_okay:
+            print "failed_soft called in DummyController"
+            print details
             raise AssertionError("failed_soft called in DummyController")
         self.failed_soft_count += 1
 
@@ -267,6 +279,7 @@ class MiroTestCase(unittest.TestCase):
         self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True
+        models.Item._path_count_tracker.reset()
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
         # setup the deleted file checker
@@ -275,19 +288,20 @@ class MiroTestCase(unittest.TestCase):
         # setup movie data stuff
         self.metadata_progress_updater = FakeMetadataProgressUpdater()
         app.metadata_progress_updater = self.metadata_progress_updater
-        app.movie_data_updater = moviedata.MovieDataUpdater()
         # Skip worker proccess for feedparser
         feed._RUN_FEED_PARSER_INLINE = True
         # reload config and initialize it to temprary
         config.load_temporary()
+        self.setup_config_watcher()
         self.platform = app.config.get(prefs.APP_PLATFORM)
         self.set_temp_support_directory()
         database.set_thread(threading.currentThread())
-        database.setup_managers()
         self.raise_db_load_errors = True
         app.db = None
+        self.allow_db_upgrade_error_dialog = False
         self.reload_database()
         self.setup_new_item_info_cache()
+        item.setup_metadata_manager(self.tempdir)
         searchengines._engines = [
             searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
             ]
@@ -312,6 +326,11 @@ class MiroTestCase(unittest.TestCase):
         # for the individual test unless necessary.  In this case we override
         # the class to run the downloader).
         app.download_state_manager = downloader.DownloadStateManager()
+        self.mock_patchers = []
+
+    def setup_config_watcher(self):
+        app.backend_config_watcher = config.ConfigWatcher(
+            lambda func, *args: func(*args))
 
     def set_temp_support_directory(self):
         self.sandbox_support_directory = os.path.join(self.tempdir, 'support')
@@ -319,20 +338,15 @@ class MiroTestCase(unittest.TestCase):
             os.makedirs(self.sandbox_support_directory)
         app.config.set(prefs.SUPPORT_DIRECTORY, self.sandbox_support_directory)
 
-    def tearDown(self): 
-        app.config.set(prefs.SUPPORT_DIRECTORY, self.old_support_directory)
-        try:
-            shutil.rmtree(self.sandbox_support_directory)
-        except OSError, e:
-            assert 0, "test teardown failed"
-        MiroTestCase.tearDown(self)
-
     def on_windows(self):
         return self.platform == "windows"
 
     def tearDown(self):
+        for patcher in self.mock_patchers:
+            patcher.stop()
         # shutdown workerprocess if we started it for some reason.
         workerprocess.shutdown()
+        workerprocess._miro_task_queue.reset()
         self.reset_log_filter()
         signals.system.disconnect_all()
         util.chatter = True
@@ -345,7 +359,6 @@ class MiroTestCase(unittest.TestCase):
         # Remove any leftover database
         app.db.close()
         app.db = None
-        database.setup_managers()
 
         # Remove anything that may have been accidentally queued up
         eventloop._eventloop = eventloop.EventLoop()
@@ -353,10 +366,30 @@ class MiroTestCase(unittest.TestCase):
         # Remove tempdir
         shutil.rmtree(self.tempdir, onerror=self._on_rmtree_error)
 
+    def patch_function(self, function_name, new_function):
+        """Use Mock to replace an existing function for a single test.
+
+        function_name should be in the form "full.module.name.object".  For
+        example "miro.startup.startup"
+
+        This can also be used on a class object in order to return a different
+        object, if we only use class objects as factory functions.
+
+        :param function_name: name of the function to patch
+        :param new_function: function object to replace it with
+        """
+        patcher = mock.patch(function_name,
+                             mock.Mock(side_effect=new_function))
+        patcher.start()
+        self.mock_patchers.append(patcher)
+
     def unload_extensions(self):
         for ext in app.extension_manager.extensions:
             if ext.loaded:
                 app.extension_manager.unload_extension(ext)
+
+    def make_item_info(self, itemobj):
+        return itemsource.DatabaseItemSource._item_info_for(itemobj)
 
     def setup_log_filter(self):
         """Make a LogFilter that will turn loggings into exceptions."""
@@ -433,22 +466,28 @@ class MiroTestCase(unittest.TestCase):
     def check_failed_soft_count(self, count):
         self.assertEquals(app.controller.failed_soft_count, count)
 
-    def reload_database(self, path=':memory:', schema_version=None,
-                        object_schemas=None, upgrade=True):
+    def reload_database(self, path=':memory:', upgrade=True, **kwargs):
         self.shutdown_database()
-        self.setup_new_database(path, schema_version, object_schemas)
+        self.setup_new_database(path, **kwargs)
         if upgrade:
-            app.db.upgrade_database()
-            database.update_last_id()
+            if self.allow_db_upgrade_error_dialog:
+                # this means that exceptions in the upgrade will be sent to a
+                # dialog box.  Be careful with this, if you don't handle the
+                # dialog, then the unit tests will hang.
+                app.db.upgrade_database()
+            else:
+                # normal case: use _upgrade_database() because we want
+                # exceptions to keep propagating
+                app.db._upgrade_database()
+        database.initialize()
 
     def clear_ddb_object_cache(self):
         app.db._ids_loaded = set()
         app.db._object_map = {}
+        app.db.cache = storedatabase.DatabaseObjectCache()
 
-    def setup_new_database(self, path, schema_version, object_schemas):
-        app.db = storedatabase.LiveStorage(path,
-                                           schema_version=schema_version,
-                                           object_schemas=object_schemas)
+    def setup_new_database(self, path, **kwargs):
+        app.db = storedatabase.LiveStorage(path, **kwargs)
         app.db.raise_load_errors = self.raise_db_load_errors
 
     def allow_db_load_errors(self, allow):
@@ -486,8 +525,8 @@ class MiroTestCase(unittest.TestCase):
         self.assertSameSet(dict1.keys(), dict2.keys())
         for k in dict1:
             if not dict1[k] == dict2[k]:
-                raise AssertionError("Values differ for key %s: %s -- %s",
-                        k, dict1[k], dict2[k])
+                raise AssertionError("Values differ for key %r: %r -- %r" %
+                        (k, dict1[k], dict2[k]))
 
 class EventLoopTest(MiroTestCase):
     def setUp(self):

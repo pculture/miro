@@ -388,6 +388,7 @@ class MiroBuild (py2app):
         self.precompile_site_pyc()
         self.copy_quicktime_components()
         self.copy_conversion_helpers()
+        self.copy_codegen_helpers()
         self.copy_ffmpeg_presets()
         self.copy_portable_resources()
         self.copy_extensions()
@@ -491,6 +492,13 @@ class MiroBuild (py2app):
         copy_binaries('segmenter/bin/', self.helpersRoot, ["miro-segmenter"])
         copy_binaries('ffmpeg/bin/', self.helpersRoot, ["ffmpeg"])
         copy_binaries('ffmpeg2theora/bin/', self.helpersRoot, ["ffmpeg2theora"])
+
+    def copy_codegen_helpers(self):
+        print 'Copying ENMFP code generate to the application bundle'
+        copy_binaries('enmfp-codegen', self.helpersRoot, [
+            "codegen.Darwin",
+            "libtag.1.dylib",
+        ])
 
     def copy_ffmpeg_presets(self):
         preset_source_dir = os.path.join(BKIT_DIR, 'ffmpeg', 'presets')

@@ -140,7 +140,7 @@ class ViewTrackerTest(DatabaseTestCase):
         self.feed2.set_title(u"booya")
         self.i3.signal_change()
         self.i2.remove()
-        self.i1.set_title(u"new title")
+        self.i1.mark_item_skipped()
         app.bulk_sql_manager.finish()
         self.assertEquals(self.add_callbacks, [self.i3])
         self.assertEquals(self.remove_callbacks, [self.i2])
@@ -148,14 +148,6 @@ class ViewTrackerTest(DatabaseTestCase):
 
     def test_unlink(self):
         self.tracker.unlink()
-        self.feed2.set_title(u"booya")
-        self.feed.revert_title()
-        self.assertEquals(self.add_callbacks, [])
-        self.assertEquals(self.remove_callbacks, [])
-        self.assertEquals(self.change_callbacks, [])
-
-    def test_reset(self):
-        database.setup_managers()
         self.feed2.set_title(u"booya")
         self.feed.revert_title()
         self.assertEquals(self.add_callbacks, [])
