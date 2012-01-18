@@ -533,7 +533,12 @@ class BGDownloader(object):
             # this is an ascii filename and needs to be fixed
             filename = clean_filename(filename)
         new_filename = os.path.join(download_dir, filename)
-        if not exists:
+        if not exists or not os.path.exists(new_filename):
+            if exists:
+                # if the file/directory is supposed to exist and doesn't, just
+                # create it
+                logging.warn("f/d was supposed to exist, but does not: %s",
+                             new_filename)
             if is_directory:
                 # if this is a torrent and it's a directory of files, then
                 # we create a temp directory to put the directory of files
