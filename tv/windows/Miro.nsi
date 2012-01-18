@@ -1268,54 +1268,6 @@ SkipLanguageDLL:
   ; Make check boxes for unhandled file extensions.
 
 
-  !insertmacro checkExtensionHandled ".torrent" ${SecRegisterTorrent}
-
-  StrCpy $R0 "alwaysRegisterTorrents"
-  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
-  Call GetConfigOption
-  Pop $R0
-  StrCmp $R0 "" DoneTorrentRegistration
-  SectionGetFlags ${SecRegisterTorrent} $0
-  IntOp $0 $0 | 17  ; Set register .torrents to selected and read only
-  SectionSetFlags ${SecRegisterTorrent} $0
-
-DoneTorrentRegistration:
-  !insertmacro checkExtensionHandled ".miro" ${SecRegisterMiro}
-  !insertmacro checkExtensionHandled ".democracy" ${SecRegisterDemocracy}
-  !insertmacro checkExtensionHandled ".avi" ${SecRegisterAvi}
-  !insertmacro checkExtensionHandled ".m4v" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mpg" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mpeg" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mp2" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mp4" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mpe" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mpv" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mpv2" ${SecRegisterMpg}
-  !insertmacro checkExtensionHandled ".mp3" ${SecRegisterMp3}
-  !insertmacro checkExtensionHandled ".mpa" ${SecRegisterMp3}
-  !insertmacro checkExtensionHandled ".mov" ${SecRegisterMov}
-  !insertmacro checkExtensionHandled ".qa" ${SecRegisterMov}
-  !insertmacro checkExtensionHandled ".asf" ${SecRegisterAsf}
-  !insertmacro checkExtensionHandled ".wmv" ${SecRegisterWmv}
-  !insertmacro checkExtensionHandled ".dts" ${SecRegisterDts}
-  !insertmacro checkExtensionHandled ".ogg" ${SecRegisterOgg}
-  !insertmacro checkExtensionHandled ".ogm" ${SecRegisterOgg}
-  !insertmacro checkExtensionHandled ".oga" ${SecRegisterOgg}
-  !insertmacro checkExtensionHandled ".ogv" ${SecRegisterOgg}
-  !insertmacro checkExtensionHandled ".ogx" ${SecRegisterOgg}
-  !insertmacro checkExtensionHandled ".mkv" ${SecRegisterMkv}
-  !insertmacro checkExtensionHandled ".mka" ${SecRegisterMkv}
-  !insertmacro checkExtensionHandled ".mks" ${SecRegisterMkv}
-  !insertmacro checkExtensionHandled ".3gp" ${SecRegister3gp}
-  !insertmacro checkExtensionHandled ".3g2" ${SecRegister3g2}
-  !insertmacro checkExtensionHandled ".flv" ${SecRegisterFlv}
-  !insertmacro checkExtensionHandled ".nsv" ${SecRegisterNsv}
-  !insertmacro checkExtensionHandled ".pva" ${SecRegisterPva}
-  !insertmacro checkExtensionHandled ".anx" ${SecRegisterAnx}
-  !insertmacro checkExtensionHandled ".xvid" ${SecRegisterXvid}
-  !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
-
-
 ;-- get the start menu name from the command line (OPENINSTALL)
   ${GetParameters} $R0
   ${GetOptions} "$R0" "/_STARTMENU=" $STARTMENU_FOLDER
@@ -1362,6 +1314,9 @@ DoneTorrentRegistration:
   !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "anx" ${SecRegisterAnx}
   !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "xvid" ${SecRegisterXvid}
   !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "3ivx" ${SecRegisterXvid}
+  !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "torrent" ${SecRegisterTorrent}
+
+
 
 FunctionEnd
 
