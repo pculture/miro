@@ -210,7 +210,6 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
         """We need to figure out if the URL is a external video link,
         or a link to a feed.
         """
-        print 'callback for', url, headers, content_type
         if check_url_exists(url):
             return
 
