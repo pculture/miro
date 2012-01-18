@@ -7,7 +7,6 @@ gtk-tooltip-browse-mode-timeout = 0
 # Below are styles added by PCF
 style "PCF"
 {
-  font_name = "tahoma 11"
   GtkButton::inner-border = { 7, 7, 0, 0 }
   # We want 9px horizontal spacing between the label and the button and 5px
   # vertically.  Not sure why we have to use these values, but they work.
