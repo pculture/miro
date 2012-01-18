@@ -520,8 +520,16 @@ class RemoteDownloader(DDBObject):
             elif name_changed:
                 # update the title; happens with magnet URLs since we
                 # don't have a real one when the download starts
+                new_title = self.status['shortFilename']
+                if not isinstance(new_title, unicode):
+                    try:
+                        new_title = new_title.decode('utf-8')
+                    except UnicodeDecodeError:
+                        # if there's a problem with the filename, don't bother
+                        # changing
+                        return
                 for item in self.item_list:
-                    item.title = self.status['shortFilename']
+                    item.title = new_title
                     item.signal_change()
 
         return True
