@@ -34,4 +34,4 @@ import pangocairo
 def get_all_font_info():
     font_map = pangocairo.cairo_font_map_get_default()
     families = font_map.list_families()
-    return [f.get_name() for f in families]
+    return sorted([f.get_name() for f in families])
