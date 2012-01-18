@@ -508,7 +508,7 @@ class BGDownloader(object):
                                               [self.get_status()]).send()
 
     def pick_initial_filename(self, suffix=".part", torrent=False,
-                              is_directory=False):
+                              is_directory=False, exists=False):
         """Pick a path to download to based on self.shortFilename.
 
         This method sets self.filename, as well as creates any leading
@@ -520,6 +520,8 @@ class BGDownloader(object):
             ascii and needs to be transformed into something sane.
         :param is_directory: If True, we're really creating a
             directory--not a file.
+        :param exists: If True, libtorrent has already created the
+            file/directory
         """
         download_dir = os.path.join(app.config.get(prefs.MOVIES_DIRECTORY),
                                     'Incomplete Downloads')
@@ -530,16 +532,16 @@ class BGDownloader(object):
         if not torrent:
             # this is an ascii filename and needs to be fixed
             filename = clean_filename(filename)
-
-        full_path = os.path.join(download_dir, filename)
-        if is_directory:
-            # if this is a torrent and it's a directory of files, then
-            # we create a temp directory to put the directory of files
-            # in.
-            new_filename = next_free_directory(full_path)
-        else:
-            new_filename, fp = next_free_filename(full_path)
-            fp.close()
+        new_filename = os.path.join(download_dir, filename)
+        if not exists:
+            if is_directory:
+                # if this is a torrent and it's a directory of files, then
+                # we create a temp directory to put the directory of files
+                # in.
+                new_filename = next_free_directory(new_filename)
+            else:
+                new_filename, fp = next_free_filename(new_filename)
+                fp.close()
         self.filename = new_filename
 
     def move_to_movies_directory(self):
@@ -1494,15 +1496,20 @@ class BTDownloader(BGDownloader):
         # FIXME: we should determine whether it is a directory
         # in the same way in got_metainfo and got_delayed_metainfo
         is_directory = False
+        multiple_files = False
         for file_ in self.torrent.get_torrent_info().files():
-            if os.sep in file_.path:
+            # if there is >1 file, we'll go back through the loop and
+            # multiple_files will be True
+            if os.sep in file_.path or multiple_files:
                 is_directory = True
+                break
+            else:
+                multiple_files = True
 
-        is_directory = (is_directory or 
-                       len(self.torrent.get_torrent_info().files()) > 1)
         try:
             self.pick_initial_filename(
-                suffix="", torrent=True, is_directory=is_directory)
+                suffix="", torrent=True, is_directory=is_directory,
+                exists=True)
             # Somewhere deep it calls makedirs() which can throw
             # exceptions.
             #
@@ -1512,6 +1519,7 @@ class BTDownloader(BGDownloader):
             raise RuntimeError
         save_path = self.calc_save_path()
         self.torrent.move_storage(save_path)
+        self.update_client()
 
 
     def handle_corrupt_torrent(self):
