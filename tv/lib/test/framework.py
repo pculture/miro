@@ -381,6 +381,12 @@ class MiroTestCase(unittest.TestCase):
         self.log_filter = LogFilter()
         logger.addFilter(self.log_filter)
 
+    def crash_on_warning(self):
+        """Convenience function to crash when we log a warning."""
+        # FIXME This probably should be the default and tests should have to
+        # opt-out of it
+        self.log_filter.set_exception_level(logging.WARN)
+
     def reset_log_filter(self):
         logger = logging.getLogger()
         for old_filter in logger.filters:

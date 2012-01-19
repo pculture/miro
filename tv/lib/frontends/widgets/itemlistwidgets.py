@@ -1713,12 +1713,12 @@ class ProgressToolbar(Toolbar):
         self.elapsed = None
         self.eta = None
         self.total = None
-        self.remaining = None
+        self.count = None
+        self.net_lookup_only = False
         self.mediatype = 'other'
-        self.displayed = False
         self.set_up = False
 
-    def _display(self):
+    def _setup(self):
         if not self.set_up:
             padding = max(0, 380 - self.label.get_width())
             self.hbox.pack_start(
@@ -1728,16 +1728,15 @@ class ProgressToolbar(Toolbar):
             self.hbox.pack_start(widgetutil.align_left(
                             self.meter, 0, 0, 0, 200), expand=True)
             self.set_up = True
-        if not self.displayed:
-            self.label_widget.show()
-            self.meter.show()
-            self.displayed = True
 
     def _update_label(self):
         # TODO: display eta
-        state = {"number": self.total-self.remaining,
+        state = {"number": self.count,
                  "total": self.total}
-        if self.mediatype == 'audio':
+        if self.net_lookup_only:
+            text = _("Looking up album art and song info: "
+                    "%(number)d of %(total)d", state)
+        elif self.mediatype == 'audio':
             text = _("Importing audio details and artwork: "
                     "%(number)d of %(total)d", state)
         elif self.mediatype == 'video':
@@ -1748,19 +1747,31 @@ class ProgressToolbar(Toolbar):
                     "%(number)d of %(total)d", state)
         self.label.set_text(text)
 
-    def update(self, mediatype, remaining, seconds, total):
+    def update(self, mediatype, finished, finished_local, eta, total):
         """Update progress."""
         self.mediatype = mediatype
-        self.eta = seconds
+        self.eta = eta
         self.total = total
-        self.remaining = remaining
-        if total:
-            self._update_label()
-            self._display()
-        else:
+        if total == 0:
+            # completely finished
             self.label_widget.hide()
             self.meter.hide()
-            self.displayed = False
+        elif finished_local == total:
+            # finished with local extraction, working on internet lookups
+            self.net_lookup_only = True
+            self.count = finished
+            self.label_widget.show()
+            self.meter.hide()
+            self._setup()
+            self._update_label()
+        else:
+            # still working on local extraction (mutagen, moviedata, etc)
+            self.net_lookup_only = True
+            self.count = finished_local
+            self.label_widget.show()
+            self.meter.show()
+            self._setup()
+            self._update_label()
 
 class ItemDetailsBackground(widgetset.Background):
     """Nearly white background behind the item details widget

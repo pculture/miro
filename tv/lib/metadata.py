@@ -578,6 +578,176 @@ class _EchonestProcessor(_MetadataProcessor):
         # since we may have deleted active paths, process the new ones
         self._process_queue()
 
+class ProgressCountTracker(object):
+    """Helps MetadataManager keep track of counts for MetadataProgressUpdate
+
+    ProgressCountTracker counts the total number of items that need metadata
+    processing, the number of items finished, and the number of items that
+    have finished mutagen/movie-data but still need internet metadata.  Once
+    all items are finished, then the counts reset.
+    """
+
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        """Reset the counts."""
+        self.all_files = set()
+        self.finished_local = set()
+        self.finished = set()
+        self.all_sets = (self.all_files, self.finished_local, self.finished)
+
+    def get_count_info(self):
+        """Get the current count info.
+
+        This method gets three counts:
+        - total count: total number of files to be processed
+        - finished_local count: number of files that have finished
+        mutagen/moviedata, but not echonest
+        - finished_count count: number of files that have finished all
+        processing
+
+        :returns: the tuple (total, finished_local, finished_count)
+        """
+        return (len(self.all_files),
+                len(self.finished_local),
+                len(self.finished))
+
+    def file_started(self, path, initial_metadata):
+        """Add a file to the counts."""
+        self.all_files.add(path)
+
+    def file_updated(self, path, new_metadata):
+        """Call this as we get new metadata."""
+        # subclasses can deal with this, but we don't
+        pass
+
+    def file_finished_local_processing(self, path):
+        """Remove a file from our counts."""
+        if path not in self.all_files:
+            logging.warn("file_finished_local_processing called for a file "
+                         "that we're not tracking: %s", path)
+            return
+        self.finished_local.add(path)
+
+    def file_finished(self, path):
+        """Remove a file from our counts."""
+        if path not in self.all_files:
+            logging.warn("file_finished called for a file that we're "
+                         "not tracking: %s", path)
+            return
+        self.finished.add(path)
+        self.finished_local.add(path)
+        if len(self.finished) == len(self.all_files):
+            self.reset()
+
+    def file_moved(self, old_path, new_path):
+        """Handle a file changing names."""
+        if old_path not in self.all_files:
+            logging.warn("file_moved called for a file that we're "
+                         "not tracking: %s", old_path)
+            return
+        for count_set in self.all_sets:
+            if old_path in count_set:
+                count_set.remove(old_path)
+                count_set.add(new_path)
+
+    def remove_file(self, path):
+        """Remove a file from the counts.
+
+        This is different than finishing the file, since this will lower the
+        total count, rather than increase the finished count.
+        """
+        for count_set in self.all_sets:
+            count_set.discard(path)
+        if len(self.finished) == len(self.all_files):
+            self.reset()
+
+class LibraryProgressCountTracker(object):
+    """Tracks progress counts for the library tabs.
+
+    This has the same API as ProgressCountTracker, but it keeps separate
+    counts for the video and audio tabs, based on the file_type for each path.
+    """
+    def __init__(self):
+        self.trackers = {
+            u'audio': ProgressCountTracker(),
+            u'video': ProgressCountTracker(),
+            u'other': ProgressCountTracker(),
+        }
+        self.file_types = {}
+
+    def file_started(self, path, initial_metadata):
+        file_type = initial_metadata.get('file_type', u'other')
+        self.trackers[file_type].file_started(path, file_type)
+        self.file_types[path] = file_type
+
+    def file_moved(self, old_path, new_path):
+        tracker = self._get_tracker_for_path(old_path)
+        if tracker is not None:
+            tracker.file_moved(old_path, new_path)
+        try:
+            self.file_types[new_path] = self.file_types.pop(old_path)
+        except KeyError:
+            logging.warn("file_moved called for file not being tracked "
+                         "old: %s new: %s", old_path, new_path)
+
+    def get_count_info(self, file_type):
+        return self.trackers[file_type].get_count_info()
+
+    def file_finished(self, path):
+        tracker = self._get_tracker_for_path(path)
+        tracker.file_finished(path)
+
+    def file_finished_local_processing(self, path):
+        tracker = self._get_tracker_for_path(path)
+        if tracker is None:
+            return # _get_tracker_for_path already logged a warning
+        tracker.file_finished_local_processing(path)
+
+    def _get_tracker_for_path(self, path):
+        """Get the ProgressCountTracker for a file.
+
+        :returns: ProgressCountTracker or None if we couldn't look it up
+        """
+        try:
+            old_file_type = self.file_types[path]
+        except KeyError:
+            logging.warn("_get_tracker_for_path: couldn't lookup file type "
+                         "for: %s", path)
+            return None
+        return self.trackers[old_file_type]
+
+    def file_updated(self, path, metadata):
+        if 'file_type' not in metadata:
+            # no new file type, we don't have to change anything
+            return
+        new_file_type = metadata['file_type']
+        try:
+            old_file_type = self.file_types[path]
+        except KeyError:
+            logging.warn("file_updated: couldn't lookup file type for: %s",
+                         path)
+            return
+        if old_file_type == new_file_type:
+            return
+        old_tracker = self.trackers[old_file_type]
+        new_tracker = self.trackers[new_file_type]
+
+        if path not in old_tracker.all_files:
+            logging.warn("file_changed_type called for a file we're not "
+                         "tracking: %s", path)
+            return
+
+        new_tracker.file_started(path, new_file_type)
+        if path in old_tracker.finished:
+            new_tracker.file_finished(path)
+        elif path in old_tracker.finished_local:
+            new_tracker.file_finished_local_processing(path)
+
+        old_tracker.remove_file(path)
+        self.file_types[path] = new_file_type
+
 class _ProcessingCountTracker(object):
     """Helps MetadataManager keep track of counts for MetadataProgressUpdate
 
@@ -655,7 +825,7 @@ class _ProcessingCountTracker(object):
     def file_being_processed(self, path):
         return path in self.file_types
 
-class MetadataManager(signals.SignalEmitter):
+class MetadataManagerBase(signals.SignalEmitter):
     """Extract and track metadata for files.
 
     This class is responsible for:
@@ -701,7 +871,7 @@ class MetadataManager(signals.SignalEmitter):
         for processor in self.metadata_processors:
             processor.connect("task-complete", self._on_task_complete)
             processor.connect("task-error", self._on_task_error)
-        self.count_tracker = _ProcessingCountTracker()
+        self.count_tracker = self.make_count_tracker()
         # List of (processor, path, metadata) tuples for metadata since the
         # last _run_updates() call
         self.metadata_finished = []
@@ -817,7 +987,7 @@ class MetadataManager(signals.SignalEmitter):
         else:
             self._run_mutagen(path)
         if status.current_processor is not None:
-            self.count_tracker.file_started(path)
+            self.count_tracker.file_started(path, initial_metadata)
         self._schedule_update()
         return initial_metadata
 
@@ -1003,6 +1173,10 @@ class MetadataManager(signals.SignalEmitter):
             self.echonest_processor.remove_tasks_for_paths(paths_to_cancel)
 
         for path in paths_to_start:
+            # get_metadata() is sometimes more accurate than
+            # _get_metadata_from_filename() but slower.  Let's go for speed.
+            metadata = self._get_metadata_from_filename(status.path)
+            self.count_tracker.file_started(status.path, metadata)
             self._run_echonest(path)
 
         if paths_to_refresh:
@@ -1035,7 +1209,10 @@ class MetadataManager(signals.SignalEmitter):
             except database.ObjectNotFoundError:
                 continue # just ignore deleted objects
             self.run_next_processor(status)
-            self.count_tracker.file_started(status.path)
+            # get_metadata() is sometimes more accurate than
+            # _get_metadata_from_filename() but slower.  Let's go for speed.
+            metadata = self._get_metadata_from_filename(status.path)
+            self.count_tracker.file_started(status.path, metadata)
 
         del self.restart_ids
         self._schedule_update()
@@ -1144,6 +1321,7 @@ class MetadataManager(signals.SignalEmitter):
                              path)
                 continue
             self._make_new_metadata_entry(status, processor, path, result)
+            self.count_tracker.file_updated(path, result)
             self.run_next_processor(status)
         self.metadata_finished = []
 
@@ -1196,6 +1374,7 @@ class MetadataManager(signals.SignalEmitter):
         elif status.current_processor == u'movie-data':
             self._run_movie_data(status.path)
         elif status.current_processor == u'echonest':
+            self.count_tracker.file_finished_local_processing(status.path)
             self._run_echonest(status.path)
         else:
             self.count_tracker.file_finished(status.path)
@@ -1203,25 +1382,39 @@ class MetadataManager(signals.SignalEmitter):
     def _send_progress_updates(self):
         for file_type in (u'audio', u'video'):
             target = (u'library', file_type)
-            count = self.count_tracker.get_count(file_type)
-            total = self.count_tracker.get_total(file_type)
+            count_info = self.count_tracker.get_count_info(file_type)
+            total, finished_local, finished = count_info
             eta = None
-            msg = messages.MetadataProgressUpdate(target, count, eta, total)
+            msg = messages.MetadataProgressUpdate(target, finished,
+                                                  finished_local, eta, total)
             msg.send_to_frontend()
 
-class DeviceMetadataManager(MetadataManager):
+class LibraryMetadataManager(MetadataManagerBase):
+    """MetadataManager for the user's audio/video library."""
+
+    def make_count_tracker(self):
+        return LibraryProgressCountTracker()
+
+class DeviceMetadataManager(MetadataManagerBase):
+    """MetadataManager for devices."""
+
     def __init__(self, db_info, device_id, mount):
         cover_art_dir = os.path.join(mount, '.miro', 'cover-art')
         screenshot_dir = os.path.join(mount, '.miro', 'screenshots')
-        MetadataManager.__init__(self, cover_art_dir, screenshot_dir, db_info)
+        MetadataManagerBase.__init__(self, cover_art_dir, screenshot_dir,
+                                     db_info)
         self.mount = mount
         self.device_id = device_id
         # FIXME: should we wait to restart incomplete metadata?
         self.restart_incomplete()
 
+    def make_count_tracker(self):
+        # for devices we just use a simple count tracker
+        return ProgressCountTracker()
+
     def get_metadata(self, path):
-        metadata = MetadataManager.get_metadata(self, path)
-        # device items except cover art and screenshots to be relative to
+        metadata = MetadataManagerBase.get_metadata(self, path)
+        # device items expect cover art and screenshots to be relative to
         # the device mount
         for key in ('cover_art_path', 'screenshot_path'):
             if key in metadata:
@@ -1242,12 +1435,10 @@ class DeviceMetadataManager(MetadataManager):
             raise ValueError("%s is not relative to %s" % (path, self.mount))
 
     def _send_progress_updates(self):
-        count = total = 0
-        for file_type in (u'audio', u'video'):
-            count += self.count_tracker.get_count(file_type)
-            total += self.count_tracker.get_total(file_type)
-
         target = (u'device', self.device_id)
+        count_info = self.count_tracker.get_count_info()
+        total, finished_local, finished = count_info
         eta = None
-        msg = messages.MetadataProgressUpdate(target, count, eta, total)
+        msg = messages.MetadataProgressUpdate(target, finished,
+                                              finished_local, eta, total)
         msg.send_to_frontend()

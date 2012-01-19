@@ -156,8 +156,8 @@ class MetadataManagerTest(MiroTestCase):
                             self.processor.exec_codegen)
         self.patch_function('miro.echonest.query_echonest',
                             self.processor.query_echonest)
-        self.metadata_manager = metadata.MetadataManager(self.tempdir,
-                                                         self.tempdir)
+        self.metadata_manager = metadata.LibraryMetadataManager(self.tempdir,
+                                                                self.tempdir)
         # For these examples we want to run echonest by default
         app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
 
@@ -706,8 +706,8 @@ class MetadataManagerTest(MiroTestCase):
         self.check_queued_echonest_codegen_calls([])
         # Create a new MetadataManager and call restart_incomplete on that.
         # That should invoke mutagen and movie data
-        self.metadata_manager = metadata.MetadataManager(self.tempdir,
-                                                         self.tempdir)
+        self.metadata_manager = metadata.LibraryMetadataManager(self.tempdir,
+                                                                self.tempdir)
         self.metadata_manager.restart_incomplete()
         self.check_queued_moviedata_calls(['foo.avi'])
         self.check_queued_mutagen_calls(['bar.avi'])
@@ -744,8 +744,8 @@ class MetadataManagerTest(MiroTestCase):
         self.check_path_in_system('other-file.avi', False)
         # Test path_in_system() for objects in the DB, but not in cache
         self.clear_ddb_object_cache()
-        self.metadata_manager = metadata.MetadataManager(self.tempdir,
-                                                         self.tempdir)
+        self.metadata_manager = metadata.LibraryMetadataManager(self.tempdir,
+                                                                self.tempdir)
         self.check_path_in_system('foo.avi', True)
         self.check_path_in_system('bar.avi', True)
         self.check_path_in_system('baz.mp3', True)
@@ -1680,3 +1680,130 @@ class TestEchonestQueries(MiroTestCase):
         self.query_metadata['album'] = "Thr\u0129ller"
         self.query_metadata['title'] = u"B\u0129llie jean"
         self.test_query_with_tags()
+
+class ProgressUpdateTest(MiroTestCase):
+    # Test the objects used to send the MetadataProgressUpdate messages
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.crash_on_warning()
+
+    def test_count_tracker(self):
+        # test the ProgressCountTracker
+        counter = metadata.ProgressCountTracker()
+        # test as the total goes up
+        files = ["foo.avi", "bar.avi", "baz.avi"]
+        files = [PlatformFilenameType(f) for f in files]
+        for i, f in enumerate(files):
+            counter.file_started(f, {})
+            self.assertEquals(counter.get_count_info(), (i+1, 0, 0))
+        # test as files finish moviedata/mutagen and move to echonest
+        for i, f in enumerate(files):
+            counter.file_finished_local_processing(f)
+            self.assertEquals(counter.get_count_info(), (3, i+1, 0))
+        # test as files finish echonest
+        for i, f in enumerate(files):
+            counter.file_finished(f)
+            if i < 2:
+                self.assertEquals(counter.get_count_info(), (3, 3, i+1))
+            else:
+                # all files completely done.  We should reset the counts
+                self.assertEquals(counter.get_count_info(), (0, 0, 0))
+
+    def test_count_tracker_no_net_lookup(self):
+        # test the ProgressCountTracker when files skip the net lookup stage
+
+        counter = metadata.ProgressCountTracker()
+        # test as the total goes up
+        files = ["foo.avi", "bar.avi", "baz.avi"]
+        files = [PlatformFilenameType(f) for f in files]
+        for i, f in enumerate(files):
+            counter.file_started(f, {})
+            self.assertEquals(counter.get_count_info(), (i+1, 0, 0))
+        # test as files finish processing
+        for i, f in enumerate(files):
+            counter.file_finished(f)
+            if i < 2:
+                self.assertEquals(counter.get_count_info(), (3, i+1, i+1))
+            else:
+                # all files completely done.  We should reset the counts
+                self.assertEquals(counter.get_count_info(), (0, 0, 0))
+
+    def test_count_tracker_file_moved(self):
+        # test the ProgressCountTracker after a file move
+
+        counter = metadata.ProgressCountTracker()
+        # add some files
+        for i in xrange(10):
+            f = PlatformFilenameType("file-%s.avi" % i)
+            counter.file_started(f, {})
+            self.assertEquals(counter.get_count_info(), (i+1, 0, 0))
+        # check calling file_updated.  It should be a no-op
+        for i in xrange(10):
+            f = PlatformFilenameType("file-%s.avi" % i)
+            counter.file_updated(f, {
+                'duration': 10,
+                'file_type': u'audio',
+                'title': u'Title',
+            })
+
+        # move some of those files
+        for i in xrange(5, 10):
+            old = PlatformFilenameType("file-%s.avi" % i)
+            new = PlatformFilenameType("new-file-%s.avi" % i)
+            counter.file_moved(old, new)
+        # check as the files finished
+        for i in xrange(0, 10):
+            if i < 5:
+                f = PlatformFilenameType("file-%s.avi" % i)
+            else:
+                f = PlatformFilenameType("new-file-%s.avi" % i)
+            counter.file_finished(f)
+            if i < 9:
+                self.assertEquals(counter.get_count_info(), (10, i+1, i+1))
+            else:
+                self.assertEquals(counter.get_count_info(), (0, 0, 0))
+
+    def test_library_count_tracker(self):
+        # test the LibraryProgressCountTracker
+        counter = metadata.LibraryProgressCountTracker()
+        # add a couple files that we will never finish.  These will keep it so
+        # the counts don't get reset
+        counter.file_started(PlatformFilenameType("sentinal.avi"),
+                             {'file_type': u"video"})
+        counter.file_started(PlatformFilenameType("sentinal.mp3"),
+                             {'file_type': u"audio"})
+        # add a file whose filetype changes as it runs through the processors
+        self.assertEquals(counter.get_count_info('video'), (1, 0, 0))
+        self.assertEquals(counter.get_count_info('audio'), (1, 0, 0))
+
+        foo = PlatformFilenameType("foo.mp3")
+
+        counter.file_started(foo, {'file_type': u"audio"})
+        self.assertEquals(counter.get_count_info('video'), (1, 0, 0))
+        self.assertEquals(counter.get_count_info('audio'), (2, 0, 0))
+
+        counter.file_updated(foo, {'file_type': u"video"})
+        self.assertEquals(counter.get_count_info('video'), (2, 0, 0))
+        self.assertEquals(counter.get_count_info('audio'), (1, 0, 0))
+
+        # change the name, this shouldn't affect the counts at all
+        bar = PlatformFilenameType("bar.mp3")
+        counter.file_moved(foo, bar)
+        self.assertEquals(counter.get_count_info('video'), (2, 0, 0))
+        self.assertEquals(counter.get_count_info('audio'), (1, 0, 0))
+
+        # check calling file_updated after file_moved
+        counter.file_updated(bar, {'file_type': u"audio"})
+        self.assertEquals(counter.get_count_info('video'), (1, 0, 0))
+        self.assertEquals(counter.get_count_info('audio'), (2, 0, 0))
+
+        # check finishing the file after all of the changes
+        counter.file_finished(bar)
+        self.assertEquals(counter.get_count_info('video'), (1, 0, 0))
+        self.assertEquals(counter.get_count_info('audio'), (2, 1, 1))
+
+        # check file_updated for the last item
+        counter.file_updated(PlatformFilenameType("sentinal.avi"),
+                             {'file_type': u"audio"})
+        self.assertEquals(counter.get_count_info('video'), (0, 0, 0))
+        self.assertEquals(counter.get_count_info('audio'), (3, 1, 1))
