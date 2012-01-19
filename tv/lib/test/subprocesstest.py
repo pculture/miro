@@ -297,24 +297,30 @@ class MovieDataTest(WorkerProcessTest):
         if not isinstance(self.result, dict):
             raise TypeError(self.result)
 
+    def get_from_result(self, key):
+        try:
+            return self.result[key]
+        except KeyError:
+            raise AssertionError("result missing key %s: %s" % (key, result))
+
     def check_movie_data_call(self, filename, file_type, duration):
         source_path = resources.path("testdata/metadata/" + filename)
         msg = workerprocess.MovieDataProgramTask(source_path, self.tempdir)
         workerprocess.send(msg, self.callback, self.errback)
         self.runEventLoop(4.0)
         self.check_successful_result()
-        self.assertEquals(self.result['source_path'], source_path)
+        self.assertEquals(self.get_from_result('source_path'), source_path)
         if file_type is not None:
-            self.assertEquals(self.result['file_type'], file_type)
+            self.assertEquals(self.get_from_result('file_type'), file_type)
         else:
             self.assert_('file_type' not in self.result)
         if duration is not None:
-            self.assertEquals(self.result['duration'], duration)
+            self.assertEquals(self.get_from_result('duration'), duration)
         else:
             self.assert_('duration' not in self.result)
         if file_type == 'video':
             screenshot_name = os.path.basename(source_path) + '.png'
-            self.assertEquals(self.result['screenshot_path'],
+            self.assertEquals(self.get_from_result('screenshot_path'),
                               os.path.join(self.tempdir, screenshot_name))
         else:
             self.assert_('screenshot_path' not in self.result)
