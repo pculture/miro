@@ -9,6 +9,7 @@ from miro.feed import Feed
 from miro.item import Item, FileItem, FeedParserValues
 from miro.fileobject import FilenameType
 from miro.downloader import RemoteDownloader
+from miro.test import mock
 from miro.test.framework import MiroTestCase, EventLoopTest
 from miro.singleclick import _build_entry
 from miro.plat.utils import unicode_to_filename
@@ -165,6 +166,15 @@ class ItemRatingTest(MiroTestCase):
         item.skip_count = 0
         self.assertEquals(item.get_auto_rating(), 5)
 
+    def test_set_rating(self):
+        feed = Feed(u'http://example.com/1')
+        item = Item(fp_values_for_url(u'http://example.com/1/item1'),
+                feed_id=feed.id)
+        item.set_rating(5)
+        self.assertEquals(item.rating, 5)
+        item.set_rating(3)
+        self.assertEquals(item.rating, 3)
+
 class ItemRemoveTest(MiroTestCase):
     def test_watched_time_reset(self):
         feed = Feed(u'http://example.com/1')
@@ -310,3 +320,73 @@ class HaveItemForPathTest(MiroTestCase):
         self.remove_item(u'vIdEO-2')
         self.remove_item(u'VIDEO\xe4-3')
         self.check_have_item_for_path()
+
+class ItemMetadataTest(MiroTestCase):
+    # Test integration between the item and metadata modules.
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.manual_feed = Feed(u'dtv:manualFeed')
+        self.regular_feed = Feed(u'http://example.com/1')
+        self.path = os
+        self.path, fp = self.make_temp_path_fileobj(".avi")
+        fp.write("fake data")
+        fp.close()
+
+    def make_file_item(self):
+        return FileItem(self.path, self.manual_feed.id)
+
+    def check_path_in_metadata_manager(self):
+        if not app.local_metadata_manager.path_in_system(self.path):
+            raise AssertionError("path not in the metadata manager")
+
+    def check_path_not_in_metadata_manager(self):
+        if app.local_metadata_manager.path_in_system(self.path):
+            raise AssertionError("path still in the metadata manager")
+
+    def test_make_deleted(self):
+        # Test calling make_deleted on a FileItem
+        file_item = self.make_file_item()
+        self.check_path_in_metadata_manager()
+
+        file_item.make_deleted()
+        self.check_path_not_in_metadata_manager()
+
+        file_item.make_undeleted()
+        self.check_path_in_metadata_manager()
+
+    def test_remove(self):
+        # Test calling remove() a file item
+        file_item = self.make_file_item()
+        self.check_path_in_metadata_manager()
+
+        file_item.remove()
+        self.check_path_not_in_metadata_manager()
+
+    def make_regular_item(self, feed):
+        url = u'http://example.com/1/item1'
+        item = Item(fp_values_for_url(url), feed_id=feed.id)
+        item.set_downloader(RemoteDownloader(url, item))
+        return item
+
+    def test_expire(self):
+        # Test calling expire() on a item downloaded from a feed
+        item = self.make_regular_item(self.regular_feed)
+        item.downloader.status['filename'] = self.path
+        item.downloader.state = item.downloader.status['state'] = u'finished'
+        item.on_download_finished()
+        self.check_path_in_metadata_manager()
+
+        downloader = item.downloader
+        item.expire()
+        self.check_path_not_in_metadata_manager()
+
+    def test_expire_external_item(self):
+        # Test calling expire() on a item downloaded by itself
+        item = self.make_regular_item(self.manual_feed)
+        item.downloader.status['filename'] = self.path
+        item.downloader.state = item.downloader.status['state'] = u'finished'
+        item.on_download_finished()
+        self.check_path_in_metadata_manager()
+
+        item.expire()
+        self.check_path_not_in_metadata_manager()

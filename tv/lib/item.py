@@ -997,6 +997,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.update_from_metadata(metadata_dict)
         self.signal_change()
 
+    def set_rating(self, rating):
+        self.rating = rating
+        self.signal_change()
+
     def matches_search(self, search_string):
         if search_string is None or search_string == '':
             return True
@@ -2187,9 +2191,17 @@ class FileItem(Item):
                 self.make_deleted()
         if old_parent is not None and old_parent.get_children().count() == 0:
             old_parent.expire()
-        app.local_metadata_manager.remove_file(self.filename)
+        if app.local_metadata_manager.path_in_system(self.filename):
+            app.local_metadata_manager.remove_file(self.filename)
+
+    def remove(self):
+        if app.local_metadata_manager.path_in_system(self.filename):
+            app.local_metadata_manager.remove_file(self.filename)
+        Item.remove(self)
 
     def make_deleted(self):
+        if app.local_metadata_manager.path_in_system(self.filename):
+            app.local_metadata_manager.remove_file(self.filename)
         self._remove_from_playlists()
         self.downloadedTime = None
         # Move to the manual feed, since from Miro's point of view the file is
@@ -2202,6 +2214,7 @@ class FileItem(Item):
     def make_undeleted(self):
         self.deleted = False
         self.signal_change()
+        app.local_metadata_manager.add_file(self.filename)
 
     def delete_files(self):
         if self.has_parent():
