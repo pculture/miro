@@ -301,7 +301,7 @@ class MovieDataTest(WorkerProcessTest):
         try:
             return self.result[key]
         except KeyError:
-            raise AssertionError("result missing key %s: %s" % (key, result))
+            raise AssertionError("result missing key %s: %s" % (key, self.result))
 
     def check_movie_data_call(self, filename, file_type, duration):
         source_path = resources.path("testdata/metadata/" + filename)
