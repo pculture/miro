@@ -322,11 +322,6 @@ def finish_startup(obj, thread):
     app.download_state_manager = downloader.DownloadStateManager()
     app.download_state_manager.init_controller()
 
-    # Call this late, after the message handlers have been installed.
-    app.sharing_tracker = sharing.SharingTracker()
-    app.sharing_manager = sharing.SharingManager()
-    app.transcode_manager = transcode.TranscodeManager()
-
     eventloop.add_urgent_call(check_firsttime, "check first time")
 
 def fix_database_inconsistencies():
@@ -394,6 +389,12 @@ def fix_movies_gone():
         prefs.MOVIES_DIRECTORY))
     eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
 
+def start_sharing():
+    app.sharing_tracker = sharing.SharingTracker()
+    app.sharing_manager = sharing.SharingManager()
+    app.transcode_manager = transcode.TranscodeManager()
+    app.sharing_tracker.start_tracking()
+
 @startup_function
 def finish_backend_startup():
     """Last bit of startup required before we load the frontend.  """
@@ -423,6 +424,7 @@ def on_frontend_started():
             "start downloader daemon")
     eventloop.add_timeout(10, workerprocess.startup,
             "start worker process")
+    eventloop.add_timeout(15, start_sharing, "start sharing")
     eventloop.add_timeout(20, item.start_deleted_checker,
             "start checking deleted items")
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
