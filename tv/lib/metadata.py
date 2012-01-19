@@ -155,9 +155,9 @@ class MetadataStatus(database.DDBObject):
             return
         self.db_info.db.cache.set('metadata', self.path, self)
 
-    def removed_from_db(self):
+    def remove(self):
         self.db_info.db.cache.remove('metadata', self.path)
-        database.DDBObject.removed_from_db(self)
+        database.DDBObject.remove(self)
 
     def get_has_drm(self):
         """Does this media file have DRM preventing us from playing it?

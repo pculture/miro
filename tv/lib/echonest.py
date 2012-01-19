@@ -188,7 +188,8 @@ class _EchonestQuery(object):
         try:
             self._handle_echonest_callback(data['body'])
         except StandardError, e:
-            logging.exception("Error handling echonest response")
+            logging.warn("Error handling echonest response:\n%s",
+                         data['body'], exc_info=True)
             self.invoke_errback(ResponseParsingError())
 
     def _handle_echonest_callback(self, echonest_reply):

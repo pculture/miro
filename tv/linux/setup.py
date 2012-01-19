@@ -102,11 +102,9 @@ platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
                                     'widgets')
 platform_extensions_dir = os.path.join(platform_dir, 'extensions')
-echonest_dir = os.path.join(root_dir, 'contrib', 'pyechonest')
 echoprint_dir = os.path.join(platform_dir, 'contrib', 'echoprint-codegen')
 echoprint_src_dir = os.path.join(echoprint_dir, 'src')
-enmfp_path = os.path.join(platform_dir, 'contrib', 'enmfp-codegen',
-                          'codegen.Linux-i686')
+enmfp_path = os.path.join(platform_dir, 'contrib', 'enmfp-codegen')
 
 # insert the root_dir to the beginning of sys.path so that we can
 # pick up portable and other packages
@@ -460,7 +458,8 @@ class miro_build(build):
         self.distribution.scripts.append(dest_binary)
 
     def build_enmfp_codegen(self):
-        self.distribution.scripts.append(enmfp_path)
+        for path in glob(os.path.join(enmfp_path, 'codegen.Linux-*')):
+            self.distribution.scripts.append(path)
 
     def run(self):
         self.build_segmenter()
@@ -597,13 +596,11 @@ setup(name='miro',
         'miro.plat.frontends',
         'miro.plat.frontends.widgets',
         'miro.plat.renderers',
-        'pyechonest',
     ],
     package_dir={
         'miro': portable_dir,
         'miro.test': test_dir,
         'miro.plat': platform_package_dir,
-        'pyechonest': echonest_dir,
     },
     cmdclass={
         'test_system': test_system,
