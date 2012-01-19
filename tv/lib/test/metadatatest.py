@@ -1565,6 +1565,11 @@ class TestEchonestQueries(MiroTestCase):
         self.send_album_art_reply()
         self.check_callback()
 
+    def test_query_with_extended_chars(self):
+        # test normal operations
+        self.query_metadata['artist'] = u'Micha\u00e9l jackson'
+        self.test_query_with_tags()
+
     def test_album_art_error(self):
         # test normal operations
         self.start_query_with_tags()

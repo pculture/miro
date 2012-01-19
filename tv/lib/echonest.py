@@ -161,7 +161,7 @@ class _EchonestQuery(object):
         ]
         for key in ('title', 'artist'):
             if key in metadata:
-                url_data.append((key, metadata[key]))
+                url_data.append((key, metadata[key].encode('utf-8')))
         url = ('http://developer.echonest.com/api/v4/song/search?' +
                 urllib.urlencode(url_data))
         httpclient.grab_url(url, self.echonest_callback,
