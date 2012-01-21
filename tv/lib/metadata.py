@@ -666,8 +666,10 @@ class ProgressCountTracker(object):
 class LibraryProgressCountTracker(object):
     """Tracks progress counts for the library tabs.
 
-    This has the same API as ProgressCountTracker, but it keeps separate
-    counts for the video and audio tabs, based on the file_type for each path.
+    This has the same API as ProgressCountTracker for file tracking (the
+    functions file_started, file_updated, file_finished, etc), but
+    get_count_info() is different because it keeps separate counts for the
+    video and audio tabs, based on the file_type for each path.
     """
     def __init__(self):
         self.trackers = {
@@ -679,7 +681,7 @@ class LibraryProgressCountTracker(object):
 
     def file_started(self, path, initial_metadata):
         file_type = initial_metadata.get('file_type', u'other')
-        self.trackers[file_type].file_started(path, file_type)
+        self.trackers[file_type].file_started(path, initial_metadata)
         self.file_types[path] = file_type
 
     def file_moved(self, old_path, new_path):
@@ -693,6 +695,11 @@ class LibraryProgressCountTracker(object):
                          "old: %s new: %s", old_path, new_path)
 
     def get_count_info(self, file_type):
+        """Get the count info for the audio, video, or other tabs
+
+        :param file_type: file type to get the count info for
+        :returns: the tuple (total, finished_local, finished_count)
+        """
         return self.trackers[file_type].get_count_info()
 
     def file_finished(self, path):
@@ -739,7 +746,7 @@ class LibraryProgressCountTracker(object):
                          "tracking: %s", path)
             return
 
-        new_tracker.file_started(path, new_file_type)
+        new_tracker.file_started(path, metadata)
         if path in old_tracker.finished:
             new_tracker.file_finished(path)
         elif path in old_tracker.finished_local:
