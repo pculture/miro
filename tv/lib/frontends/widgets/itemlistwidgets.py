@@ -1708,36 +1708,38 @@ class ProgressToolbar(Toolbar):
         self.hbox = widgetset.HBox()
         self.add(self.hbox)
         self.label = widgetset.Label()
+        # bz18599 says we should reduce the size by 2px from the default.  The
+        # default size is 13 px, so 0.85 should do the trick.
+        self.label.set_size(0.85)
         self.meter = widgetutil.HideableWidget(loading_icon)
         self.label_widget = widgetutil.HideableWidget(self.label)
         self.elapsed = None
         self.eta = None
         self.total = None
-        self.remaining = None
+        self.count = None
+        self.net_lookup_only = False
         self.mediatype = 'other'
-        self.displayed = False
         self.set_up = False
 
-    def _display(self):
-        if not self.set_up:
-            padding = max(0, 380 - self.label.get_width())
-            self.hbox.pack_start(
-                widgetutil.align(
-                    self.label_widget, 1, 0.5, 1, 0, 0, 0, padding, 10),
-                expand=False)
-            self.hbox.pack_start(widgetutil.align_left(
-                            self.meter, 0, 0, 0, 200), expand=True)
-            self.set_up = True
-        if not self.displayed:
-            self.label_widget.show()
-            self.meter.show()
-            self.displayed = True
+    def _setup(self):
+        left_pad = max(0, 380 - self.label.get_width())
+        label_align = widgetutil.align(self.label_widget, yalign=0.5,
+                                       top_pad=1, left_pad=left_pad,
+                                       right_pad=10)
+        label_align.set_size_request(-1, 20)
+        self.hbox.pack_start(label_align, expand=False)
+        meter_align = widgetutil.align(self.meter, yalign=0.5, xscale=200)
+        self.hbox.pack_start(meter_align, expand=True)
+        self.set_up = True
 
     def _update_label(self):
         # TODO: display eta
-        state = {"number": self.total-self.remaining,
+        state = {"number": self.count,
                  "total": self.total}
-        if self.mediatype == 'audio':
+        if self.net_lookup_only:
+            text = _("Looking up album art and song info: "
+                    "%(number)d of %(total)d", state)
+        elif self.mediatype == 'audio':
             text = _("Importing audio details and artwork: "
                     "%(number)d of %(total)d", state)
         elif self.mediatype == 'video':
@@ -1748,19 +1750,40 @@ class ProgressToolbar(Toolbar):
                     "%(number)d of %(total)d", state)
         self.label.set_text(text)
 
-    def update(self, mediatype, remaining, seconds, total):
+    def update(self, mediatype, finished, finished_local, eta, total):
         """Update progress."""
         self.mediatype = mediatype
-        self.eta = seconds
+        self.eta = eta
         self.total = total
-        self.remaining = remaining
-        if total:
-            self._update_label()
-            self._display()
+        if total == 0:
+            # completely finished
+            self._set_display_mode('hide')
+        elif finished_local == total:
+            # finished with local extraction, working on internet lookups
+            self.net_lookup_only = True
+            self.count = finished
+            # ensure we are as tall we are when the loading indicator is shown
+            self._set_display_mode('show-label')
         else:
+            # still working on local extraction (mutagen, moviedata, etc)
+            self.net_lookup_only = True
+            self.count = finished_local
+            self._set_display_mode('show-all')
+
+    def _set_display_mode(self, mode):
+        if mode != 'hide':
+            if not self.set_up:
+                self._setup()
+            self._update_label()
+            self.label_widget.show()
+            if mode == 'show-all':
+                self.meter.show()
+            else:
+                self.meter.hide()
+        else:
+            # we are hiding the whole display
             self.label_widget.hide()
             self.meter.hide()
-            self.displayed = False
 
 class ItemDetailsBackground(widgetset.Background):
     """Nearly white background behind the item details widget
@@ -2301,10 +2324,10 @@ class ItemContainerWidget(widgetset.VBox):
         color1 = widgetutil.css_to_color('#303030')
         color2 = widgetutil.css_to_color('#020202')
         self.pack_start(separator.HThinSeparator(color1))
-        self.pack_start(self.progress_toolbar)
         self.background = ItemListBackground()
         self.pack_start(self.background, expand=True)
         self.pack_start(self.item_details)
+        self.pack_start(self.progress_toolbar)
         self.pack_start(self.statusbar_vbox)
         self.selected_view = view
         self.list_empty_mode = False

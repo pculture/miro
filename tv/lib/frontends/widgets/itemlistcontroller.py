@@ -129,10 +129,10 @@ class ProgressTrackingListMixin(object):
         else:
             self.mediatype = 'other'
 
-    def update_metadata_progress(self, remaining, eta, total):
+    def update_metadata_progress(self, finished, finished_local, eta, total):
         meter = self.widget.get_progress_meter()
         if meter:
-            meter.update(self.mediatype, remaining, eta, total)
+            meter.update(self.mediatype, finished, finished_local, eta, total)
             self.postponed = None
         else: # got progress before widget created
             self.postponed = (remaining, eta, total)
@@ -1443,8 +1443,10 @@ class ItemListControllerManager(object):
         if self.displayed:
             self.controller_no_longer_displayed(self.displayed)
 
-    def update_metadata_progress(self, target, remaining, eta, total):
+    def update_metadata_progress(self, target, finished, finished_local, eta,
+                                 total):
         if target not in self.controllers:
             # devices can have this process started without a controller
             return
-        self.controllers[target].update_metadata_progress(remaining, eta, total)
+        self.controllers[target].update_metadata_progress(
+            finished, finished_local, eta, total)
