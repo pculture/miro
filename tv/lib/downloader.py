@@ -304,9 +304,10 @@ class RemoteDownloader(DDBObject):
             elif file_migrated:
                 self._file_migrated(old_filename)
             elif name_changed and old_filename:
-                # update the title; happens with magnet URLs since we
-                # don't have a real one when the download starts
-                print '%r != %r' % (old_filename, self.get_filename())
+                # update the title; happens with magnet URLs since we don't
+                # have a real one when the download starts.  The old_filename
+                # check is to prevent things with existing titles from being
+                # renamed (#18656).
                 new_title = self.status['shortFilename']
                 if not isinstance(new_title, unicode):
                     try:
@@ -317,7 +318,6 @@ class RemoteDownloader(DDBObject):
                         return
                 for item in self.item_list:
                     if item.title is None:
-                        print 'changing title from %r to %r' % (item.title, new_title)
                         item.title = new_title
                         item.signal_change()
 
