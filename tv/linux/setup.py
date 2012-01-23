@@ -88,6 +88,7 @@ def get_root_dir():
     return root_dir
 
 root_dir = get_root_dir()
+git_root_dir = os.path.dirname(root_dir)
 portable_dir = os.path.join(root_dir, 'lib')
 portable_frontend_dir = os.path.join(portable_dir, 'frontends')
 portable_xpcom_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
@@ -429,6 +430,12 @@ class miro_install_data(install_data):
         self.install_app_config()
 
 class miro_build(build):
+    def git_submodule_update(self):
+        # Run git submodule update --init
+        # This initializes the echoprint directory
+        subprocess.check_call(['git', 'submodule', 'update', '--init'],
+                              cwd=git_root_dir)
+
     def build_segmenter(self):
         segmenter_src = os.path.join(platform_dir, 'miro-segmenter.c')
         cc = ccompiler.new_compiler()
@@ -462,6 +469,7 @@ class miro_build(build):
             self.distribution.scripts.append(path)
 
     def run(self):
+        self.git_submodule_update()
         self.build_segmenter()
         self.build_echoprint_codegen()
         self.build_enmfp_codegen()
