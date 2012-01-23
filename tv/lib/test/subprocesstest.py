@@ -301,7 +301,7 @@ class MovieDataTest(WorkerProcessTest):
         try:
             return self.result[key]
         except KeyError:
-            raise AssertionError("result missing key %s: %s" % (key, result))
+            raise AssertionError("result missing key %s: %s" % (key, self.result))
 
     def check_movie_data_call(self, filename, file_type, duration):
         source_path = resources.path("testdata/metadata/" + filename)
@@ -331,7 +331,6 @@ class MovieDataTest(WorkerProcessTest):
         self.check_movie_data_call('mp3-0.mp3', 'audio', 1044)
         self.check_movie_data_call('mp3-1.mp3', 'audio', 1044)
         self.check_movie_data_call('mp3-2.mp3', 'audio', 1044)
-        self.check_movie_data_call('webm-0.webm', 'video', 434)
         self.check_movie_data_call('drm.m4v', None, None)
 
 class MutagenTest(WorkerProcessTest):
