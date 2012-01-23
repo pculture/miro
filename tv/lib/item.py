@@ -2611,8 +2611,8 @@ def setup_metadata_manager(cover_art_dir=None, screenshot_dir=None):
     if screenshot_dir is None:
         icon_cache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
         screenshot_dir = os.path.join(icon_cache_dir, 'extracted')
-    app.local_metadata_manager = metadata.MetadataManager(cover_art_dir,
-                                                          screenshot_dir)
+    app.local_metadata_manager = metadata.LibraryMetadataManager(
+        cover_art_dir, screenshot_dir)
     app.local_metadata_manager.connect('new-metadata', on_new_metadata)
 
 def on_new_metadata(metadata_manager, new_metadata):

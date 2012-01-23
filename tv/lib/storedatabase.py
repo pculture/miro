@@ -1258,17 +1258,29 @@ class LiveStorage:
     def _get_size_info(self):
         """Get info about the database size
 
-        returns the tuple (page_size, page_count, freelist_count)
+        :returns: (page_size, page_count, freelist_count) tuple or None if
+        there's an error getting the size info
         """
         rv = []
         for name in ('page_size', 'page_count', 'freelist_count'):
-            self.cursor.execute('PRAGMA %s' % name)
-            rv.append(self.cursor.fetchone()[0])
+            sql = 'PRAGMA %s' % name
+            self.cursor.execute(sql)
+            row = self.cursor.fetchone()
+            if row is None:
+                # not sure why this happens, but it does #18633
+                logging.warn("_get_size_info(): error running %s", sql)
+                return None
+            rv.append(row[0])
         return rv
 
     def _preallocate_space(self, db_name='main'):
         if db_name == 'main':
-            page_size, page_count, freelist_count = self._get_size_info()
+            size_info = self._get_size_info()
+            if size_info is None:
+                logging.warn("_get_size_info() returned None.  Not "
+                             "preallocating space for: %s", self.path)
+                return
+            page_size, page_count, freelist_count = size_info
             current_size = page_size * (page_count + freelist_count)
         else:
             # HACK: We can't get size counts for attached databases so we just

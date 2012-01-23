@@ -161,7 +161,7 @@ class _EchonestQuery(object):
         ]
         for key in ('title', 'artist'):
             if key in metadata:
-                url_data.append((key, metadata[key]))
+                url_data.append((key, metadata[key].encode('utf-8')))
         url = ('http://developer.echonest.com/api/v4/song/search?' +
                 urllib.urlencode(url_data))
         httpclient.grab_url(url, self.echonest_callback,
@@ -188,8 +188,8 @@ class _EchonestQuery(object):
         try:
             self._handle_echonest_callback(data['body'])
         except StandardError, e:
-            logging.warn("Error handling echonest response:\n%s",
-                         data['body'], exc_info=True)
+            logging.warn("Error handling echonest response: %r", data['body'],
+                         exc_info=True)
             self.invoke_errback(ResponseParsingError())
 
     def _handle_echonest_callback(self, echonest_reply):
@@ -268,7 +268,8 @@ class _EchonestQuery(object):
         try:
             self._handle_7digital_callback(data['body'])
         except StandardError, e:
-            logging.exception("Error handling 7digital response")
+            logging.warn("Error handling 7digital response: %r", data['body'],
+                         exc_info=True)
             # we can still invoke our callback with the data from echonest
         if (self.cover_art_url and self.cover_art_filename):
             self.grab_url_dest = os.path.join(self.cover_art_dir,

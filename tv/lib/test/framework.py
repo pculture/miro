@@ -255,21 +255,6 @@ class LogFilter(logging.Filter):
         for rec in self.records:
             assert rec.levelno == level
 
-class FakeMetadataProgressUpdater(object):
-    def __init__(self):
-        self.paths_processed = set()
-
-    def path_processed(self, path):
-        self.paths_processed.add(path)
-
-    def will_process_path(self, path):
-        # we should test this, but for now it's just a stub
-        pass
-
-    def will_process_paths(self, paths):
-        # we should test this, but for now it's just a stub
-        pass
-
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         self.setup_log_filter()
@@ -285,9 +270,6 @@ class MiroTestCase(unittest.TestCase):
         # setup the deleted file checker
         item.setup_deleted_checker()
         item.start_deleted_checker()
-        # setup movie data stuff
-        self.metadata_progress_updater = FakeMetadataProgressUpdater()
-        app.metadata_progress_updater = self.metadata_progress_updater
         # Skip worker proccess for feedparser
         feed._RUN_FEED_PARSER_INLINE = True
         # reload config and initialize it to temprary
@@ -351,7 +333,6 @@ class MiroTestCase(unittest.TestCase):
         signals.system.disconnect_all()
         util.chatter = True
         self.stop_http_server()
-        del app.metadata_progress_updater
 
         # unload extensions
         self.unload_extensions()
@@ -399,6 +380,12 @@ class MiroTestCase(unittest.TestCase):
             logger.removeFilter(old_filter)
         self.log_filter = LogFilter()
         logger.addFilter(self.log_filter)
+
+    def crash_on_warning(self):
+        """Convenience function to crash when we log a warning."""
+        # FIXME This probably should be the default and tests should have to
+        # opt-out of it
+        self.log_filter.set_exception_level(logging.WARN)
 
     def reset_log_filter(self):
         logger = logging.getLogger()

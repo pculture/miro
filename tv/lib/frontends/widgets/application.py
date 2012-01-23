@@ -1804,6 +1804,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if not app.item_list_controller_manager or not app.tabs:
             return # got a metadata update before the UI opens
         app.item_list_controller_manager.update_metadata_progress(
-            message.target, message.remaining, message.eta, message.total)
+            message.target, message.finished, message.finished_local,
+            message.eta, message.total)
         app.tabs.update_metadata_progress(
-            message.target, message.remaining, message.eta, message.total)
+            message.target, message.finished_local, message.eta,
+            message.total)
