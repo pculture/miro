@@ -303,9 +303,10 @@ class RemoteDownloader(DDBObject):
                     item.on_download_finished()
             elif file_migrated:
                 self._file_migrated(old_filename)
-            elif name_changed:
+            elif name_changed and old_filename:
                 # update the title; happens with magnet URLs since we
                 # don't have a real one when the download starts
+                print '%r != %r' % (old_filename, self.get_filename())
                 new_title = self.status['shortFilename']
                 if not isinstance(new_title, unicode):
                     try:
@@ -315,8 +316,10 @@ class RemoteDownloader(DDBObject):
                         # changing
                         return
                 for item in self.item_list:
-                    item.title = new_title
-                    item.signal_change()
+                    if item.title is None:
+                        print 'changing title from %r to %r' % (item.title, new_title)
+                        item.title = new_title
+                        item.signal_change()
 
     def run_downloader(self):
         """This is the actual download thread.
