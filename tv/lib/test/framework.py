@@ -645,7 +645,9 @@ def dynamic_test(expected_cases=None):
     def wrap_class(cls):
         generated_cases = 0
         for test_args in cls.generate_tests():
-            test_name = ''.join(x for x in test_args[0] if x.isalnum())
+            test_name = ''.join(x for x in
+                                test_args[0].encode('ascii', 'ignore')
+                                if x.isalnum())
             setattr(cls, 'test_%s_dyn' % test_name, _generate_closure(cls, test_args))
             generated_cases += 1
 
