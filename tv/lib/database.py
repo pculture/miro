@@ -248,11 +248,11 @@ class ViewTrackerManager(object):
     def trackers_for_ddb_class(self, klass):
         return self.trackers_for_table(self.db.table_name(klass))
 
-    def update_view_trackers(self, obj):
+    def update_view_trackers(self, obj, can_change_views=True):
         """Update view trackers based on an object change."""
 
         for tracker in self.trackers_for_ddb_class(obj.__class__):
-            tracker.object_changed(obj)
+            tracker.object_changed(obj, can_change_views)
 
     def bulk_update_view_trackers(self, table_name):
         for tracker in self.trackers_for_table(table_name):
@@ -314,8 +314,11 @@ class ViewTracker(signals.SignalEmitter):
                                              self.where, self.values,
                                              joins=self.joins))
 
-    def object_changed(self, obj):
-        self.check_object(obj)
+    def object_changed(self, obj, can_change_views):
+        if can_change_views:
+            self.check_object(obj)
+        elif obj.id in self.current_ids:
+            self.emit('changed', self.fetcher.fetch_obj_for_ddb_object(obj))
 
     def remove_object(self, obj):
         if obj.id in self.current_ids:
@@ -742,7 +745,7 @@ class DDBObject(signals.SignalEmitter):
         """
         pass
 
-    def signal_change(self, needs_save=True):
+    def signal_change(self, needs_save=True, can_change_views=True):
         """Call this after you change the object
         """
         if self.in_db_init:
@@ -762,7 +765,8 @@ class DDBObject(signals.SignalEmitter):
             return
         if needs_save:
             self.db_info.db.update_obj(self)
-        self.db_info.view_tracker_manager.update_view_trackers(self)
+        self.db_info.view_tracker_manager.update_view_trackers(
+            self, can_change_views)
 
     def on_signal_change(self):
         pass

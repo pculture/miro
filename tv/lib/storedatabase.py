@@ -110,17 +110,6 @@ _sqlite_type_map = {
 
 VERSION_KEY = "Democracy Version"
 
-def split_values_for_sqlite(value_list):
-    """Split a list of values into chunks that SQL can handle.
-
-    The cursor.execute() method can only handle 999 values at once, this
-    method splits long lists into chunks where each chunk has is safe to feed
-    to sqlite.
-    """
-    CHUNK_SIZE = 990 # use 990 just to be on the safe side.
-    for start in xrange(0, len(value_list), CHUNK_SIZE):
-        yield value_list[start:start+CHUNK_SIZE]
-
 class DatabaseObjectCache(object):
     """Handles caching objects for a database.
 
@@ -904,7 +893,7 @@ class LiveStorage:
                 raise ValueError("Incompatible types for bulk remove")
         # we can only feed sqlite so many variables at once, send it chunks of
         # 900 ids at once
-        for objects_chunk in split_values_for_sqlite(objects):
+        for objects_chunk in util.split_values_for_sqlite(objects):
             commas = ','.join('?' for x in xrange(len(objects_chunk)))
             sql = "DELETE FROM %s WHERE id IN (%s)" % (obj_schema.table_name,
                     commas)
@@ -967,8 +956,11 @@ class LiveStorage:
 
         :returns: True iff we needed to load objects
         """
-        unrestored_ids = set(id_list).difference(
-          i for i, unused in self._ids_loaded)
+        table_name = app.db.table_name(klass)
+        unrestored_ids = []
+        for id_ in id_list:
+            if (id_, table_name) not in self._ids_loaded:
+                unrestored_ids.append(id_)
         if unrestored_ids:
             # restore any objects that we don't already have in memory.
             schema = self._schema_map[klass]
@@ -992,7 +984,7 @@ class LiveStorage:
         # we can only feed sqlite so many variables at once, send it chunks of
         # 900 ids at once
         id_list = tuple(id_set)
-        for id_list_chunk in split_values_for_sqlite(id_list):
+        for id_list_chunk in util.split_values_for_sqlite(id_list):
             sql = StringIO()
             sql.write("SELECT %s " % (', '.join(column_names),))
             sql.write("FROM %s WHERE id IN (%s)" % (schema.table_name, 
