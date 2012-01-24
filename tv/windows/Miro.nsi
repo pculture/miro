@@ -802,11 +802,11 @@ install_reg_keys:
   WriteRegStr HKCR "${CONFIG_PROG_ID}" "" "${CONFIG_LONG_APP_NAME}"
   WriteRegDword HKCR "${CONFIG_PROG_ID}" "EditFlags" 0x00010000
   ; FTA_OpenIsSafe flag
-  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\shell" "" "open"
-  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\DefaultIcon" "" "$INSTDIR\${CONFIG_EXECUTABLE},0"
-  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\shell\open\command" "" "$R3"
-  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\shell\edit" "" "Edit Options File"
-  WriteRegStr HKCR "${CONFIG_SHORT_APP_NAME}\shell\edit\command" "" "$R3"
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell" "" "open"
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\DefaultIcon" "" "$INSTDIR\${CONFIG_EXECUTABLE},0"
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\open\command" "" "$R3"
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit" "" "Edit Options File"
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit\command" "" "$R3"
 
   ; Delete our old, poorly formatted ProgID
   DeleteRegKey HKCR "DemocracyPlayer"
