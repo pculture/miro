@@ -1150,3 +1150,15 @@ def make_file_url(path):
     # Always return str.  Pathname2url() returns a str and from that point
     # there are no unicode to infect us for a unicode type upgrade.
     return 'file:///' + path_part
+
+def split_values_for_sqlite(value_list):
+    """Split a list of values into chunks that SQL can handle.
+
+    The cursor.execute() method can only handle 999 values at once, this
+    method splits long lists into chunks where each chunk has is safe to feed
+    to sqlite.
+    """
+    CHUNK_SIZE = 990 # use 990 just to be on the safe side.
+    for start in xrange(0, len(value_list), CHUNK_SIZE):
+        yield value_list[start:start+CHUNK_SIZE]
+

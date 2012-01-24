@@ -473,9 +473,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
 
-    def signal_change(self, needs_save=True):
+    def signal_change(self, needs_save=True, can_change_views=True):
         app.item_info_cache.item_changed(self)
-        DDBObject.signal_change(self, needs_save)
+        DDBObject.signal_change(self, needs_save, can_change_views)
 
     @classmethod
     def auto_pending_view(cls):
@@ -2616,10 +2616,25 @@ def setup_metadata_manager(cover_art_dir=None, screenshot_dir=None):
     app.local_metadata_manager.connect('new-metadata', on_new_metadata)
 
 def on_new_metadata(metadata_manager, new_metadata):
+    # Get all items that have changed using one query.  This is much faster
+    # than calling items_with_path_view() for each path.
+    path_map = collections.defaultdict(list)
+    all_paths = [filename_to_unicode(p).lower() for p in new_metadata.keys()]
+    # It's possible for there to be more than 999 items in all_paths.  Split
+    # up the query to avoid SQLite's host parametrs limit
+    for paths in util.split_values_for_sqlite(all_paths):
+        placeholders = ', '.join('?' for i in xrange(len(paths)))
+        view = Item.make_view('lower(filename) IN (%s)' % placeholders, paths)
+        for i in view:
+            path_map[i].append(i)
+
     for path, metadata in new_metadata.iteritems():
-        for item in Item.items_with_path_view(path):
+        for item in path_map[path]:
+            # optimize signal_change.  An item will only change views because
+            # of new metadata if it changes file type.
+            can_change_views = (metadata.get('file_type') != item.file_type)
             item.update_from_metadata(metadata)
-            item.signal_change()
+            item.signal_change(can_change_views=can_change_views)
 
 def update_incomplete_metadata():
     """Restart medata updates for our items.  """
