@@ -1766,7 +1766,7 @@ class ProgressToolbar(Toolbar):
             self._set_display_mode('show-label')
         else:
             # still working on local extraction (mutagen, moviedata, etc)
-            self.net_lookup_only = True
+            self.net_lookup_only = False
             self.count = finished_local
             self._set_display_mode('show-all')
 
