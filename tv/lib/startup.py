@@ -322,6 +322,11 @@ def finish_startup(obj, thread):
     app.download_state_manager = downloader.DownloadStateManager()
     app.download_state_manager.init_controller()
 
+    # Call this late, after the message handlers have been installed.
+    app.sharing_tracker = sharing.SharingTracker()
+    app.sharing_manager = sharing.SharingManager()
+    app.transcode_manager = transcode.TranscodeManager()
+
     eventloop.add_urgent_call(check_firsttime, "check first time")
 
 def fix_database_inconsistencies():
