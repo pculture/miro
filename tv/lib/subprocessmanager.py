@@ -38,6 +38,7 @@ Platforms need to ensure that this script is available and that it can be run
 with the command line and env from plat.utils.miro_helper_program_info().
 """
 
+import ctypes
 import cPickle as pickle
 import logging
 import os
@@ -49,6 +50,7 @@ import warnings
 import Queue
 
 from miro import app
+from miro import clock
 from miro import config
 from miro import prefs
 from miro import crashreport
@@ -139,9 +141,13 @@ class SubprocessError(SubprocessResponse):
 
 def _send_subprocess_error_for_exception(soft_fail=True):
     exc_info = sys.exc_info()
-    report = '---- subprocess stack ---- '
+    report = '---- subprocess stack ----\n'
     report += crashreport.format_stack_report('in subprocess', exc_info)
-    report += '-------------------------- '
+    report += '--------------------------'
+    if _on_windows():
+        report += "\nGetLastError(): %s" % ctypes.GetLastError()
+        report += '\n--------------------------'
+
     SubprocessError(report, soft_fail=soft_fail).send_to_main_process()
 
 class SubprocessHandler(messagetools.MessageHandler):
@@ -289,7 +295,7 @@ class SubprocessManager(object):
     """
 
     def __init__(self, message_base_class, responder, handler_class,
-            handler_args=None):
+            handler_args=None, restart_delay=60):
         """Create a new SubprocessManager.
 
         This method prepares the subprocess to run.  Use start() to start it
@@ -302,6 +308,9 @@ class SubprocessManager(object):
 
         handler_class and handler_args are used to build the SubprocessHandler
         inside the subprocess
+
+        restart_delay controls how quickly we restart crashed subprocesses.
+        We will not start more than 1 process per <restart_delay> seconds.
         """
         if handler_args is None:
             handler_args = ()
@@ -310,8 +319,11 @@ class SubprocessManager(object):
         self.handler_class = handler_class
         self.handler_args = handler_args
         self.is_running = False
+        self.sent_quit = False
         self.process = None
         self.thread = None
+        self.start_time = 0
+        self.restart_delay = restart_delay
 
     # Process management
 
@@ -339,6 +351,7 @@ class SubprocessManager(object):
         self.thread.start()
         # work is all done, do some finishing touches
         self.is_running = True
+        self.sent_quit = False
         self._send_startup_info()
         trapcall.trap_call("subprocess startup", self.responder.on_startup)
 
@@ -360,6 +373,7 @@ class SubprocessManager(object):
         process = subprocess.Popen(cmd_line, **kwargs)
         if _on_windows():
             process.stderr.close()
+        self.start_time = clock.clock()
         return process
 
     def shutdown(self, timeout=1.0):
@@ -396,16 +410,27 @@ class SubprocessManager(object):
                     '_on_thread_quit called by an old thread')
             return
 
-        if self.thread.quit_type == self.thread.QUIT_NORMAL:
+        if (self.thread.quit_type == self.thread.QUIT_NORMAL and
+            self.sent_quit):
             self._cleanup_process()
         else:
-            logging.warn("Restarting failed subprocess (reason: %s)",
-                    self.thread.quit_type)
+            logging.warn("Subprocess quit unexpectedly (quit_type: %s, "
+                         "sent_quit: %s).  Will restart subprocess",
+                         self.thread.quit_type, self.sent_quit)
             # NOTE: should we enforce some sort of cool-down time before
             # restarting the subprocess?
-            self._restart()
+            time_since_start = clock.clock() - self.start_time
+            delay_time = self.restart_delay - time_since_start
+            if delay_time <= 0:
+                self._restart()
+            else:
+                logging.warn("Subprocess died in %0.1f seconds, waiting "
+                             "%0.1f to restart", time_since_start, delay_time)
+                eventloop.add_timeout(delay_time, self._restart,
+                                      'restart failed subprocess')
 
     def _restart(self):
+        logging.warn("restarting failed subprocess")
         # close our stream to the subprocess
         self.process.stdin.close()
         # unset our attributes for the process that just quit.  This protects
@@ -442,6 +467,7 @@ class SubprocessManager(object):
     def send_quit(self):
         """Ask the subprocess to shutdown."""
         self.send_message(None)
+        self.sent_quit = True
 
     def _send_startup_info(self):
         self.send_message(StartupInfo(self._get_config_dict()))
