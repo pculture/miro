@@ -672,27 +672,8 @@ class LibraryProgressCountTracker(object):
     video and audio tabs, based on the file_type for each path.
     """
     def __init__(self):
-        self.trackers = {
-            u'audio': ProgressCountTracker(),
-            u'video': ProgressCountTracker(),
-            u'other': ProgressCountTracker(),
-        }
+        self.trackers = collections.defaultdict(ProgressCountTracker)
         self.file_types = {}
-
-    def file_started(self, path, initial_metadata):
-        file_type = initial_metadata.get('file_type', u'other')
-        self.trackers[file_type].file_started(path, initial_metadata)
-        self.file_types[path] = file_type
-
-    def file_moved(self, old_path, new_path):
-        tracker = self._get_tracker_for_path(old_path)
-        if tracker is not None:
-            tracker.file_moved(old_path, new_path)
-        try:
-            self.file_types[new_path] = self.file_types.pop(old_path)
-        except KeyError:
-            logging.warn("file_moved called for file not being tracked "
-                         "old: %s new: %s", old_path, new_path)
 
     def get_count_info(self, file_type):
         """Get the count info for the audio, video, or other tabs
@@ -702,28 +683,47 @@ class LibraryProgressCountTracker(object):
         """
         return self.trackers[file_type].get_count_info()
 
+    def file_started(self, path, initial_metadata):
+        file_type = initial_metadata.get('file_type', u'other')
+        self.trackers[file_type].file_started(path, initial_metadata)
+        self.file_types[path] = file_type
+
+    def file_moved(self, old_path, new_path):
+        try:
+            tracker = self._get_tracker_for_path(old_path)
+        except KeyError:
+            logging.warn("_get_tracker_for_path raised KeyError in "
+                         "file_moved() old: %s new: %s", old_path, new_path)
+        else:
+            file_type = self.file_types.pop(old_path)
+            tracker.file_moved(old_path, new_path)
+            self.file_types[new_path] = file_type
+
     def file_finished(self, path):
-        tracker = self._get_tracker_for_path(path)
-        tracker.file_finished(path)
+        try:
+            tracker = self._get_tracker_for_path(path)
+        except KeyError:
+            logging.warn("_get_tracker_for_path raised KeyError in "
+                         "file_finished (%s)", path)
+        else:
+            tracker.file_finished(path)
 
     def file_finished_local_processing(self, path):
-        tracker = self._get_tracker_for_path(path)
-        if tracker is None:
-            return # _get_tracker_for_path already logged a warning
-        tracker.file_finished_local_processing(path)
+        try:
+            tracker = self._get_tracker_for_path(path)
+        except KeyError:
+            logging.warn("_get_tracker_for_path raised KeyError in "
+                         "file_finished_local_processing (%s)", path)
+        else:
+            tracker.file_finished_local_processing(path)
 
     def _get_tracker_for_path(self, path):
         """Get the ProgressCountTracker for a file.
 
         :returns: ProgressCountTracker or None if we couldn't look it up
+        :raises: KeyError path not in our file_types dict
         """
-        try:
-            old_file_type = self.file_types[path]
-        except KeyError:
-            logging.warn("_get_tracker_for_path: couldn't lookup file type "
-                         "for: %s", path)
-            return None
-        return self.trackers[old_file_type]
+        return self.trackers[self.file_types[path]]
 
     def file_updated(self, path, metadata):
         if 'file_type' not in metadata:
