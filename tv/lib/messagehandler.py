@@ -898,7 +898,7 @@ class BackendMessageHandler(messages.MessageHandler):
             except database.ObjectNotFoundError:
                 logging.warn("SetItemMediaType: Item not found -- %s", id_)
                 continue
-            item_.set_file_type(message.media_type)
+            item_.set_user_metadata({'file_type': message.media_type})
 
     def handle_set_feed_expire(self, message):
         channel_info = message.channel_info
