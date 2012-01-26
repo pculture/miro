@@ -611,10 +611,13 @@ class SubprocessResponderThread(threading.Thread):
 
 def subprocess_main():
     """Run loop inside the subprocess."""
-    # make sure that we are using binary mode for stdout
     if _on_windows():
+        # One windows, both STDIN and STDOUT get opened as text mode.  This
+        # can causes all kinds of weirdress when reading from our pipes.
+        # (See #17804).  Change the mode to binary for both streams.
         import msvcrt
         msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
+        msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
     # unset stdin and stdout so that we don't accidentally print to them
     stdin = sys.stdin
     stdout = sys.stdout
