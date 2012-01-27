@@ -1543,6 +1543,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             except database.ObjectNotFoundError:
                 logging.warn("EditItems: Item not found -- %s", id_)
                 continue
+            # ItemInfo uses "name", but the metadata system uses "title" now
+            if 'name' in changes:
+                changes['title'] = changes.pop('name')
             item_.set_user_metadata(changes)
 
     def handle_revert_feed_title(self, message):
