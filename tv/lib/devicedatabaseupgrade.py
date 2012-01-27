@@ -41,7 +41,7 @@ from miro import storedatabase
 def import_from_json(live_storage, json_db, mount):
     """Import data from a JSON DB for a newly created sqlite DB
 
-    This method basically does upgrades 166 through 172
+    This method basically does upgrades 166 through 173
 
     How to handle upgrades after this?  Who knows.  We're just worrying about
     making version 5.0 work at this point.
