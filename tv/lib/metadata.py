@@ -1309,14 +1309,21 @@ class MetadataManagerBase(signals.SignalEmitter):
         # when we're running mutagen on a music library, but I think that's to
         # be expected.  It seems fast enough in other cases to me - BDK
         self._update_scheduled = False
+        new_metadata_copy = self.new_metadata
         app.bulk_sql_manager.start()
         try:
             self._process_metadata_finished()
             self._process_metadata_errors()
             self.emit('new-metadata', self.new_metadata)
         finally:
-            app.bulk_sql_manager.finish()
             self._reset_new_metadata()
+            try:
+                app.bulk_sql_manager.finish()
+            except StandardError:
+                logging.warn("Error adding new metadata. new_metadata\n%s",
+                             '\n'.join('%s: %s' % (os.path.basename(k), v)
+                                       for k, v in new_metadata_copy.items()))
+                raise
         self._send_progress_updates()
 
     def _process_metadata_finished(self):
