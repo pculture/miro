@@ -6,6 +6,7 @@ from miro import app
 from miro import subprocessmanager
 from miro import workerprocess
 from miro.plat import resources
+from miro.test import mock
 from miro.test.framework import EventLoopTest
 
 # setup some test messages/handlers
@@ -83,7 +84,7 @@ class SubprocessManagerTest(EventLoopTest):
 
         self.responder = TestSubprocessResponder()
         self.subprocess = subprocessmanager.SubprocessManager(TestMessage,
-                self.responder, TestSubprocessHandler)
+                self.responder, TestSubprocessHandler, restart_delay=0)
         self.subprocess.start()
         self._wait_for_subprocess_ready()
 
@@ -101,9 +102,10 @@ class SubprocessManagerTest(EventLoopTest):
             if self.responder.subprocess_ready:
                 return
             if time.time() - start > timeout:
-                self.subprocess.process.terminate()
-                raise AssertionError("subprocess didn't startup in %s secs",
-                        timeout)
+                if self.subprocess.process is not None:
+                    self.subprocess.process.terminate()
+                raise AssertionError("subprocess didn't startup in %s secs" %
+                                     timeout)
 
     def test_startup(self):
         # test that we startup the process
@@ -162,10 +164,30 @@ class SubprocessManagerTest(EventLoopTest):
         self.assertEqual(self.responder.events_saw, ['shutdown'])
 
     def test_restart(self):
-        # test that we restart process when the quit unexpectedly
+        # test that we restart subprocesses when they quit unexpectedly
         old_pid = self.subprocess.process.pid
         old_thread = self.subprocess.thread
         self.subprocess.process.terminate()
+        # wait a bit for the subprocess to quit then restart
+        self.responder.subprocess_ready = False
+        self._wait_for_subprocess_ready()
+        # test that process #1 has been restarted
+        self.assert_(self.subprocess.is_running)
+        self.assert_(self.subprocess.process.poll() is None)
+        self.assert_(self.subprocess.thread.is_alive())
+        self.assertNotEqual(old_pid, self.subprocess.process.pid)
+        # test that the original thread is gone
+        self.assert_(not old_thread.is_alive())
+
+    def test_restart2(self):
+        # test that we restart subprocesses if the quit normally, but we
+        # haven't sent the quit message to them
+        old_pid = self.subprocess.process.pid
+        old_thread = self.subprocess.thread
+        # Send None to the subprocess to make it quit, but without going
+        # through our SubprocessManager.  SubprocessManager should restart the
+        # child process in this case
+        subprocessmanager._dump_obj(None, self.subprocess.process.stdin)
         # wait a bit for the subprocess to quit then restart
         self.responder.subprocess_ready = False
         self._wait_for_subprocess_ready()
@@ -209,6 +231,7 @@ class WorkerProcessTest(EventLoopTest):
         # override the normal handler class with our own
         workerprocess._subprocess_manager.handler_class = (
                 UnittestWorkerProcessHandler)
+        workerprocess._subprocess_manager.restart_delay = 0
         self.result = self.error = None
 
     def callback(self, result):
