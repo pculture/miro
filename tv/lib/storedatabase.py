@@ -694,7 +694,7 @@ class LiveStorage:
             databaseupgrade.new_style_upgrade(self.cursor,
                                               current_version,
                                               self._schema_version)
-            self._set_version()
+            self.set_version()
             self._change_database_file_back()
         self.current_version = self._schema_version
 
@@ -719,7 +719,7 @@ class LiveStorage:
                 if util.chatter:
                     logging.info("converting pre 2.1 database")
                 convert20database.convert(self.cursor)
-                self._set_version(80)
+                self.set_version(80)
                 self._change_database_file_back()
 
     def get_variable(self, name):
@@ -1245,7 +1245,7 @@ class LiveStorage:
                         (name, schema.table_name, ', '.join(columns)))
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
-        self._set_version()
+        self.set_version()
 
     def _get_size_info(self):
         """Get info about the database size
@@ -1294,7 +1294,7 @@ class LiveStorage:
     def _get_version(self):
         return self.get_variable(VERSION_KEY)
 
-    def _set_version(self, version=None, db_name='main'):
+    def set_version(self, version=None, db_name='main'):
         """Set the database version to the current schema version."""
 
         if version is None:
