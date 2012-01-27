@@ -1544,7 +1544,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             except database.ObjectNotFoundError:
                 logging.warn("EditItems: Item not found -- %s", id_)
                 continue
-            # ItemInfo uses "name", but the metadat system uses "title" now
+            # ItemInfo uses "name", but the metadata system uses "title" now
             if 'name' in changes:
                 changes['title'] = changes.pop('name')
             item_.set_user_metadata(changes)
