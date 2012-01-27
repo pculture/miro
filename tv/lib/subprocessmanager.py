@@ -558,7 +558,7 @@ class SubprocessResponderThread(threading.Thread):
 def subprocess_main():
     """Run loop inside the subprocess."""
     if _on_windows():
-        # One windows, both STDIN and STDOUT get opened as text mode.  This
+        # On windows, both STDIN and STDOUT get opened as text mode.  This
         # can causes all kinds of weirdress when reading from our pipes.
         # (See #17804).  Change the mode to binary for both streams.
         import msvcrt
