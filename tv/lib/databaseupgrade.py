@@ -3722,3 +3722,10 @@ def upgrade172(cursor):
                    "ON metadata (status_id, source)")
     # drop old column
     remove_column(cursor, 'metadata', 'path')
+
+def upgrade173(cursor):
+    """Make sure net_lookup_enabled is always non-null."""
+    # This code should have been in upgrade170, but it's okay to run it now
+
+    cursor.execute("UPDATE metadata_status SET net_lookup_enabled=0 "
+                   "WHERE net_lookup_enabled IS NULL")
