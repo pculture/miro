@@ -1482,8 +1482,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         app.bulk_sql_manager.start()
         try:
             for i in items:
-                i.set_kind(kind)
-                i.signal_change()
+                i.set_user_metadata({u'kind': kind})
         finally:
             app.bulk_sql_manager.finish()
         
