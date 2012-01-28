@@ -323,6 +323,8 @@ class SharingTracker(object):
                                  'DAAP test connect')
 
     def mdns_callback_backend(self, added, fullname, host, port):
+        # SAFE: the shared name should be unique.  (Or else you could not
+        # identify the resource).
         if fullname == app.sharing_manager.name:
             return
         # Need to come up with a unique ID for the share.  We want to use the 
