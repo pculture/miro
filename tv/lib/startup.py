@@ -395,9 +395,6 @@ def fix_movies_gone():
     eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
 
 def start_sharing():
-    app.sharing_tracker = sharing.SharingTracker()
-    app.sharing_manager = sharing.SharingManager()
-    app.transcode_manager = transcode.TranscodeManager()
     app.sharing_tracker.start_tracking()
 
 @startup_function
