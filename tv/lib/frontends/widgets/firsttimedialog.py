@@ -456,7 +456,10 @@ class FirstTimeDialog(widgetset.DialogWindow):
             threads.call_on_ui_thread(self.make_search_progress)
 
         except StopIteration:
-            num_found = len(self.gathered_media_files)
+            if self.gathered_media_files:
+                num_found = len(self.gathered_media_files)
+            else:
+                num_found = 0
             self.search_complete(
                 ngettext(
                     "found %(count)s media file",
@@ -470,7 +473,10 @@ class FirstTimeDialog(widgetset.DialogWindow):
             logging.exception("exception thrown in make_search_progress")
 
             # we want to clean up after this exception, too.
-            num_found = len(self.gathered_media_files)
+            if self.gathered_media_files:
+                num_found = len(self.gathered_media_files)
+            else:
+                num_found = 0
             self.search_complete(
                 ngettext(
                     "found %(count)s media file",
