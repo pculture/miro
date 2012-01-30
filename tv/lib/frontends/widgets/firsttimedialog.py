@@ -468,24 +468,6 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     {"count": num_found}))
             self.finder = None
 
-        except Exception:
-            # this is here to get more data for bug #17422
-            logging.exception("exception thrown in make_search_progress")
-
-            # we want to clean up after this exception, too.
-            if self.gathered_media_files:
-                num_found = len(self.gathered_media_files)
-            else:
-                num_found = 0
-            self.search_complete(
-                ngettext(
-                    "found %(count)s media file",
-                    "found %(count)s media files",
-                    num_found,
-                    {"count": num_found}))
-            self.finder = None
-
-
     def start_search(self):
         # only start a search if we haven't gathered anything, yet.
         if self.gathered_media_files is not None:
