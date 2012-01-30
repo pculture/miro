@@ -71,12 +71,6 @@ class FeedparserTask(TaskMessage):
         TaskMessage.__init__(self)
         self.html = html
 
-class MediaMetadataExtractorTask(TaskMessage):
-    def __init__(self, filename, thumbnail):
-        TaskMessage.__init__(self)
-        self.filename = filename
-        self.thumbnail = thumbnail
-
 class MovieDataProgramTask(TaskMessage):
     priority = 10
     def __init__(self, source_path, screenshot_directory):
@@ -185,11 +179,6 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         # don't use it anyways, so just unset the value
         parsed_feed['bozo_exception'] = None
         return parsed_feed
-
-    def handle_media_metadata_extractor_task(self, msg):
-        filename = msg.filename
-        thumbnail = msg.thumbnail
-        return utils.run_media_metadata_extractor(filename, thumbnail)
 
     def handle_mutagen_task(self, msg):
         return filetags.process_file(msg.source_path, msg.cover_art_directory)
