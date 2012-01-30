@@ -189,52 +189,39 @@ class ApatheticRotatingFileHandler(RotatingFileHandler):
         pass
 
 FORMAT = "%(asctime)s %(levelname)-8s %(name)s: %(message)s"
-def setup_logging(in_downloader=False):
-    if in_downloader:
-        if 'MIRO_IN_UNIT_TESTS' in os.environ:
-            level = logging.WARN
-        elif os.environ.get('MIRO_DEBUGMODE', '') == True:
-            level = logging.DEBUG
-        else:
-            level = logging.INFO
-        logging.basicConfig(level=level,
-                            format='%(asctime)s %(levelname)-8s %(message)s',
-                            stream=sys.stderr)
-        pathname = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
-        if not pathname:
-            return
+def setup_logging(pathname, main_process=False):
+    if 'MIRO_IN_UNIT_TESTS' in os.environ:
+        level = logging.WARN
+    elif (os.environ.get('MIRO_DEBUGMODE', '') == True or
+            app.debugmode):
+        level = logging.DEBUG
     else:
-        if app.debugmode:
-            level = logging.DEBUG
-        else:
-            level = logging.INFO
-        logging.basicConfig(level=level,
-                            format=FORMAT)
-        pathname = app.config.get(prefs.LOG_PATHNAME)
+        level = logging.INFO
 
     rotater = ApatheticRotatingFileHandler(
         pathname, mode="a", maxBytes=100000, backupCount=5)
 
     formatter = logging.Formatter(FORMAT)
-    rotater.setLevel(level)
     rotater.setFormatter(formatter)
     logger = logging.getLogger('')
     logger.addHandler(rotater)
+    logger.setLevel(level)
     rotater.doRollover()
+
+    if main_process:
+        if app.debugmode:
+            stdouthandler = logging.StreamHandler(sys.stdout)
+            stdouthandler.setFormatter(formatter)
+            logger.addHandler(stdouthandler)
+        else:
+            sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
+            sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
+
     try:
         for record in prelogger.remove():
             logger.handle(record)
     except ValueError:
         logging.debug("No records from prelogger.")
-
-    if app.debugmode:
-        stdouthandler = logging.StreamHandler(sys.stdout)
-        stdouthandler.setLevel(level)
-        stdouthandler.setFormatter(formatter)
-        logger.addHandler(stdouthandler)
-    else:
-        sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
-        sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
 
     logging.info("Logging set up to %s at level %s", pathname, level)
 

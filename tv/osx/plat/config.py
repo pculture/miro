@@ -133,6 +133,9 @@ def get(descriptor):
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
         return _makeSupportFilePath('dtv-downloader-log')
 
+    elif descriptor == prefs.HELPER_LOG_PATHNAME:
+        return _makeSupportFilePath('dtv-helper-log')
+
     elif descriptor == prefs.HTTP_PROXY_ACTIVE:
         return _getProxyInfo('HTTPEnable', 0) == 1
         

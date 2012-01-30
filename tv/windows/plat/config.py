@@ -149,6 +149,14 @@ def get(descriptor):
         return os.path.join(directory,
             ('%s-downloader.log' % app.configfile['shortAppName']))
 
+    elif descriptor == prefs.HELPER_LOG_PATHNAME:
+        if u3info.u3_active:
+            directory = u3info.app_data_path
+        else:
+            directory = tempfile.gettempdir()
+        return os.path.join(directory,
+            ('%s-helper.log' % app.configfile['shortAppName']))
+
     elif descriptor == prefs.RUN_AT_STARTUP:
         import logging
         # we use the legacy startup registry key, so legacy versions
