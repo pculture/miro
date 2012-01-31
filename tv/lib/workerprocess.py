@@ -176,7 +176,7 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         WorkerProcessReady().send_to_main_process()
 
     def handle_cancel_file_operations(self, msg):
-        path_set = set(paths)
+        path_set = set(msg.paths)
         self.task_queue.cancel_file_operations(path_set)
         # we need to handle pending_moviedata_tasks, since those skip the task
         # queue
