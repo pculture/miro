@@ -115,8 +115,9 @@ class SubprocessMessage(messagetools.Message):
 
 class StartupInfo(SubprocessMessage):
     """Data needed to bootstrap the subprocess."""
-    def __init__(self, config_dict):
+    def __init__(self, config_dict, in_unit_tests):
         self.config_dict = config_dict
+        self.in_unit_tests = in_unit_tests
 
 class HandlerInfo(SubprocessMessage):
     """Describes how to build a SubprocessHandler object."""
@@ -528,7 +529,8 @@ class SubprocessManager(object):
         self.sent_quit = True
 
     def _send_startup_info(self):
-        self.send_message(StartupInfo(self._get_config_dict()))
+        self.send_message(StartupInfo(self._get_config_dict(),
+                                      hasattr(app, 'in_unit_tests')))
         self.send_message(HandlerInfo(self.handler_class, self.handler_args))
 
     def _get_config_dict(self):
@@ -699,8 +701,9 @@ def _subprocess_setup(stdin, stdout):
     config.load(config.ManualConfig())
     app.config.set_dictionary(msg.config_dict)
     gtcache.init()
-    utils.setup_logging(app.config.get(prefs.HELPER_LOG_PATHNAME))
-    util.setup_logging()
+    if not msg.in_unit_tests:
+        utils.setup_logging(app.config.get(prefs.HELPER_LOG_PATHNAME))
+        util.setup_logging()
     logging_setup = True
     logging.info("Logging Started")
     # setup our handler
