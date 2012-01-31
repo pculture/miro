@@ -189,7 +189,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.fullscreen()
 
     def _on_position_changed(self, playlist):
-        self._not_skipped_by_user = True
+        self._skipped_by_user = False
         self._play_current()
 
     def _on_playing_changed(self, playlist):
@@ -274,7 +274,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def on_display_removed(self, display):
         if not self.removing_video_display:
-            self._not_skipped_by_user = True
+            self._skipped_by_user = False
             self.stop()
 
     def play(self, start_at=0):
@@ -444,7 +444,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.removing_video_display = False
 
     def update_current_resume_time(self, resume_time=-1):
-        if self._not_skipped_by_user:
+        if not self._skipped_by_user:
             return
         if not self.player_playing() and resume_time == -1:
             # we want to see what the current time is, but the player hasn't
@@ -514,7 +514,7 @@ class PlaybackManager (signals.SignalEmitter):
         m = messages.MarkItemCompleted(self.playlist.currently_playing)
         m.send_to_backend()
         self.update_current_resume_time(0)
-        self._not_skipped_by_user = True
+        self._skipped_by_user = False
         self.play_next_item()
 
     def schedule_mark_as_watched(self, info):
@@ -622,8 +622,7 @@ class PlaybackManager (signals.SignalEmitter):
         # there.
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
-        self._not_skipped_by_user = False
-
+        self._skipped_by_user = True
 
         info_to_play = item if item else self.get_playing_item()
         if info_to_play is None: # end of the playlist
@@ -660,14 +659,14 @@ class PlaybackManager (signals.SignalEmitter):
         if playing_item is None:
             return
         self.open_finished = True
-        self._not_skipped_by_user = True
+        self._skipped_by_user = False
         self.emit('cant-play-file')
         if isinstance(obj, widgetset.AudioPlayer):
             self.play_next_item()
 
     def _handle_skip(self):
         playing = self.get_playing_item()
-        if not self._not_skipped_by_user and playing is not None:
+        if self._skipped_by_user and playing is not None:
             self.update_current_resume_time()
             messages.MarkItemSkipped(playing).send_to_backend()
 
@@ -677,13 +676,13 @@ class PlaybackManager (signals.SignalEmitter):
         self._handle_skip()
         if ((not self.item_continuous_playback_mode(
                             self.playlist.currently_playing) and
-             self._not_skipped_by_user)):
+             not self._skipped_by_user)):
             if self.repeat:
                 self._play_current()
             else: # not repeating, or shuffle
                 self.stop()
         else:
-            self.playlist.select_next_item(self._not_skipped_by_user)
+            self.playlist.select_next_item(self._skipped_by_user)
             self._play_current()
 
     def play_prev_item(self, from_user=False):
@@ -902,11 +901,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
         # no items left in shuffle_upcoming
         return None
 
-    def find_next_item(self, not_skipped_by_user=True):
+    def find_next_item(self, skipped_by_user=True):
         #if track repeat is on and the user doesn't skip, 
         #shuffle doesn't matter
         if ((self.repeat == WidgetStateStore.get_repeat_track()
-             and not_skipped_by_user)):
+             and not skipped_by_user)):
             return self.currently_playing
         elif ((not self.shuffle and
              self.repeat == WidgetStateStore.get_repeat_playlist()
@@ -1040,8 +1039,8 @@ class PlaybackPlaylist(signals.SignalEmitter):
         previous_item = self.find_previous_item()
         self._change_currently_playing(previous_item)
 
-    def select_next_item(self, not_skipped_by_user=True):
-        next_item = self.find_next_item(not_skipped_by_user)
+    def select_next_item(self, skipped_by_user=False):
+        next_item = self.find_next_item(skipped_by_user)
         self._change_currently_playing(next_item)
 
     def _is_playing_filtered_item(self):
