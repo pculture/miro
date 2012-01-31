@@ -147,8 +147,13 @@ class Extractor:
         gtk.main_quit()
 
     def run(self):
-        gtk.gdk.threads_init()
+        gobject.threads_init()
+        gobject.timeout_add(30000, self.cancel_timeout)
         gtk.main()
+
+    def cancel_timeout(self):
+        logging.warn("cancel_timeout() reached.  Quitting.")
+        self.done()
 
     def get_result(self):
         duration = self.duration

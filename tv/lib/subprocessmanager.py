@@ -478,15 +478,17 @@ class SubprocessManager(object):
             time_since_start = clock.clock() - self.start_time
             delay_time = self.restart_delay - time_since_start
             if delay_time <= 0:
-                self._restart()
+                logging.warn("Subprocess died after %0.1f seconds.  "
+                             "Restarting", time_since_start)
+                self.restart()
             else:
                 logging.warn("Subprocess died in %0.1f seconds, waiting "
                              "%0.1f to restart", time_since_start, delay_time)
-                eventloop.add_timeout(delay_time, self._restart,
+                eventloop.add_timeout(delay_time, self.restart,
                                       'restart failed subprocess')
 
-    def _restart(self):
-        logging.warn("restarting failed subprocess")
+    def restart(self):
+        logging.warn("restarting subprocess")
         # close our stream to the subprocess
         self.process.stdin.close()
         # unset our attributes for the process that just quit.  This protects
