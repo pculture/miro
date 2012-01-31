@@ -83,12 +83,18 @@ class MovieDataProgramTask(TaskMessage):
         self.source_path = source_path
         self.screenshot_directory = screenshot_directory
 
+    def __str__(self):
+        return 'MovieDataProgramTask (path: %s)' % self.source_path
+
 class MutagenTask(TaskMessage):
     priority = 10
     def __init__(self, source_path, cover_art_directory):
         TaskMessage.__init__(self)
         self.source_path = source_path
         self.cover_art_directory = cover_art_directory
+
+    def __str__(self):
+        return 'MutagenTask (path: %s)' % self.source_path
 
 class CancelFileOperations(TaskMessage):
     """Cancel mutagen/movie data tasks for a set of path."""
@@ -335,10 +341,14 @@ def handle_task(handler_method, msg):
     """Process a TaskMessage."""
     try:
         # normally we send the result of our handler method back
+        logging.info("starting task: %s", msg)
         rv = handler_method(msg)
     except StandardError, e:
         # if something breaks, we send the Exception back
         rv = e
+        logging.info("task error: %s (%s)", msg, e)
+    else:
+        logging.info("task finished: %s", msg)
     TaskResult(msg.task_id, rv).send_to_main_process()
 
 def worker_thread(task_queue):
