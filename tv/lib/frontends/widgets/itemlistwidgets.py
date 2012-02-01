@@ -2243,9 +2243,13 @@ class ItemDetailsWidget(widgetset.VBox):
         self._set_empty_mode(False)
 
     def set_extra_info_text(self, info):
+        display_date = displaytext.date_slashes(info.release_date)
+        display_duration = displaytext.duration(info.duration)
+        display_size = displaytext.size_string(info.size)
+
         parts = []
-        for attr in (info.display_date, info.display_duration,
-                info.display_size, info.file_format):
+        for attr in (display_date, display_duration, display_size,
+                     info.file_format):
             if attr:
                 parts.append(attr)
         self.extra_info_label.set_text(' | '.join(parts))
