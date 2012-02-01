@@ -642,7 +642,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_mutagen('foo-3.mp3', 'audio', 200, 'Bar',
                                'DifferentAlbum', cover_art=False)
         # send new-metadata for all of the current changes
-        self.metadata_manager._run_updates()
+        self.metadata_manager.run_updates()
         # set up a signal handle to handle the next new-metadata signal
         signal_handler = mock.Mock()
         self.metadata_manager.connect("new-metadata", signal_handler)
@@ -653,7 +653,7 @@ class MetadataManagerTest(MiroTestCase):
 
         # make our metadata manager send the new-metadata signal and check the
         # result
-        self.metadata_manager._run_updates()
+        self.metadata_manager.run_updates()
         self.assertEquals(signal_handler.call_count, 1)
         args = signal_handler.call_args[0]
         self.assertEquals(args[0], self.metadata_manager)
@@ -673,7 +673,7 @@ class MetadataManagerTest(MiroTestCase):
         signal_handler.reset_mock()
         self.check_run_mutagen('foo-5.mp3', 'audio', 200, 'Bar', 'Fights',
                                cover_art=True)
-        self.metadata_manager._run_updates()
+        self.metadata_manager.run_updates()
         self.assertEquals(signal_handler.call_count, 1)
         args = signal_handler.call_args[0]
         self.assertEquals(args[0], self.metadata_manager)
@@ -1077,13 +1077,13 @@ class DeviceMetadataTest(EventLoopTest):
     def _run_processors(self, metadata_manager, path):
         metadata_manager.mutagen_processor.emit("task-complete", path,
                                                 self.mutagen_metadata)
-        metadata_manager._run_updates()
+        metadata_manager.run_updates()
         metadata_manager.moviedata_processor.emit("task-complete", path,
                                                  self.moviedata_metadata)
-        metadata_manager._run_updates()
+        metadata_manager.run_updates()
         metadata_manager.echonest_processor.emit("task-complete", path,
                                                  self.echonest_metadata)
-        metadata_manager._run_updates()
+        metadata_manager.run_updates()
 
     def get_metadata_for_item(self):
         return self.device.metadata_manager.get_metadata('test-song.ogg')
@@ -1121,7 +1121,7 @@ class DeviceMetadataTest(EventLoopTest):
         self.assertEquals(item_data[u'artist'], u'Artist')
         self.assertEquals(item_data[u'album'], u'Album')
         # check the item-changed signal.  We should have gotten 3 calls, one
-        # for each time we ran _run_updates() in run_processors().  Check the
+        # for each time we ran run_updates() in run_processors().  Check the
         # data from the last emission
         self.assertEquals(item_changed_handler.call_count, 3)
         device_item = item_changed_handler.call_args[0][1]
