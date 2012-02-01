@@ -3618,15 +3618,18 @@ def upgrade167(cursor):
                    "WHERE cover_art_path IS NOT NULL AND "
                       "album IS NOT NULL")
     for (path, album, cover_art_path) in cursor.fetchall():
-        if album in already_moved:
-            try:
-                os.remove(cover_art_path)
-            except StandardError:
-                logging.warn("upgrade167: Error deleting %s", cover_art_path)
         # quote the filename using the same logic as
         # filetags.calc_cover_art_filename()
         dest_filename = urllib.quote(album.encode('utf-8'), safe=' ,.')
         dest_path = os.path.join(cover_art_dir, dest_filename)
+
+        if album in already_moved:
+            cursor.execute("UPDATE item SET cover_art_path=? "
+                           "WHERE filename=?", (dest_path, path))
+            try:
+                os.remove(cover_art_path)
+            except StandardError:
+                logging.warn("upgrade167: Error deleting %s", cover_art_path)
         if not os.path.exists(cover_art_path):
             logging.warn("upgrade167: Error moving cover art.  Source path "
                          "doesn't exist: %s", cover_art_path)
