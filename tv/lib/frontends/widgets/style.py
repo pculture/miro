@@ -836,7 +836,7 @@ class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
             return feed_info.thumbnail
 
     def get_album(self, item_info, first_info):
-        return item_info.feed_name
+        return ''
 
     def get_artist(self, item_info, first_info):
         return item_info.feed_url
