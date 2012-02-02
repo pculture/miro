@@ -60,7 +60,7 @@ from miro import gtcache
 from miro import messagetools
 from miro import trapcall
 from miro import util
-from miro.plat.utils import miro_helper_program_info, initialize_locale
+from miro.plat import utils
 from miro.plat.popen import Popen
 
 def _on_windows():
@@ -115,8 +115,9 @@ class SubprocessMessage(messagetools.Message):
 
 class StartupInfo(SubprocessMessage):
     """Data needed to bootstrap the subprocess."""
-    def __init__(self, config_dict):
+    def __init__(self, config_dict, in_unit_tests):
         self.config_dict = config_dict
+        self.in_unit_tests = in_unit_tests
 
 class HandlerInfo(SubprocessMessage):
     """Describes how to build a SubprocessHandler object."""
@@ -160,6 +161,8 @@ def send_subprocess_error_for_exception(soft_fail=True):
         report += '\n--------------------------'
 
     SubprocessError(report, soft_fail=soft_fail).send_to_main_process()
+    if logging_setup:
+        logging.warn("Sending crash report to main process:\n%s", report)
 
 class SubprocessHandler(messagetools.MessageHandler):
     """Handle messages inside a spawned subprocess
@@ -397,7 +400,7 @@ class SubprocessManager(object):
         trapcall.trap_call("subprocess startup", self.responder.on_startup)
 
     def _start_subprocess(self):
-        cmd_line, env = miro_helper_program_info()
+        cmd_line, env = utils.miro_helper_program_info()
         kwargs = {
                   "stdout": subprocess.PIPE,
                   "stdin": subprocess.PIPE,
@@ -476,15 +479,17 @@ class SubprocessManager(object):
             time_since_start = clock.clock() - self.start_time
             delay_time = self.restart_delay - time_since_start
             if delay_time <= 0:
-                self._restart()
+                logging.warn("Subprocess died after %0.1f seconds.  "
+                             "Restarting", time_since_start)
+                self.restart()
             else:
                 logging.warn("Subprocess died in %0.1f seconds, waiting "
                              "%0.1f to restart", time_since_start, delay_time)
-                eventloop.add_timeout(delay_time, self._restart,
+                eventloop.add_timeout(delay_time, self.restart,
                                       'restart failed subprocess')
 
-    def _restart(self):
-        logging.warn("restarting failed subprocess")
+    def restart(self):
+        logging.warn("restarting subprocess")
         # close our stream to the subprocess
         self.process.stdin.close()
         # unset our attributes for the process that just quit.  This protects
@@ -524,7 +529,8 @@ class SubprocessManager(object):
         self.sent_quit = True
 
     def _send_startup_info(self):
-        self.send_message(StartupInfo(self._get_config_dict()))
+        self.send_message(StartupInfo(self._get_config_dict(),
+                                      hasattr(app, 'in_unit_tests')))
         self.send_message(HandlerInfo(self.handler_class, self.handler_args))
 
     def _get_config_dict(self):
@@ -611,6 +617,9 @@ class SubprocessResponderThread(threading.Thread):
 
 def subprocess_main():
     """Run loop inside the subprocess."""
+    global logging_setup
+    logging_setup = False
+
     if _on_windows():
         # On windows, both STDIN and STDOUT get opened as text mode.  This
         # can causes all kinds of weirdress when reading from our pipes.
@@ -628,9 +637,11 @@ def subprocess_main():
     except Exception, e:
         # error reading our initial messages.  Try to log a warning, then
         # quit.
+
         send_subprocess_error_for_exception()
         _finish_subprocess_message_stream(stdout)
         raise # reraise so that miro_helper.py returns a non-zero exit code
+    logging.info("_subprocess_setup() finished")
     # startup thread to process stdin
     queue = Queue.Queue()
     thread = threading.Thread(target=_subprocess_pipe_thread, args=(stdin,
@@ -638,6 +649,7 @@ def subprocess_main():
     thread.daemon = False
     thread.start()
     # run our message loop
+    logging.info("starting message loop")
     handler.on_startup()
     try:
         while True:
@@ -645,6 +657,8 @@ def subprocess_main():
             if msg is None:
                 break
             handler.handle(msg)
+    except StandardError:
+        send_subprocess_error_for_exception()
     finally:
         handler.on_shutdown()
         # send None to signal that we are about to quit
@@ -672,6 +686,7 @@ def _subprocess_setup(stdin, stdout):
     :raises IOError: low-level error while reading from the pipe
     :raises LoadError: data read was corrupted
     """
+    global logging_setup
     # disable warnings so we don't get too much junk on stderr
     warnings.filterwarnings("ignore")
     # setup MessageHandler for messages going to the main process
@@ -682,10 +697,15 @@ def _subprocess_setup(stdin, stdout):
     if not isinstance(msg, StartupInfo):
         raise LoadError("first message must a StartupInfo obj")
     # setup some basic modules like config and gtcache
-    initialize_locale()
+    utils.initialize_locale()
     config.load(config.ManualConfig())
     app.config.set_dictionary(msg.config_dict)
     gtcache.init()
+    if not msg.in_unit_tests:
+        utils.setup_logging(app.config.get(prefs.HELPER_LOG_PATHNAME))
+        util.setup_logging()
+    logging_setup = True
+    logging.info("Logging Started")
     # setup our handler
     msg = _load_obj(stdin)
     if not isinstance(msg, HandlerInfo):

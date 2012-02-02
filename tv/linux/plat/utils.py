@@ -105,31 +105,20 @@ def initialize_locale():
 FORMAT = "%(asctime)s %(levelname)-8s %(name)s: %(message)s"
 
 
-def setup_logging(in_downloader=False):
+def setup_logging(pathname, main_process=False):
     """Sets up logging using the Python logging module.
 
-    :param in_downloader: True if this is being called from the
-        downloader daemon, False otherwise.
+    :param pathname: Log path to write to.
+    :param main_process: Is this for the main miro process?
     """
-    if in_downloader:
-        if 'MIRO_IN_UNIT_TESTS' in os.environ:
-            level = logging.WARN
-        elif os.environ.get('MIRO_DEBUGMODE', "") == "True":
-            level = logging.DEBUG
-        else:
-            level = logging.INFO
-        logging.basicConfig(level=level, format=FORMAT, stream=sys.stdout)
-        pathname = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
-        if not pathname:
-            return
+
+    if 'MIRO_IN_UNIT_TESTS' in os.environ:
+        level = logging.WARN
+    elif (os.environ.get('MIRO_DEBUGMODE', "") == "True" or
+            app.debugmode):
+        level = logging.DEBUG
     else:
-        if app.debugmode:
-            level = logging.DEBUG
-        else:
-            level = logging.INFO
-        logging.basicConfig(level=level,
-                            format=FORMAT)
-        pathname = app.config.get(prefs.LOG_PATHNAME)
+        level = logging.INFO
 
     try:
         rotater = logging.handlers.RotatingFileHandler(
@@ -146,9 +135,15 @@ def setup_logging(in_downloader=False):
 
     formatter = logging.Formatter(FORMAT)
     rotater.setFormatter(formatter)
-    logging.getLogger('').addHandler(rotater)
+    root_logger = logging.getLogger('')
+    root_logger.setLevel(level)
+    root_logger.addHandler(rotater)
     rotater.doRollover()
 
+    if main_process:
+        stdouthandler = logging.StreamHandler(sys.stdout)
+        stdouthandler.setFormatter(formatter)
+        root_logger.addHandler(stdouthandler)
 
 @returns_binary
 def utf8_to_filename(filename):

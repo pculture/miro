@@ -34,11 +34,13 @@ tasks to this process.  See #17328 for more details.  Right now this just
 includes feedparser, but we could pretty easily extend this to other tasks.
 """
 
-from collections import deque
+from collections import deque, namedtuple
 import itertools
 import logging
 import threading
 
+from miro import clock
+from miro import eventloop
 from miro import feedparserutil
 from miro import filetags
 from miro import messagetools
@@ -47,6 +49,9 @@ from miro import subprocessmanager
 from miro import util
 
 from miro.plat import utils
+
+class SubprocessTimeoutError(StandardError):
+    """A task failed because the subprocess didn't respond in enough time."""
 
 # define messages/handlers
 
@@ -71,12 +76,6 @@ class FeedparserTask(TaskMessage):
         TaskMessage.__init__(self)
         self.html = html
 
-class MediaMetadataExtractorTask(TaskMessage):
-    def __init__(self, filename, thumbnail):
-        TaskMessage.__init__(self)
-        self.filename = filename
-        self.thumbnail = thumbnail
-
 class MovieDataProgramTask(TaskMessage):
     priority = 10
     def __init__(self, source_path, screenshot_directory):
@@ -84,12 +83,18 @@ class MovieDataProgramTask(TaskMessage):
         self.source_path = source_path
         self.screenshot_directory = screenshot_directory
 
+    def __str__(self):
+        return 'MovieDataProgramTask (path: %s)' % self.source_path
+
 class MutagenTask(TaskMessage):
     priority = 10
     def __init__(self, source_path, cover_art_directory):
         TaskMessage.__init__(self)
         self.source_path = source_path
         self.cover_art_directory = cover_art_directory
+
+    def __str__(self):
+        return 'MutagenTask (path: %s)' % self.source_path
 
 class CancelFileOperations(TaskMessage):
     """Cancel mutagen/movie data tasks for a set of path."""
@@ -105,6 +110,17 @@ class TaskResult(subprocessmanager.SubprocessResponse):
     def __init__(self, task_id, result):
         self.task_id = task_id
         self.result = result
+
+class MovieDataTaskStatus(subprocessmanager.SubprocessResponse):
+    """Report when we are handling movie data tasks.
+
+    This is sent to the main process before and after we handle a movie data
+    task.  The movie data code has some change of just hanging, and we use
+    this message in the main process to catch that.
+    """
+
+    def __init__(self, task_id):
+        self.task_id = task_id
 
 class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
     def __init__(self):
@@ -133,9 +149,16 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
 
     def get_task_from_queue(self, queue):
         # handle movie data tasks if no more tasks are coming in right now
+        ran_movie_data = False
         while queue.empty() and self.pending_moviedata_tasks:
             method, msg = self.pending_moviedata_tasks.popleft()
+            MovieDataTaskStatus(msg.task_id).send_to_main_process()
+            ran_movie_data = True
             handle_task(method, msg)
+            # send status after all moviedata calls since we can't control
+            # how long they will take
+        if ran_movie_data:
+            MovieDataTaskStatus(None).send_to_main_process()
 
         # block waiting for the next message.  We know that one of the
         # following is True
@@ -159,7 +182,7 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         WorkerProcessReady().send_to_main_process()
 
     def handle_cancel_file_operations(self, msg):
-        path_set = set(paths)
+        path_set = set(msg.paths)
         self.task_queue.cancel_file_operations(path_set)
         # we need to handle pending_moviedata_tasks, since those skip the task
         # queue
@@ -185,11 +208,6 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         # don't use it anyways, so just unset the value
         parsed_feed['bozo_exception'] = None
         return parsed_feed
-
-    def handle_media_metadata_extractor_task(self, msg):
-        filename = msg.filename
-        thumbnail = msg.thumbnail
-        return utils.run_media_metadata_extractor(filename, thumbnail)
 
     def handle_mutagen_task(self, msg):
         return filetags.process_file(msg.source_path, msg.cover_art_directory)
@@ -323,10 +341,14 @@ def handle_task(handler_method, msg):
     """Process a TaskMessage."""
     try:
         # normally we send the result of our handler method back
+        logging.info("starting task: %s", msg)
         rv = handler_method(msg)
     except StandardError, e:
         # if something breaks, we send the Exception back
         rv = e
+        logging.info("task error: %s (%s)", msg, e)
+    else:
+        logging.info("task finished: %s", msg)
     TaskResult(msg.task_id, rv).send_to_main_process()
 
 def worker_thread(task_queue):
@@ -338,11 +360,15 @@ def worker_thread(task_queue):
             break
         handle_task(*next_task)
 
+MovieDataTaskStatusInfo = namedtuple('MovieDataTaskStatusInfo',
+                                     'task_id start_time')
+
 class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
     def __init__(self):
         subprocessmanager.SubprocessResponder.__init__(self)
         self.worker_ready = False
         self.startup_message = None
+        self.movie_data_task_status = None
 
     def on_startup(self):
         self.startup_message.send_to_process()
@@ -354,11 +380,19 @@ class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
     def on_restart(self):
         self.worker_ready = False
 
+
     def handle_task_result(self, msg):
         _miro_task_queue.process_result(msg)
 
     def handle_worker_process_ready(self, msg):
         self.worker_ready = True
+
+    def handle_movie_data_task_status(self, msg):
+        if msg.task_id is not None:
+            self.movie_data_task_status = MovieDataTaskStatusInfo(
+                    msg.task_id, clock.clock())
+        else:
+            self.movie_data_task_status = None
 
 class MiroTaskQueue(object):
     """Store the pending tasks for the main process.
@@ -396,8 +430,50 @@ class MiroTaskQueue(object):
 _miro_task_queue = MiroTaskQueue()
 
 # Manage subprocess
-_subprocess_manager = subprocessmanager.SubprocessManager(WorkerMessage,
-        WorkerProcessResponder(), WorkerProcessHandler)
+class WorkerSubprocessManager(subprocessmanager.SubprocessManager):
+    def __init__(self):
+        subprocessmanager.SubprocessManager.__init__(self, WorkerMessage,
+                WorkerProcessResponder(), WorkerProcessHandler)
+        self.check_hung_timeout = None
+
+    def _start(self):
+        subprocessmanager.SubprocessManager._start(self)
+        self.schedule_check_subprocess_hung()
+
+    def shutdown(self):
+        self.cancel_check_subprocess_hung()
+        subprocessmanager.SubprocessManager.shutdown(self)
+
+    def restart(self):
+        self.cancel_check_subprocess_hung()
+        self.responder.movie_data_task_status = None
+        subprocessmanager.SubprocessManager.restart(self)
+
+    def schedule_check_subprocess_hung(self):
+        self.check_hung_timeout = eventloop.add_timeout(90,
+                self.check_subprocess_hung, 'check workerprocess hung')
+
+    def cancel_check_subprocess_hung(self):
+        if self.check_hung_timeout is not None:
+            self.check_hung_timeout.cancel()
+            self.check_hung_timeout = None
+
+    def check_subprocess_hung(self):
+        task_status = self.responder.movie_data_task_status
+        logging.warn("check_subprocess_hung: %s (time: %s)", task_status,
+                clock.clock())
+
+        if (task_status is not None and
+                clock.clock() - task_status.start_time > 90):
+            logging.warn("Worker process is hanging on a movie data task.")
+            error_result = TaskResult(task_status.task_id,
+                    SubprocessTimeoutError())
+            self.responder.handle_task_result(error_result)
+            self.restart()
+        else:
+            self.schedule_check_subprocess_hung()
+
+_subprocess_manager = WorkerSubprocessManager()
 
 def startup(thread_count=3):
     """Startup the worker process."""

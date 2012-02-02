@@ -167,25 +167,24 @@ def initialize_locale():
     _locale_initialized = True
     del pool
 
-def setup_logging (in_downloader=False):
-    if in_downloader:
-        log_name = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
-        level = logging.INFO
+def setup_logging(pathname, main_process=False):
+    if app.debugmode:
+        level = logging.DEBUG
     else:
-        log_name = app.config.get(prefs.LOG_PATHNAME)
-        if app.config.get(prefs.APP_VERSION).endswith("git"):
-            level = logging.DEBUG
-        else:
-            level = logging.WARN
+        level = logging.INFO
 
-    logging.basicConfig(level=level, format='%(levelname)-8s %(message)s')
     rotater = logging.handlers.RotatingFileHandler(
-        log_name, mode="w", maxBytes=100000, backupCount=5)
+        pathname, mode="w", maxBytes=100000, backupCount=5)
     formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
     rotater.setFormatter(formatter)
     logging.getLogger('').addHandler(rotater)
     logging.getLogger('').setLevel(level)
     rotater.doRollover()
+
+    if main_process:
+        stdouthandler = logging.StreamHandler(sys.stdout)
+        stdouthandler.setFormatter(formatter)
+        logging.getLogger('').addHandler(stdouthandler)
 
 @returns_binary
 def utf8_to_filename(filename):

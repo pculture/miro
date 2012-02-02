@@ -6,7 +6,6 @@
 ;  CONFIG_PUBLISHER      eg, "Participatory Culture Foundation"
 ;  CONFIG_EXECUTABLE     eg, "Miro.exe
 ;  CONFIG_DOWNLOADER_EXECUTABLE     eg, "Miro_Downloader.exe
-;  CONFIG_MOVIE_DATA_EXECUTABLE     eg, "Miro_MovieData.exe
 ;  CONFIG_HELPER_EXECUTABLE     eg, "Miro_Helper.exe
 ;  CONFIG_ICON           eg, "Miro.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Miro-1.2.3.exe"
@@ -467,14 +466,12 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_ICON}"
   Delete   "${directory}\${CONFIG_DOWNLOADER_EXECUTABLE}"
-  Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_HELPER_EXECUTABLE}"
   Delete   "${directory}\*.dll"
   Delete   "${directory}\*.pyd"
   Delete   "${directory}\w9xpopen.exe"
   Delete   "${directory}\uninstall.exe"
   Delete   "${directory}\library.zip"
-  Delete   "${directory}\moviedata_util.py"
   Delete   "${directory}\miro-segmenter.exe"
   Delete   "${directory}\ffmpeg.exe"
   Delete   "${directory}\ffmpeg2theora.exe"
@@ -743,7 +740,6 @@ StrCmp $ONLY_INSTALL_THEME "1" install_theme
   File  "${CONFIG_EXECUTABLE}"
   File  "${CONFIG_ICON}"
   File  "${CONFIG_DOWNLOADER_EXECUTABLE}"
-  File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  "${CONFIG_HELPER_EXECUTABLE}"
   File  "*.dll"
   File  "*.pyd"

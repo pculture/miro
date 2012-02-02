@@ -224,6 +224,8 @@ LOG_PATHNAME = \
     Pref(key='LogPathname',      default=None, platformSpecific=True)
 DOWNLOADER_LOG_PATHNAME = \
     Pref(key='DownloaderLogPathname', default=None, platformSpecific=True)
+HELPER_LOG_PATHNAME = \
+    Pref(key='HelperLogPathname', default=None, platformSpecific=True)
 GETTEXT_PATHNAME = \
     Pref(key='GetTextPathname', default=None, platformSpecific=True)
 ENABLED_EXTENSIONS = \

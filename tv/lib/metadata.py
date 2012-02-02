@@ -1343,6 +1343,8 @@ class MetadataManagerBase(signals.SignalEmitter):
             self._make_new_metadata_entry(status, processor, path, result)
             self.count_tracker.file_updated(path, result)
             self.run_next_processor(status)
+            if status.current_processor == u'echonest':
+                self.count_tracker.file_finished_local_processing(status.path)
         self.metadata_finished = []
 
     def _make_new_metadata_entry(self, status, processor, path, result):
@@ -1379,6 +1381,8 @@ class MetadataManagerBase(signals.SignalEmitter):
                 continue
             status.update_after_error(processor.source_name)
             self.run_next_processor(status)
+            if status.current_processor == u'echonest':
+                self.count_tracker.file_finished_local_processing(status.path)
             # we only have new metadata if the error means we can set the
             # has_drm flag now
             if processor is self.moviedata_processor and status.get_has_drm():
@@ -1394,7 +1398,6 @@ class MetadataManagerBase(signals.SignalEmitter):
         elif status.current_processor == u'movie-data':
             self._run_movie_data(status.path)
         elif status.current_processor == u'echonest':
-            self.count_tracker.file_finished_local_processing(status.path)
             self._run_echonest(status.path)
         else:
             self.count_tracker.file_finished(status.path)
