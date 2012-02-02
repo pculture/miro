@@ -6,7 +6,7 @@ import tempfile
 from miro import app
 from miro import prefs
 from miro.feed import Feed
-from miro.item import Item, FileItem, FeedParserValues
+from miro.item import Item, FileItem, FeedParserValues, on_new_metadata
 from miro.fileobject import FilenameType
 from miro.downloader import RemoteDownloader
 from miro.test import mock
@@ -327,13 +327,18 @@ class ItemMetadataTest(MiroTestCase):
         MiroTestCase.setUp(self)
         self.manual_feed = Feed(u'dtv:manualFeed')
         self.regular_feed = Feed(u'http://example.com/1')
-        self.path = os
         self.path, fp = self.make_temp_path_fileobj(".avi")
         fp.write("fake data")
         fp.close()
 
     def make_file_item(self):
         return FileItem(self.path, self.manual_feed.id)
+
+    def make_new_file_item(self):
+        path, fp = self.make_temp_path_fileobj(".avi")
+        fp.write("fake data")
+        fp.close()
+        return FileItem(path, self.manual_feed.id)
 
     def check_path_in_metadata_manager(self):
         if not app.local_metadata_manager.path_in_system(self.path):
@@ -389,4 +394,27 @@ class ItemMetadataTest(MiroTestCase):
         self.check_path_in_metadata_manager()
 
         item.expire()
-        self.check_path_not_in_metadata_manager()
+
+    def test_on_new_metadata(self):
+        # make a bunch of file items
+        items = [self.make_new_file_item() for i in xrange(10)]
+        # create new metadata for some those items
+        new_metadata = {}
+        for i in [0, 1, 4, 5, 8, 9]:
+            item = items[i]
+            new_metadata[item.filename] = {
+                u'album': u'Album-%s' % i,
+                u'title': u'Title-%s' % i,
+                u'duration': 100,
+            }
+        on_new_metadata(mock.Mock(), new_metadata)
+        for item in items:
+            if item.filename in new_metadata:
+                md = new_metadata[item.filename]
+                self.assertEquals(item.album, md['album'])
+                self.assertEquals(item.title, md['title'])
+                self.assertEquals(item.duration, md['duration'])
+            else:
+                self.assertIsNone(item.album)
+                self.assertIsNone(item.title)
+                self.assertIsNone(item.duration)

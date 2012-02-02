@@ -420,8 +420,11 @@ class ItemRenderer(ItemRendererBase):
         return '', widgetutil.WHITE
 
     def calc_extra_info(self):
-        return (self.info.display_date, self.info.display_duration,
-                self.info.display_size, self.info.file_format)
+        display_date = displaytext.date_slashes(self.info.release_date)
+        display_duration = displaytext.duration(self.info.duration)
+        display_size = displaytext.size_string(self.info.size)
+        return (display_date, display_duration, display_size,
+                self.info.file_format)
 
     def calc_extra_button(self):
         """Calculate the button to put to the right of the emblem.

@@ -65,6 +65,8 @@ class Controller:
 
     @eventloop.as_urgent
     def shutdown(self):
+        logging.info("Sending pending metadata updates")
+        app.local_metadata_manager.run_updates()
         logging.info("Shutting down video conversions manager")
         conversions.conversion_manager.shutdown()
         logging.info("Shutting down Downloader...")

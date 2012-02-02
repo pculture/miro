@@ -89,10 +89,7 @@ def _get_duration(muta, info):
     """
     if 'length' in info:
         return int(round(info['length'] * 1000))
-    try: # find approximate length of FLAC file
-        return int(round(muta.seektable.seekpoints[-1][1] / 100.0))
-    except (KeyError, AttributeError, TypeError, IndexError):
-        logging.debug(muta.seektable.seekpoints[-1][1] / 100.0)
+    else:
         return None
 
 def _mediatype_from_mime(mimes):

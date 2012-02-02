@@ -320,25 +320,58 @@ class FeedNameRenderer(ListViewRendererText):
     attr_name = 'feed_name'
 
 class DateRenderer(ListViewRendererText):
-    attr_name = 'display_date'
+    def get_value(self, info):
+        return displaytext.date_slashes(info.release_date)
 
 class LengthRenderer(ListViewRendererText):
-    attr_name = 'display_duration_short'
+    def get_value(self, info):
+        return displaytext.short_time_string(info.duration)
 
 class ETARenderer(ListViewRendererText):
     right_aligned = True
-    attr_name = 'display_eta'
+
+    def get_value(self, info):
+        if info.state == 'downloading':
+            dl_info = info.download_info
+            if dl_info.eta > 0:
+                return displaytext.time_string(dl_info.eta)
+        return ''
 
 class TorrentDetailsRenderer(ListViewRendererText):
-    attr_name = 'display_torrent_details'
+    def get_value(self, info):
+        if not info.download_info or not info.download_info.torrent:
+            return ''
+
+        details = _(
+            "S: %(seeders)s  |  "
+            "L: %(leechers)s  |  "
+            "UR: %(up_rate)s  |  "
+            "UT: %(up_total)s  |  "
+            "DR: %(down_rate)s  |  "
+            "DT: %(down_total)s  |  "
+            "R: %(ratio).2f",
+            {"seeders": info.seeders,
+             "leechers": info.leechers,
+             "up_rate": info.up_rate,
+             "up_total": info.up_total,
+             "down_rate": info.down_rate,
+             "down_total": info.down_total,
+             "ratio": info.up_down_ratio})
+        return details
 
 class DownloadRateRenderer(ListViewRendererText):
     right_aligned = True
-    attr_name = 'display_rate'
+
+    def get_info(self, info):
+        if info.state == 'downloading':
+            return displaytext.download_rate(dl_info.rate)
+        else:
+            return ''
 
 class SizeRenderer(ListViewRendererText):
     right_aligned = True
-    attr_name = 'display_size'
+    def get_value(self, info):
+        return displaytext.size_string(info.size)
 
 class ArtistRenderer(ListViewRendererText):
     attr_name = 'artist'
@@ -347,23 +380,28 @@ class AlbumRenderer(ListViewRendererText):
     attr_name = 'album'
 
 class TrackRenderer(ListViewRendererText):
-    attr_name = 'display_track'
+    def get_value(self, info):
+        return displaytext.integer(info.track)
 
 class YearRenderer(ListViewRendererText):
-    attr_name = 'display_year'
+    def get_value(self, info):
+        return displaytext.integer(info.year)
 
 class GenreRenderer(ListViewRendererText):
     attr_name = 'genre'
 
 class DateAddedRenderer(ListViewRendererText):
     min_width = 70
-    attr_name = 'display_date_added'
+    def get_value(self, info):
+        return displaytext.date_slashes(info.date_added)
 
 class LastPlayedRenderer(ListViewRendererText):
-    attr_name = 'display_last_played'
+    def get_value(self, info):
+        return displaytext.date_slashes(info.last_played)
 
 class DRMRenderer(ListViewRendererText):
-    attr_name = 'display_drm'
+    def get_value(self, info):
+        return _("Locked") if info.has_drm else u""
 
 class FileTypeRenderer(ListViewRendererText):
     attr_name = 'file_format'
@@ -372,7 +410,17 @@ class ShowRenderer(ListViewRendererText):
     attr_name = 'show'
 
 class KindRenderer(ListViewRendererText):
-    attr_name = 'display_kind'
+    def get_value(self, info):
+        if info.kind == 'movie':
+            return _("Movie")
+        elif info.kind == 'show':
+            return _("Show")
+        elif info.kind == 'clip':
+            return _("Clip")
+        elif info.kind == 'podcast':
+            return _("Podcast")
+        else:
+            return None
 
 class PlaylistOrderRenderer(ListViewRendererText):
     """Displays the order an item is in a particular playlist.
