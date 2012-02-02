@@ -809,7 +809,10 @@ class _MultiRowAlbumRenderStrategy(object):
 
 class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info, first_info):
-        return item_info.cover_art_path
+        if item_info.cover_art_path is not None:
+            return item_info.cover_art_path
+        else:
+            return item_info.thumbnail
 
     def get_album(self, item_info, first_info):
         return item_info.album
@@ -828,7 +831,7 @@ class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
         try:
             feed_info = widgetutil.get_feed_info(item_info.feed_id)
         except KeyError:
-            return None
+            return first_info.thumbnail
         else:
             return feed_info.thumbnail
 
