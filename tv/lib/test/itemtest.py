@@ -415,6 +415,6 @@ class ItemMetadataTest(MiroTestCase):
                 self.assertEquals(item.title, md['title'])
                 self.assertEquals(item.duration, md['duration'])
             else:
-                self.assertIsNone(item.album)
-                self.assertIsNone(item.title)
-                self.assertIsNone(item.duration)
+                self.assertEquals(item.album, None)
+                self.assertEquals(item.title, None)
+                self.assertEquals(item.duration, None)
