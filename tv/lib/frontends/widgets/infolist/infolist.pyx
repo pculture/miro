@@ -590,6 +590,7 @@ cdef class InfoList:
         cdef long group_hash
         cdef int nodes_before
         cdef int nodes_after
+        cdef object first_info
 
         group_hash = self._get_group_hash(node)
         # count nodes in the same group before node
@@ -599,6 +600,7 @@ cdef class InfoList:
                 and self._get_group_hash(other_node) == group_hash):
             nodes_before += 1
             other_node = other_node.prev
+        first_info = infolist_node_get_info(other_node.next)
         # count nodes in the same group after node
         nodes_after = 0
         other_node = node.next
@@ -607,7 +609,7 @@ cdef class InfoList:
             nodes_after += 1
             other_node = other_node.next
         # now we can calculate the index of node and the size of the group
-        return (nodes_before, nodes_before + nodes_after + 1)
+        return (nodes_before, nodes_before + nodes_after + 1, first_info)
 
     def get_group_top(self, id_):
         """Get the first info for an item's group
