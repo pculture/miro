@@ -880,10 +880,10 @@ class MetadataManagerBase(signals.SignalEmitter):
             processor.connect("task-error", self._on_task_error)
         self.count_tracker = self.make_count_tracker()
         # List of (processor, path, metadata) tuples for metadata since the
-        # last _run_updates() call
+        # last run_updates() call
         self.metadata_finished = []
         # List of (processor, path) tuples for failed metadata since the last
-        # _run_updates() call
+        # run_updates() call
         self.metadata_errors = []
         self._reset_new_metadata()
         self._update_scheduled = False
@@ -1300,11 +1300,17 @@ class MetadataManagerBase(signals.SignalEmitter):
         """
         if not self._update_scheduled:
             eventloop.add_timeout(self.UPDATE_INTERVAL,
-                                  self._run_updates,
+                                  self.run_updates,
                                   'send metadata updates')
             self._update_scheduled = True
 
-    def _run_updates(self):
+    def run_updates(self):
+        """Run any pending metadata updates.
+
+        As we get metadata in from extractors, we store it up and send one big
+        update at a time.  Normally this is scheduled using a timeout, we also
+        need to call it at shutdown to flush the pending updates.
+        """
         # Should this be inside an idle iterator?  It definitely runs slowly
         # when we're running mutagen on a music library, but I think that's to
         # be expected.  It seems fast enough in other cases to me - BDK

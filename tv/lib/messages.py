@@ -1243,59 +1243,6 @@ class ItemInfo(object):
         # pre-calculate things that get displayed in list view
         self.description_oneline = (
                 self.description_stripped[0].replace('\n', '$'))
-        self.display_date = displaytext.date_slashes(self.release_date)
-        self.display_duration = displaytext.duration(self.duration)
-        self.display_duration_short = displaytext.short_time_string(
-                self.duration)
-        self.display_size = displaytext.size_string(self.size)
-        self.display_date_added = displaytext.date_slashes(self.date_added)
-        self.display_last_played = displaytext.date_slashes(self.last_played)
-        self.display_track = displaytext.integer(self.track)
-        self.display_year = displaytext.integer(self.year)
-        self.display_torrent_details = self.calc_torrent_details()
-        self.display_drm = self.has_drm and _("Locked") or u""
-        # FIXME: display_kind changes here need also be applied in itemedit
-        if self.kind == 'movie':
-            self.display_kind = _("Movie")
-        elif self.kind == 'show':
-            self.display_kind = _("Show")
-        elif self.kind == 'clip':
-            self.display_kind = _("Clip")
-        elif self.kind == 'podcast':
-            self.display_kind = _("Podcast")
-        else:
-            self.display_kind = None
-
-        if self.state == 'downloading':
-            dl_info = self.download_info
-            if dl_info.eta > 0:
-                self.display_eta = displaytext.time_string(dl_info.eta)
-            else:
-                self.display_eta = ''
-            self.display_rate = displaytext.download_rate(dl_info.rate)
-        else:
-            self.display_rate = self.display_eta = ''
-
-    def calc_torrent_details(self):
-        if not self.download_info or not self.download_info.torrent:
-            return ''
-
-        details = _(
-            "S: %(seeders)s  |  "
-            "L: %(leechers)s  |  "
-            "UR: %(up_rate)s  |  "
-            "UT: %(up_total)s  |  "
-            "DR: %(down_rate)s  |  "
-            "DT: %(down_total)s  |  "
-            "R: %(ratio).2f",
-            {"seeders": self.seeders,
-             "leechers": self.leechers,
-             "up_rate": self.up_rate,
-             "up_total": self.up_total,
-             "down_rate": self.down_rate,
-             "down_total": self.down_total,
-             "ratio": self.up_down_ratio})
-        return details
 
 class DownloadInfo(object):
     """Tracks the download state of an item.

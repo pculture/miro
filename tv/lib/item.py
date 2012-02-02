@@ -2626,7 +2626,7 @@ def on_new_metadata(metadata_manager, new_metadata):
         placeholders = ', '.join('?' for i in xrange(len(paths)))
         view = Item.make_view('lower(filename) IN (%s)' % placeholders, paths)
         for i in view:
-            path_map[i].append(i)
+            path_map[i.filename].append(i)
 
     for path, metadata in new_metadata.iteritems():
         for item in path_map[path]:
