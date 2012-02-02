@@ -196,8 +196,8 @@ class MultiRowAlbumSort(ItemSort):
     # switch_mode()
 
     def sort_key_standard(self, info):
-        return (info.artist_sort_key,
-                info.album_sort_key,
+        return (info.album_sort_key,
+                info.artist_sort_key,
                 info.track)
 
     def sort_key_feed(self, info):
