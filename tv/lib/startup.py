@@ -214,7 +214,8 @@ def initialize(themeName):
             app.debugmode = False
 
     # this is platform specific
-    setup_logging()
+    setup_logging(app.config.get(prefs.LOG_PATHNAME),
+                 main_process=True)
     # this is portable general
     util.setup_logging()
     app.controller = controller.Controller()

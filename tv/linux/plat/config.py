@@ -204,6 +204,10 @@ def get(descriptor):
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'miro-downloader.log')
 
+    elif descriptor == prefs.HELPER_LOG_PATHNAME:
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.join(value, 'miro-helper.log')
+
     elif descriptor == prefs.HTTP_PROXY_ACTIVE:
         return _get_gconf("/system/http_proxy/use_http_proxy")
 

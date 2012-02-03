@@ -573,8 +573,6 @@ class bdist_nsis(Command):
         nsis_vars['CONFIG_EXECUTABLE'] = "%s.exe" % template_vars['shortAppName']
         nsis_vars['CONFIG_DOWNLOADER_EXECUTABLE'] = "%s_Downloader.exe" % \
                 template_vars['shortAppName']
-        nsis_vars['CONFIG_MOVIE_DATA_EXECUTABLE'] = "%s_MovieData.exe" % \
-                template_vars['shortAppName']
         nsis_vars['CONFIG_HELPER_EXECUTABLE'] = "%s_Helper.exe" % \
                 template_vars['shortAppName']
         nsis_vars['CONFIG_ICON'] = "%s.ico" % template_vars['shortAppName']
@@ -671,11 +669,6 @@ if __name__ == "__main__":
                 # runs miro from the console--for debugging
                 'script': 'Miro.py',
                 'dest_base': 'mirodebug',
-                'icon_resources': [(0, "Miro.ico")],
-                },
-            {
-                'script': 'moviedata_util.py',
-                'dest_base': '%s_MovieData' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
                 },
             {

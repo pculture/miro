@@ -28,6 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import sys
+import logging
 import os
 import urllib
 
@@ -66,6 +67,7 @@ def scaled_size(from_size, to_size):
 
 class Extractor:
     def __init__(self, filename, thumbnail_filename):
+        logging.info("running gstreamer Extractor on %s", filename)
         self.thumbnail_filename = thumbnail_filename
         self.filename = filename
 
@@ -97,16 +99,20 @@ class Extractor:
 
     def on_bus_message(self, bus, message):
         if message.type == gst.MESSAGE_ERROR:
+            logging.warn("gstreamer error: %s", message)
             gobject.idle_add(self.error_occurred)
 
         elif message.type == gst.MESSAGE_STATE_CHANGED:
             _prev, state, _pending = message.parse_state_changed()
             if state == gst.STATE_PAUSED:
                 if message.src == self.pipeline:
+                    logging.info("gstreamer ready")
                     gobject.idle_add(self.paused_reached)
 
                 elif (message.src == self.thumbnail_pipeline and
                       not self.doing_thumbnailing):
+
+                    logging.info("thumbnail_pipeline ready")
 
                     self.doing_thumbnailing = True
                     for sink in self.thumbnail_pipeline.sinks():
@@ -124,6 +130,7 @@ class Extractor:
                         gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
                         gst.SEEK_TYPE_SET, seek_amount,
                         gst.SEEK_TYPE_NONE, 0)
+                    logging.info("seek finished.  Result: %s", seek_result)
 
                     if not seek_result:
                         self.disconnect()
@@ -140,8 +147,13 @@ class Extractor:
         gtk.main_quit()
 
     def run(self):
-        gtk.gdk.threads_init()
+        gobject.threads_init()
+        gobject.timeout_add(30000, self.cancel_timeout)
         gtk.main()
+
+    def cancel_timeout(self):
+        logging.warn("cancel_timeout() reached.  Quitting.")
+        self.done()
 
     def get_result(self):
         duration = self.duration
@@ -179,6 +191,7 @@ class Extractor:
 
         if not self.saw_video_tag and self.saw_audio_tag:
             # audio only
+            logging.info("audio only...  calling done()")
             self.audio_only = True
             self.duration = self.get_duration(self.pipeline)
             self.success = True
@@ -187,6 +200,7 @@ class Extractor:
             return False
 
         if not self.saw_video_tag and not self.saw_audio_tag:
+            logging.info("no audio or video...  calling done()")
             # no audio and no video
             self.audio_only = False
             self.disconnect()
@@ -220,6 +234,7 @@ class Extractor:
     def buffer_probe_handler_real(self, pad, buff, name):
         """Capture buffers as gdk_pixbufs when told to.
         """
+        logging.info("buffer_probe_handler_real running")
         try:
             caps = buff.caps
             if caps is None:
@@ -251,6 +266,7 @@ class Extractor:
             self.done()
         except gst.QueryError:
             pass
+        logging.info("buffer_probe_handler_real finished")
         return False
 
     def buffer_probe_handler(self, pad, buff, name):
