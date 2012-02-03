@@ -791,66 +791,64 @@ class _MultiRowAlbumRenderStrategy(object):
     This class is just used internally.
     """
 
-    def get_image_path(self, item_info):
+    def get_image_path(self, item_info, first_info):
         """Get a path to the image we should draw."""
         raise NotImplementedError()
 
-    def get_album(self, item_info):
+    def get_album(self, item_info, first_info):
         """Get album name to render."""
         raise NotImplementedError()
 
-    def get_artist(self, item_info):
+    def get_artist(self, item_info, first_info):
         """Get artist name to render."""
         raise NotImplementedError()
 
-    def get_track_number(self, item_info):
+    def get_track_number(self, item_info, first_info):
         """Track number to show"""
         raise NotImplementedError()
 
 class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
-    def get_image_path(self, item_info):
-        return item_info.cover_art_path
+    def get_image_path(self, item_info, first_info):
+        if item_info.cover_art_path is not None:
+            return item_info.cover_art_path
+        else:
+            return item_info.thumbnail
 
-    def get_album(self, item_info):
+    def get_album(self, item_info, first_info):
         return item_info.album
 
-    def get_artist(self, item_info):
+    def get_artist(self, item_info, first_info):
         return item_info.artist
 
-    def get_track_number(self, item_info):
+    def get_track_number(self, item_info, first_info):
         if item_info.track is not None:
             return item_info.track
         else:
             return ''
 
 class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
-    def get_image_path(self, item_info):
+    def get_image_path(self, item_info, first_info):
         try:
             feed_info = widgetutil.get_feed_info(item_info.feed_id)
         except KeyError:
-            return None
+            return first_info.thumbnail
         else:
             return feed_info.thumbnail
 
-    def get_album(self, item_info):
-        return item_info.feed_name
+    def get_album(self, item_info, first_info):
+        return ''
 
-    def get_artist(self, item_info):
+    def get_artist(self, item_info, first_info):
         return item_info.feed_url
 
-    def get_track_number(self, item_info):
+    def get_track_number(self, item_info, first_info):
         return ''
 
 class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
-    def get_image_path(self, item_info):
-        try:
-            feed_info = widgetutil.get_feed_info(item_info.feed_id)
-            return feed_info.thumbnail
-        except KeyError:
-            # use placeholder image until we get one from a designer
-            return resources.path('images/album-art-placeholder.gif')
+    def get_image_path(self, item_info, first_info):
+        return first_info.thumbnail
 
-    def get_album(self, item_info):
+    def get_album(self, item_info, first_info):
         if item_info.show:
             return item_info.show
         elif item_info.feed_name:
@@ -858,10 +856,10 @@ class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
         else:
             return None
 
-    def get_artist(self, item_info):
+    def get_artist(self, item_info, first_info):
         return None
 
-    def get_track_number(self, item_info):
+    def get_track_number(self, item_info, first_info):
         return ''
 
 class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
@@ -892,22 +890,29 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         self._render_strategy = _StandardRenderStrategy()
 
     def get_image_path(self):
-        return self._render_strategy.get_image_path(self.info)
+        return self._render_strategy.get_image_path(self.info,
+                                                    self.get_first_info())
 
     def get_album(self):
-        return self._render_strategy.get_album(self.info)
+        return self._render_strategy.get_album(self.info,
+                                               self.get_first_info())
 
     def get_artist(self):
-        return self._render_strategy.get_artist(self.info)
+        return self._render_strategy.get_artist(self.info,
+                                                self.get_first_info())
 
     def get_track_number(self):
-        return self._render_strategy.get_track_number(self.info)
+        return self._render_strategy.get_track_number(self.info,
+                                                      self.get_first_info())
 
     def get_current_row(self):
         return self.group_info[0]
 
     def get_total_rows(self):
         return self.group_info[1]
+
+    def get_first_info(self):
+        return self.group_info[2]
 
     def switch_mode(self, new_mode):
         """Switch which mode we use to render the album art.

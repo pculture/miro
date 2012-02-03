@@ -834,8 +834,23 @@ class TableViewCommon(object):
     def handleContextMenu_(self, event):
         self.window().makeFirstResponder_(self)
         point = self.convertPoint_fromView_(event.locationInWindow(), nil)
+        column = self.columnAtPoint_(point)
         row = self.rowAtPoint_(point)
+        if self.group_lines_enabled and column == 0:
+            self.selectAllItemsInGroupForRow_(row)
         self.popup_context_menu(row, event)
+
+    def selectAllItemsInGroupForRow_(self, row):
+        wrapper = wrappermap.wrapper(self)
+        infolist = wrapper.model
+        if (not isinstance(infolist, tablemodel.InfoListModel) or
+                infolist.get_grouping() is None):
+            return
+
+        info, attrs, group_info = infolist[row]
+        select_range = NSMakeRange(row - group_info[0], group_info[1])
+        index_set = NSIndexSet.indexSetWithIndexesInRange_(select_range)
+        self.selectRowIndexes_byExtendingSelection_(index_set, NO)
 
     def popup_context_menu(self, row, event):
         selection = self.selectedRowIndexes()

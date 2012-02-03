@@ -1305,7 +1305,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
                 iter_ = treeview.get_model().get_iter(path_info.path)
                 self.emit('row-clicked', iter_)
 
-        if self.handle_hotspot_hit(treeview, event):
+        if (event.button == 1 and self.handle_hotspot_hit(treeview, event)):
             return True
         if event.window != treeview.get_bin_window():
             # click is outside the content area, don't try to handle this.
@@ -1325,9 +1325,34 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         """Pop up a context menu for the given click event (which is a
         right-click on a row).
         """
+        # hack for album view
+        if (treeview.group_lines_enabled and
+            path_info.column == treeview.get_columns()[0]):
+            self._select_all_rows_in_group(treeview, path_info.path)
         self._popup_context_menu(path_info.path, event)
         # grab keyboard focus since we handled the event
         self.focus()
+
+    def _select_all_rows_in_group(self, treeview, path):
+        """Select all items in the group """
+
+        # FIXME: this is very tightly coupled with the portable code.
+
+        infolist = self.model
+        gtk_model = treeview.get_model()
+        if (not isinstance(infolist, InfoListModel) or
+                infolist.get_grouping() is None):
+            return
+        it = gtk_model.get_iter(path)
+        info, attrs, group_info = infolist.row_for_iter(it)
+        start_row = path[0] - group_info[0]
+        total_rows = group_info[1]
+
+        with self._ignoring_changes():
+            self.unselect_all()
+            for row in xrange(start_row, start_row + total_rows):
+                self.select_path((row,))
+            self.emit('selection-changed')
 
     def _popup_context_menu(self, path, event):
         if not self.selection.path_is_selected(path):

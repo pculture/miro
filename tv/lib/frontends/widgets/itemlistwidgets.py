@@ -931,7 +931,15 @@ class ColumnRendererSet(object):
         self._column_map = {}
 
     def add_renderer(self, name, renderer):
-        self._column_map[name] = renderer
+        if name != 'state':
+            label = widgetconst.COLUMN_LABELS[name]
+        else:
+            label = ''
+        self._column_map[name] = (label, renderer)
+
+    def change_label(self, name, new_label):
+        old_label, renderer = self.get(name)
+        self._column_map[name] = (new_label, renderer)
 
     def get(self, name):
         return self._column_map[name]
@@ -1043,11 +1051,7 @@ class ListView(ItemView, SorterOwner):
         self.remove_column(self.columns.index(column))
 
     def make_sorter(self, name):
-        if name == 'state':
-            header = u''
-        else:
-            header = widgetconst.COLUMN_LABELS[name]
-        renderer = self.renderer_set.get(name)
+        header, renderer = self.renderer_set.get(name)
         column = widgetset.TableColumn(header, renderer,
             ListViewSorter(header, renderer))
         column.set_min_width(renderer.min_width)

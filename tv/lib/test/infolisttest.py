@@ -153,18 +153,19 @@ class InfoListTestBase(MiroTestCase):
             # key is the value that new_grouping() returned.  group is an
             # iterater that contains infos in that group
             group = list(group)
+            first_info = group[0]
             total_count = len(group)
             for i, info in enumerate(group):
                 # check get_group_info()
                 self.assertEquals(self.infolist.get_group_info(info.id),
-                        (i, total_count))
+                        (i, total_count, first_info))
                 # check get_group_top()
                 self.assertEquals(self.infolist.get_group_top(info.id),
-                        group[0])
+                                  first_info)
                 # check group_info part of row_for_iter
                 it = self.infolist.iter_for_id(info.id)
                 info, attrs, group_info = self.infolist.row_for_iter(it)
-                self.assertEquals(group_info, (i, total_count))
+                self.assertEquals(group_info, (i, total_count, first_info))
 
 class InfoListDataTest(InfoListTestBase):
     def check_list(self, *names):
