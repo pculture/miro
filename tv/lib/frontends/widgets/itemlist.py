@@ -196,8 +196,8 @@ class MultiRowAlbumSort(ItemSort):
     # switch_mode()
 
     def sort_key_standard(self, info):
-        return (info.artist_sort_key,
-                info.album_sort_key,
+        return (info.album_sort_key,
+                info.artist_sort_key,
                 info.track)
 
     def sort_key_feed(self, info):
@@ -217,6 +217,8 @@ class MultiRowAlbumSort(ItemSort):
     def sort_key_video(self, info):
         if info.show:
             show_name = info.show
+        elif info.parent_sort_key:
+            show_name = info.parent_sort_key
         elif info.feed_name:
             show_name = info.feed_name
         else:
@@ -423,6 +425,8 @@ def video_grouping(info):
     """
     if info.show:
         return info.show
+    elif info.parent_sort_key:
+        return info.parent_sort_key
     elif info.feed_name:
         return info.feed_name
     else:

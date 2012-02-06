@@ -584,7 +584,12 @@ class ItemListController(object):
     def build_column_renderers(self):
         column_renderers = itemlistwidgets.ListViewColumnRendererSet()
         multi_row_mode = self.get_multi_row_album_mode()
-        column_renderers.get('multi-row-album').switch_mode(multi_row_mode)
+        (label, renderer) = column_renderers.get('multi-row-album')
+        renderer.switch_mode(multi_row_mode)
+        if multi_row_mode == 'video':
+            column_renderers.change_label('multi-row-album', _('Series'))
+        elif multi_row_mode == 'feed':
+            column_renderers.change_label('multi-row-album', _('Source'))
         return column_renderers
 
     def build_standard_view_header(self):

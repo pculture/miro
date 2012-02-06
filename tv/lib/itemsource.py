@@ -156,7 +156,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 37
+    VERSION = 38
 
     def __init__(self, view):
         ItemSource.__init__(self)
@@ -173,6 +173,7 @@ class DatabaseItemSource(ItemSource):
             'name': item.get_title(),
             'feed_id': item.feed_id,
             'feed_name': item.get_source(),
+            'parent_sort_key': item.get_parent_sort_key(),
             'feed_url': item.get_feed_url(),
             'state': item.get_state(),
             'description': item.get_description(),
@@ -422,6 +423,7 @@ class SharingItemSource(ItemSource):
             source_type='sharing',
             feed_id = item.feed_id,
             feed_name = None,
+            parent_sort_key = None,
             feed_url = None,
             state = u'saved',
             description = item.description,
@@ -631,6 +633,7 @@ class DeviceItemSource(ItemSource):
             feed_id = item.feed_id,
             feed_name = (item.feed_name is None and item.feed_name or
                          self.device.name),
+            parent_sort_key = None,
             feed_url = item.feed_url,
             state = u'saved',
             description = u'',
