@@ -362,8 +362,9 @@ class TorrentDetailsRenderer(ListViewRendererText):
 class DownloadRateRenderer(ListViewRendererText):
     right_aligned = True
 
-    def get_info(self, info):
+    def get_value(self, info):
         if info.state == 'downloading':
+            dl_info = info.download_info
             return displaytext.download_rate(dl_info.rate)
         else:
             return ''
