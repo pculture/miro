@@ -167,6 +167,9 @@ class SharingItem(object):
             if required not in kwargs:
                 raise TypeError('SharingItem must be given a "%s" argument'
                                 % required)
+
+        for name in metadata.attribute_names:
+            setattr(self, name, None)
         self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
         self.keep = True
@@ -181,9 +184,6 @@ class SharingItem(object):
         self.metadata_version = 0
         self.file_type = None
         self.creation_time = None
-
-        for name in metadata.attribute_names:
-            setattr(self, name, None)
 
         self.__dict__.update(kwargs)
 
