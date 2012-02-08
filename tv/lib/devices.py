@@ -1291,7 +1291,7 @@ def load_database(mount, countdown=0):
         except ValueError:
             logging.exception('JSON decode error on %s', mount)
             db = {}
-        except (IOError, OSError):
+        except EnvironmentError:
             if countdown == 5:
                 logging.exception('file error with JSON on %s', mount)
                 db = {}
@@ -1303,7 +1303,7 @@ def load_database(mount, countdown=0):
     ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
 
-def load_sqlite_database(mount, json_db, device_size):
+def load_sqlite_database(mount, json_db, device_size, countdown=0):
     """
     Returns a LiveStorage object for an sqlite database on the device
 
@@ -1321,9 +1321,19 @@ def load_sqlite_database(mount, json_db, device_size):
         schema.MetadataEntrySchema,
         schema.MetadataStatusSchema,
     ]
-    live_storage = storedatabase.LiveStorage(path, error_handler,
-                                             preallocate=preallocate,
-                                             object_schemas=object_schemas)
+    try:
+        live_storage = storedatabase.LiveStorage(path, error_handler,
+                                                 preallocate=preallocate,
+                                                 object_schemas=object_schemas)
+    except EnvironmentError:
+        if countdown == 5:
+            logging.exception('file error with JSON on %s', mount)
+            return load_sqlite_database(':memory:', json_db, 0, countdown)
+        else:
+            # wait a little while; total time is ~1.5s
+            time.sleep(0.20 * 1.2 ** countdown)
+            return load_sqlite_database(mount, json_db, device_size,
+                                        countdown + 1)
     if not json_db.created_new and live_storage.created_new:
         devicedatabaseupgrade.import_from_json(live_storage, json_db, mount)
     # force the version to match the current schema.  This is a hack to make
