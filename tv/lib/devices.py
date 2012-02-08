@@ -1328,7 +1328,7 @@ def load_sqlite_database(mount, json_db, device_size):
         devicedatabaseupgrade.import_from_json(live_storage, json_db, mount)
     # force the version to match the current schema.  This is a hack to make
     # databases from the nightlies match the ones from users starting with 5.0
-    live_storage.set_version(173)
+    live_storage.set_version(174)
     return live_storage
 
 def calc_sqlite_preallocate_size(device_size):

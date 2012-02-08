@@ -334,15 +334,15 @@ class MetadataManagerTest(MiroTestCase):
         # movie data failing shouldn't change the metadata
         self.check_metadata(path)
 
-    def check_echonest_not_scheduled(self, filename):
+    def check_echonest_not_scheduled(self, filename, from_pref=False):
         self.check_echonest_not_running(filename)
         path = self.make_path(filename)
         status = metadata.MetadataStatus.get_by_path(path)
-        if status.echonest_status not in (status.STATUS_SKIP,
-                                          status.STATUS_COMPLETE):
-            raise AssertionError("Bad status in "
-                                 "check_echonest_not_scheduled(): %s" %
-                                 status.echonest_status)
+        if not from_pref:
+            self.assertEquals(status.echonest_status, status.STATUS_SKIP)
+        else:
+            self.assertEquals(status.echonest_status,
+                              status.STATUS_SKIP_FROM_PREF)
 
     def check_echonest_not_running(self, filename):
         path = self.make_path(filename)
@@ -494,7 +494,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
         self.check_echonest_not_running('foo.mp3')
-        self.check_echonest_not_scheduled('foo.mp3')
+        self.check_echonest_not_scheduled('foo.mp3', from_pref=True)
         # test that it starts running if we set the value to true
         self.check_set_net_lookup_enabled('foo.mp3', True)
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights2')
@@ -1254,7 +1254,7 @@ class DeviceMetadataUpgradeTest(MiroTestCase):
         self.assertEquals(status.current_processor, u'movie-data')
         self.assertEquals(status.mutagen_status, status.STATUS_SKIP)
         self.assertEquals(status.moviedata_status, status.STATUS_NOT_RUN)
-        self.assertEquals(status.echonest_status, status.STATUS_NOT_RUN)
+        self.assertEquals(status.echonest_status, status.STATUS_SKIP_FROM_PREF)
         self.assertEquals(status.net_lookup_enabled, False)
 
     def check_migrated_entries(self, filename, item_data, device_db_info):

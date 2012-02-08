@@ -81,6 +81,7 @@ class MetadataStatus(database.DDBObject):
     STATUS_COMPLETE = u'C'
     STATUS_FAILURE = u'F'
     STATUS_SKIP = u'S'
+    STATUS_SKIP_FROM_PREF = u'P'
 
     _source_name_to_status_column = {
         u'mutagen': 'mutagen_status',
@@ -96,7 +97,7 @@ class MetadataStatus(database.DDBObject):
         if self.net_lookup_enabled:
             self.echonest_status = self.STATUS_NOT_RUN
         else:
-            self.echonest_status = self.STATUS_SKIP
+            self.echonest_status = self.STATUS_SKIP_FROM_PREF
         self.mutagen_thinks_drm = False
         self.echonest_id = None
         self.max_entry_priority = -1
@@ -232,10 +233,10 @@ class MetadataStatus(database.DDBObject):
 
     def set_net_lookup_enabled(self, enabled):
         self.net_lookup_enabled = enabled
-        if enabled and self.echonest_status == self.STATUS_SKIP:
+        if enabled and self.echonest_status == self.STATUS_SKIP_FROM_PREF:
             self.echonest_status = self.STATUS_NOT_RUN
         elif not enabled and self.echonest_status == self.STATUS_NOT_RUN:
-            self.echonest_status = self.STATUS_SKIP
+            self.echonest_status = self.STATUS_SKIP_FROM_PREF
         self._set_current_processor()
         self.signal_change()
 
