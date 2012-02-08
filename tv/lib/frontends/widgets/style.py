@@ -657,7 +657,9 @@ class RatingRenderer(widgetset.InfoListRenderer):
             path = resources.path('images/star-%s.png' % state)
             self.icon[state] = imagepool.get_surface(path,
                                (self.icon_width, self.icon_height))
-        self.min_width = self.width = int(self.icon_width * self.ICON_COUNT)
+        self.min_width = self.width = int((self.icon_width +
+                                           self.ICON_HORIZONTAL_SPACING) *
+                                          self.ICON_COUNT)
         self.hover = None
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
