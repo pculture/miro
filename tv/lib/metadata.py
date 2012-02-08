@@ -411,7 +411,7 @@ class _TaskProcessor(_MetadataProcessor):
             self._send_task(task)
 
     def _callback(self, task, result):
-        logging.debug("%s done: %s", self.source_name, task.source_path)
+        logging.debug("%s done: %r", self.source_name, task.source_path)
         self._check_for_none_values(result)
         self.emit('task-complete', task.source_path, result)
         self.remove_task_for_path(task.source_path)
@@ -428,7 +428,7 @@ class _TaskProcessor(_MetadataProcessor):
                 del result[key]
 
     def _errback(self, task, error):
-        logging.warn("Error running %s for %s: %s", task, task.source_path,
+        logging.warn("Error running %s for %r: %s", task, task.source_path,
                      error)
         self.emit('task-error', task.source_path)
         self.remove_task_for_path(task.source_path)
