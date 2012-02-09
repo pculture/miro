@@ -384,8 +384,14 @@ class CustomTableCell(NSCell):
     def drawInteriorWithFrame_inView_(self, frame, view):
         NSGraphicsContext.currentContext().saveGraphicsState()
         if not self.wrapper.IGNORE_PADDING:
-            # adjust frame based on the cell spacing
+            # adjust frame based on the cell spacing. We also have to adjust
+            # the hover position to account for the new frame
+            original_frame = frame
             frame = _calc_interior_frame(frame, view)
+            hover_adjustment = (frame.origin.x - original_frame.origin.x,
+                                frame.origin.y - original_frame.origin.y)
+        else:
+            hover_adjustment = (0, 0)
         if self.wrapper.outline_column:
             pad_left = EXPANDER_PADDING
         else:
@@ -398,6 +404,9 @@ class CustomTableCell(NSCell):
         self.set_wrapper_data()
         column = self.wrapper.get_index()
         hover_pos = view.get_hover(self.row, column)
+        if hover_pos is not None:
+            hover_pos = [hover_pos[0] - hover_adjustment[0],
+                         hover_pos[1] - hover_adjustment[1]]
         self.wrapper.render(context, self.layout_manager, self.isHighlighted(),
                 self.hotspot, hover_pos)
         NSGraphicsContext.currentContext().restoreGraphicsState()
@@ -1486,7 +1495,10 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         """If the table is width pixels big, how much width is available for
         the table's columns.
         """
-        spacing = self.tableview.intercellSpacing().width * self.column_count()
+        # HACK: I don't know why 1.5 additional pixels per column makes everything
+        # work, but 1px and 2px don't work. (#18273 - z3p)
+        column_spacing = (self.tableview.intercellSpacing().width + 1.5)
+        spacing = int(column_spacing * self.column_count())
         return width - spacing
 
     def set_column_spacing(self, column_spacing):
