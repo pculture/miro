@@ -410,7 +410,7 @@ SORT_KEY_MAP = dict((sort.KEY, sort) for sort in util.all_subclasses(ItemSort))
 
 def album_grouping(info):
     """Grouping function that groups infos by albums."""
-    return info.album
+    return (info.album_sort_key, info.artist_sort_key)
 
 def feed_grouping(info):
     """Grouping function that groups infos by their feed."""
