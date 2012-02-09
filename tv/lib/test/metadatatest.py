@@ -1067,6 +1067,60 @@ class MetadataManagerTest(MiroTestCase):
         correct_paths = paths[100:150] + new_paths
         self.assertSameSet(self.processor.mutagen_paths(), correct_paths)
 
+class EchonestNetErrorTest(EventLoopTest):
+    # Test our pause/retry logic when we get HTTP errors from echonest
+
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        self.processor = MockMetadataProcessor()
+        self.patch_function('miro.echonest.query_echonest',
+                            self.processor.query_echonest)
+
+    @mock.patch('miro.eventloop.add_timeout')
+    def test_pause_on_http_errors(self, mock_add_timeout):
+        _echonest_processor = metadata._EchonestProcessor(1, self.tempdir)
+        paths = [PlatformFilenameType('/videos/item-%s.mp3' % i)
+                 for i in xrange(100)]
+        error_count = _echonest_processor.PAUSE_AFTER_HTTP_ERROR_COUNT
+        timeout = _echonest_processor.PAUSE_AFTER_HTTP_ERROR_TIMEOUT
+        for i, path in enumerate(paths):
+            # give enough initial metadata so that we skip the codegen step
+            _echonest_processor.add_path(path,
+                                         { u'title': "Song-%i" % i })
+        path_iter = iter(paths)
+
+        for i in xrange(error_count):
+            http_error = httpclient.UnknownHostError('fake.echonest.host')
+            _echonest_processor._echonest_errback(path_iter.next(),
+                                                  http_error)
+        # after we get enough error, we should stop querying echonest
+        self.assertEquals(_echonest_processor._querying_echonest, False)
+        # we should also set a timeout to re-run the queue once enough time
+        # has passed
+        mock_add_timeout.assert_called_once_with(
+            timeout, _echonest_processor._restart_after_http_errors,
+            MatchAny())
+        # simulate time passing then run _restart_after_http_errors().  We
+        # should schedule a new echonest call
+        for i in xrange(len(_echonest_processor._http_error_times)):
+            _echonest_processor._http_error_times[i] -= timeout
+        mock_add_timeout.reset_mock()
+        _echonest_processor._restart_after_http_errors()
+        self.assertEquals(_echonest_processor._querying_echonest, True)
+        # test that if this call is sucessfull, we keep going
+        _echonest_processor._echonest_callback(path_iter.next(),
+                                               {'album': u'Album'})
+        self.assertEquals(_echonest_processor._querying_echonest, True)
+        # test that if we get enough errors, we halt again
+        for i in xrange(error_count):
+            http_error = httpclient.UnknownHostError('fake.echonest.host')
+            _echonest_processor._echonest_errback(path_iter.next(),
+                                                  http_error)
+        self.assertEquals(_echonest_processor._querying_echonest, False)
+        mock_add_timeout.assert_called_once_with(
+            timeout, _echonest_processor._restart_after_http_errors,
+            MatchAny())
+
 class DeviceMetadataTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)

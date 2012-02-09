@@ -42,6 +42,7 @@ import os.path
 import sqlite3
 
 from miro import app
+from miro import clock
 from miro import database
 from miro import echonest
 from miro import eventloop
@@ -514,6 +515,13 @@ class _EchonestProcessor(_MetadataProcessor):
     _EchonestProcessor stops calling the codegen processor once a certain
     buffer of codes to be sent to echonest is built up.
     """
+
+    # constants that control pausing after we get a bunch of HTTP errors.
+    # These settings mean that if we get 3 errors in 5 minutes, then we will
+    # pause.
+    PAUSE_AFTER_HTTP_ERROR_COUNT = 3
+    PAUSE_AFTER_HTTP_ERROR_TIMEOUT = 60 * 5
+
     # NOTE: _EchonestProcessor dosen't inherity from _TaskProcessor because it
     # handles it's work using httpclient rather than making tasks and sending
     # them to workerprocess.
@@ -528,6 +536,8 @@ class _EchonestProcessor(_MetadataProcessor):
         self._querying_echonest = False
         self._codegen_info = get_enmfp_executable_info()
         self._metadata_for_path = {}
+        self._http_error_times = collections.deque()
+        self._waiting_from_http_errors = False
 
     def add_path(self, path, current_metadata):
         self._metadata_for_path[path] = current_metadata
@@ -582,19 +592,47 @@ class _EchonestProcessor(_MetadataProcessor):
     def _echonest_errback(self, path, error):
         logging.warn("Error running echonest for %s (%s)" % (path, error))
         self._querying_echonest = False
+        if isinstance(error, net.NetworkError):
+            self._http_error_times.append(clock.clock())
+            if (len(self._http_error_times) >
+                self.PAUSE_AFTER_HTTP_ERROR_COUNT):
+                self._http_error_times.popleft()
         self.emit('task-error', path, error)
         self._process_queue()
 
     def _process_queue(self):
         # process echonest queue
-        if (self._echonest_queue and not self._querying_echonest):
-            self._query_echonest(*self._echonest_queue.pop())
+        if (self._echonest_queue and not self._querying_echonest and
+           not self._waiting_from_http_errors):
+            if not self._should_pause_from_http_errors():
+                self._query_echonest(*self._echonest_queue.pop())
+            else:
+                # we've gotten too many HTTP errors recently and are backing
+                # off sending new requests.  Add a timeout and try again then
+                if not self._waiting_from_http_errors:
+                    name = 'restart echonest queue after http error'
+                    eventloop.add_timeout(self.PAUSE_AFTER_HTTP_ERROR_TIMEOUT,
+                                          self._restart_after_http_errors, name)
+                    self._waiting_from_http_errors = True
 
         # process codegen queue
         if (self._codegen_queue and
             not self._running_codegen and
             len(self._echonest_queue) < self._code_buffer_size):
             self._run_codegen(self._codegen_queue.pop())
+
+    def _should_pause_from_http_errors(self):
+        """Have we seen enough HTTP errors recently that we should pause
+        running the queue?
+        """
+        return ((len(self._http_error_times) ==
+                self.PAUSE_AFTER_HTTP_ERROR_COUNT) and
+                self._http_error_times[0] > clock.clock() -
+                self.PAUSE_AFTER_HTTP_ERROR_TIMEOUT)
+
+    def _restart_after_http_errors(self):
+        self._waiting_from_http_errors = False
+        self._process_queue()
 
     def remove_tasks_for_paths(self, paths):
         path_set = set(paths)
