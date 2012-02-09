@@ -893,8 +893,16 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         self._render_strategy = _StandardRenderStrategy()
 
     def get_image_path(self):
-        return self._render_strategy.get_image_path(self.info,
-                                                    self.get_first_info())
+        image_path = self._render_strategy.get_image_path(
+            self.info, self.get_first_info())
+        # check if we're using one of the default image files and switch to an
+        # album-view-specific default file in that case
+        if image_path == resources.path('images/thumb-default-audio.png'):
+            return resources.path('images/album-view-default-audio.png')
+        elif image_path == resources.path('images/thumb-default-video.png'):
+            return resources.path('images/album-view-default-video.png')
+        else:
+            return image_path
 
     def get_album(self):
         return self._render_strategy.get_album(self.info,
