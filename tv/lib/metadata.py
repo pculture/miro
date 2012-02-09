@@ -49,6 +49,7 @@ from miro import filetags
 from miro import filetypes
 from miro import fileutil
 from miro import messages
+from miro import net
 from miro import prefs
 from miro import signals
 from miro import workerprocess
@@ -80,6 +81,7 @@ class MetadataStatus(database.DDBObject):
     STATUS_NOT_RUN = u'N'
     STATUS_COMPLETE = u'C'
     STATUS_FAILURE = u'F'
+    STATUS_TEMPORARY_FAILURE = u'T'
     STATUS_SKIP = u'S'
 
     _source_name_to_status_column = {
@@ -144,6 +146,11 @@ class MetadataStatus(database.DDBObject):
                           (album,), db_info=db_info)
         return [r[0] for r in rows]
 
+    @classmethod
+    def failed_temporary_view(cls):
+        return cls.make_view('echonest_status=?',
+                             (cls.STATUS_TEMPORARY_FAILURE,))
+
     def setup_restored(self):
         self.db_info.db.cache.set('metadata', self.path, self)
 
@@ -194,6 +201,14 @@ class MetadataStatus(database.DDBObject):
         self._set_current_processor()
         self.signal_change()
 
+    def retry_echonest(self):
+        if self.echonest_status == self.STATUS_TEMPORARY_FAILURE:
+            self.echonest_status = self.STATUS_NOT_RUN
+            self.signal_change()
+        else:
+            logging.warn("MetadataEntry.retry_echonest() called, but "
+                         "echonest_status is %r", self.echonest_status)
+
     def _should_skip_movie_data(self, entry):
         my_ext = os.path.splitext(self.path)[1].lower()
         # we should skip movie data if:
@@ -206,17 +221,26 @@ class MetadataStatus(database.DDBObject):
                 entry.duration is not None and
                 not entry.drm)
 
-    def update_after_error(self, source_name):
-        """Update after we failed to extract some metadata."""
-        self._set_status_column(source_name, self.STATUS_FAILURE)
+    def update_after_error(self, source_name, error):
+        """Update after we failed to extract some metadata.
+
+        Returns the new status column value
+        """
+        if source_name == 'echonest' and isinstance(error, net.NetworkError):
+            new_status = self.STATUS_TEMPORARY_FAILURE
+        else:
+            new_status = self.STATUS_FAILURE
+        self._set_status_column(source_name, new_status)
         if (source_name == u'movie-data' and
             self.mutagen_status == self.STATUS_FAILURE):
             # If both mutagen and moviedata couldn't read the file, don't
             # bother sending it to the ENMFP.  If we can't get the code, then
             # we have to skip echonest.
             self.echonest_status = self.STATUS_SKIP
-        self._set_current_processor()
+        if new_status != self.STATUS_TEMPORARY_FAILURE:
+            self._set_current_processor()
         self.signal_change()
+        return new_status
 
     def _set_current_processor(self):
         """Calculate and set the current_processor attribute """
@@ -317,6 +341,7 @@ class MetadataEntry(database.DDBObject):
                              (status.id,),
                              order_by='priority ASC',
                              db_info=db_info)
+
     @classmethod
     def get_entry(cls, source, status, db_info=None):
         view = cls.make_view('source=? AND status_id=?',
@@ -354,8 +379,8 @@ class _MetadataProcessor(signals.SignalEmitter):
 
     Signals:
 
-    - task-complete(path, results) -- we successfully extracted metadata
-    - task-error(path) -- we failed to extract metadata
+    - task-complete(path, result) -- we successfully extracted metadata
+    - task-error(path, error) -- we failed to extract metadata
     """
     def __init__(self, source_name):
         signals.SignalEmitter.__init__(self)
@@ -430,7 +455,7 @@ class _TaskProcessor(_MetadataProcessor):
     def _errback(self, task, error):
         logging.warn("Error running %s for %r: %s", task, task.source_path,
                      error)
-        self.emit('task-error', task.source_path)
+        self.emit('task-error', task.source_path, error)
         self.remove_task_for_path(task.source_path)
 
 class _EchonestQueue(object):
@@ -535,7 +560,7 @@ class _EchonestProcessor(_MetadataProcessor):
     def _codegen_errback(self, path, error):
         logging.warn("Error running echonest codegen for %s (%s)" %
                      (path, error))
-        self.emit('task-error', path)
+        self.emit('task-error', path, error)
         self._running_codegen = False
         del self._metadata_for_path[path]
         self._process_queue()
@@ -557,7 +582,7 @@ class _EchonestProcessor(_MetadataProcessor):
     def _echonest_errback(self, path, error):
         logging.warn("Error running echonest for %s (%s)" % (path, error))
         self._querying_echonest = False
-        self.emit('task-error', path)
+        self.emit('task-error', path, error)
         self._process_queue()
 
     def _process_queue(self):
@@ -887,6 +912,7 @@ class MetadataManagerBase(signals.SignalEmitter):
         self.metadata_errors = []
         self._reset_new_metadata()
         self._update_scheduled = False
+        self._retry_temporary_failures_scheduled = False
         self._calc_incomplete()
         self._setup_path_placeholders()
 
@@ -1226,6 +1252,22 @@ class MetadataManagerBase(signals.SignalEmitter):
         del self.restart_ids
         self._schedule_update()
 
+    def schedule_retry_temporary_failures(self):
+        if not self._retry_temporary_failures_scheduled:
+            eventloop.add_timeout(3600, self.retry_temporary_failures,
+                                  'retry metadata temporory failures')
+            self._retry_temporary_failures_scheduled = True
+
+    def retry_temporary_failures(self):
+        self._retry_temporary_failures_scheduled = False
+        app.bulk_sql_manager.start()
+        try:
+            for status in MetadataStatus.failed_temporary_view():
+                status.retry_echonest()
+                self.run_next_processor(status)
+        finally:
+            app.bulk_sql_manager.finish()
+
     def _get_status_for_path(self, path):
         """Get a MetadataStatus object for a given path."""
         try:
@@ -1280,9 +1322,9 @@ class MetadataManagerBase(signals.SignalEmitter):
         self.metadata_finished.append((processor, path, result))
         self._schedule_update()
 
-    def _on_task_error(self, processor, path):
+    def _on_task_error(self, processor, path, error):
         path = self._untranslate_path(path)
-        self.metadata_errors.append((processor, path))
+        self.metadata_errors.append((processor, path, error))
         self._schedule_update()
 
     def _get_metadata_from_filename(self, path):
@@ -1374,21 +1416,25 @@ class MetadataManagerBase(signals.SignalEmitter):
                 self.new_metadata[path]['cover_art_path'] = cover_art_path
 
     def _process_metadata_errors(self):
-        for (processor, path) in self.metadata_errors:
+        for (processor, path, error) in self.metadata_errors:
             try:
                 status = MetadataStatus.get_by_path(path, self.db_info)
             except database.ObjectNotFoundError:
                 logging.warn("_process_metadata_finished -- path removed: %s",
                              path)
                 continue
-            status.update_after_error(processor.source_name)
-            self.run_next_processor(status)
+            processor_status = status.update_after_error(
+                processor.source_name, error)
+            if processor_status != status.STATUS_TEMPORARY_FAILURE:
+                self.run_next_processor(status)
             if status.current_processor == u'echonest':
                 self.count_tracker.file_finished_local_processing(status.path)
             # we only have new metadata if the error means we can set the
             # has_drm flag now
             if processor is self.moviedata_processor and status.get_has_drm():
                 self.new_metadata[path].update({'has_drm': True})
+            if processor_status == status.STATUS_TEMPORARY_FAILURE:
+                self.schedule_retry_temporary_failures()
         self.metadata_errors = []
 
     def run_next_processor(self, status):

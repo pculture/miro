@@ -9,7 +9,7 @@ import string
 import json
 
 from miro.test import mock
-from miro.test.framework import MiroTestCase, EventLoopTest
+from miro.test.framework import MiroTestCase, EventLoopTest, MatchAny
 from miro import app
 from miro import devices
 from miro import echonest
@@ -138,6 +138,8 @@ class MockMetadataProcessor(object):
 
     def run_echonest_errback(self, source_path, error):
         callback, errback = self.pop_task_data(source_path, 'echonest')
+        # remove the echonest query code in case we retry it
+        del self.query_echonest_codes[source_path]
         errback(source_path, error)
 
 class MetadataManagerTest(MiroTestCase):
@@ -296,6 +298,11 @@ class MetadataManagerTest(MiroTestCase):
         self.assertSameSet(correct_paths,
                            self.processor.echonest_codegen_paths())
 
+    def check_queued_echonest_calls(self, filenames):
+        correct_paths = ['/videos/' + f for f in filenames]
+        self.assertSameSet(correct_paths,
+                           self.processor.echonest_paths())
+
     def get_metadata(self, filename):
         path = self.make_path(filename)
         return self.metadata_manager.get_metadata(path)
@@ -400,9 +407,12 @@ class MetadataManagerTest(MiroTestCase):
         self.processor.run_echonest_callback(path, echonest_data)
         self.check_metadata(path)
 
-    def check_echonest_error(self, filename):
+    def check_echonest_error(self, filename, http_error=False):
         path = self.make_path(filename)
-        error = IOError()
+        if http_error:
+            error = httpclient.UnknownHostError('fake.echonest.host')
+        else:
+            error = IOError()
         self.processor.run_echonest_errback(path, error)
         self.check_metadata(path)
 
@@ -539,6 +549,36 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
         self.check_movie_data_not_scheduled('foo.mp3')
         self.check_echonest_error('foo.mp3')
+
+    def test_echonest_http_error(self):
+        # Test echonest failing
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights')
+        self.check_movie_data_not_scheduled('foo.mp3')
+        # If echonest sees an HTTP error, it should log it an a temporary
+        # failure
+        mock_schedule_retry_temp_failures = mock.Mock()
+        patcher = mock.patch.object(self.metadata_manager,
+                                    'schedule_retry_temporary_failures',
+                                    mock_schedule_retry_temp_failures)
+        with patcher:
+            self.check_echonest_error('foo.mp3', http_error=True)
+        path = self.make_path('foo.mp3')
+        status = metadata.MetadataStatus.get_by_path(path)
+        self.assertEquals(status.echonest_status,
+                          status.STATUS_TEMPORARY_FAILURE)
+        # check that we scheduled an attempt to retry the request
+        mock_schedule_retry_temp_failures.assert_called_once_with()
+        # check that success after retrying
+        self.metadata_manager._retry_temporary_failures_scheduled = True
+        self.metadata_manager.retry_temporary_failures()
+        status = metadata.MetadataStatus.get_by_path(path)
+        self.assertEquals(status.echonest_status,
+                          status.STATUS_NOT_RUN)
+        self.assertEquals(
+            self.metadata_manager._retry_temporary_failures_scheduled,
+            False)
+        self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
 
     def test_audio_shares_cover_art(self):
         # Test that if one audio file in an album has cover art, they all will
@@ -683,7 +723,7 @@ class MetadataManagerTest(MiroTestCase):
         ])
 
     def test_restart_incomplete(self):
-        # Test restarting incomplete 
+        # test restarting incomplete 
         self.check_add_file('foo.avi')
         self.check_run_mutagen('foo.avi', 'video', 100, 'Foo')
         self.check_add_file('bar.avi')
@@ -721,6 +761,17 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_echonest_codegen('baz.mp3')
         self.check_run_echonest('baz.mp3', 'Foo')
         self.check_queued_echonest_codegen_calls(['bar.avi'])
+
+    def test_restart_incomplete_restarts_http_errors(self):
+        # test restarting incomplete 
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 100, 'Foo')
+        self.check_echonest_error('foo.mp3', http_error=True)
+        self.processor.reset()
+        self.metadata_manager = metadata.LibraryMetadataManager(self.tempdir,
+                                                                self.tempdir)
+        self.metadata_manager.restart_incomplete()
+        self.check_queued_echonest_calls(['foo.mp3'])
 
     def check_path_in_system(self, filename, correct_value):
         path = self.make_path(filename)
