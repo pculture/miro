@@ -1839,3 +1839,7 @@ class MetadataProgressUpdate(FrontendMessage):
         self.finished_local = finished_local
         self.eta = eta
         self.total = total
+
+class FinishedRemovingAllNetLookup(FrontendMessage):
+    """Sent after the backend has removed all net lookup data."""
+    pass

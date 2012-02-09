@@ -1194,6 +1194,8 @@ class MetadataManagerBase(signals.SignalEmitter):
         paths = [r[0] for r in
                  MetadataStatus.select(['path'], db_info=self.db_info)]
         self.set_net_lookup_enabled(paths, enabled)
+        if not enabled:
+            messages.FinishedRemovingAllNetLookup().send_to_frontend()
 
     def _calc_incomplete(self):
         """Figure out which metadata status objects we should restart.
