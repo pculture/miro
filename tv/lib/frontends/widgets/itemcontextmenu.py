@@ -132,8 +132,9 @@ class ItemContextMenuHandler(object):
                 convert_menu = self._make_convert_menu()
                 section.append((_('Convert to...'), convert_menu))
 
-            section.append((_('Set media kind as...'),
-              self._make_edit_metadata_menu()))
+            if not (item.device or item.remote):
+                section.append((_('Set media kind as...'),
+                                self._make_edit_metadata_menu()))
 
             if section:
                 menu_sections.append(section)
