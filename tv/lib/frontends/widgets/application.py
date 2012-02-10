@@ -1809,3 +1809,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.tabs.update_metadata_progress(
             message.target, message.finished_local, message.eta,
             message.total)
+
+    def handle_finished_removing_all_net_lookup(self, message):
+        title = _("Online lookup data removed")
+        description = _("All song info from online lookup has been removed")
+        dialogs.show_message(title, description)
