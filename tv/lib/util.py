@@ -1050,7 +1050,7 @@ def name_sort_key(text):
         text = text[2:] + ', a'
     elif text.startswith("the "):
         text = text[4:] + ', the'
-    return [_trynum(c) for c in NUM_RE.split(text)]
+    return tuple(_trynum(c) for c in NUM_RE.split(text))
 
 LOWER_TRANSLATE = string.maketrans(string.ascii_uppercase,
                                    string.ascii_lowercase)
