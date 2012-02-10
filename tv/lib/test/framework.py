@@ -328,6 +328,8 @@ class MiroTestCase(unittest.TestCase):
             patcher.stop()
         # shutdown workerprocess if we started it for some reason.
         workerprocess.shutdown()
+        workerprocess._subprocess_manager = \
+                workerprocess.WorkerSubprocessManager()
         workerprocess._miro_task_queue.reset()
         self.reset_log_filter()
         signals.system.disconnect_all()
