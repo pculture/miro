@@ -1912,7 +1912,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def update_from_feed_parser_values(self, fp_values):
         fp_values.update_item(self)
-        self.icon_cache.request_update()
+        if self.icon_cache.filename is None:
+            self.icon_cache.request_update()
         self.signal_change()
 
     def on_download_finished(self):
