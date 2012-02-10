@@ -113,7 +113,29 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def _on_settings(self, widget):
         prefpanel.show_window("downloads")
 
-    def on_items_changed(self):
+    def handle_item_list_changes(self):
+        itemlistcontroller.ItemListController.handle_item_list_changes(self)
+        self.update_rates()
+        self.update_buttons()
+
+    def update_rates(self):
         self.status_toolbar.update_rates(
             app.download_state_manager.total_down_rate,
             app.download_state_manager.total_up_rate)
+
+    def update_buttons(self):
+        items = self.item_list.get_items()
+        if len(items) == 0:
+            self.titlebar.set_button_enabled("resume", False)
+            self.titlebar.set_button_enabled("pause", False)
+            self.titlebar.set_button_enabled("cancel", False)
+        else:
+            all_paused = all_downloading = True
+            for item in items:
+                if item.state == 'paused':
+                    all_downloading = False
+                else:
+                    all_paused = False
+            self.titlebar.set_button_enabled("resume", not all_downloading)
+            self.titlebar.set_button_enabled("pause", not all_paused)
+            self.titlebar.set_button_enabled("cancel", True)
