@@ -41,7 +41,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat import resources
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro import gtcache
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 

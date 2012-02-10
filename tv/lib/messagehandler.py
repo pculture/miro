@@ -57,7 +57,7 @@ from miro import tabs
 from miro import opml
 from miro.widgetstate import DisplayState, ViewState, GlobalState
 from miro.feed import Feed, lookup_feed
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.playlist import SavedPlaylist
 from miro.folder import HideableTab, FolderBase, ChannelFolder, PlaylistFolder
 

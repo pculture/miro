@@ -42,7 +42,7 @@ This module defines the messages that are passed between the two threads.
 import copy
 import logging
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.messagetools import Message, MessageHandler
 from miro.plat import resources
 from miro import app

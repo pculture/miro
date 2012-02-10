@@ -36,7 +36,7 @@ from miro import util
 from miro import messages
 from miro import filetypes
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.gtcache import ngettext
 # from miro.fileobject import FilenameType
 from miro.frontends.widgets import widgetutil

@@ -49,7 +49,7 @@ from miro import prefs
 from miro import displaytext
 from miro import util
 from miro import eventloop
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemfilter
 from miro.frontends.widgets import style

@@ -16,7 +16,7 @@ from miro.plat import resources
 from miro.test import mock
 from miro.test.framework import EventLoopTest, uses_httpclient
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 
 TEST_PATH = 'test.txt'
 

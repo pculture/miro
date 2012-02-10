@@ -33,7 +33,7 @@ frontend.
 
 from collections import defaultdict
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 
 # Control sizes
 SIZE_NORMAL = -1

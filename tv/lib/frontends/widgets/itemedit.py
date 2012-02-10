@@ -34,7 +34,7 @@ import logging
 import os
 
 from miro import displaytext
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.gtcache import ngettext
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset

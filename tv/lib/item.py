@@ -40,7 +40,7 @@ import re
 import shutil
 import time
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)

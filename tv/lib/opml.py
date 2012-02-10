@@ -45,7 +45,7 @@ from miro import dialogs
 from miro import eventloop
 from miro import tabs
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.gtcache import ngettext
 from miro.plat.utils import filename_to_unicode
 

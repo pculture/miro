@@ -389,7 +389,7 @@ def format_size_for_user(nbytes, zero_string="", with_decimals=True,
 
     zero_string is the string to use if bytes == 0.
     """
-    from miro.gtcache import gettext as _
+    from miro.gtcache import gettext_lazy as _
     if nbytes > (1 << 30) and not kb_only:
         value = (nbytes / (1024.0 * 1024.0 * 1024.0))
         if with_decimals:

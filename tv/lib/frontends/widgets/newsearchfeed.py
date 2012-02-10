@@ -31,7 +31,7 @@
 code for the New Search Podcast dialog.
 """
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro import searchengines
 
 from miro.plat.frontends.widgets import widgetset

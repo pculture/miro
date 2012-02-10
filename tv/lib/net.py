@@ -48,7 +48,7 @@ from miro import prefs
 from miro import signals
 from miro import trapcall
 from miro.clock import clock
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 
 SOCKET_READ_TIMEOUT = 60
 SOCKET_INITIAL_READ_TIMEOUT = 30

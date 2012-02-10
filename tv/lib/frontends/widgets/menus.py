@@ -50,7 +50,7 @@ from miro.plat.frontends.widgets import widgetset
 # import menu widgets into our namespace for easy access
 from miro.plat.frontends.widgets.widgetset import (Separator, Menu,
                                                    RadioMenuItem, CheckMenuItem)
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.plat import utils
 
 class MenuItem(widgetset.MenuItem):

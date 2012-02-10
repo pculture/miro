@@ -33,7 +33,7 @@ import random
 import logging
 import time
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
 from miro.download_utils import (next_free_filename, get_file_url_path,

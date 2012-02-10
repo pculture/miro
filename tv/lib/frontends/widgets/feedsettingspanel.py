@@ -39,7 +39,7 @@ from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
 from miro.dialogs import BUTTON_DONE
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import separator
 from miro.frontends.widgets.dialogs import MainDialog

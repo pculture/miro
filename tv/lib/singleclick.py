@@ -31,7 +31,7 @@
 torrent downloading.
 """
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 import logging
 import urlparse
 import os.path

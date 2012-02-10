@@ -64,7 +64,7 @@ from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, get_logical_cpu_count
 from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro import gtcache
 
 # Note: we do an additional import from prefpanelset half way down the file.

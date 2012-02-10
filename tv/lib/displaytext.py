@@ -33,7 +33,7 @@
 import datetime
 
 from miro import gtcache
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.gtcache import ngettext
 
 LOCALE_HAS_UNIT_CONVERSIONS = True

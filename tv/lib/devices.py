@@ -61,7 +61,7 @@ from miro import filetypes
 from miro import metadata
 from miro import prefs
 from miro import playlist
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro import messages
 from miro import schema
 from miro import signals

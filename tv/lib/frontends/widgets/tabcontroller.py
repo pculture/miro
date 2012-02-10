@@ -36,7 +36,7 @@ from miro import app
 from miro import prefs
 from miro import messages
 
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import prefpanel

@@ -40,7 +40,7 @@ difference is that all of the dialogs run modally.
 """
 
 from miro import app
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.dialogs import (

@@ -48,7 +48,7 @@ from miro.errors import (WidgetActionError, WidgetRangeError,
 from miro import messages
 from miro import prefs
 from miro import subscription
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist

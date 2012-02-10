@@ -37,7 +37,7 @@ except ImportError:
 
 from miro import app
 from miro import displaytext
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.gtcache import ngettext
 from miro import messages
 
