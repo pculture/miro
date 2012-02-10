@@ -1295,13 +1295,21 @@ class DownloadTitlebar(ItemListTitlebar):
 
     def set_small_width_mode(self, enabled):
         if enabled:
-            labels = [ _('All'), _('All'), _('All'), _('Settings')]
+            labels = {
+                'pause': _('All'),
+                'resume': _('All'),
+                'cancel': _('All'),
+                'settings': _('Settings'),
+            }
         else:
-            labels = [ _('Pause All'), _('Resume All'), _('Cancel All'),
-                    _('Download Settings')]
-
-        for button, label in zip(self.buttons, labels):
-            button.set_title(label)
+            labels = {
+                'pause': _('Pause All'),
+                'resume': _('Resume All'),
+                'cancel': _('Cancel All'),
+                'settings': _('Download Settings'),
+            }
+            for key, title in labels.items():
+                self.buttons[key].set_title(title)
         ItemListTitlebar.set_small_width_mode(self, enabled)
 
     def _build_before_filters(self):
@@ -1331,9 +1339,25 @@ class DownloadTitlebar(ItemListTitlebar):
         h.pack_start(widgetutil.align_middle(settings_button, top_pad=5,
             bottom_pad=5, right_pad=16))
 
-        self.buttons = [pause_button, resume_button, cancel_button,
-                settings_button]
+        self.buttons = {
+            'pause': pause_button,
+            'resume': resume_button,
+            'cancel': cancel_button,
+            'settings': settings_button,
+        }
         return h
+
+    def set_button_enabled(self, name, enabled):
+        """Enable/Disable a button
+
+        :param name: "pause", "resume", "cancel", or "settings"
+        :param enabled: should the button be enabled?
+        """
+        button = self.buttons[name]
+        if enabled:
+            button.enable()
+        else:
+            button.disable()
 
     def _on_pause_button_clicked(self, widget):
         self.emit('pause-all')
