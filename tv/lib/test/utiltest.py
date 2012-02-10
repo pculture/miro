@@ -813,14 +813,24 @@ class TestCopySubtitleFile(unittest.TestCase):
 class TestNameSortKey(unittest.TestCase):
     def test_simple(self):
         for testcase in ((None, 'ZZZZZZZZZZZZZ'),
-                         (u'', [u'']),
-                         (u'a', [u'a']),
-                         (u'a1a', [u'a', 1.0, u'a']),
-                         (u'Episode_100', [u'episode_', 100.0, u'']),
-                         (u'episode_1', [u'episode_', 1.0, u''])
+                         (u'', (u'',)),
+                         (u'a', (u'a',)),
+                         (u'a1a', (u'a', 1.0, u'a')),
+                         (u'Episode_100', (u'episode_', 100.0, u'')),
+                         (u'episode_1', (u'episode_', 1.0, u''))
                          ):
             self.assertEquals(util.name_sort_key(testcase[0]),
                               testcase[1])
+
+    def test_hashable(self):
+        for testcase in (None,
+                         u'',
+                         u'a',
+                         u'a1a',
+                         u'Episode_100',
+                         u'episode_1',
+                         ):
+            hash(util.name_sort_key(testcase))
 
     def test_sorting(self):
         for inlist, outlist in (
