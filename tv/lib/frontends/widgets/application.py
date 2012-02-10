@@ -163,8 +163,11 @@ class Application:
         self.setup_globals()
         self.ui_initialized = True
 
-        self.window = MiroWindow(app.config.get(prefs.LONG_APP_NAME),
-                                 self.get_main_window_dimensions())
+        title = app.config.get(prefs.LONG_APP_NAME)
+        if app.debugmode:
+            title += ' (%s - %s)' % (app.config.get(prefs.APP_VERSION),
+                                     app.config.get(prefs.APP_REVISION_NUM))
+        self.window = MiroWindow(title, self.get_main_window_dimensions())
         self.window.connect_weak('key-press', self.on_key_press)
         self.window.connect_weak('on-shown', self.on_shown)
         self._window_show_callback = self.window.connect_weak('show',
