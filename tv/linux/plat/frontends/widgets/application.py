@@ -387,7 +387,9 @@ class LinuxApplication(Application):
             return
 
         notification = pynotify.Notification(title, body)
-        if attach_trayicon and app.config.get(options.SHOW_TRAYICON):
+        if (hasattr(notification, 'attach_to_status_icon') and
+            attach_trayicon and
+            app.config.get(options.SHOW_TRAYICON)):
             notification.attach_to_status_icon(self.trayicon)
         if timeout:
             notification.set_timeout(timeout)
