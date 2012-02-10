@@ -134,13 +134,17 @@ def _do_import(cursor, json_db, mount):
             current_processor = u'movie-data'
         else:
             current_processor = None
+        if file_type == u'audio':
+            echonest_status = 'P' # STATUS_SKIP_FROM_PREF
+        else:
+            echonest_status = 'S' # STATUS_SKIP
         sql = ("INSERT INTO metadata_status "
                "(id, path, current_processor, mutagen_status, "
                "moviedata_status, echonest_status, net_lookup_enabled, "
                "mutagen_thinks_drm, max_entry_priority) "
                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
         cursor.execute(sql, (next_id, path, current_processor, 'S',
-                             moviedata_status, 'N', False, has_drm,
+                             moviedata_status, echonest_status, False, has_drm,
                              OLD_ITEM_PRIORITY))
         status_id = next_id
         next_id += 1
