@@ -148,10 +148,26 @@ class gettext_lazy(object):
     def __repr__(self):
         return repr(unicode(self))
 
+    def __nonzero__(self):
+        return bool(self.text)
+
+    def __len__(self):
+        return len(unicode(self))
+
+    def __iter__(self):
+        return iter(unicode(self))
+
     def __eq__(self, other):
-        if isinstance(other, basestring):
-            return unicode(self) == unicode(other)
-        return NotImplemented
+        return unicode(self) == other
+
+    def __ne__(self, other):
+        return unicode(self) != other
+
+    def __hash__(self):
+        return hash(unicode(self))
+
+    def __getattr__(self, attr):
+        return getattr(unicode(self), attr)
 
 
 def gettext(text, values=None):

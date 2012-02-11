@@ -1053,6 +1053,5 @@ class NetworkErrorTest(HTTPClientTestBase):
         self.check_errback_called()
         self.assert_(isinstance(self.grab_url_error,
             httpclient.NetworkError))
-        self.assert_(isinstance(self.grab_url_error.longDescription, unicode))
-        self.assert_(isinstance(self.grab_url_error.friendlyDescription,
-            unicode))
+        self.assert_(unicode(self.grab_url_error.longDescription))
+        self.assert_(unicode(self.grab_url_error.friendlyDescription))

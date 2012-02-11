@@ -495,6 +495,9 @@ class MiroUnicodeError(StandardError):
 def check_u(text):
     """Raises an exception if input isn't unicode
     """
+    from miro.gtcache import gettext_lazy
+    if isinstance(text, gettext_lazy):
+        text = unicode(text)
     if text is not None and not isinstance(text, unicode):
         raise MiroUnicodeError(u"text %r is not a unicode string (type:%s)" %
                                (text, type(text)))
