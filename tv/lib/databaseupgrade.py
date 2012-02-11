@@ -3732,3 +3732,20 @@ def upgrade173(cursor):
 
     cursor.execute("UPDATE metadata_status SET net_lookup_enabled=0 "
                    "WHERE net_lookup_enabled IS NULL")
+
+def upgrade174(cursor):
+    """Set some echonest_status to STATUS_SKIP_FROM_PREF instead of skipped."""
+
+    # for audio files, echonest_status should be STATUS_SKIP_FROM_PREF so that
+    # if the user enables echonest for that file it will run.  We keep
+    # video/other items as STATUS_SKIP, so that echonest will never run.
+    cursor.execute("UPDATE metadata_status SET echonest_status='P' "
+                   "WHERE id IN "
+                      "(SELECT status_id FROM metadata "
+                      "WHERE source = "
+                          "(SELECT source FROM metadata "
+                          "WHERE status_id=status_id AND "
+                          "file_type IS NOT NULL "
+                          "ORDER BY priority DESC LIMIT 1) AND "
+                      "file_type = 'audio')")
+
