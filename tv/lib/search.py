@@ -97,7 +97,7 @@ class BooleanSearch:
         return self.string
 
 def _calc_search_text(item_info):
-    match_against = [unicode(item_info.name), unicode(item_info.description)]
+    match_against = [item_info.name, item_info.description]
     if item_info.artist is not None:
         match_against.append(item_info.artist)
     if item_info.album is not None:
