@@ -279,11 +279,12 @@ def get_app_menu():
                 MenuItem(_("Clog Backend"), "ClogBackend"),
                 MenuItem(_("Run Echoprint"), "RunEchoprint"),
                 MenuItem(_("Run ENMFP"), "RunENMFP"),
-                MenuItem(_("Run Donate Popup"), "RunDonatePopup"),
                 MenuItem(_("Force Main DB Save Error"),
                          "ForceMainDBSaveError"),
                 MenuItem(_("Force Device DB Save Error"),
                          "ForceDeviceDBSaveError"),
+                MenuItem(_("Run Donate Manager PowerToys"),
+                         "RunDonateManagerPowerToys")
                 ])
         )
     return all_menus
@@ -608,9 +609,9 @@ def on_run_enmfp():
     subprocess.call([enmfp_info['path']], env=enmfp_info.get('env'))
     print '-' * 50
 
-@action_handler("RunDonatePopup")
-def on_run_donate_poupup():
-    app.widgetapp.show_donate_popup()
+@action_handler("RunDonateManagerPowerToys")
+def on_run_donate_manager_powertoys():
+    app.donate_manager.run_powertoys()
 
 @action_handler("ForceMainDBSaveError")
 def on_force_device_db_save_error():

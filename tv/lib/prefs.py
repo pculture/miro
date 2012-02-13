@@ -62,6 +62,14 @@ class Pref:
         return self.key != other.key
 
 # These are normal user preferences.
+DONATE_PAYMENT_URL          = Pref(key='donatePaymentURL',      default='https://www.stayclassy.org/checkout/donation?cid=7214', platformSpecific=False)
+DONATE_URL_TEMPLATE         = Pref(key='donateURLTemplate',     default='http://getmiro.com/give/m%s/', platformSpecific=False)
+DONATE_ASK1                 = Pref(key='donateAsk1',            default=10,    platformSpecific=False)
+DONATE_ASK2                 = Pref(key='donateAsk2',            default=50,    platformSpecific=False)
+DONATE_ASK3                 = Pref(key='donateAsk3',            default=100,   platformSpecific=False)
+DONATE_NOTHANKS             = Pref(key='donateNoThanks',        default=0,     platformSpecific=False)
+LAST_DONATE_TIME            = Pref(key='lastDonateTime',        default=0,     platformSpecific=False)
+DONATE_COUNTER              = Pref(key='donateCounter',         default=10,    platformSpecific=False)
 MAIN_WINDOW_FRAME           = Pref(key='mainWindowFrame',       default=None,  platformSpecific=False)
 LEFT_VIEW_SIZE              = Pref(key='leftViewSize',          default=None,  platformSpecific=False)
 RIGHT_VIEW_SIZE             = Pref(key='rightViewSize',         default=None,  platformSpecific=False)
