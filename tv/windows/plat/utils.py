@@ -43,7 +43,7 @@ import sqlite3
 
 from miro import app
 from miro import prefs
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.importmedia import import_itunes_path
 from miro.plat import config as plat_config
 from miro.plat import prelogger
