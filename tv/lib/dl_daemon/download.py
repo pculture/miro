@@ -1111,7 +1111,12 @@ class BTDownloader(BGDownloader):
             # disadvantage of extra disk i/o because of pieces are moved
             # on the fly rather than being placed into its logical location
             # within the file but makes everything else usable again.
-            params["storage_mode"] = lt.storage_mode_t.storage_mode_compact
+            if self.magnet:
+                # unfortunately, compact allocation doesn't work for Magnet
+                # links, so we revert to the allocate mode
+                params["storage_mode"] = lt.storage_mode_t.storage_mode_allocate
+            else:
+                params["storage_mode"] = lt.storage_mode_t.storage_mode_compact
 
             if self.info_hash:
                 self.fast_resume_data = load_fast_resume_data(self.info_hash)
