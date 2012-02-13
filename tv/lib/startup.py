@@ -57,6 +57,7 @@ from miro import databaselog
 from miro import databaseupgrade
 from miro import dbupgradeprogress
 from miro import dialogs
+from miro import donate
 from miro import downloader
 from miro import eventloop
 from miro import fileutil
@@ -327,6 +328,8 @@ def finish_startup(obj, thread):
     app.sharing_tracker = sharing.SharingTracker()
     app.sharing_manager = sharing.SharingManager()
     app.transcode_manager = transcode.TranscodeManager()
+
+    app.donate_manager = donate.DonateManager()
 
     eventloop.add_urgent_call(check_firsttime, "check first time")
 

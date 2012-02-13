@@ -39,6 +39,9 @@ controller = None
 # list of active renderers
 renderers = []
 
+# donation manager singleton object
+donate_manager = None
+
 # database object
 db = None
 
