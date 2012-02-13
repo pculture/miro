@@ -49,7 +49,7 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 
 class BrowserLoadingImage(widgetset.HBox):
 

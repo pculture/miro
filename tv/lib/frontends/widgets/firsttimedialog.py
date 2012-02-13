@@ -40,7 +40,7 @@ from miro.plat.frontends.widgets import threads
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets import dialogs
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import gtcache
 from miro.plat.utils import (filename_to_unicode,

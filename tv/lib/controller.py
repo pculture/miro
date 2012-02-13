@@ -43,7 +43,7 @@ from miro import app
 from miro import crashreport
 from miro import downloader
 from miro import eventloop
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro import httpauth
 from miro import httpclient
 from miro import iconcache

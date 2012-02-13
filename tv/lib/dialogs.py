@@ -81,7 +81,7 @@ import threading
 from miro import eventloop
 from miro import signals
 from miro import util
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 
 class DialogButton(object):
     def __init__(self, text):

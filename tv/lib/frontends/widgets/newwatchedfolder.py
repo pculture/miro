@@ -36,7 +36,7 @@ import os
 
 from miro import app
 from miro import prefs
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog, ask_for_directory
 from miro.dialogs import BUTTON_CANCEL, BUTTON_ADD_FOLDER

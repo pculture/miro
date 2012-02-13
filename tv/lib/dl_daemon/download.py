@@ -38,7 +38,7 @@ import logging
 import tempfile
 import base64
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 
 import libtorrent as lt
 from miro.clock import clock

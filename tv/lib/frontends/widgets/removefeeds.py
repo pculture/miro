@@ -38,7 +38,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_CANCEL, BUTTON_REMOVE
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 
 KEEP_ITEMS = "keep_items"

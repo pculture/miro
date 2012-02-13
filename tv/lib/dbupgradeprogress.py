@@ -31,7 +31,7 @@
 database.
 """
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro import messages
 
 _doing_20_upgrade = False

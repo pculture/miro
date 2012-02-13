@@ -77,7 +77,7 @@ from miro import messages
 from miro import schema
 from miro import prefs
 from miro import util
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType, filename_to_unicode
 
 class UpgradeError(Exception):

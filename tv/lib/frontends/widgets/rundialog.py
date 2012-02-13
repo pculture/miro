@@ -30,7 +30,7 @@
 """Run dialogs from the backend thread."""
 
 from miro import dialogs
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
 from miro.plat.frontends.widgets import widgetset

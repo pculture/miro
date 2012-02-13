@@ -125,9 +125,6 @@ class SchemaString(SchemaSimpleItem):
     """Defines the SchemaString type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
-        from miro.gtcache import gettext_lazy
-        if isinstance(data, gettext_lazy):
-            data = unicode(data)
         self.validateType(data, unicode)
 
 class SchemaBinary(SchemaSimpleItem):

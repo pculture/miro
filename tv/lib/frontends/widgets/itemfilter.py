@@ -40,7 +40,7 @@ are selected for a given item list.
 
 from miro import app
 from miro import util
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 
 class ItemFilter(object):

@@ -41,7 +41,7 @@ import uuid
 from datetime import datetime
 from hashlib import md5
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro import app
 from miro import eventloop
 from miro import messages

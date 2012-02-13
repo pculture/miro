@@ -36,7 +36,7 @@ from miro import signals
 from miro import displaytext
 from miro import prefs
 from miro import util
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil

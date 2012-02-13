@@ -37,7 +37,7 @@ Add new items to the ITEMS variable.
 import os
 import stat
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil

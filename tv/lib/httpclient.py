@@ -54,7 +54,7 @@ from miro import net
 from miro import prefs
 from miro import signals
 from miro import util
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.xhtmltools import url_encode_dict, multipart_encode
 from miro.plat import utils
 from miro.plat.resources import get_osname

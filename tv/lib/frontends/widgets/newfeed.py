@@ -31,7 +31,7 @@
 code for adding a new feed.
 """
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.dialogs import MainDialog

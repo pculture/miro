@@ -44,7 +44,7 @@ from miro import prefs
 from miro import signals
 from miro import messages
 from miro import errors
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import keyboard

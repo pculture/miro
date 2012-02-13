@@ -31,7 +31,7 @@
 
 from miro import app
 from miro import feed
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro import filetypes
 from miro import messages
 from miro.frontends.widgets import dialogs

@@ -35,7 +35,7 @@ from miro import app
 from miro import displaytext
 from miro import messages
 from miro import prefs
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat.frontends.widgets import file_navigator_name
 from miro.conversions import conversion_manager

@@ -43,7 +43,7 @@ GST_PLAY_FLAG_TEXT = (1 << 2)
 from miro import app
 from miro import prefs
 from miro import util
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.plat import options
 from miro import iso639
 

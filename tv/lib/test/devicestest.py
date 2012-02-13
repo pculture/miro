@@ -35,7 +35,7 @@ except ImportError:
 
 import sqlite3
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType
 from miro.test.framework import MiroTestCase
 from miro.test import mock
@@ -60,7 +60,7 @@ class DeviceManagerTest(MiroTestCase):
     def test_parsing(self):
         self.build_config_file(
             "foo.py",
-            """from miro.gtcache import gettext_lazy as _
+            """from miro.gtcache import gettext as _
 from miro.devices import DeviceInfo, MultipleDeviceInfo
 defaults = {
     "audio_conversion": "mp3",

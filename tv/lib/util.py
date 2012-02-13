@@ -389,7 +389,7 @@ def format_size_for_user(nbytes, zero_string="", with_decimals=True,
 
     zero_string is the string to use if bytes == 0.
     """
-    from miro.gtcache import gettext_lazy as _
+    from miro.gtcache import gettext as _
     if nbytes > (1 << 30) and not kb_only:
         value = (nbytes / (1024.0 * 1024.0 * 1024.0))
         if with_decimals:
@@ -495,9 +495,6 @@ class MiroUnicodeError(StandardError):
 def check_u(text):
     """Raises an exception if input isn't unicode
     """
-    from miro.gtcache import gettext_lazy
-    if isinstance(text, gettext_lazy):
-        text = unicode(text)
     if text is not None and not isinstance(text, unicode):
         raise MiroUnicodeError(u"text %r is not a unicode string (type:%s)" %
                                (text, type(text)))

@@ -59,7 +59,7 @@ from miro import messages
 from miro import eventloop
 from miro import conversions
 from miro import filetypes
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import donate

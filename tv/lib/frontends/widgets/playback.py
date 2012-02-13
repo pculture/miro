@@ -37,7 +37,7 @@ from miro import signals
 from miro import messages
 from miro import filetypes
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay

@@ -39,7 +39,7 @@ while Miro is already running.  They should arrange for ``add_video``
 or ``add_torrent`` to be called in the existing Miro process.
 """
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 import time
 
 import os.path

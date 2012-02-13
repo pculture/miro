@@ -42,7 +42,7 @@ from cStringIO import StringIO
 from datetime import datetime, timedelta
 import logging
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.feedparser import FeedParserDict
 from miro.xhtmltools import (unescape, xhtmlify, fix_xml_header,
                              fix_html_header)

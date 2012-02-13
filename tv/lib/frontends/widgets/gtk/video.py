@@ -35,7 +35,7 @@ import gobject
 import gtk
 
 from miro import app
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro import messages
 from miro.plat import resources
 from miro.plat import screensaver

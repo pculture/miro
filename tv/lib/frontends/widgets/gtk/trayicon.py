@@ -34,7 +34,7 @@ import pygtk
 pygtk.require("2.0")
 import gtk
 import gobject
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 
 from miro import app
 from miro import messages

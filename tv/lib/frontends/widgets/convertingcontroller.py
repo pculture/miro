@@ -30,7 +30,7 @@
 from miro import app
 from miro import prefs
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import separator

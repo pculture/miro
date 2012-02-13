@@ -32,7 +32,7 @@
 
 import logging
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro import dialogs
 from miro import database
 from miro import models

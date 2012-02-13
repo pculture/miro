@@ -31,7 +31,7 @@
 """``miro.theme`` -- Holds the ThemeHistory object.
 """
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 import logging
 from miro import app
 from miro import prefs

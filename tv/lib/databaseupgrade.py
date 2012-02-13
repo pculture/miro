@@ -46,7 +46,7 @@ import shutil
 import time
 import urllib
 
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro import schema
 from miro import util
 import types

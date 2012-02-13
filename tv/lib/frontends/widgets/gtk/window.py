@@ -40,7 +40,7 @@ from miro import prefs
 from miro import signals
 from miro import dialogs
 from miro.fileobject import FilenameType
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import gtkmenus
 from miro.frontends.widgets.gtk import keymap
 from miro.frontends.widgets.gtk import layout

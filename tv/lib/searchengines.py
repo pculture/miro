@@ -40,7 +40,7 @@ import os
 from miro import app
 from miro import prefs
 import logging
-from miro.gtcache import gettext_lazy as _
+from miro.gtcache import gettext as _
 
 class IntentionalCrash(Exception):
     pass
