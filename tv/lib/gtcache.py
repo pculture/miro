@@ -134,6 +134,42 @@ def declarify(text):
         return text.split("|")[-1]
     return text
 
+class gettext_lazy(object):
+    def __init__(self, text, values=None):
+        self.text = text
+        self.values = values
+
+    def __unicode__(self):
+        return gettext(self.text, self.values)
+
+    def __str__(self):
+        return str(unicode(self))
+
+    def __repr__(self):
+        return repr(unicode(self))
+
+    def __nonzero__(self):
+        return bool(self.text)
+
+    def __len__(self):
+        return len(unicode(self))
+
+    def __iter__(self):
+        return iter(unicode(self))
+
+    def __eq__(self, other):
+        return unicode(self) == other
+
+    def __ne__(self, other):
+        return unicode(self) != other
+
+    def __hash__(self):
+        return hash(unicode(self))
+
+    def __getattr__(self, attr):
+        return getattr(unicode(self), attr)
+
+
 def gettext(text, values=None):
     """Returns the translated form of the given text.  If values are provided,
     expands the string with the given values.

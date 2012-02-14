@@ -45,6 +45,21 @@ class GettextTest(MiroTestCase):
         logging.getLogger().setLevel(self.oldlevel)
 
     @make_french
+    def test_gettext_lazy(self):
+        ok = gtcache.gettext_lazy("OK")
+        channels = gtcache.gettext_lazy("Channels")
+        self.assertEqual(ok, u'Valider')
+        self.assertEqual(u'%s' % ok, u'Valider')
+        self.assertEqual(channels, u'Cha\xeenes')
+        self.assertEqual(u'%s' % channels, u'Cha\xeenes')
+        gtcache.init(languages=['en'],
+                     localedir=resources.path("testdata/locale"))
+        self.assertEqual(ok, u'OK')
+        self.assertEqual(u'%s' % ok, u'OK')
+        self.assertEqual(channels, u'Channels')
+        self.assertEqual(u'%s' % channels, u'Channels')
+
+    @make_french
     def test_gettext(self):
         self.assertEqual(gtcache.gettext("OK"), u'Valider')
         self.assertEqual(gtcache.gettext("Channels"), u'Cha\xeenes')
