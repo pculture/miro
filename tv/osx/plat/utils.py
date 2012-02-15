@@ -45,7 +45,7 @@ from AppKit import *
 
 from miro import app
 from miro import prefs
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy as _
 from miro.importmedia import import_itunes_path
 from miro.util import returns_unicode, returns_binary, check_u, check_b
 from miro.plat.filenames import (PlatformFilenameType,

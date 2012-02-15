@@ -64,7 +64,7 @@ from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, get_logical_cpu_count
 from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext as _, gettext_lazy
 from miro import gtcache
 
 # Note: we do an additional import from prefpanelset half way down the file.
@@ -1392,20 +1392,25 @@ class ExtensionsPanel(PanelBuilder):
         self.extensions_helper.load()
 
 # Add the initial panels
-add_panel("general", _("General"), GeneralPanel, 'images/pref_tab_general.png')
-add_panel("feeds", _("Podcasts"), PodcastsPanel, 'images/pref_tab_feeds.png')
-add_panel("downloads", _("Downloads"), DownloadsPanel,
+add_panel("general", gettext_lazy("General"), GeneralPanel,
+          'images/pref_tab_general.png')
+add_panel("feeds", gettext_lazy("Podcasts"), PodcastsPanel,
+          'images/pref_tab_feeds.png')
+add_panel("downloads", gettext_lazy("Downloads"), DownloadsPanel,
           'images/pref_tab_downloads.png')
-add_panel("folders", _("Folders"), FoldersPanel, 'images/pref_tab_folders.png')
-add_panel("disk_space", _("Disk space"), DiskSpacePanel,
+add_panel("folders", gettext_lazy("Folders"), FoldersPanel,
+          'images/pref_tab_folders.png')
+add_panel("disk_space", gettext_lazy("Disk space"), DiskSpacePanel,
           'images/pref_tab_disk_space.png')
-add_panel("playback", _("Playback"), PlaybackPanel,
+add_panel("playback", gettext_lazy("Playback"), PlaybackPanel,
           'images/pref_tab_playback.png')
-add_panel("sharing", _("Sharing"), SharingPanel, 'images/pref_tab_sharing.png')
-add_panel("conversions", _("Conversions"), ConversionsPanel,
+add_panel("sharing", gettext_lazy("Sharing"), SharingPanel,
+          'images/pref_tab_sharing.png')
+add_panel("conversions", gettext_lazy("Conversions"), ConversionsPanel,
           'images/pref_tab_conversions.png')
-add_panel("stores", _("Stores"), StoresPanel, 'images/pref_tab_stores.png')
-add_panel("extensions", _("Extensions"), ExtensionsPanel,
+add_panel("stores", gettext_lazy("Stores"), StoresPanel,
+          'images/pref_tab_stores.png')
+add_panel("extensions", gettext_lazy("Extensions"), ExtensionsPanel,
           'images/pref_tab_extensions.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):
