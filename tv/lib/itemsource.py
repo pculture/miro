@@ -737,16 +737,13 @@ class DeviceItemHandler(ItemHandler):
                          exc_info=True)
         else:
             del device.database[info.file_type][info.id]
-            if info.thumbnail and info.thumbnail.startswith(device.mount):
-                try:
-                    os.unlink(info.thumbnail)
-                except (OSError, IOError):
-                    pass # ignore errors
-            if info.cover_art and info.cover_art.startswith(device.mount):
-                try:
-                    os.unlink(info.cover_art)
-                except (OSError, IOError):
-                    pass # ignore errors
+            for art_file in (info.screenshot_path, info.cover_art_path):
+                full_path = os.path.join(device.mount, art_file)
+                if full_path.startswith(device.mount): # actually on the device
+                    try:
+                        os.unlink(full_path)
+                    except EnvironmentError:
+                        pass # ignore errors
             device.remaining += info.size
             device.database.emit('item-removed', info)
 
