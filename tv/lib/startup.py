@@ -475,11 +475,9 @@ def mark_first_time():
 
 def should_create_movies_directory(path):
     """Figure out if we should create the movies directory if it's missing."""
-    if sys.platform == 'darwin' and path.startswith("/Volumes/"):
-        # Hack to fix #17826.  Don't try to create new directories in the
-        # mount points on OS X.
-        return False
-    return True
+    # We should only do this if the directory is the default directory.  This
+    # avoids trying to create files on unmonted filesystems (#17826)
+    return path == app.config.get_platform_default(prefs.MOVIES_DIRECTORY)
 
 def is_movies_directory_gone():
     """Checks to see if the MOVIES_DIRECTORY exists.
