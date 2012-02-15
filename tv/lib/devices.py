@@ -199,8 +199,8 @@ class DeviceInfo(BaseDeviceInfo):
         return "<DeviceInfo %r %r %x %x>" % (
             getattr(self, "name", None),
             getattr(self, "device_name", None),
-            getattr(self, "vendor_id", 0),
-            getattr(self, "product_id", 0))
+            getattr(self, "vendor_id", None) or 0,
+            getattr(self, "product_id", None) or 0)
 
 class MultipleDeviceInfo(BaseDeviceInfo):
     """
