@@ -1989,7 +1989,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         for item_id in message.item_ids:
             try:
                 i = item.Item.get_by_id(item_id)
-            except ObjectNotFoundError:
+            except database.ObjectNotFoundError:
                 logging.warn("handle_force_run_echonest: id not found: %s",
                              item_id)
             else:
@@ -2004,7 +2004,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         for item_id in message.item_ids:
             try:
                 i = item.Item.get_by_id(item_id)
-            except ObjectNotFoundError:
+            except database.ObjectNotFoundError:
                 logging.warn("handle_force_run_echonest: id not found: %s",
                              item_id)
             else:
