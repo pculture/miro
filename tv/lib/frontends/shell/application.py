@@ -38,7 +38,7 @@ import code
 from miro import app
 from miro import startup
 from miro import messages
-from miro import signals
+from miro.infoupdater import InfoUpdater
 
 def run_application():
     app.info_updater = InfoUpdater()
@@ -66,85 +66,3 @@ class MessageHandler(messages.MessageHandler):
         code.interact(local=imported_objects)
 
         app.controller.shutdown()
-
-class InfoUpdaterCallbackList(object):
-    """Tracks the list of callbacks for InfoUpdater.
-    """
-
-    def __init__(self):
-        self._callbacks = {}
-
-    def add(self, type_, id_, callback):
-        """Adds the callback to the list for ``type_`` ``id_``.
-
-        :param type_: the type of the thing (feed, site, ...)
-        :param id_: the id for the thing
-        :param callback: the callback function to add
-        """
-        key = (type_, id_)
-        self._callbacks.setdefault(key, set()).add(callback)
-
-    def remove(self, type_, id_, callback):
-        """Removes the callback from the list for ``type_`` ``id_``.
-
-        :param type_: the type of the thing (feed, site, ...)
-        :param id_: the id for the thing
-        :param callback: the callback function to remove
-        """
-        key = (type_, id_)
-        callback_set = self._callbacks[key]
-        callback_set.remove(callback)
-        if len(callback_set) == 0:
-            del self._callbacks[key]
-
-    def get(self, type_, id_):
-        """Get the list of callbacks for ``type_``, ``id_``.
-
-        :param type_: the type of the thing (feed, site, ...)
-        :param id_: the id for the thing
-        """
-        key = (type_, id_)
-        if key not in self._callbacks:
-            return []
-        else:
-            # return a new list of callbacks, so that if we iterate over the
-            # return value, we don't have to worry about callbacks being
-            # removed midway.
-            return list(self._callbacks[key])
-
-class InfoUpdater(signals.SignalEmitter):
-    def __init__(self):
-        signals.SignalEmitter.__init__(self)
-        for prefix in ('feeds', 'sites', 'playlists'):
-            self.create_signal('%s-added' % prefix)
-            self.create_signal('%s-changed' % prefix)
-            self.create_signal('%s-removed' % prefix)
-
-        self.item_list_callbacks = InfoUpdaterCallbackList()
-        self.item_changed_callbacks = InfoUpdaterCallbackList()
-
-    def handle_items_changed(self, message):
-        callback_list = self.item_changed_callbacks
-        for callback in callback_list.get(message.type, message.id):
-            callback(message)
-
-    def handle_item_list(self, message):
-        callback_list = self.item_list_callbacks
-        for callback in callback_list.get(message.type, message.id):
-            callback(message)
-
-    def handle_tabs_changed(self, message):
-        if message.type == 'feed':
-            signal_start = 'feeds'
-        elif message.type == 'site':
-            signal_start = 'sites'
-        elif message.type == 'playlist':
-            signal_start = 'playlists'
-        else:
-            return
-        if message.added:
-            self.emit('%s-added' % signal_start, message.added)
-        if message.changed:
-            self.emit('%s-changed' % signal_start, message.changed)
-        if message.removed:
-            self.emit('%s-removed' % signal_start, message.removed)
