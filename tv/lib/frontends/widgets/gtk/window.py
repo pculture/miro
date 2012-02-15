@@ -200,8 +200,11 @@ class Window(WindowBase):
         if hasattr(self, "_closing"):
             return
         self._closing = True
+        # Keep a reference to the widget in case will-close signal handler
+        # calls destroy()
+        old_window = self._window
         self.emit('will-close')
-        self._window.hide()
+        old_window.hide()
         del self._closing
 
     def destroy(self):
