@@ -200,7 +200,12 @@ class MultiRowAlbumSort(ItemSort):
                 info.artist_sort_key,
                 info.track)
 
-    def sort_key_feed(self, info):
+    def _watched_folder_key(self, info):
+        """Get a value that will sort watched folders to the bottom.
+
+        This can be placed as the first key in a tuple to ensure that watched
+        folders are at the bottom.  See #18410 and #18278.
+        """
         # sort watched folders to the bottom
         if info.feed_url.startswith('dtv:directoryfeed:'):
             watched_folder_key = 1
@@ -209,8 +214,12 @@ class MultiRowAlbumSort(ItemSort):
         # We want watched folders to always be at the bottom, even if we
         # reverse the search.
         if self.reverse:
-            watched_folder_key = -watched_folder_key
-        return (watched_folder_key,
+            return -watched_folder_key
+        else:
+            return watched_folder_key
+
+    def sort_key_feed(self, info):
+        return (self._watched_folder_key(info),
                 info.feed_name.lower(),
                 info.release_date)
 
@@ -223,7 +232,8 @@ class MultiRowAlbumSort(ItemSort):
             show_name = info.feed_name
         else:
             show_name = ''
-        return (show_name,
+        return (self._watched_folder_key(info),
+                show_name,
                 info.release_date)
 
 class TrackSort(ItemSort):
