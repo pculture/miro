@@ -1108,13 +1108,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self._parent
 
     def get_parent_sort_key(self):
-        parent = self.get_parent()
-        if parent is None:
-            return None
-        else:
+        if self.has_parent():
+            parent = self.get_parent()
             # this key lets us sort by title, but also keep torrents with
             # duplicate titles separate.
             return (parent.get_title(), parent.id)
+        else:
+            return None
 
     @returns_unicode
     def get_feed_url(self):
