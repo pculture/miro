@@ -31,7 +31,7 @@
 
 In general, frontends should do the following to handle startup.
 FIXME
-    - (optional) call startup.install_movies_gone_handler()
+    - (optional) call startup.install_movies_directory_gone_handler()
     - Call startup.initialize()
     - Wait for either the 'startup-success', or 'startup-failure' signal
 """
@@ -77,7 +77,6 @@ from miro import playlist
 from miro import prefs
 import miro.plat.resources
 from miro.plat.utils import setup_logging
-from miro.plat import config as platformcfg
 from miro import tabs
 from miro import theme
 from miro import util
@@ -165,10 +164,19 @@ def startup_function(func):
                 m.send_to_frontend()
     return wrapped
 
-def _movies_directory_gone_handler(callback):
+def _movies_directory_gone_handler(message, movies_dir, allow_continue=False):
     """Default _movies_directory_gone_handler.  The frontend should
     override this using the ``install_movies_directory_gone_handler``
     function.
+
+    _movies_directory_gone_handler should display the message to the user, and
+    present them with the following options:
+        - quit
+        - change movies directory
+        - continue with current directory (if allow_continue is True)
+
+    After the user picks, the frontend should call either
+    app.controller.shutdown() or startup.fix_movies_gone()
     """
     logging.error("Movies directory is gone -- no handler installed!")
     eventloop.add_urgent_call(callback, "continuing startup")
@@ -353,13 +361,9 @@ def check_firsttime():
     eventloop.add_urgent_call(check_movies_gone, "check movies gone")
 
 @startup_function
-def check_movies_gone():
+def check_movies_gone(check_unmounted=True):
     """Checks to see if the movies directory is gone.
     """
-
-    # callback is what the frontend will call if the user asks us to continue
-    callback = lambda: eventloop.add_urgent_call(fix_movies_gone,
-                                               "fix movies gone")
 
     movies_dir = fileutil.expand_filename(app.config.get(
         prefs.MOVIES_DIRECTORY))
@@ -370,33 +374,46 @@ def check_movies_gone():
         try:
             fileutil.makedirs(movies_dir)
         except OSError:
-            logging.info(
-                "Movies directory can't be created -- calling handler")
+            logging.info("Movies directory can't be created -- calling handler")
             # FIXME - this isn't technically correct, but it's probably
             # close enough that a user can fix the issue and Miro can
             # run happily.
-            _movies_directory_gone_handler(callback)
+            msg = _("couldn't create folder.")
+            _movies_directory_gone_handler(msg, movies_dir)
             return
 
     # make sure the directory is writeable
     if not os.access(movies_dir, os.W_OK):
-        _movies_directory_gone_handler(callback)
+        logging.info("Can't write to movies directory -- calling handler")
+        msg = _("can't write to folder")
+        _movies_directory_gone_handler(msg, movies_dir)
         return
 
     # make sure that the directory is populated if we've downloaded stuff to
     # it
-    if is_movies_directory_gone():
+    if check_unmounted and check_movies_directory_unmounted():
         logging.info("Movies directory is gone -- calling handler.")
-        _movies_directory_gone_handler(callback)
+        msg = _("folder contains no files -- is it disconnected?")
+        _movies_directory_gone_handler(msg, movies_dir, allow_continue=True)
         return
 
     eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
 
+@eventloop.as_urgent
 @startup_function
-def fix_movies_gone():
-    app.config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(
-        prefs.MOVIES_DIRECTORY))
-    eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
+def fix_movies_gone(new_movies_directory):
+    """Called by the movies directory gone handler to fix the issue.
+
+    :param new_movies_directory: new path for the movies directory, or None if
+    we should continue with the current directory.
+    """
+    if new_movies_directory is not None:
+        app.config.set(prefs.MOVIES_DIRECTORY, new_movies_directory)
+    # do another check to make sure the selected directory works.  Here we
+    # skip the unmounted check, since it's not exact and the user is giving us
+    # a directory.
+    eventloop.add_urgent_call(check_movies_gone, "check movies gone",
+                              kwargs={'check_unmounted': False})
 
 def start_sharing():
     app.sharing_tracker.start_tracking()
@@ -475,16 +492,16 @@ def mark_first_time():
 
 def should_create_movies_directory(path):
     """Figure out if we should create the movies directory if it's missing."""
-    if sys.platform == 'darwin' and path.startswith("/Volumes/"):
-        # Hack to fix #17826.  Don't try to create new directories in the
-        # mount points on OS X.
-        return False
-    return True
+    # We should only do this if the directory is the default directory.  This
+    # avoids trying to create files on unmonted filesystems (#17826)
+    return path == app.config.get_platform_default(prefs.MOVIES_DIRECTORY)
 
-def is_movies_directory_gone():
-    """Checks to see if the MOVIES_DIRECTORY exists.
+def check_movies_directory_unmounted():
+    """Checks to see MOVIES_DIRECTORY has been unmounted.
 
-    Returns True if yes, False if no.
+    Our hueristic is to check if there are any files in the directory.  If
+    it's totally empty, and we think that we should have a downloaded file in
+    it, then we return True.
     """
     movies_dir = fileutil.expand_filename(app.config.get(
         prefs.MOVIES_DIRECTORY))

@@ -207,67 +207,56 @@ class Application:
         if app.playback_manager.is_playing:
             return playback.handle_key_press(key, mods)
 
-    def handle_movies_directory_gone(self, continue_callback):
-        call_on_ui_thread(self._handle_movies_directory_gone, continue_callback)
+    def handle_movies_directory_gone(self, msg, movies_dir,
+                                     allow_continue=False):
+        call_on_ui_thread(self._handle_movies_directory_gone, msg, movies_dir,
+                          allow_continue)
 
-    def _handle_movies_directory_gone(self, continue_callback):
+    def _handle_movies_directory_gone(self, msg, movies_dir, allow_continue):
         # Make sure we close the upgrade dialog before showing a new one
         self.message_handler.close_upgrade_dialog()
 
-        title = _("Movies directory gone")
-        movies_directory = app.config.get(prefs.MOVIES_DIRECTORY)
-        if os.path.isdir(movies_directory):
-            # allow users to continue if the directory exists
-            description = _(
-                "%(shortappname)s can't use the primary video directory "
-                "located at:\n"
-                "\n"
-                "%(moviedirectory)s\n"
-                "\n"
-                "This may be because it is located on an external drive "
-                "that is not connected, is a directory that "
-                "%(shortappname)s does not have write permission to, or "
-                "there is something that is not a directory at that "
-                "path.\n"
-                "\n"
-                "If you continue, the primary video directory will be "
-                "reset to a location on this drive.  If you had videos "
-                "downloaded this will cause %(shortappname)s to lose "
-                "details about those videos.\n "
-                "\n"
-                "If you quit, then you can connect the drive or otherwise "
-                "fix the problem and relaunch %(shortappname)s.",
-                {"shortappname": app.config.get(prefs.SHORT_APP_NAME),
-                 "moviedirectory": movies_directory})
-            choice = dialogs.show_choice_dialog(title, description,
-                    [dialogs.BUTTON_CONTINUE, dialogs.BUTTON_QUIT])
+        title = _("Movies folder gone")
+        description = _(
+            "%(shortappname)s can't use the primary video folder "
+            "located at:\n"
+            "\n"
+            "%(moviedirectory)s\n"
+            "\n"
+            "Reason: %(reason)s\n"
+            "\n",
+            {"shortappname": app.config.get(prefs.SHORT_APP_NAME),
+             "moviedirectory": movies_dir,
+             "reason":msg,
+            })
+        if allow_continue:
+            description += _(
+                "You may continue with the current folder, choose a new "
+                "folder or quit and try to fix the issue manually.")
+            buttons = [
+                dialogs.BUTTON_CONTINUE,
+                dialogs.BUTTON_CHOOSE_NEW_FOLDER,
+                dialogs.BUTTON_QUIT
+            ]
         else:
-            # if the directory doesn't exist, don't let the user continue
-            description = _(
-                "%(shortappname)s can't use the primary video directory "
-                "located at:\n"
-                "\n"
-                "%(moviedirectory)s\n"
-                "\n"
-                "This may be because it is located on an external drive "
-                "that is not connected, is a directory that "
-                "%(shortappname)s does not have write permission to, or "
-                "there is something that is not a directory at that "
-                "path.\n"
-                "\n"
-                "%(shortappname)s will now exit. You can connect the drive "
-                "or otherwise fix the problem and relaunch "
-                "%(shortappname)s.",
-                {"shortappname": app.config.get(prefs.SHORT_APP_NAME),
-                    "moviedirectory": movies_directory})
-            dialogs.show_message(title, description,
-                                       alert_type=dialogs.CRITICAL_MESSAGE)
-            choice = dialogs.BUTTON_QUIT
-
+            description += _(
+                "You choose a new folder or quit and try to fix the issue "
+                "manually.")
+            buttons = [
+                dialogs.BUTTON_CHOOSE_NEW_FOLDER,
+                dialogs.BUTTON_QUIT
+            ]
+        choice = dialogs.show_choice_dialog(title, description, buttons)
         if choice == dialogs.BUTTON_CONTINUE:
-            continue_callback()
-        else:
-            self.do_quit()
+            startup.fix_movies_gone(None)
+            return
+        elif choice == dialogs.BUTTON_CHOOSE_NEW_FOLDER:
+            title = _("Choose new primary video folder")
+            new_movies_dir = dialogs.ask_for_directory(title, movies_dir)
+            if new_movies_dir is not None:
+                startup.fix_movies_gone(new_movies_dir)
+                return
+        self.do_quit()
 
     def handle_first_time(self, continue_callback):
         call_on_ui_thread(lambda: self._handle_first_time(continue_callback))
