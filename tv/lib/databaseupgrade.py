@@ -3735,7 +3735,6 @@ def upgrade173(cursor):
 
 def upgrade174(cursor):
     """Set some echonest_status to STATUS_SKIP_FROM_PREF instead of skipped."""
-    1/0
 
     # for audio files, echonest_status should be STATUS_SKIP_FROM_PREF so that
     # if the user enables echonest for that file it will run.  We keep
