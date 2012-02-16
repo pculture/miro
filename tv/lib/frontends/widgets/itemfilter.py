@@ -174,9 +174,8 @@ class ItemFilterUnplayed(ItemFilterAudioVideoHelper):
     user_label = _('Unplayed')
 
     def filter(self, item_info):
-        return (app.playback_manager.is_playing_item(item_info) or
-                (item_info.video_path is not None and not
-                    item_info.video_watched))
+        return (item_info.video_path is not None and not
+                item_info.video_watched)
 
 class ItemFilterDownloaded(ItemFilterAudioVideoHelper):
     """Filter for downloaded items."""
