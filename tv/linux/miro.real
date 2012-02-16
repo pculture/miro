@@ -117,6 +117,10 @@ group.add_option('--sync',
                  action="store_true",
                  help='Use X synchronously.')
 parser.set_defaults(sync=False)
+group.add_option('--g-fatal-warnings',
+                 action="store_true")
+# NOTE: we don't actually do anything with g-fatal-warnings, but it gets
+# picked up by the GTK code.
 group.add_option('--gconf-name',
                  dest='gconf_name',
                  metavar='<NAME>',
