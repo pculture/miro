@@ -80,6 +80,18 @@ class ConfigurationBase(object):
     def get(self, descriptor):
         return self._data[descriptor.key]
 
+    def get_platform_default(self, descriptor):
+        """Get the platform-specific default value for a preference.
+
+        For platform-specific preferences, we can't set the default attribute
+        since it will be different for each platform and also could depend on
+        things like the home directory.
+
+        Instead, use this method to get the value from the miro.plat.config
+        module.
+        """
+        return platformcfg.get(descriptor)
+
     @_with_lock
     def set(self, descriptor, value):
         self.set_key(descriptor.key, value)
@@ -121,7 +133,7 @@ class Configuration(ConfigurationBase):
             else:
                 return value
         elif descriptor.platformSpecific:
-            return platformcfg.get(descriptor)
+            return self.get_platform_default(descriptor)
         if app.configfile.contains(descriptor.key, use_theme_data):
             return app.configfile.get(descriptor.key, use_theme_data)
         else:
@@ -152,7 +164,7 @@ class ManualConfig(ConfigurationBase):
         if pref.key in self._data:
             return self._data[pref.key]
         elif pref.platformSpecific:
-            return platformcfg.get(pref)
+            return self.get_platform_default(pref)
         else:
             return pref.default
 
