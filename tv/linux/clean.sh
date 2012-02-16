@@ -12,4 +12,4 @@ rm -f plat/frontends/widgets/pluginsdir.cpp
 rm -f plat/frontends/widgets/mozprompt.c
 rm -f plat/frontends/widgets/mozprompt.h
 rm -f plat/frontends/widgets/httpobserver.c
-
+rm -f contrib/echoprint-codegen/src/libcodegen.so.4.1.1
