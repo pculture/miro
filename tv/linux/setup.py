@@ -430,12 +430,6 @@ class miro_install_data(install_data):
         self.install_app_config()
 
 class miro_build(build):
-    def git_submodule_update(self):
-        # Run git submodule update --init
-        # This initializes the echoprint directory
-        subprocess.check_call(['git', 'submodule', 'update', '--init'],
-                              cwd=git_root_dir)
-
     def build_segmenter(self):
         segmenter_src = os.path.join(platform_dir, 'miro-segmenter.c')
         cc = ccompiler.new_compiler()
@@ -469,7 +463,6 @@ class miro_build(build):
             self.distribution.scripts.append(path)
 
     def run(self):
-        self.git_submodule_update()
         self.build_segmenter()
         self.build_echoprint_codegen()
         self.build_enmfp_codegen()

@@ -1,3 +1,0 @@
-[submodule "tv/linux/contrib/echoprint-codegen"]
-	path = tv/linux/contrib/echoprint-codegen
-	url = https://github.com/echonest/echoprint-codegen
