@@ -78,6 +78,9 @@ device_tracker = None
 # platform/frontend specific directory watcher
 directory_watcher = None
 
+# MetadataManager for local items
+local_metadata_manager = None
+
 # signal emiters for when config data changes
 backend_config_watcher = None
 frontend_config_watcher = None
