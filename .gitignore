@@ -10,6 +10,7 @@ tv/linux/plat/frontends/widgets/pluginsdir.cpp
 tv/linux/plat/frontends/widgets/mozprompt.c
 tv/linux/plat/frontends/widgets/mozprompt.h
 tv/linux/plat/frontends/widgets/httpobserver.c
+tv/linux/contrib/echoprint-codegen/src/libcodegen.so.4.1.1
 
 tv/windows/miro-binary-kit-win-*
 tv/windows/build
