@@ -135,6 +135,14 @@ class ItemContextMenuHandler(object):
             if not (item.device or item.remote):
                 section.append((_('Set media kind as...'),
                                 self._make_edit_metadata_menu()))
+            if not item.remote:
+                if item.net_lookup_enabled:
+                    label = _("Don't Use Online Lookup Data")
+                    callback = app.widgetapp.disable_net_lookup_for_selection
+                else:
+                    label = _("Use Online Lookup Data")
+                    callback = app.widgetapp.enable_net_lookup_for_selection
+                section.append((label, callback))
 
             if section:
                 menu_sections.append(section)
@@ -305,6 +313,8 @@ class ItemContextMenuHandler(object):
         paused = []
         uploadable = []
         expiring = []
+        net_lookup_enabled = []
+        net_lookup_disabled = []
         editable = False
 
         # local functions
@@ -336,6 +346,10 @@ class ItemContextMenuHandler(object):
             if info.downloaded:
                 downloaded.append(info)
                 if info.is_playable:
+                    if info.net_lookup_enabled:
+                        net_lookup_enabled.append(info)
+                    else:
+                        net_lookup_disabled.append(info)
                     playable.append(info)
                     if info.device:
                         device.append(info)
@@ -393,7 +407,15 @@ class ItemContextMenuHandler(object):
                 menu.append((_('Convert to...'), convert_menu))
         menu.append((_('Set media kind as...'),
                     self._make_edit_metadata_menu()))
-
+        if downloaded and not remote:
+            if net_lookup_enabled:
+                label = _("Don't Use Online Lookup Data")
+                callback = app.widgetapp.disable_net_lookup_for_selection
+                menu.append((label, callback))
+            if net_lookup_disabled:
+                label = _("Use Online Lookup Data")
+                callback = app.widgetapp.enable_net_lookup_for_selection
+                menu.append((label, callback))
 
         if available:
             if len(menu) > 0:
