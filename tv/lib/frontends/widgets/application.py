@@ -357,6 +357,20 @@ class Application:
     def resume_play_selection(self):
         app.item_list_controller_manager.resume_play_selection()
 
+    def enable_net_lookup_for_selection(self):
+        selection = app.item_list_controller_manager.get_selection()
+        id_list = [info.id for info in selection
+                   if info.downloaded and not info.net_lookup_enabled]
+        m = messages.SetNetLookupEnabled(id_list, True)
+        m.send_to_backend()
+
+    def disable_net_lookup_for_selection(self):
+        selection = app.item_list_controller_manager.get_selection()
+        id_list = [info.id for info in selection
+                   if info.downloaded and info.net_lookup_enabled]
+        m = messages.SetNetLookupEnabled(id_list, False)
+        m.send_to_backend()
+
     def on_stop_clicked(self, button=None):
         app.playback_manager.stop()
 
