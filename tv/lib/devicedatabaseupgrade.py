@@ -96,7 +96,7 @@ def _do_import(cursor, json_db, mount):
         ('album_artist', 'album_artist'),
         ('album_tracks', 'album_tracks'),
         ('artist', 'artist'),
-        ('screenshot_path', 'screenshot'),
+        ('screenshot', 'screenshot'),
         ('drm', 'has_drm'),
         ('genre', 'genre'),
         ('title ', 'title'),
@@ -177,8 +177,6 @@ def _do_import(cursor, json_db, mount):
 
         if 'cover_art' in old_item:
             upgrade_cover_art(old_item, cover_art_dir)
-        if 'screenshot' in old_item:
-            old_item['screenshot_path'] = old_item.pop('screenshot')
         if 'mdp_state' in old_item:
             del old_item['mdp_state']
         if 'metadata_version' in old_item:
@@ -191,22 +189,22 @@ def upgrade_cover_art(device_item, cover_art_dir):
 
     if 'album' not in device_item or 'cover_art' not in device_item:
         return
-    cover_art_path = device_item.pop('cover_art')
+    cover_art = device_item.pop('cover_art')
     # quote the filename using the same logic as
     # filetags.calc_cover_art_filename()
     dest_filename = urllib.quote(device_item['album'].encode('utf-8'),
                                  safe=' ,.')
     dest_path = os.path.join(cover_art_dir, dest_filename)
     if not os.path.exists(dest_path):
-        if not os.path.exists(cover_art_path):
+        if not os.path.exists(cover_art):
             logging.warn("upgrade_cover_art: Error moving cover art, "
-                         "source path doesn't exist: %s", cover_art_path)
+                         "source path doesn't exist: %s", cover_art)
             return
         try:
-            shutil.move(cover_art_path, dest_path)
+            shutil.move(cover_art, dest_path)
         except StandardError:
             logging.warn("upgrade_cover_art: Error moving %s -> %s", 
-                         cover_art_path, dest_path)
+                         cover_art, dest_path)
 
 def handle_failed_upgrade(cursor, json_db):
     # make a metadata_status row for each item in the database as if they were

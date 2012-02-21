@@ -3749,3 +3749,11 @@ def upgrade174(cursor):
                           "ORDER BY priority DESC LIMIT 1) AND "
                       "file_type = 'audio')")
 
+def upgrade175(cursor):
+    """Rename screenshot_path and cover_art_path back to their old names."""
+
+    rename_column(cursor, 'metadata', 'screenshot_path', 'screenshot')
+    alter_table_columns(cursor, 'item', [], rename_columns={
+        'screenshot_path': 'screenshot',
+        'cover_art_path': 'cover_art',
+    })

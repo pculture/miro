@@ -450,7 +450,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
-        ('screenshot_path', SchemaFilename(noneOk=True)),
+        ('screenshot', SchemaFilename(noneOk=True)),
         ('resumeTime', SchemaInt()),
         ('channelTitle', SchemaString(noneOk=True)),
         ('license', SchemaString(noneOk=True)),
@@ -474,7 +474,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
         # metadata:
-        ('cover_art_path', SchemaFilename(noneOk=True)),
+        ('cover_art', SchemaFilename(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
         ('description', SchemaString(noneOk=True)),
         ('album', SchemaString(noneOk=True)),
@@ -854,7 +854,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('album_artist', SchemaString(noneOk=True)),
         ('album_tracks', SchemaInt(noneOk=True)),
         ('artist', SchemaString(noneOk=True)),
-        ('screenshot_path', SchemaFilename(noneOk=True)),
+        ('screenshot', SchemaFilename(noneOk=True)),
         ('drm', SchemaBool(noneOk=True)),
         ('genre', SchemaString(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
@@ -878,7 +878,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 174
+VERSION = 175
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

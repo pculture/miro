@@ -374,5 +374,5 @@ def _parse_mutagen(filename, muta, cover_art_directory):
                                               cover_art_directory)
         del data['cover_art']
     if cover_art_info is not None:
-        data['cover_art_path'], data['created_cover_art'] = cover_art_info
+        data['cover_art'], data['created_cover_art'] = cover_art_info
     return data

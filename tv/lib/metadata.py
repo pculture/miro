@@ -59,7 +59,7 @@ from miro.plat.utils import (filename_to_unicode,
 
 attribute_names = set([
     'file_type', 'duration', 'album', 'album_artist', 'album_tracks',
-    'artist', 'cover_art_path', 'screenshot_path', 'has_drm', 'genre',
+    'artist', 'cover_art', 'screenshot', 'has_drm', 'genre',
     'title', 'track', 'year', 'description', 'rating', 'show', 'episode_id',
     'episode_number', 'season_number', 'kind', 'net_lookup_enabled',
 ])
@@ -313,9 +313,9 @@ class MetadataEntry(database.DDBObject):
     # net_lookup_enabled is proveded by the metadata_status table, not the
     # actual metadata tables
     metadata_columns.discard('net_lookup_enabled')
-    # cover_art_path is handled implicitly by saving the cover art using the
+    # cover_art is handled implicitly by saving the cover art using the
     # album name
-    metadata_columns.discard('cover_art_path')
+    metadata_columns.discard('cover_art')
 
     def setup_new(self, status, source, data):
         self.status_id = status.id
@@ -1239,7 +1239,7 @@ class MetadataManagerBase(signals.SignalEmitter):
             metadata.update(entry_metadata)
         metadata['has_drm'] = status.get_has_drm()
         metadata['net_lookup_enabled'] = status.net_lookup_enabled
-        self._add_cover_art_path(metadata)
+        self._add_cover_art(metadata)
         return metadata
 
     def refresh_metadata_for_paths(self, paths):
@@ -1258,7 +1258,7 @@ class MetadataManagerBase(signals.SignalEmitter):
             new_metadata[p] = metadata
         self.emit("new-metadata", new_metadata)
 
-    def _add_cover_art_path(self, metadata):
+    def _add_cover_art(self, metadata):
         """Add the cover art path to a metadata dict """
         if 'album' in metadata:
             filename = filetags.calc_cover_art_filename(metadata['album'])
@@ -1266,9 +1266,9 @@ class MetadataManagerBase(signals.SignalEmitter):
             echonest_path = os.path.join(self.cover_art_dir, 'echonest',
                                          filename)
             if os.path.exists(echonest_path):
-                metadata['cover_art_path'] = echonest_path
+                metadata['cover_art'] = echonest_path
             elif os.path.exists(mutagen_path):
-                metadata['cover_art_path'] = mutagen_path
+                metadata['cover_art'] = mutagen_path
 
     def set_user_data(self, path, user_data):
         """Update metadata based on user-inputted data
@@ -1520,9 +1520,9 @@ class MetadataManagerBase(signals.SignalEmitter):
         # add cover-art-path for other items in the same album
         if created_cover_art and 'album' in self.new_metadata[path]:
             album = self.new_metadata[path]['album']
-            cover_art_path = self.new_metadata[path]['cover_art_path']
+            cover_art = self.new_metadata[path]['cover_art']
             for path in MetadataStatus.paths_for_album(album, self.db_info):
-                self.new_metadata[path]['cover_art_path'] = cover_art_path
+                self.new_metadata[path]['cover_art'] = cover_art
 
     def _process_metadata_errors(self):
         for (processor, path, error) in self.metadata_errors:
@@ -1610,7 +1610,7 @@ class DeviceMetadataManager(MetadataManagerBase):
         metadata = MetadataManagerBase.get_metadata(self, path)
         # device items expect cover art and screenshots to be relative to
         # the device mount
-        for key in ('cover_art_path', 'screenshot_path'):
+        for key in ('cover_art', 'screenshot'):
             if key in metadata:
                 metadata[key] = self._untranslate_path(metadata[key])
         return metadata
