@@ -383,7 +383,7 @@ class DeviceDatabaseTest(MiroTestCase):
         # Force our upgrade code to run and throw an exception.
         os.remove(os.path.join(self.device.mount, '.miro', 'sqlite'))
         mock_do_import = mock.Mock()
-        patcher = mock.patch('miro.devicedatabaseupgrade._do_import',
+        patcher = mock.patch('miro.devicedatabaseupgrade._do_import_old_items',
                              mock_do_import)
         mock_do_import.side_effect = sqlite3.DatabaseError("Error")
         self.device.database.created_new = False

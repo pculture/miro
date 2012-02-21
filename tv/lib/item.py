@@ -2427,6 +2427,11 @@ class DeviceItem(object):
         else:
             local_path = None
         self._fix_paths_from_database(kwargs)
+        # set values for attributes used in pre-5.0 databases.
+        self.metadata_version = 5 # version used in 4.0.x
+        self.mdp_state = 1 # RAN stat
+        self.title_tag = None
+
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
@@ -2505,6 +2510,13 @@ class DeviceItem(object):
         """
         if self.title:
             return self.title
+        if self.title_tag:
+            # title_tag was set to the ID3 tag by pre-5.0 versions.  We
+            # convert this to title_tag in
+            # devicedatabaseupgrade.import_old_items(), so this probably won't
+            # be reached.  But we might as well prefer title_tag over the
+            # filename if it somehow exists.
+            return self.title_tag
         return os.path.basename(self.id)
 
     @returns_filename
