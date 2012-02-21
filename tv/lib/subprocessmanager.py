@@ -462,7 +462,7 @@ class SubprocessManager(object):
             #
             # So if the self.thread attribute is None then it means we are done
             # and so things are all good.
-            if self.thread is not None:
+            if self.thread is not None and thread.quit_type != thread.QUIT_NORMAL:
                 app.controller.failed_soft('handling subprocess',
                         '_on_thread_quit called by an old thread')
             return
@@ -488,13 +488,15 @@ class SubprocessManager(object):
                 eventloop.add_timeout(delay_time, self.restart,
                                       'restart failed subprocess')
 
-    def restart(self):
-        logging.warn("restarting subprocess")
-        # close our stream to the subprocess
-        self.process.stdin.close()
-        # unset our attributes for the process that just quit.  This protects
-        # us in case _start() fails for some reason.
-        self._cleanup_process()
+    def restart(self, clean=False):
+        if clean:
+            self.shutdown()
+        else:
+            # close our stream to the subprocess
+            self.process.stdin.close()
+            # unset our attributes for the process that just quit.  This protects
+            # us in case _start() fails for some reason.
+            self._cleanup_process()
         # restart ourselves
         self._start()
         trapcall.trap_call("subprocess restart", self.responder.on_restart)

@@ -215,7 +215,7 @@ class DeletesInProgressTracker(object):
 
 deletes_in_progress = DeletesInProgressTracker()
 
-def delete(path, retry_after=10, retry_for=60):
+def delete(path, retry_after=10, retry_for=60, firsttime=True):
     """Try to delete a file or directory.  If this fails because the
     file is open, we retry deleting the file every so often This
     probably only makes a difference on Windows.
@@ -239,7 +239,13 @@ def delete(path, retry_after=10, retry_for=60):
             logging.info('Retrying delete for %s (%d)', path, retry_after)
             eventloop.add_timeout(retry_after, delete,
                     "Delete File Retry", args=(path, retry_after,
-                        retry_for - retry_after))
+                        retry_for - retry_after, False))
+            if firsttime:
+                logging.debug('restarting subprocess_manager to hopefully '
+                              'free file references')
+                from miro.workerprocess import _subprocess_manager
+                _subprocess_manager.restart(clean=True)
+
     else:
         deletes_in_progress.discard(path)
 
