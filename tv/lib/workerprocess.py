@@ -375,6 +375,8 @@ class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
         _miro_task_queue.run_pending_tasks()
 
     def on_shutdown(self):
+        # do the tasks that we've already gotten
+        self.process_handler_queue()
         self.worker_ready = False
 
     def on_restart(self):
@@ -444,10 +446,10 @@ class WorkerSubprocessManager(subprocessmanager.SubprocessManager):
         self.cancel_check_subprocess_hung()
         subprocessmanager.SubprocessManager.shutdown(self)
 
-    def restart(self):
+    def restart(self, clean=False):
         self.cancel_check_subprocess_hung()
         self.responder.movie_data_task_status = None
-        subprocessmanager.SubprocessManager.restart(self)
+        subprocessmanager.SubprocessManager.restart(self, clean)
 
     def schedule_check_subprocess_hung(self):
         self.check_hung_timeout = eventloop.add_timeout(90,
