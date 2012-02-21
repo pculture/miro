@@ -58,7 +58,6 @@ from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import gtkdirectorywatch
 from miro.frontends.widgets.gtk import gtkmenus
 from miro.frontends.widgets.gtk import trayicon
-from miro.frontends.widgets.gtk import persistentwindow
 from miro.frontends.widgets.gtk import widgets
 from miro.plat.frontends.widgets import bonjour
 from miro.plat.frontends.widgets import embeddingwidget
