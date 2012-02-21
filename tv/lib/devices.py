@@ -199,8 +199,8 @@ class DeviceInfo(BaseDeviceInfo):
         return "<DeviceInfo %r %r %x %x>" % (
             getattr(self, "name", None),
             getattr(self, "device_name", None),
-            getattr(self, "vendor_id", 0),
-            getattr(self, "product_id", 0))
+            getattr(self, "vendor_id", None) or 0,
+            getattr(self, "product_id", None) or 0)
 
 class MultipleDeviceInfo(BaseDeviceInfo):
     """
@@ -467,6 +467,7 @@ class DeviceManager(object):
 
         return info
 
+    @eventloop.as_idle
     def device_connected(self, id_, **kwargs):
         if id_ in self.connected:
             # backend got confused
@@ -486,6 +487,7 @@ class DeviceManager(object):
             on_mount(info)
         messages.TabsChanged('connect', [info], [], []).send_to_frontend()
 
+    @eventloop.as_idle
     def device_changed(self, id_, **kwargs):
         if id_ not in self.connected:
             # backend didn't send a connected message
@@ -517,6 +519,7 @@ class DeviceManager(object):
         messages.TabsChanged('connect', [], [info], []).send_to_frontend()
         messages.DeviceChanged(info).send_to_frontend()
 
+    @eventloop.as_idle
     def device_disconnected(self, id_):
         if id_ not in self.connected:
             return # don't bother with sending messages
@@ -1309,6 +1312,7 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0):
 
     The database lives at [MOUNT]/.miro/sqlite
     """
+    database.confirm_db_thread()
     if mount == ':memory:': # special case for the unittests
         path = ':memory:'
         preallocate = None

@@ -32,6 +32,7 @@
 import logging
 import os.path
 import shutil
+import urllib
 
 from miro import app
 from miro import databaseupgrade
@@ -49,7 +50,8 @@ def import_from_json(live_storage, json_db, mount):
     live_storage.cursor.execute("BEGIN TRANSACTION")
     try:
         _do_import(live_storage.cursor, json_db, mount)
-    except StandardError, e:
+    except StandardError:
+        logging.exception('exception while importing JSON db from %s', mount)
         action = live_storage.error_handler.handle_upgrade_error()
         # Our error handle should always return ACTION_START_FRESH
         if action != storedatabase.LiveStorageErrorHandler.ACTION_START_FRESH:
@@ -119,7 +121,7 @@ def _do_import(cursor, json_db, mount):
 
     next_id = databaseupgrade.get_next_id(cursor)
     for file_type, path, old_item in device_items:
-        has_drm = old_item['has_drm']
+        has_drm = old_item.get('has_drm') # other doesn't have DRM
         if path in filenames_seen:
             # duplicate filename, just skip this data
             continue
@@ -174,7 +176,7 @@ def _do_import(cursor, json_db, mount):
         #   - add a new column for torrent titles
 
         if 'cover_art' in old_item:
-            self.upgrade_cover_art(old_item, cover_art_dir)
+            upgrade_cover_art(old_item, cover_art_dir)
         if 'screenshot' in old_item:
             old_item['screenshot_path'] = old_item.pop('screenshot')
         if 'mdp_state' in old_item:
@@ -224,4 +226,13 @@ def handle_failed_upgrade(cursor, json_db):
         for path in json_db[file_type].keys():
            values = (path, u'mutagen', STATUS_NOT_RUN, STATUS_NOT_RUN,
                      STATUS_NOT_RUN, net_lookup_enabled, False, 0)
-           cursor.execute(sql, values)
+           try:
+               cursor.execute(sql, values)
+           except storedatabase.sqlite3.IntegrityError, e:
+               if e.message == 'column path is not unique': # XXX better way to
+                                                            # detect this?
+                   # This item already got added to the DB during a partial
+                   # upgrade; skip adding a row to the DB.
+                   pass
+               else:
+                   raise
