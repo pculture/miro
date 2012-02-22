@@ -84,7 +84,6 @@ class MetadataStatus(database.DDBObject):
     STATUS_FAILURE = u'F'
     STATUS_TEMPORARY_FAILURE = u'T'
     STATUS_SKIP = u'S'
-    STATUS_SKIP_FROM_PREF = u'P'
 
     _source_name_to_status_column = {
         u'mutagen': 'mutagen_status',
@@ -95,12 +94,13 @@ class MetadataStatus(database.DDBObject):
     def setup_new(self, path, net_lookup_enabled):
         self.path = path
         self.net_lookup_enabled = net_lookup_enabled
+        self.file_type = u'other'
         self.mutagen_status = self.STATUS_NOT_RUN
         self.moviedata_status = self.STATUS_NOT_RUN
         if self.net_lookup_enabled:
             self.echonest_status = self.STATUS_NOT_RUN
         else:
-            self.echonest_status = self.STATUS_SKIP_FROM_PREF
+            self.echonest_status = self.STATUS_SKIP
         self.mutagen_thinks_drm = False
         self.echonest_id = None
         self.max_entry_priority = -1
@@ -200,6 +200,9 @@ class MetadataStatus(database.DDBObject):
         :param entry: MetadataEntry for the new data
         """
         self._set_status_column(entry.source, self.STATUS_COMPLETE)
+        if (entry.priority >= self.max_entry_priority and
+            entry.file_type is not None):
+            self.file_type = entry.file_type
         if entry.source == 'mutagen':
             if self._should_skip_movie_data(entry):
                 self.moviedata_status = self.STATUS_SKIP
@@ -267,10 +270,12 @@ class MetadataStatus(database.DDBObject):
 
     def set_net_lookup_enabled(self, enabled):
         self.net_lookup_enabled = enabled
-        if enabled and self.echonest_status == self.STATUS_SKIP_FROM_PREF:
+        if (enabled and
+            self.echonest_status == self.STATUS_SKIP
+            and self.file_type == u'audio'):
             self.echonest_status = self.STATUS_NOT_RUN
         elif not enabled and self.echonest_status == self.STATUS_NOT_RUN:
-            self.echonest_status = self.STATUS_SKIP_FROM_PREF
+            self.echonest_status = self.STATUS_SKIP
         self._set_current_processor()
         self.signal_change()
 

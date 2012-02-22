@@ -154,18 +154,20 @@ def _do_import_old_items(cursor, json_db, mount):
             current_processor = u'movie-data'
         else:
             current_processor = None
-        if file_type == u'audio':
-            echonest_status = 'P' # STATUS_SKIP_FROM_PREF
+
+        net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
+        if net_lookup_enabled:
+            echonest_status = 'N' # STATUS_NOT_RUN
         else:
             echonest_status = 'S' # STATUS_SKIP
         sql = ("INSERT INTO metadata_status "
-               "(id, path, current_processor, mutagen_status, "
+               "(id, path, file_type, current_processor, mutagen_status, "
                "moviedata_status, echonest_status, net_lookup_enabled, "
                "mutagen_thinks_drm, max_entry_priority) "
-               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
-        cursor.execute(sql, (next_id, path, current_processor, 'S',
-                             moviedata_status, echonest_status, False, has_drm,
-                             OLD_ITEM_PRIORITY))
+               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        cursor.execute(sql, (next_id, path, file_type, current_processor, 'S',
+                             moviedata_status, echonest_status,
+                             net_lookup_enabled, has_drm, OLD_ITEM_PRIORITY))
         status_id = next_id
         next_id += 1
 

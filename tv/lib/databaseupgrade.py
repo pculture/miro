@@ -3757,3 +3757,18 @@ def upgrade175(cursor):
         'screenshot_path': 'screenshot',
         'cover_art_path': 'cover_art',
     })
+
+def upgrade176(cursor):
+    """Add file_type to metadata_status."""
+    # Add file_type to metadata_status and set it to the file_type from the
+    # metadata table
+    cursor.execute("ALTER TABLE metadata_status ADD file_type TEXT")
+    cursor.execute("UPDATE metadata_status "
+                   "SET file_type=("
+                      "SELECT file_type FROM metadata "
+                      "WHERE status_id=metadata_status.id AND "
+                      "file_type IS NOT NULL "
+                      "ORDER BY priority DESC LIMIT 1)")
+    # Set file_type to other for items that the subquery returned 0 rows for
+    cursor.execute("UPDATE metadata_status SET file_type='other' "
+                   "WHERE file_type IS NULL")

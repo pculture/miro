@@ -823,6 +823,7 @@ class MetadataStatusSchema(DDBObjectSchema):
     table_name = 'metadata_status'
     fields = DDBObjectSchema.fields + [
         ('path', SchemaFilename()),
+        ('file_type', SchemaString()),
         ('current_processor', SchemaString(noneOk=True)),
         ('mutagen_status', SchemaString()),
         ('moviedata_status', SchemaString()),
@@ -878,7 +879,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 175
+VERSION = 176
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
