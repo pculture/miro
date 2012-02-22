@@ -151,9 +151,9 @@ def _do_import_old_items(cursor, json_db, mount):
         # SKIPPED.  moviedata_status is based on the old mdp_state column
         moviedata_status = mdp_state_map[old_item.get('mdp_state')]
         if moviedata_status == 'N':
-            current_processor = u'movie-data'
+            finished_status = 0
         else:
-            current_processor = None
+            finished_status = 1
 
         net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
         if net_lookup_enabled:
@@ -161,11 +161,11 @@ def _do_import_old_items(cursor, json_db, mount):
         else:
             echonest_status = 'S' # STATUS_SKIP
         sql = ("INSERT INTO metadata_status "
-               "(id, path, file_type, current_processor, mutagen_status, "
+               "(id, path, file_type, finished_status, mutagen_status, "
                "moviedata_status, echonest_status, net_lookup_enabled, "
                "mutagen_thinks_drm, max_entry_priority) "
                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-        cursor.execute(sql, (next_id, path, file_type, current_processor, 'S',
+        cursor.execute(sql, (next_id, path, file_type, finished_status, 'S',
                              moviedata_status, echonest_status,
                              net_lookup_enabled, has_drm, OLD_ITEM_PRIORITY))
         status_id = next_id
@@ -235,7 +235,7 @@ def handle_failed_upgrade(cursor, json_db):
     # just added
 
     sql = ("INSERT INTO metadata_status "
-           "(path, current_processor, mutagen_status, moviedata_status, "
+           "(path, finished_status, mutagen_status, moviedata_status, "
            "echonest_status, net_lookup_enabled, mutagen_thinks_drm, "
            "max_entry_priority) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 
@@ -246,6 +246,6 @@ def handle_failed_upgrade(cursor, json_db):
         if file_type not in json_db:
             continue
         for path in json_db[file_type].keys():
-           values = (path, u'mutagen', STATUS_NOT_RUN, STATUS_NOT_RUN,
+           values = (path, 0, STATUS_NOT_RUN, STATUS_NOT_RUN,
                      STATUS_NOT_RUN, net_lookup_enabled, False, 0)
            cursor.execute(sql, values)

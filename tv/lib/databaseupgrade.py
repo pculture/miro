@@ -3772,3 +3772,21 @@ def upgrade176(cursor):
     # Set file_type to other for items that the subquery returned 0 rows for
     cursor.execute("UPDATE metadata_status SET file_type='other' "
                    "WHERE file_type IS NULL")
+
+def upgrade177(cursor):
+    """Add finished_status, remove current_processor from metadata_status."""
+    cursor.execute("ALTER TABLE metadata_status ADD finished_status INTEGER")
+    # set finished_status to 1 (the current versionas of 5.0) if
+    # current_processor was None
+    cursor.execute("UPDATE metadata_status "
+                   "SET finished_status=1 "
+                   "WHERE current_processor IS NULL")
+    # set finished_status to 0 (unfinished) for all other rows)
+    cursor.execute("UPDATE metadata_status "
+                   "SET finished_status=0 "
+                   "WHERE current_processor IS NOT NULL")
+    cursor.execute("CREATE INDEX metadata_finished ON "
+                   "metadata_status (finished_status)")
+    # drop the current_processor column
+    cursor.execute("DROP INDEX metadata_processor")
+    remove_column(cursor, 'metadata_status', ['current_processor'])

@@ -85,6 +85,8 @@ class MetadataStatus(database.DDBObject):
     STATUS_TEMPORARY_FAILURE = u'T'
     STATUS_SKIP = u'S'
 
+    FINISHED_STATUS_VERSION = 1
+
     _source_name_to_status_column = {
         u'mutagen': 'mutagen_status',
         u'movie-data': 'moviedata_status',
@@ -104,8 +106,22 @@ class MetadataStatus(database.DDBObject):
         self.mutagen_thinks_drm = False
         self.echonest_id = None
         self.max_entry_priority = -1
+        # current processor tracks what processor we should be running for
+        # this status.  We don't save it to the database.
         self.current_processor = u'mutagen'
+        # finished_status tracks if we are done running metadata processors on
+        # an item.  finished status is:
+        # - 0 if we haven't finished running metadata on it.
+        # - A positive version code once we are done.  This version code
+        #   increases as we add more metadata processors.
+        # This hopefully is allows us to track if metadata processing is
+        # finished, even as the database schema changes between miro versions.
+        self.finished_status = 0
         self._add_to_cache()
+
+    def setup_restored(self):
+        self._set_current_processor(update_finished_status=False)
+        self.db_info.db.cache.set('metadata', self.path, self)
 
     def copy_status(self, other_status):
         """Copy values from another metadata status object."""
@@ -117,6 +133,9 @@ class MetadataStatus(database.DDBObject):
             # set net_lookup_enabled to True.
             if name not in ('id', 'path', 'net_lookup_enabled'):
                 setattr(self, name, getattr(other_status, name))
+        # also copy current_processor, which doesn't get stored in the DB and
+        # thus isn't returned by schema_fields()
+        self.current_processor = other_status.current_processor
         self.signal_change()
 
     @classmethod
@@ -157,9 +176,6 @@ class MetadataStatus(database.DDBObject):
     def failed_temporary_view(cls):
         return cls.make_view('echonest_status=?',
                              (cls.STATUS_TEMPORARY_FAILURE,))
-
-    def setup_restored(self):
-        self.db_info.db.cache.set('metadata', self.path, self)
 
     def _add_to_cache(self):
         if self.db_info.db.cache.key_exists('metadata', self.path):
@@ -256,7 +272,7 @@ class MetadataStatus(database.DDBObject):
         self.signal_change()
         return new_status
 
-    def _set_current_processor(self):
+    def _set_current_processor(self, update_finished_status=True):
         """Calculate and set the current_processor attribute """
         # check what the next processor we should run is
         if self.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
@@ -267,6 +283,9 @@ class MetadataStatus(database.DDBObject):
             self.current_processor = u'echonest'
         else:
             self.current_processor = None
+            if (update_finished_status and
+                self.FINISHED_STATUS_VERSION > self.finished_status):
+                self.finished_status = self.FINISHED_STATUS_VERSION
 
     def set_net_lookup_enabled(self, enabled):
         self.net_lookup_enabled = enabled
@@ -288,8 +307,9 @@ class MetadataStatus(database.DDBObject):
 
     @classmethod
     def was_running_select(cls, columns, db_info=None):
-        return cls.select(columns, 'current_processor IS NOT NULL',
-                         db_info=db_info)
+        return cls.select(columns, 'finished_status < ?',
+                          values=(cls.FINISHED_STATUS_VERSION,),
+                          db_info=db_info)
 
 class MetadataEntry(database.DDBObject):
     """Stores metadata from a single source.

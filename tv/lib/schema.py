@@ -824,7 +824,7 @@ class MetadataStatusSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('path', SchemaFilename()),
         ('file_type', SchemaString()),
-        ('current_processor', SchemaString(noneOk=True)),
+        ('finished_status', SchemaInt()),
         ('mutagen_status', SchemaString()),
         ('moviedata_status', SchemaString()),
         ('echonest_status', SchemaString()),
@@ -835,7 +835,7 @@ class MetadataStatusSchema(DDBObjectSchema):
     ]
 
     indexes = (
-        ('metadata_processor', ('current_processor',)),
+        ('metadata_finished', ('finished_status',)),
     )
 
     unique_indexes = (
@@ -879,7 +879,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 176
+VERSION = 177
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
