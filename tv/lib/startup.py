@@ -76,7 +76,7 @@ from miro import models
 from miro import playlist
 from miro import prefs
 import miro.plat.resources
-from miro.plat.utils import setup_logging
+from miro.plat.utils import setup_logging, filename_to_unicode
 from miro import tabs
 from miro import theme
 from miro import util
@@ -367,6 +367,7 @@ def check_movies_gone(check_unmounted=True):
 
     movies_dir = fileutil.expand_filename(app.config.get(
         prefs.MOVIES_DIRECTORY))
+    movies_dir = filename_to_unicode(movies_dir)
 
     # if the directory doesn't exist, create it.
     if (not os.path.exists(movies_dir) and
@@ -378,14 +379,18 @@ def check_movies_gone(check_unmounted=True):
             # FIXME - this isn't technically correct, but it's probably
             # close enough that a user can fix the issue and Miro can
             # run happily.
-            msg = _("couldn't create folder.")
+            msg = _("Permissions error: %(appname)s couldn't "
+                    "create the folder.",
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME)})
             _movies_directory_gone_handler(msg, movies_dir)
             return
 
     # make sure the directory is writeable
     if not os.access(movies_dir, os.W_OK):
         logging.info("Can't write to movies directory -- calling handler")
-        msg = _("can't write to folder")
+        msg = _("Permissions error: %(appname)s can't "
+                "write to the folder.",
+                {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         _movies_directory_gone_handler(msg, movies_dir)
         return
 
@@ -393,7 +398,8 @@ def check_movies_gone(check_unmounted=True):
     # it
     if check_unmounted and check_movies_directory_unmounted():
         logging.info("Movies directory is gone -- calling handler.")
-        msg = _("folder contains no files -- is it disconnected?")
+        msg = _("The folder contains no files: "
+                "is it on a drive that's disconnected?")
         _movies_directory_gone_handler(msg, movies_dir, allow_continue=True)
         return
 

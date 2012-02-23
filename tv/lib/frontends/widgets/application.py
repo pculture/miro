@@ -218,12 +218,12 @@ class Application:
 
         title = _("Movies folder gone")
         description = _(
-            "%(shortappname)s can't use the primary video folder "
-            "located at:\n"
+            "%(shortappname)s can't use your primary video folder, which "
+            "is currently set to:\n"
             "\n"
             "%(moviedirectory)s\n"
             "\n"
-            "Reason: %(reason)s\n"
+            "%(reason)s\n"
             "\n",
             {"shortappname": app.config.get(prefs.SHORT_APP_NAME),
              "moviedirectory": movies_dir,
