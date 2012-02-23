@@ -247,6 +247,7 @@ class TorrentSession(object):
         self.set_dht()
         self.set_upload_limit()
         self.set_download_limit()
+        self.set_connection_limit()
         self.set_encryption()
         self.callback_handle = app.downloader_config_watcher.connect('changed',
                 self.on_config_changed)
