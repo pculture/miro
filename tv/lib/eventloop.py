@@ -607,3 +607,41 @@ def idle_iterator(func):
         return idle_iterate(func, "%s() (using idle_iterator)" % func.__name__, 
                             args=args, kwargs=kwargs)
     return queuer
+
+class DelayedFunctionCaller(object):
+    """Call a function sometime in the future using add_idle()/add_timeout()
+
+    This class also tracks whether a function has been scheduled and avoids
+    scheduling it twice.
+    """
+    def __init__(self, func):
+        """Create a DelayedFunctionCaller
+
+        :param func: function to call.
+        """
+        self.dc = None
+        self.func = func
+        self.name = 'delayed call to %s' % func
+
+    def call_when_idle(self, *args, **kwargs):
+        """Call our function when we're idle."""
+        if self.dc is None:
+            self.dc = add_idle(self.call_now, self.name, args=args,
+                               kwargs=kwargs)
+
+    def call_after_timeout(self, timeout, *args, **kwargs):
+        """Call our function after a timeout."""
+        if self.dc is None:
+            self.dc = add_timeout(timeout, self.call_now, self.name,
+                                  args=args, kwargs=kwargs)
+
+    def call_now(self, *args, **kwargs):
+        """Call our function immediately."""
+        self.dc = None
+        self.func(*args, **kwargs)
+
+    def cancel_call(self):
+        """Cancel a timeout/idle callback, if scheduled."""
+        if self.dc is not None:
+            self.dc.cancel()
+            self.dc = None
