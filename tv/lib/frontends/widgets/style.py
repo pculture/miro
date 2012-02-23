@@ -763,7 +763,7 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
         # center icon vertically and horizontally
         x = (context.width - icon.width) // 2
         y = (context.height - icon.height) // 2
-        icon.draw(context, x, y, icon.width, icon.height)
+        icon.draw(context, x + 1, y, icon.width, icon.height)
 
     def calc_icon(self):
         """Get the icon we should show.
