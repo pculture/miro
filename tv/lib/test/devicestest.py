@@ -375,22 +375,20 @@ class DeviceDatabaseTest(MiroTestCase):
         dir_contents = os.listdir(os.path.join(self.device.mount, '.miro'))
         self.assert_('corrupt_database' in dir_contents)
 
-    @mock.patch('miro.dialogs.MessageBoxDialog.run_blocking')
-    def test_upgrade_error(self, mock_dialog_run):
+    def test_upgrade_error(self):
         self.open_database()
         self.make_device_items('foo.mp3', 'bar.mp3')
         devices.write_database(self.device.database, self.device.mount)
         # Force our upgrade code to run and throw an exception.
         os.remove(os.path.join(self.device.mount, '.miro', 'sqlite'))
         mock_do_import = mock.Mock()
-        patcher = mock.patch('miro.devicedatabaseupgrade._do_import_old_items',
-                             mock_do_import)
+        method = ('miro.devicedatabaseupgrade.'
+                  '_DoImportOldItems.convert_old_item')
+        patcher = mock.patch(method, mock_do_import)
         mock_do_import.side_effect = sqlite3.DatabaseError("Error")
         self.device.database.created_new = False
         with patcher:
             self.open_database()
-        # check that we popup up an error dialog
-        self.assertEquals(mock_dialog_run.call_count, 1)
         # check that we created a new sqlite database and added new metadata
         # status rows for the device items
         cursor = self.device.sqlite_database.cursor

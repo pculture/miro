@@ -1338,11 +1338,19 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0):
             time.sleep(0.20 * 1.2 ** countdown)
             return load_sqlite_database(mount, json_db, device_size,
                                         countdown + 1)
+    DB_VERSION = 177
     if live_storage.created_new:
         # force the version to match the current schema.  This is a hack to
         # make databases from the nightlies match the ones from users starting
         # with 5.0
-        live_storage.set_version(174)
+        live_storage.set_version(DB_VERSION)
+    elif live_storage.get_version() != DB_VERSION:
+        # we don't support upgrading databases because the only ones that need
+        # upgrading are ones that have gone through the nightlys.  Just
+        # re-create the database in this case
+        logging.warn("Reseting device database: %r", mount)
+        live_storage.reset_database(init_db=True)
+
     devicedatabaseupgrade.import_old_items(live_storage, json_db, mount)
     return live_storage
 
