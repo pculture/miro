@@ -37,6 +37,7 @@ import urllib
 
 from miro import app
 from miro import databaseupgrade
+from miro import metadata
 from miro import prefs
 from miro import storedatabase
 
@@ -175,9 +176,9 @@ class _DoImportOldItems(object):
             finished_status = 1
 
         if self.net_lookup_enabled:
-            echonest_status = 'N' # STATUS_NOT_RUN
+            echonest_status = metadata.MetadataStatus.STATUS_NOT_RUN
         else:
-            echonest_status = 'S' # STATUS_SKIP
+            echonest_status = metadata.MetadataStatus.STATUS_SKIP
         status_id = self.insert_into_metadata_status(
             path, file_type, finished_status, 'S', moviedata_status,
             echonest_status, has_drm, OLD_ITEM_PRIORITY)
@@ -251,7 +252,7 @@ class _DoImportOldItems(object):
         # make a metadata_status row for each item in the database as if they
         # were just added
 
-        STATUS_NOT_RUN = 'N'
+        STATUS_NOT_RUN = metadata.MetadataStatus.STATUS_NOT_RUN
         self.insert_into_metadata_status(path, file_type, 0, STATUS_NOT_RUN,
                                          STATUS_NOT_RUN, STATUS_NOT_RUN,
                                          False, 0)

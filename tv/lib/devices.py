@@ -1344,10 +1344,14 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0):
         # make databases from the nightlies match the ones from users starting
         # with 5.0
         live_storage.set_version(DB_VERSION)
-    elif live_storage.get_version() != DB_VERSION:
-        # we don't support upgrading databases because the only ones that need
-        # upgrading are ones that have gone through the nightlys.  Just
-        # re-create the database in this case
+    elif live_storage.get_version() < DB_VERSION:
+        # Hack for 5.0.
+        #
+        # We didn't create sqlite databases in 4.0.x, so if there is a
+        # database with an earlier version, we know it was created by a
+        # nightly build.  In that case it's not a huge deal to reset it.
+        #
+        # FIXME: Need to write real upgrade code for post-5.0
         logging.warn("Reseting device database: %r", mount)
         live_storage.reset_database(init_db=True)
 

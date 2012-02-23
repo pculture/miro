@@ -82,6 +82,10 @@ MIME_SUBSITUTIONS = {
     u'QUICKTIME': u'MOV',
 }
 
+# We don't mdp_state as of version 5.0, but we need to set this for
+# DeviceItems so that older versions can read the device DB
+MDP_STATE_RAN = 1
+
 def _check_for_image(path, element):
     """Given an element (which is really a dict), traverses
     the path in the element and if that turns out to be an image,
@@ -2429,7 +2433,7 @@ class DeviceItem(object):
         self._fix_paths_from_database(kwargs)
         # set values for attributes used in pre-5.0 databases.
         self.metadata_version = 5 # version used in 4.0.x
-        self.mdp_state = 1 # RAN stat
+        self.mdp_state = MDP_STATE_RAN
         self.title_tag = None
 
         self.__dict__.update(kwargs)
