@@ -53,7 +53,7 @@ def import_old_items(live_storage, json_db, mount):
     """
     live_storage.cursor.execute("BEGIN TRANSACTION")
     try:
-        _DoImportOldItems(live_storage.cursor, json_db, mount).invoke()
+        _do_import_old_items(live_storage.cursor, json_db, mount)
         live_storage.cursor.execute("COMMIT TRANSACTION")
     except StandardError:
         logging.exception('exception while importing JSON db from %s', mount)
@@ -63,7 +63,7 @@ def import_old_items(live_storage, json_db, mount):
             logging.warn("Unexpected return value from the error handler for "
                          "a device database: %s" % action)
 
-class _DoImportOldItems(object):
+class _do_import_old_items(object):
     """Function object that handles the work for import_old_items"""
 
     # FIXME: this code is tied to the 5.0 release and may not work for future
@@ -131,7 +131,6 @@ class _DoImportOldItems(object):
         # track the next id that we should create in the database
         self.id_counter = itertools.count(databaseupgrade.get_next_id(cursor))
 
-    def invoke(self):
         if not self.device_items:
             # nothing new to import
             return

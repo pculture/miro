@@ -383,7 +383,7 @@ class DeviceDatabaseTest(MiroTestCase):
         os.remove(os.path.join(self.device.mount, '.miro', 'sqlite'))
         mock_do_import = mock.Mock()
         method = ('miro.devicedatabaseupgrade.'
-                  '_DoImportOldItems.convert_old_item')
+                  '_do_import_old_items.convert_old_item')
         patcher = mock.patch(method, mock_do_import)
         mock_do_import.side_effect = sqlite3.DatabaseError("Error")
         self.device.database.created_new = False
