@@ -557,10 +557,10 @@ class MetadataManagerTest(MiroTestCase):
         self.check_movie_data_not_scheduled('foo.mp3')
         # If echonest sees an HTTP error, it should log it an a temporary
         # failure
-        mock_schedule_retry_temp_failures = mock.Mock()
+        mock_retry_temporary_failure_caller = mock.Mock()
         patcher = mock.patch.object(self.metadata_manager,
-                                    'schedule_retry_temporary_failures',
-                                    mock_schedule_retry_temp_failures)
+                                    '_retry_temporary_failure_caller',
+                                    mock_retry_temporary_failure_caller)
         with patcher:
             self.check_echonest_error('foo.mp3', http_error=True)
         path = self.make_path('foo.mp3')
@@ -568,16 +568,13 @@ class MetadataManagerTest(MiroTestCase):
         self.assertEquals(status.echonest_status,
                           status.STATUS_TEMPORARY_FAILURE)
         # check that we scheduled an attempt to retry the request
-        mock_schedule_retry_temp_failures.assert_called_once_with()
+        mock_call = mock_retry_temporary_failure_caller.call_after_timeout
+        mock_call.assert_called_once_with(3600)
         # check that success after retrying
-        self.metadata_manager._retry_temporary_failures_scheduled = True
         self.metadata_manager.retry_temporary_failures()
         status = metadata.MetadataStatus.get_by_path(path)
         self.assertEquals(status.echonest_status,
                           status.STATUS_NOT_RUN)
-        self.assertEquals(
-            self.metadata_manager._retry_temporary_failures_scheduled,
-            False)
         self.check_run_echonest('foo.mp3', 'Bar', 'Artist', 'Fights')
 
     def test_audio_shares_cover_art(self):

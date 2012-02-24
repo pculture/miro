@@ -944,6 +944,7 @@ class MetadataManagerBase(signals.SignalEmitter):
     # mean more responsiveness, longer times allow us to bulk update many
     # items at once.
     UPDATE_INTERVAL = 1.0
+    RETRY_TEMPORARY_INTERVAL = 3600
 
     def __init__(self, cover_art_dir, screenshot_dir, db_info=None):
         signals.SignalEmitter.__init__(self)
@@ -980,8 +981,10 @@ class MetadataManagerBase(signals.SignalEmitter):
         # run_updates() call
         self.metadata_errors = []
         self._reset_new_metadata()
-        self._update_scheduled = False
-        self._retry_temporary_failures_scheduled = False
+        self._run_update_caller = eventloop.DelayedFunctionCaller(
+            self.run_updates)
+        self._retry_temporary_failure_caller = \
+                eventloop.DelayedFunctionCaller(self.retry_temporary_failures)
         self._calc_incomplete()
         self._setup_path_placeholders()
         self._setup_net_lookup_count()
@@ -1112,7 +1115,7 @@ class MetadataManagerBase(signals.SignalEmitter):
             self._run_mutagen(path)
         if status.current_processor is not None:
             self.count_tracker.file_started(path, initial_metadata)
-        self._schedule_update()
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
         self._send_net_lookup_counts_caller.call_when_idle()
         return initial_metadata
 
@@ -1167,7 +1170,7 @@ class MetadataManagerBase(signals.SignalEmitter):
                 entry.remove()
             status.remove()
             self.count_tracker.file_finished(path)
-        self._schedule_update()
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
         self._send_net_lookup_counts_caller.call_when_idle()
 
     def will_move_files(self, paths):
@@ -1368,16 +1371,9 @@ class MetadataManagerBase(signals.SignalEmitter):
             self.count_tracker.file_started(status.path, metadata)
 
         del self.restart_ids
-        self._schedule_update()
-
-    def schedule_retry_temporary_failures(self):
-        if not self._retry_temporary_failures_scheduled:
-            eventloop.add_timeout(3600, self.retry_temporary_failures,
-                                  'retry metadata temporory failures')
-            self._retry_temporary_failures_scheduled = True
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
 
     def retry_temporary_failures(self):
-        self._retry_temporary_failures_scheduled = False
         app.bulk_sql_manager.start()
         try:
             for status in MetadataStatus.failed_temporary_view():
@@ -1438,33 +1434,18 @@ class MetadataManagerBase(signals.SignalEmitter):
     def _on_task_complete(self, processor, path, result):
         path = self._untranslate_path(path)
         self.metadata_finished.append((processor, path, result))
-        self._schedule_update()
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
 
     def _on_task_error(self, processor, path, error):
         path = self._untranslate_path(path)
         self.metadata_errors.append((processor, path, error))
-        self._schedule_update()
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
 
     def _get_metadata_from_filename(self, path):
         """Get metadata that we know from a filename alone."""
         return {
             'file_type': filetypes.item_file_type_for_filename(path),
         }
-
-    def _schedule_update(self):
-        """Scheduling sending updates.
-
-        For performance reasons we try to group together database updates and
-        progress updates so that we can perform them in bulk.
-
-        Call this when we have updates from our metadata processors, or when
-        we may nede to change the MetadataProgressUpdate counts.
-        """
-        if not self._update_scheduled:
-            eventloop.add_timeout(self.UPDATE_INTERVAL,
-                                  self.run_updates,
-                                  'send metadata updates')
-            self._update_scheduled = True
 
     def run_updates(self):
         """Run any pending metadata updates.
@@ -1476,7 +1457,6 @@ class MetadataManagerBase(signals.SignalEmitter):
         # Should this be inside an idle iterator?  It definitely runs slowly
         # when we're running mutagen on a music library, but I think that's to
         # be expected.  It seems fast enough in other cases to me - BDK
-        self._update_scheduled = False
         new_metadata_copy = self.new_metadata
         app.bulk_sql_manager.start()
         try:
@@ -1557,7 +1537,8 @@ class MetadataManagerBase(signals.SignalEmitter):
             if processor is self.moviedata_processor and status.get_has_drm():
                 self.new_metadata[path].update({'has_drm': True})
             if processor_status == status.STATUS_TEMPORARY_FAILURE:
-                self.schedule_retry_temporary_failures()
+                self._retry_temporary_failure_caller.call_after_timeout(
+                    self.RETRY_TEMPORARY_INTERVAL)
         self.metadata_errors = []
 
     def run_next_processor(self, status):
