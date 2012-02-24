@@ -1508,7 +1508,7 @@ class TestEchonestQueries(MiroTestCase):
             self.assertEquals(grabbed_url.query, '')
 
     def check_echonest_grab_url_call(self):
-        search_url = 'http://developer.echonest.com/api/v4/song/search'
+        search_url = 'http://echonest.pculture.org/api/v4/song/search'
         query_dict = {
             'api_key': [echonest.ECHO_NEST_API_KEY],
             # NOTE: either order of the bucket params is okay
@@ -1520,7 +1520,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def check_echonest_grab_url_call_with_code(self):
         """Check the url sent to grab_url to perform our echonest query."""
-        identify_url = 'http://developer.echonest.com/api/v4/song/identify'
+        identify_url = 'http://echonest.pculture.org/api/v4/song/identify'
         post_vars = {
             'api_key': echonest.ECHO_NEST_API_KEY,
             # NOTE: either order of the bucket params is okay
@@ -1561,7 +1561,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def check_7digital_grab_url_call(self, release_id):
         """Check the url sent to grab_url to perform our 7digital query."""
-        seven_digital_url = 'http://api.7digital.com/1.2/release/details'
+        seven_digital_url = 'http://7digital.pculture.org/1.2/release/details'
         correct_query = {
             'oauth_consumer_key': [echonest.SEVEN_DIGITAL_API_KEY],
             'imageSize': ['350'],

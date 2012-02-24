@@ -148,7 +148,7 @@ class _EchonestQuery(object):
             'bucket': ['tracks', 'id:7digital'],
             'query': self._make_echonest_query(code, version, metadata),
         }
-        url = 'http://developer.echonest.com/api/v4/song/identify?'
+        url = 'http://echonest.pculture.org/api/v4/song/identify?'
         httpclient.grab_url(url,
                             self.echonest_callback, self.echonest_errback,
                             post_vars=post_vars)
@@ -162,7 +162,7 @@ class _EchonestQuery(object):
         for key in ('title', 'artist'):
             if key in metadata:
                 url_data.append((key, metadata[key].encode('utf-8')))
-        url = ('http://developer.echonest.com/api/v4/song/search?' +
+        url = ('http://echonest.pculture.org/api/v4/song/search?' +
                 urllib.urlencode(url_data))
         httpclient.grab_url(url, self.echonest_callback,
                             self.echonest_errback)
@@ -261,7 +261,7 @@ class _EchonestQuery(object):
             ('imageSize', '350'),
             ('releaseid', str(release_id)),
         ]
-        return ('http://api.7digital.com/1.2/release/details?' +
+        return ('http://7digital.pculture.org/1.2/release/details?' +
                 urllib.urlencode(url_data))
 
     def seven_digital_callback(self, data):
