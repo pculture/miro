@@ -1840,6 +1840,12 @@ class MetadataProgressUpdate(FrontendMessage):
         self.eta = eta
         self.total = total
 
-class FinishedRemovingAllNetLookup(FrontendMessage):
-    """Sent after the backend has removed all net lookup data."""
+class SetNetLookupEnabledFinished(FrontendMessage):
+    """The backend has processed the SetNetLookupEnabled message."""
     pass
+
+class NetLookupCounts(FrontendMessage):
+    """Update the frontend on how many items we're running net lookups for."""
+    def __init__(self, net_lookup_count, total_count):
+        self.net_lookup_count = net_lookup_count
+        self.total_count = total_count

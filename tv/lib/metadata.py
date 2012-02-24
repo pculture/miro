@@ -944,6 +944,7 @@ class MetadataManagerBase(signals.SignalEmitter):
     # mean more responsiveness, longer times allow us to bulk update many
     # items at once.
     UPDATE_INTERVAL = 1.0
+    RETRY_TEMPORARY_INTERVAL = 3600
 
     def __init__(self, cover_art_dir, screenshot_dir, db_info=None):
         signals.SignalEmitter.__init__(self)
@@ -971,6 +972,8 @@ class MetadataManagerBase(signals.SignalEmitter):
             processor.connect("task-complete", self._on_task_complete)
             processor.connect("task-error", self._on_task_error)
         self.count_tracker = self.make_count_tracker()
+        self._send_net_lookup_counts_caller = eventloop.DelayedFunctionCaller(
+            self._send_net_lookup_counts)
         # List of (processor, path, metadata) tuples for metadata since the
         # last run_updates() call
         self.metadata_finished = []
@@ -978,10 +981,15 @@ class MetadataManagerBase(signals.SignalEmitter):
         # run_updates() call
         self.metadata_errors = []
         self._reset_new_metadata()
-        self._update_scheduled = False
-        self._retry_temporary_failures_scheduled = False
+        self._run_update_caller = eventloop.DelayedFunctionCaller(
+            self.run_updates)
+        self._retry_temporary_failure_caller = \
+                eventloop.DelayedFunctionCaller(self.retry_temporary_failures)
         self._calc_incomplete()
         self._setup_path_placeholders()
+        self._setup_net_lookup_count()
+        # send initial NetLookupCounts message
+        self._send_net_lookup_counts()
 
     def _reset_new_metadata(self):
         self.new_metadata = collections.defaultdict(dict)
@@ -1018,8 +1026,24 @@ class MetadataManagerBase(signals.SignalEmitter):
         However, we don't actually want to load the objects yet, since this is
         called pretty early in the startup process.
         """
-        for row in MetadataStatus.select(["path"], db_info=self.db_info):
+        rows = MetadataStatus.select(["path"], db_info=self.db_info)
+        for row in rows:
             self.db_info.db.cache.set('metadata', row[0], None)
+        # also set up total_count here, since it's convenient.  total_count
+        # tracks the total number of paths in the system
+        self.total_count = len(rows)
+
+    def _setup_net_lookup_count(self):
+        """Set up net_lookup_count
+
+        net_lookup_count tracks the number of paths in the system with
+        net_lookup_enabled=True.
+        """
+        cursor = self.db_info.db.cursor
+        cursor.execute("SELECT COUNT(1) "
+                       "FROM metadata_status "
+                       "WHERE net_lookup_enabled=1")
+        self.net_lookup_count = cursor.fetchone()[0]
 
     @contextlib.contextmanager
     def bulk_add(self):
@@ -1073,6 +1097,9 @@ class MetadataManagerBase(signals.SignalEmitter):
             status = MetadataStatus(path, db_info=self.db_info)
         except sqlite3.IntegrityError:
             raise ValueError("%s already added" % path)
+        if status.net_lookup_enabled:
+            self.net_lookup_count += 1
+        self.total_count += 1
         initial_metadata = self._get_metadata_from_filename(path)
         initial_metadata['net_lookup_enabled'] = status.net_lookup_enabled
         if local_path is not None:
@@ -1088,7 +1115,8 @@ class MetadataManagerBase(signals.SignalEmitter):
             self._run_mutagen(path)
         if status.current_processor is not None:
             self.count_tracker.file_started(path, initial_metadata)
-        self._schedule_update()
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
+        self._send_net_lookup_counts_caller.call_when_idle()
         return initial_metadata
 
     def path_in_system(self, path):
@@ -1128,13 +1156,22 @@ class MetadataManagerBase(signals.SignalEmitter):
         """Does the work for remove_file and remove_files"""
         self._cancel_processing_paths(paths)
         for path in paths:
-            status = self._get_status_for_path(path)
+            try:
+                status = self._get_status_for_path(path)
+            except KeyError:
+                logging.warn("MetadataManager._remove_files: KeyError "
+                             "getting status for %r", path)
+                continue
+            if status.net_lookup_enabled:
+                self.net_lookup_count -= 1
+            self.total_count -= 1
             for entry in MetadataEntry.metadata_for_status(status,
                                                            self.db_info):
                 entry.remove()
             status.remove()
             self.count_tracker.file_finished(path)
-        self._schedule_update()
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
+        self._send_net_lookup_counts_caller.call_when_idle()
 
     def will_move_files(self, paths):
         """Prepare for files to be moved
@@ -1244,6 +1281,7 @@ class MetadataManagerBase(signals.SignalEmitter):
         paths_to_refresh = []
         paths_to_cancel = []
         paths_to_start = []
+        change_count = 0
         app.bulk_sql_manager.start()
         try:
             for path in paths:
@@ -1253,6 +1291,10 @@ class MetadataManagerBase(signals.SignalEmitter):
                     logging.warn("set_net_lookup_enabled() "
                                  "path not in system: %s", path)
                     continue
+                if status.net_lookup_enabled == enabled:
+                    # nothing to change
+                    continue
+                change_count += 1
                 old_current_processor = status.current_processor
                 status.set_net_lookup_enabled(enabled)
                 if MetadataEntry.set_disabled('echonest', status, not enabled,
@@ -1282,13 +1324,25 @@ class MetadataManagerBase(signals.SignalEmitter):
         if paths_to_refresh:
             self.refresh_metadata_for_paths(paths_to_refresh)
 
+        if enabled:
+            self.net_lookup_count += change_count
+        else:
+            self.net_lookup_count -= change_count
+        # call _send_net_lookup_counts() immediately because we want the
+        # frontend to update the counts before it un-disables the buttons.
+        self._send_net_lookup_counts_caller.call_now()
+        self._send_progress_updates()
+
     def set_net_lookup_enabled_for_all(self, enabled):
         """Set if we should do an internet lookup for all current paths"""
         paths = [r[0] for r in
                  MetadataStatus.select(['path'], db_info=self.db_info)]
         self.set_net_lookup_enabled(paths, enabled)
-        if not enabled:
-            messages.FinishedRemovingAllNetLookup().send_to_frontend()
+        messages.SetNetLookupEnabledFinished().send_to_frontend()
+
+    def _send_net_lookup_counts(self):
+        m = messages.NetLookupCounts(self.net_lookup_count, self.total_count)
+        m.send_to_frontend()
 
     def _calc_incomplete(self):
         """Figure out which metadata status objects we should restart.
@@ -1317,16 +1371,9 @@ class MetadataManagerBase(signals.SignalEmitter):
             self.count_tracker.file_started(status.path, metadata)
 
         del self.restart_ids
-        self._schedule_update()
-
-    def schedule_retry_temporary_failures(self):
-        if not self._retry_temporary_failures_scheduled:
-            eventloop.add_timeout(3600, self.retry_temporary_failures,
-                                  'retry metadata temporory failures')
-            self._retry_temporary_failures_scheduled = True
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
 
     def retry_temporary_failures(self):
-        self._retry_temporary_failures_scheduled = False
         app.bulk_sql_manager.start()
         try:
             for status in MetadataStatus.failed_temporary_view():
@@ -1387,33 +1434,18 @@ class MetadataManagerBase(signals.SignalEmitter):
     def _on_task_complete(self, processor, path, result):
         path = self._untranslate_path(path)
         self.metadata_finished.append((processor, path, result))
-        self._schedule_update()
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
 
     def _on_task_error(self, processor, path, error):
         path = self._untranslate_path(path)
         self.metadata_errors.append((processor, path, error))
-        self._schedule_update()
+        self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
 
     def _get_metadata_from_filename(self, path):
         """Get metadata that we know from a filename alone."""
         return {
             'file_type': filetypes.item_file_type_for_filename(path),
         }
-
-    def _schedule_update(self):
-        """Scheduling sending updates.
-
-        For performance reasons we try to group together database updates and
-        progress updates so that we can perform them in bulk.
-
-        Call this when we have updates from our metadata processors, or when
-        we may nede to change the MetadataProgressUpdate counts.
-        """
-        if not self._update_scheduled:
-            eventloop.add_timeout(self.UPDATE_INTERVAL,
-                                  self.run_updates,
-                                  'send metadata updates')
-            self._update_scheduled = True
 
     def run_updates(self):
         """Run any pending metadata updates.
@@ -1425,7 +1457,6 @@ class MetadataManagerBase(signals.SignalEmitter):
         # Should this be inside an idle iterator?  It definitely runs slowly
         # when we're running mutagen on a music library, but I think that's to
         # be expected.  It seems fast enough in other cases to me - BDK
-        self._update_scheduled = False
         new_metadata_copy = self.new_metadata
         app.bulk_sql_manager.start()
         try:
@@ -1506,7 +1537,8 @@ class MetadataManagerBase(signals.SignalEmitter):
             if processor is self.moviedata_processor and status.get_has_drm():
                 self.new_metadata[path].update({'has_drm': True})
             if processor_status == status.STATUS_TEMPORARY_FAILURE:
-                self.schedule_retry_temporary_failures()
+                self._retry_temporary_failure_caller.call_after_timeout(
+                    self.RETRY_TEMPORARY_INTERVAL)
         self.metadata_errors = []
 
     def run_next_processor(self, status):
@@ -1585,3 +1617,7 @@ class DeviceMetadataManager(MetadataManagerBase):
         msg = messages.MetadataProgressUpdate(target, finished,
                                               finished_local, eta, total)
         msg.send_to_frontend()
+
+    def _send_net_lookup_counts(self):
+        # This isn't supported for devices yet
+        pass
