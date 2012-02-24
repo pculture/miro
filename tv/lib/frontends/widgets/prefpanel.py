@@ -473,6 +473,10 @@ def pack_extras(vbox, panel):
         [vbox.pack_start(mem) for mem in extras[1:]]
 
 class GeneralPanel(PanelBuilder):
+    def __init__(self):
+        PanelBuilder.__init__(self)
+        self.disable_net_lookup_buttons = False
+
     def build_widget(self):
         v = widgetset.VBox(8)
         self.pack_startup_shutdown_section(v)
@@ -559,26 +563,69 @@ class GeneralPanel(PanelBuilder):
                       '7Digital).')
         v.pack_start(widgetset.Label(help_text))
 
-        run_button = widgetset.Button(
+        self.run_net_lookup_button = widgetset.Button(
             _('Run Online Lookup for All Current Music'))
-        run_button.connect('clicked', self.on_run_online_lookup)
-        remove_button = widgetset.Button(_("Remove All Lookup data"))
-        remove_button.connect('clicked', self.on_remove_lookup_data)
+        self.run_net_lookup_button.connect(
+            'clicked', self.net_lookup_button_clicked, True)
+        self.remove_net_lookup_button = widgetset.Button(
+            _("Remove All Lookup data"))
+        self.remove_net_lookup_button.connect(
+            'clicked', self.net_lookup_button_clicked, False)
 
         v.pack_start(widgetutil.build_control_line(
-            (run_button, remove_button)))
+            (self.run_net_lookup_button, self.remove_net_lookup_button)))
+
+        self.net_lookup_label = widgetset.Label(self._net_lookup_label_text())
+        v.pack_start(self.net_lookup_label)
 
         cb_text = _('Automatically run online lookup for any new audio files '
                     'that I add to Miro.')
         cbx = widgetset.Checkbox(cb_text)
         attach_boolean(cbx, prefs.NET_LOOKUP_BY_DEFAULT)
         v.pack_start(cbx)
+        self._update_net_lookup_butons()
 
-    def on_run_online_lookup(self, button):
-        messages.SetNetLookupEnabled(None, True).send_to_backend()
+    def net_lookup_button_clicked(self, button, value):
+        messages.SetNetLookupEnabled(None, value).send_to_backend()
+        self.disable_net_lookup_buttons = True
+        self._update_net_lookup_butons()
 
-    def on_remove_lookup_data(self, button):
-        messages.SetNetLookupEnabled(None, False).send_to_backend()
+    def enable_net_lookup_buttons(self):
+        self.disable_net_lookup_buttons = False
+        self._update_net_lookup_butons()
+
+    def update_net_lookup_counts(self):
+        self.net_lookup_label.set_text(self._net_lookup_label_text())
+        self._update_net_lookup_butons()
+
+    def _net_lookup_label_text(self):
+        global _net_lookup_counts
+
+        return _("Using lookup data for %(net_lookup_count)s "
+                 "out of %(total_count)s items", {
+                     'net_lookup_count': _net_lookup_counts[0],
+                     'total_count': _net_lookup_counts[1],
+                 })
+
+    def _update_net_lookup_butons(self):
+        """Enable/Disable the buttons for echonest lookup."""
+        global _net_lookup_counts
+
+        net_lookup_count, total_count = _net_lookup_counts
+
+        if self.disable_net_lookup_buttons:
+            self.run_net_lookup_button.disable()
+            self.remove_net_lookup_button.disable()
+        elif net_lookup_count == total_count:
+            self.run_net_lookup_button.disable()
+            self.remove_net_lookup_button.enable()
+        elif net_lookup_count == 0:
+            self.run_net_lookup_button.enable()
+            self.remove_net_lookup_button.disable()
+        else:
+            self.run_net_lookup_button.enable()
+            self.remove_net_lookup_button.enable()
+
 
 class PodcastsPanel(PanelBuilder):
     def build_widget(self):
@@ -1416,10 +1463,10 @@ add_panel("extensions", gettext_lazy("Extensions"), ExtensionsPanel,
 class PreferencesWindow(widgetset.PreferencesWindow):
     def __init__(self):
         widgetset.PreferencesWindow.__init__(self, _("Preferences"))
-        self.panel_builders = []
+        self.panel_builders = {}
         for name, title, image_name, panel_builder_class in _PANEL:
             panel_builder = panel_builder_class()
-            self.panel_builders.append(panel_builder)
+            self.panel_builders[name] = panel_builder
             panel = panel_builder.build_widget()
             alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
             alignment.set_padding(20, 20, 20, 20)
@@ -1427,6 +1474,9 @@ class PreferencesWindow(widgetset.PreferencesWindow):
             self.append_panel(name, alignment, title, image_name)
 
         self.finish_panels()
+
+    def get_panel(self, name):
+        return self.panel_builders[name]
 
     def select_panel(self, selection):
         if selection is None:
@@ -1444,11 +1494,11 @@ class PreferencesWindow(widgetset.PreferencesWindow):
         return False
 
     def do_show(self):
-        for panel_builder in self.panel_builders:
+        for panel_builder in self.panel_builders.values():
             panel_builder.on_window_open()
 
     def do_hide(self):
-        for panel_builder in self.panel_builders:
+        for panel_builder in self.panel_builders.values():
             panel_builder.on_window_closed()
 
 _pref_window = None
@@ -1456,6 +1506,7 @@ _pref_window = None
 def show_window(selection=None):
     """Displays the preferences window."""
     global _pref_window
+
     if _pref_window is None:
         _pref_window = PreferencesWindow()
     _pref_window.select_panel(selection)
@@ -1466,3 +1517,17 @@ def is_window_shown():
 
 def hide_window():
     _pref_window.close()
+
+def enable_net_lookup_buttons():
+    global _pref_window
+    if _pref_window is not None:
+        _pref_window.get_panel('general').enable_net_lookup_buttons()
+
+_net_lookup_counts = (0, 0)
+def update_net_lookup_counts(net_lookup_count, total_count):
+    global _pref_window
+    global _net_lookup_counts
+
+    _net_lookup_counts = (net_lookup_count, total_count)
+    if _pref_window is not None:
+        _pref_window.get_panel('general').update_net_lookup_counts()

@@ -1708,7 +1708,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
             message.target, message.finished_local, message.eta,
             message.total)
 
-    def handle_finished_removing_all_net_lookup(self, message):
-        title = _("Online lookup data removed")
-        description = _("All song info from online lookup has been removed")
-        dialogs.show_message(title, description)
+    def handle_set_net_lookup_enabled_finished(self, message):
+        prefpanel.enable_net_lookup_buttons()
+
+    def handle_net_lookup_counts(self, message):
+        prefpanel.update_net_lookup_counts(message.net_lookup_count,
+                                           message.total_count)
