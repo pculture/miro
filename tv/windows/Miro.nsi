@@ -332,6 +332,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
 !macro uninstall directory
   ; Remove the program
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
+  Delete   "${directory}\${CONFIG_EXECUTABLE}.log"
   Delete   "${directory}\${CONFIG_ICON}"
   Delete   "${directory}\${CONFIG_DOWNLOADER_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_HELPER_EXECUTABLE}"
@@ -347,6 +348,9 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
 
   RMDir /r "${directory}\extensions"
   RMDir /r "${directory}\etc"
+  RMDir /r "${directory}\lib"
+  RMDir /r "${directory}\share"
+  RMDir /r "${directory}\vlc-plugins"
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\gstreamer-0.10"
@@ -618,6 +622,8 @@ StrCmp $ONLY_INSTALL_THEME "1" install_theme
   File  "ffmpeg2theora.exe"
   File  "*.ffpreset"
   File  /r etc
+  File  /r lib
+  File  /r share
   File  /r extensions
   File  /r resources
   File  /r xulrunner
@@ -1204,7 +1210,7 @@ Section "Uninstall" SEC91
 
   Delete "$DESKTOP\$R0.lnk"
   Delete "$QUICKLAUNCH\$R0.lnk"
-
+  
   RMDir "$SMPROGRAMS\$R1"
 
 continue:
@@ -1250,13 +1256,16 @@ continue:
   DeleteRegKey HKLM "Software\magnet\handlers\${CONFIG_SHORT_APP_NAME}"
 
   !insertmacro uninstall $INSTDIR
+  #RMDIR \r "$PROGRAMFILES\$PUBLISHER\lib"
+  #RMDIR \r "$PROGRAMFILES\$PUBLISHER\share"
+  #RMDIR \r "$PROGRAMFILES\$PUBLISHER\vlc-plugins"
   RMDIR "$PROGRAMFILES\$PUBLISHER"
 
   ; Remove Start Menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
   Delete "$SMPROGRAMS\$R0\${RUN_SHORTCUT}"
   Delete "$SMPROGRAMS\$R0\${UNINSTALL_SHORTCUT}"
-  RMDir "$SMPROGRAMS\$R0"
+  RMDir /r "$SMPROGRAMS\$R0"
 
   ; Remove desktop and quick launch shortcuts
   Delete "$DESKTOP\${RUN_SHORTCUT}"
