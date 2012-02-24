@@ -1148,12 +1148,9 @@ class DeviceMetadataTest(EventLoopTest):
             'file_type': u'audio',
             'title': u'Title',
             'album': u'Album',
-        }
-        self.moviedata_metadata = { 'duration': 100 }
-        self.echonest_metadata = { 
-            'title': u'BetterTitle',
             'artist': u'Artist',
         }
+        self.moviedata_metadata = { 'duration': 100 }
         # make a device manager
         app.device_manager = mock.Mock()
         app.device_manager.connected = {self.device.id: self.device}
@@ -1183,9 +1180,6 @@ class DeviceMetadataTest(EventLoopTest):
         metadata_manager.moviedata_processor.emit("task-complete", path,
                                                  self.moviedata_metadata)
         metadata_manager.run_updates()
-        metadata_manager.echonest_processor.emit("task-complete", path,
-                                                 self.echonest_metadata)
-        metadata_manager.run_updates()
 
     def get_metadata_for_item(self):
         return self.device.metadata_manager.get_metadata('test-song.ogg')
@@ -1210,7 +1204,7 @@ class DeviceMetadataTest(EventLoopTest):
         # check data in MetadataManager
         self.assertDictEquals(self.get_metadata_for_item(), {
             'file_type': u'audio',
-            'title': u'BetterTitle',
+            'title': u'Title',
             'album': u'Album',
             'duration': 100,
             'artist': 'Artist',
@@ -1219,15 +1213,15 @@ class DeviceMetadataTest(EventLoopTest):
         })
         # check data in the json database
         item_data = self.device.database[u'audio'][u'test-song.ogg']
-        self.assertEquals(item_data[u'title'], u'BetterTitle')
+        self.assertEquals(item_data[u'title'], u'Title')
         self.assertEquals(item_data[u'artist'], u'Artist')
         self.assertEquals(item_data[u'album'], u'Album')
-        # check the item-changed signal.  We should have gotten 3 calls, one
+        # check the item-changed signal.  We should have gotten 2 calls, one
         # for each time we ran run_updates() in run_processors().  Check the
         # data from the last emission
-        self.assertEquals(item_changed_handler.call_count, 3)
+        self.assertEquals(item_changed_handler.call_count, 2)
         device_item = item_changed_handler.call_args[0][1]
-        self.assertEquals(device_item.title, u'BetterTitle')
+        self.assertEquals(device_item.title, u'Title')
         self.assertEquals(device_item.artist, u'Artist')
         self.assertEquals(device_item.album, u'Album')
 
@@ -1240,7 +1234,6 @@ class DeviceMetadataTest(EventLoopTest):
         cover_art_path = os.path.join(self.device.mount, '.miro', 'cover-art',
                                       unicode_to_filename(u'Album'))
         self.moviedata_metadata['screenshot_path'] = screenshot_path
-        self.echonest_metadata['cover_art_path'] = cover_art_path
         for path in (screenshot_path, cover_art_path):
             if not os.path.exists(os.path.dirname(path)):
                 os.makedirs(os.path.dirname(path))
@@ -1303,9 +1296,9 @@ class DeviceMetadataTest(EventLoopTest):
         self.assertEquals(status.current_processor, None)
         self.assertEquals(status.mutagen_status, status.STATUS_COMPLETE)
         self.assertEquals(status.moviedata_status, status.STATUS_COMPLETE)
-        self.assertEquals(status.echonest_status, status.STATUS_COMPLETE)
+        self.assertEquals(status.echonest_status, status.STATUS_SKIP)
         # test that we made MetadataEntry rows
-        for source in (u'mutagen', u'movie-data', u'echonest'):
+        for source in (u'mutagen', u'movie-data'):
             # this will raise an exception if the entry is not there
             metadata.MetadataEntry.get_entry(source, status,
                                              device_db_info)
