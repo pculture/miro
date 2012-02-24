@@ -1154,7 +1154,8 @@ class DeviceMetadataTest(EventLoopTest):
         # make a device manager
         app.device_manager = mock.Mock()
         app.device_manager.connected = {self.device.id: self.device}
-        # run echonest for our files
+        # Set NET_LOOKUP_BY_DEFAULT to True.  We should ignore it for device
+        # items and always set net_lookup_enabled to False.
         app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
 
     def tearDown(self):
@@ -1189,11 +1190,11 @@ class DeviceMetadataTest(EventLoopTest):
         device_item = self.make_device_item()
         self.assertDictEquals(self.get_metadata_for_item(), {
             u'file_type': u'audio',
-            u'net_lookup_enabled': True,
+            u'net_lookup_enabled': False,
             u'has_drm': False,
         })
         self.assertEquals(device_item.file_type, u'audio')
-        self.assertEquals(device_item.net_lookup_enabled, True)
+        self.assertEquals(device_item.net_lookup_enabled, False)
 
     def test_update(self):
         item_changed_handler = mock.Mock()
@@ -1209,7 +1210,7 @@ class DeviceMetadataTest(EventLoopTest):
             'duration': 100,
             'artist': 'Artist',
             'has_drm': False,
-            'net_lookup_enabled': True,
+            'net_lookup_enabled': False,
         })
         # check data in the json database
         item_data = self.device.database[u'audio'][u'test-song.ogg']
@@ -1302,9 +1303,14 @@ class DeviceMetadataTest(EventLoopTest):
             # this will raise an exception if the entry is not there
             metadata.MetadataEntry.get_entry(source, status,
                                              device_db_info)
-        # the device item should have the original items metadata
+        # the device item should have the original items metadata, except
+        # we shouldn't copy net_lookup_enabled
         device_item_metadata = self.device.metadata_manager.get_metadata(
             copied_item_path)
+        self.assertEquals(item_metadata['net_lookup_enabled'], True)
+        self.assertEquals(device_item_metadata['net_lookup_enabled'], False)
+        del item_metadata['net_lookup_enabled']
+        del device_item_metadata['net_lookup_enabled']
         self.assertDictEquals(device_item_metadata, item_metadata)
 
 class DeviceMetadataUpgradeTest(MiroTestCase):

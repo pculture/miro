@@ -92,9 +92,9 @@ class MetadataStatus(database.DDBObject):
         u'echonest': 'echonest_status',
     }
 
-    def setup_new(self, path):
+    def setup_new(self, path, net_lookup_enabled):
         self.path = path
-        self.net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
+        self.net_lookup_enabled = net_lookup_enabled
         self.mutagen_status = self.STATUS_NOT_RUN
         self.moviedata_status = self.STATUS_NOT_RUN
         if self.net_lookup_enabled:
@@ -110,7 +110,12 @@ class MetadataStatus(database.DDBObject):
     def copy_status(self, other_status):
         """Copy values from another metadata status object."""
         for name, field in app.db.schema_fields(MetadataStatus):
-            if name not in ('id', 'path'):
+            # don't copy id or path for obvious resons.  Don't copy
+            # net_lookup_enabled because we don't want the other status's
+            # value to overwrite ours.  The main reason is that for device
+            # items, when we copy the local item's metadata, we don't want to
+            # set net_lookup_enabled to True.
+            if name not in ('id', 'path', 'net_lookup_enabled'):
                 setattr(self, name, getattr(other_status, name))
         self.signal_change()
 
@@ -1094,7 +1099,8 @@ class MetadataManagerBase(signals.SignalEmitter):
         :raises ValueError: path is already in the system
         """
         try:
-            status = MetadataStatus(path, db_info=self.db_info)
+            status = MetadataStatus(path, self.net_lookup_enabled_default(),
+                                    db_info=self.db_info)
         except sqlite3.IntegrityError:
             raise ValueError("%s already added" % path)
         if status.net_lookup_enabled:
@@ -1118,6 +1124,10 @@ class MetadataManagerBase(signals.SignalEmitter):
         self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
         self._send_net_lookup_counts_caller.call_when_idle()
         return initial_metadata
+
+    def net_lookup_enabled_default(self):
+        """net_lookup_enabled value for new MetadataStatus objects."""
+        return app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
 
     def path_in_system(self, path):
         """Test if a path is in the metadata system."""
@@ -1582,6 +1592,19 @@ class DeviceMetadataManager(MetadataManagerBase):
         self.device_id = device_id
         # FIXME: should we wait to restart incomplete metadata?
         self.restart_incomplete()
+
+    def net_lookup_enabled_default(self):
+        """For devices we always want net_lookup_enabled to be False.
+
+        See #18788.
+        """
+        return False
+
+    def set_net_lookup_enabled(self, paths, enabled):
+        # net_lookup_enabled should be False for device items and never
+        # change.  Log a warning if we call set_net_lookup_enabled
+        logging.warn("DeviceMetadataManager.set_net_lookup_enabled() called")
+        return
 
     def make_count_tracker(self):
         # for devices we just use a simple count tracker

@@ -135,7 +135,7 @@ class ItemContextMenuHandler(object):
             if not (item.device or item.remote):
                 section.append((_('Set media kind as...'),
                                 self._make_edit_metadata_menu()))
-            if not item.remote:
+            if not item.remote and not item.device:
                 if item.net_lookup_enabled:
                     label = _("Don't Use Online Lookup Data")
                     callback = app.widgetapp.disable_net_lookup_for_selection
@@ -407,7 +407,7 @@ class ItemContextMenuHandler(object):
                 menu.append((_('Convert to...'), convert_menu))
         menu.append((_('Set media kind as...'),
                     self._make_edit_metadata_menu()))
-        if downloaded and not remote:
+        if downloaded and not remote and not device:
             if net_lookup_enabled:
                 label = _("Don't Use Online Lookup Data")
                 callback = app.widgetapp.disable_net_lookup_for_selection
