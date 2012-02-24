@@ -185,6 +185,10 @@ class MetadataStatus(database.DDBObject):
         column_name = self._source_name_to_status_column[source_name]
         setattr(self, column_name, value)
 
+    def need_metadata_for_source(self, source_name):
+        column_name = self._source_name_to_status_column[source_name]
+        return getattr(self, column_name) == self.STATUS_NOT_RUN
+
     def update_after_success(self, entry):
         """Update after we succussfully extracted some metadata
 
@@ -537,10 +541,16 @@ class _EchonestProcessor(_MetadataProcessor):
         self._querying_echonest = False
         self._codegen_info = get_enmfp_executable_info()
         self._metadata_for_path = {}
+        self._paths_in_system = set()
         self._http_error_times = collections.deque()
         self._waiting_from_http_errors = False
 
     def add_path(self, path, current_metadata):
+        if path in self._paths_in_system:
+            logging.warn("_EchonestProcessor.add_path: attempt to add "
+                         "duplicate path: %r", path)
+            return
+        self._paths_in_system.add(path)
         self._metadata_for_path[path] = current_metadata
         if not self.should_skip_codegen(current_metadata):
             self._codegen_queue.add(path)
@@ -564,8 +574,12 @@ class _EchonestProcessor(_MetadataProcessor):
         self._running_codegen = True
 
     def _codegen_callback(self, path, code):
+        if path in self._paths_in_system:
+            self._echonest_queue.add(path, code)
+        else:
+            logging.warn("_EchonestProcessor._codegen_callback called for "
+                         "path not in system: %r", path)
         self._running_codegen = False
-        self._echonest_queue.add(path, code)
         self._process_queue()
 
     def _codegen_errback(self, path, error):
@@ -574,9 +588,14 @@ class _EchonestProcessor(_MetadataProcessor):
         self.emit('task-error', path, error)
         self._running_codegen = False
         del self._metadata_for_path[path]
+        self._paths_in_system.discard(path)
         self._process_queue()
 
     def _query_echonest(self, path, code):
+        if path not in self._paths_in_system:
+            logging.warn("_EchonestProcessor._query_echonest() called for "
+                         "path not in system: %r", path)
+            return
         version = 3.15 # change to 4.11 for echoprint
         metadata = self._metadata_for_path.pop(path)
         echonest.query_echonest(path, self._cover_art_dir, code, version,
@@ -585,13 +604,19 @@ class _EchonestProcessor(_MetadataProcessor):
         self._querying_echonest = True
 
     def _echonest_callback(self, path, metadata):
-        logging.debug("Got echonest data for %s:\n%s", path, metadata)
+        if path in self._paths_in_system:
+            logging.debug("Got echonest data for %s:\n%s", path, metadata)
+            self._paths_in_system.discard(path)
+            self.emit('task-complete', path, metadata)
+        else:
+            logging.warn("_EchonestProcessor._echonest_callback called for "
+                         "path not in system: %r", path)
         self._querying_echonest = False
-        self.emit('task-complete', path, metadata)
         self._process_queue()
 
     def _echonest_errback(self, path, error):
         logging.warn("Error running echonest for %s (%s)" % (path, error))
+        self._paths_in_system.discard(path)
         self._querying_echonest = False
         if isinstance(error, net.NetworkError):
             self._http_error_times.append(clock.clock())
@@ -639,6 +664,9 @@ class _EchonestProcessor(_MetadataProcessor):
         path_set = set(paths)
         self._echonest_queue.remove_paths(path_set)
         self._codegen_queue.remove_paths(path_set)
+        self._paths_in_system -= path_set
+        for path in path_set.intersection(self._metadata_for_path.keys()):
+            del self._metadata_for_path[path]
         # since we may have deleted active paths, process the new ones
         self._process_queue()
 
@@ -1422,6 +1450,11 @@ class MetadataManagerBase(signals.SignalEmitter):
             except database.ObjectNotFoundError:
                 logging.warn("_process_metadata_finished -- path removed: %s",
                              path)
+                continue
+            if not status.need_metadata_for_source(processor.source_name):
+                logging.warn("_process_metadata_finished -- got duplicate "
+                             "metadata for %s (source: %s)", path,
+                             processor.source_name)
                 continue
             self._make_new_metadata_entry(status, processor, path, result)
             self.count_tracker.file_updated(path, result)
