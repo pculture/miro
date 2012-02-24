@@ -441,7 +441,8 @@ class miro_build(build):
         cc.add_include_dir('/usr/include/ffmpeg')
         output_dir = os.path.join(self.build_base, 'miro-segmenter')
         segmenter_objs = cc.compile([segmenter_src],
-                                    output_dir=output_dir)
+                                    output_dir=output_dir,
+                                    extra_preargs=(os.environ.get("CFLAGS") or "").split())
         cc.link_executable(segmenter_objs, 'miro-segmenter',
                            output_dir=output_dir)
         segmenter_exe = os.path.join(output_dir, 'miro-segmenter')
