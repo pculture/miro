@@ -637,7 +637,7 @@ class DelayedFunctionCaller(object):
 
     def call_now(self, *args, **kwargs):
         """Call our function immediately."""
-        self.dc = None
+        self.cancel_call()
         self.func(*args, **kwargs)
 
     def cancel_call(self):
