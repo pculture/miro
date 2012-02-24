@@ -69,71 +69,68 @@ class _do_import_old_items(object):
     # FIXME: this code is tied to the 5.0 release and may not work for future
     # versions
 
+    # map old MDP states to their new values
+    mdp_state_map = {
+        None : 'N',
+        0 : 'S',
+        1 : 'C',
+        2 : 'F',
+    }
+
+    # list that contains tuples in the form of
+    # (metadata_column_name, device_item_key
+    column_map = [
+        ('duration', 'duration'),
+        ('album', 'album'),
+        ('album_artist', 'album_artist'),
+        ('album_tracks', 'album_tracks'),
+        ('artist', 'artist'),
+        ('screenshot', 'screenshot'),
+        ('drm', 'has_drm'),
+        ('genre', 'genre'),
+        ('title ', 'title'),
+        ('track', 'track'),
+        ('year', 'year'),
+        ('description', 'description'),
+        ('rating', 'rating'),
+        ('show', 'show'),
+        ('episode_id', 'episode_id'),
+        ('episode_number', 'episode_number'),
+        ('season_number', 'season_number'),
+        ('kind', 'kind'),
+    ]
+
+    insert_columns = ['id', 'status_id', 'file_type', 'source', 'priority',
+                      'disabled']
+    for new_name, old_name in column_map:
+        insert_columns.append(new_name)
+
+    # SQL to insert a row into the metadata table
+    metadata_insert_sql = (
+        "INSERT INTO metadata (%s) VALUES (%s)" %
+        (', '.join(insert_columns),
+         ', '.join('?' for i in xrange(len(insert_columns)))))
+
     def __init__(self, cursor, json_db, mount):
         self.cover_art_dir = os.path.join(mount, '.miro', 'cover-art')
         self.net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
         self.mount = mount
         self.cursor = cursor
-        # map old MDP states to their new values
-        self.mdp_state_map = {
-            None : 'N',
-            0 : 'S',
-            1 : 'C',
-            2 : 'F',
-        }
-        # list that contains tuples in the form of
-        # (metadata_column_name, device_item_key
-        self.column_map = [
-            ('duration', 'duration'),
-            ('album', 'album'),
-            ('album_artist', 'album_artist'),
-            ('album_tracks', 'album_tracks'),
-            ('artist', 'artist'),
-            ('screenshot', 'screenshot'),
-            ('drm', 'has_drm'),
-            ('genre', 'genre'),
-            ('title ', 'title'),
-            ('track', 'track'),
-            ('year', 'year'),
-            ('description', 'description'),
-            ('rating', 'rating'),
-            ('show', 'show'),
-            ('episode_id', 'episode_id'),
-            ('episode_number', 'episode_number'),
-            ('season_number', 'season_number'),
-            ('kind', 'kind'),
-        ]
-
-        insert_columns = ['id', 'status_id', 'file_type', 'source', 'priority',
-                          'disabled']
-        for new_name, old_name in self.column_map:
-            insert_columns.append(new_name)
-
-        # SQL to insert a row into the metadata table
-        self.metadata_insert_sql = (
-            "INSERT INTO metadata (%s) VALUES (%s)" %
-            (', '.join(insert_columns),
-             ', '.join('?' for i in xrange(len(insert_columns)))))
-
-        # track which paths already have a row in the metadata_status table
-        cursor.execute("SELECT path FROM metadata_status")
-        self.paths_in_metadata_table = set(row[0] for row in cursor)
-
-        # get info about each item on the device
-        self.device_items = []
-        for file_type in (u'audio', u'video', u'other'):
-            if file_type not in json_db:
-                continue
-            for path, data in json_db[file_type].iteritems():
-                if path not in self.paths_in_metadata_table:
-                    self.device_items.append((file_type, path, data))
-
         # track the next id that we should create in the database
         self.id_counter = itertools.count(databaseupgrade.get_next_id(cursor))
 
+        self.init_paths_in_metadata_table()
+        self.init_device_items(json_db)
+        self.process_items()
+
+    def process_items(self):
+        """Run through device_items and create rows in the metadata table for
+        them.
+        """
         if not self.device_items:
             # nothing new to import
             return
+
         logging.info("Importing %d old device items", len(self.device_items))
         for file_type, path, item in self.device_items:
             if path in self.paths_in_metadata_table:
@@ -146,6 +143,30 @@ class _do_import_old_items(object):
                 logging.warn("error converting device item for %r ", path,
                              exc_info=True)
                 self.insert_fresh_metadata_status_row(file_type, path)
+
+    def init_paths_in_metadata_table(self):
+        """Initialize paths_in_metadata_table
+
+        paths_in_metadata_table tracks which paths already have a row in the
+        metadata_status table
+        """
+        self.cursor.execute("SELECT path FROM metadata_status")
+        self.paths_in_metadata_table = set(row[0] for row in self.cursor)
+
+    def init_device_items(self, json_db):
+        """Initialize device_items
+
+        device_items stores a (file_type, path, item_data) tuple for each
+        device item that we should convert
+        """
+        # get info about each item on the device
+        self.device_items = []
+        for file_type in (u'audio', u'video', u'other'):
+            if file_type not in json_db:
+                continue
+            for path, data in json_db[file_type].iteritems():
+                if path not in self.paths_in_metadata_table:
+                    self.device_items.append((file_type, path, data))
 
     def convert_old_item(self, file_type, path, old_item):
 
