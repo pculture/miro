@@ -158,6 +158,10 @@ class _EchonestQuery(object):
             ('api_key', ECHO_NEST_API_KEY),
             ('bucket', 'tracks'),
             ('bucket', 'id:7digital'),
+            # In case there are multiple songs for the same artist/title, only
+            # use the "hottest" song, AKA the most popular.
+            ('results', '1'),
+            ('sort', 'song_hotttnesss-desc'),
         ]
         for key in ('title', 'artist'):
             if key in metadata:

@@ -1519,6 +1519,8 @@ class TestEchonestQueries(MiroTestCase):
             'api_key': [echonest.ECHO_NEST_API_KEY],
             # NOTE: either order of the bucket params is okay
             'bucket': ['tracks', 'id:7digital'],
+            'results': ['1'],
+            'sort': ['song_hotttnesss-desc'],
             'artist': [self.query_metadata['artist'].encode('utf-8')],
             'title': [self.query_metadata['title'].encode('utf-8')],
         }
