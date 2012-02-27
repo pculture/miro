@@ -228,10 +228,16 @@ class VideoDetailsWidget(Background):
         self._keep_link = self._keep_image = None
         self._will_play_handle = app.playback_manager.connect(
             'will-play', self.on_will_play)
+        self._info_changed_handle = app.playback_manager.connect(
+            'playing-info-changed', self.on_info_changed)
 
     def on_will_play(self, widget, duration):
         # we need to update the video details now that the file is
         # open and we know more about subtitle track info.
+        self.rebuild_video_details()
+
+    def on_info_changed(self, widget, item_info):
+        self.item_info = item_info
         self.rebuild_video_details()
 
     def rebuild_video_details(self):
