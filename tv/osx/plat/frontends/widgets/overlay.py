@@ -115,6 +115,8 @@ class OverlayPalette (NSWindowController):
 
         app.playback_manager.connect('will-play', self.video_will_play)
         app.playback_manager.connect('will-pause', self.video_will_pause)
+        app.playback_manager.connect('playing-info-changed',
+                                     self.on_info_changed)
 
         return self
 
@@ -423,6 +425,10 @@ class OverlayPalette (NSWindowController):
     def video_will_pause(self, obj):
         self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-play'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-play-alt'))
+
+    def on_info_changed(self, obj, item_info):
+        self.item_info = item_info
+        self.on_items_changed([item_info])
 
     def remove(self):
         threads.warn_if_not_on_main_thread('OverlayPalette.remove')
