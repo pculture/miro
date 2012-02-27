@@ -298,7 +298,7 @@ class VideoDetailsWidget(Background):
         right_side_hbox.pack_start(_align_middle(self._delete_image))
         self._delete_link = make_label(_("Delete"), self.handle_delete)
         right_side_hbox.pack_start(_align_middle(self._delete_link))
-        if self.item_info.expiration_date: # keepable
+        if self.item_info.can_be_saved: # keepable
             self._keep_image = make_image_button(
                 'images/keep-button.png', self.handle_keep)
             right_side_hbox.pack_start(_align_middle(self._keep_image))
