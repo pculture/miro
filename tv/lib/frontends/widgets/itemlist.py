@@ -196,8 +196,8 @@ class MultiRowAlbumSort(ItemSort):
     # switch_mode()
 
     def sort_key_standard(self, info):
-        return (info.album_sort_key,
-                info.artist_sort_key,
+        return (info.album_artist_sort_key,
+                info.album_sort_key,
                 info.track)
 
     def _watched_folder_key(self, info):
@@ -420,7 +420,7 @@ SORT_KEY_MAP = dict((sort.KEY, sort) for sort in util.all_subclasses(ItemSort))
 
 def album_grouping(info):
     """Grouping function that groups infos by albums."""
-    return (info.album_sort_key, info.artist_sort_key)
+    return (info.album_artist_sort_key, info.album_sort_key)
 
 def feed_grouping(info):
     """Grouping function that groups infos by their feed."""
