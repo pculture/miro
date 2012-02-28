@@ -1327,8 +1327,8 @@ class MetadataManagerBase(signals.SignalEmitter):
         for path in paths_to_start:
             # get_metadata() is sometimes more accurate than
             # _get_metadata_from_filename() but slower.  Let's go for speed.
-            metadata = self._get_metadata_from_filename(status.path)
-            self.count_tracker.file_started(status.path, metadata)
+            metadata = self._get_metadata_from_filename(path)
+            self.count_tracker.file_started(path, metadata)
             self._run_echonest(path)
 
         if paths_to_refresh:
