@@ -626,10 +626,16 @@ class TableViewCommon(object):
         widget = wrappermap.wrapper(self)
         window = widget.get_window()
         if window and window.is_active():
-            start_color = (0.588, 0.717, 0.843)
-            end_color = (0.416, 0.568, 0.713)
-            top_line_color = (0.416, 0.569, 0.714, 1.0)
-            bottom_line_color = (0.416, 0.569, 0.714, 1.0)
+            if focused:
+                start_color = (0.588, 0.717, 0.843)
+                end_color = (0.416, 0.568, 0.713)
+                top_line_color = (0.416, 0.569, 0.714, 1.0)
+                bottom_line_color = (0.416, 0.569, 0.714, 1.0)
+            else:
+                start_color = (168 / 255.0, 188 / 255.0, 208 / 255.0)
+                end_color = (129 / 255.0, 152 / 255.0, 176 / 255.0)
+                top_line_color = (129 / 255.0, 152 / 255.0, 175 / 255.0, 1.0)
+                bottom_line_color = (0.416, 0.569, 0.714, 1.0)
         else:
             start_color = (0.675, 0.722, 0.765)
             end_color = (0.592, 0.659, 0.710)
