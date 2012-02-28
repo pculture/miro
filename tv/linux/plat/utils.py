@@ -373,10 +373,19 @@ def get_transcode_audio_options():
     has_audio_args = []
     return has_audio_args
 
-def setup_ffmpeg_presets():
-    # the linux distro should handle this
-    pass
+has_vpre_slow = None
 
+def setup_ffmpeg_presets():
+    # check to see if there's a 'slow' preset file
+    global has_vpre_slow
+    basenames = ['slow', 'libx264-slow']
+    extensions = ['.ffpreset', '.avpreset']
+    for basename in basenames:
+        for ext in extensions:
+            if os.path.exists('/usr/share/ffmpeg/%s%s' % (basename, ext)):
+                has_vpre_slow = True
+                return
+    has_vpre_slow = False
 
 def get_ffmpeg_executable_path():
     """Returns the location of the ffmpeg binary.
@@ -396,6 +405,11 @@ def customize_ffmpeg_parameters(params):
     :returns: list of modified parameters that will get passed to
         ffmpeg
     """
+    if not has_vpre_slow:
+        index = params.index('slow')
+        if index != -1:
+            if params[index-1] == '-vpre':
+                params = params[:index-1] + ['-preset'] + params[index:]
     return params
 
 
