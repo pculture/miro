@@ -738,6 +738,9 @@ class DeviceItemHandler(ItemHandler):
         else:
             del device.database[info.file_type][info.id]
             for art_file in (info.screenshot_path, info.cover_art_path):
+                if not art_file:
+                    # not a real value, don't bother deleting
+                    continue
                 full_path = os.path.join(device.mount, art_file)
                 if full_path.startswith(device.mount): # actually on the device
                     try:
