@@ -332,6 +332,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
 !macro uninstall directory
   ; Remove the program
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
+  Delete   "${directory}\${CONFIG_EXECUTABLE}.log"
   Delete   "${directory}\${CONFIG_ICON}"
   Delete   "${directory}\${CONFIG_DOWNLOADER_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_HELPER_EXECUTABLE}"
@@ -347,6 +348,9 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
 
   RMDir /r "${directory}\extensions"
   RMDir /r "${directory}\etc"
+  RMDir /r "${directory}\lib"
+  RMDir /r "${directory}\share"
+  RMDir /r "${directory}\vlc-plugins"
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\gstreamer-0.10"
@@ -618,6 +622,8 @@ StrCmp $ONLY_INSTALL_THEME "1" install_theme
   File  "ffmpeg2theora.exe"
   File  "*.ffpreset"
   File  /r etc
+  File  /r lib
+  File  /r share
   File  /r extensions
   File  /r resources
   File  /r xulrunner
