@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8" ?><response status="error" version="1.2"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://api.7digital.com/1.2/static/7digitalAPI.xsd" ><error code="2002"><errorMessage>Release is not available in this country/shop.</errorMessage></error></response>

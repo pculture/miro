@@ -1430,15 +1430,11 @@ class MetadataManagerBase(signals.SignalEmitter):
         # we only send a subset of the metadata to echonest and some of the
         # key names are different
         echonest_metadata = {}
-        for key in ('title', 'artist', 'duration'):
+        for key in ('title', 'artist', 'album', 'duration'):
             try:
                 echonest_metadata[key] = metadata[key]
             except KeyError:
                 pass
-        try:
-            echonest_metadata['release'] = metadata['album']
-        except KeyError:
-            pass
         self.echonest_processor.add_path(path, echonest_metadata)
 
     def _on_task_complete(self, processor, path, result):
