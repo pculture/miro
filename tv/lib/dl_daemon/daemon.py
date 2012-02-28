@@ -47,7 +47,7 @@ from miro import util
 
 SIZE_OF_INT = calcsize("I")
 
-class DaemonError(Exception):
+class DaemonError(StandardError):
     """Exception while communicating to a daemon (either controller or
     downloader).
     """

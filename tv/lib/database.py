@@ -35,10 +35,8 @@ import threading
 from miro import app
 from miro import signals
 
-class DatabaseException(Exception):
-    """Superclass for classes that subclass Exception and are all
-    Database related.
-    """
+class DatabaseException(StandardError):
+    """Superclass database errors."""
     pass
 
 class DatabaseConstraintError(DatabaseException):

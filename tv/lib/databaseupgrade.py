@@ -57,7 +57,7 @@ from miro import prefs
 # looks nicer as a return value
 NO_CHANGES = set()
 
-class DatabaseTooNewError(Exception):
+class DatabaseTooNewError(StandardError):
     """Error that we raise when we see a database that is newer than
     the version that we can update too.
     """
@@ -1832,7 +1832,7 @@ def upgrade75(objectList):
                     rv = self.first_video_enclosure["text"]
                 elif hasattr(self.entry, "description"):
                     rv = self.entry.description
-            except Exception:
+            except StandardError:
                 logging.exception("_calc_raw_description threw exception:")
             if rv is None:
                 return u''
