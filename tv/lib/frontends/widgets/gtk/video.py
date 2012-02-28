@@ -224,14 +224,20 @@ class VideoDetailsWidget(Background):
         Background.__init__(self)
         self.item_info = None
         self.rebuild_video_details()
-        self._delete_link = None
-        self._delete_image = None
+        self._delete_link = self._delete_image = None
+        self._keep_link = self._keep_image = None
         self._will_play_handle = app.playback_manager.connect(
             'will-play', self.on_will_play)
+        self._info_changed_handle = app.playback_manager.connect(
+            'playing-info-changed', self.on_info_changed)
 
     def on_will_play(self, widget, duration):
         # we need to update the video details now that the file is
         # open and we know more about subtitle track info.
+        self.rebuild_video_details()
+
+    def on_info_changed(self, widget, item_info):
+        self.item_info = item_info
         self.rebuild_video_details()
 
     def rebuild_video_details(self):
@@ -292,6 +298,12 @@ class VideoDetailsWidget(Background):
         right_side_hbox.pack_start(_align_middle(self._delete_image))
         self._delete_link = make_label(_("Delete"), self.handle_delete)
         right_side_hbox.pack_start(_align_middle(self._delete_link))
+        if self.item_info.can_be_saved: # keepable
+            self._keep_image = make_image_button(
+                'images/keep-button.png', self.handle_keep)
+            right_side_hbox.pack_start(_align_middle(self._keep_image))
+            self._keep_link = make_label(_("Keep"), self.handle_keep)
+            right_side_hbox.pack_start(_align_middle(self._keep_link))
 
         outer_hbox = HBox()
         outer_hbox.pack_start(_align_left(left_side_hbox, left_pad=10),
@@ -352,6 +364,8 @@ class VideoDetailsWidget(Background):
     def handle_keep(self, widget):
         messages.KeepVideo(self.item_info.id).send_to_backend()
         self._widget.window.set_cursor(None)
+        self.reset()
+        self.rebuild_video_details()
 
     def handle_delete(self, widget):
         item_info = self.item_info
@@ -459,6 +473,10 @@ class VideoDetailsWidget(Background):
             self._delete_link.on_leave_notify(None, None)
         if self._delete_image:
             self._delete_image.on_leave_notify(None, None)
+        if self._keep_link:
+            self._keep_link.on_leave_notify(None, None)
+        if self._keep_image:
+            self._keep_image.on_leave_notify(None, None)
 
 class VideoPlayer(player.GTKPlayer, VBox):
     """Video renderer widget.
