@@ -296,22 +296,24 @@ class _EchonestQuery(object):
 
     def _parse_seven_digital_callback(self, seven_digital_reply):
         doc = minidom.parseString(seven_digital_reply)
-        def find_text_for_tag(tag_name):
-            return doc.getElementsByTagName(tag_name)[0].firstChild.data
+        def find_text_for_tag(elt, tag_name):
+            return elt.getElementsByTagName(tag_name)[0].firstChild.data
         result = {}
 
         if len(doc.getElementsByTagName('error')) != 0:
             error = doc.getElementsByTagName('error')[0]
             code = error.getAttribute("code"),
-            msg = find_text_for_tag('errorMessage')
+            msg = find_text_for_tag(doc, 'errorMessage')
             logging.warn("7digital returned an error: %s -- %s", code, msg)
             return None
 
         release = doc.getElementsByTagName('release')[0]
         result['id'] = release.getAttribute('id')
-        result['album'] = album = find_text_for_tag('title')
-        result['cover_art_url'] = find_text_for_tag('image')
+        result['album'] = album = find_text_for_tag(doc, 'title')
+        result['cover_art_url'] = find_text_for_tag(doc, 'image')
         result['cover_art_filename'] = filetags.calc_cover_art_filename(album)
+        artist = doc.getElementsByTagName('artist')[0]
+        result['album_artist'] = find_text_for_tag(artist, 'name')
         return result
 
     def seven_digital_errback(self, error):
@@ -329,6 +331,7 @@ class _EchonestQuery(object):
             self.invoke_callback()
             return
         self.metadata['album'] = result['album']
+        self.metadata['album_artist'] = result['album_artist']
         self.cover_art_url = result['cover_art_url']
         self.cover_art_filename = result['cover_art_filename']
         # try to grab cover art if we can, and it's not already downloaded.

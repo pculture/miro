@@ -1650,6 +1650,7 @@ class TestEchonestQueries(MiroTestCase):
             self.reply_metadata['cover_art_path'] = os.path.join(
                 self.album_art_dir, 'Bossanova')
             self.reply_metadata['created_cover_art'] = True
+            self.reply_metadata['album_artist'] = 'Pixies'
             self.album_art_url = (
                 'http://cdn.7static.com/static/img/sleeveart/'
                 '00/001/898/0000189844_350.jpg')
@@ -1657,6 +1658,7 @@ class TestEchonestQueries(MiroTestCase):
             # NOTE: there are multiple thriller relaseses.  We just pick one
             # arbitrarily
             self.reply_metadata['album'] = 'Thriller'
+            self.reply_metadata['album_artist'] = 'Michael Jackson'
             self.reply_metadata['cover_art_path'] = os.path.join(
                 self.album_art_dir, 'Thriller')
             self.reply_metadata['created_cover_art'] = True
