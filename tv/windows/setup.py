@@ -300,11 +300,13 @@ def fill_template(templatepath, outpath, **vars):
 data_files = []
 data_files.extend(find_data_files('xulrunner', XULRUNNER_SDK_BIN_PATH))
 
-# theme_engine_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'engines')
-# theme_path = os.path.join('share', 'themes')
-# for path in (theme_engine_path, theme_path):
-#     src_path = os.path.join(GTK_ROOT_PATH, path)
-#     data_files.extend(find_data_files(path, src_path))
+# Clearlooks-Visto theme files
+theme_name = 'Clearlooks-Visto'
+theme_files_path = os.path.join(BINARY_KIT_ROOT, 'gtk-clearlooks')
+theme_engine_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'engines')
+data_files.append((theme_engine_path, [os.path.join(theme_files_path, 'libclearlooks.dll')]))
+data_files.extend(find_data_files(os.path.join('share', 'themes', theme_name),
+                                  os.path.join(theme_files_path, theme_name)))
 
 # gstreamer files
 data_files.append(('', iglob(os.path.join(GSTREAMER_PATH, 'lib', '*.dll'))))
