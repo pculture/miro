@@ -1148,16 +1148,14 @@ class DeviceMetadataTest(EventLoopTest):
             'file_type': u'audio',
             'title': u'Title',
             'album': u'Album',
-        }
-        self.moviedata_metadata = { 'duration': 100 }
-        self.echonest_metadata = { 
-            'title': u'BetterTitle',
             'artist': u'Artist',
         }
+        self.moviedata_metadata = { 'duration': 100 }
         # make a device manager
         app.device_manager = mock.Mock()
         app.device_manager.connected = {self.device.id: self.device}
-        # run echonest for our files
+        # Set NET_LOOKUP_BY_DEFAULT to True.  We should ignore it for device
+        # items and always set net_lookup_enabled to False.
         app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
 
     def tearDown(self):
@@ -1183,9 +1181,6 @@ class DeviceMetadataTest(EventLoopTest):
         metadata_manager.moviedata_processor.emit("task-complete", path,
                                                  self.moviedata_metadata)
         metadata_manager.run_updates()
-        metadata_manager.echonest_processor.emit("task-complete", path,
-                                                 self.echonest_metadata)
-        metadata_manager.run_updates()
 
     def get_metadata_for_item(self):
         return self.device.metadata_manager.get_metadata('test-song.ogg')
@@ -1195,11 +1190,11 @@ class DeviceMetadataTest(EventLoopTest):
         device_item = self.make_device_item()
         self.assertDictEquals(self.get_metadata_for_item(), {
             u'file_type': u'audio',
-            u'net_lookup_enabled': True,
+            u'net_lookup_enabled': False,
             u'has_drm': False,
         })
         self.assertEquals(device_item.file_type, u'audio')
-        self.assertEquals(device_item.net_lookup_enabled, True)
+        self.assertEquals(device_item.net_lookup_enabled, False)
 
     def test_update(self):
         item_changed_handler = mock.Mock()
@@ -1210,24 +1205,24 @@ class DeviceMetadataTest(EventLoopTest):
         # check data in MetadataManager
         self.assertDictEquals(self.get_metadata_for_item(), {
             'file_type': u'audio',
-            'title': u'BetterTitle',
+            'title': u'Title',
             'album': u'Album',
             'duration': 100,
             'artist': 'Artist',
             'has_drm': False,
-            'net_lookup_enabled': True,
+            'net_lookup_enabled': False,
         })
         # check data in the json database
         item_data = self.device.database[u'audio'][u'test-song.ogg']
-        self.assertEquals(item_data[u'title'], u'BetterTitle')
+        self.assertEquals(item_data[u'title'], u'Title')
         self.assertEquals(item_data[u'artist'], u'Artist')
         self.assertEquals(item_data[u'album'], u'Album')
-        # check the item-changed signal.  We should have gotten 3 calls, one
+        # check the item-changed signal.  We should have gotten 2 calls, one
         # for each time we ran run_updates() in run_processors().  Check the
         # data from the last emission
-        self.assertEquals(item_changed_handler.call_count, 3)
+        self.assertEquals(item_changed_handler.call_count, 2)
         device_item = item_changed_handler.call_args[0][1]
-        self.assertEquals(device_item.title, u'BetterTitle')
+        self.assertEquals(device_item.title, u'Title')
         self.assertEquals(device_item.artist, u'Artist')
         self.assertEquals(device_item.album, u'Album')
 
@@ -1240,7 +1235,6 @@ class DeviceMetadataTest(EventLoopTest):
         cover_art_path = os.path.join(self.device.mount, '.miro', 'cover-art',
                                       unicode_to_filename(u'Album'))
         self.moviedata_metadata['screenshot_path'] = screenshot_path
-        self.echonest_metadata['cover_art_path'] = cover_art_path
         for path in (screenshot_path, cover_art_path):
             if not os.path.exists(os.path.dirname(path)):
                 os.makedirs(os.path.dirname(path))
@@ -1303,15 +1297,20 @@ class DeviceMetadataTest(EventLoopTest):
         self.assertEquals(status.current_processor, None)
         self.assertEquals(status.mutagen_status, status.STATUS_COMPLETE)
         self.assertEquals(status.moviedata_status, status.STATUS_COMPLETE)
-        self.assertEquals(status.echonest_status, status.STATUS_COMPLETE)
+        self.assertEquals(status.echonest_status, status.STATUS_SKIP)
         # test that we made MetadataEntry rows
-        for source in (u'mutagen', u'movie-data', u'echonest'):
+        for source in (u'mutagen', u'movie-data'):
             # this will raise an exception if the entry is not there
             metadata.MetadataEntry.get_entry(source, status,
                                              device_db_info)
-        # the device item should have the original items metadata
+        # the device item should have the original items metadata, except
+        # we shouldn't copy net_lookup_enabled
         device_item_metadata = self.device.metadata_manager.get_metadata(
             copied_item_path)
+        self.assertEquals(item_metadata['net_lookup_enabled'], True)
+        self.assertEquals(device_item_metadata['net_lookup_enabled'], False)
+        del item_metadata['net_lookup_enabled']
+        del device_item_metadata['net_lookup_enabled']
         self.assertDictEquals(device_item_metadata, item_metadata)
 
 class DeviceMetadataUpgradeTest(MiroTestCase):
@@ -1439,12 +1438,7 @@ class TestEchonestQueries(MiroTestCase):
         # query_echonest() doesn't neseccarily relate to the fake reply we
         # send back.
         self.echonest_code = "FaKe=EChoNEST+COdE"
-        self.query_metadata = {
-            "artist": "Michael jackson",
-            "album": "800 chansons des annes 80",
-            "title": "Billie jean",
-            "duration": 294000,
-        }
+        self.setup_query_metadata_for_rock_music()
         self.echonest_id = "fake-id-echonest"
         self.seven_digital_id = "fake-id-7digital"
         self.album_art_url = None
@@ -1455,6 +1449,7 @@ class TestEchonestQueries(MiroTestCase):
             518377, 280410, 307167, 289401, 282494, 282073, 624250, 312343,
             391641, 341656, 284075, 280538, 283379, 312343, 669160, 391639,
         ]
+        self.thriller_release_id = 282494
         echonest._EchonestQuery.seven_digital_cache = {}
 
     def callback(self, *args):
@@ -1462,6 +1457,22 @@ class TestEchonestQueries(MiroTestCase):
 
     def errback(self, *args):
         self.errback_data = args
+
+    def setup_query_metadata_for_billie_jean(self):
+        self.query_metadata = {
+            "artist": "Michael jackson",
+            "album": "Thriller",
+            "title": "Billie jean",
+            "duration": 168400,
+        }
+
+    def setup_query_metadata_for_rock_music(self):
+        self.query_metadata = {
+            "artist": "Pixies",
+            "album": "Bossanova",
+            "title": "Rock Music",
+            "duration": 168400,
+        }
 
     def start_query_with_tags(self):
         """Send ID3 tags echonest.query_echonest()."""
@@ -1514,12 +1525,49 @@ class TestEchonestQueries(MiroTestCase):
         else:
             self.assertEquals(grabbed_url.query, '')
 
+    def check_grab_url_multiple(self, calls_to_check):
+        """Check that grab_url was called with multiple urls
+
+        :param calls_to_check: list of (url, query) tuples to check.  The order
+        doesn't matter.
+        """
+
+        def query_to_set(query_dict):
+            """Make a frozenset that represets a query dict.
+
+            This allows us to have something hashable, which is needed for
+            assertSameSet.
+            """
+            return frozenset((key, tuple(values))
+                             for key, values in query.iteritems())
+
+        grabbed_urls_parsed = []
+        for args, kwargs in mock_grab_url.call_args_list:
+            grabbed_url = urlparse.urlparse(args[0])
+            query = urlparse.parse_qs(grabbed_url.query)
+            grabbed_urls_parsed.append((grabbed_url.scheme,
+                                        grabbed_url.netloc,
+                                        grabbed_url.path,
+                                        grabbed_url.fragment,
+                                        query_to_set(query)))
+        calls_to_check_parsed = []
+        for url, query in calls_to_check:
+            parsed_url = urlparse.urlparse(url)
+            calls_to_check_parsed.append((parsed_url.scheme,
+                                        parsed_url.netloc,
+                                        parsed_url.path,
+                                        parsed_url.fragment,
+                                        query_to_set(query)))
+        self.assertSameSet(grabbed_urls_parsed, calls_to_check_parsed)
+
     def check_echonest_grab_url_call(self):
-        search_url = 'http://developer.echonest.com/api/v4/song/search'
+        search_url = 'http://echonest.pculture.org/api/v4/song/search'
         query_dict = {
             'api_key': [echonest.ECHO_NEST_API_KEY],
             # NOTE: either order of the bucket params is okay
             'bucket': ['tracks', 'id:7digital'],
+            'results': ['1'],
+            'sort': ['song_hotttnesss-desc'],
             'artist': [self.query_metadata['artist'].encode('utf-8')],
             'title': [self.query_metadata['title'].encode('utf-8')],
         }
@@ -1527,7 +1575,7 @@ class TestEchonestQueries(MiroTestCase):
 
     def check_echonest_grab_url_call_with_code(self):
         """Check the url sent to grab_url to perform our echonest query."""
-        identify_url = 'http://developer.echonest.com/api/v4/song/identify'
+        identify_url = 'http://echonest.pculture.org/api/v4/song/identify'
         post_vars = {
             'api_key': echonest.ECHO_NEST_API_KEY,
             # NOTE: either order of the bucket params is okay
@@ -1566,37 +1614,57 @@ class TestEchonestQueries(MiroTestCase):
             self.reply_metadata['title'] = 'Billie Jean'
             self.reply_metadata['echonest_id'] = 'SOJIZLV12A58A78309'
 
-    def check_7digital_grab_url_call(self, release_id):
+    def check_7digital_grab_url_calls(self, release_ids):
         """Check the url sent to grab_url to perform our 7digital query."""
-        seven_digital_url = 'http://api.7digital.com/1.2/release/details'
-        correct_query = {
-            'oauth_consumer_key': [echonest.SEVEN_DIGITAL_API_KEY],
-            'imageSize': ['350'],
-            'releaseid': [str(release_id)],
-        }
-        self.check_grab_url(seven_digital_url, correct_query)
+        calls_to_check = []
+        seven_digital_url = 'http://7digital.pculture.org/1.2/release/details'
+        for releaseid in release_ids:
+            calls_to_check.append((seven_digital_url, {
+                'oauth_consumer_key': [echonest.SEVEN_DIGITAL_API_KEY],
+                'imageSize': ['350'],
+                'releaseid': [str(releaseid)],
+            }))
+        self.check_grab_url_multiple(calls_to_check)
 
-    def send_7digital_reply(self, response_file):
+    def send_7digital_reply(self, response_file, call_index=0,
+                            reset_mock=True, best_reply=True):
         """Send a reply back from 7digital.
 
-        As a side-effect we reset the mock_grab_url object.
-
         :param response_file: which file to use for response data
+        :param call_index: if we called grab_url multiple times, use this to
+        pick which callback to send
+        :param reset_mock: should we reset mock_grab_url?
+        :param best_reply: is this the reply that we should choose?
         """
         response_path = resources.path('testdata/7digital-replies/%s' %
                                        response_file)
         response_data = open(response_path).read()
-        callback = mock_grab_url.call_args[0][1]
-        mock_grab_url.reset_mock()
+        callback = mock_grab_url.call_args_list[call_index][0][1]
+        if reset_mock:
+            mock_grab_url.reset_mock()
         callback({'body': response_data})
+        if not best_reply:
+            return
         if response_file == self.bossanova_release_id:
             self.reply_metadata['album'] = 'Bossanova'
             self.reply_metadata['cover_art_path'] = os.path.join(
                 self.album_art_dir, 'Bossanova')
             self.reply_metadata['created_cover_art'] = True
+            self.reply_metadata['album_artist'] = 'Pixies'
             self.album_art_url = (
                 'http://cdn.7static.com/static/img/sleeveart/'
                 '00/001/898/0000189844_350.jpg')
+        elif response_file == self.thriller_release_id:
+            # NOTE: there are multiple thriller relaseses.  We just pick one
+            # arbitrarily
+            self.reply_metadata['album'] = 'Thriller'
+            self.reply_metadata['album_artist'] = 'Michael Jackson'
+            self.reply_metadata['cover_art_path'] = os.path.join(
+                self.album_art_dir, 'Thriller')
+            self.reply_metadata['created_cover_art'] = True
+            self.album_art_url = (
+                'http://cdn.7static.com/static/img/sleeveart/'
+                '00/002/840/0000284075_350.jpg')
 
     def check_album_art_grab_url_call(self):
         if self.album_art_url is None:
@@ -1640,8 +1708,10 @@ class TestEchonestQueries(MiroTestCase):
     def check_grab_url_not_called(self):
         self.assertEquals(mock_grab_url.call_count, 0)
 
-    def send_http_error(self):
-        errback = mock_grab_url.call_args[0][2]
+    def send_http_error(self, call_index=0, reset_mock=False):
+        errback = mock_grab_url.call_args_list[call_index][0][2]
+        if reset_mock:
+            mock_grab_url.reset_mock()
         error = httpclient.UnexpectedStatusCode(404)
         errback(error)
 
@@ -1650,7 +1720,7 @@ class TestEchonestQueries(MiroTestCase):
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
-        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply(self.bossanova_release_id)
         self.check_album_art_grab_url_call()
         self.send_album_art_reply()
@@ -1661,23 +1731,18 @@ class TestEchonestQueries(MiroTestCase):
         self.start_query_with_code()
         self.check_echonest_grab_url_call_with_code()
         self.send_echonest_reply('rock-music')
-        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply(self.bossanova_release_id)
         self.check_album_art_grab_url_call()
         self.send_album_art_reply()
         self.check_callback()
-
-    def test_query_with_extended_chars(self):
-        # test normal operations
-        self.query_metadata['artist'] = u'Micha\u00e9l jackson'
-        self.test_query_with_tags()
 
     def test_album_art_error(self):
         # test normal operations
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
-        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply(self.bossanova_release_id)
         self.check_album_art_grab_url_call()
         self.send_http_error()
@@ -1716,7 +1781,7 @@ class TestEchonestQueries(MiroTestCase):
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
-        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_http_error()
         self.check_callback()
 
@@ -1725,18 +1790,68 @@ class TestEchonestQueries(MiroTestCase):
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
-        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply('no-matches')
         self.check_callback()
 
     def test_multiple_releases(self):
-        # test multple releases when one matches our ID3 tag
+        # test multiple 7digital releases
+        self.setup_query_metadata_for_billie_jean()
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('billie-jean')
-        # When we have multiple releases, we don't have a good way of finding
-        # which one is correct.  We should skip querying 7digital.
-        self.check_grab_url_not_called()
+        release_ids = [ 518377, 280410, 307167, 289401, 282494, 282073,
+                       624250, 312343, 391641, 341656, 284075, 280538, 283379,
+                       312343, 669160, 391639,
+                      ]
+        self.check_7digital_grab_url_calls(release_ids)
+
+        # send replies
+        for i, release_id in enumerate(release_ids):
+            # For the last reply, send an HTTP error.  We should just skip
+            # over this and use the rest of the replies.
+            # Also, reset our mock_grab_url call to get ready for the album
+            # art grab_url calls
+            if i == len(release_ids) - 1:
+                self.send_http_error(i, reset_mock=True)
+                continue
+            if release_id == self.thriller_release_id:
+                best_reply = True
+            else:
+                best_reply = False
+            self.send_7digital_reply(release_id, i, reset_mock=False,
+                                     best_reply=best_reply)
+        self.check_album_art_grab_url_call()
+        self.send_album_art_reply()
+        self.check_callback()
+
+    def test_multiple_releases_error(self):
+        # test multiple 7digital releases and all of them resulting in an HTTP
+        # error
+        self.setup_query_metadata_for_billie_jean()
+        self.start_query_with_tags()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('billie-jean')
+        release_ids = [ 518377, 280410, 307167, 289401, 282494, 282073,
+                       624250, 312343, 391641, 341656, 284075, 280538, 283379,
+                       312343, 669160, 391639,
+                      ]
+        # send HTTP errors for all results
+        for i in xrange(len(release_ids) - 1):
+            self.send_http_error(i, reset_mock=False)
+        self.send_http_error(len(release_ids)-1, reset_mock=True)
+        # we should still get our callback with echonest data
+        self.check_callback()
+
+    def test_multiple_releases_no_album_name(self):
+        # test multiple 7digital releases and when we don't have a album name
+        self.setup_query_metadata_for_billie_jean()
+        del  self.query_metadata['album']
+        self.start_query_with_tags()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('billie-jean')
+        # since there's no good way to pick from multiple releases, we should
+        # skipn the 7digital step
         self.check_callback()
 
     def test_7digital_caching(self):
@@ -1744,7 +1859,7 @@ class TestEchonestQueries(MiroTestCase):
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
-        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply(self.bossanova_release_id)
         self.check_album_art_grab_url_call()
         self.send_album_art_reply()
@@ -1768,7 +1883,7 @@ class TestEchonestQueries(MiroTestCase):
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
-        self.check_7digital_grab_url_call(self.bossanova_release_id)
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply(self.bossanova_release_id)
         # we shouldn't try to download the album art, since that file is
         # already there
@@ -1778,9 +1893,9 @@ class TestEchonestQueries(MiroTestCase):
 
     def test_query_encoding(self):
         # test that we send parameters as unicode to echonest/7digital
-        self.query_metadata['artist'] = "M\u0129chael jackson"
-        self.query_metadata['album'] = "Thr\u0129ller"
-        self.query_metadata['title'] = u"B\u0129llie jean"
+        self.query_metadata['artist'] = u'Pixi\u00e9s jackson'
+        self.query_metadata['album'] = u'Bossan\u00f6va'
+        self.query_metadata['title'] = u"Rock Mus\u0129c"
         self.test_query_with_tags()
 
 class ProgressUpdateTest(MiroTestCase):
