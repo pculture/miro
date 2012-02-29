@@ -1353,7 +1353,7 @@ def calc_sqlite_preallocate_size(device_size):
     size = max_items_estimate * 400
     # force the size to be between 512K and 10M
     size = max(size, 512 * (2 ** 10))
-    size = min(size, 20 * (2 ** 10))
+    size = min(size, 10 * (2 ** 20))
     return size
 
 def make_metadata_manager(mount, sqlite_db, device_id):
