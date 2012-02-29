@@ -356,6 +356,7 @@ cdef class InfoList:
             for 0 <= i < count:
                 node = node_array[i]
                 infolist_node_set_info(node, infos[i])
+                node.group_hash = -1
                 infolistplat_node_changed(self.nodelist, node)
             if not resort:
                 return
