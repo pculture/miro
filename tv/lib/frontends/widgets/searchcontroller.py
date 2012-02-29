@@ -174,7 +174,8 @@ class SearchController(itemlistcontroller.SimpleItemListController):
 
     def _on_save_search(self, widget, search_text):
         engine = self.titlebar.get_engine()
-        app.search_manager.perform_search(engine, search_text)
+        # don't need to perform the search, just set the info for saving
+        app.search_manager.set_search_info(engine, search_text)
         app.search_manager.save_search()
 
     def start_tracking(self):
