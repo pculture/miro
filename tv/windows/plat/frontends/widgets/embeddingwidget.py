@@ -46,8 +46,13 @@ def init():
     embeddingwindow.init()
 
 def shutdown():
-    # This should release the reference and it should garbage collect
-    _live_widgets = set()
+    # XXX Force a destroy of all outstanding embedding widgets.  Otherwise we
+    # may get mysterious hangs on Windows (bz18632).  But breaking this sort
+    # of open reference is probably bad; we should investigate more how to fix
+    # this properly.
+    to_destroy = list(_live_widgets)
+    for d in to_destroy:
+        d.destroy()
 
 class EmbeddingWidget(gtk.DrawingArea):
     """EmbeddingWidget -- GTK widget for embedding other components."""
@@ -77,7 +82,7 @@ class EmbeddingWidget(gtk.DrawingArea):
         gtk.DrawingArea.do_realize(self)
         # attach our embedded window to our window
         self.embedding_window.attach(self.window.handle,
-                *self._get_window_area())
+                                     *self._get_window_area())
 
     def do_unrealize(self):
         # detach our embedded window
