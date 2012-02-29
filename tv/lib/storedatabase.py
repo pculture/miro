@@ -80,7 +80,7 @@ from miro import util
 from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType, filename_to_unicode
 
-class UpgradeError(Exception):
+class UpgradeError(StandardError):
     """While upgrading the database, we ran out of disk space."""
     pass
 
@@ -600,10 +600,7 @@ class LiveStorage:
         """Run any database upgrades that haven't been run."""
         try:
             self._upgrade_database()
-        except (KeyError, SystemError,
-                databaseupgrade.DatabaseTooNewError):
-            raise
-        except Exception, e:
+        except StandardError, e:
             logging.exception('error when upgrading database: %s', e)
             self._handle_upgrade_error()
 

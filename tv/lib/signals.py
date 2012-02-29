@@ -39,7 +39,7 @@ import weakref
 
 from miro import crashreport
 
-class NestedSignalError(Exception):
+class NestedSignalError(StandardError):
     pass
 
 class WeakMethodReference:

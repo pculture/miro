@@ -61,13 +61,13 @@ PIPE_WAIT = 0x00000000
 
 MIRO_IPC_PIPE_NAME = r'\\.\pipe\MiroIPC'
 
-class PipeExists(Exception):
+class PipeExists(StandardError):
     """We tried to create a named pipe, but it already exists.  Probably a
     different Miro instance created it.
     """
     pass
 
-class QuitThread(Exception):
+class QuitThread(StandardError):
     """Raised to exit out of the pipe listening thread.
     """
     pass

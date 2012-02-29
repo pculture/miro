@@ -92,7 +92,7 @@ from miro.plat import devicetracker
 DEBUG_DB_MEM_USAGE = False
 mem_usage_test_event = threading.Event()
 
-class StartupError(Exception):
+class StartupError(StandardError):
     def __init__(self, summary, description):
         self.summary = summary
         self.description = description
@@ -110,9 +110,7 @@ def startup_function(func):
             else:
                 m = messages.FrontendQuit()
             m.send_to_frontend()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except Exception, exc:
+        except StandardError, exc:
             # we do this so that we only kick up the database error
             # if it's a database-related exception AND the app has a
             # db attribute

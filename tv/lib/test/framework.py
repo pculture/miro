@@ -147,7 +147,7 @@ def skip_for_platforms(*platforms):
     else:
         return identity
 
-class HadToStopEventLoop(Exception):
+class HadToStopEventLoop(StandardError):
     pass
 
 class DummyMainFrame:

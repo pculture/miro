@@ -42,11 +42,11 @@ from miro import prefs
 from miro import util
 from miro import fileutil
 
-class UnknownImageObjectException(Exception):
+class UnknownImageObjectException(StandardError):
     """Image uses this when mutagen gives us something strange.
     """
     def __init__(self, object_type, known_types):
-        Exception.__init__(self)
+        StandardError.__init__(self)
         self.object_type = object_type
         self.known_types = known_types
 

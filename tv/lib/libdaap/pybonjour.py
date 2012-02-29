@@ -246,7 +246,7 @@ kDNSServiceInterfaceIndexLocalOnly  = -1
 
 
 
-class BonjourError(Exception):
+class BonjourError(StandardError):
 
     """
 
@@ -288,8 +288,8 @@ class BonjourError(Exception):
 
     def __init__(self, errorCode):
         self.errorCode = errorCode
-        Exception.__init__(self,
-                           (errorCode, self._errmsg.get(errorCode, 'unknown')))
+        StandardError.__init__(self,
+                               (errorCode, self._errmsg.get(errorCode, 'unknown')))
 
 
 

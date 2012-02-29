@@ -167,7 +167,7 @@ def add_cookie(name, value, domain, path, expiry):
     if rv != NS_OK:
        raise XPCOMError("add_cookie failed with code: %d" % rv)
 
-class XPCOMError(Exception):
+class XPCOMError(StandardError):
     pass
 
 cdef void focusCallbackGlue(PRBool forward, void* data) with gil:

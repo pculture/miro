@@ -55,7 +55,7 @@ import time
 from types import NoneType
 from miro.plat.utils import PlatformFilenameType
 
-class ValidationError(Exception):
+class ValidationError(StandardError):
     """Error thrown when we try to save invalid data."""
     pass
 

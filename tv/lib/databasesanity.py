@@ -44,7 +44,7 @@ from miro import feed
 from miro import signals
 from miro import guide
 
-class DatabaseInsaneError(Exception):
+class DatabaseInsaneError(StandardError):
     pass
 
 class SanityTest(object):

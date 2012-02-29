@@ -568,7 +568,7 @@ def on_profile_message():
 def on_profile_redraw():
     app.widgetapp.profile_redraw()
 
-class TestIntentionalCrash(Exception):
+class TestIntentionalCrash(StandardError):
     pass
 
 @action_handler("TestCrashReporter")
