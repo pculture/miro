@@ -1632,6 +1632,7 @@ class RSSMultiFeedBase(RSSFeedImplBase):
                 etag=etag, modified=modified,
                 default_mime_type=u'application/rss+xml',)
             self.updating += 1
+        self.ufeed.signal_change(needs_save=False)
 
     def _update_errback(self, error, url):
         if not self.ufeed.id_exists():
