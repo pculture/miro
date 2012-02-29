@@ -640,11 +640,22 @@ class Table(Container):
             for mem in self._cells:
                 if mem: mem.disable()
 
+class MiroScrollView(NSScrollView):
+    def tile(self):
+        NSScrollView.tile(self)
+        # tile is called when we need to layout our child view and scrollers.
+        # This probably means that we've either hidden or shown a scrollbar so
+        # call viewport_repositioned to ensure that things get re-layed out
+        # correctly.  (#see 13842)
+        wrapper = wrappermap.wrapper(self)
+        if wrapper is not None:
+            wrapper.viewport_repositioned()
+
 class Scroller(Bin):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, horizontal, vertical):
         Bin.__init__(self)
-        self.view = NSScrollView.alloc().init()
+        self.view = MiroScrollView.alloc().init()
         self.view.setAutohidesScrollers_(YES)
         self.view.setHasHorizontalScroller_(horizontal)
         self.view.setHasVerticalScroller_(vertical)
@@ -662,11 +673,11 @@ class Scroller(Bin):
         self.view.setBorderType_(NSBezelBorder)
 
     def viewport_repositioned(self):
-        # If the window is resized, this translates to a viewport_repositoned()
-        # event.  So, do whatever super requires of us, then place the 
-        # chilren to work out if we need a scrollbar, then get the new size,
-        # then replace the children (which now takes into account of scrollbar
-        # size.)
+        # If the window is resized, this translates to a
+        # viewport_repositioned() event.  So, do whatever super requires of
+        # us, then place the chilren to work out if we need a scrollbar, then
+        # get the new size, then replace the children (which now takes into
+        # account of scrollbar size.)
         super(Scroller, self).viewport_repositioned()
         self.place_children()
         self.cached_size_request = self.calc_size_request()
