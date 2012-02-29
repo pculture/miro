@@ -33,8 +33,29 @@
 import os
 import sys
 import logging
+import tempfile
 
 def startup(argv):
+    # Rewrite the stdout and stderr to catch cases debug being printed via
+    # a print or via a write to stderr.  Normally we would use shortAppName
+    # but at this point nothing has been bootstrapped yet.  We only want to
+    # catch it though if py2exe has fiddled with our file descriptors.
+    #
+    # The stdout/stderr are redirected again in the Windows-specific
+    # setup_logging(). 
+    #
+    # See bz17793
+    redirected = sys.stdout != sys.__stdout__
+    if redirected:
+        try:
+            logfile = os.path.join(tempfile.gettempdir(), 'Miro_console.log')
+            sys.stderr = sys.stdout = open(logfile, 'w')
+        except EnvironmentError:
+            # too bad ... let's silence rather than spew stuff to stop it 
+            # writing to a file that it might not have permissions to.  
+            # Hopefully, this does not happen often.
+            sys.stderr = sys.stdout = open(os.devnull, 'w')
+
     # Before importing gstreamer, fix os.environ so gstreamer finds its
     # plugins.  Do this early before any code is run to prevent any import
     # of gst missing this!
