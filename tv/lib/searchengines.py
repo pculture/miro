@@ -42,7 +42,7 @@ from miro import prefs
 import logging
 from miro.gtcache import gettext as _
 
-class IntentionalCrash(Exception):
+class IntentionalCrash(StandardError):
     pass
 
 class SearchEngineInfo:

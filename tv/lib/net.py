@@ -65,7 +65,7 @@ except (ImportError, AttributeError):
     def convert_to_ssl(sock):
         return socket.ssl(sock)
 
-class NetworkError(Exception):
+class NetworkError(StandardError):
     """Base class for all errors that will be passed to errbacks from get_url
     and friends.  NetworkErrors can be display in 2 ways:
 
