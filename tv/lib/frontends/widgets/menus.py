@@ -1290,7 +1290,8 @@ class EchonestMenuHandler(object):
     def update(self, reasons):
         ilc_manager = app.item_list_controller_manager
         selection_info = ilc_manager.get_selection_info()
-        if selection_info.has_download:
+        if (selection_info.has_download and
+            not ilc_manager.displayed_type().startswith("device-")):
             self.menu_item.enable()
         else:
             self.menu_item.disable()

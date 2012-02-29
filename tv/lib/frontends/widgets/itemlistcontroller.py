@@ -1455,3 +1455,10 @@ class ItemListControllerManager(object):
             return
         self.controllers[target].update_metadata_progress(
             finished, finished_local, eta, total)
+
+    def displayed_type(self):
+        """Get the type of the displayed ItemListController."""
+        if self.displayed is not None:
+            return self.displayed.type
+        else:
+            return None

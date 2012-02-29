@@ -15,5 +15,10 @@ def download_release(releaseid, filename=None):
 
 # bossanova
 download_release(189844)
+# all billie jean releases
+for releaseid in [ 518377, 280410, 307167, 289401, 282494, 282073, 624250,
+                  312343, 391641, 341656, 284075, 280538, 283379, 312343,
+                  669160, 391639, ]:
+    download_release(releaseid)
 # releaseid that doesn't match
 download_release(1, 'no-matches')
