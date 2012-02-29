@@ -1353,7 +1353,7 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0):
         #
         # FIXME: Need to write real upgrade code for post-5.0
         logging.warn("Reseting device database: %r", mount)
-        live_storage.reset_database(init_db=True)
+        live_storage.reset_database(init_schema=True)
 
     devicedatabaseupgrade.import_old_items(live_storage, json_db, mount)
     return live_storage
