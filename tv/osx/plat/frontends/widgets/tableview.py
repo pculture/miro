@@ -1489,7 +1489,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
                         # just ignore.
                         pass
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
-            size_changed = True
+                size_changed = True
         else:
             return
         if size_changed:
