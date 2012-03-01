@@ -45,8 +45,6 @@ from miro.plat import proxyfind
 from miro.plat import resources
 from miro.plat import specialfolders
 
-proxy_info = proxyfind.get_proxy_info()
-
 def _get_support_directory():
     if u3info.u3_active:
         path = u3info.APP_DATA_PREFIX
@@ -193,12 +191,16 @@ def get(descriptor):
         return False
 
     elif descriptor == prefs.HTTP_PROXY_ACTIVE:
+        proxy_info = proxyfind.get_proxy_info()
         return proxy_info.host is not None
     elif descriptor == prefs.HTTP_PROXY_HOST:
+        proxy_info = proxyfind.get_proxy_info()
         return proxy_info.host
     elif descriptor == prefs.HTTP_PROXY_PORT:
+        proxy_info = proxyfind.get_proxy_info()
         return proxy_info.port
     elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
+        proxy_info = proxyfind.get_proxy_info()
         return proxy_info.ignore_hosts
     elif descriptor == prefs.AUTOUPDATE_URL:
         if app.configfile.contains(descriptor.key):
