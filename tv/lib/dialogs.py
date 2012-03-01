@@ -81,58 +81,63 @@ import threading
 from miro import eventloop
 from miro import signals
 from miro import util
-from miro.gtcache import gettext as _
+from miro.gtcache import gettext_lazy, gettext as _
 
 class DialogButton(object):
     def __init__(self, text):
-        self.text = text
+        self._text = text
     def __eq__(self, other):
         return isinstance(other, DialogButton) and self.text == other.text
     def __str__(self):
         return "DialogButton(%r)" % util.stringify(self.text)
+    @property
+    def text(self):
+        return unicode(self._text)
 
-BUTTON_OK = DialogButton(_("OK"))
-BUTTON_APPLY = DialogButton(_("Apply"))
-BUTTON_CLOSE = DialogButton(_("Close"))
-BUTTON_CANCEL = DialogButton(_("Cancel"))
-BUTTON_DONE = DialogButton(_("Done"))
-BUTTON_YES = DialogButton(_("Yes"))
-BUTTON_NO = DialogButton(_("No"))
-BUTTON_QUIT = DialogButton(_("Quit"))
-BUTTON_CONTINUE = DialogButton(_("Continue"))
-BUTTON_IGNORE = DialogButton(_("Ignore"))
-BUTTON_IMPORT_FILES = DialogButton(_("Import Files"))
-BUTTON_SUBMIT_REPORT = DialogButton(_("Submit Crash Report"))
-BUTTON_MIGRATE = DialogButton(_("Migrate"))
-BUTTON_DONT_MIGRATE = DialogButton(_("Don't Migrate"))
-BUTTON_DOWNLOAD = DialogButton(_("Download"))
-BUTTON_REMOVE_ENTRY = DialogButton(_("Remove Entry"))
-BUTTON_DELETE_FILE = DialogButton(_("Delete File"))
-BUTTON_DELETE_FILES = DialogButton(_("Delete Files"))
-BUTTON_KEEP_VIDEOS = DialogButton(_("Keep Videos"))
-BUTTON_DELETE_VIDEOS = DialogButton(_("Delete Videos"))
-BUTTON_CREATE = DialogButton(_("Create"))
-BUTTON_CREATE_FEED = DialogButton(_("Create Podcast"))
-BUTTON_CREATE_FOLDER = DialogButton(_("Create Folder"))
-BUTTON_CHOOSE_NEW_FOLDER = DialogButton(_("Choose New Folder"))
-BUTTON_ADD_FOLDER = DialogButton(_("Add Folder"))
-BUTTON_ADD = DialogButton(_("Add"))
-BUTTON_ADD_INTO_NEW_FOLDER = DialogButton(_("Add Into New Folder"))
-BUTTON_KEEP = DialogButton(_("Keep"))
-BUTTON_DELETE = DialogButton(_("Delete"))
-BUTTON_REMOVE = DialogButton(_("Remove"))
-BUTTON_NOT_NOW = DialogButton(_("Not Now"))
-BUTTON_CLOSE_TO_TRAY = DialogButton(_("Close to Tray"))
-BUTTON_LAUNCH_MIRO = DialogButton(_("Launch Miro"))
-BUTTON_DOWNLOAD_ANYWAY = DialogButton(_("Download Anyway"))
-BUTTON_OPEN_IN_EXTERNAL_BROWSER = DialogButton(_("Open in External Browser"))
-BUTTON_DONT_INSTALL = DialogButton(_("Don't Install"))
-BUTTON_SUBSCRIBE = DialogButton(_("Subscribe"))
-BUTTON_STOP_WATCHING = DialogButton(_("Stop Watching"))
-BUTTON_RETRY = DialogButton(_("Retry"))
-BUTTON_START_FRESH = DialogButton(_("Start Fresh"))
-BUTTON_INCLUDE_DATABASE = DialogButton(_("Include Database"))
-BUTTON_DONT_INCLUDE_DATABASE = DialogButton(_("Don't Include Database"))
+BUTTON_OK = DialogButton(gettext_lazy("OK"))
+BUTTON_APPLY = DialogButton(gettext_lazy("Apply"))
+BUTTON_CLOSE = DialogButton(gettext_lazy("Close"))
+BUTTON_CANCEL = DialogButton(gettext_lazy("Cancel"))
+BUTTON_DONE = DialogButton(gettext_lazy("Done"))
+BUTTON_YES = DialogButton(gettext_lazy("Yes"))
+BUTTON_NO = DialogButton(gettext_lazy("No"))
+BUTTON_QUIT = DialogButton(gettext_lazy("Quit"))
+BUTTON_CONTINUE = DialogButton(gettext_lazy("Continue"))
+BUTTON_IGNORE = DialogButton(gettext_lazy("Ignore"))
+BUTTON_IMPORT_FILES = DialogButton(gettext_lazy("Import Files"))
+BUTTON_SUBMIT_REPORT = DialogButton(gettext_lazy("Submit Crash Report"))
+BUTTON_MIGRATE = DialogButton(gettext_lazy("Migrate"))
+BUTTON_DONT_MIGRATE = DialogButton(gettext_lazy("Don't Migrate"))
+BUTTON_DOWNLOAD = DialogButton(gettext_lazy("Download"))
+BUTTON_REMOVE_ENTRY = DialogButton(gettext_lazy("Remove Entry"))
+BUTTON_DELETE_FILE = DialogButton(gettext_lazy("Delete File"))
+BUTTON_DELETE_FILES = DialogButton(gettext_lazy("Delete Files"))
+BUTTON_KEEP_VIDEOS = DialogButton(gettext_lazy("Keep Videos"))
+BUTTON_DELETE_VIDEOS = DialogButton(gettext_lazy("Delete Videos"))
+BUTTON_CREATE = DialogButton(gettext_lazy("Create"))
+BUTTON_CREATE_FEED = DialogButton(gettext_lazy("Create Podcast"))
+BUTTON_CREATE_FOLDER = DialogButton(gettext_lazy("Create Folder"))
+BUTTON_CHOOSE_NEW_FOLDER = DialogButton(gettext_lazy("Choose New Folder"))
+BUTTON_ADD_FOLDER = DialogButton(gettext_lazy("Add Folder"))
+BUTTON_ADD = DialogButton(gettext_lazy("Add"))
+BUTTON_ADD_INTO_NEW_FOLDER = DialogButton(gettext_lazy("Add Into New Folder"))
+BUTTON_KEEP = DialogButton(gettext_lazy("Keep"))
+BUTTON_DELETE = DialogButton(gettext_lazy("Delete"))
+BUTTON_REMOVE = DialogButton(gettext_lazy("Remove"))
+BUTTON_NOT_NOW = DialogButton(gettext_lazy("Not Now"))
+BUTTON_CLOSE_TO_TRAY = DialogButton(gettext_lazy("Close to Tray"))
+BUTTON_LAUNCH_MIRO = DialogButton(gettext_lazy("Launch Miro"))
+BUTTON_DOWNLOAD_ANYWAY = DialogButton(gettext_lazy("Download Anyway"))
+BUTTON_OPEN_IN_EXTERNAL_BROWSER = DialogButton(gettext_lazy(
+                                               "Open in External Browser"))
+BUTTON_DONT_INSTALL = DialogButton(gettext_lazy("Don't Install"))
+BUTTON_SUBSCRIBE = DialogButton(gettext_lazy("Subscribe"))
+BUTTON_STOP_WATCHING = DialogButton(gettext_lazy("Stop Watching"))
+BUTTON_RETRY = DialogButton(gettext_lazy("Retry"))
+BUTTON_START_FRESH = DialogButton(gettext_lazy("Start Fresh"))
+BUTTON_INCLUDE_DATABASE = DialogButton(gettext_lazy("Include Database"))
+BUTTON_DONT_INCLUDE_DATABASE = DialogButton(gettext_lazy(
+                                            "Don't Include Database"))
 
 class Dialog(object):
     """Abstract base class for dialogs.
