@@ -469,12 +469,9 @@ class Application:
 
     def open_video(self):
         title = _('Open Files...')
-        audio_extensions = [mem.replace(".", "")
-                            for mem in filetypes.AUDIO_EXTENSIONS]
-        video_extensions = [mem.replace(".", "")
-                            for mem in filetypes.VIDEO_EXTENSIONS]
-        torrent_extensions = [mem.replace(".", "")
-                              for mem in filetypes.TORRENT_EXTENSIONS]
+        audio_extensions = [mem[1:] for mem in filetypes.AUDIO_EXTENSIONS]
+        video_extensions = [mem[1:] for mem in filetypes.VIDEO_EXTENSIONS]
+        torrent_extensions = [mem[1:] for mem in filetypes.TORRENT_EXTENSIONS]
         all_extensions = (audio_extensions + video_extensions
                           + torrent_extensions)
         filenames = dialogs.ask_for_open_pathname(
@@ -751,10 +748,8 @@ class Application:
 
     def import_choose_files(self):
         # opens dialog allowing you to choose files and folders
-        audio_extensions = [mem.replace(".", "")
-                            for mem in filetypes.AUDIO_EXTENSIONS]
-        video_extensions = [mem.replace(".", "")
-                            for mem in filetypes.VIDEO_EXTENSIONS]
+        audio_extensions = [mem[1:] for mem in filetypes.AUDIO_EXTENSIONS]
+        video_extensions = [mem[1:] for mem in filetypes.VIDEO_EXTENSIONS]
         files_ = dialogs.ask_for_open_pathname(
             _("Choose files to import"),
             filters=[
