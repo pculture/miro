@@ -75,7 +75,8 @@ def install_bonjour():
         "Your browser will load the web-site where you can download "
         "and install Bonjour.\n\n"
         "When the installation is finished, simply restart %(appname)s for "
-        "the changes to take effect."
+        "the changes to take effect.",
+        {"appname": app.config.get(prefs.SHORT_APP_NAME }
     )
     dialogs.show_message(title, description)
     logging.debug('Taking to Bonjour download landing page')
