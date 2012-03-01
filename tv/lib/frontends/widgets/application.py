@@ -469,7 +469,23 @@ class Application:
 
     def open_video(self):
         title = _('Open Files...')
-        filenames = dialogs.ask_for_open_pathname(title, select_multiple=True)
+        audio_extensions = [mem.replace(".", "")
+                            for mem in filetypes.AUDIO_EXTENSIONS]
+        video_extensions = [mem.replace(".", "")
+                            for mem in filetypes.VIDEO_EXTENSIONS]
+        torrent_extensions = [mem.replace(".", "")
+                              for mem in filetypes.TORRENT_EXTENSIONS]
+        all_extensions = (audio_extensions + video_extensions
+                          + torrent_extensions)
+        filenames = dialogs.ask_for_open_pathname(
+            title,
+            filters=[
+                (_('All Media Files'), all_extensions),
+                (_('Video Files'), video_extensions),
+                (_('Audio Files'), audio_extensions),
+                (_('Torrent Files'), torrent_extensions)
+                ],
+            select_multiple=True)
 
         if not filenames:
             return
