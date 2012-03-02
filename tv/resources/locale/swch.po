@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Miro\n"
 "Report-Msgid-Bugs-To: http://bugzilla.pculture.org/\n"
-"POT-Creation-Date: 2012-03-01 10:11-0500\n"
+"POT-Creation-Date: 2012-03-02 08:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,134 +149,134 @@ msgstr ""
 "%(name)s vas remuved wheele-a a sync was een prugress.  Nut all eetems may "
 "have-a been cupeeed. bork!"
 
-#: ../../lib/dialogs.py:94
+#: ../../lib/dialogs.py:97
 msgid "OK"
 msgstr "OK bork!"
 
-#: ../../lib/dialogs.py:95
+#: ../../lib/dialogs.py:98
 msgid "Apply"
 msgstr "Epply bork!"
 
-#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/gtk/window.py:557
+#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/gtk/window.py:557
 msgid "Close"
 msgstr "Cluse bork!"
 
-#: ../../lib/dialogs.py:97 ../../lib/frontends/widgets/itemrenderer.py:107
+#: ../../lib/dialogs.py:100 ../../lib/frontends/widgets/itemrenderer.py:107
 msgid "Cancel"
 msgstr "Cuncel bork!"
 
-#: ../../lib/dialogs.py:98
+#: ../../lib/dialogs.py:101
 msgid "Done"
 msgstr "Dune bork!"
 
-#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/firsttimedialog.py:257
+#: ../../lib/dialogs.py:102 ../../lib/frontends/widgets/firsttimedialog.py:257
 #: ../../lib/frontends/widgets/firsttimedialog.py:298
 #: ../../lib/frontends/widgets/firsttimedialog.py:538
 msgid "Yes"
 msgstr "Yes bork!"
 
-#: ../../lib/dialogs.py:100 ../../lib/frontends/widgets/firsttimedialog.py:258
+#: ../../lib/dialogs.py:103 ../../lib/frontends/widgets/firsttimedialog.py:258
 #: ../../lib/frontends/widgets/firsttimedialog.py:297
 #: ../../lib/frontends/widgets/firsttimedialog.py:539
 msgid "No"
 msgstr "Nu bork!"
 
-#: ../../lib/dialogs.py:101
+#: ../../lib/dialogs.py:104
 msgid "Quit"
 msgstr "Qooeet bork!"
 
-#: ../../lib/dialogs.py:102
+#: ../../lib/dialogs.py:105
 msgid "Continue"
 msgstr "Cunteenooe bork!"
 
-#: ../../lib/dialogs.py:103
+#: ../../lib/dialogs.py:106
 msgid "Ignore"
 msgstr "Ignure bork!"
 
-#: ../../lib/dialogs.py:104
+#: ../../lib/dialogs.py:107
 msgid "Import Files"
 msgstr "Impurt Feeles bork!"
 
-#: ../../lib/dialogs.py:105
+#: ../../lib/dialogs.py:108
 msgid "Submit Crash Report"
 msgstr "Soobmeet Crash Repurt bork!"
 
-#: ../../lib/dialogs.py:106
+#: ../../lib/dialogs.py:109
 msgid "Migrate"
 msgstr "Meegrate bork!"
 
-#: ../../lib/dialogs.py:107
+#: ../../lib/dialogs.py:110
 msgid "Don't Migrate"
 msgstr "Dun't Meegrate bork!"
 
-#: ../../lib/dialogs.py:108 ../../lib/frontends/widgets/itemcontextmenu.py:223
+#: ../../lib/dialogs.py:111 ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/itemcontextmenu.py:428
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1953
 #: ../../lib/frontends/widgets/itemrenderer.py:102
 msgid "Download"
 msgstr "Doonluad bork!"
 
-#: ../../lib/dialogs.py:109
+#: ../../lib/dialogs.py:112
 msgid "Remove Entry"
 msgstr "Remuve-a Entry bork!"
 
-#: ../../lib/dialogs.py:110
+#: ../../lib/dialogs.py:113
 msgid "Delete File"
 msgstr "Delete-a Feele bork!"
 
-#: ../../lib/dialogs.py:111
+#: ../../lib/dialogs.py:114
 msgid "Delete Files"
 msgstr "Delete-a Feeles bork!"
 
-#: ../../lib/dialogs.py:112
+#: ../../lib/dialogs.py:115
 msgid "Keep Videos"
 msgstr "Keep Feedeus bork!"
 
-#: ../../lib/dialogs.py:113
+#: ../../lib/dialogs.py:116
 msgid "Delete Videos"
 msgstr "Delete-a Veedeus bork!"
 
-#: ../../lib/dialogs.py:114
+#: ../../lib/dialogs.py:117
 msgid "Create"
 msgstr "Creete bork!"
 
-#: ../../lib/dialogs.py:115
+#: ../../lib/dialogs.py:118
 msgid "Create Podcast"
 msgstr "Creete-a Pudcast bork!"
 
-#: ../../lib/dialogs.py:116
+#: ../../lib/dialogs.py:119
 msgid "Create Folder"
 msgstr "Creete-a Fulder bork!"
 
-#: ../../lib/dialogs.py:117
+#: ../../lib/dialogs.py:120
 msgid "Choose New Folder"
 msgstr "Chuuse-a Noo Fulder bork!"
 
-#: ../../lib/dialogs.py:118
+#: ../../lib/dialogs.py:121
 msgid "Add Folder"
 msgstr "Edd Fulder bork!"
 
-#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/prefpanel.py:912
+#: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/prefpanel.py:912
 msgid "Add"
 msgstr "Edd bork!"
 
-#: ../../lib/dialogs.py:120
+#: ../../lib/dialogs.py:123
 msgid "Add Into New Folder"
 msgstr "Edd Intu Noo Fulder bork!"
 
-#: ../../lib/dialogs.py:121 ../../lib/frontends/widgets/gtk/video.py:305
+#: ../../lib/dialogs.py:124 ../../lib/frontends/widgets/gtk/video.py:305
 #: ../../lib/frontends/widgets/itemcontextmenu.py:403
 #: ../../osx/plat/frontends/widgets/overlay.py:134
 msgid "Keep"
 msgstr "Keep bork!"
 
-#: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/gtk/video.py:299
+#: ../../lib/dialogs.py:125 ../../lib/frontends/widgets/gtk/video.py:299
 #: ../../osx/plat/frontends/widgets/osxmenus.py:485
 #: ../../osx/plat/frontends/widgets/overlay.py:138
 msgid "Delete"
 msgstr "Delete bork!"
 
-#: ../../lib/dialogs.py:123 ../../lib/frontends/widgets/menus.py:152
+#: ../../lib/dialogs.py:126 ../../lib/frontends/widgets/menus.py:152
 #: ../../lib/frontends/widgets/prefpanel.py:915
 #: ../../lib/frontends/widgets/tablist.py:1108
 #: ../../lib/frontends/widgets/tablist.py:1122
@@ -287,62 +287,62 @@ msgstr "Delete bork!"
 msgid "Remove"
 msgstr "Remuve bork!"
 
-#: ../../lib/dialogs.py:124
+#: ../../lib/dialogs.py:127
 msgid "Not Now"
 msgstr "Nut Noo bork!"
 
-#: ../../lib/dialogs.py:125
+#: ../../lib/dialogs.py:128
 msgid "Close to Tray"
 msgstr "Cluse-a tu Tray bork!"
 
-#: ../../lib/dialogs.py:126
+#: ../../lib/dialogs.py:129
 msgid "Launch Miro"
 msgstr "Loonch Muru bork!"
 
-#: ../../lib/dialogs.py:127
+#: ../../lib/dialogs.py:130
 msgid "Download Anyway"
 msgstr "Doonluad Anyway bork!"
 
-#: ../../lib/dialogs.py:128
+#: ../../lib/dialogs.py:132
 msgid "Open in External Browser"
 msgstr "Opee een External Brooser bork!"
 
-#: ../../lib/dialogs.py:129
+#: ../../lib/dialogs.py:133
 msgid "Don't Install"
 msgstr "Dun't Install bork!"
 
-#: ../../lib/dialogs.py:130
+#: ../../lib/dialogs.py:134
 msgid "Subscribe"
 msgstr "Soobscreebe bork!"
 
-#: ../../lib/dialogs.py:131
+#: ../../lib/dialogs.py:135
 msgid "Stop Watching"
 msgstr "Stup Watcheeng bork!"
 
-#: ../../lib/dialogs.py:132
+#: ../../lib/dialogs.py:136
 msgid "Retry"
 msgstr "Retry bork!"
 
-#: ../../lib/dialogs.py:133
+#: ../../lib/dialogs.py:137
 msgid "Start Fresh"
 msgstr "Stert Fresh bork!"
 
-#: ../../lib/dialogs.py:134
+#: ../../lib/dialogs.py:138
 msgid "Include Database"
 msgstr "Incloode-a Database bork!"
 
-#: ../../lib/dialogs.py:135
+#: ../../lib/dialogs.py:140
 msgid "Don't Include Database"
 msgstr "Dun't Incloode-a Database bork!"
 
-#: ../../lib/dialogs.py:212
+#: ../../lib/dialogs.py:217
 #, python-format
 msgid "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
 "%(authtype)s %(url)s reqooures a oosername-a and passwurd ffur "
 "\"%(realm)s\". bork!"
 
-#: ../../lib/dialogs.py:215
+#: ../../lib/dialogs.py:220
 msgid "Login Required"
 msgstr "Lugeen Reqooured bork!"
 
