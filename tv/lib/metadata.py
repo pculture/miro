@@ -551,6 +551,9 @@ class _EchonestProcessor(_MetadataProcessor):
     buffer of codes to be sent to echonest is built up.
     """
 
+    # Cooldown time for our codegen process
+    CODEGEN_COOLDOWN_TIME = 5.0
+
     # constants that control pausing after we get a bunch of HTTP errors.
     # These settings mean that if we get 3 errors in 5 minutes, then we will
     # pause.
@@ -570,6 +573,9 @@ class _EchonestProcessor(_MetadataProcessor):
         self._running_codegen = False
         self._querying_echonest = False
         self._codegen_info = get_enmfp_executable_info()
+        self._codegen_cooldown_end = 0
+        self._codegen_cooldown_caller = eventloop.DelayedFunctionCaller(
+            self._process_queue)
         self._metadata_for_path = {}
         self._paths_in_system = set()
         self._http_error_times = collections.deque()
@@ -609,17 +615,15 @@ class _EchonestProcessor(_MetadataProcessor):
         else:
             logging.warn("_EchonestProcessor._codegen_callback called for "
                          "path not in system: %r", path)
-        self._running_codegen = False
-        self._process_queue()
+        self._codegen_finished()
 
     def _codegen_errback(self, path, error):
         logging.warn("Error running echonest codegen for %s (%s)" %
                      (path, error))
         self.emit('task-error', path, error)
-        self._running_codegen = False
         del self._metadata_for_path[path]
         self._paths_in_system.discard(path)
-        self._process_queue()
+        self._codegen_finished()
 
     def _query_echonest(self, path, code):
         if path not in self._paths_in_system:
@@ -672,10 +676,25 @@ class _EchonestProcessor(_MetadataProcessor):
                     self._waiting_from_http_errors = True
 
         # process codegen queue
-        if (self._codegen_queue and
-            not self._running_codegen and
-            len(self._echonest_queue) < self._code_buffer_size):
+        if self._should_process_codegen_queue():
             self._run_codegen(self._codegen_queue.pop())
+
+    def _should_process_codegen_queue(self):
+        if not (self._codegen_queue and
+                not self._running_codegen and
+                len(self._echonest_queue) < self._code_buffer_size):
+            return False
+        cooldown_left = self._codegen_cooldown_end - clock.clock()
+        if cooldown_left > 0:
+            self._codegen_cooldown_caller.call_after_timeout(cooldown_left)
+            return False
+        return True
+
+    def _codegen_finished(self):
+        self._running_codegen = False
+        self._codegen_cooldown_end = (clock.clock() +
+                                      self.CODEGEN_COOLDOWN_TIME)
+        self._process_queue()
 
     def _should_pause_from_http_errors(self):
         """Have we seen enough HTTP errors recently that we should pause
