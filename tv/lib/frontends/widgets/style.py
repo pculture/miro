@@ -891,16 +891,32 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
         self._render_strategy = _StandardRenderStrategy()
+        self._setup_default_image_map()
+
+    def _setup_default_image_map(self):
+        """Setup the _default_image_map attribute.
+
+        _default_image_map maps the default images for things to a default
+        image that looks better in album view.
+        """
+        # check if we're using one of the default image files and switch to an
+        # album-view-specific default file in that case
+        mappings = [
+            ('thumb-default-audio.png', 'album-view-default-audio.png'),
+            ('thumb-default-video.png', 'album-view-default-video.png'),
+            ('icon-podcast-small.png', 'album-view-default-podcast.png'),
+        ]
+        self._default_image_map = {}
+        for src, dest in mappings:
+            src_path = resources.path('images/%s' % src)
+            dest_path = resources.path('images/%s' % dest)
+            self._default_image_map[src_path] = dest_path
 
     def get_image_path(self):
         image_path = self._render_strategy.get_image_path(
             self.info, self.get_first_info())
-        # check if we're using one of the default image files and switch to an
-        # album-view-specific default file in that case
-        if image_path == resources.path('images/thumb-default-audio.png'):
-            return resources.path('images/album-view-default-audio.png')
-        elif image_path == resources.path('images/thumb-default-video.png'):
-            return resources.path('images/album-view-default-video.png')
+        if image_path in self._default_image_map:
+            return self._default_image_map[image_path]
         else:
             return image_path
 
