@@ -41,6 +41,7 @@ VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx',
                     '.rmvb', '.mkv', '.m2v', '.ogm', '.webm', '.ogx']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac', '.ogg', '.oga']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
+TORRENT_EXTENSIONS = ['.torrent']
 OTHER_EXTENSIONS = ['.pdf', '.txt', '.html', '.doc', '.bmp', '.gif', '.jpg',
                     '.jpeg', '.png', '.psd', '.tif', '.tiff',]
 SUBTITLES_EXTENSIONS = ['.srt', '.sub', '.ass', '.ssa', '.smil', '.cmml']
