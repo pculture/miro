@@ -1470,6 +1470,14 @@ class TestEchonestQueries(MiroTestCase):
             "duration": 168400,
         }
 
+    def setup_query_metadata_for_break_like_the_wind(self):
+        self.query_metadata = {
+            "artist": u'Sp\u0131n\u0308al Tap',
+            "album": "Break Like The Wind",
+            "title": "Break Like The Wind",
+            "duration": 168400,
+        }
+
     def start_query_with_tags(self):
         """Send ID3 tags echonest.query_echonest()."""
         # This tracks the metadata we expect to see back from query_echonest()
@@ -1609,6 +1617,10 @@ class TestEchonestQueries(MiroTestCase):
             self.reply_metadata['artist'] = 'Michael Jackson'
             self.reply_metadata['title'] = 'Billie Jean'
             self.reply_metadata['echonest_id'] = 'SOJIZLV12A58A78309'
+        elif response_file == 'break-like-the-wind':
+            self.reply_metadata['artist'] = u'Sp\u0131n\u0308al Tap'
+            self.reply_metadata['title'] = 'Break Like The Wind'
+            self.reply_metadata['echonest_id'] = 'SOBKZUR12B0B80C2C1'
 
     def check_7digital_grab_url_calls(self, release_ids):
         """Check the url sent to grab_url to perform our 7digital query."""
@@ -1893,6 +1905,17 @@ class TestEchonestQueries(MiroTestCase):
         self.query_metadata['album'] = u'Bossan\u00f6va'
         self.query_metadata['title'] = u"Rock Mus\u0129c"
         self.test_query_with_tags()
+
+    def test_reply_encoding(self):
+        # test that we handle extended unicode chars from echonest
+        self.setup_query_metadata_for_break_like_the_wind()
+        self.start_query_with_tags()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('break-like-the-wind')
+        # break like the wind contains no tracks, so we don't need to deal
+        # with the 7digital stuff.  Just check that we properly parsed the
+        # echonest query
+        self.check_callback()
 
 class ProgressUpdateTest(MiroTestCase):
     # Test the objects used to send the MetadataProgressUpdate messages

@@ -199,7 +199,7 @@ class _EchonestQuery(object):
             self.invoke_errback(ResponseParsingError())
 
     def _handle_echonest_callback(self, echonest_reply):
-        response = json.loads(echonest_reply)['response']
+        response = json.loads(echonest_reply.decode('utf-8'))['response']
         status_code = response['status']['code']
         # TODO: check status code
         songs = response['songs']
@@ -219,9 +219,9 @@ class _EchonestQuery(object):
             return
 
         song = songs[0]
-        self.metadata['title'] = song['title'].decode('utf-8')
-        self.metadata['artist'] = song['artist_name'].decode('utf-8')
-        self.metadata['echonest_id'] = song['id'].decode('utf-8')
+        self.metadata['title'] = song['title']
+        self.metadata['artist'] = song['artist_name']
+        self.metadata['echonest_id'] = song['id']
 
         tracks = song.get('tracks', [])
         if len(tracks) == 0:
