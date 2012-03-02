@@ -46,10 +46,10 @@ class FileTagsTest(MiroTestCase):
         if cover_art:
             # cover art should be stored using the album name as its file
             correct_path = path.join(self.tempdir, results['album'])
-            self.assertEquals(results.pop('cover_art_path'), correct_path)
+            self.assertEquals(results.pop('cover_art'), correct_path)
             self.assertEquals(results.pop('created_cover_art'), True)
         else:
-            self.assert_('cover_art_path' not in results)
+            self.assert_('cover_art' not in results)
         # for the rest, we just compare the dicts
         self.assertEquals(results, expected)
 
@@ -68,19 +68,19 @@ class FileTagsTest(MiroTestCase):
 
         # process the first file
         result_1 = process_file(dest_paths[0], self.tempdir)
-        self.assertEquals(result_1['cover_art_path'],
+        self.assertEquals(result_1['cover_art'],
                           path.join(self.tempdir, result_1['album']))
-        self.assert_(path.exists(result_1['cover_art_path']))
-        org_mtime = stat(result_1['cover_art_path']).st_mtime
+        self.assert_(path.exists(result_1['cover_art']))
+        org_mtime = stat(result_1['cover_art']).st_mtime
 
-        # process the rest, they should fill in the cover_art_path value, but
+        # process the rest, they should fill in the cover_art value, but
         # not rewrite the file
         for dup_path in dest_paths[1:]:
             results = process_file(dup_path, self.tempdir)
-            self.assertEquals(results['cover_art_path'],
-                              result_1['cover_art_path'])
-            self.assert_(path.exists(results['cover_art_path']))
-            self.assertEquals(stat(results['cover_art_path']).st_mtime,
+            self.assertEquals(results['cover_art'],
+                              result_1['cover_art'])
+            self.assert_(path.exists(results['cover_art']))
+            self.assertEquals(stat(results['cover_art']).st_mtime,
                               org_mtime)
 
 @dynamic_test()

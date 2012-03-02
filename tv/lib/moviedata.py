@@ -33,7 +33,7 @@ from miro import download_utils
 from miro import fileutil
 from miro.plat.utils import run_media_metadata_extractor
 
-def convert_mdp_result(source_path, screenshot_path, result):
+def convert_mdp_result(source_path, screenshot, result):
     """Convert the movie data program result for the metadata manager
     """
     converted_result = { 'source_path': source_path }
@@ -59,8 +59,8 @@ def convert_mdp_result(source_path, screenshot_path, result):
         converted_result['file_type'] = u'video'
 
     if (converted_result.get('file_type') == 'video' and success and
-        fileutil.exists(screenshot_path)):
-        converted_result['screenshot_path'] = screenshot_path
+        fileutil.exists(screenshot)):
+        converted_result['screenshot'] = screenshot
     return converted_result
 
 def _make_screenshot_path(source_path, image_directory):
@@ -85,8 +85,8 @@ def process_file(source_path, image_directory):
     :param image_directory: directory to put screenshut files
     :returns: dictionary with metadata info
     """
-    screenshot_path, fp = _make_screenshot_path(source_path, image_directory)
-    result = run_media_metadata_extractor(source_path, screenshot_path)
+    screenshot, fp = _make_screenshot_path(source_path, image_directory)
+    result = run_media_metadata_extractor(source_path, screenshot)
     # we can close the file now, since MDP has written to it
     fp.close()
-    return convert_mdp_result(source_path, screenshot_path, result)
+    return convert_mdp_result(source_path, screenshot, result)

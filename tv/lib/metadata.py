@@ -59,7 +59,7 @@ from miro.plat.utils import (filename_to_unicode,
 
 attribute_names = set([
     'file_type', 'duration', 'album', 'album_artist', 'album_tracks',
-    'artist', 'cover_art_path', 'screenshot_path', 'has_drm', 'genre',
+    'artist', 'cover_art', 'screenshot', 'has_drm', 'genre',
     'title', 'track', 'year', 'description', 'rating', 'show', 'episode_id',
     'episode_number', 'season_number', 'kind', 'net_lookup_enabled',
 ])
@@ -84,7 +84,8 @@ class MetadataStatus(database.DDBObject):
     STATUS_FAILURE = u'F'
     STATUS_TEMPORARY_FAILURE = u'T'
     STATUS_SKIP = u'S'
-    STATUS_SKIP_FROM_PREF = u'P'
+
+    FINISHED_STATUS_VERSION = 1
 
     _source_name_to_status_column = {
         u'mutagen': 'mutagen_status',
@@ -95,17 +96,32 @@ class MetadataStatus(database.DDBObject):
     def setup_new(self, path, net_lookup_enabled):
         self.path = path
         self.net_lookup_enabled = net_lookup_enabled
+        self.file_type = u'other'
         self.mutagen_status = self.STATUS_NOT_RUN
         self.moviedata_status = self.STATUS_NOT_RUN
         if self.net_lookup_enabled:
             self.echonest_status = self.STATUS_NOT_RUN
         else:
-            self.echonest_status = self.STATUS_SKIP_FROM_PREF
+            self.echonest_status = self.STATUS_SKIP
         self.mutagen_thinks_drm = False
         self.echonest_id = None
         self.max_entry_priority = -1
+        # current processor tracks what processor we should be running for
+        # this status.  We don't save it to the database.
         self.current_processor = u'mutagen'
+        # finished_status tracks if we are done running metadata processors on
+        # an item.  finished status is:
+        # - 0 if we haven't finished running metadata on it.
+        # - A positive version code once we are done.  This version code
+        #   increases as we add more metadata processors.
+        # This hopefully is allows us to track if metadata processing is
+        # finished, even as the database schema changes between miro versions.
+        self.finished_status = 0
         self._add_to_cache()
+
+    def setup_restored(self):
+        self._set_current_processor(update_finished_status=False)
+        self.db_info.db.cache.set('metadata', self.path, self)
 
     def copy_status(self, other_status):
         """Copy values from another metadata status object."""
@@ -117,6 +133,9 @@ class MetadataStatus(database.DDBObject):
             # set net_lookup_enabled to True.
             if name not in ('id', 'path', 'net_lookup_enabled'):
                 setattr(self, name, getattr(other_status, name))
+        # also copy current_processor, which doesn't get stored in the DB and
+        # thus isn't returned by schema_fields()
+        self.current_processor = other_status.current_processor
         self.signal_change()
 
     @classmethod
@@ -158,9 +177,6 @@ class MetadataStatus(database.DDBObject):
         return cls.make_view('echonest_status=?',
                              (cls.STATUS_TEMPORARY_FAILURE,))
 
-    def setup_restored(self):
-        self.db_info.db.cache.set('metadata', self.path, self)
-
     def _add_to_cache(self):
         if self.db_info.db.cache.key_exists('metadata', self.path):
             # duplicate path.  Lets let sqlite raise the error when we try to
@@ -200,6 +216,9 @@ class MetadataStatus(database.DDBObject):
         :param entry: MetadataEntry for the new data
         """
         self._set_status_column(entry.source, self.STATUS_COMPLETE)
+        if (entry.priority >= self.max_entry_priority and
+            entry.file_type is not None):
+            self.file_type = entry.file_type
         if entry.source == 'mutagen':
             if self._should_skip_movie_data(entry):
                 self.moviedata_status = self.STATUS_SKIP
@@ -253,7 +272,7 @@ class MetadataStatus(database.DDBObject):
         self.signal_change()
         return new_status
 
-    def _set_current_processor(self):
+    def _set_current_processor(self, update_finished_status=True):
         """Calculate and set the current_processor attribute """
         # check what the next processor we should run is
         if self.mutagen_status == MetadataStatus.STATUS_NOT_RUN:
@@ -264,13 +283,18 @@ class MetadataStatus(database.DDBObject):
             self.current_processor = u'echonest'
         else:
             self.current_processor = None
+            if (update_finished_status and
+                self.FINISHED_STATUS_VERSION > self.finished_status):
+                self.finished_status = self.FINISHED_STATUS_VERSION
 
     def set_net_lookup_enabled(self, enabled):
         self.net_lookup_enabled = enabled
-        if enabled and self.echonest_status == self.STATUS_SKIP_FROM_PREF:
+        if (enabled and
+            self.echonest_status == self.STATUS_SKIP
+            and self.file_type == u'audio'):
             self.echonest_status = self.STATUS_NOT_RUN
         elif not enabled and self.echonest_status == self.STATUS_NOT_RUN:
-            self.echonest_status = self.STATUS_SKIP_FROM_PREF
+            self.echonest_status = self.STATUS_SKIP
         self._set_current_processor()
         self.signal_change()
 
@@ -283,8 +307,9 @@ class MetadataStatus(database.DDBObject):
 
     @classmethod
     def was_running_select(cls, columns, db_info=None):
-        return cls.select(columns, 'current_processor IS NOT NULL',
-                         db_info=db_info)
+        return cls.select(columns, 'finished_status < ?',
+                          values=(cls.FINISHED_STATUS_VERSION,),
+                          db_info=db_info)
 
 class MetadataEntry(database.DDBObject):
     """Stores metadata from a single source.
@@ -313,9 +338,9 @@ class MetadataEntry(database.DDBObject):
     # net_lookup_enabled is proveded by the metadata_status table, not the
     # actual metadata tables
     metadata_columns.discard('net_lookup_enabled')
-    # cover_art_path is handled implicitly by saving the cover art using the
+    # cover_art is handled implicitly by saving the cover art using the
     # album name
-    metadata_columns.discard('cover_art_path')
+    metadata_columns.discard('cover_art')
 
     def setup_new(self, status, source, data):
         self.status_id = status.id
@@ -1239,7 +1264,7 @@ class MetadataManagerBase(signals.SignalEmitter):
             metadata.update(entry_metadata)
         metadata['has_drm'] = status.get_has_drm()
         metadata['net_lookup_enabled'] = status.net_lookup_enabled
-        self._add_cover_art_path(metadata)
+        self._add_cover_art(metadata)
         return metadata
 
     def refresh_metadata_for_paths(self, paths):
@@ -1258,7 +1283,7 @@ class MetadataManagerBase(signals.SignalEmitter):
             new_metadata[p] = metadata
         self.emit("new-metadata", new_metadata)
 
-    def _add_cover_art_path(self, metadata):
+    def _add_cover_art(self, metadata):
         """Add the cover art path to a metadata dict """
         if 'album' in metadata:
             filename = filetags.calc_cover_art_filename(metadata['album'])
@@ -1266,9 +1291,9 @@ class MetadataManagerBase(signals.SignalEmitter):
             echonest_path = os.path.join(self.cover_art_dir, 'echonest',
                                          filename)
             if os.path.exists(echonest_path):
-                metadata['cover_art_path'] = echonest_path
+                metadata['cover_art'] = echonest_path
             elif os.path.exists(mutagen_path):
-                metadata['cover_art_path'] = mutagen_path
+                metadata['cover_art'] = mutagen_path
 
     def set_user_data(self, path, user_data):
         """Update metadata based on user-inputted data
@@ -1520,9 +1545,9 @@ class MetadataManagerBase(signals.SignalEmitter):
         # add cover-art-path for other items in the same album
         if created_cover_art and 'album' in self.new_metadata[path]:
             album = self.new_metadata[path]['album']
-            cover_art_path = self.new_metadata[path]['cover_art_path']
+            cover_art = self.new_metadata[path]['cover_art']
             for path in MetadataStatus.paths_for_album(album, self.db_info):
-                self.new_metadata[path]['cover_art_path'] = cover_art_path
+                self.new_metadata[path]['cover_art'] = cover_art
 
     def _process_metadata_errors(self):
         for (processor, path, error) in self.metadata_errors:
@@ -1610,7 +1635,7 @@ class DeviceMetadataManager(MetadataManagerBase):
         metadata = MetadataManagerBase.get_metadata(self, path)
         # device items expect cover art and screenshots to be relative to
         # the device mount
-        for key in ('cover_art_path', 'screenshot_path'):
+        for key in ('cover_art', 'screenshot'):
             if key in metadata:
                 metadata[key] = self._untranslate_path(metadata[key])
         return metadata

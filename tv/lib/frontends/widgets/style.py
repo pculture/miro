@@ -812,8 +812,8 @@ class _MultiRowAlbumRenderStrategy(object):
 
 class _StandardRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_image_path(self, item_info, first_info):
-        if item_info.cover_art_path is not None:
-            return item_info.cover_art_path
+        if item_info.cover_art is not None:
+            return item_info.cover_art
         else:
             return item_info.thumbnail
 

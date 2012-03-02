@@ -272,6 +272,7 @@ class MiroTestCase(unittest.TestCase):
         item.start_deleted_checker()
         # Skip worker proccess for feedparser
         feed._RUN_FEED_PARSER_INLINE = True
+        signals.system.connect('new-dialog', self.handle_new_dialog)
         # reload config and initialize it to temprary
         config.load_temporary()
         self.setup_config_watcher()
@@ -348,6 +349,13 @@ class MiroTestCase(unittest.TestCase):
 
         # Remove tempdir
         shutil.rmtree(self.tempdir, onerror=self._on_rmtree_error)
+
+    def handle_new_dialog(self, obj, dialog):
+        """Handle the new-dialog signal
+
+        Subclasses must implement this if they expect to see a dialog.
+        """
+        raise AssertionError("Unexpected dialog: %s" % dialog)
 
     def patch_function(self, function_name, new_function):
         """Use Mock to replace an existing function for a single test.

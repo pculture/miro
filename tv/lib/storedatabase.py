@@ -449,7 +449,7 @@ class LiveStorage:
         except sqlite3.DatabaseError:
             msg = "Error running 'PRAGMA journal_mode=PERSIST'"
             self.error_handler.handle_load_error()
-            self._handle_load_error(msg, init_db=False)
+            self._handle_load_error(msg, init_schema=False)
             self.created_new = True
             # rerun the command with our fresh database
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
@@ -615,7 +615,7 @@ class LiveStorage:
         action = self.error_handler.handle_upgrade_error()
         if action == LiveStorageErrorHandler.ACTION_START_FRESH:
             self._handle_load_error("Error upgrading database")
-            self.startup_version = self.current_version = self._get_version()
+            self.startup_version = self.current_version = self.get_version()
         elif action == LiveStorageErrorHandler.ACTION_SUBMIT_REPORT:
             report = crashreport.format_crash_report("Upgrading Database",
                     exc_info=sys.exc_info(), details=None)
@@ -672,7 +672,7 @@ class LiveStorage:
         del self._changed_db_path
 
     def _upgrade_database(self):
-        self.startup_version = current_version = self._get_version()
+        self.startup_version = current_version = self.get_version()
 
         if current_version > self._schema_version:
             msg = _("Database was created by a newer version of %(appname)s "
@@ -686,7 +686,7 @@ class LiveStorage:
             # need to pull the variable again here because
             # _upgrade_20_database will have done an upgrade
             dbupgradeprogress.doing_new_style_upgrade()
-            current_version = self._get_version()
+            current_version = self.get_version()
             self._change_database_file(current_version)
             databaseupgrade.new_style_upgrade(self.cursor,
                                               current_version,
@@ -699,7 +699,7 @@ class LiveStorage:
         self.cursor.execute("SELECT COUNT(*) FROM sqlite_master "
                 "WHERE type='table' and name = 'dtv_objects'")
         if self.cursor.fetchone()[0] > 0:
-            current_version = self._get_version()
+            current_version = self.get_version()
             if current_version >= 80:
                 # we have a dtv_objects table, but we also have a database
                 # that's been converted to the new-style.  What happened was
@@ -1288,7 +1288,7 @@ class LiveStorage:
             self.cursor.execute("DELETE FROM %s.dtv_variables "
                                 "WHERE name='preallocate'" % (db_name,))
 
-    def _get_version(self):
+    def get_version(self):
         return self.get_variable(VERSION_KEY)
 
     def set_version(self, version=None, db_name='main'):
@@ -1311,16 +1311,20 @@ class LiveStorage:
                 types.append('%s %s PRIMARY KEY' % (name, typ))
         return ', '.join(types)
 
-    def reset_database(self):
+    def reset_database(self, init_schema=False):
         """Saves the current database then starts fresh with an empty
         database.
+
+        :param init_schema: should we create tables for our schema?
         """
         self.connection.close()
         self.save_invalid_db()
         self.open_connection()
         self.created_new = True
+        if init_schema:
+            self._init_database()
 
-    def _handle_load_error(self, message, init_db=True):
+    def _handle_load_error(self, message, init_schema=True):
         """Handle errors happening when we try to load the database.  Our
         basic strategy is to log the error, save the current database then
         start fresh with an empty database.
@@ -1329,9 +1333,7 @@ class LiveStorage:
             raise
         if util.chatter:
             logging.exception(message)
-        self.reset_database()
-        if init_db:
-            self._init_database()
+        self.reset_database(init_schema)
 
     def save_invalid_db(self):
         target_path = os.path.dirname(self.path)

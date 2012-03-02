@@ -343,10 +343,10 @@ class MovieDataTest(WorkerProcessTest):
             self.assert_('duration' not in self.result)
         if file_type == 'video':
             screenshot_name = os.path.basename(source_path) + '.png'
-            self.assertEquals(self.get_from_result('screenshot_path'),
+            self.assertEquals(self.get_from_result('screenshot'),
                               os.path.join(self.tempdir, screenshot_name))
         else:
-            self.assert_('screenshot_path' not in self.result)
+            self.assert_('screenshot' not in self.result)
         self.reset_results()
 
     def test_movie_data_worker_process(self):
@@ -375,9 +375,9 @@ class MutagenTest(WorkerProcessTest):
         self.assertEquals(self.result['duration'], duration)
         self.assertEquals(self.result['title'], title)
         if has_cover_art:
-            self.assertNotEquals(self.result['cover_art_path'], None)
+            self.assertNotEquals(self.result['cover_art'], None)
         else:
-            self.assert_('cover_art_path' not in self.result)
+            self.assert_('cover_art' not in self.result)
         self.reset_results()
 
     def test_mutagen_worker_process(self):
