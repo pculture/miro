@@ -251,6 +251,13 @@ class FakeSchemaTest(StoreDatabaseTest):
         databaseupgrade._upgrade_overide[2] = upgrade2
 
 class DiskTest(FakeSchemaTest):
+    def setUp(self):
+        FakeSchemaTest.setUp(self)
+        # should we handle upgrade error dialogs by clicking "start fresh"
+        self.handle_upgrade_error_dialogs = False
+        # should we handle database corrupt message boxes by clicking "OK?"
+        self.handle_corruption_dialogs = False
+
     def check_database(self):
         obj_map = {}
         for klass in (PCFProgramer, RestorableHuman, Human):
@@ -375,27 +382,30 @@ class DiskTest(FakeSchemaTest):
         self.allow_db_load_errors(False)
         self.assert_(os.path.exists(corrupt_path))
 
-    def handle_corrupt_db_dialogs(self, upgrade, corruption):
+    def handle_dialogs(self, upgrade, corruption):
         """Handle the dialogs that we pop up when we notice database errors.
 
         :param upgrade: handle upgrade dialogs by clicking "start fresh"
         :param corruption: handle database corrupt message boxes
         """
         self.allow_db_upgrade_error_dialog = True
-        def dialog_handler(obj, dialog):
-            if upgrade and (dialogs.BUTTON_START_FRESH in dialog.buttons):
-                # handle database upgrade dialog
-                dialog.run_callback(dialogs.BUTTON_START_FRESH)
-            elif corruption and isinstance(dialog, dialogs.MessageBoxDialog):
-                # handle the load error dialog
-                dialog.run_callback(dialogs.BUTTON_OK)
-            else:
-                raise AssertionError("Don't know how to handle dialog: %s",
-                        dialog)
-        signals.system.connect('new-dialog', dialog_handler)
+        self.handle_upgrade_error_dialogs = upgrade
+        self.handle_corruption_dialogs = corruption
+
+    def handle_new_dialog(self, obj, dialog):
+        if (self.handle_upgrade_error_dialogs and 
+            (dialogs.BUTTON_START_FRESH in dialog.buttons)):
+            # handle database upgrade dialog
+            dialog.run_callback(dialogs.BUTTON_START_FRESH)
+        elif (self.handle_corruption_dialogs and
+              isinstance(dialog, dialogs.MessageBoxDialog)):
+            # handle the load error dialog
+            dialog.run_callback(dialogs.BUTTON_OK)
+        else:
+            return FakeSchemaTest.handle_new_dialog(self, obj, dialog)
 
     def test_upgrade_error(self):
-        self.handle_corrupt_db_dialogs(upgrade=True, corruption=False)
+        self.handle_dialogs(upgrade=True, corruption=False)
         self.check_reload_error(version=2)
 
     def test_corrupt_database(self):
@@ -404,12 +414,12 @@ class DiskTest(FakeSchemaTest):
         # depending on the SQLite version, we will notice the error when we
         # issup the PRAGMA journal_mode command, or when we do the upgrades.
         # Handle the dialogs for both.
-        self.handle_corrupt_db_dialogs(upgrade=True, corruption=True)
+        self.handle_dialogs(upgrade=True, corruption=True)
         self.check_reload_error()
 
     def test_database_data_error(self):
         app.db.cursor.execute("DROP TABLE human")
-        self.handle_corrupt_db_dialogs(upgrade=False, corruption=True)
+        self.handle_dialogs(upgrade=False, corruption=True)
         self.check_reload_error()
 
     def test_bulk_insert(self):

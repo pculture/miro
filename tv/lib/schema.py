@@ -450,7 +450,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
-        ('screenshot_path', SchemaFilename(noneOk=True)),
+        ('screenshot', SchemaFilename(noneOk=True)),
         ('resumeTime', SchemaInt()),
         ('channelTitle', SchemaString(noneOk=True)),
         ('license', SchemaString(noneOk=True)),
@@ -474,7 +474,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
         # metadata:
-        ('cover_art_path', SchemaFilename(noneOk=True)),
+        ('cover_art', SchemaFilename(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
         ('description', SchemaString(noneOk=True)),
         ('album', SchemaString(noneOk=True)),
@@ -823,7 +823,8 @@ class MetadataStatusSchema(DDBObjectSchema):
     table_name = 'metadata_status'
     fields = DDBObjectSchema.fields + [
         ('path', SchemaFilename()),
-        ('current_processor', SchemaString(noneOk=True)),
+        ('file_type', SchemaString()),
+        ('finished_status', SchemaInt()),
         ('mutagen_status', SchemaString()),
         ('moviedata_status', SchemaString()),
         ('echonest_status', SchemaString()),
@@ -834,7 +835,7 @@ class MetadataStatusSchema(DDBObjectSchema):
     ]
 
     indexes = (
-        ('metadata_processor', ('current_processor',)),
+        ('metadata_finished', ('finished_status',)),
     )
 
     unique_indexes = (
@@ -854,7 +855,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('album_artist', SchemaString(noneOk=True)),
         ('album_tracks', SchemaInt(noneOk=True)),
         ('artist', SchemaString(noneOk=True)),
-        ('screenshot_path', SchemaFilename(noneOk=True)),
+        ('screenshot', SchemaFilename(noneOk=True)),
         ('drm', SchemaBool(noneOk=True)),
         ('genre', SchemaString(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
@@ -878,7 +879,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 174
+VERSION = 177
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

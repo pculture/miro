@@ -340,7 +340,7 @@ class _EchonestQuery(object):
             self.grab_url_dest = os.path.join(self.cover_art_dir,
                                               self.cover_art_filename)
             if os.path.exists(self.grab_url_dest):
-                self.metadata['cover_art_path'] = self.grab_url_dest
+                self.metadata['cover_art'] = self.grab_url_dest
                 self.invoke_callback()
             else:
                 self.fetch_cover_art()
@@ -400,7 +400,7 @@ class _EchonestQuery(object):
     def cover_art_callback(self, data):
         # we don't care about the data sent back, since grab_url wrote our
         # file for us
-        self.metadata['cover_art_path'] = self.grab_url_dest
+        self.metadata['cover_art'] = self.grab_url_dest
         self.metadata['created_cover_art'] = True
         self.invoke_callback()
 

@@ -29,6 +29,7 @@
 
 """Upgrade old device databases """
 
+import itertools
 import logging
 import os.path
 import shutil
@@ -36,20 +37,25 @@ import urllib
 
 from miro import app
 from miro import databaseupgrade
+from miro import item
+from miro import metadata
 from miro import prefs
 from miro import storedatabase
 
-def import_from_json(live_storage, json_db, mount):
-    """Import data from a JSON DB for a newly created sqlite DB
+def import_old_items(live_storage, json_db, mount):
+    """Import items in a JSON database from old versions.
 
-    This method basically does upgrades 166 through 173
+    For each item in the JSON db that doesn't have a corresponding entry in
+    the metadata status table, we import that data into the metadata table.
+    This method basically does upgrades 166 through 173 for those items.
 
     How to handle upgrades after this?  Who knows.  We're just worrying about
     making version 5.0 work at this point.
     """
     live_storage.cursor.execute("BEGIN TRANSACTION")
     try:
-        _do_import(live_storage.cursor, json_db, mount)
+        _do_import_old_items(live_storage.cursor, json_db, mount)
+        live_storage.cursor.execute("COMMIT TRANSACTION")
     except StandardError:
         logging.exception('exception while importing JSON db from %s', mount)
         action = live_storage.error_handler.handle_upgrade_error()
@@ -57,15 +63,13 @@ def import_from_json(live_storage, json_db, mount):
         if action != storedatabase.LiveStorageErrorHandler.ACTION_START_FRESH:
             logging.warn("Unexpected return value from the error handler for "
                          "a device database: %s" % action)
-        handle_failed_upgrade(live_storage.cursor, json_db)
-    finally:
-        live_storage.cursor.execute("COMMIT TRANSACTION")
 
-def _do_import(cursor, json_db, mount):
+class _do_import_old_items(object):
+    """Function object that handles the work for import_old_items"""
+
     # FIXME: this code is tied to the 5.0 release and may not work for future
     # versions
 
-    cover_art_dir = os.path.join(mount, '.miro', 'cover-art')
     # map old MDP states to their new values
     mdp_state_map = {
         None : 'N',
@@ -73,20 +77,6 @@ def _do_import(cursor, json_db, mount):
         1 : 'C',
         2 : 'F',
     }
-
-    device_items = []
-    for file_type in (u'audio', u'video', u'other'):
-        for path, data in json_db[file_type].iteritems():
-            device_items.append((file_type, path, data))
-
-    # currently get_title() returns the contents of title and falls back on
-    # title_tag.  Set the title column to be that value for the conversion and
-    # erase title_tag
-    for file_type, path, item in device_items:
-        if 'title_tag' in item:
-            if not item['title']:
-                item['title'] = item['title_tag']
-            del item['title_tag']
 
     # list that contains tuples in the form of
     # (metadata_column_name, device_item_key
@@ -96,7 +86,7 @@ def _do_import(cursor, json_db, mount):
         ('album_artist', 'album_artist'),
         ('album_tracks', 'album_tracks'),
         ('artist', 'artist'),
-        ('screenshot_path', 'screenshot'),
+        ('screenshot', 'screenshot'),
         ('drm', 'has_drm'),
         ('genre', 'genre'),
         ('title ', 'title'),
@@ -113,126 +103,175 @@ def _do_import(cursor, json_db, mount):
 
     insert_columns = ['id', 'status_id', 'file_type', 'source', 'priority',
                       'disabled']
-
-    filenames_seen = set()
-
     for new_name, old_name in column_map:
         insert_columns.append(new_name)
 
-    next_id = databaseupgrade.get_next_id(cursor)
-    for file_type, path, old_item in device_items:
+    # SQL to insert a row into the metadata table
+    metadata_insert_sql = (
+        "INSERT INTO metadata (%s) VALUES (%s)" %
+        (', '.join(insert_columns),
+         ', '.join('?' for i in xrange(len(insert_columns)))))
+
+    def __init__(self, cursor, json_db, mount):
+        self.cover_art_dir = os.path.join(mount, '.miro', 'cover-art')
+        self.net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
+        self.mount = mount
+        self.cursor = cursor
+        # track the next id that we should create in the database
+        self.id_counter = itertools.count(databaseupgrade.get_next_id(cursor))
+
+        self.init_paths_in_metadata_table()
+        self.init_device_items(json_db)
+        self.process_items()
+
+    def process_items(self):
+        """Run through device_items and create rows in the metadata table for
+        them.
+        """
+        if not self.device_items:
+            # nothing new to import
+            return
+
+        logging.info("Importing %d old device items", len(self.device_items))
+        for file_type, path, item in self.device_items:
+            if path in self.paths_in_metadata_table:
+                # duplicate filename, just skip this data
+                continue
+            self.paths_in_metadata_table.add(path)
+            try:
+                self.convert_old_item(file_type, path, item)
+            except StandardError, e:
+                logging.warn("error converting device item for %r ", path,
+                             exc_info=True)
+                self.insert_fresh_metadata_status_row(file_type, path)
+
+    def init_paths_in_metadata_table(self):
+        """Initialize paths_in_metadata_table
+
+        paths_in_metadata_table tracks which paths already have a row in the
+        metadata_status table
+        """
+        self.cursor.execute("SELECT path FROM metadata_status")
+        self.paths_in_metadata_table = set(row[0] for row in self.cursor)
+
+    def init_device_items(self, json_db):
+        """Initialize device_items
+
+        device_items stores a (file_type, path, item_data) tuple for each
+        device item that we should convert
+        """
+        # get info about each item on the device
+        self.device_items = []
+        for file_type in (u'audio', u'video', u'other'):
+            if file_type not in json_db:
+                continue
+            for path, data in json_db[file_type].iteritems():
+                if path not in self.paths_in_metadata_table:
+                    self.device_items.append((file_type, path, data))
+
+    def convert_old_item(self, file_type, path, old_item):
+
+        # title and title_tag were pretty confusing before 5.0.  We would set
+        # title_tag based on the ID3 tags, and if that didn't work, then set
+        # title based on the filename.  get_title() would try the title
+        # attribute first, then fallback to title_tag.  After 5.0, we just
+        # only use title.
+        #
+        # This code should make it so that titles work correctly for upgraded
+        # items, both in 5.0 and also if you go back to a pre-5.0 versions.
+        if 'title_tag' in old_item:
+            if not old_item['title']:
+                old_item['title'] = old_item['title_tag']
+            old_item['title_tag'] = None
+
+
         has_drm = old_item.get('has_drm') # other doesn't have DRM
-        if path in filenames_seen:
-            # duplicate filename, just skip this data
-            continue
-        else:
-            filenames_seen.add(path)
         OLD_ITEM_PRIORITY = 10
         # Make an entry in the metadata_status table.  We're not sure if
         # mutagen completed successfully or not, so we just call its status
         # SKIPPED.  moviedata_status is based on the old mdp_state column
-        moviedata_status = mdp_state_map[old_item.get('mdp_state')]
-        if moviedata_status == 'N':
-            current_processor = u'movie-data'
-        else:
-            current_processor = None
-        if file_type == u'audio':
-            echonest_status = 'P' # STATUS_SKIP_FROM_PREF
-        else:
-            echonest_status = 'S' # STATUS_SKIP
-        sql = ("INSERT INTO metadata_status "
-               "(id, path, current_processor, mutagen_status, "
-               "moviedata_status, echonest_status, net_lookup_enabled, "
-               "mutagen_thinks_drm, max_entry_priority) "
-               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
-        cursor.execute(sql, (next_id, path, current_processor, 'S',
-                             moviedata_status, echonest_status, False, has_drm,
-                             OLD_ITEM_PRIORITY))
-        status_id = next_id
-        next_id += 1
+        moviedata_status = self.mdp_state_map[old_item.get('mdp_state')]
+        finished_status = bool(moviedata_status !=
+                               metadata.MetadataStatus.STATUS_NOT_RUN)
 
+        if self.net_lookup_enabled:
+            echonest_status = metadata.MetadataStatus.STATUS_NOT_RUN
+        else:
+            echonest_status = metadata.MetadataStatus.STATUS_SKIP
+        status_id = self.insert_into_metadata_status(
+            path, file_type, finished_status, 'S', moviedata_status,
+            echonest_status, has_drm, OLD_ITEM_PRIORITY)
         # Make an entry in the metadata table with the metadata that was
         # stored.  We don't know if it came from mutagen, movie data, torrent
         # data or wherever, so we use "old-item" as the source and give it a
         # low priority.
-        values = [next_id, status_id, file_type, 'old-item', 10, False]
-        for new_name, old_name in column_map:
+        values = [self.id_counter.next(), status_id, file_type, 'old-item',
+                  10, False]
+        for new_name, old_name in self.column_map:
             value = old_item.get(old_name)
             if value == '':
                 value = None
             values.append(value)
 
-        sql = "INSERT INTO metadata (%s) VALUES (%s)" % (
-            ', '.join(insert_columns),
-            ', '.join('?' for i in xrange(len(insert_columns))))
-        cursor.execute(sql, values)
-        next_id += 1
-
-
-        # We need to alter the device info to:
-        #   - drop the columns now handled by metadata_status
-        #   - transform the cover art path to match our new system
-        #   - make column names match the keys in MetadataManager.get_metadata()
-        #   - add a new column for torrent titles
+        self.cursor.execute(self.metadata_insert_sql, values)
 
         if 'cover_art' in old_item:
-            upgrade_cover_art(old_item, cover_art_dir)
-        if 'screenshot' in old_item:
-            old_item['screenshot_path'] = old_item.pop('screenshot')
-        if 'mdp_state' in old_item:
-            del old_item['mdp_state']
-        if 'metadata_version' in old_item:
-            del old_item['metadata_version']
+            self.upgrade_cover_art(old_item)
+        # Use the RAN state for all old items.  This will prevent old miro
+        # versions from running the movie data program on them.  This seems
+        # the safest option and old versions should still pick up new metadata
+        # when newer versions run MDP.
+        old_item['mdp_state'] = item.MDP_STATE_RAN
 
-def upgrade_cover_art(device_item, cover_art_dir):
-    """Drop the cover_art field and move cover art to a filename based on the
-    album
-    """
+    def insert_into_metadata_status(self, path, file_type, finished_status,
+                                    mutagen_status, moviedata_status,
+                                    echonest_status, has_drm,
+                                    max_entry_priority):
+        status_id = self.id_counter.next()
+        sql = ("INSERT INTO metadata_status "
+               "(id, path, file_type, finished_status, mutagen_status, "
+               "moviedata_status, echonest_status, net_lookup_enabled, "
+               "mutagen_thinks_drm, max_entry_priority) "
+               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 
-    if 'album' not in device_item or 'cover_art' not in device_item:
-        return
-    cover_art_path = device_item.pop('cover_art')
-    # quote the filename using the same logic as
-    # filetags.calc_cover_art_filename()
-    dest_filename = urllib.quote(device_item['album'].encode('utf-8'),
-                                 safe=' ,.')
-    dest_path = os.path.join(cover_art_dir, dest_filename)
-    if not os.path.exists(dest_path):
-        if not os.path.exists(cover_art_path):
-            logging.warn("upgrade_cover_art: Error moving cover art, "
-                         "source path doesn't exist: %s", cover_art_path)
+        self.cursor.execute(sql, (status_id, path, file_type, finished_status,
+                             mutagen_status, moviedata_status,
+                             echonest_status, self.net_lookup_enabled,
+                             has_drm, max_entry_priority))
+        return status_id
+
+    def upgrade_cover_art(self, device_item):
+        """Drop the cover_art field and move cover art to a filename based on
+        the album
+        """
+
+        if 'album' not in device_item or 'cover_art' not in device_item:
             return
-        try:
-            shutil.move(cover_art_path, dest_path)
-        except StandardError:
-            logging.warn("upgrade_cover_art: Error moving %s -> %s", 
-                         cover_art_path, dest_path)
+        cover_art = device_item.pop('cover_art')
+        device_item['cover_art'] = None # default in case the upgrade fails.
+        # quote the filename using the same logic as
+        # filetags.calc_cover_art_filename()
+        dest_filename = urllib.quote(device_item['album'].encode('utf-8'),
+                                     safe=' ,.')
+        dest_path = os.path.join(self.cover_art_dir, dest_filename)
+        if not os.path.exists(dest_path):
+            if not os.path.exists(cover_art):
+                logging.warn("upgrade_cover_art: Error moving cover art, "
+                             "source path doesn't exist: %s", cover_art)
+                return
+            try:
+                shutil.move(cover_art, dest_path)
+            except StandardError:
+                logging.warn("upgrade_cover_art: Error moving %s -> %s", 
+                             cover_art, dest_path)
+                return
+        device_item['cover_art'] = dest_path
 
-def handle_failed_upgrade(cursor, json_db):
-    # make a metadata_status row for each item in the database as if they were
-    # just added
+    def insert_fresh_metadata_status_row(self, file_type, path):
+        # make a metadata_status row for each item in the database as if they
+        # were just added
 
-    sql = ("INSERT INTO metadata_status "
-           "(path, current_processor, mutagen_status, moviedata_status, "
-           "echonest_status, net_lookup_enabled, mutagen_thinks_drm, "
-           "max_entry_priority) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-
-    net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
-    STATUS_NOT_RUN = 'N'
-
-    for file_type in (u'audio', u'video', u'other'):
-        if file_type not in json_db:
-            continue
-        for path in json_db[file_type].keys():
-           values = (path, u'mutagen', STATUS_NOT_RUN, STATUS_NOT_RUN,
-                     STATUS_NOT_RUN, net_lookup_enabled, False, 0)
-           try:
-               cursor.execute(sql, values)
-           except storedatabase.sqlite3.IntegrityError, e:
-               if e.message == 'column path is not unique': # XXX better way to
-                                                            # detect this?
-                   # This item already got added to the DB during a partial
-                   # upgrade; skip adding a row to the DB.
-                   pass
-               else:
-                   raise
+        STATUS_NOT_RUN = metadata.MetadataStatus.STATUS_NOT_RUN
+        self.insert_into_metadata_status(path, file_type, 0, STATUS_NOT_RUN,
+                                         STATUS_NOT_RUN, STATUS_NOT_RUN,
+                                         False, 0)

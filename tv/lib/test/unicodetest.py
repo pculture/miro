@@ -12,11 +12,10 @@ from miro.plat import resources
 class UnicodeFeedTestCase(framework.EventLoopTest):
     def setUp(self):
         super(UnicodeFeedTestCase, self).setUp()
-        signals.system.connect('new-dialog', self.onNewDialog)
         self.choice = None
         self.num_dialogs = 0
 
-    def onNewDialog(self, obj, dialog):
+    def handle_new_dialog(self, obj, dialog):
         self.assertNotEqual(self.choice, None)
         self.num_dialogs += 1
         # print "rundialog called from %s" % dialog.title

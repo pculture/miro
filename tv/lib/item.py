@@ -82,6 +82,10 @@ MIME_SUBSITUTIONS = {
     u'QUICKTIME': u'MOV',
 }
 
+# We don't mdp_state as of version 5.0, but we need to set this for
+# DeviceItems so that older versions can read the device DB
+MDP_STATE_RAN = 1
+
 def _check_for_image(path, element):
     """Given an element (which is really a dict), traverses
     the path in the element and if that turns out to be an image,
@@ -431,7 +435,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.filename = None
         self.eligibleForAutoDownload = eligibleForAutoDownload
         self.duration = None
-        self.screenshot_path = None
+        self.screenshot = None
         self.resumeTime = 0
         self.channelTitle = None
         self.downloader_id = None
@@ -1484,8 +1488,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         to signal the right set of items.
         """
         self.confirm_db_thread()
-        if self.cover_art_path:
-            path = self.cover_art_path
+        if self.cover_art:
+            path = self.cover_art
             path = resources.path(fileutil.expand_filename(path))
             if fileutil.exists(path):
                 return path
@@ -1493,8 +1497,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             # is_valid() verifies that the path exists
             path = self.icon_cache.get_filename()
             return resources.path(fileutil.expand_filename(path))
-        if self.screenshot_path:
-            path = self.screenshot_path
+        if self.screenshot:
+            path = self.screenshot
             path = resources.path(fileutil.expand_filename(path))
             if fileutil.exists(path):
                 return path
@@ -2413,7 +2417,7 @@ class DeviceItem(object):
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = None
-        self.duration = self.screenshot_path = self.thumbnail_url = None
+        self.duration = self.screenshot = self.thumbnail_url = None
         self.resumeTime = 0
         self.subtitle_encoding = self.enclosure_type = None
         self.auto_sync = False
@@ -2427,6 +2431,11 @@ class DeviceItem(object):
         else:
             local_path = None
         self._fix_paths_from_database(kwargs)
+        # set values for attributes used in pre-5.0 databases.
+        self.metadata_version = 5 # version used in 4.0.x
+        self.mdp_state = MDP_STATE_RAN
+        self.title_tag = None
+
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
@@ -2458,9 +2467,9 @@ class DeviceItem(object):
         self.__initialized = True
 
     def _fix_paths_from_database(self, data):
-        """Make screenshot_path and cover_art_path the correct type.
+        """Make screenshot and cover_art the correct type.
         """
-        for key in ('screenshot_path', 'cover_art_path'):
+        for key in ('screenshot', 'cover_art'):
             if key in data and isinstance(data[key], unicode):
                 data[key] = utf8_to_filename(data[key].encode('utf-8'))
 
@@ -2505,16 +2514,23 @@ class DeviceItem(object):
         """
         if self.title:
             return self.title
+        if self.title_tag:
+            # title_tag was set to the ID3 tag by pre-5.0 versions.  We
+            # convert this to title_tag in
+            # devicedatabaseupgrade.import_old_items(), so this probably won't
+            # be reached.  But we might as well prefer title_tag over the
+            # filename if it somehow exists.
+            return self.title_tag
         return os.path.basename(self.id)
 
     @returns_filename
     def get_thumbnail(self):
-        if self.cover_art_path:
+        if self.cover_art:
             return os.path.join(self.device.mount,
-                                self.cover_art_path)
-        elif self.screenshot_path:
+                                self.cover_art)
+        elif self.screenshot:
             return os.path.join(self.device.mount,
-                                self.screenshot_path)
+                                self.screenshot)
         elif self.file_type == 'audio':
             return resources.path("images/thumb-default-audio.png")
         else:
@@ -2563,7 +2579,7 @@ class DeviceItem(object):
         for k, v in self.__dict__.items():
             if v is not None and k not in (u'device', u'file_type', u'id',
                                            u'video_path', u'_deferred_update'):
-                if ((k == u'screenshot_path' or k == u'cover_art_path')):
+                if ((k == u'screenshot' or k == u'cover_art')):
                     v = filename_to_unicode(v)
                 data[k] = v
         return data

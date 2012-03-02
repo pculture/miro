@@ -486,21 +486,23 @@ class HTTPClientTest(HTTPClientTestBase):
 class HTTPAuthTest(HTTPClientTestBase):
     def setUp(self):
         HTTPClientTestBase.setUp(self)
-        self.callback_handle = None
         self.setup_cancel()
         self.dialogs_seen = 0
         self.dialog_callback = None
+        self.answer = None
 
     def setup_answer(self, username, password, button=dialogs.BUTTON_OK):
-        def handler(obj, dialog):
-            self.dialogs_seen += 1
-            if self.dialog_callback:
-                self.dialog_callback()
-            dialog.run_callback(button, unicode(username),
-                    unicode(password))
-        if self.callback_handle:
-            signals.system.disconnect(self.callback_handle)
-        self.callback_handle = signals.system.connect('new-dialog', handler)
+        self.answer = (unicode(username), unicode(password), button)
+
+    def handle_new_dialog(self, obj, dialog):
+        if self.answer is None:
+            HTTPClientTestBase.handle_new_dialog(self, obj, dialog)
+
+        self.dialogs_seen += 1
+        if self.dialog_callback:
+            self.dialog_callback()
+        username, password, button = self.answer
+        dialog.run_callback(button, username, password)
 
     def setup_cancel(self):
         self.setup_answer('', '', dialogs.BUTTON_CANCEL)
@@ -751,10 +753,9 @@ class HTTPAuthBackendTest(EventLoopTest):
 
     def setUp(self):
         self.dialogs_seen = 0
-        signals.system.connect('new-dialog', self.handle_dialog)
         EventLoopTest.setUp(self)
 
-    def handle_dialog(self, obj, dialog):
+    def handle_new_dialog(self, obj, dialog):
         self.dialogs_seen += 1
         dialog.run_callback(dialogs.BUTTON_OK, u'user', u'password')
 

@@ -174,6 +174,12 @@ class Dialog(object):
                                     "%s callback" % self.__class__,
                                     args=(self,))
 
+    def __str__(self):
+        button_text = '/'.join(b.text for b in self.buttons)
+        return "%s (text: %s, buttons: %s)" % (self.__class__,
+                                               self.title,
+                                               button_text)
+
 class MessageBoxDialog(Dialog):
     """Show the user some info in a dialog box.  The only button is
     Okay.  The callback is optional for a message box dialog.
