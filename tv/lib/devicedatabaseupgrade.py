@@ -191,10 +191,8 @@ class _do_import_old_items(object):
         # mutagen completed successfully or not, so we just call its status
         # SKIPPED.  moviedata_status is based on the old mdp_state column
         moviedata_status = self.mdp_state_map[old_item.get('mdp_state')]
-        if moviedata_status == 'N':
-            finished_status = 0
-        else:
-            finished_status = 1
+        finished_status = bool(moviedata_status !=
+                               metadata.MetadataStatus.STATUS_NOT_RUN)
 
         if self.net_lookup_enabled:
             echonest_status = metadata.MetadataStatus.STATUS_NOT_RUN

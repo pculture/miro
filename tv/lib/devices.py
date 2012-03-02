@@ -1344,16 +1344,24 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0):
         # make databases from the nightlies match the ones from users starting
         # with 5.0
         live_storage.set_version(DB_VERSION)
-    elif live_storage.get_version() < DB_VERSION:
-        # Hack for 5.0.
-        #
-        # We didn't create sqlite databases in 4.0.x, so if there is a
-        # database with an earlier version, we know it was created by a
-        # nightly build.  In that case it's not a huge deal to reset it.
-        #
-        # FIXME: Need to write real upgrade code for post-5.0
-        logging.warn("Reseting device database: %r", mount)
-        live_storage.reset_database(init_schema=True)
+    else:
+        device_db_version = live_storage.get_version()
+        if device_db_version < DB_VERSION:
+            # Hack for 5.0.
+            #
+            # We didn't create sqlite databases in 4.0.x, so if there is a
+            # database with an earlier version, we know it was created by a
+            # nightly build.  In that case it's not a huge deal to reset it.
+            #
+            # FIXME: Need to write real upgrade code for post-5.0
+            logging.warn("Reseting device database: %r", mount)
+            live_storage.reset_database(init_schema=True)
+        elif device_db_version > DB_VERSION:
+            # Newer versions of miro should store their device databases in a
+            # way that's compatible with previous ones.  We just have to hope
+            # that's true in this case.
+            logging.warn("database from newer miro version: %r (version=%s)",
+                         mount, device_db_version)
 
     devicedatabaseupgrade.import_old_items(live_storage, json_db, mount)
     return live_storage
