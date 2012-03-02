@@ -37,6 +37,7 @@ import urllib
 
 from miro import app
 from miro import databaseupgrade
+from miro import item
 from miro import metadata
 from miro import prefs
 from miro import storedatabase
@@ -222,7 +223,7 @@ class _do_import_old_items(object):
         # versions from running the movie data program on them.  This seems
         # the safest option and old versions should still pick up new metadata
         # when newer versions run MDP.
-        old_item['mdp_state'] = 1
+        old_item['mdp_state'] = item.MDP_STATE_RAN
 
     def insert_into_metadata_status(self, path, file_type, finished_status,
                                     mutagen_status, moviedata_status,
