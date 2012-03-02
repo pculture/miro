@@ -74,8 +74,17 @@ def download_code(filename, code):
     reply = urllib.urlopen(url).read()
     open(filename, 'wb').write(reply)
 
+def download_id(filename, id):
+    print 'generating %s' % filename
+    url = ('http://developer.echonest.com/api/v4/song/profile'
+           '?api_key=N6E4NIOVYMTHNDM8J'
+           '&id=' + id)
+    reply = urllib.urlopen(url).read()
+    open(filename, 'wb').write(reply)
+
 download_code('billie-jean', billy_jean_code)
 download_code('rock-music', rock_music_code)
+download_id('break-like-the-wind', 'SOBKZUR12B0B80C2C1')
 download_code('no-match', 'fake-code')
 download_code('error', '')
 # make no-releases from rock music
