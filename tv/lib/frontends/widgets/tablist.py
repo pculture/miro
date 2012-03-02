@@ -180,7 +180,7 @@ class TabUpdaterMixin(object):
             del self.updating_animations[id_]
             return
         self.view.pulse_updating_image(iter_)
-        timer_id = timer.add(0.1, self.pulse_updating_animation, id_)
+        timer_id = timer.add(0.5, self.pulse_updating_animation, id_)
         self.updating_animations[id_] = timer_id
 
 class TabBlinkerMixin(object):
