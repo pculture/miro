@@ -756,14 +756,11 @@ class LiveStorage:
         # menu item, so it should be okay
         # Make it so that the next attempt (and only that attempt) to execute
         # a query results in an error.
-        from miro.test import mock
-        mock_time_execute = mock.Mock()
-        patcher = mock.patch.object(self, '_time_execute', mock_time_execute)
-        patcher.start()
+        old_time_execute = self._time_execute
         def time_execute_intercept(*args, **kwargs):
-            patcher.stop()
+            self._time_execute = old_time_execute
             raise sqlite3.OperationalError()
-        mock_time_execute.side_effect = time_execute_intercept
+        self._time_execute = time_execute_intercept
         # force the db to execute sql
         self._execute("REPLACE INTO dtv_variables "
                       "(name, serialized_value) VALUES (?,?)",
