@@ -304,7 +304,13 @@ class BugReportSender(signals.SignalEmitter):
                     path = os.path.join(root, fn)
                     if not os.path.islink(path):
                         relpath = os.path.join(relativeroot, fn)
-                        relpath = relpath.encode('ascii', 'replace')
+                        # convert relpath to an ascii string
+                        # NOTE: Not sure why this is needed.
+                        if isinstance(relpath, unicode):
+                            relpath = relpath.encode('ascii', 'replace')
+                        else:
+                            relpath = relpath.decode('utf-8', 'replace')
+                            relpath = relpath.encode('ascii', 'replace')
                         zipfile.write(path, relpath)
             zipfile.close()
             logging.info("Support directory backed up to %s (%d bytes)",
