@@ -69,6 +69,7 @@ from miro import crashreport
 from miro import convert20database
 from miro import databaseupgrade
 from miro import dbupgradeprogress
+from miro import displaytext
 from miro import dialogs
 from miro import eventloop
 from miro import fileutil
@@ -766,6 +767,30 @@ class LiveStorage:
                       "(name, serialized_value) VALUES (?,?)",
                       ('simulate_db_save_error', 1), is_update=True)
 
+    def debug_space_usage(self):
+        """Try to debug how much space each column takes in the table."""
+        results = []
+        for schema in self._all_schemas:
+            table = schema.table_name
+            sql = "SELECT COUNT(1) FROM %s" % table
+            row_count = self._execute(sql)[0][0]
+            for row in self._execute("PRAGMA table_info('%s')" % table):
+                column = row[1]
+                sql = "SELECT AVG(LENGTH(%s)) FROM %s" % (column, table)
+                avg_size = self._execute(sql)[0][0]
+                if avg_size:
+                    size = avg_size * row_count
+                else:
+                    size = 0
+                results.append((size, table, column))
+
+        results.sort(reverse=True)
+        output = []
+        for size, table, column in results[:25]:
+            size_str = displaytext.size_string(int(size))
+            output.append("%s.%s: %s" % (table, column, size_str))
+        logging.debug("database size usage estimates:\n\n%s", '\n'.join(output))
+
     def remember_object(self, obj):
         key = (obj.id, app.db.table_name(obj.__class__))
         self._object_map[key] = obj
@@ -1078,7 +1103,7 @@ class LiveStorage:
                 self.cursor.execute("ROLLBACK TRANSACTION")
         self._statements_in_transaction = []
 
-    def _execute(self, sql, values, is_update=False, many=False):
+    def _execute(self, sql, values=(), is_update=False, many=False):
         if is_update and self._quitting_from_operational_error:
             # We want to avoid updating the database at this point.
             return

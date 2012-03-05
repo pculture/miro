@@ -929,6 +929,9 @@ class ForceDeviceDBSaveError(BackendMessage):
     def __init__(self, device_info):
         self.device_info = device_info
 
+class DebugDBSpaceUsage(BackendMessage):
+    """Estimate the space used by each column in the database."""
+
 # Frontend Messages
 class DownloaderSyncCommandComplete(FrontendMessage):
     """Tell the frontend that the pause/resume all command are complete,

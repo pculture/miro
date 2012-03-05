@@ -71,6 +71,39 @@ class MenuItem(widgetset.MenuItem):
                 raise ValueError("only support one group")
             MenuItem.group_map[groups[0]].add(self)
 
+# Define specific menu items
+#
+# NOTE: most of our menu items use the MenuItem class and then define an
+# associted function that's decorated with action_handler.  This is mostly
+# because that's how we needed to do things before and no one has taken time
+# to refactore it.
+#
+# Now that we can subclass widgetset.MenuItem, we can create a simpler system
+# for menu items and both systems can live together.  The naming is awkward,
+# but that's the only issue.
+#
+# TODO: Convert all MenuItems to using the MenuItemBase system and remove the
+# MenuItem class.
+class MenuItemBase(widgetset.MenuItem):
+    """Base class for menu items.
+
+    Subclasses must define a label attribute, and can optionally define a
+    shortcuts one.  They also probably want to define the do_activate()
+    method.
+    """
+
+    shortcut = None
+
+    def __init__(self):
+        name = str(self.__class__)
+        widgetset.MenuItem.__init__(self, self.label, name, self.shortcut)
+
+class MenuItemDebugDBSpaceUsage(MenuItemBase):
+    label = _('Debug DB Space Usage')
+
+    def do_activate(self):
+        messages.DebugDBSpaceUsage().send_to_backend()
+
 class MenuItemFetcher(object):
     """Get MenuItems by their name quickly.  """
 
@@ -283,6 +316,7 @@ def get_app_menu():
                          "ForceMainDBSaveError"),
                 MenuItem(_("Force Device DB Save Error"),
                          "ForceDeviceDBSaveError"),
+                MenuItemDebugDBSpaceUsage(),
                 MenuItem(_("Run Donate Manager PowerToys"),
                          "RunDonateManagerPowerToys")
                 ])

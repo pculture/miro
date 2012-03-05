@@ -1979,6 +1979,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def handle_force_device_dbsave_error(self, message):
         app.device_manager.force_db_save_error(message.device_info)
 
+    def handle_debug_dbspace_usage(self, message):
+        app.db.debug_space_usage()
+
     def handle_set_net_lookup_enabled(self, message):
         paths = set()
         if message.item_ids is None:
