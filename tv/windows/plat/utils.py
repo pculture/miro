@@ -209,10 +209,23 @@ def setup_logging(pathname, main_process=False):
     rotater.doRollover()
 
     if main_process:
+        # If it was redirected (by py2exe) then reset stdout/stderr to the
+        # AutoLoggingStream.  Otherwise, we do actually want to output to
+        # console and so leave it untouched.   Just add a log handler for it.
+        # For release builds we don't care and just redirect everything for
+        # the console to the log.
         if app.debugmode:
-            stdouthandler = logging.StreamHandler(sys.stdout)
-            stdouthandler.setFormatter(formatter)
-            logger.addHandler(stdouthandler)
+            redirected = sys.stdout != sys.__stdout__
+            if redirected:
+                sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
+                sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
+            else:
+                stdouthandler = logging.StreamHandler(sys.stdout)
+                stdouthandler.setFormatter(formatter)
+                logger.addHandler(stdouthandler)
+                stderrhandler = logging.StreamHandler(sys.stderr)
+                stderrhandler.setFormatter(formatter)
+                logger.addHandler(stderrhandler)
         else:
             sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
             sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
