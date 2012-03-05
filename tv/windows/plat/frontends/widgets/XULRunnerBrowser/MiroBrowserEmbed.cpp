@@ -121,8 +121,8 @@ nsresult MiroBrowserEmbed::disable()
 
     rv = browserBaseWindow->SetVisibility(PR_FALSE);
     NS_ENSURE_SUCCESS(rv, rv);
-    rv = browserBaseWindow->SetEnabled(PR_FALSE);
-    NS_ENSURE_SUCCESS(rv, rv);
+    browserBaseWindow->SetEnabled(PR_FALSE);
+    // If SetEnabled fails, we should still just return NS_OK.  See #18793.
     return NS_OK;
 }
 

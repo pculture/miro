@@ -62,7 +62,8 @@ class BrowserWidget(embeddingwidget.EmbeddingWidget):
         self.browser.enable()
 
     def do_unrealize(self):
-        self.browser.disable()
+        if self.browser is not None:
+            self.browser.disable()
         embeddingwidget.EmbeddingWidget.do_unrealize(self)
 
     def do_size_allocate(self, allocation):
