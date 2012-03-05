@@ -905,6 +905,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             ('thumb-default-audio.png', 'album-view-default-audio.png'),
             ('thumb-default-video.png', 'album-view-default-video.png'),
             ('icon-podcast-small.png', 'album-view-default-podcast.png'),
+            ('icon-watched-folder.png', 'album-view-watched-folder.png'),
         ]
         self._default_image_map = {}
         for src, dest in mappings:
