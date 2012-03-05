@@ -162,6 +162,12 @@ class MetadataManagerTest(MiroTestCase):
                                                                 self.tempdir)
         # For these examples we want to run echonest by default
         app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
+        # Don't wait in-between runs of the echonest codegen
+        metadata._EchonestProcessor.CODEGEN_COOLDOWN_TIME = 0.0
+
+    def tearDown(self):
+        metadata._EchonestProcessor.CODEGEN_COOLDOWN_TIME = 5.0
+        MiroTestCase.tearDown(self)
 
     def _calc_correct_metadata(self, path):
         """Calculate what the metadata should be for a path."""
