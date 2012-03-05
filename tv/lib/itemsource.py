@@ -737,7 +737,7 @@ class DeviceItemHandler(ItemHandler):
                          exc_info=True)
         else:
             del device.database[info.file_type][info.id]
-            for art_file in (info.screenshot_path, info.cover_art_path):
+            for art_file in (info.screenshot, info.cover_art):
                 if not art_file:
                     # not a real value, don't bother deleting
                     continue
