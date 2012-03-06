@@ -164,10 +164,10 @@ class MetadataStatus(database.DDBObject):
     def paths_for_album(cls, album, db_info=None):
         rows = cls.select(['path',],
                           'id IN '
-                          '(SELECT status_id FROM metadata WHERE '
+                          '(SELECT status_id FROM metadata p WHERE '
                           'album=? AND priority='
-                          '(SELECT MAX(priority) FROM metadata '
-                          'WHERE status_id=status_id AND '
+                          '(SELECT MAX(priority) FROM metadata c '
+                          'WHERE p.status_id=c.status_id AND '
                           'NOT disabled AND album IS NOT NULL))',
                           (album,), db_info=db_info)
         return [r[0] for r in rows]

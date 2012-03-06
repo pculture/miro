@@ -674,9 +674,9 @@ class MetadataManagerTest(MiroTestCase):
         self.check_add_file('foo-3.mp3')
         self.check_add_file('foo-4.mp3')
         self.check_add_file('foo-5.mp3')
-        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'Fights',
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'Bar', 'AlbumOne',
                                cover_art=False)
-        self.check_run_mutagen('foo-2.mp3', 'audio', 200, 'Bar', 'Fights',
+        self.check_run_mutagen('foo-2.mp3', 'audio', 200, 'Bar', 'AlbumOne',
                                cover_art=False)
         self.check_run_mutagen('foo-3.mp3', 'audio', 200, 'Bar',
                                'DifferentAlbum', cover_art=False)
@@ -687,30 +687,38 @@ class MetadataManagerTest(MiroTestCase):
         self.metadata_manager.connect("new-metadata", signal_handler)
         # Simulate mutagen getting cover art.  We should send new-metadata for
         # all items in the album
-        self.check_run_mutagen('foo-4.mp3', 'audio', 200, 'Bar', 'Fights',
+        self.check_run_mutagen('foo-4.mp3', 'audio', 200, 'Bar', 'AlbumOne',
                                cover_art=True)
 
         # make our metadata manager send the new-metadata signal and check the
         # result
-        self.metadata_manager.run_updates()
-        self.assertEquals(signal_handler.call_count, 1)
-        args = signal_handler.call_args[0]
-        self.assertEquals(args[0], self.metadata_manager)
-        new_metadata = args[1]
-        self.assertSameSet(new_metadata.keys(), [
+        def check_new_metadata_for_album(album_name, *correct_paths):
+            """Check that the new-metadata signal emits for all items in an
+            album.
+
+            :param album_name: name of the album
+            :param correct_paths: paths for all items in the album
+            """
+
+            signal_handler.reset_mock()
+            self.metadata_manager.run_updates()
+            self.assertEquals(signal_handler.call_count, 1)
+            args = signal_handler.call_args[0]
+            self.assertEquals(args[0], self.metadata_manager)
+            new_metadata = args[1]
+            self.assertSameSet(new_metadata.keys(), correct_paths)
+            correct_cover_art = self.cover_art_for_album(album_name)
+            for key, value in new_metadata.items():
+                self.assertEquals(value['cover_art'], correct_cover_art)
+        check_new_metadata_for_album('AlbumOne',
             self.make_path('foo.mp3'),
             self.make_path('foo-2.mp3'),
             self.make_path('foo-4.mp3'),
-        ])
-        for filename in ('foo.mp3', 'foo-2.mp3'):
-            cover_art = self.cover_art_for_album('Fights')
-            self.assertEquals(new_metadata[self.make_path(filename)], {
-                'cover_art': cover_art,
-            })
+        )
         # test that if we get more cover art for the same file, we don't
         # re-update the other items
         signal_handler.reset_mock()
-        self.check_run_mutagen('foo-5.mp3', 'audio', 200, 'Bar', 'Fights',
+        self.check_run_mutagen('foo-5.mp3', 'audio', 200, 'Bar', 'AlbumOne',
                                cover_art=True)
         self.metadata_manager.run_updates()
         self.assertEquals(signal_handler.call_count, 1)
@@ -720,6 +728,17 @@ class MetadataManagerTest(MiroTestCase):
         self.assertSameSet(new_metadata.keys(), [
             self.make_path('foo-5.mp3'),
         ])
+
+        # Test cover art from echonest
+        signal_handler.reset_mock()
+        self.check_run_echonest('foo.mp3', 'NewTitle', 'NewArtist',
+                                'AlbumOne')
+        check_new_metadata_for_album('AlbumOne',
+            self.make_path('foo.mp3'),
+            self.make_path('foo-2.mp3'),
+            self.make_path('foo-4.mp3'),
+            self.make_path('foo-5.mp3'),
+        )
 
     def test_restart_incomplete(self):
         # test restarting incomplete 
