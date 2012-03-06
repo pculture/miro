@@ -39,14 +39,14 @@ def convert_mdp_result(source_path, screenshot, result):
     converted_result = { 'source_path': source_path }
     file_type, duration, success = result
 
-    # MDP retuturns durations in millseconds, convert to seconds
     if duration >= 0:
         converted_result['duration'] = duration
 
-    # if moviedata reports other, that's a sign that it doesn't know what the
-    # file type is.  Just leave out the file_type key so that we fallback to
-    # the mutagen guess.
-    if file_type != "other":
+    # Return a file_type only if the duration is > 0.  Otherwise it may be a
+    # false identification (#18840).  Also, if moviedata reports other, that's
+    # a sign that it doesn't know what the file type is.  Just leave out the
+    # file_type key so that we fallback to the mutagen guess.
+    if file_type != "other" and (duration not in (0, None)):
         # Make file_type is unicode, or else database validation will fail on
         # insert!
         converted_result['file_type'] = unicode(file_type)
