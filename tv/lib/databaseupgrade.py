@@ -3630,6 +3630,7 @@ def upgrade167(cursor):
                 os.remove(cover_art_path)
             except StandardError:
                 logging.warn("upgrade167: Error deleting %s", cover_art_path)
+            continue
         if not os.path.exists(cover_art_path):
             logging.warn("upgrade167: Error moving cover art.  Source path "
                          "doesn't exist: %s", cover_art_path)
