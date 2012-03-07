@@ -675,8 +675,10 @@ class TableViewCommon(object):
         # create a NSBezierPath that contains the rects of the columns with
         # DRAW_BACKGROUND True.
         clip_path = NSBezierPath.bezierPath()
+        number_of_columns = len(self.tableColumns())
         for col_index in iter_range(self.columnsInRect_(clip_rect)):
             column = wrappermap.wrapper(self.tableColumns()[col_index])
+            column_rect = None
             if column.renderer.DRAW_BACKGROUND:
                 # We should draw the background for this column, add it's rect
                 # to our clip rect.
@@ -688,6 +690,17 @@ class TableViewCommon(object):
                 # first row and after the last row.
                 self.drawBackgroundOutsideContent_clipRect_(col_index,
                         clip_rect)
+            if col_index == number_of_columns - 1: # last column
+                if not column_rect:
+                    column_rect = self.rectOfColumn_(col_index)
+                column_right = column_rect.origin.x + column_rect.size.width
+                clip_right = clip_rect.origin.x + clip_rect.size.width
+                if column_right < clip_right:
+                    # there's space to the right, so add that to the clip_rect
+                    remaining = clip_right - column_right
+                    left_rect = NSMakeRect(column_right, clip_rect.origin.y,
+                                           remaining, clip_rect.size.height)
+                    clip_path.appendBezierPathWithRect_(left_rect)
         # clip to that path
         clip_path.addClip()
         # do the default drawing
