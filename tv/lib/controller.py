@@ -281,13 +281,23 @@ class BugReportSender(signals.SignalEmitter):
             uniqfn = "%012ddatabasebackup.zip" % randrange(0, 999999999999)
             tempfilename = os.path.join(tempfile.gettempdir(), uniqfn)
             zipfile = ZipFile(tempfilename, "w")
-            iconcache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
-            iconcache_dir = os.path.normpath(iconcache_dir)
+            skip_dirs = [
+                app.config.get(prefs.ICON_CACHE_DIRECTORY),
+                app.config.get(prefs.COVER_ART_DIRECTORY),
+            ]
+            skip_dirs = [os.path.normpath(d) for d in skip_dirs]
 
             for root, dummy, files in os.walk(support_dir):
-                if (os.path.normpath(root).startswith(iconcache_dir)
-                        or os.path.islink(root)):
+                if os.path.islink(root):
                     continue
+                should_skip = False
+                for skip_dir in skip_dirs:
+                    if os.path.normpath(root).startswith(skip_dir):
+                        should_skip = True
+                        break
+                if should_skip:
+                    continue
+
                 relativeroot = root[len(support_dir):]
                 while (len(relativeroot) > 0
                        and relativeroot[0] in ['/', '\\']):
