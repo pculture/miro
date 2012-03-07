@@ -645,6 +645,13 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_mutagen('foo.avi', 'video', 100, 'Foo')
         self.check_movie_data_error('foo.avi')
 
+    def test_movie_data_skips_other(self):
+        # Check that we don't run movie data if mutagen can't read the file
+        # and the extension indicates it's not a media file (#18840)
+        self.check_add_file('foo.pdf')
+        self.check_run_mutagen('foo.pdf', None, None, None)
+        self.check_movie_data_not_scheduled('foo.pdf')
+
     def test_has_drm(self):
         # check the has_drm flag
         self.check_add_file('foo.avi')

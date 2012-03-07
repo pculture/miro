@@ -246,10 +246,16 @@ class MetadataStatus(database.DDBObject):
         #     audio)
         #   - mutagen was able to get the duration for the file
         #   - mutagen doesn't think the file has DRM
-        return ((my_ext == '.oga' or not my_ext.startswith('.og')) and
-                entry.file_type == 'audio' and
-                entry.duration is not None and
-                not entry.drm)
+        if ((my_ext == '.oga' or not my_ext.startswith('.og')) and
+            entry.file_type == 'audio' and
+            entry.duration is not None and
+            not entry.drm):
+            return True
+        # We should also skip it if mutagen couldn't identify the file and the
+        # extension indicates it's a non-media file
+        if entry.file_type is None and filetypes.is_other_filename(self.path):
+            return True
+        return False
 
     def update_after_error(self, source_name, error):
         """Update after we failed to extract some metadata.
