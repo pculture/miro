@@ -41,6 +41,7 @@ pygst.require('0.10')
 import gst
 import gst.interfaces
 
+from miro.frontends.widgets.gst import gstutil
 
 def scaled_size(from_size, to_size):
     """Takes an image which has a width and a height and a size tuple
@@ -71,6 +72,7 @@ class Extractor:
         self.thumbnail_filename = thumbnail_filename
         self.filename = filename
 
+        self.timeout = None
         self.grabit = False
         self.first_pause = True
         self.doing_thumbnailing = False
@@ -144,16 +146,22 @@ class Extractor:
         else:
             media_type = 'other'
         self.media_type = media_type
+        self.cancel_timeout()
         gtk.main_quit()
 
     def run(self):
         gobject.threads_init()
-        gobject.timeout_add(30000, self.cancel_timeout)
+        self.timeout = gobject.timeout_add(30000, self.on_timeout)
         gtk.main()
 
-    def cancel_timeout(self):
-        logging.warn("cancel_timeout() reached.  Quitting.")
+    def on_timeout(self):
+        logging.warn("on_timeout() reached.  Quitting.")
         self.done()
+
+    def cancel_timeout(self):
+        if self.timeout is not None:
+            gobject.source_remove(self.timeout)
+            self.timeout = None
 
     def get_result(self):
         duration = self.duration
@@ -211,7 +219,7 @@ class Extractor:
         self.grabit = True
         self.buffer_probes = {}
 
-        fileurl = self.filename.replace("\\", "/")
+        fileurl = gstutil._get_file_url(self.filename)
         self.thumbnail_pipeline = gst.parse_launch(
             'filesrc location="%s" ! decodebin ! '
             'ffmpegcolorspace ! video/x-raw-rgb,depth=24,bpp=24 ! '
