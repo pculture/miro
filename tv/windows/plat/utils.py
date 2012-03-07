@@ -51,7 +51,7 @@ from miro.plat import proxyfind
 from miro.plat import resources
 from miro.plat import specialfolders
 from miro.plat.popen import Popen
-from miro.plat.renderers import gst_extractor
+from miro.frontends.widgets.gst import gst_extractor
 from miro.util import returns_unicode, check_u
 from miro.util import AutoLoggingStream
 from miro import fileutil
