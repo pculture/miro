@@ -1279,6 +1279,19 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         if custom_headers:
             self._enable_custom_headers()
 
+    def _check_selection(self):
+        """
+        Used by `start_bulk_change` and `on_model_structure_change` to see if
+        the selection has changed.  When the structure changes in big ways,
+        OS X doesn't always notify us.
+        """
+        try:
+            self.get_selection()
+        except errors.WidgetActionError:
+            # no more selection means we've removed the selected item
+            # (see #17823)
+            self.on_selection_changed(self.tableview)
+
     def _enable_custom_headers(self):
         self.custom_header = True
         self.header_height = CUSTOM_HEADER_HEIGHT
@@ -1306,6 +1319,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
 
     def on_model_structure_change(self, model):
         self.reload_needed = True
+        self._check_selection()
         self.cancel_hotspot_track()
 
     def cancel_hotspot_track(self):
@@ -1455,6 +1469,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         # adding/removing/changing a bunch of rows.  Instead, just reload the
         # model afterwards.
         self.reload_needed = True
+        self._check_selection()
         self.cancel_hotspot_track()
         self.model.freeze_signals()
 
