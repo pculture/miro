@@ -1514,11 +1514,10 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         """If the table is width pixels big, how much width is available for
         the table's columns.
         """
-        # HACK: I don't know why 1.5 additional pixels per column makes everything
-        # work, but 1px and 2px don't work. (#18273 - z3p)
-        column_spacing = (self.tableview.intercellSpacing().width + 1.5)
-        spacing = int(column_spacing * self.column_count())
-        return width - spacing
+        # XXX this used to do some calculation with the spacing of each column,
+        # but it doesn't appear like we need it to be that complicated anymore
+        # (see #18273)
+        return width - 2
 
     def set_column_spacing(self, column_spacing):
         self.tableview.column_spacing = column_spacing
@@ -1569,12 +1568,14 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.try_to_set_row_height()
 
     def _set_min_max_column_widths(self, column):
+        if column.do_horizontal_padding:
+            spacing = self.tableview.column_spacing
+        else:
+            spacing = 0
         if column.min_width > 0:
-            column._column.setMinWidth_(column.min_width +
-                    self.tableview.column_spacing)
+            column._column.setMinWidth_(column.min_width + spacing)
         if column.max_width > 0:
-            column._column.setMaxWidth_(column.max_width +
-                    self.tableview.column_spacing)
+            column._column.setMaxWidth_(column.max_width + spacing)
 
     def column_count(self):
         return len(self.tableview.tableColumns())
