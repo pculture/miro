@@ -644,6 +644,7 @@ class MetadataManagerTest(MiroTestCase):
         self.check_add_file('foo.avi')
         self.check_run_mutagen('foo.avi', 'video', 100, 'Foo')
         self.check_movie_data_error('foo.avi')
+        self.check_echonest_not_scheduled('foo.avi')
 
     def test_movie_data_skips_other(self):
         # Check that we don't run movie data if mutagen can't read the file
