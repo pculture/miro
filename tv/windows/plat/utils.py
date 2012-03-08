@@ -223,9 +223,6 @@ def setup_logging(pathname, main_process=False):
                 stdouthandler = logging.StreamHandler(sys.stdout)
                 stdouthandler.setFormatter(formatter)
                 logger.addHandler(stdouthandler)
-                stderrhandler = logging.StreamHandler(sys.stderr)
-                stderrhandler.setFormatter(formatter)
-                logger.addHandler(stderrhandler)
         else:
             sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
             sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
