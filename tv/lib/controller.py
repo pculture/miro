@@ -304,7 +304,18 @@ class BugReportSender(signals.SignalEmitter):
                     path = os.path.join(root, fn)
                     if not os.path.islink(path):
                         relpath = os.path.join(relativeroot, fn)
-                        relpath = relpath.encode('ascii', 'replace')
+                        # ensure that relpath is ASCII.  zipfiles in general,
+                        # and especially the python zipfile module don't seem
+                        # to support them well.  The only filenames we should
+                        # be sending are ASCII anyways, so let's just use a
+                        # hack here to force things.
+                        # See the "zipfile and unicode filenames" thread here:
+                        # http://mail.python.org/pipermail/python-dev/2007-June/thread.html
+                        if isinstance(relpath, unicode):
+                            relpath = relpath.encode('ascii', 'replace')
+                        else:
+                            relpath = relpath.decode('ascii', 'replace')
+                            relpath = relpath.encode('ascii', 'replace')
                         zipfile.write(path, relpath)
             zipfile.close()
             logging.info("Support directory backed up to %s (%d bytes)",
