@@ -45,9 +45,11 @@ import socket
 import string
 import subprocess
 import sys
+import tempfile
 import traceback
 import unicodedata
 import urllib
+import zipfile
 
 from miro.clock import clock
 from miro import filetypes
@@ -1162,3 +1164,66 @@ def split_values_for_sqlite(value_list):
     for start in xrange(0, len(value_list), CHUNK_SIZE):
         yield value_list[start:start+CHUNK_SIZE]
 
+
+class SupportDirBackup(object):
+    """Backup the support directory to send in a crash report."""
+    def __init__(self, support_dir, skip_dirs):
+        logging.info("Attempting to back up support directory: %r",
+                     support_dir)
+        uniqfn = "%012ddatabasebackup.zip" % random.randrange(0, 999999999999)
+        self.backupfile = os.path.join(tempfile.gettempdir(), uniqfn)
+        archive = zipfile.ZipFile(self.backupfile, "w")
+        self.skip_dirs = [os.path.normpath(d) for d in skip_dirs]
+
+        for root, dummy, files in os.walk(support_dir):
+            if self.should_skip_directory(root):
+                continue
+            relativeroot = os.path.relpath(root, support_dir)
+            for fn in files:
+                if self.should_skip_file(root, fn):
+                    continue
+                path = os.path.join(root, fn)
+                relpath = os.path.join(relativeroot, fn)
+                relpath = self.ensure_ascii_filename(relpath)
+                archive.write(path, relpath)
+        archive.close()
+        logging.info("Support directory backed up to %s (%d bytes)",
+                     self.backupfile, os.path.getsize(self.backupfile))
+
+    def should_skip_directory(self, directory):
+        if os.path.islink(directory):
+            return True
+        for skip_dir in self.skip_dirs:
+            if os.path.normpath(directory).startswith(skip_dir):
+                return True
+        return False
+
+    def should_skip_file(self, directory, filename):
+        if filename == 'httpauth':
+            # don't send http passwords over the internet
+            return True
+        if filename == 'preferences.bin':
+            # On windows, don't send the config file.  Other
+            # platforms don't handle config the same way, so we
+            # don't need to worry about them
+            return True
+        if os.path.islink(os.path.join(directory, filename)):
+            return True
+        return False
+
+    def ensure_ascii_filename(self, relpath):
+        """Ensure that a path we are about to archive is ASCII."""
+
+        # NOTE: zipfiles in general, and especially the python zipfile module
+        # don't seem to support them well.  The only filenames we should be
+        # sending are ASCII anyways, so let's just use a hack here to force
+        # things.  See the "zipfile and unicode filenames" thread here:
+        # http://mail.python.org/pipermail/python-dev/2007-June/thread.html
+        if isinstance(relpath, unicode):
+            return relpath.encode('ascii', 'ignore')
+        else:
+            return relpath.decode('ascii', 'ignore').encode('ascii', 'ignore')
+
+    def fileobj(self):
+        """Get a file object for the archive file."""
+        return open(self.backupfile, "rb")

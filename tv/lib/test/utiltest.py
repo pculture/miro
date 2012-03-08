@@ -6,12 +6,14 @@ import tempfile
 import shutil
 import unittest
 import sys
+import zipfile
 
 from miro.test.framework import skip_for_platforms, MiroTestCase
 from miro import download_utils
 from miro import util
 from miro import buildutils
 from miro.fileobject import FilenameType
+from miro.plat.utils import unicode_to_filename
 
 # We're going to override this so we can guarantee that if the order
 # changes later that it doesn't really affect us.
@@ -908,3 +910,72 @@ class TestGatherMediaFiles(unittest.TestCase):
         self.verify_results()
         self.add_file('test.ogv', True)
         self.verify_results()
+
+class TestBackupSupportDir(MiroTestCase):
+    # Test backing up the support directory
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.support_dir = self.make_temp_dir_path()
+        self.correct_files = []
+        self.skip_dirs = []
+        self.setup_support_dir()
+
+    def setup_support_dir(self):
+        """Add objects to our fake support directory that we want around for
+        every test.
+        """
+
+        # add log files
+        self.add_file_to_support_dir('miro.log')
+        self.add_file_to_support_dir('miro-downloader.log')
+        for i in range(1, 5):
+            self.add_file_to_support_dir('miro.log.%s' % i)
+            self.add_file_to_support_dir('miro-downloader.log.%s' % i)
+        # add database files
+        self.add_file_to_support_dir('sqlitedb')
+        self.add_file_to_support_dir('sqlitedb-journal')
+        self.add_file_to_support_dir('dbbackups/sqlitedb_backup_165')
+        self.add_file_to_support_dir('dbbackups/sqlitedb_backup_170')
+        self.add_file_to_support_dir('dbbackups/sqlitedb_backup_183')
+        # add other files
+        self.add_skip_dir('icon-cache')
+        self.add_skip_dir('cover-art')
+        self.add_file_to_support_dir('httpauth', should_skip=True)
+        self.add_file_to_support_dir('preferences.bin', should_skip=True)
+        for i in range(5):
+            self.add_file_to_support_dir('cover-art/Album-%s' % i,
+                                         should_skip=True)
+            self.add_file_to_support_dir('icon-cache/icon-%s' % i,
+                                         should_skip=True)
+            self.add_file_to_support_dir('crashes/crash-report-%i' % i)
+
+    def add_skip_dir(self, skip_dir):
+        self.skip_dirs.append(os.path.join(self.support_dir, skip_dir))
+
+    def add_file_to_support_dir(self, path, archive_name=None,
+                                should_skip=False):
+        if archive_name is None:
+            archive_name = path
+        full_path = os.path.join(self.support_dir, path)
+        directory = os.path.dirname(full_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        open(full_path, "wt").write("FAKE DATA")
+        if not should_skip:
+            self.correct_files.append(archive_name)
+
+    def check_backup(self):
+        backup = util.SupportDirBackup(self.support_dir, self.skip_dirs)
+        archive = zipfile.ZipFile(backup.fileobj(), 'r')
+        errors = archive.testzip()
+        if errors is not None:
+            raise AssertionError("Errors in the zip file: %s" % errors)
+        self.assertSameSet(archive.namelist(), self.correct_files)
+
+    def test_backup(self):
+        self.check_backup()
+
+    def test_extendend_chars(self):
+        filename = unicode_to_filename(u'\u0112xtended Chars')
+        self.add_file_to_support_dir(filename, 'xtended Chars')
+        self.check_backup()
