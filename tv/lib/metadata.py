@@ -268,10 +268,12 @@ class MetadataStatus(database.DDBObject):
             new_status = self.STATUS_FAILURE
         self._set_status_column(source_name, new_status)
         if (source_name == u'movie-data' and
-            self.mutagen_status == self.STATUS_FAILURE):
-            # If both mutagen and moviedata couldn't read the file, don't
-            # bother sending it to the ENMFP.  If we can't get the code, then
-            # we have to skip echonest.
+            (self.mutagen_status == self.STATUS_FAILURE or
+             self.file_type != u'audio')):
+            # if moviedata failed and mutagen either thought the file was
+            # video, or it couldn't read it, then don't
+            # bother sending it to echonest.  We don't want to run the codegen
+            # program.
             self.echonest_status = self.STATUS_SKIP
         if new_status != self.STATUS_TEMPORARY_FAILURE:
             self._set_current_processor()
