@@ -280,7 +280,8 @@ class BugReportSender(signals.SignalEmitter):
         app.db.close()
         try:
             support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
-            backup = util.SupportDirBackup(support_dir, skip_dirs)
+            max_size = 100000000 # 100 MB
+            backup = util.SupportDirBackup(support_dir, skip_dirs, max_size)
             return backup.fileobj()
         finally:
             app.db.open_connection()

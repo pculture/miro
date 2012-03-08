@@ -953,19 +953,20 @@ class TestBackupSupportDir(MiroTestCase):
         self.skip_dirs.append(os.path.join(self.support_dir, skip_dir))
 
     def add_file_to_support_dir(self, path, archive_name=None,
-                                should_skip=False):
+                                should_skip=False, contents='FAKE DATA'):
         if archive_name is None:
             archive_name = path
         full_path = os.path.join(self.support_dir, path)
         directory = os.path.dirname(full_path)
         if not os.path.exists(directory):
             os.makedirs(directory)
-        open(full_path, "wt").write("FAKE DATA")
+        open(full_path, "wt").write(contents)
         if not should_skip:
             self.correct_files.append(archive_name)
 
     def check_backup(self):
-        backup = util.SupportDirBackup(self.support_dir, self.skip_dirs)
+        backup = util.SupportDirBackup(self.support_dir, self.skip_dirs,
+                                       max_size=1000000)
         archive = zipfile.ZipFile(backup.fileobj(), 'r')
         errors = archive.testzip()
         if errors is not None:
@@ -979,3 +980,20 @@ class TestBackupSupportDir(MiroTestCase):
         filename = unicode_to_filename(u'\u0112xtended Chars')
         self.add_file_to_support_dir(filename, 'xtended Chars')
         self.check_backup()
+
+    def test_size_limit(self):
+        # create 200 kb worth of data
+        large_data = " " * 200000
+        # add a bunch of those files
+        for i in xrange(10):
+            self.add_file_to_support_dir('big-file-%s' % i,
+                                         contents=large_data)
+        # check that we don't max an archive file too much bigger than our max
+        # size
+        max_size = 1000000 # 1MB
+        backup = util.SupportDirBackup(self.support_dir, self.skip_dirs,
+                                       max_size=max_size)
+        filesize = os.stat(backup.backupfile).st_size
+        if filesize > 1100000:
+            raise AssertionError("Backup file too big.  filesize: %s "
+                                 "max_size: %s" % (filesize, max_size))

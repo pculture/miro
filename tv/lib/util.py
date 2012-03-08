@@ -1167,7 +1167,7 @@ def split_values_for_sqlite(value_list):
 
 class SupportDirBackup(object):
     """Backup the support directory to send in a crash report."""
-    def __init__(self, support_dir, skip_dirs):
+    def __init__(self, support_dir, skip_dirs, max_size):
         logging.info("Attempting to back up support directory: %r",
                      support_dir)
         uniqfn = "%012ddatabasebackup.zip" % random.randrange(0, 999999999999)
@@ -1175,6 +1175,7 @@ class SupportDirBackup(object):
         archive = zipfile.ZipFile(self.backupfile, "w")
         self.skip_dirs = [os.path.normpath(d) for d in skip_dirs]
 
+        total_size = 0
         for root, dummy, files in os.walk(support_dir):
             if self.should_skip_directory(root):
                 continue
@@ -1183,9 +1184,19 @@ class SupportDirBackup(object):
                 if self.should_skip_file(root, fn):
                     continue
                 path = os.path.join(root, fn)
-                relpath = os.path.join(relativeroot, fn)
+                if relativeroot != '.':
+                    relpath = os.path.join(relativeroot, fn)
+                else:
+                    relpath = fn
                 relpath = self.ensure_ascii_filename(relpath)
                 archive.write(path, relpath)
+                total_size += archive.getinfo(relpath).compress_size
+                if total_size >= max_size:
+                    break
+            if total_size >= max_size:
+                logging.warn("Support directory backup too big.  "
+                             "Quitting after %s bytes", total_size)
+                break
         archive.close()
         logging.info("Support directory backed up to %s (%d bytes)",
                      self.backupfile, os.path.getsize(self.backupfile))
