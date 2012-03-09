@@ -65,7 +65,9 @@ class MiroResponderInterceptor(NSResponder):
         We will give the wrapper for responder a chance to handle the event,
         then pass it along to responder.
         """
+        self = super(MiroResponderInterceptor, self).init()
         self.responder = responder
+        return self
 
     def keyDown_(self, event):
         if self.sendKeyDownToWrapper_(event):
@@ -83,8 +85,8 @@ class MiroResponderInterceptor(NSResponder):
 
         # Make a new MiroResponderInterceptor whose responder is the next
         # responder down the chain.
-        next_intercepter = MiroResponderInterceptor.alloc()
-        next_intercepter.initWithResponder_(self.responder.nextResponder())
+        next_intercepter = MiroResponderInterceptor.alloc().initWithResponder_(
+                           self.responder.nextResponder())
         # Install the interceptor
         self.responder.setNextResponder_(next_intercepter)
         # Send event along
@@ -118,8 +120,8 @@ class MiroWindow(NSWindow):
     def handleKeyDown_(self, event):
         if self.handle_tab_navigation(event):
             return
-        interceptor = MiroResponderInterceptor.alloc()
-        interceptor.initWithResponder_(self.firstResponder())
+        interceptor = MiroResponderInterceptor.alloc().initWithResponder_(
+                          self.firstResponder())
         interceptor.keyDown_(event)
 
     def handle_tab_navigation(self, event):
