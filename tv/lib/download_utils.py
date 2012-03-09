@@ -44,6 +44,12 @@ from miro.util import check_f, check_u, returns_filename, returns_file
 from miro.plat.utils import unicode_to_filename, unmake_url_safe
 from miro.fileutil import expand_filename
 
+# next_free_filename and friends used to be defined in this module, but
+# they've been moved to the utils module.  For now, we import into this module
+# too so that the old code will continue to work.
+# FIXME: refactor code so we import next_free_filename from util.py
+from miro.util import next_free_filename, next_free_directory
+
 URI_PATTERN = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
 
 # filename limits this is mostly for windows where we have a 255 character
@@ -139,71 +145,6 @@ def check_filename_extension(filename, content_type):
         if guessed_ext is not None:
             filename += guessed_ext
     return filename
-
-def next_free_filename_candidates(path):
-    """Generates candidate names for next_free_filename."""
-
-    # try unmodified path first
-    yield path
-    # add stuff to the filename to try to make it unique
-
-    dirname, filename = os.path.split(path)
-    if not filename:
-        raise ValueError("%s is a directory name" % path)
-    basename, ext = os.path.splitext(filename)
-    count = 1
-    while True:
-        filename = "%s.%s%s" % (basename, count, ext)
-        yield os.path.join(dirname, filename)
-        count += 1
-        if count > 1000:
-            raise ValueError("Can't find available filename for %s" % path)
-
-@returns_file
-def next_free_filename(name):
-    """Finds a filename that's unused and similar the the file we want
-    to download and returns an open file handle to it.
-    """ 
-    check_f(name)
-    mask = os.O_CREAT | os.O_EXCL | os.O_RDWR
-    # On Windows we need to pass in O_BINARY, fdopen() even with 'b' 
-    # specified is not sufficient.
-    if sys.platform == 'win32':
-        mask |= os.O_BINARY
-
-    candidates = next_free_filename_candidates(name)
-    while True:
-        # Try with the name supplied.
-        newname = candidates.next()
-        try:
-            fd = os.open(expand_filename(newname), mask)
-            fp = os.fdopen(fd, 'wb')
-            return expand_filename(newname), fp
-        except OSError:
-            continue
-    return (expand_filename(newname), fp)
-
-def next_free_directory_candidates(name):
-    """Generates candidate names for next_free_directory."""
-    yield name
-    count = 1
-    while True:
-        yield "%s.%s" % (name, count)
-        count += 1
-        if count > 1000:
-            raise ValueError("Can't find available directory for %s" % name)
-
-@returns_filename
-def next_free_directory(name):
-    """Finds a unused directory name using name as a base.
-
-    This method doesn't create the directory, it just finds an an-used one.
-    """
-    candidates = next_free_directory_candidates(name)
-    while True:
-        candidate = candidates.next()
-        if not os.path.exists(candidate):
-            return candidate
 
 @returns_filename
 def filename_from_url(url, clean=False):
