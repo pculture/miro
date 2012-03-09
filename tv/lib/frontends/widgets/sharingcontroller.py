@@ -54,6 +54,7 @@ class SharingView(itemlistcontroller.SimpleItemListController,
         titlebar = itemlistwidgets.SharingTitlebar()
         titlebar.connect('search-changed', self._on_search_changed)
         titlebar.connect('filter-clicked', self.on_filter_clicked)
+        titlebar.hide_album_view_button()
         return titlebar
 
     def build_renderer(self):
