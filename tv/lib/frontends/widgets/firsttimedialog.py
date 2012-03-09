@@ -31,6 +31,7 @@
 """
 
 from miro import app
+from miro import fileutil
 from miro import prefs
 from miro import util
 from miro import messages
@@ -72,6 +73,20 @@ def _build_paragraph_text(text):
     lab.set_size_request(WIDTH - 40, -1)
     return widgetutil.align_left(lab, bottom_pad=15)
 
+def _build_checkbox_and_label(checkbox, label_text):
+    """Build a checkbox with a label right under it.
+
+    This is useful because checkboxes don't wrap properly.  Labels don't
+    wrap great either, but we can hack things to make labels wrape.
+    """
+    label = widgetset.Label(label_text)
+    label.set_size_request(WIDTH - 40, -1)
+    label.set_wrap(True)
+    vbox = widgetset.VBox(spacing=0)
+    vbox.pack_start(widgetutil.align_left(checkbox))
+    vbox.pack_start(widgetutil.align_left(label))
+    return vbox
+
 class FirstTimeDialog(widgetset.DialogWindow):
     def __init__(self, done_firsttime_callback, title=None):
         if title == None:
@@ -100,8 +115,6 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self._done_firsttime_callback = done_firsttime_callback
 
         self.mp_name, self.mp_path = get_plat_media_player_name_path()
-        self._has_media_player = (
-            self.mp_name is not None and self.mp_path is not None)
 
         self._page_box = widgetset.VBox()
         self._pages = self.build_pages()
@@ -521,45 +534,15 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
         return vbox
 
-    def build_checkbox_and_label(self, checkbox, label_text):
-        """Build a checkbox with a label right under it.
-
-        This is useful because checkboxes don't wrap properly.  Labels don't
-        wrap great either, but we can hack things to make labels wrape.
-        """
-        label = widgetset.Label(label_text)
-        label.set_size_request(WIDTH - 40, -1)
-        label.set_wrap(True)
-        vbox = widgetset.VBox(spacing=0)
-        vbox.pack_start(widgetutil.align_left(checkbox))
-        vbox.pack_start(widgetutil.align_left(label))
-        return vbox
-
     def build_music_page(self):
-        vbox = widgetset.VBox(spacing=5)
-
-        vbox.pack_start(_build_title(_("Music Setup")))
-        if self._has_media_player:
-            import_cbx = widgetset.Checkbox(
-                _("Show my %(player)s music in my %(appname)s library.",
-                  {"player": self.mp_name,
-                   "appname": app.config.get(prefs.SHORT_APP_NAME)}))
+        vbox = MusicSetupVBox(self.mp_name)
+        if vbox.import_cbx:
             def on_import_toggled(cbx):
-                self.import_media_player_stuff = import_cbx.get_checked()
-            import_cbx.connect("toggled", on_import_toggled)
-            controls = self.build_checkbox_and_label(
-                import_cbx, _("(Don't worry, no files are copied.)"))
-            vbox.pack_start(widgetutil.pad(controls, bottom=10))
-        else:
-            import_cbx = None
+                self.import_media_player_stuff = cbx.get_checked()
+            vbox.import_cbx.connect("toggled", on_import_toggled)
 
-        net_lookup_cbx = widgetset.Checkbox(_('Use online lookup'))
-        prefpanel.attach_boolean(net_lookup_cbx,
+        prefpanel.attach_boolean(vbox.net_lookup_cbx,
                                  prefs.NET_LOOKUP_BY_DEFAULT)
-        vbox.pack_start(self.build_checkbox_and_label(
-            net_lookup_cbx, _('Miro will use Echonest and 7Digital '
-                              'to cleanup all song titles, info, and '
-                              'album art.  Highly recommended.')))
 
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
@@ -572,6 +555,88 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     widgetutil.build_hbox((prev_button, next_button)))),
             expand=True)
 
-        vbox = widgetutil.pad(vbox)
-
         return vbox
+
+class MusicSetupVBox(widgetset.VBox):
+    """VBox for the music setup page.
+
+    This is separated out because we want to re-use it when the user first
+    clicks the music tab.
+
+    Attributes:
+    - import_cbx: Checkbox to import music from the platform player
+    - net_lookup_cbx: Checkbox to enable net lookups by default
+    """
+    def __init__(self, mp_name, pack_title=True):
+        widgetset.VBox.__init__(self, spacing=5)
+
+        if pack_title:
+            self.pack_start(_build_title(_("Music Setup")))
+        if mp_name is not None:
+            self.import_cbx = widgetset.Checkbox(
+                _("Show my %(player)s music in my %(appname)s library.",
+                  {"player": mp_name,
+                   "appname": app.config.get(prefs.SHORT_APP_NAME)}))
+            controls = _build_checkbox_and_label(
+                self.import_cbx, _("(Don't worry, no files are copied.)"))
+            self.pack_start(widgetutil.pad(controls, bottom=10))
+        else:
+            self.import_cbx = None
+
+        self.net_lookup_cbx = widgetset.Checkbox(_('Use online lookup'))
+        self.pack_start(_build_checkbox_and_label(
+            self.net_lookup_cbx, _('Miro will use Echonest and 7Digital '
+                                   'to cleanup all song titles, info, and '
+                                   'album art.  Highly recommended.')))
+
+        # Give the "Note:" heading top padding to separate it from the
+        # checkboxes, but no bottom padding to keep it together with the rest
+        # of the text.
+        heading = widgetset.Label(_("Note:"))
+        heading.set_wrap(True)
+        heading.set_bold(True)
+        heading.set_size_request(WIDTH - 40, -1)
+        self.pack_start(widgetutil.pad(heading, top=15))
+        text = _("You can manually set or undo song info cleanup by "
+                 "right-clicking on a song or batch of songs.  You can "
+                 "adjust lookup settings at any time in Miro preferences."
+                 "\n\n"
+                 "Online lookup involves sending anonymized data about "
+                 "your songs to Miro and indirectly to Echonest and "
+                 "7Digital.")
+        self.pack_start(_build_paragraph_text(text))
+
+class MusicSetupDialog(dialogs.MainDialog):
+    """Ask some questions on music settings.
+
+    We pop this up the first time the user clicks on the music tab, if we
+    haven't already asked the questions in the first-time setup dialog.
+    """
+    def __init__(self):
+        dialogs.MainDialog.__init__(self, _("Music Setup"))
+        self.mp_name, self.mp_path = get_plat_media_player_name_path()
+        if self.already_added_media_player_path():
+            self.mp_name = self.mp_path = None
+        self.vbox = MusicSetupVBox(self.mp_name, pack_title=False)
+        self.set_extra_widget(self.vbox)
+        self.add_button(_("Get Started"))
+
+    def already_added_media_player_path(self):
+        if self.mp_path is None:
+            return False
+        wf_model = app.watched_folder_manager.model
+        wf_iter = wf_model.first_iter()
+        while wf_iter is not None:
+            path = wf_model[wf_iter][1]
+            if fileutil.samefile(path, self.mp_path):
+                return True
+            wf_iter = wf_model.next_iter(wf_iter)
+
+    def should_enable_net_lookup(self):
+        return self.vbox.net_lookup_cbx.get_checked()
+
+    def import_path(self):
+        if self.vbox.import_cbx and self.vbox.import_cbx.get_checked():
+            return self.mp_path
+        else:
+            return None

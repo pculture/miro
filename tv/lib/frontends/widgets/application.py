@@ -1016,21 +1016,12 @@ class Application:
         importing media.
         """
         app.config.set(prefs.MUSIC_TAB_CLICKED, True)
-        name, path = get_plat_media_player_name_path()
-        if path is None:
-            return
-        trans_data = {
-            'media_player': name,
-            'short_app_name': app.config.get(prefs.SHORT_APP_NAME)}
-        title = _('Import Music from %(media_player)s?', trans_data)
-        description = _("We see that you have %(media_player)s installed.  "
-                        "Would you like %(short_app_name)s to import the "
-                        "music from it?", trans_data)
-        ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_YES,
-                                          dialogs.BUTTON_NO])
-        if ret == dialogs.BUTTON_YES:
-            app.watched_folder_manager.add(path)
+        dialog = firsttimedialog.MusicSetupDialog()
+        dialog.run()
+        if dialog.should_enable_net_lookup():
+            app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
+        if dialog.import_path():
+            app.watched_folder_manager.add(dialog.import_path())
 
     def quit_ui(self):
         """Quit  out of the UI event loop."""
