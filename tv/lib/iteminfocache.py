@@ -223,11 +223,16 @@ class ItemInfoCache(signals.SignalEmitter):
         try:
             return self.id_to_info[id_]
         except KeyError:
-            app.controller.failed_soft("getting item info",
+            # Let's not kick up the crash report - there are some cases
+            # where an abnormal shutdown does not save the database (e.g.
+            # hard crash or loss of power)
+            signals.system.failed("getting item info",
                     "KeyError: %d" % id_, with_exception=True)
             item = models.Item.get_by_id(id_)
             info = itemsource.DatabaseItemSource._item_info_for(item)
             self.id_to_info[id_] = info
+            self._infos_added[item.id] = info
+            self.schedule_save_to_db()
             return info
 
     def item_created(self, item):
