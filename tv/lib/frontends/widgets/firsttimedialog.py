@@ -56,7 +56,7 @@ WIDTH = 475
 HEIGHT = 375
 
 
-def _build_title_question(text):
+def _build_title(text):
     """Builds and returns a title widget for the panes in the
     First Time Startup dialog.
     """
@@ -113,13 +113,10 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
     def build_pages(self):
         pages = [self.build_language_page(),
-                 self.build_startup_page()]
-
-        if self._has_media_player:
-            pages.append(self.build_media_player_import_page())
-
-        pages.extend([self.build_find_files_page(),
-                      self.build_search_page()])
+                 self.build_startup_page(),
+                 self.build_music_page(),
+                 self.build_find_files_page(),
+                 self.build_search_page()]
 
         for page in pages:
             page.set_size_request(WIDTH - 40, HEIGHT - 40)
@@ -182,7 +179,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     "to help you get started.",
                     {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
-        vbox.pack_start(_build_title_question(_(
+        vbox.pack_start(_build_title(_(
                     "What language would you like %(name)s to be in?",
                     {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
@@ -249,7 +246,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     "and update your podcasts.",
                     {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
-        vbox.pack_start(_build_title_question(_(
+        vbox.pack_start(_build_title(_(
                     "Would you like to run %(name)s on startup?",
                     {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
@@ -288,7 +285,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
                     "will be copied or duplicated.",
                     {"name": app.config.get(prefs.SHORT_APP_NAME)})))
 
-        vbox.pack_start(_build_title_question(_(
+        vbox.pack_start(_build_title(_(
                     "Would you like %(name)s to search your computer "
                     "for media files?",
                     {"name": app.config.get(prefs.SHORT_APP_NAME)})))
@@ -524,44 +521,51 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
         return vbox
 
+    def build_checkbox_and_label(self, checkbox, label_text):
+        """Build a checkbox with a label right under it.
 
-    def build_media_player_import_page(self):
+        This is useful because checkboxes don't wrap properly.  Labels don't
+        wrap great either, but we can hack things to make labels wrape.
+        """
+        label = widgetset.Label(label_text)
+        label.set_size_request(WIDTH - 40, -1)
+        label.set_wrap(True)
+        vbox = widgetset.VBox(spacing=0)
+        vbox.pack_start(widgetutil.align_left(checkbox))
+        vbox.pack_start(widgetutil.align_left(label))
+        return vbox
+
+    def build_music_page(self):
         vbox = widgetset.VBox(spacing=5)
 
-        vbox.pack_start(_build_title_question(_(
-                "Would you like to display your %(player)s music and "
-                "video in %(appname)s?",
-                {"player": self.mp_name,
-                 "appname": app.config.get(prefs.SHORT_APP_NAME)})))
+        vbox.pack_start(_build_title(_("Music Setup")))
+        if self._has_media_player:
+            import_cbx = widgetset.Checkbox(
+                _("Show my %(player)s music in my %(appname)s library.",
+                  {"player": self.mp_name,
+                   "appname": app.config.get(prefs.SHORT_APP_NAME)}))
+            def on_import_toggled(cbx):
+                self.import_media_player_stuff = import_cbx.get_checked()
+            import_cbx.connect("toggled", on_import_toggled)
+            controls = self.build_checkbox_and_label(
+                import_cbx, _("(Don't worry, no files are copied.)"))
+            vbox.pack_start(widgetutil.pad(controls, bottom=10))
+        else:
+            import_cbx = None
 
-        rbg = widgetset.RadioButtonGroup()
-        yes_rb = widgetset.RadioButton(_("Yes"), rbg)
-        no_rb = widgetset.RadioButton(_("No"), rbg)
-        yes_rb.set_selected()
-
-        vbox.pack_start(widgetutil.align_left(yes_rb))
-        vbox.pack_start(widgetutil.align_left(no_rb))
-
-        lab = widgetset.Label(_(
-                "Note: %(appname)s won't move or copy any files on your "
-                "disk.  It will just add them to your %(appname)s library.",
-                {"appname": app.config.get(prefs.SHORT_APP_NAME)}))
-        lab.set_size_request(WIDTH - 40, -1)
-        lab.set_wrap(True)
-        vbox.pack_start(widgetutil.align_left(lab))
-
-        def handle_next(widget):
-            if rbg.get_selected() == yes_rb:
-                self.import_media_player_stuff = True
-            else:
-                self.import_media_player_stuff = False
-            self.next_page()
+        net_lookup_cbx = widgetset.Checkbox(_('Use online lookup'))
+        prefpanel.attach_boolean(net_lookup_cbx,
+                                 prefs.NET_LOOKUP_BY_DEFAULT)
+        vbox.pack_start(self.build_checkbox_and_label(
+            net_lookup_cbx, _('Miro will use Echonest and 7Digital '
+                              'to cleanup all song titles, info, and '
+                              'album art.  Highly recommended.')))
 
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
 
         next_button = widgetset.Button(_("Next >"))
-        next_button.connect('clicked', handle_next)
+        next_button.connect('clicked', lambda x: self.next_page())
 
         vbox.pack_start(
             widgetutil.align_bottom(widgetutil.align_right(
