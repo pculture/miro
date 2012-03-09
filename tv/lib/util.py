@@ -1215,6 +1215,8 @@ class SupportDirBackup(object):
         return False
 
     def should_skip_file(self, directory, filename):
+        if os.path.islink(os.path.join(directory, filename)):
+            return True
         if filename == 'httpauth':
             # don't send http passwords over the internet
             return True
