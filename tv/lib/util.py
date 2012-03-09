@@ -1170,15 +1170,15 @@ class SupportDirBackup(object):
     def __init__(self, support_dir, skip_dirs, max_size):
         logging.info("Attempting to back up support directory: %r",
                      support_dir)
-        uniqfn = "%012ddatabasebackup.zip" % random.randrange(0, 999999999999)
-        self.backupfile = os.path.join(tempfile.gettempdir(), uniqfn)
-        archive = zipfile.ZipFile(self.backupfile, "w")
+        backupfile_start = os.path.join(tempfile.gettempdir(),
+                                        'miro-support-backup.zip')
+        self.backupfile, fp = next_free_filename(backupfile_start)
+        archive = zipfile.ZipFile(fp, "w")
         self.skip_dirs = [os.path.normpath(d) for d in skip_dirs]
 
         total_size = 0
-        for root, dummy, files in os.walk(support_dir):
-            if self.should_skip_directory(root):
-                continue
+        for root, directories, files in os.walk(support_dir):
+            self.filter_directories(root, directories)
             relativeroot = os.path.relpath(root, support_dir)
             for fn in files:
                 if self.should_skip_file(root, fn):
@@ -1201,11 +1201,16 @@ class SupportDirBackup(object):
         logging.info("Support directory backed up to %s (%d bytes)",
                      self.backupfile, os.path.getsize(self.backupfile))
 
+    def filter_directories(self, root, directories):
+        """Remove directories from the list that os.walk() passes us."""
+        filtered = [d for d in directories
+                    if not self.should_skip_directory(os.path.join(root, d))]
+        # os.walk() wants us to change directories in-place
+        directories[:] = filtered
+
     def should_skip_directory(self, directory):
-        if os.path.islink(directory):
-            return True
         for skip_dir in self.skip_dirs:
-            if os.path.normpath(directory).startswith(skip_dir):
+            if directory.startswith(skip_dir):
                 return True
         return False
 
@@ -1217,8 +1222,6 @@ class SupportDirBackup(object):
             # On windows, don't send the config file.  Other
             # platforms don't handle config the same way, so we
             # don't need to worry about them
-            return True
-        if os.path.islink(os.path.join(directory, filename)):
             return True
         return False
 
@@ -1238,3 +1241,68 @@ class SupportDirBackup(object):
     def fileobj(self):
         """Get a file object for the archive file."""
         return open(self.backupfile, "rb")
+
+def next_free_filename_candidates(path):
+    """Generates candidate names for next_free_filename."""
+
+    # try unmodified path first
+    yield path
+    # add stuff to the filename to try to make it unique
+
+    dirname, filename = os.path.split(path)
+    if not filename:
+        raise ValueError("%s is a directory name" % path)
+    basename, ext = os.path.splitext(filename)
+    count = 1
+    while True:
+        filename = "%s.%s%s" % (basename, count, ext)
+        yield os.path.join(dirname, filename)
+        count += 1
+        if count > 1000:
+            raise ValueError("Can't find available filename for %s" % path)
+
+@returns_file
+def next_free_filename(name):
+    """Finds a filename that's unused and similar the the file we want
+    to download and returns an open file handle to it.
+    """ 
+    check_f(name)
+    mask = os.O_CREAT | os.O_EXCL | os.O_RDWR
+    # On Windows we need to pass in O_BINARY, fdopen() even with 'b' 
+    # specified is not sufficient.
+    if sys.platform == 'win32':
+        mask |= os.O_BINARY
+
+    candidates = next_free_filename_candidates(name)
+    while True:
+        # Try with the name supplied.
+        newname = candidates.next()
+        try:
+            fd = os.open(newname, mask)
+            fp = os.fdopen(fd, 'wb')
+            return newname, fp
+        except OSError:
+            continue
+    return (newname, fp)
+
+def next_free_directory_candidates(name):
+    """Generates candidate names for next_free_directory."""
+    yield name
+    count = 1
+    while True:
+        yield "%s.%s" % (name, count)
+        count += 1
+        if count > 1000:
+            raise ValueError("Can't find available directory for %s" % name)
+
+@returns_filename
+def next_free_directory(name):
+    """Finds a unused directory name using name as a base.
+
+    This method doesn't create the directory, it just finds an an-used one.
+    """
+    candidates = next_free_directory_candidates(name)
+    while True:
+        candidate = candidates.next()
+        if not os.path.exists(candidate):
+            return candidate

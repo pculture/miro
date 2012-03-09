@@ -477,7 +477,7 @@ class DownloadUtilsTest(MiroTestCase):
     def test_next_free_filename_generators(self):
         # try path without extension
         path = "/foo/.bar/test"
-        generator = download_utils.next_free_filename_candidates(path)
+        generator = util.next_free_filename_candidates(path)
         # first candidate should just be the file itself
         self.assertEquals(generator.next(), "/foo/.bar/test")
         # next candidate should just be the file with .X added to it
@@ -486,7 +486,7 @@ class DownloadUtilsTest(MiroTestCase):
 
         # try path with extension
         path = "/foo/.bar/test.jpg"
-        generator = download_utils.next_free_filename_candidates(path)
+        generator = util.next_free_filename_candidates(path)
         # first candidate should just be the file itself
         self.assertEquals(generator.next(), "/foo/.bar/test.jpg")
         # next candidate should just be the file with .X added before the
@@ -495,7 +495,7 @@ class DownloadUtilsTest(MiroTestCase):
         self.assertEquals(generator.next(), "/foo/.bar/test.2.jpg")
 
         # test that if we call it too many times, we get an exception
-        generator = download_utils.next_free_filename_candidates(path)
+        generator = util.next_free_filename_candidates(path)
         for x in xrange(100000):
             try:
                 generator.next()
@@ -511,7 +511,7 @@ class DownloadUtilsTest(MiroTestCase):
 
     def test_next_free_directory_generators(self):
         path = "/foo/.bar/test"
-        generator = download_utils.next_free_directory_candidates(path)
+        generator = util.next_free_directory_candidates(path)
         # first candidate should just be the file itself
         self.assertEquals(generator.next(), "/foo/.bar/test")
         # next candidate should just be the file with .X added to it
@@ -519,7 +519,7 @@ class DownloadUtilsTest(MiroTestCase):
         self.assertEquals(generator.next(), "/foo/.bar/test.2")
 
         # test that if we call it too many times, we get an exception
-        generator = download_utils.next_free_directory_candidates(path)
+        generator = util.next_free_directory_candidates(path)
         for x in xrange(100000):
             try:
                 generator.next()
@@ -542,14 +542,14 @@ class DownloadUtilsTest(MiroTestCase):
 
         path1 = os.path.join(self.tempdir, 'foo')
         # test we find the a nonexistent file
-        returned_path, fp = download_utils.next_free_filename(path1)
+        returned_path, fp = util.next_free_filename(path1)
         self.assertEquals(returned_path, os.path.join(self.tempdir, 'foo.3'))
         # test that we create the file
         self.assert_(os.path.exists(returned_path))
 
         # try with an extension
         path2 = os.path.join(self.tempdir, 'bar.jpg')
-        returned_path, fp = download_utils.next_free_filename(path2)
+        returned_path, fp = util.next_free_filename(path2)
         self.assertEquals(returned_path, os.path.join(self.tempdir,
             'bar.2.jpg'))
         self.assert_(os.path.exists(returned_path))
@@ -562,7 +562,7 @@ class DownloadUtilsTest(MiroTestCase):
 
         path = os.path.join(self.tempdir, 'foo')
         # test we find the a nonexistent file
-        returned_path = download_utils.next_free_directory(path)
+        returned_path = util.next_free_directory(path)
         self.assertEquals(returned_path, os.path.join(self.tempdir, 'foo.3'))
         # test that we don't create the directory
         self.assert_(not os.path.exists(returned_path))
@@ -969,8 +969,7 @@ class TestBackupSupportDir(MiroTestCase):
                                        max_size=1000000)
         archive = zipfile.ZipFile(backup.fileobj(), 'r')
         errors = archive.testzip()
-        if errors is not None:
-            raise AssertionError("Errors in the zip file: %s" % errors)
+        self.assertTrue(errors is None, "Errors in the zip file: %s" % errors)
         self.assertSameSet(archive.namelist(), self.correct_files)
 
     def test_backup(self):
@@ -994,6 +993,6 @@ class TestBackupSupportDir(MiroTestCase):
         backup = util.SupportDirBackup(self.support_dir, self.skip_dirs,
                                        max_size=max_size)
         filesize = os.stat(backup.backupfile).st_size
-        if filesize > 1100000:
-            raise AssertionError("Backup file too big.  filesize: %s "
-                                 "max_size: %s" % (filesize, max_size))
+        self.assertTrue(filesize <= 1100000,
+                        "Backup file too big.  filesize: %s max_size: %s" %
+                        (filesize, max_size))
