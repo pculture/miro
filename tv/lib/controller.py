@@ -34,10 +34,7 @@ crashes and shutdown.
 import logging
 import os
 import threading
-import tempfile
 import locale
-from random import randrange
-from zipfile import ZipFile
 
 from miro import app
 from miro import crashreport
@@ -51,6 +48,7 @@ from miro import messages
 from miro import prefs
 from miro import signals
 from miro import conversions
+from miro import util
 from miro import workerprocess
 from miro.plat.utils import exit_miro
 
@@ -242,7 +240,7 @@ class BugReportSender(signals.SignalEmitter):
             post_files = {"databasebackup":
                               {"filename": "databasebackup.zip",
                                "mimetype": "application/octet-stream",
-                               "handle": open(backupfile, "rb")
+                               "handle": backupfile,
                                }}
         else:
             post_files = None
@@ -271,44 +269,19 @@ class BugReportSender(signals.SignalEmitter):
         return progress.uploaded, progress.upload_total
 
     def _backup_support_dir(self):
-        # backs up the support directories to a zip file
-        # returns the name of the zip file
-        logging.info("Attempting to back up support directory")
+        """Back up the support directory.
+
+        :returns: handle of a file for the archive
+        """
+        skip_dirs = [
+            app.config.get(prefs.ICON_CACHE_DIRECTORY),
+            app.config.get(prefs.COVER_ART_DIRECTORY),
+        ]
         app.db.close()
-
-        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
         try:
-            uniqfn = "%012ddatabasebackup.zip" % randrange(0, 999999999999)
-            tempfilename = os.path.join(tempfile.gettempdir(), uniqfn)
-            zipfile = ZipFile(tempfilename, "w")
-            iconcache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
-            iconcache_dir = os.path.normpath(iconcache_dir)
-
-            for root, dummy, files in os.walk(support_dir):
-                if (os.path.normpath(root).startswith(iconcache_dir)
-                        or os.path.islink(root)):
-                    continue
-                relativeroot = root[len(support_dir):]
-                while (len(relativeroot) > 0
-                       and relativeroot[0] in ['/', '\\']):
-                    relativeroot = relativeroot[1:]
-                for fn in files:
-                    if fn == 'httpauth':
-                        # don't send http passwords over the internet
-                        continue
-                    if fn == 'preferences.bin':
-                        # On windows, don't send the config file.  Other
-                        # platforms don't handle config the same way, so we
-                        # don't need to worry about them
-                        continue
-                    path = os.path.join(root, fn)
-                    if not os.path.islink(path):
-                        relpath = os.path.join(relativeroot, fn)
-                        relpath = relpath.encode('ascii', 'replace')
-                        zipfile.write(path, relpath)
-            zipfile.close()
-            logging.info("Support directory backed up to %s (%d bytes)",
-                         tempfilename, os.path.getsize(tempfilename))
-            return tempfilename
+            support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
+            max_size = 100000000 # 100 MB
+            backup = util.SupportDirBackup(support_dir, skip_dirs, max_size)
+            return backup.fileobj()
         finally:
             app.db.open_connection()

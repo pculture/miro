@@ -45,9 +45,11 @@ import socket
 import string
 import subprocess
 import sys
+import tempfile
 import traceback
 import unicodedata
 import urllib
+import zipfile
 
 from miro.clock import clock
 from miro import filetypes
@@ -1162,3 +1164,147 @@ def split_values_for_sqlite(value_list):
     for start in xrange(0, len(value_list), CHUNK_SIZE):
         yield value_list[start:start+CHUNK_SIZE]
 
+
+class SupportDirBackup(object):
+    """Backup the support directory to send in a crash report."""
+    def __init__(self, support_dir, skip_dirs, max_size):
+        logging.info("Attempting to back up support directory: %r",
+                     support_dir)
+        backupfile_start = os.path.join(tempfile.gettempdir(),
+                                        'miro-support-backup.zip')
+        self.backupfile, fp = next_free_filename(backupfile_start)
+        archive = zipfile.ZipFile(fp, "w")
+        self.skip_dirs = [os.path.normpath(d) for d in skip_dirs]
+
+        total_size = 0
+        for root, directories, files in os.walk(support_dir):
+            self.filter_directories(root, directories)
+            relativeroot = os.path.relpath(root, support_dir)
+            for fn in files:
+                if self.should_skip_file(root, fn):
+                    continue
+                path = os.path.join(root, fn)
+                if relativeroot != '.':
+                    relpath = os.path.join(relativeroot, fn)
+                else:
+                    relpath = fn
+                relpath = self.ensure_ascii_filename(relpath)
+                archive.write(path, relpath)
+                total_size += archive.getinfo(relpath).compress_size
+                if total_size >= max_size:
+                    break
+            if total_size >= max_size:
+                logging.warn("Support directory backup too big.  "
+                             "Quitting after %s bytes", total_size)
+                break
+        archive.close()
+        logging.info("Support directory backed up to %s (%d bytes)",
+                     self.backupfile, os.path.getsize(self.backupfile))
+
+    def filter_directories(self, root, directories):
+        """Remove directories from the list that os.walk() passes us."""
+        filtered = [d for d in directories
+                    if not self.should_skip_directory(os.path.join(root, d))]
+        # os.walk() wants us to change directories in-place
+        directories[:] = filtered
+
+    def should_skip_directory(self, directory):
+        for skip_dir in self.skip_dirs:
+            if directory.startswith(skip_dir):
+                return True
+        return False
+
+    def should_skip_file(self, directory, filename):
+        if os.path.islink(os.path.join(directory, filename)):
+            return True
+        if filename == 'httpauth':
+            # don't send http passwords over the internet
+            return True
+        if filename == 'preferences.bin':
+            # On windows, don't send the config file.  Other
+            # platforms don't handle config the same way, so we
+            # don't need to worry about them
+            return True
+        return False
+
+    def ensure_ascii_filename(self, relpath):
+        """Ensure that a path we are about to archive is ASCII."""
+
+        # NOTE: zipfiles in general, and especially the python zipfile module
+        # don't seem to support them well.  The only filenames we should be
+        # sending are ASCII anyways, so let's just use a hack here to force
+        # things.  See the "zipfile and unicode filenames" thread here:
+        # http://mail.python.org/pipermail/python-dev/2007-June/thread.html
+        if isinstance(relpath, unicode):
+            return relpath.encode('ascii', 'ignore')
+        else:
+            return relpath.decode('ascii', 'ignore').encode('ascii', 'ignore')
+
+    def fileobj(self):
+        """Get a file object for the archive file."""
+        return open(self.backupfile, "rb")
+
+def next_free_filename_candidates(path):
+    """Generates candidate names for next_free_filename."""
+
+    # try unmodified path first
+    yield path
+    # add stuff to the filename to try to make it unique
+
+    dirname, filename = os.path.split(path)
+    if not filename:
+        raise ValueError("%s is a directory name" % path)
+    basename, ext = os.path.splitext(filename)
+    count = 1
+    while True:
+        filename = "%s.%s%s" % (basename, count, ext)
+        yield os.path.join(dirname, filename)
+        count += 1
+        if count > 1000:
+            raise ValueError("Can't find available filename for %s" % path)
+
+@returns_file
+def next_free_filename(name):
+    """Finds a filename that's unused and similar the the file we want
+    to download and returns an open file handle to it.
+    """ 
+    check_f(name)
+    mask = os.O_CREAT | os.O_EXCL | os.O_RDWR
+    # On Windows we need to pass in O_BINARY, fdopen() even with 'b' 
+    # specified is not sufficient.
+    if sys.platform == 'win32':
+        mask |= os.O_BINARY
+
+    candidates = next_free_filename_candidates(name)
+    while True:
+        # Try with the name supplied.
+        newname = candidates.next()
+        try:
+            fd = os.open(newname, mask)
+            fp = os.fdopen(fd, 'wb')
+            return newname, fp
+        except OSError:
+            continue
+    return (newname, fp)
+
+def next_free_directory_candidates(name):
+    """Generates candidate names for next_free_directory."""
+    yield name
+    count = 1
+    while True:
+        yield "%s.%s" % (name, count)
+        count += 1
+        if count > 1000:
+            raise ValueError("Can't find available directory for %s" % name)
+
+@returns_filename
+def next_free_directory(name):
+    """Finds a unused directory name using name as a base.
+
+    This method doesn't create the directory, it just finds an an-used one.
+    """
+    candidates = next_free_directory_candidates(name)
+    while True:
+        candidate = candidates.next()
+        if not os.path.exists(candidate):
+            return candidate

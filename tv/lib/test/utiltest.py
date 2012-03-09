@@ -6,12 +6,14 @@ import tempfile
 import shutil
 import unittest
 import sys
+import zipfile
 
 from miro.test.framework import skip_for_platforms, MiroTestCase
 from miro import download_utils
 from miro import util
 from miro import buildutils
 from miro.fileobject import FilenameType
+from miro.plat.utils import unicode_to_filename
 
 # We're going to override this so we can guarantee that if the order
 # changes later that it doesn't really affect us.
@@ -475,7 +477,7 @@ class DownloadUtilsTest(MiroTestCase):
     def test_next_free_filename_generators(self):
         # try path without extension
         path = "/foo/.bar/test"
-        generator = download_utils.next_free_filename_candidates(path)
+        generator = util.next_free_filename_candidates(path)
         # first candidate should just be the file itself
         self.assertEquals(generator.next(), "/foo/.bar/test")
         # next candidate should just be the file with .X added to it
@@ -484,7 +486,7 @@ class DownloadUtilsTest(MiroTestCase):
 
         # try path with extension
         path = "/foo/.bar/test.jpg"
-        generator = download_utils.next_free_filename_candidates(path)
+        generator = util.next_free_filename_candidates(path)
         # first candidate should just be the file itself
         self.assertEquals(generator.next(), "/foo/.bar/test.jpg")
         # next candidate should just be the file with .X added before the
@@ -493,7 +495,7 @@ class DownloadUtilsTest(MiroTestCase):
         self.assertEquals(generator.next(), "/foo/.bar/test.2.jpg")
 
         # test that if we call it too many times, we get an exception
-        generator = download_utils.next_free_filename_candidates(path)
+        generator = util.next_free_filename_candidates(path)
         for x in xrange(100000):
             try:
                 generator.next()
@@ -509,7 +511,7 @@ class DownloadUtilsTest(MiroTestCase):
 
     def test_next_free_directory_generators(self):
         path = "/foo/.bar/test"
-        generator = download_utils.next_free_directory_candidates(path)
+        generator = util.next_free_directory_candidates(path)
         # first candidate should just be the file itself
         self.assertEquals(generator.next(), "/foo/.bar/test")
         # next candidate should just be the file with .X added to it
@@ -517,7 +519,7 @@ class DownloadUtilsTest(MiroTestCase):
         self.assertEquals(generator.next(), "/foo/.bar/test.2")
 
         # test that if we call it too many times, we get an exception
-        generator = download_utils.next_free_directory_candidates(path)
+        generator = util.next_free_directory_candidates(path)
         for x in xrange(100000):
             try:
                 generator.next()
@@ -540,14 +542,14 @@ class DownloadUtilsTest(MiroTestCase):
 
         path1 = os.path.join(self.tempdir, 'foo')
         # test we find the a nonexistent file
-        returned_path, fp = download_utils.next_free_filename(path1)
+        returned_path, fp = util.next_free_filename(path1)
         self.assertEquals(returned_path, os.path.join(self.tempdir, 'foo.3'))
         # test that we create the file
         self.assert_(os.path.exists(returned_path))
 
         # try with an extension
         path2 = os.path.join(self.tempdir, 'bar.jpg')
-        returned_path, fp = download_utils.next_free_filename(path2)
+        returned_path, fp = util.next_free_filename(path2)
         self.assertEquals(returned_path, os.path.join(self.tempdir,
             'bar.2.jpg'))
         self.assert_(os.path.exists(returned_path))
@@ -560,7 +562,7 @@ class DownloadUtilsTest(MiroTestCase):
 
         path = os.path.join(self.tempdir, 'foo')
         # test we find the a nonexistent file
-        returned_path = download_utils.next_free_directory(path)
+        returned_path = util.next_free_directory(path)
         self.assertEquals(returned_path, os.path.join(self.tempdir, 'foo.3'))
         # test that we don't create the directory
         self.assert_(not os.path.exists(returned_path))
@@ -908,3 +910,89 @@ class TestGatherMediaFiles(unittest.TestCase):
         self.verify_results()
         self.add_file('test.ogv', True)
         self.verify_results()
+
+class TestBackupSupportDir(MiroTestCase):
+    # Test backing up the support directory
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.support_dir = self.make_temp_dir_path()
+        self.correct_files = []
+        self.skip_dirs = []
+        self.setup_support_dir()
+
+    def setup_support_dir(self):
+        """Add objects to our fake support directory that we want around for
+        every test.
+        """
+
+        # add log files
+        self.add_file_to_support_dir('miro.log')
+        self.add_file_to_support_dir('miro-downloader.log')
+        for i in range(1, 5):
+            self.add_file_to_support_dir('miro.log.%s' % i)
+            self.add_file_to_support_dir('miro-downloader.log.%s' % i)
+        # add database files
+        self.add_file_to_support_dir('sqlitedb')
+        self.add_file_to_support_dir('sqlitedb-journal')
+        self.add_file_to_support_dir('dbbackups/sqlitedb_backup_165')
+        self.add_file_to_support_dir('dbbackups/sqlitedb_backup_170')
+        self.add_file_to_support_dir('dbbackups/sqlitedb_backup_183')
+        # add other files
+        self.add_skip_dir('icon-cache')
+        self.add_skip_dir('cover-art')
+        self.add_file_to_support_dir('httpauth', should_skip=True)
+        self.add_file_to_support_dir('preferences.bin', should_skip=True)
+        for i in range(5):
+            self.add_file_to_support_dir('cover-art/Album-%s' % i,
+                                         should_skip=True)
+            self.add_file_to_support_dir('icon-cache/icon-%s' % i,
+                                         should_skip=True)
+            self.add_file_to_support_dir('crashes/crash-report-%i' % i)
+
+    def add_skip_dir(self, skip_dir):
+        self.skip_dirs.append(os.path.join(self.support_dir, skip_dir))
+
+    def add_file_to_support_dir(self, path, archive_name=None,
+                                should_skip=False, contents='FAKE DATA'):
+        if archive_name is None:
+            archive_name = path
+        full_path = os.path.join(self.support_dir, path)
+        directory = os.path.dirname(full_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        open(full_path, "wt").write(contents)
+        if not should_skip:
+            self.correct_files.append(archive_name)
+
+    def check_backup(self):
+        backup = util.SupportDirBackup(self.support_dir, self.skip_dirs,
+                                       max_size=1000000)
+        archive = zipfile.ZipFile(backup.fileobj(), 'r')
+        errors = archive.testzip()
+        self.assertTrue(errors is None, "Errors in the zip file: %s" % errors)
+        self.assertSameSet(archive.namelist(), self.correct_files)
+
+    def test_backup(self):
+        self.check_backup()
+
+    def test_extendend_chars(self):
+        filename = unicode_to_filename(u'\u0112xtended Chars')
+        self.add_file_to_support_dir(filename, 'xtended Chars')
+        self.check_backup()
+
+    def test_size_limit(self):
+        # create 200 kb worth of data
+        large_data = " " * 200000
+        # add a bunch of those files
+        for i in xrange(10):
+            self.add_file_to_support_dir('big-file-%s' % i,
+                                         contents=large_data)
+        # check that we don't max an archive file too much bigger than our max
+        # size
+        max_size = 1000000 # 1MB
+        backup = util.SupportDirBackup(self.support_dir, self.skip_dirs,
+                                       max_size=max_size)
+        filesize = os.stat(backup.backupfile).st_size
+        self.assertTrue(filesize <= 1100000,
+                        "Backup file too big.  filesize: %s max_size: %s" %
+                        (filesize, max_size))
