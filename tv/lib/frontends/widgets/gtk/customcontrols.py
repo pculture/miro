@@ -109,12 +109,28 @@ class DragableCustomButtonWidget(CustomButtonWidget):
         if self.last_drag_event is None:
             wrappermap.wrapper(self).emit('clicked')
 
+class _DragInfo(object):
+    """Info about the start of a drag.
+
+    Attributes:
+
+    - button: button that started the drag
+    - start_pos: position of the slider
+    - click_pos: position of the click
+
+    Note that start_pos and click_pos will be different if the user clicks
+    inside the slider.
+    """
+
+    def __init__(self, button, start_pos, click_pos):
+        self.button = button
+        self.start_pos = start_pos
+        self.click_pos = click_pos
+
 class CustomScaleMixin(CustomControlMixin):
     def __init__(self):
         CustomControlMixin.__init__(self)
-        self.in_drag = False
-        self.drag_inbounds = False
-        self.drag_button = None
+        self.drag_info = None
         self.min = self.max = 0.0
 
     def get_range(self):
@@ -128,27 +144,6 @@ class CustomScaleMixin(CustomControlMixin):
     def is_continuous(self):
         return wrappermap.wrapper(self).is_continuous()
 
-    def do_button_press_event(self, event):
-        if self.in_drag:
-            return
-        self.start_value = self.get_value()
-        self.in_drag = True
-        self.drag_button = event.button
-        self.drag_inbounds = True
-        self.move_slider_to_mouse(event.x, event.y)
-        self.grab_focus()
-        wrappermap.wrapper(self).emit('pressed')
-
-    def do_motion_notify_event(self, event):
-        if self.in_drag:
-            self.move_slider_to_mouse(event.x, event.y)
-
-    def calc_percent(self, pos, size):
-        slider_size = wrappermap.wrapper(self).slider_size()
-        pos -= slider_size / 2
-        size -= slider_size
-        return max(0, min(1, float(pos) / size))
-
     def is_horizontal(self):
         # this comes from a mixin
         pass
@@ -159,32 +154,77 @@ class CustomScaleMixin(CustomControlMixin):
         else:
             return gtk.VScale
 
-    def move_slider_to_mouse(self, x, y):
-        if ((not 0 <= x < self.allocation.width) or
-                (not 0 <= y < self.allocation.height)):
-            self.handle_drag_out_of_bounds()
-            return
+    def get_slider_pos(self, value=None):
+        if value is None:
+            value = self.get_value()
         if self.is_horizontal():
-            pos = x
             size = self.allocation.width
         else:
-            pos = y
-            size = self.height
-        value = (self.max - self.min) * self.calc_percent(pos, size)
-        self.set_value(value)
+            size = self.allocation.height
+        ratio = (float(value) - self.min) / (self.max - self.min)
+        start_pos = self.slider_size() / 2.0
+        return start_pos + ratio * (size - self.slider_size())
+
+    def slider_size(self):
+        return wrappermap.wrapper(self).slider_size()
+
+    def _event_pos(self, event):
+        """Get the position of an event.
+
+        If we are horizontal, this will be the x coordinate.  If we are
+        vertical, the y.
+        """
+        if self.is_horizontal():
+            return event.x
+        else:
+            return event.y
+
+    def do_button_press_event(self, event):
+        if self.drag_info is not None:
+            return
+        current_pos = self.get_slider_pos()
+        event_pos = self._event_pos(event)
+        pos_difference = abs(current_pos - event_pos)
+        # only move the slider if the click was outside its boundaries
+        # (#18840)
+        if pos_difference > self.slider_size() / 2.0:
+            self.move_slider(event_pos)
+            current_pos = event_pos
+        self.drag_info = _DragInfo(event.button, current_pos, event_pos)
+        self.grab_focus()
+        wrappermap.wrapper(self).emit('pressed')
+
+    def do_motion_notify_event(self, event):
+        if self.drag_info is not None:
+            event_pos = self._event_pos(event)
+            delta = event_pos - self.drag_info.click_pos
+            self.move_slider(self.drag_info.start_pos + delta)
+
+    def move_slider(self, new_pos):
+        """Move the slider so that it's centered on new_pos."""
+        if self.is_horizontal():
+            size = self.allocation.width
+        else:
+            size = self.allocation.height
+
+        slider_size = self.slider_size()
+        new_pos -= slider_size / 2
+        size -= slider_size
+        ratio = max(0, min(1, float(new_pos) / size))
+        self.set_value(ratio * (self.max - self.min))
+
         wrappermap.wrapper(self).emit('moved', self.get_value())
         if self.is_continuous():
             wrappermap.wrapper(self).emit('changed', self.get_value())
 
     def handle_drag_out_of_bounds(self):
-        self.drag_inbounds = False
         if not self.is_continuous():
             self.set_value(self.start_value)
 
     def do_button_release_event(self, event):
-        if event.button != self.drag_button:
+        if event.button != self.drag_info.button:
             return
-        self.in_drag = False
+        self.drag_info = None
         if (self.is_continuous and
                 (0 <= event.x < self.allocation.width) and
                 (0 <= event.y < self.allocation.height)):
@@ -192,16 +232,27 @@ class CustomScaleMixin(CustomControlMixin):
         wrappermap.wrapper(self).emit('released')
 
     def do_scroll_event(self, event):
+        wrapper = wrappermap.wrapper(self)
         if self.is_horizontal():
             if event.direction == gtk.gdk.SCROLL_UP:
                 event.direction = gtk.gdk.SCROLL_DOWN
             elif event.direction == gtk.gdk.SCROLL_DOWN:
                 event.direction = gtk.gdk.SCROLL_UP
-        self.gtk_scale_class().do_scroll_event(self, event)
+        if (wrapper._scroll_step is not None and
+            event.direction in (gtk.gdk.SCROLL_UP, gtk.gdk.SCROLL_DOWN)):
+            # handle the scroll ourself
+            if event.direction == gtk.gdk.SCROLL_DOWN:
+                delta = wrapper._scroll_step
+            else:
+                delta = -wrapper._scroll_step
+            self.set_value(self.get_value() + delta)
+        else:
+            # let GTK handle the scroll
+            self.gtk_scale_class().do_scroll_event(self, event)
         # Treat mouse scrolls as if the user clicked on the new position
-        wrappermap.wrapper(self).emit('pressed')
-        wrappermap.wrapper(self).emit('changed', self.get_value())
-        wrappermap.wrapper(self).emit('released')
+        wrapper.emit('pressed')
+        wrapper.emit('changed', self.get_value())
+        wrapper.emit('released')
 
     def do_move_slider(self, scroll):
         if self.is_horizontal():
@@ -357,6 +408,7 @@ class CustomSlider(CustomControlBase):
         self.create_signal('released')
         self.create_signal('changed')
         self.create_signal('moved')
+        self._scroll_step = None
         if self.is_horizontal():
             self.set_widget(CustomHScaleWidget())
         else:
@@ -376,14 +428,40 @@ class CustomSlider(CustomControlBase):
     def get_range(self):
         return self._widget.get_range()
 
+    def get_slider_pos(self, value=None):
+        """Get the position for the slider for our current value.
+
+        This will return position that the slider should be centered on to
+        display the value.  It will be the x coordinate if is_horizontal() is
+        True and the y coordinate otherwise.
+
+        This method takes into acount the size of the slider when calculating
+        the position.  The slider position will start at (slider_size / 2) and
+        will end (slider_size / 2) px before the end of the widget.
+
+        :param value: value to get the position for.  Defaults to the current
+        value
+        """
+        return self._widget.get_slider_pos(value)
+
     def set_range(self, min_value, max_value):
         self._widget.set_range(min_value, max_value)
-        # Try to pick a reasonable default for the digits
+        # set_digits controls the precision of the scale by limiting changes
+        # to a certain number of digits.  If the range is [0, 1], this code
+        # will give us 4 digits of precision, which seems reasonable.
         range = max_value - min_value
-        self._widget.set_digits(int(round(math.log10(100.0 / range))))
+        self._widget.set_digits(int(round(math.log10(10000.0 / range))))
 
-    def set_increments(self, increment, big_increment):
-        self._widget.set_increments(increment, big_increment)
+    def set_increments(self, small_step, big_step, scroll_step=None):
+        """Set the increments to scroll.
+
+        :param small_step: scroll amount for up/down
+        :param big_step: scroll amount for page up/page down.
+        :param scroll_step: scroll amount for mouse wheel, or None to make
+                            this 2 times the small step
+        """
+        self._widget.set_increments(small_step, big_step)
+        self._scroll_step = scroll_step
 
 def to_miro_volume(value):
     """Convert from 0 to 1.0 to 0.0 to MAX_VOLUME.
