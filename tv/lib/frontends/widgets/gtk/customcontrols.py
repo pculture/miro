@@ -189,9 +189,8 @@ class CustomScaleMixin(CustomControlMixin):
         # (#18840)
         if pos_difference > self.slider_size() / 2.0:
             self.move_slider(event_pos)
-        self.drag_info = _DragInfo(event.button,
-                                   self.get_slider_pos(),
-                                   event_pos)
+            current_pos = event_pos
+        self.drag_info = _DragInfo(event.button, current_pos, event_pos)
         self.grab_focus()
         wrappermap.wrapper(self).emit('pressed')
 

@@ -234,7 +234,7 @@ class CustomSliderCell(NSSliderCell):
         # only move the cursor if the click was outside the slider
         if abs(click_pos - start_pos) > view.knobThickness() / 2:
             self.moveSliderTo(view, click_pos)
-            start_pos = self.get_slider_pos(view)
+            start_pos = click_pos
         view.mouse_tracking_info = MouseTrackingInfo(start_pos, click_pos)
         if not wrapper.get_disabled():
             wrapper.emit('pressed')
