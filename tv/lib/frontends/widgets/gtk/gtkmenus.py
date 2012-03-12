@@ -167,7 +167,9 @@ class MenuItem(MenuItemBase):
         Subclasses will probably want to override this.
         """
         if self.name in _STOCK_IDS:
-            return gtk.ImageMenuItem(stock_id=_STOCK_IDS[self.name])
+            mi = gtk.ImageMenuItem(stock_id=_STOCK_IDS[self.name])
+            mi.set_label(label)
+            return mi
         else:
             return gtk.MenuItem(label)
 
