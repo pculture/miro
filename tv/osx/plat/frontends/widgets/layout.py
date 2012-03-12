@@ -674,12 +674,12 @@ class Scroller(Bin):
 
     def viewport_repositioned(self):
         # If the window is resized, this translates to a
-        # viewport_repositioned() event.  So, do whatever super requires of
-        # us, then place the chilren to work out if we need a scrollbar, then
-        # get the new size, then replace the children (which now takes into
-        # account of scrollbar size.)
+        # viewport_repositioned() event.  Instead of calling
+        # place_children() one, which is what our suporclass does, we need
+        # some extra logic here.  place the chilren to work out if we need a
+        # scrollbar, then get the new size, then replace the children (which
+        # now takes into account of scrollbar size.)
         super(Scroller, self).viewport_repositioned()
-        self.place_children()
         self.cached_size_request = self.calc_size_request()
         self.place_children()
 
