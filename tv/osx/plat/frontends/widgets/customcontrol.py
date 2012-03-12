@@ -251,6 +251,25 @@ class CustomSliderView(NSSlider):
     def knobThickness(self):
         return wrappermap.wrapper(self).slider_size()
 
+    def scrollWheel_(self, event):
+        wrapper = wrappermap.wrapper(self)
+        if wrapper.get_disabled():
+            return
+        # NOTE: we ignore the scroll_step value passed into set_increments()
+        # and calculate the change using deltaY, which is in device
+        # coordinates.
+        slider_size = wrapper.slider_size()
+        if wrapper.is_horizontal():
+            size = self.bounds().size.width
+        else:
+            size = self.bounds().size.height
+        size -= slider_size
+
+        range = self.maxValue() - self.minValue()
+        value_change = (event.deltaY() / size) * range
+        self.setFloatValue_(self.floatValue() + value_change)
+        wrapper.emit('changed', self.floatValue())
+
     def isVertical(self):
         return not wrappermap.wrapper(self).is_horizontal()
 
@@ -352,7 +371,7 @@ class CustomSlider(CustomControlBase):
         self.view.setMinValue_(min_value)
         self.view.setMaxValue_(max_value)
 
-    def set_increments(self, increment, big_increment):
+    def set_increments(self, small_step, big_step, scroll_step=None):
         pass
 
     def enable(self):

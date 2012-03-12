@@ -192,16 +192,27 @@ class CustomScaleMixin(CustomControlMixin):
         wrappermap.wrapper(self).emit('released')
 
     def do_scroll_event(self, event):
+        wrapper = wrappermap.wrapper(self)
         if self.is_horizontal():
             if event.direction == gtk.gdk.SCROLL_UP:
                 event.direction = gtk.gdk.SCROLL_DOWN
             elif event.direction == gtk.gdk.SCROLL_DOWN:
                 event.direction = gtk.gdk.SCROLL_UP
-        self.gtk_scale_class().do_scroll_event(self, event)
+        if (wrapper._scroll_step is not None and
+            event.direction in (gtk.gdk.SCROLL_UP, gtk.gdk.SCROLL_DOWN)):
+            # handle the scroll ourself
+            if event.direction == gtk.gdk.SCROLL_DOWN:
+                delta = wrapper._scroll_step
+            else:
+                delta = -wrapper._scroll_step
+            self.set_value(self.get_value() + delta)
+        else:
+            # let GTK handle the scroll
+            self.gtk_scale_class().do_scroll_event(self, event)
         # Treat mouse scrolls as if the user clicked on the new position
-        wrappermap.wrapper(self).emit('pressed')
-        wrappermap.wrapper(self).emit('changed', self.get_value())
-        wrappermap.wrapper(self).emit('released')
+        wrapper.emit('pressed')
+        wrapper.emit('changed', self.get_value())
+        wrapper.emit('released')
 
     def do_move_slider(self, scroll):
         if self.is_horizontal():
@@ -357,6 +368,7 @@ class CustomSlider(CustomControlBase):
         self.create_signal('released')
         self.create_signal('changed')
         self.create_signal('moved')
+        self._scroll_step = None
         if self.is_horizontal():
             self.set_widget(CustomHScaleWidget())
         else:
@@ -380,10 +392,18 @@ class CustomSlider(CustomControlBase):
         self._widget.set_range(min_value, max_value)
         # Try to pick a reasonable default for the digits
         range = max_value - min_value
-        self._widget.set_digits(int(round(math.log10(100.0 / range))))
+        self._widget.set_digits(int(round(math.log10(10000.0 / range))))
 
-    def set_increments(self, increment, big_increment):
-        self._widget.set_increments(increment, big_increment)
+    def set_increments(self, small_step, big_step, scroll_step=None):
+        """Set the increments to scroll.
+
+        :param small_step: scroll amount for up/down
+        :param big_step: scroll amount for page up/page down.
+        :param scroll_step: scroll amount for mouse wheel, or None to make
+                            this 2 times the small step
+        """
+        self._widget.set_increments(small_step, big_step)
+        self._scroll_step = scroll_step
 
 def to_miro_volume(value):
     """Convert from 0 to 1.0 to 0.0 to MAX_VOLUME.

@@ -315,6 +315,8 @@ class ProgressTimeRemaining(widgetset.CustomButton):
 class ProgressSlider(widgetset.CustomSlider):
     def __init__(self):
         widgetset.CustomSlider.__init__(self)
+        # progress silders always use the range [0, 1]
+        self.set_range(0, 1)
         self.set_can_focus(False)
         self.background_surface = widgetutil.ThreeImageSurface('playback_track')
         self.progress_surface = widgetutil.ThreeImageSurface('playback_track_progress')
@@ -328,7 +330,7 @@ class ProgressSlider(widgetset.CustomSlider):
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('will-stop', self.handle_stop)
         self.disable()
-        self.duration = 0
+        self.playing = False
 
     def handle_progress(self, obj, elapsed, total):
         if elapsed is None or total is None:
@@ -339,14 +341,17 @@ class ProgressSlider(widgetset.CustomSlider):
             self.set_value(0)
 
     def handle_play(self, obj, duration):
-        self.duration = duration
+        self.playing = True
+        # This makes it so that the mouswheel scrolls exactly 5 seconds
+        step_size = 5.0 / duration
+        self.set_increments(step_size, step_size, step_size)
         self.enable()
 
     def handle_selecting(self, obj, item_info):
         self.disable()
 
     def handle_stop(self, obj):
-        self.duration = 0
+        self.playing = False
         self.set_value(0)
         self.disable()
 
@@ -386,7 +391,7 @@ class ProgressSlider(widgetset.CustomSlider):
         if cursor_pos:
             progress.draw(context, 0, 1, cursor_pos + 9)
 
-        if self.duration > 0:
+        if self.playing:
             cursor.draw(context, cursor_pos, 0, cursor.width, cursor.height)
 
 class ProgressTimeline(widgetset.Background):
@@ -399,6 +404,7 @@ class ProgressTimeline(widgetset.Background):
         self.time = ProgressTime()
         self.slider.connect('pressed', self.on_slider_pressed)
         self.slider.connect('moved', self.on_slider_moved)
+        self.slider.connect('changed', self.on_slider_moved)
         self.slider.connect('released', self.on_slider_released)
         self.remaining_time = ProgressTimeRemaining()
         self.remaining_time.connect('clicked', self.on_remaining_clicked)
@@ -427,16 +433,6 @@ class ProgressTimeline(widgetset.Background):
 
     def on_slider_released(self, slider):
         app.playback_manager.resume()
-
-    def set_duration(self, duration):
-        self.slider.set_range(0, duration)
-        self.slider.set_increments(5, min(20, duration / 20.0))
-        self.remaining_time.set_duration(duration)
-
-    def set_current_time(self, current_time):
-        self.slider.set_value(current_time)
-        self.time.set_current_time(current_time)
-        self.remaining_time.set_current_time(current_time)
 
     def size_request(self, layout):
         return -1, 46
