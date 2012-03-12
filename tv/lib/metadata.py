@@ -1231,7 +1231,8 @@ class MetadataManagerBase(signals.SignalEmitter):
                                                            self.db_info):
                 entry.remove()
             status.remove()
-            self.count_tracker.file_finished(path)
+            if status.current_processor is not None:
+                self.count_tracker.file_finished(path)
         self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
         self._send_net_lookup_counts_caller.call_when_idle()
 
