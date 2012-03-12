@@ -420,6 +420,11 @@ class CustomSlider(CustomControlBase):
         self.view.setMaxValue_(max_value)
 
     def set_increments(self, small_step, big_step, scroll_step=None):
+        # NOTE: we ignore all of these parameters.
+        #
+        # Cocoa doesn't have a concept of changing the increments for
+        # NSScroller.  scroll_step is isn't really compatible with
+        # the event object that's passed to scrollWheel_()
         pass
 
     def enable(self):
