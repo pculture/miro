@@ -126,7 +126,10 @@ SHARE_WARN_ON_QUIT          = Pref(key='ShareWarnOnQuit',       default=True, pl
 SHARE_VIDEO                 = Pref(key='ShareVideo',            default=True, platformSpecific=False)
 SHARE_AUDIO                 = Pref(key='ShareAudio',            default=True, platformSpecific=False)
 SHARE_FEED                  = Pref(key='ShareFeed',             default=True, platformSpecific=False)
-MUSIC_TAB_CLICKED           = Pref(key='musicTabClicked',       default=False, platformSpecific=False)
+# the musicTabClicked key was used before miro 5.0.  It's been changed because
+# we want to pop up the dialog for users who ran 4.0.x and let them know about
+# internet lookups
+MUSIC_TAB_CLICKED           = Pref(key='musicTabClicked2',       default=False, platformSpecific=False)
 SHOW_PODCASTS_IN_VIDEO      = Pref(key='showPodcastsInVideo', default=True, platformSpecific=False)
 SHOW_PODCASTS_IN_MUSIC      = Pref(key='showPodcastsInMusic', default=False, platformSpecific=False)
 REMEMBER_LAST_DISPLAY       = Pref(key='rememberLastDisplay', default=False, platformSpecific=False)
