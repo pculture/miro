@@ -360,7 +360,7 @@ class ProgressSlider(widgetset.CustomSlider):
         return (60, 17)
 
     def slider_size(self):
-        return 1
+        return self.progress_cursor.width
 
     def draw(self, context, layout):
         if not app.playback_manager.is_playing:
