@@ -1018,8 +1018,6 @@ class Application:
         app.config.set(prefs.MUSIC_TAB_CLICKED, True)
         dialog = firsttimedialog.MusicSetupDialog()
         dialog.run()
-        if dialog.should_enable_net_lookup():
-            app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
         if dialog.import_path():
             app.watched_folder_manager.add(dialog.import_path())
 

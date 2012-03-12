@@ -541,9 +541,6 @@ class FirstTimeDialog(widgetset.DialogWindow):
                 self.import_media_player_stuff = cbx.get_checked()
             vbox.import_cbx.connect("toggled", on_import_toggled)
 
-        prefpanel.attach_boolean(vbox.net_lookup_cbx,
-                                 prefs.NET_LOOKUP_BY_DEFAULT)
-
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
 
@@ -566,6 +563,9 @@ class MusicSetupVBox(widgetset.VBox):
     Attributes:
     - import_cbx: Checkbox to import music from the platform player
     - net_lookup_cbx: Checkbox to enable net lookups by default
+
+    This class handles changing the NET_LOOKUP_BY_DEFAULT pref, but the class
+    using it must handle responding import_cbx being checked.
     """
     def __init__(self, mp_name, pack_title=True):
         widgetset.VBox.__init__(self, spacing=5)
@@ -588,6 +588,8 @@ class MusicSetupVBox(widgetset.VBox):
             self.net_lookup_cbx, _('Miro will use Echonest and 7Digital '
                                    'to cleanup all song titles, info, and '
                                    'album art.  Highly recommended.')))
+        prefpanel.attach_boolean(self.net_lookup_cbx,
+                                 prefs.NET_LOOKUP_BY_DEFAULT)
 
         # Give the "Note:" heading top padding to separate it from the
         # checkboxes, but no bottom padding to keep it together with the rest
@@ -632,10 +634,14 @@ class MusicSetupDialog(dialogs.MainDialog):
                 return True
             wf_iter = wf_model.next_iter(wf_iter)
 
-    def should_enable_net_lookup(self):
-        return self.vbox.net_lookup_cbx.get_checked()
-
     def import_path(self):
+        """Path to import music from.
+
+        The code using MusicSetupDialog should check this once the dialog is
+        closed and create a watched folder if needed.
+
+        :returns: path or None if we shouldn't import anything.
+        """
         if self.vbox.import_cbx and self.vbox.import_cbx.get_checked():
             return self.mp_path
         else:
