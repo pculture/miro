@@ -311,7 +311,9 @@ class CustomSliderView(NSSlider):
         range = self.maxValue() - self.minValue()
         value_change = (event.deltaY() / size) * range
         self.setFloatValue_(self.floatValue() + value_change)
+        wrapper.emit('pressed')
         wrapper.emit('changed', self.floatValue())
+        wrapper.emit('released')
 
     def isVertical(self):
         return not wrappermap.wrapper(self).is_horizontal()

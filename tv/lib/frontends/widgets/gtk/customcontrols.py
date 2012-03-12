@@ -447,7 +447,9 @@ class CustomSlider(CustomControlBase):
 
     def set_range(self, min_value, max_value):
         self._widget.set_range(min_value, max_value)
-        # Try to pick a reasonable default for the digits
+        # set_digits controls the precision of the scale by limiting changes
+        # to a certain number of digits.  If the range is [0, 1], this code
+        # will give us 4 digits of precision, which seems reasonable.
         range = max_value - min_value
         self._widget.set_digits(int(round(math.log10(10000.0 / range))))
 
