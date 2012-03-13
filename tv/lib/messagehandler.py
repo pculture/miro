@@ -1500,15 +1500,19 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         try:
             if fileutil.samefile(item_.get_filename(), message.filename):
                 return # saving over the same file
-        except (IOError, OSError):
-            # FIXME - return an error to the frontend?
+        except EnvironmentError:
+            # just try to write the file anyways
             pass
 
         try:
             shutil.copyfile(item_.get_filename(), message.filename)
-        except IOError:
-            # FIXME - we should pass the error back to the frontend
-            pass
+        except EnvironmentError, e:
+            # XXX is there a more useful error message we can show the user?
+            messages.ShowWarning(
+                _("Error saving file"),
+                _("There was an error saving %(filename)s: %(error)s", {
+                        'filename': message.filename,
+                        'error': e.strerror})).send_to_frontend()
 
     def handle_remove_video_entries(self, message):
         items = []
