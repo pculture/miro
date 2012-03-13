@@ -76,9 +76,7 @@ ZLIB_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'include')
 ZLIB_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'lib')
 ZLIB_RUNTIME_LIBRARY_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib')
 
-OPENSSL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'include')
-OPENSSL_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'lib')
-OPENSSL_LIBRARIES = ['ssleay32', 'libeay32']
+OPENSSL_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl')
 
 import gtk
 GTK_ROOT_PATH = os.path.join(
