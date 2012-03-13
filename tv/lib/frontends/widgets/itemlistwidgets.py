@@ -1756,7 +1756,7 @@ class ProgressToolbar(Toolbar):
                                        right_pad=10)
         label_align.set_size_request(-1, 20)
         self.hbox.pack_start(label_align, expand=False)
-        meter_align = widgetutil.align(self.meter, yalign=0.5, xscale=200)
+        meter_align = widgetutil.align(self.meter, yalign=0.5, xalign=1.0)
         self.hbox.pack_start(meter_align, expand=True)
         self.set_up = True
 

@@ -976,7 +976,7 @@ class TestBackupSupportDir(MiroTestCase):
         self.check_backup()
 
     def test_extendend_chars(self):
-        filename = unicode_to_filename(u'\u0112xtended Chars')
+        filename = unicode_to_filename(u'\ufffdxtended Chars')
         self.add_file_to_support_dir(filename, 'xtended Chars')
         self.check_backup()
 
