@@ -29,6 +29,8 @@
 
 """miro.plat.frontends.widgets.customcontrol -- CustomControl handlers.  """
 
+import collections
+
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
@@ -198,6 +200,9 @@ class DragableDrawableButton(DrawableButton):
         return YES
 DragableDrawableButton.setCellClass_(DragableButtonCell)
 
+MouseTrackingInfo = collections.namedtuple("MouseTrackingInfo",
+                                           "start_pos click_pos")
+
 class CustomSliderCell(NSSliderCell):
     def calc_slider_amount(self, view, pos, size):
         slider_size = wrappermap.wrapper(view).slider_size()
@@ -205,19 +210,42 @@ class CustomSliderCell(NSSliderCell):
         size -= slider_size
         return max(0, min(1, float(pos) / size))
 
-    def startTrackingAt_inView_(self, at, view):
-        wrapper = wrappermap.wrapper(view)
-        if not wrapper.get_disabled():
-            wrapper.emit('pressed')
-        return self.continueTracking_at_inView_(at, at, view)
-
-    def continueTracking_at_inView_(self, lastPoint, at, view):
+    def get_slider_pos(self, view, value=None):
+        if value is None:
+            value = view.floatValue()
         if view.isVertical():
-            pos = at.y
             size = view.bounds().size.height
         else:
-            pos = at.x
             size = view.bounds().size.width
+        slider_size = view.knobThickness()
+        size -= slider_size
+        start_pos = slider_size / 2.0
+        ratio = ((value - view.minValue()) /
+                 view.maxValue() - view.minValue())
+        return start_pos + (ratio * size)
+
+    def startTrackingAt_inView_(self, at, view):
+        wrapper = wrappermap.wrapper(view)
+        start_pos = self.get_slider_pos(view)
+        if self.isVertical():
+            click_pos = at.y
+        else:
+            click_pos = at.x
+        # only move the cursor if the click was outside the slider
+        if abs(click_pos - start_pos) > view.knobThickness() / 2:
+            self.moveSliderTo(view, click_pos)
+            start_pos = click_pos
+        view.mouse_tracking_info = MouseTrackingInfo(start_pos, click_pos)
+        if not wrapper.get_disabled():
+            wrapper.emit('pressed')
+        return YES
+
+    def moveSliderTo(self, view, pos):
+        if view.isVertical():
+            size = view.bounds().size.height
+        else:
+            size = view.bounds().size.width
+
         slider_amount = self.calc_slider_amount(view, pos, size)
         value = (self.maxValue() - self.minValue()) * slider_amount
         self.setFloatValue_(value)
@@ -226,19 +254,34 @@ class CustomSliderCell(NSSliderCell):
             wrapper.emit('moved', value)
             if self.isContinuous():
                 wrapper.emit('changed', value)
+
+    def continueTracking_at_inView_(self, lastPoint, at, view):
+        if view.isVertical():
+            mouse_pos = at.y
+        else:
+            mouse_pos = at.x
+
+        info = view.mouse_tracking_info
+        new_pos = info.start_pos + (mouse_pos - info.click_pos)
+        self.moveSliderTo(view, new_pos)
         return YES
     
     def stopTracking_at_inView_mouseIsUp_(self, lastPoint, at, view, mouseUp):
         wrapper = wrappermap.wrapper(view)
         if not wrapper.get_disabled():
             wrapper.emit('released')
+        view.mouse_tracking_info = None
 
 class CustomSliderView(NSSlider):
     def init(self):
         self = super(CustomSliderView, self).init()
         self.layout_manager = LayoutManager()
         self.custom_cursor = None
+        self.mouse_tracking_info = None
         return self
+
+    def get_slider_pos(self, value=None):
+        return self.cell().get_slider_pos(self, value)
 
     def resetCursorRects(self):
         if self.custom_cursor is not None:
@@ -250,6 +293,27 @@ class CustomSliderView(NSSlider):
 
     def knobThickness(self):
         return wrappermap.wrapper(self).slider_size()
+
+    def scrollWheel_(self, event):
+        wrapper = wrappermap.wrapper(self)
+        if wrapper.get_disabled():
+            return
+        # NOTE: we ignore the scroll_step value passed into set_increments()
+        # and calculate the change using deltaY, which is in device
+        # coordinates.
+        slider_size = wrapper.slider_size()
+        if wrapper.is_horizontal():
+            size = self.bounds().size.width
+        else:
+            size = self.bounds().size.height
+        size -= slider_size
+
+        range = self.maxValue() - self.minValue()
+        value_change = (event.deltaY() / size) * range
+        self.setFloatValue_(self.floatValue() + value_change)
+        wrapper.emit('pressed')
+        wrapper.emit('changed', self.floatValue())
+        wrapper.emit('released')
 
     def isVertical(self):
         return not wrappermap.wrapper(self).is_horizontal()
@@ -336,6 +400,9 @@ class CustomSlider(CustomControlBase):
             self.view.setContinuous_(NO)
         self.view.setEnabled_(True)
 
+    def get_slider_pos(self, value=None):
+        return self.view.get_slider_pos(value)
+
     def viewport_created(self):
         self.view.cell().setKnobThickness_(self.slider_size())
 
@@ -352,7 +419,12 @@ class CustomSlider(CustomControlBase):
         self.view.setMinValue_(min_value)
         self.view.setMaxValue_(max_value)
 
-    def set_increments(self, increment, big_increment):
+    def set_increments(self, small_step, big_step, scroll_step=None):
+        # NOTE: we ignore all of these parameters.
+        #
+        # Cocoa doesn't have a concept of changing the increments for
+        # NSScroller.  scroll_step is isn't really compatible with
+        # the event object that's passed to scrollWheel_()
         pass
 
     def enable(self):
