@@ -1416,14 +1416,20 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self._position_set = False
 
     def remove_viewport(self):
-        if self.viewport is not None:
-            self._remove_views()
-            wrappermap.remove(self.tableview)
-            self.notifications.disconnect()
-            self.viewport = None
+        # Make sure we unwind things one by one here!
+        # First, disconnect the NSNotification signals.  This ensures we
+        # won't receive any more events via notifications.
+        # Now, remove the wrapper object.  This ensure that even if the
+        # selection changes it won't use any stale object (retile/reposition,
+        # etc).
+        self.notifications.disconnect()
         if self.clipview_notifications:
             self.clipview_notifications.disconnect()
             self.clipview_notifications = None
+        if self.viewport is not None:
+            wrappermap.remove(self.tableview)
+            self._remove_views()
+            self.viewport = None
 
     def _should_place_header_view(self):
         return self._show_headers and not self.parent_is_scroller
