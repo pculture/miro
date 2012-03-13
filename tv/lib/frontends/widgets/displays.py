@@ -215,7 +215,7 @@ class DisplayManager(object):
                 return
         for klass in self.on_demand_display_classes:
             if klass.should_display(tab_type, selected_tabs):
-                self.change_non_video_displays(klass(tab_type, selected_tabs))
+                self.change_non_video_displays(klass, tab_type, selected_tabs)
                 return
         raise AssertionError(
             "Can't find display for %s %s" % (tab_type, selected_tabs))
@@ -225,7 +225,7 @@ class DisplayManager(object):
         self.deselect_all_displays()
         self.push_display(display)
 
-    def change_non_video_displays(self, display):
+    def change_non_video_displays(self, *args):
         # If the dc exists, cancel it.  If the cancel failed because lost
         # the race to cancel it, then the display will load and some
         # some redundant code will be scheduled onto the main thread, but
@@ -238,9 +238,9 @@ class DisplayManager(object):
             self.change_non_video_displays_dc = None
         self.change_non_video_displays_dc = timer.add(0.1,
           lambda: call_on_ui_thread(
-          lambda: self.do_change_non_video_displays(display)))
+          lambda: self.do_change_non_video_displays(args)))
 
-    def do_change_non_video_displays(self, display):
+    def do_change_non_video_displays(self, args):
         """Like select_display(), but don't replace the VideoDisplay
 
         Mostly this will work like select_display().  However, if there is a
@@ -258,6 +258,11 @@ class DisplayManager(object):
         e.g. during a continued keypress event as part of navigation.
         """
 
+        if len(args) == 1:
+            display = args[0]
+        else:
+            klass, tab_type, selected_tabs = args
+            display = klass(tab_type, selected_tabs)
         if (len(self.display_stack) == 0 or
                 not isinstance(self.display_stack[-1], VideoDisplay)):
             # no video displays are on the stack, just call select_display
