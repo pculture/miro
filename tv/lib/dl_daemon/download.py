@@ -710,7 +710,14 @@ class BGDownloader(object):
                 size = 0
             preserved = (app.config.get(prefs.PRESERVE_X_GB_FREE) *
                          1024 * 1024 * 1024)
-            available = get_available_bytes_for_movies() - preserved
+            # below code gets the additional space we expect to be taken by
+            # in-progress downloads.  totalSize == -1 when the download doesn't
+            # know how big it is.
+            additional_space =  sum(dl.totalSize - dl.currentSize
+                                    for dl in _downloads.values()
+                                    if dl.totalSize != -1)
+            available = (get_available_bytes_for_movies() - preserved -
+                         additional_space)
             accept = (size <= available)
         return accept
 
