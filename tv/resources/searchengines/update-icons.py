@@ -94,13 +94,15 @@ def load_icon(file, index=None):
 
 def get_favicon_url(url):
     parsed_url = urlparse.urlparse(url)
-    data = urllib2.urlopen('%s://%s/' % (
+    root = '%s://%s/' % (
             parsed_url.scheme,
-            parsed_url.netloc)).read()
+            parsed_url.netloc)
+    data = urllib2.urlopen(root).read()
     bs = BeautifulSoup.BeautifulSoup(data)
-    icons = bs.findAll('link', {'rel': 'icon'})
+    icons = [i for i in bs.findAll('link') if 'icon' in i['rel'].lower() and
+             'apple-' not in i['rel'].lower()]
     if icons:
-        return icons[0]['href']
+        return urlparse.urljoin(root, icons[0]['href'])
     parsed_url = urlparse.urlparse(url)
     return '%s://%s/favicon.ico' % (
         parsed_url.scheme,
