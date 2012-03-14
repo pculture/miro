@@ -12,6 +12,7 @@ from xml.dom.minidom import parse
 import urllib2
 import urlparse
 
+import BeautifulSoup
 from PIL import BmpImagePlugin, PngImagePlugin, Image
 
 THIS_DIRECTORY = os.path.dirname(__file__) or '.'
@@ -91,8 +92,20 @@ def load_icon(file, index=None):
 
     return image
 
+def get_favicon_url(url):
+    parsed_url = urlparse.urlparse(url)
+    data = urllib2.urlopen('%s://%s/' % (
+            parsed_url.scheme,
+            parsed_url.netloc)).read()
+    bs = BeautifulSoup.BeautifulSoup(data)
+    icons = bs.findAll('link', {'rel': 'icon'})
+    if icons:
+        return icons[0]['href']
+    parsed_url = urlparse.urlparse(url)
+    return '%s://%s/favicon.ico' % (
+        parsed_url.scheme,
+        parsed_url.netloc)
 # roughly copied from tv/lib/searchengines.py
-
 engines = {}
 
 for f in os.listdir(THIS_DIRECTORY):
@@ -115,10 +128,8 @@ for f in os.listdir(THIS_DIRECTORY):
             # fix for YouTube URLs
             url = url.replace('gdata.youtube.com', 'www.youtube.com')
         out_file = ICON_TEMPLATE % id_
-        parsed_url = urlparse.urlparse(url)
-        favicon_url = '%s://%s/favicon.ico' % (
-            parsed_url.scheme,
-            parsed_url.netloc)
+        favicon_url = get_favicon_url(url)
+        print 'getting', favicon_url
         try:
             data = StringIO(urllib2.urlopen(favicon_url).read())
         except urllib2.HTTPError:
