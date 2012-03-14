@@ -226,8 +226,8 @@ class ItemInfoCache(signals.SignalEmitter):
             # Let's not kick up the crash report - there are some cases
             # where an abnormal shutdown does not save the database (e.g.
             # hard crash or loss of power)
-            signals.system.failed("getting item info",
-                    "KeyError: %d" % id_, with_exception=True)
+            logging.info('iteminfocache.getinfo(): %s not found; recreating.',
+                         id_)
             item = models.Item.get_by_id(id_)
             info = itemsource.DatabaseItemSource._item_info_for(item)
             self.id_to_info[id_] = info
