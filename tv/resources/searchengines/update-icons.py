@@ -137,7 +137,7 @@ for f in os.listdir(THIS_DIRECTORY):
         except urllib2.HTTPError:
             print 'invalid URL', favicon_url
             continue
-        image = load_icon(data)
+        image = load_icon(data, 0)
         image = image.resize((16, 16))
         image.save(out_file, optimize=True)
         print 'wrote', out_file
