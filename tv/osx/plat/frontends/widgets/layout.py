@@ -645,11 +645,11 @@ class MiroScrollView(NSScrollView):
         NSScrollView.tile(self)
         # tile is called when we need to layout our child view and scrollers.
         # This probably means that we've either hidden or shown a scrollbar so
-        # call viewport_repositioned to ensure that things get re-layed out
+        # call invalidate_size_request to ensure that things get re-layed out
         # correctly.  (#see 13842)
         wrapper = wrappermap.wrapper(self)
         if wrapper is not None:
-            wrapper.viewport_repositioned()
+            wrapper.invalidate_size_request()
 
 class Scroller(Bin):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
@@ -674,12 +674,12 @@ class Scroller(Bin):
 
     def viewport_repositioned(self):
         # If the window is resized, this translates to a
-        # viewport_repositioned() event.  So, do whatever super requires of
-        # us, then place the chilren to work out if we need a scrollbar, then
-        # get the new size, then replace the children (which now takes into
-        # account of scrollbar size.)
+        # viewport_repositioned() event.  Instead of calling
+        # place_children() one, which is what our suporclass does, we need
+        # some extra logic here.  place the chilren to work out if we need a
+        # scrollbar, then get the new size, then replace the children (which
+        # now takes into account of scrollbar size.)
         super(Scroller, self).viewport_repositioned()
-        self.place_children()
         self.cached_size_request = self.calc_size_request()
         self.place_children()
 
