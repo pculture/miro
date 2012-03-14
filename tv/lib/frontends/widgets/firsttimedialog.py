@@ -115,6 +115,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
         self._done_firsttime_callback = done_firsttime_callback
 
         self.mp_name, self.mp_path = get_plat_media_player_name_path()
+        logging.debug("firsttimedialog: got media player name/path: %r %r",
+                      self.mp_name, self.mp_path)
 
         self._page_box = widgetset.VBox()
         self._pages = self.build_pages()
@@ -141,7 +143,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
     def on_close(self, widget=None):
         if self.import_media_player_stuff:
-            logging.debug("firsttimedialog: adding mp_path")
+            logging.debug("firsttimedialog: adding mp_path (%r)",
+                          self.mp_path)
             app.watched_folder_manager.add(self.mp_path)
         if self.gathered_media_files:
             logging.debug("firsttimedialog: adding %d files",
