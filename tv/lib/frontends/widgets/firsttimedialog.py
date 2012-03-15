@@ -38,6 +38,7 @@ from miro import messages
 from miro.fileobject import FilenameType
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import threads
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets import dialogs
@@ -85,6 +86,8 @@ def _build_checkbox_and_label(checkbox, label_text):
     vbox = widgetset.VBox(spacing=0)
     vbox.pack_start(widgetutil.align_left(checkbox))
     vbox.pack_start(widgetutil.align_left(label))
+    label.set_size(widgetconst.SIZE_SMALL)
+    checkbox.set_size(widgetconst.SIZE_NORMAL)
     return vbox
 
 class FirstTimeDialog(widgetset.DialogWindow):
@@ -210,8 +213,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
             # import time, so if someone changes the language, then
             # the translations have already happened.  we reload the
             # module to force them to happen again.  bug 17515
-            if "miro.frontends.widgets.widgetconst" in sys.modules:
-                reload(sys.modules["miro.frontends.widgets.widgetconst"])
+            reload(widgetconst)
             self.this_page(rebuild=True)
 
         lang_option_menu = widgetset.OptionMenu([op[1] for op in lang_options])
