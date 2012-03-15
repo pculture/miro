@@ -1283,14 +1283,21 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.header_height = HEADER_HEIGHT
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
-        self.model.connect_weak('row-changed', self.on_row_change)
-        self.model.connect_weak('structure-will-change',
-                self.on_model_structure_change)
+        self.model_signal_ids = [
+            self.model.connect_weak('row-changed', self.on_row_change),
+            self.model.connect_weak('structure-will-change',
+                    self.on_model_structure_change),
+        ]
         self.iters_to_update = []
         self.height_changed = self.reload_needed = False
         self._resizing = False
         if custom_headers:
             self._enable_custom_headers()
+
+    def unset_model(self):
+        for signal_id in self.model_signal_ids:
+            self.model.disconnect(signal_id)
+        self.model = None
 
     def _check_selection(self):
         """
