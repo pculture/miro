@@ -535,7 +535,7 @@ class FirstTimeDialog(widgetset.DialogWindow):
         return vbox
 
     def build_music_page(self):
-        vbox = MusicSetupVBox(self.mp_name)
+        vbox = MusicSetupVBox(self.mp_name, _('Music Setup'))
         if vbox.import_cbx:
             def on_import_toggled(cbx):
                 self.import_media_player_stuff = cbx.get_checked()
@@ -567,11 +567,10 @@ class MusicSetupVBox(widgetset.VBox):
     This class handles changing the NET_LOOKUP_BY_DEFAULT pref, but the class
     using it must handle responding import_cbx being checked.
     """
-    def __init__(self, mp_name, pack_title=True):
+    def __init__(self, mp_name, title):
         widgetset.VBox.__init__(self, spacing=5)
 
-        if pack_title:
-            self.pack_start(_build_title(_("Music Setup")))
+        self.pack_start(_build_title(title))
         if mp_name is not None:
             self.import_cbx = widgetset.Checkbox(
                 _("Show my %(player)s music in my %(appname)s library.",
@@ -583,11 +582,13 @@ class MusicSetupVBox(widgetset.VBox):
         else:
             self.import_cbx = None
 
-        self.net_lookup_cbx = widgetset.Checkbox(_('Use online lookup'))
+        self.net_lookup_cbx = widgetset.Checkbox(
+            _('Cleanup Song Info and Album Art'))
+
         self.pack_start(_build_checkbox_and_label(
             self.net_lookup_cbx, _('Miro will use Echonest and 7Digital '
                                    'to cleanup all song titles, info, and '
-                                   'album art.  Highly recommended.')))
+                                   'album art.  Recommended.')))
         prefpanel.attach_boolean(self.net_lookup_cbx,
                                  prefs.NET_LOOKUP_BY_DEFAULT)
 
@@ -619,7 +620,7 @@ class MusicSetupDialog(dialogs.MainDialog):
         self.mp_name, self.mp_path = get_plat_media_player_name_path()
         if self.already_added_media_player_path():
             self.mp_name = self.mp_path = None
-        self.vbox = MusicSetupVBox(self.mp_name, pack_title=False)
+        self.vbox = MusicSetupVBox(self.mp_name, _('First Time Music Setup'))
         self.set_extra_widget(self.vbox)
         self.add_button(_("Get Started"))
 
