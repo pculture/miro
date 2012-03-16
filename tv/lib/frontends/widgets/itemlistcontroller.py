@@ -986,6 +986,8 @@ class ItemListController(object):
         self.cancel_track_item_lists()
         self.cancel_track_playback()
         self.cancel_track_config_changes()
+        for item_view in self.all_item_views():
+            item_view.unset_model()
 
     def track_item_lists(self):
         if self._item_tracker_callbacks:
