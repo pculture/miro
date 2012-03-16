@@ -56,6 +56,22 @@ _SYSTEM_LANGUAGE = os.environ.get("LANGUAGE", "")
 WIDTH = 475
 HEIGHT = 375
 
+def get_media_player_name_path(where):
+    """Get the media player name and path from the platform.
+
+    This method wraps the platform version with a bit of error checking and
+    logging.
+
+    :param where: what piece of code calling this?
+    """
+    mp_name, mp_path = get_plat_media_player_name_path()
+    logging.debug("%s: got media player name/path: %r %r",
+                  where, mp_name, mp_path)
+    if mp_path is None or mp_name is None:
+        # If either path or name is not given, make sure that neither are
+        # set.  See #18865.
+        return None, None
+    return mp_name, mp_path
 
 def _build_title(text):
     """Builds and returns a title widget for the panes in the
@@ -114,7 +130,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
         self._done_firsttime_callback = done_firsttime_callback
 
-        self.mp_name, self.mp_path = get_plat_media_player_name_path()
+        mp_info = get_media_player_name_path('firsttimedialog')
+        self.mp_name, self.mp_path = mp_info
 
         self._page_box = widgetset.VBox()
         self._pages = self.build_pages()
@@ -141,7 +158,8 @@ class FirstTimeDialog(widgetset.DialogWindow):
 
     def on_close(self, widget=None):
         if self.import_media_player_stuff:
-            logging.debug("firsttimedialog: adding mp_path")
+            logging.debug("firsttimedialog: adding mp_path (%r)",
+                          self.mp_path)
             app.watched_folder_manager.add(self.mp_path)
         if self.gathered_media_files:
             logging.debug("firsttimedialog: adding %d files",
@@ -616,7 +634,8 @@ class MusicSetupDialog(dialogs.MainDialog):
     """
     def __init__(self):
         dialogs.MainDialog.__init__(self, _("Music Setup"))
-        self.mp_name, self.mp_path = get_plat_media_player_name_path()
+        mp_info = get_media_player_name_path('musicsetupdialog')
+        self.mp_name, self.mp_path = mp_info
         if self.already_added_media_player_path():
             self.mp_name = self.mp_path = None
         self.vbox = MusicSetupVBox(self.mp_name, pack_title=False)
