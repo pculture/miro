@@ -534,7 +534,7 @@ class MenuBar(MenuShell):
         elif name == "PresentHalfSize":
             NSApp().delegate().present_movie('half-size')
         elif name == "ShowMain":
-            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(sender)
+            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(self)
 
     def _connect_to_signals(self):
         app.playback_manager.connect("will-play", self._on_playback_change)
