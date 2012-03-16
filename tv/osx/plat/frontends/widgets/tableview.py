@@ -1298,6 +1298,8 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         for signal_id in self.model_signal_ids:
             self.model.disconnect(signal_id)
         self.model = None
+        self.tableview.setDataSource_(None)
+        self.data_source = None
 
     def _check_selection(self):
         """
