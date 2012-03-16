@@ -1157,6 +1157,16 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         if custom_headers:
             self._enable_custom_headers()
 
+    # FIXME: should implement set_model() and make None a special case.
+    def unset_model(self):
+        """Disconnect our model from this table view.
+
+        This should be called when you want to destroy a TableView and
+        there's a new TableView sharing its model.
+        """
+        self._widget.set_model(None)
+        self.model = None
+
     def _connect_signals(self):
         self.create_signal('row-expanded')
         self.create_signal('row-collapsed')
