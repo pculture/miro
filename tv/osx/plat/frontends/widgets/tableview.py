@@ -1290,6 +1290,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         ]
         self.iters_to_update = []
         self.height_changed = self.reload_needed = False
+        self.old_selection = None
         self._resizing = False
         if custom_headers:
             self._enable_custom_headers()
@@ -1300,19 +1301,6 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.model = None
         self.tableview.setDataSource_(None)
         self.data_source = None
-
-    def _check_selection(self):
-        """
-        Used by `start_bulk_change` and `on_model_structure_change` to see if
-        the selection has changed.  When the structure changes in big ways,
-        OS X doesn't always notify us.
-        """
-        try:
-            self.get_selection()
-        except errors.WidgetActionError:
-            # no more selection means we've removed the selected item
-            # (see #17823)
-            self.on_selection_changed(self.tableview)
 
     def _enable_custom_headers(self):
         self.custom_header = True
@@ -1340,9 +1328,13 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
             self.tableview.hotspot_tracker.update_hit()
 
     def on_model_structure_change(self, model):
-        self.reload_needed = True
-        self._check_selection()
+        self.will_need_reload()
         self.cancel_hotspot_track()
+
+    def will_need_reload(self):
+        if not self.reload_needed:
+            self.reload_needed = True
+            self.old_selection = [i.value() for i in self.get_selection()]
 
     def cancel_hotspot_track(self):
         if self.tableview.hotspot_tracker is not None:
@@ -1490,8 +1482,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         # stop our model from emitting signals, which is slow if we're
         # adding/removing/changing a bunch of rows.  Instead, just reload the
         # model afterwards.
-        self.reload_needed = True
-        self._check_selection()
+        self.will_need_reload()
         self.cancel_hotspot_track()
         self.model.freeze_signals()
 
@@ -1502,6 +1493,10 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         size_changed = False
         if self.reload_needed:
             self.tableview.reloadData()
+            new_selection = [i.value() for i in self.get_selection()]
+            if new_selection != self.old_selection:
+                self.on_selection_changed(self.tableview)
+            self.old_selection = None
             size_changed = True
         elif self.iters_to_update:
             if self.fixed_height or not self.height_changed:
