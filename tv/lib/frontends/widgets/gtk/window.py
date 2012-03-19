@@ -402,7 +402,10 @@ class Dialog(DialogBase):
         return packing_vbox
 
     def add_button(self, text):
-        self.buttons_to_add.append(_stock.get(text, text))
+        if text in _stock:
+            # store both the text and the stock ID
+            text = _stock[text], text
+        self.buttons_to_add.append(text)
 
     def pack_buttons(self):
         # There's a couple tricky things here:
@@ -413,7 +416,12 @@ class Dialog(DialogBase):
         # response_ids for the user.
         response_id = len(self.buttons_to_add)
         for text in reversed(self.buttons_to_add):
-            self._window.add_button(text, response_id)
+            label = None
+            if isinstance(text, tuple): # stock ID, text
+                text, label = text
+            button = self._window.add_button(text, response_id)
+            if label is not None:
+                button.set_label(label)
             response_id -= 1
         self.buttons_to_add = []
         self._window.set_default_response(1)
