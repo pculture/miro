@@ -372,7 +372,7 @@ class MutagenTest(WorkerProcessTest):
         self.runEventLoop(4.0)
         self.check_successful_result()
         self.assertEquals(self.result['file_type'], file_type)
-        self.assertEquals(self.result['duration'], duration)
+        self.assertClose(self.result['duration'], duration)
         self.assertEquals(self.result['title'], title)
         if has_cover_art:
             self.assertNotEquals(self.result['cover_art'], None)
