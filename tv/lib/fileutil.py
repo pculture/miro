@@ -244,7 +244,8 @@ def delete(path, retry_after=10, retry_for=60, firsttime=True):
                 logging.debug('restarting subprocess_manager to hopefully '
                               'free file references')
                 from miro.workerprocess import _subprocess_manager
-                _subprocess_manager.restart(clean=True)
+                if _subprocess_manager.is_running:
+                    _subprocess_manager.restart(clean=True)
 
     else:
         deletes_in_progress.discard(path)
