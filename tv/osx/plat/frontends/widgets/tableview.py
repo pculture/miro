@@ -1100,6 +1100,9 @@ class CocoaSelectionOwnerMixin(SelectionOwnerMixin):
             return None
         return self.model.iter_for_row(self.tableview, row)
 
+    def _get_selected_rows(self):
+        return [self.model[i] for i in self._get_selected_iters()]
+
     @property
     def num_rows_selected(self):
         return self.tableview.numberOfSelectedRows()
@@ -1334,7 +1337,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
     def will_need_reload(self):
         if not self.reload_needed:
             self.reload_needed = True
-            self.old_selection = [i.value() for i in self.get_selection()]
+            self.old_selection = self._get_selected_rows()
 
     def cancel_hotspot_track(self):
         if self.tableview.hotspot_tracker is not None:
@@ -1493,7 +1496,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         size_changed = False
         if self.reload_needed:
             self.tableview.reloadData()
-            new_selection = [i.value() for i in self.get_selection()]
+            new_selection = self._get_selected_rows()
             if new_selection != self.old_selection:
                 self.on_selection_changed(self.tableview)
             self.old_selection = None
