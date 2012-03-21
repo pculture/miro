@@ -135,7 +135,7 @@ class ProgressTrackingListMixin(object):
             meter.update(self.mediatype, finished, finished_local, eta, total)
             self.postponed = None
         else: # got progress before widget created
-            self.postponed = (remaining, eta, total)
+            self.postponed = (finished, finished_local, eta, total)
 
     def _init_widget(self):
         """Hook that handles any updates that were waiting for the widget."""
