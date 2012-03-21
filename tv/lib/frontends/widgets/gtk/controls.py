@@ -150,19 +150,28 @@ class MultilineTextEntry(Widget):
 class Checkbox(Widget, BinBaselineCalculator):
     """Widget that the user can toggle on or off."""
 
-    def __init__(self, label=None, bold=False):
+    def __init__(self, text=None, bold=False):
         Widget.__init__(self)
         BinBaselineCalculator.__init__(self)
-        self.set_widget(gtk.CheckButton(label))
+        if text is None:
+            text = ''
+        self.set_widget(gtk.CheckButton())
+        self.label = Label(text)
+        self._widget.add(self.label._widget)
+        self.label._widget.show()
         self.create_signal('toggled')
         self.forward_signal('toggled')
-        # GTK doesn't support bold checkboxes, at least not natively
+        if bold:
+            self.label.set_bold(True)
 
     def get_checked(self):
         return self._widget.get_active()
 
     def set_checked(self, value):
         self._widget.set_active(value)
+
+    def set_size(self, scale_factor):
+        self.label.set_size(scale_factor)
 
     def get_text_padding(self):
         """
