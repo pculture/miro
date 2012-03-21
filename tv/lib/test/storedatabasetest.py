@@ -717,12 +717,7 @@ class PreallocateTest(MiroTestCase):
         disk_size = os.stat(path).st_size
         # allow some variance for the disk size, we just need to be in the
         # ballpark
-        if disk_size > preallocate_size * 1.1:
-            raise AssertionError("database size too large: %s (should be %s)"
-                                 % (disk_size, preallocate_size))
-        if disk_size < preallocate_size * 0.9:
-            raise AssertionError("database size too small: %s (should be %s)"
-                                 % (disk_size, preallocate_size))
+        self.assertClose(disk_size, preallocate_size)
 
     def test_preallocate(self):
         # test preallocating space

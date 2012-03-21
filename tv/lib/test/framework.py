@@ -525,6 +525,20 @@ class MiroTestCase(unittest.TestCase):
                 raise AssertionError("Values differ for key %r: %r -- %r" %
                         (k, dict1[k], dict2[k]))
 
+    def assertClose(self, value1, value2, tolerance=0.1):
+        """Assert that 2 values are near each other.
+
+        :param value1: value to compare
+        :param value2: value to compare
+        :param tolerance: how different the two can be
+        """
+
+        difference = abs(value1 - value2)
+        relative_difference = difference / max(abs(value1), abs(value2))
+        if relative_difference > tolerance:
+            raise AssertionError("Difference too big: %s, %s" % (value1,
+                                                                 value2))
+
 class EventLoopTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
