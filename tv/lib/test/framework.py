@@ -533,8 +533,9 @@ class MiroTestCase(unittest.TestCase):
         :param tolerance: how different the two can be
         """
 
-        difference = float(max(value1, value2)) / float(min(value1, value2))
-        if difference > 1.0 + tolerance:
+        difference = abs(value1 - value2)
+        relative_difference = difference / max(abs(value1), abs(value2))
+        if relative_difference > tolerance:
             raise AssertionError("Difference too big: %s, %s" % (value1,
                                                                  value2))
 
