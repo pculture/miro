@@ -47,7 +47,7 @@ class FontCache(util.Cache):
         key = (context, description, scale_factor, bold, italic)
         return util.Cache.get(self, key)
 
-    def create_new_value(self, key):
+    def create_new_value(self, key, invalidator=None):
         (context, description, scale_factor, bold, italic) = key
         return Font(context, description, scale_factor, bold, italic)
 
