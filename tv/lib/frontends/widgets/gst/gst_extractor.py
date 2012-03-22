@@ -41,8 +41,6 @@ pygst.require('0.10')
 import gst
 import gst.interfaces
 
-from miro.frontends.widgets.gst import gstutil
-
 def scaled_size(from_size, to_size):
     """Takes an image which has a width and a height and a size tuple
     that specifies the space available and returns the new width
@@ -94,7 +92,8 @@ class Extractor:
         self.bus.add_signal_watch()
         self.watch_id = self.bus.connect("message", self.on_bus_message)
 
-        fileurl = urllib.pathname2url(filename)
+        fileurl = urllib.pathname2url(os.path.abspath(filename))
+        logging.warn("FILE URL: %r", 'file:' + fileurl)
         self.pipeline.set_property("uri", "file:%s" % fileurl)
         self.pipeline.set_state(gst.STATE_PAUSED)
 
@@ -219,11 +218,12 @@ class Extractor:
         self.grabit = True
         self.buffer_probes = {}
 
-        fileurl = gstutil._get_file_url(self.filename)
         self.thumbnail_pipeline = gst.parse_launch(
-            'filesrc location="%s" ! decodebin ! '
+            'filesrc name="filesrc" ! decodebin ! '
             'ffmpegcolorspace ! video/x-raw-rgb,depth=24,bpp=24 ! '
-            'fakesink signal-handoffs=True' % fileurl)
+            'fakesink signal-handoffs=True')
+        filesrc = self.thumbnail_pipeline.get_by_name('filesrc')
+        filesrc.set_property("location", self.filename)
 
         self.thumbnail_bus = self.thumbnail_pipeline.get_bus()
         self.thumbnail_bus.add_signal_watch()
