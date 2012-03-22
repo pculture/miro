@@ -55,9 +55,9 @@ class SearchManager(signals.SignalEmitter):
 
     def set_search_info(self, engine, text):
         if not searchengines.get_engine_for_name(engine):
-            logging.warn('Manager asked to set engine to non-existent %s',
+            logging.info('Manager asked to set engine to non-existent %s.  '
+                         'Probably engine has been removed.',
                          engine)
-            self.perform_search(searchengines.get_last_engine().name, '')
             return
         self.engine = engine
         self.text = text
