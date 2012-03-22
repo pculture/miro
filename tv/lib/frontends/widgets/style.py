@@ -972,6 +972,12 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         if not self.sanity_check_before_render(context):
             return
 
+        # draw our background color behind everything.  We need this in case
+        # there's transparency in our album art
+        context.set_color(self.BACKGROUND_COLOR)
+        context.rectangle(0, 0, context.width, context.height)
+        context.fill()
+
         self.calc_album_art_size(context)
         self.render_album_art(context)
         self.render_track_number(context, layout_manager)
@@ -1003,12 +1009,6 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         self.album_art_size -= (self.IMAGE_MARGIN_TOP +
                 self.IMAGE_MARGIN_BOTTOM)
 
-    def clear_cell(self, context):
-        """Draw our background color over the cell to clear it."""
-        context.set_color(self.BACKGROUND_COLOR)
-        context.rectangle(0, 0, context.width, context.height)
-        context.fill()
-
     def make_album_art(self, context):
         """Make an image to draw as album art.
 
@@ -1029,9 +1029,6 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         if (album_art is not None and
                 self.cell_contains_album_art(context, album_art)):
             self.render_album_art_slice(context, album_art)
-        else:
-            # we aren't drawing album art, just clear the cell
-            self.clear_cell(context)
 
     def cell_contains_album_art(self, context, album_art):
         """Does this cell contain a portion of the album art?
@@ -1046,13 +1043,9 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         """Render the slice of the album art for this cell."""
 
         if context.width < image.width:
-            self.clear_cell(context)
             # not enough width to draw
             return
 
-        # setup our background color as the fill color in case we need to fill
-        # in whitespace.
-        context.set_color(self.BACKGROUND_COLOR)
         # setup variables to track where we are copying from and to
 
         dest_x = self.IMAGE_MARGIN_LEFT
@@ -1071,29 +1064,16 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
             src_y = 0
             # descrease height
             height -= dest_y
-            # fill top with whitespace
-            context.rectangle(dest_x, 0, image.width, dest_y)
-            context.fill()
         src_y_bottom = src_y + height
         if src_y_bottom > image.height:
             # The cell is contains the bottom padding for our image.
             # decrease height
             extra_space = src_y_bottom - image.height
             height -= extra_space
-            # fill bottom with whitespace
-            context.rectangle(dest_x, height, image.width, extra_space)
-            context.fill()
         # draw our image slice
         if height > 0:
             image.draw_rect(context, dest_x, dest_y, src_x, src_y,
                     width, height)
-        # draw whitespace on the right/left of the image
-        context.rectangle(0, 0, dest_x, context.height)
-        context.fill()
-        image_right = dest_x + image.width
-        context.rectangle(image_right, 0, context.width-image_right,
-                context.height)
-        context.fill()
 
     def render_album_or_artist(self, context, layout_manager):
         x = (self.album_art_size + self.IMAGE_MARGIN_LEFT +
