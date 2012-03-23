@@ -626,7 +626,7 @@ class _EchonestProcessor(_MetadataProcessor):
         self._codegen_finished()
 
     def _codegen_errback(self, path, error):
-        logging.warn("Error running echonest codegen for %s (%s)" %
+        logging.warn("Error running echonest codegen for %r (%s)" %
                      (path, error))
         self.emit('task-error', path, error)
         del self._metadata_for_path[path]
