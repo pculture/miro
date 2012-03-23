@@ -1388,7 +1388,13 @@ def make_metadata_manager(mount, sqlite_db, device_id):
     return manager
 
 def on_new_metadata(metadata_manager, new_metadata, device_id):
-    device = app.device_manager.connected[device_id]
+    try:
+        device = app.device_manager.connected[device_id]
+    except KeyError:
+        # bz18893: don't crash if the device isn't around any more.
+        logging.warn("devices.py - on_new_metadata: KeyError getting %r",
+                     device_id)
+        return
 
     device.database.set_bulk_mode(True)
     try:
