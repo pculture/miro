@@ -462,8 +462,6 @@ class WorkerSubprocessManager(subprocessmanager.SubprocessManager):
 
     def check_subprocess_hung(self):
         task_status = self.responder.movie_data_task_status
-        logging.warn("check_subprocess_hung: %s (time: %s)", task_status,
-                clock.clock())
 
         if (task_status is not None and
                 clock.clock() - task_status.start_time > 90):
