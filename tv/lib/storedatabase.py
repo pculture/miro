@@ -46,7 +46,6 @@ The hope is that it will be human readable.  We use the type
 ``pythonrepr`` to label these columns.
 """
 
-import collections
 import glob
 import shutil
 import cPickle
@@ -166,7 +165,7 @@ class DatabaseObjectCache(object):
 
         :param category: category to clear
         """
-        for key in objects.keys():
+        for key in self._objects.keys():
             if key[0] == category:
                 del self._objects[key]
 
@@ -200,7 +199,7 @@ class LiveStorageErrorHandler(object):
         - ACTION_USE_TEMPORARY -- Use an in-memory database for now and try to
         save the database to disk every so often.
         """
-        return ACTION_RERAISE
+        return self.ACTION_RERAISE
 
     def handle_upgrade_error(self):
         """Handle an error upgrading the database.
@@ -1089,14 +1088,12 @@ class LiveStorage:
         if values is None:
             values = ()
 
-        failed = False
         if is_update:
             self._statements_in_transaction.append((sql, values, many))
         try:
             self._time_execute(sql, values, many)
         except sqlite3.OperationalError, e:
             self._log_error(sql, values, many)
-            failed = True
             if is_update:
                 self._current_select_statement = None
             else:

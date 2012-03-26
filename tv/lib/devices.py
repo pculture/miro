@@ -47,8 +47,6 @@ except ImportError:
         def __init__(self, *args, **kwargs):
             super(Counter, self).__init__(int, *args, **kwargs)
 
-import sqlite3
-
 from miro import app
 from miro import database
 from miro import devicedatabaseupgrade
