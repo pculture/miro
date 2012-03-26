@@ -222,7 +222,7 @@ class CustomScaleMixin(CustomControlMixin):
             self.set_value(self.start_value)
 
     def do_button_release_event(self, event):
-        if event.button != self.drag_info.button:
+        if self.drag_info is None or event.button != self.drag_info.button:
             return
         self.drag_info = None
         if (self.is_continuous and
