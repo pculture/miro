@@ -599,7 +599,7 @@ class _EchonestProcessor(_MetadataProcessor):
         if not self.should_skip_codegen(current_metadata):
             self._codegen_queue.add(path)
         else:
-            self._echonest_queue.add((path, None))
+            self._echonest_queue.add(path, None)
         self._process_queue()
 
     def should_skip_codegen(self, metadata):
