@@ -1013,7 +1013,6 @@ class MetadataManagerBase(signals.SignalEmitter):
         self.cover_art_dir = cover_art_dir
         self.screenshot_dir = screenshot_dir
         self.echonest_cover_art_dir = os.path.join(cover_art_dir, 'echonest')
-        self.check_image_directories(log_warnings=True)
         self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
         self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
         self.echonest_processor = _EchonestProcessor(
