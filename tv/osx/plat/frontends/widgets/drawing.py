@@ -53,21 +53,21 @@ class ImageSurface:
         current_context = NSGraphicsContext.currentContext()
         current_context.setShouldAntialias_(YES)
         current_context.setImageInterpolation_(NSImageInterpolationHigh)
-        dest_rect = NSRect((x, y), (width, height))
+        current_context.saveGraphicsState()
+        flip_context(y + height)
+        dest_rect = NSMakeRect(x, 0, width, height)
         if self.width >= width and self.height >= height:
             # drawing to area smaller than our image
-            dest_rect = NSMakeRect(x, y, width, height)
             source_rect = NSMakeRect(0, 0, width, height)
             self.image.drawInRect_fromRect_operation_fraction_(
                 dest_rect, source_rect, NSCompositeSourceOver, fraction)
         else:
             # drawing to area larger than our image.  Need to tile it.
-            current_context.saveGraphicsState()
             NSColor.colorWithPatternImage_(self.image).set()
             current_context.setPatternPhase_(
                     self._calc_pattern_phase(context, x, y))
             NSBezierPath.fillRect_(dest_rect)
-            current_context.restoreGraphicsState()
+        current_context.restoreGraphicsState()
 
     def draw_rect(self, context, dest_x, dest_y, source_x, source_y, width,
             height, fraction=1.0):
@@ -76,12 +76,15 @@ class ImageSurface:
         current_context = NSGraphicsContext.currentContext()
         current_context.setShouldAntialias_(YES)
         current_context.setImageInterpolation_(NSImageInterpolationHigh)
+        current_context.saveGraphicsState()
+        flip_context(dest_y + height)
+        dest_y = 0
         dest_rect = NSMakeRect(dest_x, dest_y, width, height)
-        # adjust source_y to work with cocoas coordinate system
-        source_rect = NSMakeRect(source_x, self.height-source_y-height, width,
-                height)
+        source_rect = NSMakeRect(source_x, self.height-source_y-height,
+                                 width, height)
         self.image.drawInRect_fromRect_operation_fraction_(
                 dest_rect, source_rect, NSCompositeSourceOver, fraction)
+        current_context.restoreGraphicsState()
 
     def _calc_pattern_phase(self, context, x, y):
         """Calculate the pattern phase to draw tiled images.
@@ -104,7 +107,18 @@ def convert_cocoa_color(color):
 def convert_widget_color(color, alpha=1.0):
     return NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], 
                                                         color[2], alpha)
-    
+def flip_context(height):
+    """Make the current context's coordinates flipped.
+
+    This is useful for drawing images, since they use the normal cocoa
+    coordinates and we use flipped versions.
+
+    :param height: height of the current area we are drawing to.
+    """
+    xform = NSAffineTransform.transform()
+    xform.translateXBy_yBy_(0, height)
+    xform.scaleXBy_yBy_(1.0, -1.0)
+    xform.concat()
 
 class DrawingStyle(object):
     """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""

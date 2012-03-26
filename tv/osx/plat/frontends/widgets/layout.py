@@ -564,6 +564,10 @@ class Table(Container):
                 size_array[p] += iter.next()
 
     def place_children(self):
+        # This method depepnds on us calling _calc_dimensions() in
+        # calc_size_request().  Ensure that this happens.
+        if self.cached_size_request is None:
+            self.get_size_request()
         column_positions = [0]
         for width in self.column_widths[:-1]:
             column_positions.append(width + column_positions[-1] + self.column_spacing)
