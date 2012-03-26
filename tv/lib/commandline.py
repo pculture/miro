@@ -77,12 +77,13 @@ def add_video(path, manual_feed=None):
         logging.debug("Not adding duplicate video: %s",
                       path.decode('ascii', 'ignore'))
         # get the first item and undelete it
-        item_for_path = list(item.Item.items_with_path_view(path))[0]
-        if item_for_path.deleted:
-            item_for_path.make_undeleted()
-        if _command_line_videos is not None:
-            _command_line_videos.add(item_for_path)
-        return False
+        item_for_path = _get_item_for_path(path)
+        if item_for_path is not None:
+            if item_for_path.deleted:
+                item_for_path.make_undeleted()
+            if _command_line_videos is not None:
+                _command_line_videos.add(item_for_path)
+            return False
     if manual_feed is None:
         manual_feed = feed.Feed.get_manual_feed()
     file_item = item.FileItem(
@@ -90,6 +91,17 @@ def add_video(path, manual_feed=None):
     if _command_line_videos is not None and file_item.id_exists():
         _command_line_videos.add(file_item)
     return True
+
+def _get_item_for_path(path):
+    """Get the first item that has a given path."""
+    try:
+        return list(item.Item.items_with_path_view(path))[0]
+    except IndexError:
+        msg = ( "have_item_for_path returned True, but "
+                "items_with_path_view returned no items."
+                "  path: %s" % (path,))
+        app.controller.failed_soft("commandline.add_video", msg)
+        return None
 
 @eventloop.idle_iterator
 def add_videos(paths):
