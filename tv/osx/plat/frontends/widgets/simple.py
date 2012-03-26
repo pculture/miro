@@ -56,7 +56,6 @@ class Image(object):
         if self.width * self.height == 0:
             raise ValueError('Image has invalid size: (%d, %d)' % (
                     self.width, self.height))
-        self.nsimage.setFlipped_(YES)
 
     def resize(self, width, height):
         return ResizedImage(self, width, height)
@@ -130,11 +129,14 @@ class NSImageDisplay(NSView):
     def drawRect_(self, dest_rect):
         if self.image is not None:
             source_rect = self.calculateSourceRectFromDestRect_(dest_rect)
-            NSGraphicsContext.currentContext().setShouldAntialias_(YES)
-            NSGraphicsContext.currentContext().setImageInterpolation_(
-                NSImageInterpolationHigh)
+            context = NSGraphicsContext.currentContext()
+            context.setShouldAntialias_(YES)
+            context.setImageInterpolation_(NSImageInterpolationHigh)
+            context.saveGraphicsState()
+            drawing.flip_context(self.bounds().size.height)
             self.image.nsimage.drawInRect_fromRect_operation_fraction_(
                 dest_rect, source_rect, NSCompositeSourceOver, 1.0)
+            context.restoreGraphicsState()
         if self.border:
             context = drawing.DrawingContext(self, self.bounds(), dest_rect)
             context.style = drawing.DrawingStyle()
