@@ -988,6 +988,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.update_from_metadata(metadata)
         Item._path_count_tracker.add_item(self)
 
+    def file_moved(self, new_filename):
+        app.local_metadata_manager.file_moved(self.filename, new_filename)
+        self.set_filename(new_filename)
+
     def update_from_metadata(self, metadata_dict):
         """Update our attributes from a metadata dictionary."""
         self._bulk_update_db_values(metadata_dict)
@@ -1193,6 +1197,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 for item in self.get_children():
                     item.make_deleted()
                     item.remove()
+            Item._path_count_tracker.remove_item(self)
             self.delete_files()
             self.expired = True
             self.seen = self.keep = self.pendingManualDL = False
@@ -1937,8 +1942,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.recalc_feed_counts()
 
     def on_downloader_migrated(self, old_filename, new_filename):
-        app.local_metadata_manager.file_moved(old_filename, new_filename)
-        self.set_filename(new_filename)
+        self.file_moved(new_filename)
         self.signal_change()
         if self.isContainerItem:
             self.migrate_children(self.get_filename())
@@ -2269,9 +2273,8 @@ class FileItem(Item):
         self.confirm_db_thread()
         if self.parent_id:
             parent = self.get_parent()
-            self.filename = os.path.join(parent.get_filename(),
-                                         self.offsetPath)
-            self.signal_change()
+            self.file_moved(os.path.join(parent.get_filename(),
+                                         self.offsetPath))
             return
         if self.shortFilename is None:
             logging.warn("""\
@@ -2300,12 +2303,10 @@ filename was %s""", stringify(self.filename))
                              'candidate %r', func, src, new_filename)
             else:
                 def callback():
-                    self.filename = new_filename
-                    self.signal_change()
+                    self.file_moved(new_filename)
                 fileutil.migrate_file(src, new_filename, callback)
         elif fileutil.exists(new_filename):
-            self.filename = new_filename
-            self.signal_change()
+            self.file_moved(new_filename)
         self.migrate_children(newdir)
 
     def setup_links(self):
