@@ -640,7 +640,7 @@ class DeviceSyncManager(object):
                             view.order_by,
                             view.joins,
                             view.limit,
-                            view.dbinfo)
+                            view.db_info)
                         if not new_view.count():
                             expired.add(info)
         if max_size is not None and infos:
