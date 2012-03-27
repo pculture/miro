@@ -30,6 +30,7 @@
 """``miro.tabs`` -- Holds the TabOrder DDBObject.
 """
 
+from miro import app
 from miro import database
 from miro import guide
 from miro import feed
@@ -80,7 +81,6 @@ class TabOrder(database.DDBObject):
     def _get_tab_views(self):
         if self.type == u'site':
             tab_views = (guide.ChannelGuide.site_view(),)
-#            tab_views = (guide.ChannelGuide.visible_view(),)
         elif self.type == u'channel':
             tab_views = (feed.Feed.visible_view(),
                          folder.ChannelFolder.make_view())
@@ -211,7 +211,12 @@ class TabOrder(database.DDBObject):
     def _on_remove_tab(self, tracker, obj):
         if obj.id in self.id_to_tab:
             del self.id_to_tab[obj.id]
-            self.tab_ids.remove(obj.id)
+            try:
+                self.tab_ids.remove(obj.id)
+            except ValueError:
+                app.controller.failed_soft('TabOrder._on_remove_tab',
+                                           'when removing %i from %r order' % (
+                        obj.id, self.type))
             self.signal_change()
 
     def reorder(self, newOrder):
