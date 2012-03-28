@@ -1080,27 +1080,54 @@ class DebuggingTimer:
     def log_total_time(self):
         logging.timing("total time: %0.3f", clock() - self.start_time)
 
+def mtime_invalidator(path):
+    """
+    Returns a function which returns True if the mtime of path is greater than
+    it was when this function was initially called.  Useful as an invalidator
+    for Cache.
+    """
+    path = os.path.abspath(path)
+    mtime = os.stat(path).st_mtime
+    def invalidator(key):
+        return os.stat(path).st_mtime > mtime
+    return invalidator
+
 class Cache(object):
     def __init__(self, size):
         self.size = size
         self.dict = {}
         self.counter = itertools.count()
         self.access_times = {}
+        self.invalidators = {}
 
-    def get(self, key):
+    def get(self, key, invalidator=None):
         if key in self.dict:
-            self.access_times[key] = self.counter.next()
-            return self.dict[key]
-        else:
-            value = self.create_new_value(key)
-            self.set(key, value)
-            return value
+            existing_invalidator = self.invalidators[key]
+            if (existing_invalidator is None or
+                not existing_invalidator(key)):
+                self.access_times[key] = self.counter.next()
+                return self.dict[key]
 
-    def set(self, key, value):
+        value = self.create_new_value(key, invalidator=invalidator)
+        self.set(key, value, invalidator=invalidator)
+        return value
+
+    def set(self, key, value, invalidator=None):
         if len(self.dict) == self.size:
             self.shrink_size()
         self.access_times[key] = self.counter.next()
         self.dict[key] = value
+        self.invalidators[key] = invalidator
+
+    def remove(self, key):
+        if key in self.dict:
+            del self.dict[key]
+            del self.access_times[key]
+        if key in self.invalidators:
+            del self.invalidators[key]
+
+    def keys(self):
+        return self.dict.iterkeys()
 
     def shrink_size(self):
         # shrink by LRU
@@ -1108,14 +1135,16 @@ class Cache(object):
         to_sort.sort(key=lambda m: m[1])
         new_dict = {}
         new_access_times = {}
+        new_invalidators = {}
         latest_times = to_sort[len(self.dict) // 2:]
         for (key, time) in latest_times:
             new_dict[key] = self.dict[key]
+            new_invalidators[key] = self.invalidators[key]
             new_access_times[key] = time
         self.dict = new_dict
         self.access_times = new_access_times
 
-    def create_new_value(self, val):
+    def create_new_value(self, val, invalidator=None):
         raise NotImplementedError()
 
 def all_subclasses(cls):
