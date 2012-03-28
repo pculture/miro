@@ -582,6 +582,13 @@ class _EchonestProcessor(_MetadataProcessor):
         _MetadataProcessor.__init__(self, u'echonest')
         self._code_buffer_size = code_buffer_size
         self._cover_art_dir = cover_art_dir
+        # We create 3 queues to handle items at various stages of the process.
+        # - _metadata_fetch_queue holds paths that we need to fetch the
+        #    metadata for.  It's the first queue that paths go to
+        # - _codegen_queue contains paths that we need to run the codegen
+        #   executable on
+        # - _echonest_queue contains paths that we need to query echonest for
+        self._metadata_fetch_queue = _EchonestQueue()
         self._codegen_queue = _EchonestQueue()
         self._echonest_queue = _EchonestQueue()
         self._running_codegen = False
@@ -595,17 +602,24 @@ class _EchonestProcessor(_MetadataProcessor):
         self._http_error_times = collections.deque()
         self._waiting_from_http_errors = False
 
-    def add_path(self, path, current_metadata):
+    def add_path(self, path, metadata_fetcher):
+        """Add a path to the system.
+
+        metadata_fetcher is used to get the metadata for that path to send to
+        echonest.  We use a callable object that returns the metadata instead
+        of a straight dict because we want to fetch things lazily.
+        metadata_fetcher should raise a KeyError if the path is not in the
+        metadata system when its called.
+
+        :param path: path to add
+        :param metadata_fetcher: callable that will return a metadata dict
+        """
         if path in self._paths_in_system:
             logging.warn("_EchonestProcessor.add_path: attempt to add "
                          "duplicate path: %r", path)
             return
         self._paths_in_system.add(path)
-        self._metadata_for_path[path] = current_metadata
-        if not self.should_skip_codegen(current_metadata):
-            self._codegen_queue.add(path)
-        else:
-            self._echonest_queue.add(path, None)
+        self._metadata_fetch_queue.add(path, metadata_fetcher)
         self._process_queue()
 
     def should_skip_codegen(self, metadata):
@@ -675,23 +689,18 @@ class _EchonestProcessor(_MetadataProcessor):
         self._process_queue()
 
     def _process_queue(self):
-        # process echonest queue
-        if (self._echonest_queue and not self._querying_echonest and
-           not self._waiting_from_http_errors):
-            if not self._should_pause_from_http_errors():
-                self._query_echonest(*self._echonest_queue.pop())
-            else:
-                # we've gotten too many HTTP errors recently and are backing
-                # off sending new requests.  Add a timeout and try again then
-                if not self._waiting_from_http_errors:
-                    name = 'restart echonest queue after http error'
-                    eventloop.add_timeout(self.PAUSE_AFTER_HTTP_ERROR_TIMEOUT,
-                                          self._restart_after_http_errors, name)
-                    self._waiting_from_http_errors = True
-
-        # process codegen queue
+        if self._should_process_metadata_fetch_queue():
+            self._process_metadata_fetch_queue()
+        if self._should_process_echonest_queue():
+            self._process_echonest_queue()
         if self._should_process_codegen_queue():
             self._run_codegen(self._codegen_queue.pop())
+
+    def _should_process_metadata_fetch_queue(self):
+        # Try not to fetch metadata more quickly than we need to.  Only do it
+        # if the other queues waiting for us
+        return (self._metadata_fetch_queue and
+                len(self._codegen_queue) + len(self._echonest_queue) < 10)
 
     def _should_process_codegen_queue(self):
         if not (self._codegen_queue and
@@ -703,6 +712,38 @@ class _EchonestProcessor(_MetadataProcessor):
             self._codegen_cooldown_caller.call_after_timeout(cooldown_left)
             return False
         return True
+
+    def _should_process_echonest_queue(self):
+        return (self._echonest_queue and not self._querying_echonest and
+                not self._waiting_from_http_errors)
+
+    def _process_echonest_queue(self):
+        if not self._should_pause_from_http_errors():
+            self._query_echonest(*self._echonest_queue.pop())
+        else:
+            # we've gotten too many HTTP errors recently and are backing
+            # off sending new requests.  Add a timeout and try again then
+            if not self._waiting_from_http_errors:
+                name = 'restart echonest queue after http error'
+                eventloop.add_timeout(self.PAUSE_AFTER_HTTP_ERROR_TIMEOUT,
+                                      self._restart_after_http_errors, name)
+                self._waiting_from_http_errors = True
+
+    def _process_metadata_fetch_queue(self):
+        while self._metadata_fetch_queue:
+            path, metadata_fetcher = self._metadata_fetch_queue.pop()
+            try:
+                metadata = metadata_fetcher()
+            except KeyError:
+                logging.warn("_process_metadata_fetch_queue: metadata_fetcher "
+                             "raised KeyError")
+            else:
+                self._metadata_for_path[path] = metadata
+                if not self.should_skip_codegen(metadata):
+                    self._codegen_queue.add(path)
+                else:
+                    self._echonest_queue.add(path, None)
+                return
 
     def _codegen_finished(self):
         self._running_codegen = False
@@ -725,6 +766,7 @@ class _EchonestProcessor(_MetadataProcessor):
 
     def remove_tasks_for_paths(self, paths):
         path_set = set(paths)
+        self._metadata_fetch_queue.remove_paths(path_set)
         self._echonest_queue.remove_paths(path_set)
         self._codegen_queue.remove_paths(path_set)
         self._paths_in_system -= path_set
@@ -1484,23 +1526,25 @@ class MetadataManagerBase(signals.SignalEmitter):
     def _run_echonest(self, path):
         """Run echonest and other internet queries on a path."""
         self.check_image_directories()
-        # FIXME: calling get_metadata() probably slows things down
-        metadata = self.get_metadata(path)
-        # make sure to get metadata that we just created but haven't saved yet
-        # because we're doing a bulk insert
-        if path in self.new_metadata:
-            metadata.update(self.new_metadata[path])
+        def metadata_fetcher():
+            # FIXME: calling get_metadata() probably slows things down
+            metadata = self.get_metadata(path)
+            # make sure to get metadata that we just created but haven't saved yet
+            # because we're doing a bulk insert
+            if path in self.new_metadata:
+                metadata.update(self.new_metadata[path])
 
-        path = self._translate_path(path)
-        # we only send a subset of the metadata to echonest and some of the
-        # key names are different
-        echonest_metadata = {}
-        for key in ('title', 'artist', 'album', 'duration'):
-            try:
-                echonest_metadata[key] = metadata[key]
-            except KeyError:
-                pass
-        self.echonest_processor.add_path(path, echonest_metadata)
+            # we only send a subset of the metadata to echonest and some of the
+            # key names are different
+            echonest_metadata = {}
+            for key in ('title', 'artist', 'album', 'duration'):
+                try:
+                    echonest_metadata[key] = metadata[key]
+                except KeyError:
+                    pass
+            return echonest_metadata
+        self.echonest_processor.add_path(self._translate_path(path),
+                                         metadata_fetcher)
 
     def _on_task_complete(self, processor, path, result):
         path = self._untranslate_path(path)
