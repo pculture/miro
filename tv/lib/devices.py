@@ -1332,6 +1332,7 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
     if mount == ':memory:': # special case for the unittests
         path = ':memory:'
         preallocate = None
+        start_in_temp_mode = False
     else:
         directory = os.path.join(mount, '.miro')
         start_in_temp_mode = False
