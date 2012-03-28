@@ -1951,7 +1951,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 fi.url = item_info.file_url
             fi.mime_type = item_info.mime_type
             fi.creationTime = item_info.date_added
-            fi.title_tag = item_info.title_tag
             fi.artist = item_info.artist
             fi.album = item_info.album
             fi.track = item_info.track
