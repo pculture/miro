@@ -49,10 +49,6 @@ class AudioPlayer(player.GTKPlayer):
     def play(self):
         self.renderer.play()
 
-    def play_from_time(self, resume_time=0):
-        self.seek_to_time(resume_time)
-        self.play()
-
     def pause(self):
         self.renderer.pause()
 
