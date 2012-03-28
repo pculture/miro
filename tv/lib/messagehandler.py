@@ -1828,6 +1828,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                       args=(message,))
                 return
         devices.write_database(message.device.database, message.device.mount)
+        message.device.metadata_manager.close()
         message.device.sqlite_database.close()
         app.device_tracker.eject(message.device)
 
