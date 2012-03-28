@@ -47,8 +47,6 @@ except ImportError:
         def __init__(self, *args, **kwargs):
             super(Counter, self).__init__(int, *args, **kwargs)
 
-import sqlite3
-
 from miro import app
 from miro import database
 from miro import devicedatabaseupgrade
@@ -401,6 +399,12 @@ class DeviceManager(object):
                            if self._is_unknown(info)]
         if show: # now we're showing them
             for info in unknown_devices:
+                if (info.sqlite_database is not None and
+                    info.sqlite_database.temp_mode):
+                    info.sqlite_database.force_directory_creation = True
+                    eventloop.add_idle(
+                        info.sqlite_database._try_save_temp_to_disk,
+                        'writing device SQLite DB on show: %r' % info.mount)
                 self._send_connect(info)
         else: # now we're hiding them
             for info in unknown_devices:
@@ -409,11 +413,16 @@ class DeviceManager(object):
         app.config.set(prefs.SHOW_UNKNOWN_DEVICES, show)
 
     @staticmethod
-    def _is_unknown(info):
-        if not getattr(info.info, 'generic', False):
+    def _is_unknown(info_or_tuple):
+        if isinstance(info_or_tuple, messages.DeviceInfo):
+            mount, info, db = (info_or_tuple.mount, info_or_tuple.info,
+                               info_or_tuple.database)
+        else:
+            mount, info, db = info_or_tuple
+        if not getattr(info, 'generic', False):
             # not a generic device
             return False
-        if info.mount and info.database.get(u'settings', {}).get(
+        if mount and db.get(u'settings', {}).get(
             'always_show', False):
             # we want to show this device all the time
             return False
@@ -427,16 +436,12 @@ class DeviceManager(object):
             return self._is_unknown(info)
 
     def _set_connected(self, id_, kwargs):
-        if kwargs.get('mount'):
-            mount = kwargs['mount']
+        mount = kwargs.get('mount')
+        if mount:
             db = load_database(mount)
             device_name = db.get(u'device_name', kwargs.get('device_name'))
-            sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'))
-            metadata_manager = make_metadata_manager(mount, sqlite_db, id_)
         else:
             device_name = None
-            sqlite_db = None
-            metadata_manager = None
             db = DeviceDatabase()
         if 'name' in kwargs:
             try:
@@ -461,8 +466,17 @@ class DeviceManager(object):
                 'device_name': device_name,
                 'info': info})
 
+        if mount:
+            is_hidden = self._is_hidden((mount, info, db))
+            sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'),
+                                             is_hidden=is_hidden)
+            metadata_manager = make_metadata_manager(mount, sqlite_db, id_)
+        else:
+            sqlite_db = None
+            metadata_manager = None
+
         info = self.connected[id_] = messages.DeviceInfo(
-            id_, info, kwargs.get('mount'), db, sqlite_db, metadata_manager,
+            id_, info, mount, db, sqlite_db, metadata_manager,
             kwargs.get('size'), kwargs.get('remaining'))
 
         return info
@@ -1308,7 +1322,8 @@ def load_database(mount, countdown=0):
     ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
 
-def load_sqlite_database(mount, json_db, device_size, countdown=0):
+def load_sqlite_database(mount, json_db, device_size, countdown=0,
+                         is_hidden=False):
     """
     Returns a LiveStorage object for an sqlite database on the device
 
@@ -1320,17 +1335,26 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0):
         preallocate = None
     else:
         directory = os.path.join(mount, '.miro')
+        start_in_temp_mode = False
+        if is_hidden and not os.path.exists(directory):
+            # don't write to the disk initially.  This works because we set
+            # `force_directory_creation` to False further down, which prevents
+            # LiveStorage from creating the .miro directory itself
+            start_in_temp_mode = True
         path = os.path.join(directory, 'sqlite')
         preallocate = calc_sqlite_preallocate_size(device_size)
+    logging.info('loading SQLite db on device %r: %r', mount, path)
     error_handler = storedatabase.DeviceLiveStorageErrorHandler(mount)
     object_schemas = [
         schema.MetadataEntrySchema,
         schema.MetadataStatusSchema,
     ]
     try:
-        live_storage = storedatabase.LiveStorage(path, error_handler,
-                                                 preallocate=preallocate,
-                                                 object_schemas=object_schemas)
+        live_storage = storedatabase.LiveStorage(
+            path, error_handler,
+            preallocate=preallocate,
+            object_schemas=object_schemas,
+            start_in_temp_mode=start_in_temp_mode)
     except EnvironmentError:
         if countdown == 5:
             logging.exception('file error with JSON on %s', mount)
@@ -1346,6 +1370,10 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0):
         # make databases from the nightlies match the ones from users starting
         # with 5.0
         live_storage.set_version(DB_VERSION)
+        if start_in_temp_mode:
+            # We won't create an SQLite database until something else writes to
+            # the .miro directory on the device.
+            live_storage.force_directory_creation = False
     else:
         device_db_version = live_storage.get_version()
         if device_db_version < DB_VERSION:
