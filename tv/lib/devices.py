@@ -1336,7 +1336,9 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
         directory = os.path.join(mount, '.miro')
         start_in_temp_mode = False
         if is_hidden and not os.path.exists(directory):
-            # don't write to the disk initially
+            # don't write to the disk initially.  This works because we set
+            # `force_directory_creation` to False further down, which prevents
+            # LiveStorage from creating the .miro directory itself
             start_in_temp_mode = True
         path = os.path.join(directory, 'sqlite')
         preallocate = calc_sqlite_preallocate_size(device_size)
