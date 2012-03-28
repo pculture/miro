@@ -173,6 +173,12 @@ class MetadataStatus(database.DDBObject):
         return [r[0] for r in rows]
 
     @classmethod
+    def net_lookup_enabled_view(cls, net_lookup_enabled, db_info=None):
+        return cls.make_view('net_lookup_enabled=?',
+                             (net_lookup_enabled,),
+                             db_info=db_info)
+
+    @classmethod
     def failed_temporary_view(cls):
         return cls.make_view('echonest_status=?',
                              (cls.STATUS_TEMPORARY_FAILURE,))
@@ -1339,29 +1345,38 @@ class MetadataManagerBase(signals.SignalEmitter):
             MetadataEntry(status, u'user-data', user_data, db_info=self.db_info)
 
     def set_net_lookup_enabled(self, paths, enabled):
-        """Set if we should do an internet lookup for a list of paths"""
+        """Set if we should do an internet lookup for a list of paths
+
+        :param paths: paths to change or None to change it for all entries
+        :param enabled: should we do internet lookups for paths?
+        """
         paths_to_refresh = []
         paths_to_cancel = []
         paths_to_start = []
-        change_count = 0
-        app.bulk_sql_manager.start()
-        try:
+        to_change = []
+
+        if paths is not None:
             for path in paths:
                 try:
                     status = MetadataStatus.get_by_path(path, self.db_info)
+                    if status.net_lookup_enabled != enabled:
+                        to_change.append(status)
                 except database.ObjectNotFoundError:
                     logging.warn("set_net_lookup_enabled() "
                                  "path not in system: %s", path)
-                    continue
-                if status.net_lookup_enabled == enabled:
-                    # nothing to change
-                    continue
-                change_count += 1
+        else:
+            view = MetadataStatus.net_lookup_enabled_view(not enabled,
+                                                          self.db_info)
+            to_change = list(view)
+
+        app.bulk_sql_manager.start()
+        try:
+            for status in to_change:
                 old_current_processor = status.current_processor
                 status.set_net_lookup_enabled(enabled)
                 if MetadataEntry.set_disabled('echonest', status, not enabled,
                                               self.db_info):
-                    paths_to_refresh.append(path)
+                    paths_to_refresh.append(status.path)
                 # Changing the net_lookup value may mean we have to send the
                 # path through echonest
                 if (old_current_processor is None and
@@ -1387,9 +1402,9 @@ class MetadataManagerBase(signals.SignalEmitter):
             self.refresh_metadata_for_paths(paths_to_refresh)
 
         if enabled:
-            self.net_lookup_count += change_count
+            self.net_lookup_count += len(to_change)
         else:
-            self.net_lookup_count -= change_count
+            self.net_lookup_count -= len(to_change)
         # call _send_net_lookup_counts() immediately because we want the
         # frontend to update the counts before it un-disables the buttons.
         self._send_net_lookup_counts_caller.call_now()
@@ -1397,9 +1412,7 @@ class MetadataManagerBase(signals.SignalEmitter):
 
     def set_net_lookup_enabled_for_all(self, enabled):
         """Set if we should do an internet lookup for all current paths"""
-        paths = [r[0] for r in
-                 MetadataStatus.select(['path'], db_info=self.db_info)]
-        self.set_net_lookup_enabled(paths, enabled)
+        self.set_net_lookup_enabled(None, enabled)
         messages.SetNetLookupEnabledFinished().send_to_frontend()
 
     def _send_net_lookup_counts(self):
