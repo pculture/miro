@@ -1334,12 +1334,11 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
         preallocate = None
     else:
         directory = os.path.join(mount, '.miro')
+        start_in_temp_mode = False
         if is_hidden and not os.path.exists(directory):
-            # HACK pt1. If the .miro directory doesn't already exist, we aren't
-            # going to create it here.  Just use an in-memory database.
-            path = ':memory:'
-        else:
-            path = os.path.join(directory, 'sqlite')
+            # don't write to the disk initially
+            start_in_temp_mode = True
+        path = os.path.join(directory, 'sqlite')
         preallocate = calc_sqlite_preallocate_size(device_size)
     logging.info('loading SQLite db on device %r: %r', mount, path)
     error_handler = storedatabase.DeviceLiveStorageErrorHandler(mount)
@@ -1348,9 +1347,11 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
         schema.MetadataStatusSchema,
     ]
     try:
-        live_storage = storedatabase.LiveStorage(path, error_handler,
-                                                 preallocate=preallocate,
-                                                 object_schemas=object_schemas)
+        live_storage = storedatabase.LiveStorage(
+            path, error_handler,
+            preallocate=preallocate,
+            object_schemas=object_schemas,
+            start_in_temp_mode=start_in_temp_mode)
     except EnvironmentError:
         if countdown == 5:
             logging.exception('file error with JSON on %s', mount)
@@ -1366,12 +1367,10 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
         # make databases from the nightlies match the ones from users starting
         # with 5.0
         live_storage.set_version(DB_VERSION)
-        if is_hidden and mount != ':memory:' and path == ':memory:':
-            # HACK pt2. We won't create an SQLite database until something else
-            # writes to the .miro directory on the device.
+        if start_in_temp_mode:
+            # We won't create an SQLite database until something else writes to
+            # the .miro directory on the device.
             live_storage.force_directory_creation = False
-            live_storage.path = os.path.join(mount, '.miro', 'sqlite')
-            live_storage._switch_to_temp_mode()
     else:
         device_db_version = live_storage.get_version()
         if device_db_version < DB_VERSION:

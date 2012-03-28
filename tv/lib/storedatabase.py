@@ -350,7 +350,8 @@ class LiveStorage:
     - cache -- DatabaseObjectCache object
     """
     def __init__(self, path=None, error_handler=None, preallocate=None,
-                 object_schemas=None, schema_version=None):
+                 object_schemas=None, schema_version=None,
+                 start_in_temp_mode=False):
         """Create a LiveStorage for a database
 
         :param path: path to the database (or ":memory:")
@@ -361,6 +362,9 @@ class LiveStorage:
            schema.object_schemas
         :param schema_version: current version of the schema for upgrading
            purposes.  Defaults to schema.VERSION.
+        :param start_in_temp_mode: True if this database should start in
+                                   temporary mode (running in memory, but
+                                   checking if it can write to the disk)
         """
         if path is None:
             path = app.config.get(prefs.SQLITE_PATHNAME)
@@ -416,36 +420,39 @@ class LiveStorage:
                 self._schema_column_map[oschema, name] = schema_item
         self._converter = SQLiteConverter()
 
-        self.open_connection()
+        self.open_connection(start_in_temp_mode=start_in_temp_mode)
 
         if self.created_new:
             self._init_database()
         if self.preallocate:
             self._preallocate_space()
 
-    def open_connection(self, path=None):
+    def open_connection(self, path=None, start_in_temp_mode=False):
         if path is None:
             path = self.path
-        self._ensure_database_directory_exists(path)
-        logging.info("opening database %s", path)
-        try:
-            self.connection = sqlite3.connect(path,
-                    isolation_level=None,
-                    detect_types=sqlite3.PARSE_DECLTYPES)
-        except sqlite3.Error, e:
-            logging.warn("Error opening sqlite database: %s", e)
-            action = self.error_handler.handle_open_error()
-            if action == LiveStorageErrorHandler.ACTION_RERAISE:
-                raise
-            elif action == LiveStorageErrorHandler.ACTION_USE_TEMPORARY:
-                logging.warn("Error opening database %s.  Opening an "
-                             "in-memory database instead", path)
-                self._switch_to_temp_mode()
-                self.created_new = True
-            else:
-                logging.warn("Bad return value for handle_open_error: %s",
-                             action)
-                raise
+        if start_in_temp_mode:
+            self._switch_to_temp_mode()
+        else:
+            self._ensure_database_directory_exists(path)
+            logging.info("opening database %s", path)
+            try:
+                self.connection = sqlite3.connect(path,
+                        isolation_level=None,
+                        detect_types=sqlite3.PARSE_DECLTYPES)
+            except sqlite3.Error, e:
+                logging.warn("Error opening sqlite database: %s", e)
+                action = self.error_handler.handle_open_error()
+                if action == LiveStorageErrorHandler.ACTION_RERAISE:
+                    raise
+                elif action == LiveStorageErrorHandler.ACTION_USE_TEMPORARY:
+                    logging.warn("Error opening database %s.  Opening an "
+                                 "in-memory database instead", path)
+                    self._switch_to_temp_mode()
+                    self.created_new = True
+                else:
+                    logging.warn("Bad return value for handle_open_error: %s",
+                                 action)
+                    raise
 
         self.cursor = self.connection.cursor()
         try:
