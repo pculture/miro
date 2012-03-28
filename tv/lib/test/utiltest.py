@@ -1020,9 +1020,9 @@ class MtimeInvalidatorTestCase(MiroTestCase):
         file(filename, 'w').write('foo')
         invalidator = util.mtime_invalidator(filename)
         self.assertFalse(invalidator(None))
-        time.sleep(0.1) # might not work on Windows? Not sure what the
-                        # resolution of mtime is there.
-        file(filename, 'w').write('bar')
+        mtime = os.stat(filename).st_mtime
+        # pretend the file was modified in the future
+        os.utime(filename, (mtime + 10, mtime + 10))
         self.assertTrue(invalidator(None))
 
 class CacheTestCase(MiroTestCase):
