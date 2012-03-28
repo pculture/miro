@@ -1098,7 +1098,9 @@ class ItemRendererCanvas(object):
         context.fill()
 
     def draw_thumbnail(self, context, x, y, width, height):
-        icon = imagepool.get_surface(self.thumbnail, (width, height))
+        icon = imagepool.get_surface(self.thumbnail, (width, height),
+                                     invalidator=util.mtime_invalidator(
+                self.thumbnail))
         icon_x = x + (width - icon.width) // 2
         icon_y = y + (height - icon.height) // 2
         # if our thumbnail is far enough to the left, we need to set a clip

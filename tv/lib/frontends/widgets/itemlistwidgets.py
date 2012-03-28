@@ -2257,7 +2257,9 @@ class ItemDetailsWidget(widgetset.VBox):
         self.description_label.set_text(info.description_stripped[0])
         self.set_extra_info_text(info)
         self.setup_license_button(info)
-        image = imagepool.get(info.thumbnail, self.IMAGE_SIZE)
+        image = imagepool.get(info.thumbnail, self.IMAGE_SIZE,
+                              invalidator=util.mtime_invalidator(
+                info.thumbnail))
         self.image_widget.set_image(image)
         self.set_label_widths()
         self._set_empty_mode(False)

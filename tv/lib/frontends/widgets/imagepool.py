@@ -86,7 +86,7 @@ def resize_one_dimension(image, width_scale, height_scale,
     return image
 
 class ImagePool(util.Cache):
-    def create_new_value(self, (path, size)):
+    def create_new_value(self, (path, size), invalidator=None):
         try:
             image = widgetset.Image(path)
         except StandardError:
@@ -98,14 +98,14 @@ class ImagePool(util.Cache):
         return image
 
 class ImageSurfacePool(util.Cache):
-    def create_new_value(self, (path, size)):
-        image = _imagepool.get((path, size))
+    def create_new_value(self, (path, size), invalidator=None):
+        image = _imagepool.get((path, size), invalidator=invalidator)
         return widgetset.ImageSurface(image)
 
 _imagepool = ImagePool(CACHE_SIZE)
 _image_surface_pool = ImageSurfacePool(CACHE_SIZE)
 
-def get(path, size=None):
+def get(path, size=None, invalidator=None):
     """Returns an Image for path.
 
     :param path: the filename for the image
@@ -113,10 +113,12 @@ def get(path, size=None):
                  space, then specify this and get will return a
                  scaled image; if size is not specified, then this
                  returns the default sized image
+    :param invalidator: an optional functions which returns True if
+                        the cache value is no longer valid
     """
-    return _imagepool.get((path, size))
+    return _imagepool.get((path, size), invalidator=invalidator)
 
-def get_surface(path, size=None):
+def get_surface(path, size=None, invalidator=None):
     """Returns an ImageSurface for path.
 
     :param path: the filename for the image
@@ -124,10 +126,12 @@ def get_surface(path, size=None):
                  space, then specify this and get will return a
                  scaled image; if size is not specified, then this
                  returns the default sized image
+    :param invalidator: an optional functions which returns True if
+                        the cache value is no longer valid
     """
-    return _image_surface_pool.get((path, size))
+    return _image_surface_pool.get((path, size), invalidator=invalidator)
 
-def get_image_display(path, size=None):
+def get_image_display(path, size=None, invalidator=None):
     """Returns an ImageDisplay for path.
 
     :param path: the filename for the image
@@ -135,8 +139,21 @@ def get_image_display(path, size=None):
                  space, then specify this and get will return a
                  scaled image; if size is not specified, then this
                  returns the default sized image
+    :param invalidator: an optional functions which returns True if
+                        the cache value is no longer valid
     """
-    return widgetset.ImageDisplay(_imagepool.get((path, size)))
+    return widgetset.ImageDisplay(_imagepool.get((path, size),
+                                                 invalidator=invalidator))
 
-# XXX have a way to remove a path from the cache? (re: #16573)
-
+def clear_cache_for_path(path):
+    """
+    Removes a give path from the ImagePool and ImageSurface pools.  Removing a
+    non-existent path is a no-op.
+    """
+    for pool in _imagepool, _image_surface_pool:
+        invalid = set()
+        for key in pool.keys():
+            if key[0] == path:
+                invalid.add(key)
+        for key in invalid:
+            pool.remove(key)

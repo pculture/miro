@@ -57,13 +57,12 @@ from miro import dialogs
 from miro import download_utils
 from miro import eventloop
 from miro import feedupdate
-from miro import flashscraper
 from miro import models
 from miro import prefs
 from miro.plat import resources
 from miro import downloader
 from miro.util import (returns_unicode, returns_filename, unicodify, check_u,
-                       check_f, quote_unicode_url, escape, to_uni,
+                       check_f, quote_unicode_url, to_uni,
                        is_url, stringify, is_magnet_uri)
 from miro import fileutil
 from miro.plat.utils import filename_to_unicode, make_url_safe, unmake_url_safe
@@ -101,7 +100,6 @@ class _RateLimiter(object):
         self.last_time = time.time()
 
     def check_for_sleep(self):
-        new_time = time.time()
         elapsed = self.last_time - time.time()
         if elapsed < 0.1:
             return # don't sleep until a decent of time has passed.
@@ -239,7 +237,7 @@ def run_feedparser(html, callback, errback):
     else:
         workerprocess.send(workerprocess.FeedparserTask(html),
                            lambda msg, result: callback(result),
-                           lambda msg, error: errback(result))
+                           lambda msg, error: errback(error))
 
 # Wait X seconds before updating the feeds at startup
 INITIAL_FEED_UPDATE_DELAY = 5.0

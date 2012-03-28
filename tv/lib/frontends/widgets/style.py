@@ -33,6 +33,7 @@ import logging
 import math
 
 from miro import displaytext
+from miro import util
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
@@ -1022,7 +1023,9 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
         if album_art_path is None:
             return None
         return imagepool.get_surface(album_art_path,
-                size=(self.album_art_size, self.album_art_size))
+                size=(self.album_art_size, self.album_art_size),
+                                     invalidator=util.mtime_invalidator(
+                album_art_path))
 
     def render_album_art(self, context):
         album_art = self.make_album_art(context)
