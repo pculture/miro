@@ -729,7 +729,8 @@ class DeviceSyncManager(object):
         items_for_converter = {}
         for info in items:
             converter = self.conversion_for_info(info)
-            items_for_converter.setdefault(converter, set()).add(info)
+            if converter is not None:
+                items_for_converter.setdefault(converter, set()).add(info)
         if 'copy' in items_for_converter:
             items = items_for_converter.pop('copy')
             count += len(items)
