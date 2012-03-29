@@ -378,7 +378,7 @@ def copy_subtitle_file(sub_path, video_path):
             if os.path.exists(dest_path):
                 os.remove(dest_path)
             shutil.copyfile(sub_path, dest_path)
-        except (OSError, IOError):
+        except EnvironmentError:
             logging.exception('unable to remove existing subtitle file '
                               'or copy subtitle file')
             dest_path = ''
