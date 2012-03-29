@@ -480,6 +480,10 @@ class _TaskProcessor(_MetadataProcessor):
             self._send_task(task)
 
     def _callback(self, task, result):
+        if task.source_path not in self._active_tasks:
+            logging.debug("%s done but already removed: %r", self.source_name,
+                          task.source_path)
+            return
         logging.debug("%s done: %r", self.source_name, task.source_path)
         self._check_for_none_values(result)
         self.emit('task-complete', task.source_path, result)
@@ -1009,6 +1013,7 @@ class MetadataManagerBase(signals.SignalEmitter):
             self.db_info = app.db_info
         else:
             self.db_info = db_info
+        self.closed = False
         self.create_signal('new-metadata')
         self.cover_art_dir = cover_art_dir
         self.screenshot_dir = screenshot_dir
@@ -1149,11 +1154,13 @@ class MetadataManagerBase(signals.SignalEmitter):
         :returns initial metadata for the file
         :raises ValueError: path is already in the system
         """
+        if self.closed:
+            raise ValueError("%r added to closed MetadataManager" % path)
         try:
             status = MetadataStatus(path, self.net_lookup_enabled_default(),
                                     db_info=self.db_info)
         except sqlite3.IntegrityError:
-            raise ValueError("%s already added" % path)
+            raise ValueError("%r already added" % path)
         if status.net_lookup_enabled:
             self.net_lookup_count += 1
         self.total_count += 1
@@ -1213,6 +1220,18 @@ class MetadataManagerBase(signals.SignalEmitter):
         finally:
             app.bulk_sql_manager.finish()
 
+    def close(self):
+        """
+        Close the MetadataExtractor.  Cancel anything in progress, and don't
+        allow new requests.
+        """
+        if self.closed: # already closed
+            return
+        self.closed = True
+        paths = [r[0] for r in
+                 MetadataStatus.select(['path'], db_info=self.db_info)]
+        self._cancel_processing_paths(paths)
+
     def _remove_files(self, paths):
         """Does the work for remove_file and remove_files"""
         self._cancel_processing_paths(paths)
@@ -1252,8 +1271,10 @@ class MetadataManagerBase(signals.SignalEmitter):
 
         :param move_info: list of (old_path, new_path) tuples
         """
-        restart_mutagen_for = []
-        restart_moviedata_for = []
+        if self.closed:
+            raise ValueError("%r moved to %r on closed MetadataManager" % (
+                    old_path, new_path))
+
         try:
             status = self._get_status_for_path(old_path)
         except KeyError:
@@ -1273,7 +1294,6 @@ class MetadataManagerBase(signals.SignalEmitter):
             self._run_mutagen(new_path)
         elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
             self._run_movie_data(new_path)
-            restart_moviedata_for.append(new_path)
         self.count_tracker.file_moved(old_path, new_path)
 
     def get_metadata(self, path):
@@ -1327,6 +1347,9 @@ class MetadataManagerBase(signals.SignalEmitter):
 
         :raises KeyError: path not in the metadata system
         """
+        if self.closed:
+            raise ValueError(
+                "%r called set_user_data on closed MetadataManager" % path)
         # make sure that our MetadataStatus object exists
         status = self._get_status_for_path(path)
         try:
