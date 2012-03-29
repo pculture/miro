@@ -887,7 +887,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     BOTTOM_LINE_COLOR = widgetutil.css_to_color('#dddddd')
     FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
 
-    min_width = 133
+    min_width = 260
 
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
