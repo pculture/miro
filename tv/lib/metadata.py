@@ -734,9 +734,10 @@ class _EchonestProcessor(_MetadataProcessor):
             path, metadata_fetcher = self._metadata_fetch_queue.pop()
             try:
                 metadata = metadata_fetcher()
-            except KeyError:
+            except StandardError:
                 logging.warn("_process_metadata_fetch_queue: metadata_fetcher "
-                             "raised KeyError")
+                             "raised exception (path: %r, fetcher: %s)",
+                             path, metadata_fetcher, exc_info=True)
             else:
                 self._metadata_for_path[path] = metadata
                 if not self.should_skip_codegen(metadata):
