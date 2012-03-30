@@ -374,18 +374,6 @@ class Player(player.Player):
         qttime = self.movie.duration()
         return qttimeutils.qttime2secs(qttime)
 
-    def skip_forward(self):
-        current = self.get_elapsed_playback_time()
-        duration = self.get_total_playback_time()
-        pos = min(duration, current + 30.0)
-        self.seek_to(pos / duration)
-
-    def skip_backward(self):
-        current = self.get_elapsed_playback_time()
-        duration = self.get_total_playback_time()
-        pos = max(0, current - 15.0)
-        self.seek_to(pos / duration)
-
     def seek_to(self, position):
         if not self.movie:
             return
@@ -395,10 +383,6 @@ class Player(player.Player):
         else:
             qttime.timeValue = qttime.timeValue * position
         self.movie.setCurrentTime_(qttime)
-
-    def play_from_time(self, resume_time=0):
-        self.seek_to(resume_time / self.get_total_playback_time())
-        self.play()
 
     def set_playback_rate(self, rate):
         if self.movie:
