@@ -735,9 +735,11 @@ class _EchonestProcessor(_MetadataProcessor):
             try:
                 metadata = metadata_fetcher()
             except StandardError:
+                # log exceptions and try the next item in the queue.
                 logging.warn("_process_metadata_fetch_queue: metadata_fetcher "
                              "raised exception (path: %r, fetcher: %s)",
                              path, metadata_fetcher, exc_info=True)
+                continue
             else:
                 self._metadata_for_path[path] = metadata
                 if not self.should_skip_codegen(metadata):
@@ -1528,15 +1530,14 @@ class MetadataManagerBase(signals.SignalEmitter):
         """Run echonest and other internet queries on a path."""
         self.check_image_directories()
         def metadata_fetcher():
-            # FIXME: calling get_metadata() probably slows things down
             metadata = self.get_metadata(path)
-            # make sure to get metadata that we just created but haven't saved yet
-            # because we're doing a bulk insert
+            # make sure to get metadata that we just created but haven't saved
+            # yet because we're doing a bulk insert
             if path in self.new_metadata:
                 metadata.update(self.new_metadata[path])
 
-            # we only send a subset of the metadata to echonest and some of the
-            # key names are different
+            # we only send a subset of the metadata to echonest and some of
+            # the key names are different
             echonest_metadata = {}
             for key in ('title', 'artist', 'album', 'duration'):
                 try:
