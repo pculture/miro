@@ -1111,8 +1111,8 @@ class EchonestNetErrorTest(EventLoopTest):
         timeout = _echonest_processor.PAUSE_AFTER_HTTP_ERROR_TIMEOUT
         for i, path in enumerate(paths):
             # give enough initial metadata so that we skip the codegen step
-            _echonest_processor.add_path(path,
-                                         { u'title': "Song-%i" % i })
+            fetcher = lambda: { u'title': "Song-%i" % i }
+            _echonest_processor.add_path(path, fetcher)
         path_iter = iter(paths)
 
         for i in xrange(error_count):
