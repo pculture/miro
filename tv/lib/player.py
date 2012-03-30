@@ -27,6 +27,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import logging
+
 from miro import signals
 from miro import messages
 
@@ -47,25 +49,53 @@ class Player(signals.SignalEmitter):
         messages.MarkItemWatched(self.item_info).send_to_backend()
         self.emit('cant-play')
 
-    def skip_forward(self):
+    def _seek(self, seek_to_func, args):
+        if args is None:
+            return False
+        pos, duration = seek_to_func(*args)
+        if duration <= 0:
+            logging.warning('_seek: duration = %s', duration)
+            return None
+        self.seek_to(pos / duration)
+        return True
+
+    def _skip_args(self):
         current = self.get_elapsed_playback_time()
         duration = self.get_total_playback_time()
         if current is None or duration is None:
-            return
-        pos = min(duration, current + 30.0)
-        self.seek_to(pos / duration)
+            logging.warning('cannot skip: current = %s duration = %s',
+                            current, duration)
+            return None
+        return (current, duration)
+
+    def _resume_at_args(self, resume):
+        duration = self.get_total_playback_time()
+        if duration is not None:
+            logging.warn('_resume_at_args: duration is None')
+            return None
+        return (resume, duration)
+
+    def _skip_forward_func(self, current, duration):
+        return (min(duration, current + 30.0), duration)
+
+    def _skip_backward_func(self, current, duration):
+        return (max(0, current - 15.0), duration)
+
+    def _resume_at_func(self, resume_time, duration):
+        return (resume_time, duration)
+
+    def skip_forward(self):
+        args = self._skip_args()
+        self._seek(self._skip_forward_func, args)
 
     def skip_backward(self):
-        current = self.get_elapsed_playback_time()
-        duration = self.get_total_playback_time()
-        if current is None or duration is None:
-            return
-        pos = max(0, current - 15.0)
-        self.seek_to(pos / duration)
+        args = self._skip_args()
+        self._seek(self._skip_backward_func, args)
 
     def play_from_time(self, resume_time=0):
-        self.seek_to(resume_time / self.get_total_playback_time())
-        self.play()
+        args = self._resume_at_args(resume)
+        if self._seek(self._resume_at_func, args):
+            self.play()
 
     def set_item(self, item_info, success_callback, error_callback):
         raise NotImplementedError()
