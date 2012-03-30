@@ -161,7 +161,7 @@ class Renderer(object):
     def get_current_time(self, attempt=0):
         # query_position fails periodically, so this attempts it 5 times
         # and if after that it fails, then we return 0.
-        if attempt == 5:
+        if not self.playbin or attempt == 5:
             return 0
         try:
             position, fmt = self.playbin.query_position(gst.FORMAT_TIME)
@@ -171,6 +171,8 @@ class Renderer(object):
             return self.get_current_time(attempt + 1)
 
     def _seek(self, seconds):
+        if not self.playbin:
+            return
         event = gst.event_new_seek(
             1.0,
             gst.FORMAT_TIME,
@@ -182,12 +184,16 @@ class Renderer(object):
             logging.error("seek failed")
 
     def _set_current_time_actual(self, bus, message, seconds):
+        if not self.playbin:
+            return
         if self.playbin.get_state(0)[1] in (gst.STATE_PAUSED,
                                             gst.STATE_PLAYING):
             self._seek(seconds)
             self.bus.disconnect(self._set_current_time_actual_id)
 
     def set_current_time(self, seconds):
+        if not self.playbin:
+            return
         # only want to kick these off when PAUSED or PLAYING
         if self.playbin.get_state(0)[1] not in (gst.STATE_PAUSED,
                                                 gst.STATE_PLAYING):
@@ -200,6 +206,8 @@ class Renderer(object):
         self._seek(seconds)
 
     def get_duration(self):
+        if not self.playbin:
+            return None
         try:
             duration, fmt = self.playbin.query_duration(gst.FORMAT_TIME)
             return gstutil.to_seconds(duration)
@@ -213,12 +221,18 @@ class Renderer(object):
             self.destroy_playbin()
 
     def set_volume(self, level):
+        if not self.playbin:
+            return
         self.playbin.set_property("volume", level / widgetconst.MAX_VOLUME)
 
     def play(self):
+        if not self.playbin:
+            return
         self.playbin.set_state(gst.STATE_PLAYING)
 
     def pause(self):
+        if not self.playbin:
+            return
         self.playbin.set_state(gst.STATE_PAUSED)
 
     def stop(self):
@@ -229,7 +243,7 @@ class Renderer(object):
         return 256
 
     def set_rate(self, rate):
-        if self.rate == rate:
+        if not self.playbin or self.rate == rate:
             return
         self.rate = rate
         position = self.playbin.query_position(gst.FORMAT_TIME, None)[0]
@@ -256,9 +270,13 @@ class Renderer(object):
         return self.playbin.get_property('n-audio')
 
     def set_audio_track(self, track_index):
+        if not self.playbin:
+            return
         self.playbin.set_property('current-audio', track_index)
 
     def get_enabled_audio_track(self):
+        if not self.playbin:
+            return None
         return self.playbin.get_property('current-audio')
 
 class AudioRenderer(Renderer):
@@ -313,6 +331,8 @@ class VideoRenderer(Renderer):
             self.set_subtitle_font(value)
 
     def set_subtitle_font(self, name):
+        if not self.playbin:
+            return
         self.playbin.set_property("subtitle-font-desc", name)
 
     def select_file(self, iteminfo, callback, errback, sub_filename=""):
@@ -334,7 +354,7 @@ class VideoRenderer(Renderer):
                 sub_index = 0
                 self.enabled_track = 0
 
-        if sub_filename:
+        if sub_filename and self.playbin:
             self.playbin.set_property("suburi",
                     gstutil._get_file_url(sub_filename))
         if sub_index > -1:
@@ -382,7 +402,7 @@ class VideoRenderer(Renderer):
     def _get_subtitle_track_name(self, index):
         """Returns the language for the track at the specified index.
         """
-        if not self.supports_subtitles:
+        if not self.supports_subtitles or not self.playbin:
             return None
         tag_list = self.playbin.emit("get-text-tags", index)
         lang = None
