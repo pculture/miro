@@ -843,7 +843,7 @@ class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
         return ''
 
     def get_artist(self, item_info, first_info):
-        return item_info.feed_url
+        return item_info.feed_name
 
     def get_track_number(self, item_info, first_info):
         return ''
@@ -887,7 +887,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     BOTTOM_LINE_COLOR = widgetutil.css_to_color('#dddddd')
     FONT_SIZE = widgetutil.font_scale_from_osx_points(11)
 
-    min_width = 133
+    min_width = 260
 
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
