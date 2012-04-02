@@ -843,7 +843,7 @@ class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
         return ''
 
     def get_artist(self, item_info, first_info):
-        return item_info.feed_url
+        return item_info.feed_name
 
     def get_track_number(self, item_info, first_info):
         return ''
