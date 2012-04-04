@@ -1087,9 +1087,20 @@ def mtime_invalidator(path):
     for Cache.
     """
     path = os.path.abspath(path)
-    mtime = os.stat(path).st_mtime
+    try:
+        mtime = os.stat(path).st_mtime
+    except EnvironmentError:
+        # if the file doesn't exist or has a problem when we start, the cache
+        # will always be invalid
+        return lambda x: True
+
     def invalidator(key):
-        return os.stat(path).st_mtime > mtime
+        try:
+            return os.stat(path).st_mtime > mtime
+        except EnvironmentError:
+            # if the file disappears, the cache is also invalid
+            return True
+
     return invalidator
 
 class Cache(object):
