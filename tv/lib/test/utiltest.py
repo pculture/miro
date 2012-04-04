@@ -1015,14 +1015,34 @@ class TestBackupSupportDir(MiroTestCase):
 
 class MtimeInvalidatorTestCase(MiroTestCase):
 
-    def test(self):
+    def test_valid(self):
         filename = os.path.join(self.tempdir, 'mtime_test')
         file(filename, 'w').write('foo')
         invalidator = util.mtime_invalidator(filename)
         self.assertFalse(invalidator(None))
+
+    def test_invalid(self):
+        filename = os.path.join(self.tempdir, 'mtime_test_future')
+        file(filename, 'w').write('foo')
+        invalidator = util.mtime_invalidator(filename)
         mtime = os.stat(filename).st_mtime
         # pretend the file was modified in the future
         os.utime(filename, (mtime + 10, mtime + 10))
+        self.assertTrue(invalidator(None))
+
+    def test_doesnotexist(self):
+        filename = os.path.join(self.tempdir,
+                                'mtime_test_doesnotexist')
+        invalidator = util.mtime_invalidator(filename)
+        self.assertTrue(invalidator(None))
+
+    def test_disappears(self):
+        filename = os.path.join(self.tempdir,
+                                'mtime_test_disappears')
+        file(filename, 'w').write('foo')
+        invalidator = util.mtime_invalidator(filename)
+        self.assertFalse(invalidator(None))
+        os.unlink(filename)
         self.assertTrue(invalidator(None))
 
 class CacheTestCase(MiroTestCase):
