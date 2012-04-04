@@ -1835,6 +1835,15 @@ class TestEchonestQueries(MiroTestCase):
         self.send_7digital_reply('no-matches')
         self.check_callback()
 
+    def test_7digital_invalid_xml(self):
+        # test 7digital sending back invalid XML
+        self.start_query_with_tags()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
+        self.send_7digital_reply('invalid-xml')
+        self.check_callback()
+
     def test_multiple_releases(self):
         # test multiple 7digital releases
         self.setup_query_metadata_for_billie_jean()

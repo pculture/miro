@@ -35,6 +35,7 @@ import logging
 import os.path
 import urllib
 from xml.dom import minidom
+from xml.parsers import expat
 
 from miro import filetags
 from miro import httpclient
@@ -289,7 +290,7 @@ class _EchonestQuery(object):
     def parse_seven_digital_callback(self, seven_digital_reply):
         try:
             return self._parse_seven_digital_callback(seven_digital_reply)
-        except StandardError, e:
+        except (StandardError, expat.ExpatError), e:
             logging.warn("Error handling 7digital response: %r",
                          seven_digital_reply, exc_info=True)
             return None
