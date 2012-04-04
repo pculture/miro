@@ -68,12 +68,12 @@ class Player(signals.SignalEmitter):
             return None
         return (current, duration)
 
-    def _resume_at_args(self, resume):
+    def _resume_at_args(self, resume_time):
         duration = self.get_total_playback_time()
         if duration is not None:
             logging.warn('_resume_at_args: duration is None')
             return None
-        return (resume, duration)
+        return (resume_time, duration)
 
     def _skip_forward_func(self, current, duration):
         return (min(duration, current + 30.0), duration)
@@ -93,7 +93,7 @@ class Player(signals.SignalEmitter):
         self._seek(self._skip_backward_func, args)
 
     def play_from_time(self, resume_time=0):
-        args = self._resume_at_args(resume)
+        args = self._resume_at_args(resume_time)
         if self._seek(self._resume_at_func, args):
             self.play()
 
