@@ -288,6 +288,8 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         self.queue_redraw()
 
     def set_duration(self, duration):
+        if duration is None:
+            duration = 0
         self.duration = duration
         self.queue_redraw()
 
@@ -342,8 +344,11 @@ class ProgressSlider(widgetset.CustomSlider):
 
     def handle_play(self, obj, duration):
         self.playing = True
-        # This makes it so that the mouswheel scrolls exactly 5 seconds
-        step_size = 5.0 / duration
+        # This makes it so that the mousewheel scrolls exactly 5 seconds
+        if duration is None or duration < 5:
+            step_size = 1
+        else:
+            step_size = 5.0 / duration
         self.set_increments(step_size, step_size, step_size)
         self.enable()
 
