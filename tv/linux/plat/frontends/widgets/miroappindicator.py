@@ -91,6 +91,10 @@ class MiroAppIndicator:
     def make_popup_menu_items(self):
         menu_items = []
         window = app.widgetapp.window
+        if window._window is None or hasattr(window, '_closing'):
+            # The main window was destroyed, but we still ended up here somehow
+            # (#18937).  Don't bother doing anything else.
+            return None
 
         if app.playback_manager.is_playing:
             if app.playback_manager.is_paused:
@@ -142,8 +146,10 @@ class MiroAppIndicator:
         return menu_items
 
     def calculate_popup_menu(self):
-        popup_menu = gtk.Menu()
         menu_items = self.make_popup_menu_items()
+        if menu_items is None:
+            return
+        popup_menu = gtk.Menu()
         if self.menu_items != menu_items:
             for label, callback in menu_items:
                 if not label and not callback:
