@@ -162,11 +162,11 @@ default_share = get_from_environ('DTV_SHARE_URL',
                                  u'http://www.miroguide.com/share')
 default_autoupdate = get_from_environ(
     'DTV_AUTOUPDATE_URL',
-    u'http://www.participatoryculture.org/democracy-appcast.xml')
+    u'http://miro-updates.participatoryculture.org/democracy-appcast.xml')
 
 default_autoupdate_beta = get_from_environ(
     'DTV_AUTOUPDATE_BETA_URL',
-    u'http://www.participatoryculture.org/democracy-appcast-beta.xml')
+    u'http://miro-updates.participatoryculture.org/democracy-appcast-beta.xml')
 
 
 CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=default_guide,
