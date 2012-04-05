@@ -288,7 +288,6 @@ class PlaybackManager (signals.SignalEmitter):
         duration = self.player.get_total_playback_time()
         if duration is None or duration <= 0:
             logging.warning('duration is %s', duration)
-            return
         self.emit('will-play', duration)
         resume_time = self.playlist.currently_playing.resume_time
         if start_at > 0:
