@@ -39,6 +39,7 @@ import os, os.path
 import re
 import time
 import bisect
+import tempfile
 try:
     from collections import Counter
 except ImportError:
@@ -333,7 +334,8 @@ class DeviceManager(object):
     def shutdown(self):
         self.running = False
         for device in self.connected.values():
-            if device.mount and not self._is_hidden(device):
+            if (device.mount and not self._is_hidden(device) and
+                not device.read_only):
                 device.metadata_manager.run_updates()
                 write_database(device.database, device.mount)
 
@@ -396,7 +398,7 @@ class DeviceManager(object):
         if self.show_unknown == show:
             return # no change
         unknown_devices = [info for info in self.connected.values()
-                           if self._is_unknown(info)]
+                           if self._is_unknown(info) and not info.read_only]
         if show: # now we're showing them
             for info in unknown_devices:
                 if (info.sqlite_database is not None and
@@ -427,6 +429,18 @@ class DeviceManager(object):
             # we want to show this device all the time
             return False
         return True
+
+    @staticmethod
+    def _is_read_only(mount):
+        if not mount:
+            return True
+        try:
+            f = tempfile.TemporaryFile(dir=mount)
+        except EnvironmentError:
+            return True
+        else:
+            f.close()
+            return False
 
     def _is_hidden(self, info):
         # like _is_unknown(), but takes the self.show_unknown flag into account
@@ -468,16 +482,21 @@ class DeviceManager(object):
 
         if mount:
             is_hidden = self._is_hidden((mount, info, db))
-            sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'),
-                                             is_hidden=is_hidden)
-            metadata_manager = make_metadata_manager(mount, sqlite_db, id_)
+            read_only = self._is_read_only(mount)
+            if not read_only:
+                sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'),
+                                                 is_hidden=is_hidden)
+                metadata_manager = make_metadata_manager(mount, sqlite_db, id_)
+            else:
+                sqlite_db = metadata_manager = None
         else:
             sqlite_db = None
             metadata_manager = None
+            read_only = False
 
         info = self.connected[id_] = messages.DeviceInfo(
             id_, info, mount, db, sqlite_db, metadata_manager,
-            kwargs.get('size'), kwargs.get('remaining'))
+            kwargs.get('size'), kwargs.get('remaining'), read_only)
 
         return info
 
@@ -490,7 +509,7 @@ class DeviceManager(object):
 
         info = self._set_connected(id_, kwargs)
 
-        if not self._is_hidden(info):
+        if not self._is_hidden(info) and not info.read_only:
             self._send_connect(info)
         else:
             logging.debug('ignoring %r', info)
@@ -518,7 +537,7 @@ class DeviceManager(object):
 
         info = self._set_connected(id_, kwargs)
 
-        if self._is_hidden(info):
+        if self._is_hidden(info) or info.read_only:
             # don't bother with change message on devices we're not showing
             return
 
@@ -539,7 +558,7 @@ class DeviceManager(object):
             return # don't bother with sending messages
 
         info = self.connected.pop(id_)
-        if not self._is_hidden(info):
+        if not self._is_hidden(info) and not info.read_only:
             self._send_disconnect(info)
 
     def _send_disconnect(self, info):
@@ -1513,21 +1532,24 @@ def scan_device_for_files(device):
     # XXX is this as_idle() safe?
 
     # prepare paths to add
-    logging.debug('starting scan on %s', device.mount)
+    if device.read_only:
+        logging.debug('skipping scan on read-only device %r', device.mount)
+        return
+    logging.debug('starting scan on %r', device.mount)
     known_files = clean_database(device)
     item_data = []
     start = time.time()
     filenames = []
     def _stop():
         if not app.device_manager.running: # user quit, so we will too
-            logging.debug('stopping scan on %s: user quit', device.mount)
+            logging.debug('stopping scan on %r: user quit', device.mount)
             return True
         if not os.path.exists(device.mount): # device disappeared
-            logging.debug('stopping scan on %s: disappeared', device.mount)
+            logging.debug('stopping scan on %r: disappeared', device.mount)
             return True
         if app.device_manager._is_hidden(device): # device no longer being
                                                   # shown
-            logging.debug('stopping scan on %s: hidden', device.mount)
+            logging.debug('stopping scan on %r: hidden', device.mount)
             return True
         return False
 
@@ -1557,7 +1579,7 @@ def scan_device_for_files(device):
         yield # yield after prep work
 
         device.database.setdefault(u'sync', {})
-        logging.debug('scanned %s, found %i files (%i total)',
+        logging.debug('scanned %r, found %i files (%i total)',
                       device.mount, len(item_data),
                       len(known_files) + len(item_data))
 
