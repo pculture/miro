@@ -1624,7 +1624,7 @@ class DeviceInfo(object):
     """Tracks the state of an attached device.
     """
     def __init__(self, id_, device_info, mount, database, sqlite_database,
-                 metadata_manager, size, remaining):
+                 metadata_manager, size, remaining, read_only):
         self.id = id_
         self.mount = mount
         self.database = database
@@ -1633,6 +1633,7 @@ class DeviceInfo(object):
         self.size = size
         self.remaining = remaining
         self.info = device_info
+        self.read_only = read_only
         self.name = database.get('settings', {}).get('name', device_info.name)
 
     def __repr__(self):
