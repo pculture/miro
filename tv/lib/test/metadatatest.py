@@ -1168,7 +1168,7 @@ class DeviceMetadataTest(EventLoopTest):
             self.tempdir, sqlite_db, device_id)
         self.device = messages.DeviceInfo(device_id, device_info, mount,
                                           self.db, sqlite_db,
-                                          metadata_manager, 1000, 0)
+                                          metadata_manager, 1000, 0, False)
         # copy a file to our device
         src = resources.path('testdata/Wikipedia_Song_by_teddy.ogg')
         dest = os.path.join(self.tempdir, 'test-song.ogg')
