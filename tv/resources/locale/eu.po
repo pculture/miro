@@ -7,24 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-03-19 14:16+0100\n"
-"PO-Revision-Date: 2012-03-16 15:54+0000\n"
+"POT-Creation-Date: 2012-04-09 11:50+0200\n"
+"PO-Revision-Date: 2012-03-25 00:33+0000\n"
 "Last-Translator: Azpidatziak <Unknown>\n"
 "Language-Team: (EUS_Xabier Aramendi) <azpidatziak@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-03-19 16:17+0000\n"
-"X-Generator: Launchpad (build 14969)\n"
+"X-Launchpad-Export-Date: 2012-04-09 15:28+0000\n"
+"X-Generator: Launchpad (build 15060)\n"
 "X-Poedit-Country: Basque Country (Navarre)\n"
 "X-Poedit-Language: Basque (Euskara)\n"
 
-#: ../../lib/commandline.py:141
+#: ../../lib/commandline.py:153
 msgid "Subscription error"
 msgstr "Harpidetza akatsa"
 
-#: ../../lib/commandline.py:151
+#: ../../lib/commandline.py:163
 #, python-format
 msgid ""
 "This %(appname)s podcast file has an invalid format: %(url)s.  Please notify "
@@ -33,7 +33,7 @@ msgstr ""
 "%(appname)s podcast agiri hau heuskarri baliogabean dago: %(url)s. Mesedez "
 "jakinarazi agiri honen argitaratzaileari."
 
-#: ../../lib/commandline.py:162
+#: ../../lib/commandline.py:174
 #, python-format
 msgid ""
 "This %(appname)s podcast file has the wrong content type: %(url)s. Please "
@@ -42,26 +42,26 @@ msgstr ""
 "%(appname)s podcast agiri honek eduki mota okerrak ditu: %(url)s. Mesedez "
 "jakinarazi agiri honen argitaratzaileari."
 
-#: ../../lib/commandline.py:171
+#: ../../lib/commandline.py:183
 #, python-format
 msgid "Could not download the %(appname)s podcast file: %(url)s"
 msgstr "Ezinezkoa %(appname)s podcast agiria jeistea: %(url)s"
 
-#: ../../lib/commandline.py:226
+#: ../../lib/commandline.py:238
 msgid "Invalid Torrent"
 msgstr "Torrent Baliogabea"
 
-#: ../../lib/commandline.py:228
+#: ../../lib/commandline.py:240
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr "%(filename)s torrent agiria hondatuta agertzen da edo ezin da ireki."
 
-#: ../../lib/commandline.py:235
+#: ../../lib/commandline.py:247
 msgid "File Error"
 msgstr "Agiri Akatsa"
 
-#: ../../lib/commandline.py:237
+#: ../../lib/commandline.py:249
 #, python-format
 msgid ""
 "The torrent file %(filename)s could not be opened. Please ensure it exists "
@@ -106,7 +106,7 @@ msgstr "Kopiatu"
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr "%(original_name)s (%(format)s-ra bihurtuta)"
 
-#: ../../lib/databaseupgrade.py:2739 ../../lib/feed.py:1695
+#: ../../lib/databaseupgrade.py:2739 ../../lib/feed.py:1693
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr "%(engine)s '%(query)s'-rentzat"
@@ -128,19 +128,19 @@ msgstr "Datubase Eguneraketa"
 msgid "Preparing Items"
 msgstr "Gaien Gertaketa"
 
-#: ../../lib/devices.py:248
+#: ../../lib/devices.py:247
 msgid "Your drive must be mounted."
 msgstr "Zure gidagailua tresnatuta egon behar da."
 
-#: ../../lib/devices.py:454
+#: ../../lib/devices.py:473
 msgid "USB Device"
 msgstr "USB Gailua"
 
-#: ../../lib/devices.py:536
+#: ../../lib/devices.py:569
 msgid "Device removed during sync"
 msgstr "Gailua kenduta albiberetzean"
 
-#: ../../lib/devices.py:537
+#: ../../lib/devices.py:570
 #, python-format
 msgid ""
 "%(name)s was removed while a sync was in progress.  Not all items may have "
@@ -157,7 +157,7 @@ msgstr "Ongi"
 msgid "Apply"
 msgstr "Ezarri"
 
-#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/gtk/window.py:557
+#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/gtk/window.py:565
 msgid "Close"
 msgstr "Itxi"
 
@@ -209,7 +209,7 @@ msgstr "Ez Migratu"
 
 #: ../../lib/dialogs.py:111 ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/itemcontextmenu.py:428
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1953
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1945
 #: ../../lib/frontends/widgets/itemrenderer.py:102
 msgid "Download"
 msgstr "Jeitsi"
@@ -274,7 +274,7 @@ msgstr "Heutsi"
 msgid "Delete"
 msgstr "Ezabatu"
 
-#: ../../lib/dialogs.py:126 ../../lib/frontends/widgets/menus.py:152
+#: ../../lib/dialogs.py:126 ../../lib/frontends/widgets/menus.py:154
 #: ../../lib/frontends/widgets/prefpanel.py:915
 #: ../../lib/frontends/widgets/tablist.py:1108
 #: ../../lib/frontends/widgets/tablist.py:1122
@@ -315,7 +315,7 @@ msgstr "Harpidetu"
 
 #: ../../lib/dialogs.py:135
 msgid "Stop Watching"
-msgstr ""
+msgstr "Gelditu Ikustea"
 
 #: ../../lib/dialogs.py:136
 msgid "Retry"
@@ -323,7 +323,7 @@ msgstr "Berriro Saiatu"
 
 #: ../../lib/dialogs.py:137
 msgid "Start Fresh"
-msgstr ""
+msgstr "Hasi Berritzea"
 
 #: ../../lib/dialogs.py:138
 msgid "Include Database"
@@ -527,7 +527,7 @@ msgstr "Agiria ez da aurkitu"
 
 #: ../../lib/downloader.py:569
 msgid "Flash URL Scraping Error"
-msgstr ""
+msgstr "Flash URL Zuriketa Akatsa"
 
 #: ../../lib/downloader.py:787
 msgid "starting up"
@@ -548,16 +548,16 @@ msgstr "elkarketarik ez -  birsaiaketa laister"
 msgid "Unknown"
 msgstr "Ezezaguna"
 
-#: ../../lib/feed.py:1035
+#: ../../lib/feed.py:1033
 msgid "Bad content-type"
 msgstr "Eduki-mota okerra"
 
-#: ../../lib/feed.py:1048
+#: ../../lib/feed.py:1046
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
 msgstr "Podcasta ez da bateragarria %(appname)s-rekin"
 
-#: ../../lib/feed.py:1051
+#: ../../lib/feed.py:1049
 #, python-format
 msgid ""
 "This podcast is not compatible with %(appname)s but we'll try our best to "
@@ -569,12 +569,19 @@ msgid ""
 "\n"
 "Do you want to try to load this podcast anyway?"
 msgstr ""
+"Podcast hau ez da %(appname)s-rekin bateragarria baina saiatuko gara agiriak "
+"hartzen. Denbora hartu dezake bideoak, eta azalpenak ongi gelditzeko.\n"
+"\n"
+"Mesedez jarri harremanetan %(url)s-ren argitaratzaileekin eta galdetu ea "
+"eman ahal dezketen %(appname)s-rekin ongi lan egingo duen podcast bat.\n"
+"\n"
+"Edonola podcast hau gertatzea nahi duzu?"
 
-#: ../../lib/feed.py:2385 ../../lib/feed.py:2525
+#: ../../lib/feed.py:2383 ../../lib/feed.py:2523
 msgid "Local Files"
 msgstr "Tokiko Agiriak"
 
-#: ../../lib/feed.py:2394 ../../lib/feed.py:2500 ../../lib/feed.py:2510
+#: ../../lib/feed.py:2392 ../../lib/feed.py:2498 ../../lib/feed.py:2508
 #: ../../lib/frontends/widgets/firsttimedialog.py:383
 msgid "Search"
 msgstr "Bilatu"
@@ -610,6 +617,13 @@ msgid ""
 "%(reason)s\n"
 "\n"
 msgstr ""
+"%(shortappname)s-k ezin du zure lehen bide agiritegia erabili, hemen "
+"ezarrita dagoena:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"%(reason)s\n"
+"\n"
 
 #: ../../lib/frontends/widgets/application.py:234
 msgid ""
@@ -622,6 +636,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:243
 msgid "You choose a new folder or quit and try to fix the issue manually."
 msgstr ""
+"Hautatu agiritegi berri bat edo utzi eta saiatu arazoa eskuz zuzentzen."
 
 #: ../../lib/frontends/widgets/application.py:254
 msgid "Choose new primary video folder"
@@ -629,7 +644,7 @@ msgstr "Hautatu bideo agiritegi lehenetsi berria"
 
 #: ../../lib/frontends/widgets/application.py:459
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Akatsa Agiria Agertaraztean"
 
 #: ../../lib/frontends/widgets/application.py:460
 #, python-format
@@ -642,7 +657,7 @@ msgstr "Ireki Agiriak..."
 
 #: ../../lib/frontends/widgets/application.py:480
 msgid "All Media Files"
-msgstr ""
+msgstr "Multimedia Agiri Guztiak"
 
 #: ../../lib/frontends/widgets/application.py:481
 #: ../../lib/frontends/widgets/application.py:756
@@ -656,7 +671,7 @@ msgstr "Audio Agiriak"
 
 #: ../../lib/frontends/widgets/application.py:483
 msgid "Torrent Files"
-msgstr ""
+msgstr "Torrent Agiriak"
 
 #: ../../lib/frontends/widgets/application.py:495
 #: ../../lib/frontends/widgets/application.py:500
@@ -721,7 +736,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a podcast. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Gai hauetako bat ez da podcast batetik jeitsia. Ezabatzea nahi duzu edo "
+"Liburutegitik kentzea bakarrik?"
 msgstr[1] ""
+"Gai hauetako batzuk ez dira podcast batetik jeitsiak. Ezabatzea nahi dituzu "
+"edo Liburutegitik kentzea bakarrik?"
 
 #: ../../lib/frontends/widgets/application.py:613
 msgid ""
@@ -731,7 +750,11 @@ msgid_plural ""
 "Some of these items are folders.  Deleting/Removing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Gai hauetako bat agiritegi bat da. Agiritegi bat Ezabatu/Kendu ezkero bere "
+"edukiak ezabatu/kendu-ko dira"
 msgstr[1] ""
+"Gai hauetako batzuk agiritegiak bat dira. Agiritegi bat Ezabatu/Kendu ezkero "
+"bere edukiak ezabatu/kendu-ko dira"
 
 #: ../../lib/frontends/widgets/application.py:628
 #, python-format
@@ -766,7 +789,7 @@ msgid "Choose files to import"
 msgstr "Hautatu inportatzeko agiriak"
 
 #: ../../lib/frontends/widgets/application.py:794
-#: ../../lib/frontends/widgets/menus.py:139
+#: ../../lib/frontends/widgets/menus.py:141
 #: ../../lib/frontends/widgets/tabcontroller.py:496
 msgid "Add Source"
 msgstr "Gehitu Ituburua"
@@ -786,6 +809,10 @@ msgid ""
 "\n"
 "Enter the URL of the source to add"
 msgstr ""
+"Sartu duzun helbidea ez da baliozko url bat.\n"
+"Mesedez egiaztatu URL-a eta saiatu berriro.\n"
+"\n"
+"Sartu gehitzeko iturburuaren URL-a"
 
 #: ../../lib/frontends/widgets/application.py:854
 msgid "Import OPML File"
@@ -811,7 +838,7 @@ msgstr "Sortu Irakur-zerrenda"
 #: ../../lib/frontends/widgets/application.py:900
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1245
 msgid "Enter a name for the new playlist"
-msgstr "Sartu izen bat irakuri-zerrenda berriarentzat"
+msgstr "Sartu izen bat irakur-zerrenda berriarentzat"
 
 #: ../../lib/frontends/widgets/application.py:921
 msgid "Create Playlist Folder"
@@ -832,7 +859,7 @@ msgid "Enter a new name for the podcast folder %(name)s"
 msgstr "Sartu izen berri bat %(name)s podcast agiritegiarentzat"
 
 #: ../../lib/frontends/widgets/application.py:948
-#: ../../lib/frontends/widgets/menus.py:150
+#: ../../lib/frontends/widgets/menus.py:152
 msgid "Rename Podcast"
 msgstr "Berrizendatu Podcasta"
 
@@ -842,7 +869,7 @@ msgid "Enter a new name for the podcast %(name)s"
 msgstr "Sartu izen berri bat %(name)s podcastarentzat"
 
 #: ../../lib/frontends/widgets/application.py:953
-#: ../../lib/frontends/widgets/menus.py:189
+#: ../../lib/frontends/widgets/menus.py:191
 #: ../../lib/frontends/widgets/tablist.py:1179 ../../lib/playlist.py:203
 msgid "Rename Playlist"
 msgstr "Berrizendatu Irakur-zerrenda"
@@ -863,7 +890,7 @@ msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Sartu izen berri bat %(name)s irakur-zerrenda agiritegiarentzat"
 
 #: ../../lib/frontends/widgets/application.py:962
-#: ../../lib/frontends/widgets/menus.py:151
+#: ../../lib/frontends/widgets/menus.py:153
 #: ../../lib/frontends/widgets/tablist.py:1004
 msgid "Rename Source"
 msgstr "Berrizendatu Iturburua"
@@ -915,6 +942,8 @@ msgstr "Zihur zaude uztea nahi duzula?"
 msgid ""
 "Warn me when I attempt to quit when others are connected to my media library"
 msgstr ""
+"Ohartarazi uzten saiatzen naizenean beste batzuk nire multimedia "
+"liburutegira elkarketatuta daudela."
 
 #: ../../lib/frontends/widgets/application.py:1187
 #, python-format
@@ -937,7 +966,7 @@ msgstr[1] "%(count)d bihurketa dituzu garatzen. Utzi edonola?"
 
 #: ../../lib/frontends/widgets/application.py:1211
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr ""
+msgstr "Ohartarazi uzten saiatzen naizenean bihurketak  garatzen ari direla"
 
 #: ../../lib/frontends/widgets/application.py:1387
 msgid "Connect failed"
@@ -950,6 +979,10 @@ msgid ""
 "\n"
 "The share is either unreachable or incompatible with %(appname)s sharing."
 msgstr ""
+"%(name)s elkarbanatzeko elkarketa hutsegitea.\n"
+"\n"
+"Elkarbanaketa erdietsiezina edo bateraezina da %(appname)s "
+"elkarbanaketarekin."
 
 #: ../../lib/frontends/widgets/application.py:1409
 msgid "Upgrading database"
@@ -962,12 +995,17 @@ msgid ""
 "process can take a long time if you have a large number of items in "
 "%(appname)s (it can even take more than 30 minutes)."
 msgstr ""
+"%(appname)s zure podcast eta agiri datubasea eguneratzen ari da.  Aldibaeko "
+"aurrerabide honek luzaro iraun dezake gaiz zenbateko handia baduzu "
+"%(appname)s-en (30 minutu baino gehiago hartu ditzake)."
 
 #: ../../lib/frontends/widgets/application.py:1418
 #, python-format
 msgid ""
 "%(appname)s shutdown improperly and needs to prepare your items for display."
 msgstr ""
+"%(appname)s ezegoki itzali da eta beharrezkoa da zure gaien erakustea "
+"gertatzeko."
 
 #: ../../lib/frontends/widgets/application.py:1656
 msgid "Message"
@@ -984,11 +1022,12 @@ msgstr "Jeitsi bideo hau"
 #: ../../lib/frontends/widgets/crashdialog.py:53
 #, python-format
 msgid "Oops!  %(appname)s has encountered an internal error"
-msgstr ""
+msgstr "Oops! %(appname)s-k baren akats bat aurkitu du"
 
 #: ../../lib/frontends/widgets/crashdialog.py:68
 msgid "You can help us fix this problem by submitting an error report."
 msgstr ""
+"Arazo hau zuzentzen lagundu gaitzakezu akats jakinarazpen bat bidaliz."
 
 #: ../../lib/frontends/widgets/crashdialog.py:75
 msgid ""
@@ -996,6 +1035,9 @@ msgid ""
 "uniquely identifable information including file names, website URLs, podcast "
 "URLs, and disk paths."
 msgstr ""
+"Oharra: Akats jakinarazpen hau ez da publikoki argitaratuko, baina nortasun "
+"argibide bakarrak barneratu ditzake, agirizenak, webgune URL-ak, podcastak, "
+"eta diska helburuak barne."
 
 #: ../../lib/frontends/widgets/crashdialog.py:83
 msgid "See crash report"
@@ -1006,11 +1048,15 @@ msgid ""
 "Include entire program database including all filenames, websites, and "
 "podcasts with the error report."
 msgstr ""
+"Programaren datubase osoa du barne, agirizen, webgune eta akats "
+"jakinarazpena duten podcast guzitak barne."
 
 #: ../../lib/frontends/widgets/crashdialog.py:95
 msgid ""
 "What were you doing when you got this message?  (Helpful, but not required.)"
 msgstr ""
+"Zer  egiten ari zinen mezu hau jaso duzunean? (Lagungarria, baina ez "
+"beharrezkoa.)"
 
 #: ../../lib/frontends/widgets/crashdialog.py:108
 msgid "Crash Report:"
@@ -1024,7 +1070,7 @@ msgstr "Eguneratuta"
 #: ../../lib/frontends/widgets/devicecontroller.py:194
 #, python-format
 msgid "%(used)s used / %(total)s total"
-msgstr ""
+msgstr "%(used)s erabilita / %(total)s guztira"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:198
 #, python-format
@@ -1040,7 +1086,7 @@ msgstr[1] "Aldiberetu %(count)i Agiri"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:225
 msgid "Now Syncing"
-msgstr ""
+msgstr "Orain Aldiberetzen"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:226
 msgid "Cancel Sync"
@@ -1048,7 +1094,7 @@ msgstr "Ezeztatu Aldiberetzea"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:323
 msgid "Sync These Podcasts"
-msgstr ""
+msgstr "Aldiberetu Podcast Hauek"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:360
 msgid "Select none"
@@ -1072,7 +1118,7 @@ msgstr "Ezabatu epez-kanpoko podcastak nire gailutik"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:525
 msgid "Sync These Playlists"
-msgstr ""
+msgstr "Aldiberetu Irakur-zerrenda Haueka"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:526
 msgid "Sync Playlists"
@@ -1119,6 +1165,10 @@ msgid ""
 "play without conversion\n"
 "(may reduce video file sizes, but makes syncing much slower)"
 msgstr ""
+"Betik bihurtu bideoak gailu honetara kopiatu aurretik, baita bideoa "
+"bihurketa gabe irakurri badaiteke ere\n"
+"(bideo agiriaren neurria txikitu dezake, baina aldiberetzea askoz astiroagoa "
+"egiten du)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:682
 msgid "Main"
@@ -1157,6 +1207,7 @@ msgid ""
 "Drag individual video and audio files onto the device in the sidebar to copy "
 "them."
 msgstr ""
+"Arrastatu bideo eta audio agiri bat albobarrako gailura hura kopiatzeko."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:716
 msgid "Syncing"
@@ -1165,24 +1216,28 @@ msgstr "Aldiberetzea"
 #: ../../lib/frontends/widgets/devicecontroller.py:719
 msgid "Use the tabs above and these options for automatic syncing."
 msgstr ""
+"Erabili gaineko hegatsak eta aukera hauek berezgaitasunezko aldiberetzerako."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:725
 msgid "Sync automatically when this device is connected"
-msgstr ""
+msgstr "Berezgaitasunez aldiberetu gailu hau elkarketatuta dagoenean"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:730
 #, python-format
 msgid "Don't fill more than %(count)i percent of the free space when syncing"
 msgstr ""
+"Ez bete toki askearen %(count)i ehuneko baino gehiago aldiberetzerakoan"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:750
 msgid "Auto Fill"
-msgstr ""
+msgstr "Berez Bete"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:753
 msgid ""
 "After syncing my selections in the tabs above, fill remaining space with:"
 msgstr ""
+"Gaineko hegatsetan nire hautapenak aldiberetu ondoren, bete gelditzen den "
+"tartea honekin:"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:759
 msgid "Newest Music"
@@ -1214,7 +1269,7 @@ msgstr "Gehiago"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:956
 msgid "Your device isn't telling us its exact model number."
-msgstr ""
+msgstr "Zure gailuak ez digu bere modelo zenbaki zehatza adierazten."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:961
 msgid "For optimal video conversion, select the device model."
@@ -1225,6 +1280,8 @@ msgid ""
 "If you don't know the model or it doesn't appear in the list, it's fine to "
 "choose the 'Generic' device option."
 msgstr ""
+"Ez baduzu ezagutzen modeloa edo ez bada zerrendan agertze,  ona da hautatzea "
+"gailu 'Orokorra'aukera."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:1006
 msgid "This is my device"
@@ -1245,14 +1302,14 @@ msgstr "%(databasecount)s: Ezabatu"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:466
 #: ../../lib/frontends/widgets/itemedit.py:551
 #: ../../lib/frontends/widgets/itemedit.py:563
-#: ../../lib/frontends/widgets/style.py:418
+#: ../../lib/frontends/widgets/style.py:421
 #: ../../lib/frontends/widgets/widgetconst.py:79
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:140
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:144
 msgid "Show"
 msgstr "Erakutsi"
 
 #: ../../lib/frontends/widgets/diagnostics.py:91
-#: ../../lib/frontends/widgets/menus.py:258
+#: ../../lib/frontends/widgets/menus.py:260
 msgid "Diagnostics"
 msgstr "Igarpenak"
 
@@ -1294,7 +1351,7 @@ msgstr "db objektu guztira oroimenean:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:136
 msgid "Total db backups:"
-msgstr ""
+msgstr "db  babeskopia guztira:"
 
 #: ../../lib/frontends/widgets/displays.py:592
 #, python-format
@@ -1391,7 +1448,7 @@ msgid "Put Into a New Folder"
 msgstr "Jarri Agiritegi Berri Batean"
 
 #: ../../lib/frontends/widgets/donate.py:183
-#: ../../lib/frontends/widgets/menus.py:253
+#: ../../lib/frontends/widgets/menus.py:255
 msgid "Donate"
 msgstr "Eman Diru-laguntza"
 
@@ -1477,7 +1534,7 @@ msgstr "Berez-Epezkanpotu Gaiak:"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:96
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "%(expiration)s ikusita (Berezkoa)"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 1 day ago"
@@ -1501,7 +1558,7 @@ msgstr "Duela 1 hilabete ikusita"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:138
 msgid "Outdated Podcast Items:"
-msgstr ""
+msgstr "Epezkanpoko Podcast Gaiak:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:140
 #, python-format
@@ -1538,7 +1595,7 @@ msgstr "Gai zaharrak kendu egin dira."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:194
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr ""
+msgstr "Pausatu berez-jeisketa gai kopuru hau irakurrigabe dagoenean:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:198
 msgid "1 unplayed item"
@@ -1574,11 +1631,12 @@ msgstr "%(appname)s Ezarpena"
 msgid ""
 "Welcome to %(name)s!  We have a couple of questions to help you get started."
 msgstr ""
+"Ongi etorria %(name)s-ra! Galdera pare bat ditugu zure hasten laguntzeko."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:217
 #, python-format
 msgid "What language would you like %(name)s to be in?"
-msgstr ""
+msgstr "Zein hizkuntza gustatuko litzaizuke %(name)s egotea?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:221
 #: ../../lib/frontends/widgets/prefpanel.py:537
@@ -1602,6 +1660,8 @@ msgid ""
 "%(name)s can automatically run when you start your computer so that it can "
 "resume your downloads and update your podcasts."
 msgstr ""
+"%(name)s berezgaitasunez  abiatu  daiteke zure ordenagailua abirazten "
+"duzunean zure jeisketei berrekinez eta zure podcastak eguneratuz."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:283
 #, python-format
@@ -1621,11 +1681,13 @@ msgid ""
 "%(name)s can find music and video on your computer and show them in your "
 "%(name)s library.  No files will be copied or duplicated."
 msgstr ""
+"%(name)s-k musika eta bidoeoak bilatu ditzake zure ordenagailuan eta hauek "
+"zure %(name)s liburutegian erakutsi. Ez da agiririk kopiatuko edo bikoiztuko."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:322
 #, python-format
 msgid "Would you like %(name)s to search your computer for media files?"
-msgstr ""
+msgstr "Nahi duzu %(name)s zure ordenagailuan multimedia agiriak bilatzeko?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:338
 msgid "Search everywhere."
@@ -1673,30 +1735,32 @@ msgstr "Ezeztatu Bilaketa"
 #: ../../lib/frontends/widgets/firsttimedialog.py:558
 #: ../../lib/frontends/widgets/firsttimedialog.py:639
 msgid "Music Setup"
-msgstr ""
+msgstr "Musika Ezarpena"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:596
 #, python-format
 msgid "Show my %(player)s music in my %(appname)s library."
-msgstr ""
+msgstr "Erakutsi nire %(player)s musika nire %(appname)s liburutegian."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:600
 msgid "(Don't worry, no files are copied.)"
-msgstr ""
+msgstr "(Ez kezkatu, ez dago agiririk kopiatuta)"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:606
 msgid "Cleanup Song Info and Album Art"
-msgstr ""
+msgstr "Garbitu Abesti Argibideak eta Bilduma Azala"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:609
 msgid ""
 "Miro will use Echonest and 7Digital to cleanup all song titles, info, and "
 "album art.  Recommended."
 msgstr ""
+"Mirok Echonest eta 7Digital erabili ditzake abesti izenburu, argibide, eta "
+"bilduma guztiak garbitzeko. Gomendatua."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:618
 msgid "Note:"
-msgstr ""
+msgstr "Oharra:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:623
 msgid ""
@@ -1707,234 +1771,240 @@ msgid ""
 "Online lookup involves sending anonymized data about your songs to Miro and "
 "indirectly to Echonest and 7Digital."
 msgstr ""
+"Eskuz ezarri edo desegin dezakezu abesti argibide garbiketa eskuin-klikatuz "
+"abesti batean edo abesti multzo batean. Bilaketa ezarpenak zehaztu ditzakezu "
+"edonoiz Miro hobespenetan.\n"
+"\n"
+"Onlineko bilaketa zure abestien izengabeko datuak Mirori ez zeharka Echonest "
+"eta 7Digitali bidaltzean datza."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:644
 msgid "First Time Music Setup"
-msgstr ""
+msgstr "Lehn Aldiko Musia Ezarpena"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:646
 msgid "Get Started"
-msgstr ""
+msgstr "Hasi"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:436
+#: ../../lib/frontends/widgets/gst/renderer.py:456
 #, python-format
 msgid "Track %(tracknumber)d"
 msgstr "Bidea %(tracknumber)d"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:446
+#: ../../lib/frontends/widgets/gst/renderer.py:466
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
 msgstr "%(tracknumber)d Azpidatzi agiria"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:540
+#: ../../lib/frontends/widgets/gst/renderer.py:560
 msgid "Eastern European"
 msgstr "Europa Ekialdea"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:541
-#: ../../lib/frontends/widgets/gst/renderer.py:542
-#: ../../lib/frontends/widgets/gst/renderer.py:543
+#: ../../lib/frontends/widgets/gst/renderer.py:561
+#: ../../lib/frontends/widgets/gst/renderer.py:562
+#: ../../lib/frontends/widgets/gst/renderer.py:563
 msgid "Baltic"
 msgstr "Baltikoa"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:544
+#: ../../lib/frontends/widgets/gst/renderer.py:564
 msgid "Croatian"
 msgstr "Kroaziera"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:545
-#: ../../lib/frontends/widgets/gst/renderer.py:546
-#: ../../lib/frontends/widgets/gst/renderer.py:547
-#: ../../lib/frontends/widgets/gst/renderer.py:548
-#: ../../lib/frontends/widgets/gst/renderer.py:549
-#: ../../lib/frontends/widgets/gst/renderer.py:550
+#: ../../lib/frontends/widgets/gst/renderer.py:565
+#: ../../lib/frontends/widgets/gst/renderer.py:566
+#: ../../lib/frontends/widgets/gst/renderer.py:567
+#: ../../lib/frontends/widgets/gst/renderer.py:568
+#: ../../lib/frontends/widgets/gst/renderer.py:569
+#: ../../lib/frontends/widgets/gst/renderer.py:570
 msgid "Cyrillic"
 msgstr "Zirilikoa"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:551
+#: ../../lib/frontends/widgets/gst/renderer.py:571
 msgid "Cyrillic/Russian"
 msgstr "Zirilikoa/Errusia"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:552
-#: ../../lib/frontends/widgets/gst/renderer.py:553
+#: ../../lib/frontends/widgets/gst/renderer.py:572
+#: ../../lib/frontends/widgets/gst/renderer.py:573
 msgid "Cyrillic/Ukrainian"
 msgstr "Zirilikoa/Ukrainia"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:555
-#: ../../lib/frontends/widgets/gst/renderer.py:556
-#: ../../lib/frontends/widgets/gst/renderer.py:557
+#: ../../lib/frontends/widgets/gst/renderer.py:575
+#: ../../lib/frontends/widgets/gst/renderer.py:576
+#: ../../lib/frontends/widgets/gst/renderer.py:577
 msgid "Central European"
 msgstr "Europa Erdialdea"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:558
-#: ../../lib/frontends/widgets/gst/renderer.py:559
+#: ../../lib/frontends/widgets/gst/renderer.py:578
+#: ../../lib/frontends/widgets/gst/renderer.py:579
 msgid "Romanian"
 msgstr "Errumaniera"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:561
+#: ../../lib/frontends/widgets/gst/renderer.py:581
 msgid "Western European"
 msgstr "Europa Mendebaldea"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:562
+#: ../../lib/frontends/widgets/gst/renderer.py:582
 msgid "Celtic"
 msgstr "Zeltiera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:563
-#: ../../lib/frontends/widgets/gst/renderer.py:564
-#: ../../lib/frontends/widgets/gst/renderer.py:565
-msgid "Greek"
-msgstr "Greziera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:566
-msgid "Icelandic"
-msgstr "Islandiera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:567
-msgid "Nordic"
-msgstr "Nordikoa"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:568
-msgid "South European"
-msgstr "Europa Hegoaldea"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:569
-#: ../../lib/frontends/widgets/gst/renderer.py:570
-#: ../../lib/frontends/widgets/gst/renderer.py:571
-#: ../../lib/frontends/widgets/gst/renderer.py:572
-#: ../../lib/frontends/widgets/gst/renderer.py:573
-msgid "Western"
-msgstr "Mendebaldea"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:575
-msgid "East Asian"
-msgstr "Asia Ekialdea"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:576
-#: ../../lib/frontends/widgets/gst/renderer.py:577
-#: ../../lib/frontends/widgets/gst/renderer.py:578
-#: ../../lib/frontends/widgets/gst/renderer.py:579
-msgid "Chinese Simplified"
-msgstr "Txinera Arrundua"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:580
-#: ../../lib/frontends/widgets/gst/renderer.py:581
-#: ../../lib/frontends/widgets/gst/renderer.py:582
-msgid "Chinese Traditional"
-msgstr "Txinera Tradizionala"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:583
 #: ../../lib/frontends/widgets/gst/renderer.py:584
 #: ../../lib/frontends/widgets/gst/renderer.py:585
+msgid "Greek"
+msgstr "Greziera"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:586
+msgid "Icelandic"
+msgstr "Islandiera"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:587
+msgid "Nordic"
+msgstr "Nordikoa"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:588
+msgid "South European"
+msgstr "Europa Hegoaldea"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:589
+#: ../../lib/frontends/widgets/gst/renderer.py:590
+#: ../../lib/frontends/widgets/gst/renderer.py:591
+#: ../../lib/frontends/widgets/gst/renderer.py:592
+#: ../../lib/frontends/widgets/gst/renderer.py:593
+msgid "Western"
+msgstr "Mendebaldea"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:595
+msgid "East Asian"
+msgstr "Asia Ekialdea"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:596
+#: ../../lib/frontends/widgets/gst/renderer.py:597
+#: ../../lib/frontends/widgets/gst/renderer.py:598
+#: ../../lib/frontends/widgets/gst/renderer.py:599
+msgid "Chinese Simplified"
+msgstr "Txinera Arrundua"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:600
+#: ../../lib/frontends/widgets/gst/renderer.py:601
+#: ../../lib/frontends/widgets/gst/renderer.py:602
+msgid "Chinese Traditional"
+msgstr "Txinera Tradizionala"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:603
+#: ../../lib/frontends/widgets/gst/renderer.py:604
+#: ../../lib/frontends/widgets/gst/renderer.py:605
 msgid "Japanese"
 msgstr "Japoniera"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:586
-#: ../../lib/frontends/widgets/gst/renderer.py:587
-#: ../../lib/frontends/widgets/gst/renderer.py:588
-#: ../../lib/frontends/widgets/gst/renderer.py:589
-msgid "Korean"
-msgstr "Koreaera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:591
-msgid "SE and SW Asian"
-msgstr "Asia HE eta HM"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:592
-msgid "Armenian"
-msgstr "Armeniera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:593
-msgid "Georgian"
-msgstr "Georgiera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:594
-msgid "Gujarati"
-msgstr "Gujaratiera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:595
-msgid "Gurmukhi"
-msgstr "Gurmukhiera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:596
-msgid "Hindi"
-msgstr "Hindiera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:597
-msgid "Thai"
-msgstr "Thailandiera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:598
-#: ../../lib/frontends/widgets/gst/renderer.py:599
-#: ../../lib/frontends/widgets/gst/renderer.py:600
-#: ../../lib/frontends/widgets/gst/renderer.py:601
-msgid "Turkish"
-msgstr "Turkiera"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:602
-#: ../../lib/frontends/widgets/gst/renderer.py:603
-#: ../../lib/frontends/widgets/gst/renderer.py:604
-msgid "Vietnamese"
-msgstr "Vietnamiera"
-
 #: ../../lib/frontends/widgets/gst/renderer.py:606
-msgid "Middle Eastern"
-msgstr "Ekialde Ertaina"
-
 #: ../../lib/frontends/widgets/gst/renderer.py:607
 #: ../../lib/frontends/widgets/gst/renderer.py:608
 #: ../../lib/frontends/widgets/gst/renderer.py:609
-#: ../../lib/frontends/widgets/gst/renderer.py:610
-msgid "Arabic"
-msgstr "Arabiera"
+msgid "Korean"
+msgstr "Koreaera"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:611
+msgid "SE and SW Asian"
+msgstr "Asia HE eta HM"
+
 #: ../../lib/frontends/widgets/gst/renderer.py:612
+msgid "Armenian"
+msgstr "Armeniera"
+
 #: ../../lib/frontends/widgets/gst/renderer.py:613
+msgid "Georgian"
+msgstr "Georgiera"
+
 #: ../../lib/frontends/widgets/gst/renderer.py:614
-msgid "Hebrew"
-msgstr "Hebraiera"
+msgid "Gujarati"
+msgstr "Gujaratiera"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:615
-msgid "Hebrew Visual"
-msgstr "Ikus Hebraiera"
+msgid "Gurmukhi"
+msgstr "Gurmukhiera"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:616
-msgid "Persian"
-msgstr "Pertsiera"
+msgid "Hindi"
+msgstr "Hindiera"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:617
+msgid "Thai"
+msgstr "Thailandiera"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:618
 #: ../../lib/frontends/widgets/gst/renderer.py:619
 #: ../../lib/frontends/widgets/gst/renderer.py:620
 #: ../../lib/frontends/widgets/gst/renderer.py:621
+msgid "Turkish"
+msgstr "Turkiera"
+
 #: ../../lib/frontends/widgets/gst/renderer.py:622
 #: ../../lib/frontends/widgets/gst/renderer.py:623
+#: ../../lib/frontends/widgets/gst/renderer.py:624
+msgid "Vietnamese"
+msgstr "Vietnamiera"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:626
+msgid "Middle Eastern"
+msgstr "Ekialde Ertaina"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:627
+#: ../../lib/frontends/widgets/gst/renderer.py:628
+#: ../../lib/frontends/widgets/gst/renderer.py:629
+#: ../../lib/frontends/widgets/gst/renderer.py:630
+msgid "Arabic"
+msgstr "Arabiera"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:631
+#: ../../lib/frontends/widgets/gst/renderer.py:632
+#: ../../lib/frontends/widgets/gst/renderer.py:633
+#: ../../lib/frontends/widgets/gst/renderer.py:634
+msgid "Hebrew"
+msgstr "Hebraiera"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:635
+msgid "Hebrew Visual"
+msgstr "Ikus Hebraiera"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:636
+msgid "Persian"
+msgstr "Pertsiera"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:638
+#: ../../lib/frontends/widgets/gst/renderer.py:639
+#: ../../lib/frontends/widgets/gst/renderer.py:640
+#: ../../lib/frontends/widgets/gst/renderer.py:641
+#: ../../lib/frontends/widgets/gst/renderer.py:642
+#: ../../lib/frontends/widgets/gst/renderer.py:643
 msgid "Unicode"
 msgstr "Unicode"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:97
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:120
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:124
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
 msgstr "Irakurri Hurrengo Irakurrigabea (%(unplayed)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:101
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:124
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:128
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr "Irakurri Irakurrigabeko Denak (%(unplayed)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:104
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:127
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:131
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
 msgstr "Pausatu Jeisketa Denak (%(downloading)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:107
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:130
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:134
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
 msgstr "Berrekin Jeisketa Denak (%(paused)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:138
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:142
 msgid "Hide"
 msgstr "Ezkutatu"
 
@@ -1960,42 +2030,42 @@ msgid "Subtitles Found"
 msgstr "Azpidatzi Bilaketa"
 
 #: ../../lib/frontends/widgets/gtk/video.py:336
-#: ../../lib/frontends/widgets/menus.py:236
+#: ../../lib/frontends/widgets/menus.py:238
 #: ../../osx/plat/frontends/widgets/overlay.py:126
 msgid "Subtitles"
 msgstr "Azpidatziak"
 
 #: ../../lib/frontends/widgets/gtk/video.py:382
-#: ../../lib/frontends/widgets/menus.py:233
-#: ../../lib/frontends/widgets/menus.py:1083
-#: ../../lib/frontends/widgets/menus.py:1102
+#: ../../lib/frontends/widgets/menus.py:235
+#: ../../lib/frontends/widgets/menus.py:1145
+#: ../../lib/frontends/widgets/menus.py:1164
 msgid "None Available"
-msgstr "Batere Ez Erabilgarri"
+msgstr "Bat Ere Ez Erabilgarri"
 
 #: ../../lib/frontends/widgets/gtk/video.py:404
-#: ../../lib/frontends/widgets/menus.py:1178
+#: ../../lib/frontends/widgets/menus.py:1240
 msgid "Disable Subtitles"
 msgstr "Ezgaitu Azpidatziak"
 
 #: ../../lib/frontends/widgets/gtk/video.py:415
-#: ../../lib/frontends/widgets/menus.py:1150
+#: ../../lib/frontends/widgets/menus.py:1212
 msgid "Select a Subtitles file..."
 msgstr "Hautatu Azpidatzi agiria..."
 
-#: ../../lib/frontends/widgets/gtk/window.py:475
+#: ../../lib/frontends/widgets/gtk/window.py:483
 msgid "All files"
 msgstr "Agiri denak"
 
-#: ../../lib/frontends/widgets/gtk/window.py:529
+#: ../../lib/frontends/widgets/gtk/window.py:537
 msgid "Choose"
 msgstr "Hautatu"
 
-#: ../../lib/frontends/widgets/gtk/window.py:555
+#: ../../lib/frontends/widgets/gtk/window.py:563
 #, python-format
 msgid "About %(appname)s"
 msgstr "%(appname)s-eri buruz"
 
-#: ../../lib/frontends/widgets/gtk/window.py:578
+#: ../../lib/frontends/widgets/gtk/window.py:586
 #, python-format
 msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
@@ -2004,17 +2074,20 @@ msgstr ""
 "%(copyright)s. Ikus license.txt agiria xehetasun gehiagorako.\n"
 "%(trademark)s"
 
-#: ../../lib/frontends/widgets/gtk/window.py:592
+#: ../../lib/frontends/widgets/gtk/window.py:600
 #, python-format
 msgid ""
 "Thank you to all the people who contributed to %(appname)s %(version)s:"
 msgstr ""
+"Eskerrak %(appname)s %(version)s-an bere ekarpena egin duen jende guztiari:"
 
-#: ../../lib/frontends/widgets/gtk/window.py:621
+#: ../../lib/frontends/widgets/gtk/window.py:629
 #, python-format
 msgid ""
 "To help fund continued %(appname)s development, visit the donation page at:"
 msgstr ""
+"%(appname)s garapenaren jarraipena finantzatzen laguntzeko, ikusi "
+"dirulaguntza orrialdea hemen:"
 
 #: ../../lib/frontends/widgets/guidecontroller.py:178
 msgid "Recently Watched"
@@ -2055,7 +2128,7 @@ msgstr "Bihurtu hona..."
 #: ../../lib/frontends/widgets/itemcontextmenu.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:408
 msgid "Set media kind as..."
-msgstr ""
+msgstr "Ezarri multimedia  mota honela..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:412
@@ -2071,13 +2144,13 @@ msgstr "Erabili Onlineko Datu Bilaketa"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:159
 #: ../../lib/frontends/widgets/itemcontextmenu.py:237
 #: ../../lib/frontends/widgets/itemcontextmenu.py:393
-#: ../../lib/frontends/widgets/menus.py:199
-#: ../../lib/frontends/widgets/menus.py:877
+#: ../../lib/frontends/widgets/menus.py:201
+#: ../../lib/frontends/widgets/menus.py:939
 msgid "Play"
 msgstr "Irakurri"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:161
-#: ../../lib/frontends/widgets/menus.py:879
+#: ../../lib/frontends/widgets/menus.py:941
 msgid "Pause"
 msgstr "Pausatu"
 
@@ -2201,25 +2274,25 @@ msgstr "Editatu Gaiak"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:464
 #: ../../lib/frontends/widgets/itemedit.py:562
-#: ../../lib/frontends/widgets/style.py:416
+#: ../../lib/frontends/widgets/style.py:419
 msgid "Movie"
 msgstr "Filma"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:468
 #: ../../lib/frontends/widgets/itemedit.py:564
-#: ../../lib/frontends/widgets/style.py:420
+#: ../../lib/frontends/widgets/style.py:423
 msgid "Clip"
 msgstr "Klip"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:470
 #: ../../lib/frontends/widgets/itemedit.py:565
-#: ../../lib/frontends/widgets/style.py:422
+#: ../../lib/frontends/widgets/style.py:425
 msgid "Podcast"
 msgstr "Poscast"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:486
 #: ../../lib/frontends/widgets/itemlistwidgets.py:684
-#: ../../lib/frontends/widgets/menus.py:304
+#: ../../lib/frontends/widgets/menus.py:308
 msgid "Show Conversion Folder"
 msgstr "Erakutsi Bihurketa Agiritegia"
 
@@ -2329,7 +2402,7 @@ msgstr "Neurria"
 
 #: ../../lib/frontends/widgets/itemedit.py:526
 msgid "Art"
-msgstr ""
+msgstr "Azala"
 
 #: ../../lib/frontends/widgets/itemedit.py:537
 msgid "Path"
@@ -2350,7 +2423,7 @@ msgstr "Atal Zenbakia"
 #: ../../lib/frontends/widgets/itemedit.py:559
 #: ../../lib/frontends/widgets/widgetconst.py:80
 msgid "Video Kind"
-msgstr ""
+msgstr "Bideo Mota"
 
 #: ../../lib/frontends/widgets/itemedit.py:686
 msgid "Edit Item"
@@ -2368,6 +2441,8 @@ msgid ""
 "To change a field for all the selected items, check the checkbox next to the "
 "field you'd like to change."
 msgstr ""
+"Hautatutako gai guztien eremu bat  aldatzeko, hautatu aldatzea nahi duzun "
+"eremuaren ondoko hautakuxa."
 
 #: ../../lib/frontends/widgets/itemedit.py:768
 #: ../../lib/frontends/widgets/prefpanel.py:1442
@@ -2382,7 +2457,7 @@ msgstr "Ikusi|Denak"
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1273
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1044
 #: ../../lib/frontends/widgets/itemrenderer.py:109
-#: ../../lib/frontends/widgets/style.py:598
+#: ../../lib/frontends/widgets/style.py:601
 msgid "Unplayed"
 msgstr "Irakurri gabea"
 
@@ -2471,7 +2546,7 @@ msgstr "Jeisketa"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1047
 #: ../../lib/frontends/widgets/itemrenderer.py:111
-#: ../../lib/frontends/widgets/style.py:616
+#: ../../lib/frontends/widgets/style.py:619
 msgid "Newly Available"
 msgstr "Berriki Eskuragarri"
 
@@ -2485,7 +2560,7 @@ msgstr "%(rate)s"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1237
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
+msgstr "%(available)s jeisketa toki mugaren azpitik (%(amount)s aske diskan)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1244
 #, python-format
@@ -2540,72 +2615,75 @@ msgstr "Berez-Jeitsi Denak"
 msgid "Remove podcast"
 msgstr "Kendu podcasta"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1768
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1765
 #, python-format
 msgid "Looking up album art and song info: %(number)d of %(total)d"
 msgstr ""
+"Bilduma azala eta abesti argibideak bilaketa: %(number)d  %(total)d-tik"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1771
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1768
 #, python-format
 msgid "Importing audio details and artwork: %(number)d of %(total)d"
-msgstr ""
+msgstr "Audio xehetasunak eta lan inportazioa: %(number)d  %(total)d-tik"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1774
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1771
 #, python-format
 msgid ""
 "Importing video details and creating thumbnails: %(number)d of %(total)d"
 msgstr ""
+"Bideo xehetasunak inportazioa eta txikirudiak sortzea: %(number)d of "
+"%(total)d"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1777
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1774
 #, python-format
 msgid "Importing file details: %(number)d of %(total)d"
-msgstr ""
+msgstr "Agiri xehetasun inportazioa: %(number)d of %(total)d"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1952
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1944
 msgid "Remaining"
-msgstr ""
+msgstr "Gelditzen da"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1954
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1946
 msgid "Upload"
 msgstr "Igoera"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1955
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1956
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1947
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1948
 msgid "Total"
 msgstr "Guztira"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2000
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1992
 msgid "Connected Peers"
 msgstr "Elkarketatutako Hartzaileak"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2001
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1993
 msgid "Seeders"
 msgstr "Emaleak"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2002
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1994
 msgid "Leechers"
 msgstr "Izainak"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2003
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1995
 msgid "Share Ratio"
 msgstr "Elkarbanatze Maila"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2187
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2179
 msgid "View License"
 msgstr "Ikusi Baimena"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2208
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2200
 msgid "Select an item to view more of its details"
 msgstr "Hautatu gai bat bere xehetasun gehiago ikusteko"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2261
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2253
 msgid "DRM Locked"
 msgstr "DRM Blokeatuta"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:98
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr ""
+msgstr "Hemen Agertarazten: %(progname)s"
 
 #: ../../lib/frontends/widgets/itemrenderer.py:101
 msgid "display contents"
@@ -2656,43 +2734,43 @@ msgstr "ELKARBANATU"
 msgid "DRM locked"
 msgstr "DRM blokeatuta"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1343
+#: ../../lib/frontends/widgets/itemrenderer.py:1345
 #, python-format
 msgid "Conversion to %(format)s"
 msgstr "%(format)s-ra bihurtu"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1346
+#: ../../lib/frontends/widgets/itemrenderer.py:1348
 #, python-format
 msgid "Conversion to %(format)s failed: %(error)s"
 msgstr "%(format)s-ra bihurtze hutsegitea: %(error)s"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1353
-#: ../../lib/frontends/widgets/itemrenderer.py:1360
+#: ../../lib/frontends/widgets/itemrenderer.py:1355
+#: ../../lib/frontends/widgets/itemrenderer.py:1362
 msgid "Clear"
 msgstr "Garbitu"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1355
+#: ../../lib/frontends/widgets/itemrenderer.py:1357
 msgid "Failed"
 msgstr "Hutsegitea"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1356
+#: ../../lib/frontends/widgets/itemrenderer.py:1358
 msgid "Troubleshoot"
 msgstr "Arazoak"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1357
+#: ../../lib/frontends/widgets/itemrenderer.py:1359
 msgid "Open Log"
 msgstr "Ireki Oharra"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1362
+#: ../../lib/frontends/widgets/itemrenderer.py:1364
 msgid "Completed"
 msgstr "Osatuta"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1371
+#: ../../lib/frontends/widgets/itemrenderer.py:1373
 #, python-format
 msgid "%(percent)i%% done"
 msgstr "%(percent)i%% eginda"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1378
+#: ../../lib/frontends/widgets/itemrenderer.py:1380
 #: ../../lib/frontends/widgets/statictabs.py:167
 #: ../../lib/frontends/widgets/statictabs.py:174
 msgid "Converting"
@@ -2715,329 +2793,335 @@ msgstr ""
 "\n"
 "%(url)s"
 
-#: ../../lib/frontends/widgets/menus.py:91
+#: ../../lib/frontends/widgets/menus.py:93
 msgid "_File"
 msgstr "_Agiria"
 
-#: ../../lib/frontends/widgets/menus.py:92
-msgid "_Open"
-msgstr "_Ireki"
-
 #: ../../lib/frontends/widgets/menus.py:94
+msgid "_Open"
+msgstr "I_reki"
+
+#: ../../lib/frontends/widgets/menus.py:96
 msgid "Import"
 msgstr "Inportatu"
 
-#: ../../lib/frontends/widgets/menus.py:95
+#: ../../lib/frontends/widgets/menus.py:97
 msgid "Search all my Files..."
 msgstr "Bilatu nire Agiri guztiak..."
 
-#: ../../lib/frontends/widgets/menus.py:98
+#: ../../lib/frontends/widgets/menus.py:100
 msgid "Search in a Folder..."
 msgstr "Bilatu Agiritegi bat..."
 
-#: ../../lib/frontends/widgets/menus.py:101
+#: ../../lib/frontends/widgets/menus.py:103
 msgid "Watch a Folder..."
 msgstr "Ikusi Agiritegi bat..."
 
-#: ../../lib/frontends/widgets/menus.py:104
+#: ../../lib/frontends/widgets/menus.py:106
 msgid "Choose Files...."
 msgstr "Hautatu Agiriak..."
 
-#: ../../lib/frontends/widgets/menus.py:109
+#: ../../lib/frontends/widgets/menus.py:111
 msgid "Download from a URL"
 msgstr "Jeitsi URL batetik"
 
-#: ../../lib/frontends/widgets/menus.py:111
+#: ../../lib/frontends/widgets/menus.py:113
 msgid "Edit _Item Details..."
 msgstr "Editatu _Gai Xehetasunak..."
 
-#: ../../lib/frontends/widgets/menus.py:114
+#: ../../lib/frontends/widgets/menus.py:116
 msgid "Edit _Items"
 msgstr "Editatu _Gaiak"
 
-#: ../../lib/frontends/widgets/menus.py:115
+#: ../../lib/frontends/widgets/menus.py:117
 msgid "Use album art and song info from online lookup database (Echonest)"
 msgstr ""
+"Erabili bilduma azal eta abesti argibidea onlineko datubase bilaketatik "
+"(Echonest)"
 
-#: ../../lib/frontends/widgets/menus.py:119
+#: ../../lib/frontends/widgets/menus.py:121
 msgid "Remove Item"
 msgstr "Kendu Gaia"
 
-#: ../../lib/frontends/widgets/menus.py:121
+#: ../../lib/frontends/widgets/menus.py:123
 msgid "Remove Items"
 msgstr "Kendu Gaiak"
 
-#: ../../lib/frontends/widgets/menus.py:122
+#: ../../lib/frontends/widgets/menus.py:124
 msgid "_Save Item As"
 msgstr "_Gorde Gaia Honela"
 
-#: ../../lib/frontends/widgets/menus.py:125
+#: ../../lib/frontends/widgets/menus.py:127
 msgid "_Save Items As"
 msgstr "_Gorde Gaiak Honela"
 
-#: ../../lib/frontends/widgets/menus.py:126
+#: ../../lib/frontends/widgets/menus.py:128
 msgid "Copy Item _URL"
 msgstr "_Kopitatu Gaiaren URL-a"
 
-#: ../../lib/frontends/widgets/menus.py:130
+#: ../../lib/frontends/widgets/menus.py:132
 msgid "Check Version"
 msgstr "Egiaztatu Bertsioa"
 
-#: ../../lib/frontends/widgets/menus.py:131
+#: ../../lib/frontends/widgets/menus.py:133
 #: ../../lib/frontends/widgets/prefpanel.py:1465
 msgid "Preferences"
 msgstr "Hobespenak"
 
-#: ../../lib/frontends/widgets/menus.py:132
+#: ../../lib/frontends/widgets/menus.py:134
 msgid "_Quit"
 msgstr "_Utzi"
 
-#: ../../lib/frontends/widgets/menus.py:135
+#: ../../lib/frontends/widgets/menus.py:137
 msgid "_Sidebar"
 msgstr "Alb_obarra"
 
-#: ../../lib/frontends/widgets/menus.py:136
+#: ../../lib/frontends/widgets/menus.py:138
 #: ../../lib/frontends/widgets/newfeed.py:96
 msgid "Add Podcast"
 msgstr "Gehitu Podcasta"
 
-#: ../../lib/frontends/widgets/menus.py:141
+#: ../../lib/frontends/widgets/menus.py:143
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 msgid "New Search Podcast"
 msgstr "Podcast Bilaketa Berria"
 
-#: ../../lib/frontends/widgets/menus.py:143
+#: ../../lib/frontends/widgets/menus.py:145
 msgid "_New Folder"
 msgstr "­Agiritegi Berria"
 
-#: ../../lib/frontends/widgets/menus.py:147
+#: ../../lib/frontends/widgets/menus.py:149
 #: ../../lib/frontends/widgets/tablist.py:1116
 msgid "Rename"
 msgstr "Berrizendatu"
 
-#: ../../lib/frontends/widgets/menus.py:155
+#: ../../lib/frontends/widgets/menus.py:157
 #: ../../lib/frontends/widgets/removefeeds.py:50
 msgid "Remove Podcast"
 msgid_plural "Remove Podcasts"
 msgstr[0] "Kendu Podcasta"
 msgstr[1] "Kendu Podcastak"
 
-#: ../../lib/frontends/widgets/menus.py:156
+#: ../../lib/frontends/widgets/menus.py:158
 msgid "Remove Podcasts"
 msgstr "Kendu Podcastak"
 
-#: ../../lib/frontends/widgets/menus.py:157
+#: ../../lib/frontends/widgets/menus.py:159
 msgid "Remove Folder"
 msgstr "Kendu Agiritegia"
 
-#: ../../lib/frontends/widgets/menus.py:158
+#: ../../lib/frontends/widgets/menus.py:160
 msgid "Remove Folders"
 msgstr "Kendu Agiritegiak"
 
-#: ../../lib/frontends/widgets/menus.py:159
+#: ../../lib/frontends/widgets/menus.py:161
 #: ../../lib/frontends/widgets/tablist.py:1005
 msgid "Remove Source"
 msgstr "Kendu Iturburua"
 
-#: ../../lib/frontends/widgets/menus.py:160
+#: ../../lib/frontends/widgets/menus.py:162
 #: ../../lib/frontends/widgets/tablist.py:1008
 msgid "Remove Sources"
 msgstr "Kendu Iturburuak"
 
-#: ../../lib/frontends/widgets/menus.py:161
+#: ../../lib/frontends/widgets/menus.py:163
 msgid "Update Podcast"
 msgstr "Eguneratu Podcasta"
 
-#: ../../lib/frontends/widgets/menus.py:164
+#: ../../lib/frontends/widgets/menus.py:166
 msgid "Update Podcasts"
 msgstr "Eguneratu Podcastak"
 
-#: ../../lib/frontends/widgets/menus.py:165
+#: ../../lib/frontends/widgets/menus.py:167
 msgid "Update All Podcasts and Library"
 msgstr "Eguneratu Podcast Guztiak eta Liburutegia"
 
-#: ../../lib/frontends/widgets/menus.py:170
+#: ../../lib/frontends/widgets/menus.py:172
 msgid "Import Podcasts (OPML)"
 msgstr "Inportatu Podcastak (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:172
+#: ../../lib/frontends/widgets/menus.py:174
 msgid "Export Podcasts (OPML)"
 msgstr "Esportatu Podcastak (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:175
+#: ../../lib/frontends/widgets/menus.py:177
 msgid "Share with a Friend"
 msgstr "Elkarbanatu Lagun batekin"
 
-#: ../../lib/frontends/widgets/menus.py:177
+#: ../../lib/frontends/widgets/menus.py:179
 msgid "Copy URL"
 msgstr "Kopiatu URL-a"
 
-#: ../../lib/frontends/widgets/menus.py:181
+#: ../../lib/frontends/widgets/menus.py:183
 msgid "_Playlists"
 msgstr "Irakur-_zerrendak"
 
-#: ../../lib/frontends/widgets/menus.py:182
+#: ../../lib/frontends/widgets/menus.py:184
 msgid "New _Playlist"
 msgstr "Irakur-zerrenda _Berria"
 
-#: ../../lib/frontends/widgets/menus.py:185
+#: ../../lib/frontends/widgets/menus.py:187
 msgid "New Playlist Folder"
 msgstr "Irakur-zerrenda Agiritegi Berria"
 
-#: ../../lib/frontends/widgets/menus.py:191
+#: ../../lib/frontends/widgets/menus.py:193
 msgid "Remove Playlist"
 msgstr "Kendu Irakur-zerrenda"
 
-#: ../../lib/frontends/widgets/menus.py:193
+#: ../../lib/frontends/widgets/menus.py:195
 msgid "Remove Playlists"
 msgstr "Kendu Irakur-zerrendak"
 
-#: ../../lib/frontends/widgets/menus.py:194
+#: ../../lib/frontends/widgets/menus.py:196
 msgid "Remove Playlist Folders"
 msgstr "Kendu Irakur-zerrenda Agiritegiak"
 
-#: ../../lib/frontends/widgets/menus.py:195
+#: ../../lib/frontends/widgets/menus.py:197
 msgid "Remove Playlist Folder"
 msgstr "Kendu Irakur-zerrenda Agiritegia"
 
-#: ../../lib/frontends/widgets/menus.py:198
+#: ../../lib/frontends/widgets/menus.py:200
 msgid "P_layback"
 msgstr "_Irakurketa"
 
-#: ../../lib/frontends/widgets/menus.py:201
+#: ../../lib/frontends/widgets/menus.py:203
 msgid "Stop"
 msgstr "Gelditu"
 
-#: ../../lib/frontends/widgets/menus.py:204
+#: ../../lib/frontends/widgets/menus.py:206
 msgid "Next Item"
 msgstr "Hurrengo Gaia"
 
-#: ../../lib/frontends/widgets/menus.py:207
+#: ../../lib/frontends/widgets/menus.py:209
 msgid "Previous Item"
 msgstr "Aurreko Gaia"
 
-#: ../../lib/frontends/widgets/menus.py:211
+#: ../../lib/frontends/widgets/menus.py:213
 msgid "Skip Forward"
 msgstr "Jauzi Aurrera"
 
-#: ../../lib/frontends/widgets/menus.py:213
+#: ../../lib/frontends/widgets/menus.py:215
 msgid "Skip Back"
 msgstr "Jauzi Atzera"
 
-#: ../../lib/frontends/widgets/menus.py:216
+#: ../../lib/frontends/widgets/menus.py:218
 msgid "Volume Up"
 msgstr "Igo Bolumena"
 
-#: ../../lib/frontends/widgets/menus.py:218
+#: ../../lib/frontends/widgets/menus.py:220
 msgid "Volume Down"
 msgstr "Jeitsi Bolumena"
 
-#: ../../lib/frontends/widgets/menus.py:221
+#: ../../lib/frontends/widgets/menus.py:223
 msgid "Go to Currently Playing"
 msgstr "Joan Oraingo Irakurketara"
 
-#: ../../lib/frontends/widgets/menus.py:226
+#: ../../lib/frontends/widgets/menus.py:228
 msgid "_Fullscreen"
 msgstr "I_kusleiho-osoa"
 
-#: ../../lib/frontends/widgets/menus.py:229
+#: ../../lib/frontends/widgets/menus.py:231
 msgid "_Toggle Detached/Attached"
 msgstr "_Aldatu Erantsigabe/Erantsita"
 
-#: ../../lib/frontends/widgets/menus.py:232
+#: ../../lib/frontends/widgets/menus.py:234
 msgid "Audio Track"
 msgstr "Audio Bidea"
 
-#: ../../lib/frontends/widgets/menus.py:237
+#: ../../lib/frontends/widgets/menus.py:239
 msgid "_Encoding"
 msgstr "_Kodeaketa"
 
-#: ../../lib/frontends/widgets/menus.py:244
+#: ../../lib/frontends/widgets/menus.py:246
 msgid "Sorts"
-msgstr ""
+msgstr "Antolakuntzak"
 
-#: ../../lib/frontends/widgets/menus.py:245
+#: ../../lib/frontends/widgets/menus.py:247
 msgid "_Convert"
 msgstr "_Bihurtu"
 
-#: ../../lib/frontends/widgets/menus.py:246
+#: ../../lib/frontends/widgets/menus.py:248
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: ../../lib/frontends/widgets/menus.py:247
+#: ../../lib/frontends/widgets/menus.py:249
 #, python-format
 msgid "About %(name)s"
 msgstr "%(name)s-ri buruz"
 
-#: ../../lib/frontends/widgets/menus.py:256
+#: ../../lib/frontends/widgets/menus.py:258
 msgid "Help"
 msgstr "Laguntza"
 
-#: ../../lib/frontends/widgets/menus.py:260
+#: ../../lib/frontends/widgets/menus.py:262
 msgid "Report a Bug"
 msgstr "Jakinarazi Matxura"
 
-#: ../../lib/frontends/widgets/menus.py:262
+#: ../../lib/frontends/widgets/menus.py:264
 msgid "Translate"
 msgstr "Itzulpena"
 
-#: ../../lib/frontends/widgets/menus.py:264
+#: ../../lib/frontends/widgets/menus.py:266
 msgid "Planet Miro"
 msgstr "Miro Planeta"
 
-#: ../../lib/frontends/widgets/menus.py:270
+#: ../../lib/frontends/widgets/menus.py:272
 msgid "Dev"
-msgstr ""
+msgstr "Garapena"
 
-#: ../../lib/frontends/widgets/menus.py:271
+#: ../../lib/frontends/widgets/menus.py:273
 msgid "Profile Message"
 msgstr "Profil Mezua"
 
-#: ../../lib/frontends/widgets/menus.py:272
+#: ../../lib/frontends/widgets/menus.py:274
 msgid "Profile Redraw"
-msgstr ""
+msgstr "Profilaren Bermargotzea"
 
-#: ../../lib/frontends/widgets/menus.py:273
+#: ../../lib/frontends/widgets/menus.py:275
 msgid "Test Crash Reporter"
 msgstr "Azterketa Matxura Jakinarazpena"
 
-#: ../../lib/frontends/widgets/menus.py:274
-msgid "Test Soft Crash Reporter"
-msgstr ""
-
 #: ../../lib/frontends/widgets/menus.py:276
+msgid "Test Soft Crash Reporter"
+msgstr "Aztertu Software Matxura Jakinarazlea"
+
+#: ../../lib/frontends/widgets/menus.py:278
 msgid "Memory Stats"
 msgstr "Oroimen Estatistika"
 
-#: ../../lib/frontends/widgets/menus.py:277
-msgid "Force Feedparser Processing"
-msgstr ""
-
 #: ../../lib/frontends/widgets/menus.py:279
-msgid "Clog Backend"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:280
-msgid "Run Echoprint"
-msgstr ""
+msgid "Force Feedparser Processing"
+msgstr "Behartu Harpidetza-aztertzaile  Prozesatzea"
 
 #: ../../lib/frontends/widgets/menus.py:281
+msgid "Clog Backend"
+msgstr "Amaialdi Itxitura"
+
+#: ../../lib/frontends/widgets/menus.py:282
+msgid "Run Echoprint"
+msgstr "Ekin Echo-irarketa"
+
+#: ../../lib/frontends/widgets/menus.py:283
 msgid "Run ENMFP"
 msgstr "Ekin ENMFP"
 
-#: ../../lib/frontends/widgets/menus.py:282
+#: ../../lib/frontends/widgets/menus.py:284
 msgid "Force Main DB Save Error"
 msgstr "Behartu DB Nagusi Gordetze Akatsa"
 
-#: ../../lib/frontends/widgets/menus.py:284
+#: ../../lib/frontends/widgets/menus.py:286
 msgid "Force Device DB Save Error"
 msgstr "Behartu Gailu DB Gordetze Akatsa"
 
-#: ../../lib/frontends/widgets/menus.py:286
+#: ../../lib/frontends/widgets/menus.py:288
 msgid "Run Donate Manager PowerToys"
+msgstr "Ekin Donazio Kudeatzaile IndarJostailuak"
+
+#: ../../lib/frontends/widgets/menus.py:290
+msgid "Image Render Test"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:1246
+#: ../../lib/frontends/widgets/menus.py:1308
 msgid "Default (UTF-8)"
 msgstr "Berezkoa (UTF-8)"
 
@@ -3061,6 +3145,10 @@ msgid ""
 "\n"
 "Enter the URL of the podcast to add"
 msgstr ""
+"Sartu duzun helbidea ez da baliozko url bat. Mesedez egiaztatu URL-a et "
+"saiatu  berriro.\n"
+"\n"
+"Sartu gehitzeko podcastaren URL-a"
 
 #: ../../lib/frontends/widgets/newfolder.py:56
 msgid "Folder name:"
@@ -3077,6 +3165,8 @@ msgstr "Sartu gehitzeko agiritegiaren izena"
 #: ../../lib/frontends/widgets/newsearchfeed.py:60
 msgid "A search podcast contains items that match a search term."
 msgstr ""
+"Bilaketa podcast batek bilatuta­­­­ko hitz batekin bat datozen gaiak "
+"ditu.­­­­­"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:92
 msgid "Search for:"
@@ -3105,6 +3195,8 @@ msgid ""
 "%(appname)s can watch a folder on your computer and show those media files "
 "in your library."
 msgstr ""
+"%(appname)s-k zure ordenagailuko agiritegi bat ikuskatu eta bertako "
+"multimedia agiriak zure liburutegian erakutsi ditzake."
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:78
 msgid "Directory:"
@@ -3131,11 +3223,11 @@ msgid ""
 msgstr ""
 "Zuzenbidea ez dago eskuragarri. Mesedez egiaztatu baimena eta saiatu berriro."
 
-#: ../../lib/frontends/widgets/playback.py:770
+#: ../../lib/frontends/widgets/playback.py:779
 msgid "Open Subtitles File..."
 msgstr "Ireki Azpidatzi Agiria..."
 
-#: ../../lib/frontends/widgets/playback.py:771
+#: ../../lib/frontends/widgets/playback.py:780
 msgid "Subtitle files"
 msgstr "Azpidatzi agiriak"
 
@@ -3164,14 +3256,16 @@ msgstr "Berezgaitasunez ekin %(appname)s saioa hasten dudanean."
 msgid ""
 "When starting up %(appname)s, remember what screen I was on when I last quit."
 msgstr ""
+"%(appname)s abiarazterakoan, gogoratu zein ikusleihotan nengoen azken aldiz "
+"utzitakoan."
 
 #: ../../lib/frontends/widgets/prefpanel.py:508
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr "Jakinarazi uzten saiatzen banaiz jeisketak garatzen ari direla."
+msgstr "Ohartarazi uzten saiatzen banaiz jeisketak garatzen ari direla."
 
 #: ../../lib/frontends/widgets/prefpanel.py:514
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr ""
+msgstr "Ohartarazi uzten saiatzen banaiz bihurketak garatzen ari  direla."
 
 #: ../../lib/frontends/widgets/prefpanel.py:520
 msgid "Sidebar"
@@ -3192,7 +3286,7 @@ msgstr "Hizkuntza"
 #: ../../lib/frontends/widgets/prefpanel.py:548
 #, python-format
 msgid "(Changing the language requires you to restart %(appname)s.)"
-msgstr ""
+msgstr "(Hizkuntza aldaketak %(appname)s berrabiaraztea behar du)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:554
 msgid "Display in:"
@@ -3200,13 +3294,15 @@ msgstr "Erakutsi hemen:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:558
 msgid "Music Album Art and Info Cleanup"
-msgstr ""
+msgstr "Musika Bilduma  Azal eta Argibide Garbiketa"
 
 #: ../../lib/frontends/widgets/prefpanel.py:561
 msgid ""
 "Online lookup can find matching album art and song info for all your audio "
 "files (via Echonest and 7Digital)."
 msgstr ""
+"Online bilaketak zure audio agiri guztientzako bilduma azalak eta abesti "
+"argibideak bilatu ditzake (Echonest eta 7Digital bidez)."
 
 #: ../../lib/frontends/widgets/prefpanel.py:567
 msgid "Run Online Lookup for All Current Music"
@@ -3227,7 +3323,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Using lookup data for %(net_lookup_count)s out of %(total_count)s items"
-msgstr ""
+msgstr "%(net_lookup_count)s bilaketa datu erabiltzen %(total_count)s gaitik"
 
 #: ../../lib/frontends/widgets/prefpanel.py:634
 msgid "Every day"
@@ -3292,7 +3388,7 @@ msgstr "Berezko ezarpenak podcast berrientzat:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:673
 msgid "(These can be changed using the podcast's settings button)"
-msgstr ""
+msgstr "(Hauek podcast ezarpenak botoia erabiliz aldatu daitezke)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:678
 msgid "Check for new content:"
@@ -3300,7 +3396,7 @@ msgstr "Egiaztatu eduki berria:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:683
 msgid "Auto-download setting:"
-msgstr "Berez-jeiskera ezarpena:"
+msgstr "Berez-jeisketa ezarpena:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:688
 msgid "Default view:"
@@ -3385,6 +3481,8 @@ msgid ""
 "Directory '%(dir)s' could not be created.  Please choose a directory you "
 "have write access to."
 msgstr ""
+"'%(dir)s' zuzenbidea ezin da sortu. Mesedez hautatu idaz sarbidea duzun "
+"zuzenbide bat."
 
 #: ../../lib/frontends/widgets/prefpanel.py:879
 msgid "Migrate existing movies?"
@@ -3397,6 +3495,9 @@ msgid ""
 "migrate your existing downloads there?  (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Filmak jeisteko agiritegi berri bat duzu hautatuta.  %(appname)s-k zure "
+"jeisketak hara migratu behar ditu? (Orain jeisten ari diren filmak ez dira "
+"mugituko jeisketa amaitu arte.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:899
 msgid "folder"
@@ -3415,6 +3516,8 @@ msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
+"Ikuskatu bideo eta audio gai berriak agiritegi hauetan eta barneratu "
+"liburutegian:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1002
 msgid "Keep at least this much free space on my drive:"
@@ -3456,6 +3559,8 @@ msgstr "Elkarbanatu nire multimedia liburutegia"
 #: ../../lib/frontends/widgets/tabcontroller.py:280
 msgid "Warn on quit when others are connected to my media library."
 msgstr ""
+"Ohartarazi uzterakoan besteak nire multimedia liburutegira elkarketatuta "
+"daudenean."
 
 #: ../../lib/frontends/widgets/prefpanel.py:1052
 msgid "Share my music library."
@@ -3536,11 +3641,11 @@ msgstr "Berrekin irakurketa podcasta gelditua izan den tokitik."
 
 #: ../../lib/frontends/widgets/prefpanel.py:1229
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "Ahalbidetu bihurketa kopuru hau aldiberean:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1230
 msgid "(changing this will not apply to currently running conversions)"
-msgstr ""
+msgstr "(aldaketa hau ez da orain ekinean dauden bihurketetan ezarriko)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1247
 msgid "Store"
@@ -3601,6 +3706,8 @@ msgid ""
 "Extensions are a beta feature.  Developers interested in writing extensions "
 "can learn more on our wiki."
 msgstr ""
+"Hedapenak beta ezaugarriak dira. Hedapenak idaztean interesaturik dauden "
+"garatzaileak gure wikian jakin dezakete gehiago."
 
 #: ../../lib/frontends/widgets/prefpanel.py:1427
 msgid "Extensions:"
@@ -3662,6 +3769,9 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Ikusitako agiritegiak albobarratik kenduko dira baina beren edukiak zure "
+"liburutegian agertzen jarraituko dute. Ikusitako agiritegiak ikustea gelditu "
+"dezakezu erabat %(appname)s hobespen panelean."
 
 #: ../../lib/frontends/widgets/removefeeds.py:105
 msgid ""
@@ -3693,7 +3803,7 @@ msgstr "Bideo Bilaketa"
 
 #: ../../lib/frontends/widgets/searchcontroller.py:75
 msgid "Use the search box above to search for videos on these sites"
-msgstr "Erabili goiko kutxa gune hauetan bideoak bilatzeko"
+msgstr "Erabili goiko kutxatila gune hauetan bideoak bilatzeko"
 
 #: ../../lib/frontends/widgets/searchfilesdialog.py:63
 msgid "Searching for files"
@@ -3711,7 +3821,7 @@ msgstr[1] "Aurkituta %(count)s agiri"
 msgid "Videos"
 msgstr "Bideoak"
 
-#: ../../lib/frontends/widgets/style.py:346
+#: ../../lib/frontends/widgets/style.py:349
 #, python-format
 msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
@@ -3720,15 +3830,15 @@ msgstr ""
 "E: %(seeders)s  |  I: %(leechers)s  |  IN: %(up_rate)s  |  IG: %(up_total)s  "
 "|  JN: %(down_rate)s  |  JG: %(down_total)s  |  M: %(ratio).2f"
 
-#: ../../lib/frontends/widgets/style.py:405 ../../lib/sharing.py:255
+#: ../../lib/frontends/widgets/style.py:408 ../../lib/sharing.py:255
 msgid "Locked"
 msgstr "Blokeatuta"
 
-#: ../../lib/frontends/widgets/style.py:606
+#: ../../lib/frontends/widgets/style.py:609
 msgid "paused"
 msgstr "pausatuta"
 
-#: ../../lib/frontends/widgets/style.py:608
+#: ../../lib/frontends/widgets/style.py:611
 msgid "queued"
 msgstr "lerrokatuta"
 
@@ -3744,6 +3854,10 @@ msgid ""
 "\n"
 "Once you install the Bonjour libraries, you will have to restart %(appname)s."
 msgstr ""
+"Bonjour liburutegiak ezarri behar dituzu agiriak %(appname)s-tik %(appname)s-"
+"ra edo Miro iPad gehigarrira elkarbanatzeko gai izateko.\n"
+"\n"
+"Behin Bonjour liburutegiak ezarrita, %(appname)s berrabiarazi behar duzu."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:75
 msgid "Click here to install"
@@ -3774,6 +3888,8 @@ msgid ""
 "%(shortappname)ss on your local network and to the Miro iPad app.  It's "
 "awesome!"
 msgstr ""
+"%(shortappname)s-k agiriak jariotu eta jeitsi ditzake beste %(shortappname)s-"
+"tik edo Mirora zure tokiko sarean edo Miro iPad gehigarrira. Izugarria da!"
 
 #: ../../lib/frontends/widgets/tabcontroller.py:260
 msgid "Disabled: Needs Bonjour"
@@ -3808,6 +3924,10 @@ msgid ""
 "Attach your digital camera, and convert your video files to be instantly web-"
 "ready."
 msgstr ""
+"Elkarketatu USB kablea zure Android gailua %(shortappname)s-rekin "
+"aldiberetzeko. Zihurtatu zure gailua 'USB Heda Biltegi' moduan ezartzeaz "
+"zure gailuaren ezarpenetan. Erantsi zure kamera digitala, eta  bihurtu zure "
+"bideo agiriak berehala web-gertu izateko."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:357
 msgid "Show all attached devices and drives"
@@ -3819,6 +3939,9 @@ msgid ""
 "Use this if your phone doesn't appear in %(shortappname)s when you connect "
 "it to the computer, or if you want to sync with an external drive."
 msgstr ""
+"Erabili hau zure urrutizkina ez bada %(shortappname)sn agertzen zure "
+"ordenagailuan elkarketatzen duzuean, edo kanpoko gidagailu batekin "
+"aldiberetzea nahi baduzu."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:384
 msgid "Miro on your iPad"
@@ -3831,6 +3954,9 @@ msgid ""
 "%(shortappname)s on your desktop to your iPad. You can also download songs "
 "and videos to your iPad and take them with you."
 msgstr ""
+"Miro iPad gehigarri zoragarriarekin musika eta bideoak harigabe jariotu "
+"ditzakezu %(shortappname)s-tik zure mahigainean zure iPadera. Abestiak eta "
+"bideoak ere jeitsi ditzakezu zure iPadera eta zeurekin eraman."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:406
 msgid "Miro on Android"
@@ -3841,6 +3967,8 @@ msgid ""
 "We don't yet have a Miro app for Android, but you can stream to your device "
 "using other DAAP apps."
 msgstr ""
+"Oraindik ez dugu Miro gehigarririk Androidentzat, baina zure gailura jariotu "
+"dezakezu beste DAAP gehiarriak erabiliz."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:459
 #: ../../lib/frontends/widgets/tablist.py:954
@@ -3854,6 +3982,8 @@ msgid ""
 "Sources are any websites that offer audio, video, or torrents for download "
 "that you would like to use within %(shortappname)s."
 msgstr ""
+"Iturburuak %(shortappname)s gabe erabili nahi izan ditzakezun eta jeisteko "
+"audio, bideo, edo torrentak eskaintzen dituen edozein webgune dira ."
 
 #: ../../lib/frontends/widgets/tabcontroller.py:487
 msgid "URL"
@@ -3871,6 +4001,10 @@ msgid ""
 "%(shortappname)s if you add them as Sources, but these are Stores that we've "
 "integrated and tested."
 msgstr ""
+"Hautatu %(shortappname)s-n agertzea nahi dituzun musika eta bideo biltegiak. "
+"Oharra: beste biltegi webgune batzuek ongi lan egin dezakete "
+"%(shortappname)s-rekin hauek Iturburu bezala gehitzen badituzu, baina hauek "
+"bateratuta eta aztertuta ditugun Biltegiak dira."
 
 #: ../../lib/frontends/widgets/tablist.py:1105
 msgid "Update Podcasts In Folder"
@@ -3882,7 +4016,7 @@ msgstr "Eguneratu Podcastak Orain"
 
 #: ../../lib/frontends/widgets/tablist.py:1118
 msgid "Revert Podcast Name"
-msgstr ""
+msgstr "Berreskuratu Podcast Izena"
 
 #: ../../lib/frontends/widgets/tablist.py:1127
 msgid "Update Podcasts Now"
@@ -3898,7 +4032,7 @@ msgstr "Artista Ezezaguna"
 
 #: ../../lib/frontends/widgets/widgetconst.py:57
 msgid "State"
-msgstr ""
+msgstr "Egoera"
 
 #: ../../lib/frontends/widgets/widgetconst.py:61
 msgid "Album/Artist"
@@ -3964,12 +4098,12 @@ msgstr "%(host)s-ek elkarketa itxi du"
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s gave us an empty response"
-msgstr ""
+msgstr "%(host)s-k erantzun hutsa eman digu"
 
 #: ../../lib/httpclient.py:121
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "Hostalariak itzuli du %(status)s"
 
 #: ../../lib/httpclient.py:123
 msgid "Please retry later"
@@ -3978,17 +4112,17 @@ msgstr "Mesedez saiatu geroago"
 #: ../../lib/httpclient.py:127
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
+msgstr "%(host)s-k ez du HTTP berrekitea sostengatzen"
 
 #: ../../lib/httpclient.py:132
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "HTTP Berbideratze muga %(url)s"
 
 #: ../../lib/httpclient.py:138
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Baimen Hutsegitea proxyarentzat: %(host)s:%(port)s"
 
 #: ../../lib/httpclient.py:146
 msgid "Got 404 status code"
@@ -3997,7 +4131,7 @@ msgstr "404 egoera kodea du"
 #: ../../lib/httpclient.py:148
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "Hostalariak egoera okerreko kodea itzuli dut: %(code)s"
 
 #: ../../lib/httpclient.py:154 ../../lib/httpclient.py:155
 msgid "Authorization failed"
@@ -4027,7 +4161,7 @@ msgstr "Hostalari Ezezaguna"
 #: ../../lib/httpclient.py:171
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "\"%(host)s\" domeinu-izena ezin da aurkitu"
 
 #: ../../lib/httpclient.py:177
 #, python-format
@@ -4060,26 +4194,26 @@ msgstr "Webgunea"
 msgid "Proxy"
 msgstr "Proxya"
 
-#: ../../lib/item.py:1430 ../../lib/messages.py:1285
+#: ../../lib/item.py:1435 ../../lib/messages.py:1285
 msgid "queued for download"
 msgstr "lerrokatuta jeisteko"
 
-#: ../../lib/item.py:1534
+#: ../../lib/item.py:1539
 msgid "no title"
 msgstr "izenbururik ez"
 
-#: ../../lib/item.py:1835
+#: ../../lib/item.py:1840
 msgid "starting up..."
 msgstr "abiarazten..."
 
 #: ../../lib/messagehandler.py:1512
 msgid "Error saving file"
-msgstr ""
+msgstr "Akatsa agiria gordetzerakoan"
 
 #: ../../lib/messagehandler.py:1513
 #, python-format
 msgid "There was an error saving %(filename)s: %(error)s"
-msgstr ""
+msgstr "Akats bat egon da  %(filename)s gordetzerakoan: %(error)s"
 
 #: ../../lib/messagehandler.py:1641
 msgid "Subscribed to new podcast:"
@@ -4160,8 +4294,8 @@ msgstr[1] "Ongi inportatuta %(count)d podcastak."
 #, python-format
 msgid "Skipped %(count)d podcast already present."
 msgid_plural "Skipped %(count)d podcasts already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Jauzita %(count)d podcast jadanik bertan."
+msgstr[1] "Jauzita %(count)d podcast jadanik bertan."
 
 #: ../../lib/playlist.py:204
 #, python-format
@@ -4183,7 +4317,7 @@ msgstr "URL hori jadanik kanpoko jeisketan dago."
 #: ../../lib/singleclick.py:79
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s jeisten hasiko da orain."
 
 #: ../../lib/singleclick.py:82
 msgid "It is downloading now."
@@ -4202,6 +4336,7 @@ msgstr "Agiri Jeisketa"
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or a podcast."
 msgstr ""
+"%(url)s-ko agiria ez da agertzen audio, bideo, edo podcast bat bezala."
 
 #: ../../lib/singleclick.py:172
 msgid "Download Error"
@@ -4216,6 +4351,11 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
+"%(appname)s ez da gai agiri bat URL honetatik jeisteko:\n"
+"\n"
+"URL-a: %(url)s\n"
+"\n"
+"Akatsa: %(error)s (%(errordesc)s)"
 
 #: ../../lib/startup.py:134
 msgid "Database Error"
@@ -4238,6 +4378,19 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Sentitzen dugu, %(appname)s ezin izan da abiatu datubase arazo bategaitik:\n"
+"\n"
+"Akatsa: %(error)s\n"
+"\n"
+"Badaiteke zure datubase agiria hondatuta egotea eta erabili ahal ez izatea.\n"
+"\n"
+"Berritzea hasi dezakezu eta kaltetutako zure datubasea kendu egingo da, "
+"baina berriro gehitu beharko dituzu zure podcastak eta multimedia agiriak. "
+"Hau egitea nahi baduzu, sakatu Berritzea Hasi botoia eta berrabiarazi "
+"%(appname)s.\n"
+"\n"
+"Etorkizunean hau bezalako arazoak zuzentzen laguntzeko, mesedez agiritu "
+"arazo jakinarazpen bat hona: %(url)s."
 
 #: ../../lib/startup.py:156
 msgid "Unknown Error"
@@ -4249,6 +4402,8 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"Akats ezezagun batek %(appname)s abiaraztea eragotzi du. Mesedez agiritu "
+"matxura jakinarazpen bat hona: %(url)s."
 
 #: ../../lib/startup.py:284
 msgid "Database too new"
@@ -4260,6 +4415,8 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
+"%(appname)s-ren bertsio berri batekin gordeta dagoen datubase bat duzu. "
+"%(appname)s-ren azken bertsioa jeitsi behar duzu eta hura abiarazi."
 
 #: ../../lib/startup.py:380
 #, python-format
@@ -4273,11 +4430,11 @@ msgstr "Baimen akatsa: %(appname)s ezin da agiritegian idatzi."
 
 #: ../../lib/startup.py:399
 msgid "The folder contains no files: is it on a drive that's disconnected?"
-msgstr ""
+msgstr "Agiritegiak ez du agiririk: etenda dagoen gidagailu batean dago?"
 
 #: ../../lib/startup.py:602
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "Matxura Jakinarazpena Aurkezten"
 
 #: ../../lib/startup.py:604
 #, python-format
@@ -4287,25 +4444,33 @@ msgid ""
 "Do you want to include entire program database including all video and "
 "podcast metadata with crash report? This will help us diagnose the issue."
 msgstr ""
+"%(appname)s-ek orain matxura jakinarazpen bat bidaliko du gure matxura "
+"datubesera\n"
+"\n"
+"Programaren datubase osoa barneratzea nahi duzu, bideo eta podcast metadatu "
+"guztiak barne matxura jakinarazpenarekin? Honek arazoa igartzen lagunduko "
+"digu."
 
-#: ../../lib/storedatabase.py:186
+#: ../../lib/storedatabase.py:185
 #, python-format
 msgid "%(appname)s database corrupt."
-msgstr ""
+msgstr "%(appname)s datubase ustela."
 
-#: ../../lib/storedatabase.py:189
+#: ../../lib/storedatabase.py:188
 #, python-format
 msgid ""
 "Your %(appname)s database is corrupt.  It will be backed up in your Miro "
 "database directory and a new database will be created now."
 msgstr ""
+"Zure %(appname)s datubasea hondatuta dago. Hau zure Miro datubase "
+"zuzenbidean babeskopiatuko da eta datubase berri bat sortuko da orain."
 
-#: ../../lib/storedatabase.py:213
+#: ../../lib/storedatabase.py:212
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "%(appname)s datubase eguneratze hutsegitea"
 
-#: ../../lib/storedatabase.py:216
+#: ../../lib/storedatabase.py:215
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -4319,13 +4484,24 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your podcasts and media files."
 msgstr ""
+"Sentitzen dugu,  %(appname)s-k ezin izan du zure datubasea eguneratu "
+"akatsengaitik.\n"
+"\n"
+"Egiaztatu ikusteko zure diska beteta dagoen. Beteta badago, utzi "
+"%(appname)s, egin tokia, eta abiarazi %(appname)s berriro.\n"
+"\n"
+"Zure diska ez badago beteta, lagundu gaitzazu arazoa ulertzen hau gure "
+"matxura datubasera jakinaraziz.\n"
+"\n"
+"Azkenik, berritzea hasi dezakezu eta kaltetutako datubasea kendu egingo da, "
+"baina berriro gehitu beharko dituzu zure podcastak eta multimedia agiriak."
 
-#: ../../lib/storedatabase.py:247
+#: ../../lib/storedatabase.py:246
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr ""
+msgstr "%(appname)s datubase gordetze hutsegitea"
 
-#: ../../lib/storedatabase.py:250
+#: ../../lib/storedatabase.py:249
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -4342,36 +4518,52 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s-k ezin izan du zure datubasea gorde.\n"
+"\n"
+"Zure diska beteta badago, tokia apur egitea eta bersaiatzea iradokitzen "
+"dizugu. Zure diska ez badago beteta, badaiteke bersaiatzean ongi lan "
+"egitea.\n"
+"\n"
+"Bersaiatzean ez badu lanik egiten, mesedez utzi %(appname)s eta "
+"berrabiarazi. Aldaketa berriak galdu daitezke.\n"
+"\n"
+"Akats hau sarri ikusten baduzu jeisten ari zarela, iradokitzen dizugu "
+"aldibereko jeisketa zenbatekoa gutxitzea Jeisketa hegatseko Aukerak "
+"elkarrizketan.\n"
+"\n"
+"Akatsa:: %(error_text)s\n"
+"\n"
 
-#: ../../lib/storedatabase.py:276
+#: ../../lib/storedatabase.py:275
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr ""
+msgstr "%(appname)s datubasea ongi gorde da"
 
-#: ../../lib/storedatabase.py:278
+#: ../../lib/storedatabase.py:277
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "Datubasea ongi gorde da. Orain gertu dago isteko daturik galdu gabe."
 
-#: ../../lib/storedatabase.py:292
+#: ../../lib/storedatabase.py:291
 #, python-format
 msgid "database for device %(name)s corrupt."
-msgstr ""
+msgstr "%(name)s-rentzako gailu datubasea ustela."
 
-#: ../../lib/storedatabase.py:295
+#: ../../lib/storedatabase.py:294
 #, python-format
 msgid ""
 "The %(appname)s database on your device is corrupt and a new one will be "
 "created."
 msgstr ""
+"Zure gailuko %(appname)s datubasea ustela da eta berri bat sortuko da."
 
-#: ../../lib/storedatabase.py:312
+#: ../../lib/storedatabase.py:311
 #, python-format
 msgid "Database save failed for device %(name)s."
-msgstr ""
+msgstr "%(name)s gailuarentzako datubase gordetze hutsegitea"
 
-#: ../../lib/storedatabase.py:315
+#: ../../lib/storedatabase.py:314
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database on %(device)s.\n"
@@ -4382,22 +4574,31 @@ msgid ""
 "If retrying does not work select start fresh to reset the database to a new "
 "one."
 msgstr ""
+"%(appname)s-k ezin izan du datubsea hemen gorde %(device)s.\n"
+"\n"
+"Zure gailua beteta badago, iradokitzen dizugu tokia apur bat egitea eta "
+"bersaiatzea. Zure diska ez badago beteta, badaiteke bersaiatuz lan egitea.\n"
+"\n"
+"Bersaiatzean ez badu lanik egiten hautatu berritzea hasi datubasea berri "
+"batera berrezartzeko."
 
-#: ../../lib/storedatabase.py:336
+#: ../../lib/storedatabase.py:335
 msgid "Device database save succeeded"
 msgstr "Gailu datubasea gordeta"
 
-#: ../../lib/storedatabase.py:337
+#: ../../lib/storedatabase.py:336
 #, python-format
 msgid "The database for %(device)s has been successfully saved. "
-msgstr ""
+msgstr "%(device)s-rentzako datubasea ongi gorde da. "
 
-#: ../../lib/storedatabase.py:678
+#: ../../lib/storedatabase.py:695
 #, python-format
 msgid ""
 "Database was created by a newer version of %(appname)s (db version is "
 "%(version)s)"
 msgstr ""
+"Datubasea %(appname)s-ren bertsio berriago batekin sortu zen (db bertsioa "
+"da: %(version)s)"
 
 #: ../../lib/theme.py:181
 msgid "Example Playlist"
@@ -4425,7 +4626,7 @@ msgstr "%(size)sB"
 
 #: ../../linux/plat/devicetracker.py:202
 msgid "Eject failed"
-msgstr ""
+msgstr "Ateratze hutsegitea"
 
 #: ../../linux/plat/devicetracker.py:203
 #, python-format
@@ -4434,6 +4635,9 @@ msgid ""
 "\n"
 "The device is in use."
 msgstr ""
+"Hutsegitea '%(name)s' gailua ateratzerakoan.\n"
+"\n"
+"Gailua erabilia izaten ari da."
 
 #: ../../linux/plat/frontends/widgets/bonjour.py:47
 #, python-format
@@ -4447,6 +4651,15 @@ msgid ""
 "mDNSResponder compatibility library.  Please refer to your operating system "
 "documentation on how you can install this library."
 msgstr ""
+"%(appname)s jarduera hoberenerako, iradokitzen dizugu Bonjour ezartzea. "
+"Bonjour ezartzeak zure multimedia liburutegia elkarbanatzea ahalbidetuko "
+"dizu beste %(appname)s erabiltzaile batzuekin zure sarean, eta baita "
+"multimedia jarioak beste %(appname)s erabiltzaile batzuengandik zure "
+"sarean.\n"
+"\n"
+"%(appname)s-k erabaki zure sistemak zihurrenik ez duela  Avahi mDNSResponder "
+"bateragarritasun liburutegia. Mesedez irakurri zure sistema eragilearen "
+"agiritzan liburutegi hau nola ezarri dezakezun."
 
 #: ../../linux/plat/frontends/widgets/bonjour.py:60
 #, python-format
@@ -4462,6 +4675,17 @@ msgid ""
 "\n"
 "Would you like %(appname)s to warn you on next startup?"
 msgstr ""
+"%(appname)s jarduera hoberenerako, iradokitzen dizugu Bonjour ezartzea. "
+"Bonjour ezartzeak zure multimedia liburutegia elkarbanatzea ahalbidetuko "
+"dizu beste %(appname)s erabiltzaile batzuekin zure sarean, eta baita "
+"multimedia jarioak beste %(appname)s erabiltzaile batzuengandik zure "
+"sarean.\n"
+"\n"
+"%(appname)s-k erabaki zure sistemak zihurrenik ez duela  Avahi mDNSResponder "
+"bateragarritasun liburutegia. Mesedez irakurri zure sistema eragilearen "
+"agiritzan liburutegi hau nola ezarri dezakezun.\n"
+"\n"
+"Nahi duzu %(appname)s-k hurrengo abiaraztean ohartaraztea?"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:52
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:42
@@ -4476,6 +4700,7 @@ msgstr "Aurkezpen aukerak:"
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"%(appname)s berrabiarazi behar duzu aurkeztutako aldaketek eragina izateko."
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:83
 msgid "Video renderer:"
@@ -4509,6 +4734,9 @@ msgid ""
 "components, a standard part of Mac OS X installations.  Please review your "
 "Mac OS X installation."
 msgstr ""
+"%(appname)s-k erabaki du zure sistemak Bonjour osagairen bat behar duela, "
+"Mac OS X ezarpenen zati estandar bat. Mesedez berrikusi zure Mac OS X "
+"ezarpena."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:457
 msgid "Services"
@@ -4610,7 +4838,7 @@ msgstr "Barneratu"
 msgid "Track %(track)d (%(name)s)"
 msgstr "Bidea %(track)d (%(name)s)"
 
-#: ../../osx/plat/utils.py:601 ../../windows/plat/utils.py:505
+#: ../../osx/plat/utils.py:604 ../../windows/plat/utils.py:508
 msgid "iTunes"
 msgstr "iTunes"
 
@@ -4622,6 +4850,10 @@ msgid ""
 "sync files to it.\n"
 "To mount your phone, select 'Turn on USB storage' from the notifications."
 msgstr ""
+"Zure urrutizkinak 'USB biltegi  moduan' egon behar du %(shortappname)s-ek "
+"agiriak bertara aldiberetzeko.\n"
+"Zure urrutizkina tresnatzeko, hautatu 'Piztu USB biltegia' "
+"jakinarazpenetatik."
 
 #: ../../resources/devices/android.py:23
 #: ../../resources/devices/android.py:224
@@ -4631,26 +4863,34 @@ msgid ""
 "sync files to it.\n"
 "To mount your phone, select 'Turn on USB storage' from the notifications."
 msgstr ""
+"Zure tabletak 'USB biltegi  moduan' egon behar du %(shortappname)s-ek "
+"agiriak bertara aldiberetzeko.\n"
+"Zure urrutizkina tresnatzeko, hautatu 'Piztu USB biltegia' "
+"jakinarazpenetatik."
 
 #: ../../resources/devices/android.py:72
 #: ../../resources/devices/generic_phone.py:32
 #, python-format
 msgid "Generic %(name)s Device"
-msgstr ""
+msgstr "%(name)s Gailu Orokorra"
 
 #: ../../resources/devices/android.py:210
 msgid ""
 "Your Nook Color must be connected to your computer and in USB Mode to sync "
 "files to it.\n"
 msgstr ""
+"Zure Nook Color zure ordenagailura elkarketatuta egon behar da eta USB "
+"Moduan agiriak bertara aldiberetzeko.\n"
 
 #: ../../resources/devices/ereader.py:16
 msgid "Your Kindle must be mounted to sync files to it.\n"
 msgstr ""
+"Zure Kindle tresnatuta egon behar da bertara agiriak aldiberetzeko.\n"
 
 #: ../../resources/devices/ereader.py:30
 msgid "Your Kindle must be in USB Storage mode to sync files to it.\n"
 msgstr ""
+"Zure Kindle USB Biltegi moduan egon behar da agiriak bertara aldiberetzeko.\n"
 
 #: ../../resources/devices/generic_phone.py:42
 #, python-format
@@ -4658,18 +4898,26 @@ msgid ""
 "Your device must be mounted in order for %(shortappname)s to sync files to "
 "it."
 msgstr ""
+"Zure gailuak tresnatuta egon behar du %(shortappname)s-ek agiriak bertara "
+"aldiberetzeko."
 
 #: ../../resources/devices/mediaplayer.py:16
 msgid "Your Walkman must be in USB Storage mode to sync files to it.\n"
 msgstr ""
+"Zure Walkmanak USB Biltegiratze moduan egon behar du bertara agiriak "
+"aldiberetzeko\n"
 
 #: ../../resources/devices/mediaplayer.py:30
 msgid "Your device must be in USB Storage mode to sync files to it.\n"
 msgstr ""
+"Zure gailuak USB Biltegiratze moduan egon behar du bertara agiriak "
+"aldiberetzeko\n"
 
 #: ../../resources/devices/mediaplayer.py:44
 msgid "Your PSP must be in USB Storage mode to sync files to it.\n"
 msgstr ""
+"Zure PSP-ak USB Biltegiratze moduan egon behar du bertara agiriak "
+"aldiberetzeko.\n"
 
 #: ../../windows/plat/frontends/widgets/application.py:234
 msgid "Close to tray?"
@@ -4681,10 +4929,12 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Ondoko botoi gorria sakatzen duzunean, nahi duzu %(appname)s sistema "
+"erretilura istea edo uztea? Ezarpen hau gero aldatu dezakezu Aukerak-en."
 
 #: ../../windows/plat/frontends/widgets/application.py:303
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Akatsa Gaia Bonbardatzerakoan"
 
 #: ../../windows/plat/frontends/widgets/application.py:305
 msgid "Error Recommending Item"
@@ -4699,6 +4949,8 @@ msgstr "Akatsa Webgunea Irekitzerakoan"
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
+"Akats bat egon da %(url)s irekitzerakoan. Mesedez saiatu berriro segundu "
+"gutxi barru."
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:48
 #, python-format
@@ -4714,6 +4966,17 @@ msgid ""
 "\n"
 "Would you like to do this now?"
 msgstr ""
+"%(appname)s jarduera hoberenerako, Bonjour ezartzea iradokitzen dizugu, "
+"zeina Irarketa Zerbitzuen barne banatua den.\n"
+"\n"
+"Bonjour ezartzeak zure multimedia liburutegia elkarbanatzea ahalbidetuko "
+"dizu beste %(appname)s erabiltzaile batzuekin zure sarean, eta baita "
+"multimedia jarioak beste %(appname)s erabiltzaile batzuengandik zure "
+"sarean.\n"
+"\n"
+"Irarketa Zerbitzuak ezarri ondoren, %(appname)s berrabiarazi behar duzu.\n"
+"\n"
+"Orain egitea nahi duzu?"
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:75
 #, python-format
@@ -4724,6 +4987,11 @@ msgid ""
 "When the installation is finished, simply restart %(appname)s for the "
 "changes to take effect."
 msgstr ""
+"Zure nabigatzaileak Bonjour jeitsi eta ezarri dezakezun webgunea gertatuko "
+"du.\n"
+"\n"
+"Ezarpena amaitutakoan, besterik gabe berrabiarazi %(appname)s aldaketek "
+"eragina izateko."
 
 #: ../../windows/plat/frontends/widgets/flash.py:56
 msgid "Install Adobe Flash?"
@@ -4735,6 +5003,8 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
+"%(appname)s jarduera hoberenerako, iradokizen dizugu Adobe Flash ezartzea. "
+"Orain egitea nahi duzu?"
 
 #: ../../windows/plat/frontends/widgets/flash.py:71
 msgid "Install Adobe Flash"
@@ -4749,6 +5019,11 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Zure nabigatzaileak Adobe Flash jeitsi eta ezarri dezakezun webgunea "
+"gertatuko du.\n"
+"\n"
+"Orain %(appname)s utzi behar duzu eta berriro berrabiarazi Adobe Flash "
+"ezarri ondoren."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:46
 msgid "When I click the red close button:"
@@ -4756,7 +5031,7 @@ msgstr "Botoi gorria klikatzen dudanean:"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Itxi erretilura jeisketak jarraitzeko bezala."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:50
 #, python-format
@@ -5370,7 +5645,3 @@ msgstr "Azpidatzi hizkia:"
 
 #~ msgid "Outdated Feed Items:"
 #~ msgstr "Jarioko iraungitako elementuak:"
-
-#, python-format
-#~ msgid "Import Music from %(media_player)s?"
-#~ msgstr "Inportatu Musika %(media_player)s-tik?"
