@@ -445,6 +445,9 @@ class Dialog(DialogBase):
         content_rect.size = NSSize(width, height)
         new_frame = self.window.frameRectForContentRect_(content_rect)
         self.window.setFrame_display_(new_frame, NO)
+        # Need to call place() again, since our window has changed size
+        contentView = self.window.contentView()
+        self.content_widget.place(contentView.frame(), contentView)
 
     def run(self):
         self.window = self.build_window()
