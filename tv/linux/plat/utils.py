@@ -373,9 +373,22 @@ def get_transcode_audio_options():
     has_audio_args = []
     return has_audio_args
 
+ffmpeg_version = None
 
 def setup_ffmpeg_presets():
-    pass
+    global ffmpeg_version
+    if ffmpeg_version is None:
+        commandline = [get_ffmpeg_executable_path(), '-version']
+        lines = subprocess.check_output(commandline,
+                                        stderr=file("/dev/null", "wb")
+                                        ).split('\n')
+        version = lines[0].rsplit(' ', 1)[1].split('.')
+        def maybe_int(v):
+            try:
+                return int(v)
+            except ValueError:
+                return v
+        ffmpeg_version = tuple(maybe_int(v) for v in version)
 
 def get_ffmpeg_executable_path():
     """Returns the location of the ffmpeg binary.
@@ -395,6 +408,16 @@ def customize_ffmpeg_parameters(params):
     :returns: list of modified parameters that will get passed to
         ffmpeg
     """
+    if ffmpeg_version < (0, 8):
+        # Fallback for older versions of FFmpeg (Ubuntu Natty, in particular).
+        # see also #18969
+        params = ['-vpre' if i == '-preset' else i for i in params]
+        profile_index = params.index('-profile:v')
+        if profile_index != -1:
+            if params[profile_index + 1] == 'baseline':
+                params[profile_index:profile_index+2] = [
+                    '-coder', '0', '-bf', '0', '-refs', '1',
+                    '-flags2', '-wpred-dct8x8']
     return params
 
 
