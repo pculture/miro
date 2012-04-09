@@ -551,6 +551,13 @@ class VideoPlayer(player.GTKPlayer, VBox):
         # do this to trigger the overlay showing up for a smidge
         self.on_mouse_motion(None)
 
+    def play_from_time(self, resume_time=0):
+        # FIXME: this overrides the default implementation.  The reason
+        # is going through the default implementation it requires the total
+        # time and it may not be ready at this point.
+        self.seek_to_time(resume_time)
+        self.play()
+
     def pause(self):
         self.renderer.pause()
 

@@ -70,7 +70,7 @@ class Player(signals.SignalEmitter):
 
     def _resume_at_args(self, resume_time):
         duration = self.get_total_playback_time()
-        if duration is not None:
+        if duration is None:
             logging.warn('_resume_at_args: duration is None')
             return None
         return (resume_time, duration)
