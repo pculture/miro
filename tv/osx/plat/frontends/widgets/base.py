@@ -106,6 +106,18 @@ class Widget(signals.SignalEmitter):
         """
         raise NotImplementedError()
 
+    def _debug_size_request(self, nesting_level=0):
+        """Debug size request calculations.
+
+        This method recursively prints out the size request for each widget.
+        """
+        request = self.calc_size_request()
+        width = int(request[0])
+        height = int(request[1])
+        indent = '    ' * nesting_level
+        me = str(self.__class__).split('.')[-1]
+        print '%s%s: %sx%s' % (indent, me, width, height)
+
     def place(self, rect, containing_view):
         """Place this widget on a view.  """
         if self.viewport is None:
@@ -262,6 +274,11 @@ class Container(Widget):
     def place_children(self):
         """Layout our child widgets.  Must be implemented by subclasses."""
         raise NotImplementedError()
+
+    def _debug_size_request(self, nesting_level=0):
+        for child in self.children:
+            child._debug_size_request(nesting_level+1)
+        Widget._debug_size_request(self, nesting_level)
 
 class Bin(Container):
     """Container that only has one child widget."""

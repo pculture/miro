@@ -565,15 +565,10 @@ class VideoPanel(DialogPanel):
                 (u'podcast', _("Podcast")),
             ]),
         ]
-        content = widgetset.VBox()
+        self.vbox = widgetset.VBox()
         for field in self.fields:
             field.set_label_width(120)
-            content.pack_start(field.get_box(), padding=5)
-        # XXX - hack: OS X is cutting off the right side of the box in single
-        # selection mode; this seems like a bug in layout. padding the right
-        # side causes only padding to be cut off.
-        # XXX - this padding fixes 17065. 17065 is the same layout issue?
-        self.vbox = widgetutil.pad(content, right=15)
+            self.vbox.pack_start(field.get_box(), padding=5)
 
 class ToggleButtonBackground(widgetset.Background):
     """Gradiated background for an individual ToggleButton."""
@@ -757,6 +752,17 @@ class ItemEditDialog(widgetset.Dialog):
         self.panels[name] = content
         self.toggler.add_option(name, label)
 
+    def set_width_from_panels(self):
+        """Set the min-width for our panels.
+
+        We set the min-width to the width of the biggest panel, to avoid
+        things moving too much when the user switches between them
+        """
+        max_width = -1
+        for panel in self.panels.values():
+            max_width = max(max_width, panel.vbox.get_size_request()[0])
+        self.content_panel.set_size_request(max_width, -1)
+
     def on_choose_panel(self, _toggler, name):
         self.content_panel.set(self.panels[name].vbox)
 
@@ -768,6 +774,7 @@ class ItemEditDialog(widgetset.Dialog):
         self._add_panel(_("General"), 'general', GeneralPanel(self.items))
         self._add_panel(_("Video"), 'video', VideoPanel(self.items))
         self._pack_bottom()
+        self.set_width_from_panels()
         self.toggler.choose('general')
         self.content_panel.set(self.panels['general'].vbox)
         return self.vbox
