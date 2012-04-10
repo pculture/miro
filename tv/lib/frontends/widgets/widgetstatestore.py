@@ -331,9 +331,9 @@ class WidgetStateStore(object):
     def _calc_default_columns(self, display_type, view_type):
         columns = list(WidgetStateStore.DEFAULT_COLUMNS[display_type])
         if view_type == self.get_album_view_type():
-            # remove the individual artist/album columns.  The user can see
-            # both in the multi-row-artist
-            columns = [n for n in columns if n not in (u'artist', u'album')]
+            # Remove columns that contain info in the album/artist column.
+            filter_out = (u'artist', u'album', u'track', u'feed-name')
+            columns = [n for n in columns if n not in filter_out]
         return columns
 
     def _add_manditory_columns(self, view_type, columns):

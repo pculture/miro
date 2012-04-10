@@ -29,10 +29,7 @@
 
 import logging
 import ctypes, ctypes.wintypes
-import tempfile
 import _winreg
-
-import os
 
 LOTS_OF_DEBUGGING = False
 
@@ -392,7 +389,7 @@ STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_KINGSTON&PROD_DATATRAVELER_G3&REV_PMAP#\
         full_key = 'SYSTEM\\CurrentControlSet\\Enum\\%s' % reg_key
         try:
             friendly_name = get_friendy_name(full_key)
-        except WindowsError:
+        except OSError:
             friendly_name = None
             logging.debug('could not open registry key %r (from %r/%r)',
                           full_key, path, device_id,

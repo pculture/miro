@@ -47,7 +47,7 @@ class FontCache(util.Cache):
         key = (context, description, scale_factor, bold, italic)
         return util.Cache.get(self, key)
 
-    def create_new_value(self, key):
+    def create_new_value(self, key, invalidator=None):
         (context, description, scale_factor, bold, italic) = key
         return Font(context, description, scale_factor, bold, italic)
 
@@ -145,8 +145,10 @@ class Font(object):
 
     def line_height(self):
         metrics = self.get_font_metrics()
-        # the +1: some glyphs can be slightly taller than ascent+descent (#17329)
-        return pango.PIXELS(metrics.get_ascent() + metrics.get_descent()) + 1
+        # the +1: some glyphs can be slightly taller than ascent+descent
+        # (#17329)
+        return (pango.PIXELS(metrics.get_ascent()) +
+                pango.PIXELS(metrics.get_descent()) + 1)
 
 class TextBox(object):
     def __init__(self, context, font, color, shadow):

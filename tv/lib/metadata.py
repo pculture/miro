@@ -173,6 +173,12 @@ class MetadataStatus(database.DDBObject):
         return [r[0] for r in rows]
 
     @classmethod
+    def net_lookup_enabled_view(cls, net_lookup_enabled, db_info=None):
+        return cls.make_view('net_lookup_enabled=?',
+                             (net_lookup_enabled,),
+                             db_info=db_info)
+
+    @classmethod
     def failed_temporary_view(cls):
         return cls.make_view('echonest_status=?',
                              (cls.STATUS_TEMPORARY_FAILURE,))
@@ -480,6 +486,10 @@ class _TaskProcessor(_MetadataProcessor):
             self._send_task(task)
 
     def _callback(self, task, result):
+        if task.source_path not in self._active_tasks:
+            logging.debug("%s done but already removed: %r", self.source_name,
+                          task.source_path)
+            return
         logging.debug("%s done: %r", self.source_name, task.source_path)
         self._check_for_none_values(result)
         self.emit('task-complete', task.source_path, result)
@@ -576,6 +586,13 @@ class _EchonestProcessor(_MetadataProcessor):
         _MetadataProcessor.__init__(self, u'echonest')
         self._code_buffer_size = code_buffer_size
         self._cover_art_dir = cover_art_dir
+        # We create 3 queues to handle items at various stages of the process.
+        # - _metadata_fetch_queue holds paths that we need to fetch the
+        #    metadata for.  It's the first queue that paths go to
+        # - _codegen_queue contains paths that we need to run the codegen
+        #   executable on
+        # - _echonest_queue contains paths that we need to query echonest for
+        self._metadata_fetch_queue = _EchonestQueue()
         self._codegen_queue = _EchonestQueue()
         self._echonest_queue = _EchonestQueue()
         self._running_codegen = False
@@ -589,17 +606,24 @@ class _EchonestProcessor(_MetadataProcessor):
         self._http_error_times = collections.deque()
         self._waiting_from_http_errors = False
 
-    def add_path(self, path, current_metadata):
+    def add_path(self, path, metadata_fetcher):
+        """Add a path to the system.
+
+        metadata_fetcher is used to get the metadata for that path to send to
+        echonest.  We use a callable object that returns the metadata instead
+        of a straight dict because we want to fetch things lazily.
+        metadata_fetcher should raise a KeyError if the path is not in the
+        metadata system when its called.
+
+        :param path: path to add
+        :param metadata_fetcher: callable that will return a metadata dict
+        """
         if path in self._paths_in_system:
             logging.warn("_EchonestProcessor.add_path: attempt to add "
                          "duplicate path: %r", path)
             return
         self._paths_in_system.add(path)
-        self._metadata_for_path[path] = current_metadata
-        if not self.should_skip_codegen(current_metadata):
-            self._codegen_queue.add(path)
-        else:
-            self._echonest_queue.add((path, None))
+        self._metadata_fetch_queue.add(path, metadata_fetcher)
         self._process_queue()
 
     def should_skip_codegen(self, metadata):
@@ -626,7 +650,7 @@ class _EchonestProcessor(_MetadataProcessor):
         self._codegen_finished()
 
     def _codegen_errback(self, path, error):
-        logging.warn("Error running echonest codegen for %s (%s)" %
+        logging.warn("Error running echonest codegen for %r (%s)" %
                      (path, error))
         self.emit('task-error', path, error)
         del self._metadata_for_path[path]
@@ -669,23 +693,18 @@ class _EchonestProcessor(_MetadataProcessor):
         self._process_queue()
 
     def _process_queue(self):
-        # process echonest queue
-        if (self._echonest_queue and not self._querying_echonest and
-           not self._waiting_from_http_errors):
-            if not self._should_pause_from_http_errors():
-                self._query_echonest(*self._echonest_queue.pop())
-            else:
-                # we've gotten too many HTTP errors recently and are backing
-                # off sending new requests.  Add a timeout and try again then
-                if not self._waiting_from_http_errors:
-                    name = 'restart echonest queue after http error'
-                    eventloop.add_timeout(self.PAUSE_AFTER_HTTP_ERROR_TIMEOUT,
-                                          self._restart_after_http_errors, name)
-                    self._waiting_from_http_errors = True
-
-        # process codegen queue
+        if self._should_process_metadata_fetch_queue():
+            self._process_metadata_fetch_queue()
+        if self._should_process_echonest_queue():
+            self._process_echonest_queue()
         if self._should_process_codegen_queue():
             self._run_codegen(self._codegen_queue.pop())
+
+    def _should_process_metadata_fetch_queue(self):
+        # Try not to fetch metadata more quickly than we need to.  Only do it
+        # if the other queues waiting for us
+        return (self._metadata_fetch_queue and
+                len(self._codegen_queue) + len(self._echonest_queue) < 10)
 
     def _should_process_codegen_queue(self):
         if not (self._codegen_queue and
@@ -697,6 +716,41 @@ class _EchonestProcessor(_MetadataProcessor):
             self._codegen_cooldown_caller.call_after_timeout(cooldown_left)
             return False
         return True
+
+    def _should_process_echonest_queue(self):
+        return (self._echonest_queue and not self._querying_echonest and
+                not self._waiting_from_http_errors)
+
+    def _process_echonest_queue(self):
+        if not self._should_pause_from_http_errors():
+            self._query_echonest(*self._echonest_queue.pop())
+        else:
+            # we've gotten too many HTTP errors recently and are backing
+            # off sending new requests.  Add a timeout and try again then
+            if not self._waiting_from_http_errors:
+                name = 'restart echonest queue after http error'
+                eventloop.add_timeout(self.PAUSE_AFTER_HTTP_ERROR_TIMEOUT,
+                                      self._restart_after_http_errors, name)
+                self._waiting_from_http_errors = True
+
+    def _process_metadata_fetch_queue(self):
+        while self._metadata_fetch_queue:
+            path, metadata_fetcher = self._metadata_fetch_queue.pop()
+            try:
+                metadata = metadata_fetcher()
+            except StandardError:
+                # log exceptions and try the next item in the queue.
+                logging.warn("_process_metadata_fetch_queue: metadata_fetcher "
+                             "raised exception (path: %r, fetcher: %s)",
+                             path, metadata_fetcher, exc_info=True)
+                continue
+            else:
+                self._metadata_for_path[path] = metadata
+                if not self.should_skip_codegen(metadata):
+                    self._codegen_queue.add(path)
+                else:
+                    self._echonest_queue.add(path, None)
+                return
 
     def _codegen_finished(self):
         self._running_codegen = False
@@ -719,6 +773,7 @@ class _EchonestProcessor(_MetadataProcessor):
 
     def remove_tasks_for_paths(self, paths):
         path_set = set(paths)
+        self._metadata_fetch_queue.remove_paths(path_set)
         self._echonest_queue.remove_paths(path_set)
         self._codegen_queue.remove_paths(path_set)
         self._paths_in_system -= path_set
@@ -1009,11 +1064,11 @@ class MetadataManagerBase(signals.SignalEmitter):
             self.db_info = app.db_info
         else:
             self.db_info = db_info
+        self.closed = False
         self.create_signal('new-metadata')
         self.cover_art_dir = cover_art_dir
         self.screenshot_dir = screenshot_dir
         self.echonest_cover_art_dir = os.path.join(cover_art_dir, 'echonest')
-        self.check_image_directories(log_warnings=True)
         self.mutagen_processor = _TaskProcessor(u'mutagen', 100)
         self.moviedata_processor = _TaskProcessor(u'movie-data', 100)
         self.echonest_processor = _EchonestProcessor(
@@ -1150,11 +1205,13 @@ class MetadataManagerBase(signals.SignalEmitter):
         :returns initial metadata for the file
         :raises ValueError: path is already in the system
         """
+        if self.closed:
+            raise ValueError("%r added to closed MetadataManager" % path)
         try:
             status = MetadataStatus(path, self.net_lookup_enabled_default(),
                                     db_info=self.db_info)
         except sqlite3.IntegrityError:
-            raise ValueError("%s already added" % path)
+            raise ValueError("%r already added" % path)
         if status.net_lookup_enabled:
             self.net_lookup_count += 1
         self.total_count += 1
@@ -1214,6 +1271,18 @@ class MetadataManagerBase(signals.SignalEmitter):
         finally:
             app.bulk_sql_manager.finish()
 
+    def close(self):
+        """
+        Close the MetadataExtractor.  Cancel anything in progress, and don't
+        allow new requests.
+        """
+        if self.closed: # already closed
+            return
+        self.closed = True
+        paths = [r[0] for r in
+                 MetadataStatus.select(['path'], db_info=self.db_info)]
+        self._cancel_processing_paths(paths)
+
     def _remove_files(self, paths):
         """Does the work for remove_file and remove_files"""
         self._cancel_processing_paths(paths)
@@ -1253,8 +1322,10 @@ class MetadataManagerBase(signals.SignalEmitter):
 
         :param move_info: list of (old_path, new_path) tuples
         """
-        restart_mutagen_for = []
-        restart_moviedata_for = []
+        if self.closed:
+            raise ValueError("%r moved to %r on closed MetadataManager" % (
+                    old_path, new_path))
+
         try:
             status = self._get_status_for_path(old_path)
         except KeyError:
@@ -1274,7 +1345,6 @@ class MetadataManagerBase(signals.SignalEmitter):
             self._run_mutagen(new_path)
         elif status.moviedata_status == MetadataStatus.STATUS_NOT_RUN:
             self._run_movie_data(new_path)
-            restart_moviedata_for.append(new_path)
         self.count_tracker.file_moved(old_path, new_path)
 
     def get_metadata(self, path):
@@ -1328,6 +1398,9 @@ class MetadataManagerBase(signals.SignalEmitter):
 
         :raises KeyError: path not in the metadata system
         """
+        if self.closed:
+            raise ValueError(
+                "%r called set_user_data on closed MetadataManager" % path)
         # make sure that our MetadataStatus object exists
         status = self._get_status_for_path(path)
         try:
@@ -1340,29 +1413,38 @@ class MetadataManagerBase(signals.SignalEmitter):
             MetadataEntry(status, u'user-data', user_data, db_info=self.db_info)
 
     def set_net_lookup_enabled(self, paths, enabled):
-        """Set if we should do an internet lookup for a list of paths"""
+        """Set if we should do an internet lookup for a list of paths
+
+        :param paths: paths to change or None to change it for all entries
+        :param enabled: should we do internet lookups for paths?
+        """
         paths_to_refresh = []
         paths_to_cancel = []
         paths_to_start = []
-        change_count = 0
-        app.bulk_sql_manager.start()
-        try:
+        to_change = []
+
+        if paths is not None:
             for path in paths:
                 try:
                     status = MetadataStatus.get_by_path(path, self.db_info)
+                    if status.net_lookup_enabled != enabled:
+                        to_change.append(status)
                 except database.ObjectNotFoundError:
                     logging.warn("set_net_lookup_enabled() "
                                  "path not in system: %s", path)
-                    continue
-                if status.net_lookup_enabled == enabled:
-                    # nothing to change
-                    continue
-                change_count += 1
+        else:
+            view = MetadataStatus.net_lookup_enabled_view(not enabled,
+                                                          self.db_info)
+            to_change = list(view)
+
+        app.bulk_sql_manager.start()
+        try:
+            for status in to_change:
                 old_current_processor = status.current_processor
                 status.set_net_lookup_enabled(enabled)
                 if MetadataEntry.set_disabled('echonest', status, not enabled,
                                               self.db_info):
-                    paths_to_refresh.append(path)
+                    paths_to_refresh.append(status.path)
                 # Changing the net_lookup value may mean we have to send the
                 # path through echonest
                 if (old_current_processor is None and
@@ -1388,9 +1470,9 @@ class MetadataManagerBase(signals.SignalEmitter):
             self.refresh_metadata_for_paths(paths_to_refresh)
 
         if enabled:
-            self.net_lookup_count += change_count
+            self.net_lookup_count += len(to_change)
         else:
-            self.net_lookup_count -= change_count
+            self.net_lookup_count -= len(to_change)
         # call _send_net_lookup_counts() immediately because we want the
         # frontend to update the counts before it un-disables the buttons.
         self._send_net_lookup_counts_caller.call_now()
@@ -1398,9 +1480,7 @@ class MetadataManagerBase(signals.SignalEmitter):
 
     def set_net_lookup_enabled_for_all(self, enabled):
         """Set if we should do an internet lookup for all current paths"""
-        paths = [r[0] for r in
-                 MetadataStatus.select(['path'], db_info=self.db_info)]
-        self.set_net_lookup_enabled(paths, enabled)
+        self.set_net_lookup_enabled(None, enabled)
         messages.SetNetLookupEnabledFinished().send_to_frontend()
 
     def _send_net_lookup_counts(self):
@@ -1472,23 +1552,24 @@ class MetadataManagerBase(signals.SignalEmitter):
     def _run_echonest(self, path):
         """Run echonest and other internet queries on a path."""
         self.check_image_directories()
-        # FIXME: calling get_metadata() probably slows things down
-        metadata = self.get_metadata(path)
-        # make sure to get metadata that we just created but haven't saved yet
-        # because we're doing a bulk insert
-        if path in self.new_metadata:
-            metadata.update(self.new_metadata[path])
+        def metadata_fetcher():
+            metadata = self.get_metadata(path)
+            # make sure to get metadata that we just created but haven't saved
+            # yet because we're doing a bulk insert
+            if path in self.new_metadata:
+                metadata.update(self.new_metadata[path])
 
-        path = self._translate_path(path)
-        # we only send a subset of the metadata to echonest and some of the
-        # key names are different
-        echonest_metadata = {}
-        for key in ('title', 'artist', 'album', 'duration'):
-            try:
-                echonest_metadata[key] = metadata[key]
-            except KeyError:
-                pass
-        self.echonest_processor.add_path(path, echonest_metadata)
+            # we only send a subset of the metadata to echonest and some of
+            # the key names are different
+            echonest_metadata = {}
+            for key in ('title', 'artist', 'album', 'duration'):
+                try:
+                    echonest_metadata[key] = metadata[key]
+                except KeyError:
+                    pass
+            return echonest_metadata
+        self.echonest_processor.add_path(self._translate_path(path),
+                                         metadata_fetcher)
 
     def _on_task_complete(self, processor, path, result):
         path = self._untranslate_path(path)

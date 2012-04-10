@@ -270,7 +270,11 @@ class PlaybackManager (signals.SignalEmitter):
         if self.player_playing():
             elapsed = self.player.get_elapsed_playback_time()
             total = self.player.get_total_playback_time()
-            self.emit('playback-did-progress', elapsed, total)
+            if elapsed is not None and total is not None:
+                self.emit('playback-did-progress', elapsed, total)
+            else:
+                logging.warning('notify_update: elapsed = %s total = %s',
+                                elapsed, total)
 
     def on_display_removed(self, display):
         if not self.removing_video_display:
@@ -282,6 +286,8 @@ class PlaybackManager (signals.SignalEmitter):
             logging.warn("no self.player in play(). race condition?")
             return
         duration = self.player.get_total_playback_time()
+        if duration is None or duration <= 0:
+            logging.warning('duration is %s', duration)
         self.emit('will-play', duration)
         resume_time = self.playlist.currently_playing.resume_time
         if start_at > 0:
@@ -454,6 +460,9 @@ class PlaybackManager (signals.SignalEmitter):
         if resume_time == -1:
             resume_time = self.player.get_elapsed_playback_time()
             duration = self.player.get_total_playback_time()
+            if duration is None:
+                logging.warning('update_current_resume_time: duration is None')
+                return
             # if we are 95% of the way into the movie and less than 30
             # seconds before the end, don't save resume time (#11956)
             if resume_time > min(duration * 0.95, duration - 30):

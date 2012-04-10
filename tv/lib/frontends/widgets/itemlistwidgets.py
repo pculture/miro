@@ -1722,7 +1722,7 @@ class EmptyListDescription(widgetset.Alignment):
         self.add(self.label)
 
 class ProgressToolbar(Toolbar):
-    """Toolbar displayed above ItemViews to show the progress of
+    """Toolbar displayed below ItemViews to show the progress of
     reading new metadata, communicating with a device, and similar
     time-consuming operations.
 
@@ -1731,15 +1731,12 @@ class ProgressToolbar(Toolbar):
     """
     def __init__(self):
         Toolbar.__init__(self)
-        loading_icon = widgetset.AnimatedImageDisplay(
-                       resources.path('images/load-indicator.gif'))
         self.hbox = widgetset.HBox()
         self.add(self.hbox)
         self.label = widgetset.Label()
         # bz18599 says we should reduce the size by 2px from the default.  The
         # default size is 13 px, so 0.85 should do the trick.
         self.label.set_size(0.85)
-        self.meter = widgetutil.HideableWidget(loading_icon)
         self.label_widget = widgetutil.HideableWidget(self.label)
         self.elapsed = None
         self.eta = None
@@ -1756,8 +1753,8 @@ class ProgressToolbar(Toolbar):
                                        right_pad=10)
         label_align.set_size_request(-1, 20)
         self.hbox.pack_start(label_align, expand=False)
-        meter_align = widgetutil.align(self.meter, yalign=0.5, xalign=1.0)
-        self.hbox.pack_start(meter_align, expand=True)
+        # this is where we could pack a progress bar if we wanted to show that
+        # again
         self.set_up = True
 
     def _update_label(self):
@@ -1791,27 +1788,22 @@ class ProgressToolbar(Toolbar):
             self.net_lookup_only = True
             self.count = finished
             # ensure we are as tall we are when the loading indicator is shown
-            self._set_display_mode('show-label')
+            self._set_display_mode('show')
         else:
             # still working on local extraction (mutagen, moviedata, etc)
             self.net_lookup_only = False
             self.count = finished_local
-            self._set_display_mode('show-all')
+            self._set_display_mode('show')
 
     def _set_display_mode(self, mode):
-        if mode != 'hide':
+        if mode == 'show':
             if not self.set_up:
                 self._setup()
             self._update_label()
             self.label_widget.show()
-            if mode == 'show-all':
-                self.meter.show()
-            else:
-                self.meter.hide()
         else:
             # we are hiding the whole display
             self.label_widget.hide()
-            self.meter.hide()
 
 class ItemDetailsBackground(widgetset.Background):
     """Nearly white background behind the item details widget
@@ -2265,7 +2257,9 @@ class ItemDetailsWidget(widgetset.VBox):
         self.description_label.set_text(info.description_stripped[0])
         self.set_extra_info_text(info)
         self.setup_license_button(info)
-        image = imagepool.get(info.thumbnail, self.IMAGE_SIZE)
+        image = imagepool.get(info.thumbnail, self.IMAGE_SIZE,
+                              invalidator=util.mtime_invalidator(
+                info.thumbnail))
         self.image_widget.set_image(image)
         self.set_label_widths()
         self._set_empty_mode(False)

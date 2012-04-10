@@ -1111,8 +1111,8 @@ class EchonestNetErrorTest(EventLoopTest):
         timeout = _echonest_processor.PAUSE_AFTER_HTTP_ERROR_TIMEOUT
         for i, path in enumerate(paths):
             # give enough initial metadata so that we skip the codegen step
-            _echonest_processor.add_path(path,
-                                         { u'title': "Song-%i" % i })
+            fetcher = lambda: { u'title': "Song-%i" % i }
+            _echonest_processor.add_path(path, fetcher)
         path_iter = iter(paths)
 
         for i in xrange(error_count):
@@ -1168,7 +1168,7 @@ class DeviceMetadataTest(EventLoopTest):
             self.tempdir, sqlite_db, device_id)
         self.device = messages.DeviceInfo(device_id, device_info, mount,
                                           self.db, sqlite_db,
-                                          metadata_manager, 1000, 0)
+                                          metadata_manager, 1000, 0, False)
         # copy a file to our device
         src = resources.path('testdata/Wikipedia_Song_by_teddy.ogg')
         dest = os.path.join(self.tempdir, 'test-song.ogg')
@@ -1833,6 +1833,15 @@ class TestEchonestQueries(MiroTestCase):
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply('no-matches')
+        self.check_callback()
+
+    def test_7digital_invalid_xml(self):
+        # test 7digital sending back invalid XML
+        self.start_query_with_tags()
+        self.check_echonest_grab_url_call()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
+        self.send_7digital_reply('invalid-xml')
         self.check_callback()
 
     def test_multiple_releases(self):

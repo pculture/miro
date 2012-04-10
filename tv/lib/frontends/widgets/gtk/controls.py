@@ -150,19 +150,28 @@ class MultilineTextEntry(Widget):
 class Checkbox(Widget, BinBaselineCalculator):
     """Widget that the user can toggle on or off."""
 
-    def __init__(self, label=None, bold=False):
+    def __init__(self, text=None, bold=False):
         Widget.__init__(self)
         BinBaselineCalculator.__init__(self)
-        self.set_widget(gtk.CheckButton(label))
+        if text is None:
+            text = ''
+        self.set_widget(gtk.CheckButton())
+        self.label = Label(text)
+        self._widget.add(self.label._widget)
+        self.label._widget.show()
         self.create_signal('toggled')
         self.forward_signal('toggled')
-        # GTK doesn't support bold checkboxes, at least not natively
+        if bold:
+            self.label.set_bold(True)
 
     def get_checked(self):
         return self._widget.get_active()
 
     def set_checked(self, value):
         self._widget.set_active(value)
+
+    def set_size(self, scale_factor):
+        self.label.set_size(scale_factor)
 
     def get_text_padding(self):
         """
@@ -245,12 +254,11 @@ class Button(Widget, BinBaselineCalculator):
         self.create_signal('clicked')
         self.forward_signal('clicked')
         self.label = Label(text)
-        if width:
-            current_width = self.label.get_width()
-            padding = (width - current_width) // 2
-            odd = width - current_width - padding * 2
+        # only honor width if its bigger than the width we need to display the
+        # label (#18994)
+        if width and width > self.label.get_width():
             alignment = layout.Alignment(0.5, 0.5, 0, 0)
-            alignment.set_padding(0, 0, padding, padding+odd)
+            alignment.set_size_request(width, -1)
             alignment.add(self.label)
             self._widget.add(alignment._widget)
         else:

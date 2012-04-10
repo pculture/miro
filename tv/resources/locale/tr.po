@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-02-20 13:19+0100\n"
+"POT-Creation-Date: 2012-04-09 11:50+0200\n"
 "PO-Revision-Date: 2012-01-02 09:46+0000\n"
 "Last-Translator: Bolimatos <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -15,18 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2012-02-20 20:37+0000\n"
-"X-Generator: Launchpad (build 14833)\n"
+"X-Launchpad-Export-Date: 2012-04-09 15:28+0000\n"
+"X-Generator: Launchpad (build 15060)\n"
 
-#: ../../lib/frontends/widgets/menus.py:198
+#: ../../lib/frontends/widgets/menus.py:200
 msgid "P_layback"
 msgstr "_Oynat"
 
-#: ../../lib/commandline.py:141
+#: ../../lib/commandline.py:153
 msgid "Subscription error"
 msgstr "Abonelik hatası"
 
-#: ../../lib/commandline.py:151
+#: ../../lib/commandline.py:163
 #, python-format
 msgid ""
 "This %(appname)s podcast file has an invalid format: %(url)s.  Please notify "
@@ -35,7 +35,7 @@ msgstr ""
 "Bu %(appname)s podcast dosyası geçersiz bir biçim:%(url)s içeriyor. Lütfen "
 "bu dosyanın yayıncısını bilgilendirin."
 
-#: ../../lib/commandline.py:162
+#: ../../lib/commandline.py:174
 #, python-format
 msgid ""
 "This %(appname)s podcast file has the wrong content type: %(url)s. Please "
@@ -44,26 +44,26 @@ msgstr ""
 "Bu %(appname)s podcast dosyası yanlış bir içerik tipi:%(url)s içeriyor. "
 "Lütfen bu dosyanın yayıncısını uyarın."
 
-#: ../../lib/commandline.py:171
+#: ../../lib/commandline.py:183
 #, python-format
 msgid "Could not download the %(appname)s podcast file: %(url)s"
 msgstr "%(appname)s podcast dosyası İndirilemedi: %(url)s"
 
-#: ../../lib/commandline.py:226
+#: ../../lib/commandline.py:238
 msgid "Invalid Torrent"
 msgstr "Geçersiz Torrent"
 
-#: ../../lib/commandline.py:228
+#: ../../lib/commandline.py:240
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr "Torrent dosyası %(filename)s hatalı görünüyor ve açılamaz."
 
-#: ../../lib/commandline.py:235
+#: ../../lib/commandline.py:247
 msgid "File Error"
 msgstr "Dosya Hatası"
 
-#: ../../lib/commandline.py:237
+#: ../../lib/commandline.py:249
 #, python-format
 msgid ""
 "The torrent file %(filename)s could not be opened. Please ensure it exists "
@@ -72,11 +72,11 @@ msgstr ""
 "Torrent dosyası %(filename)s açılamıyor. Lütfen dosyanın varlığından ve "
 "sizin dosya üzerinde yetkili olduğunuzdan emin olun."
 
-#: ../../lib/controller.py:189
+#: ../../lib/controller.py:187
 msgid "Sending Crash Report"
 msgstr "Çökme Raporu Gönderiliyor"
 
-#: ../../lib/controller.py:210
+#: ../../lib/controller.py:208
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
 msgstr "Çökme Raporu Gönderiliyor (%(progress)d%%)"
@@ -108,7 +108,7 @@ msgstr "Copy"
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr "%(original_name)s (%(format)s formatına dönüştürüldü)"
 
-#: ../../lib/databaseupgrade.py:2739 ../../lib/feed.py:1694
+#: ../../lib/databaseupgrade.py:2739 ../../lib/feed.py:1693
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr "%(engine)s '%(query)s' için"
@@ -130,19 +130,19 @@ msgstr "Veritabanı Yükseltiliyor"
 msgid "Preparing Items"
 msgstr "Objeler hazırlanıyor"
 
-#: ../../lib/devices.py:248
+#: ../../lib/devices.py:247
 msgid "Your drive must be mounted."
 msgstr "Sürücü takılı olmalı."
 
-#: ../../lib/devices.py:454
+#: ../../lib/devices.py:473
 msgid "USB Device"
 msgstr "USB Aygıtı"
 
-#: ../../lib/devices.py:533
+#: ../../lib/devices.py:569
 msgid "Device removed during sync"
 msgstr "Cihaz güncelleme sırasında kaldırıldı"
 
-#: ../../lib/devices.py:534
+#: ../../lib/devices.py:570
 #, python-format
 msgid ""
 "%(name)s was removed while a sync was in progress.  Not all items may have "
@@ -151,134 +151,133 @@ msgstr ""
 "Güncelleme sırasında %(name)s  kaldırıldı. Objelerin hepsi kopyalanmamış "
 "olabilir."
 
-#: ../../lib/dialogs.py:94
+#: ../../lib/dialogs.py:97
 msgid "OK"
 msgstr "TAMAM"
 
-#: ../../lib/dialogs.py:95
+#: ../../lib/dialogs.py:98
 msgid "Apply"
 msgstr "Uygula"
 
-#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/gtk/window.py:557
+#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/gtk/window.py:565
 msgid "Close"
 msgstr "Kapat"
 
-#: ../../lib/dialogs.py:97 ../../lib/frontends/widgets/itemrenderer.py:107
+#: ../../lib/dialogs.py:100 ../../lib/frontends/widgets/itemrenderer.py:107
 msgid "Cancel"
 msgstr "İptal"
 
-#: ../../lib/dialogs.py:98
+#: ../../lib/dialogs.py:101
 msgid "Done"
 msgstr "Tamamlandı."
 
-#: ../../lib/dialogs.py:99 ../../lib/frontends/widgets/firsttimedialog.py:257
-#: ../../lib/frontends/widgets/firsttimedialog.py:298
-#: ../../lib/frontends/widgets/firsttimedialog.py:538
+#: ../../lib/dialogs.py:102 ../../lib/frontends/widgets/firsttimedialog.py:287
+#: ../../lib/frontends/widgets/firsttimedialog.py:328
 msgid "Yes"
 msgstr "Evet"
 
-#: ../../lib/dialogs.py:100 ../../lib/frontends/widgets/firsttimedialog.py:258
-#: ../../lib/frontends/widgets/firsttimedialog.py:297
-#: ../../lib/frontends/widgets/firsttimedialog.py:539
+#: ../../lib/dialogs.py:103 ../../lib/frontends/widgets/firsttimedialog.py:288
+#: ../../lib/frontends/widgets/firsttimedialog.py:327
 msgid "No"
 msgstr "Hayır"
 
-#: ../../lib/dialogs.py:101
+#: ../../lib/dialogs.py:104
 msgid "Quit"
 msgstr "Çık"
 
-#: ../../lib/dialogs.py:102
+#: ../../lib/dialogs.py:105
 msgid "Continue"
 msgstr "Devam Et"
 
-#: ../../lib/dialogs.py:103
+#: ../../lib/dialogs.py:106
 msgid "Ignore"
 msgstr "Önemseme"
 
-#: ../../lib/dialogs.py:104
+#: ../../lib/dialogs.py:107
 msgid "Import Files"
 msgstr "Dosyaları İçeri Aktar"
 
-#: ../../lib/dialogs.py:105
+#: ../../lib/dialogs.py:108
 msgid "Submit Crash Report"
 msgstr "Hata Raporu Bildir"
 
-#: ../../lib/dialogs.py:106
+#: ../../lib/dialogs.py:109
 msgid "Migrate"
 msgstr "Taşı"
 
-#: ../../lib/dialogs.py:107
+#: ../../lib/dialogs.py:110
 msgid "Don't Migrate"
 msgstr "Taşıma"
 
-#: ../../lib/dialogs.py:108 ../../lib/frontends/widgets/itemcontextmenu.py:223
+#: ../../lib/dialogs.py:111 ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/itemcontextmenu.py:428
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1953
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1945
 #: ../../lib/frontends/widgets/itemrenderer.py:102
 msgid "Download"
 msgstr "İndir"
 
-#: ../../lib/dialogs.py:109
+#: ../../lib/dialogs.py:112
 msgid "Remove Entry"
 msgstr "Girişi Kaldır"
 
-#: ../../lib/dialogs.py:110
+#: ../../lib/dialogs.py:113
 msgid "Delete File"
 msgstr "Dosyayı Sil"
 
-#: ../../lib/dialogs.py:111
+#: ../../lib/dialogs.py:114
 msgid "Delete Files"
 msgstr "Dosyaları Sil"
 
-#: ../../lib/dialogs.py:112
+#: ../../lib/dialogs.py:115
 msgid "Keep Videos"
 msgstr "Videoları Sakla"
 
-#: ../../lib/dialogs.py:113
+#: ../../lib/dialogs.py:116
 msgid "Delete Videos"
 msgstr "Videoları Sil"
 
-#: ../../lib/dialogs.py:114
+#: ../../lib/dialogs.py:117
 msgid "Create"
 msgstr "Oluştur"
 
-#: ../../lib/dialogs.py:115
+#: ../../lib/dialogs.py:118
 msgid "Create Podcast"
 msgstr "Podcast Oluştur"
 
-#: ../../lib/dialogs.py:116
+#: ../../lib/dialogs.py:119
 msgid "Create Folder"
 msgstr "Klasör Oluştur"
 
-#: ../../lib/dialogs.py:117
+#: ../../lib/dialogs.py:120
 msgid "Choose New Folder"
 msgstr ""
 
-#: ../../lib/dialogs.py:118
+#: ../../lib/dialogs.py:121
 msgid "Add Folder"
 msgstr "Klasör Ekle"
 
-#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/prefpanel.py:865
+#: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/prefpanel.py:912
 msgid "Add"
 msgstr "Ekle"
 
-#: ../../lib/dialogs.py:120
+#: ../../lib/dialogs.py:123
 msgid "Add Into New Folder"
 msgstr "Yeni Dizine Ekle"
 
-#: ../../lib/dialogs.py:121 ../../lib/frontends/widgets/itemcontextmenu.py:403
-#: ../../osx/plat/frontends/widgets/overlay.py:132
+#: ../../lib/dialogs.py:124 ../../lib/frontends/widgets/gtk/video.py:305
+#: ../../lib/frontends/widgets/itemcontextmenu.py:403
+#: ../../osx/plat/frontends/widgets/overlay.py:134
 msgid "Keep"
 msgstr "Sakla"
 
-#: ../../lib/dialogs.py:122 ../../lib/frontends/widgets/gtk/video.py:293
+#: ../../lib/dialogs.py:125 ../../lib/frontends/widgets/gtk/video.py:299
 #: ../../osx/plat/frontends/widgets/osxmenus.py:485
-#: ../../osx/plat/frontends/widgets/overlay.py:136
+#: ../../osx/plat/frontends/widgets/overlay.py:138
 msgid "Delete"
 msgstr "Sil"
 
-#: ../../lib/dialogs.py:123 ../../lib/frontends/widgets/menus.py:152
-#: ../../lib/frontends/widgets/prefpanel.py:868
+#: ../../lib/dialogs.py:126 ../../lib/frontends/widgets/menus.py:154
+#: ../../lib/frontends/widgets/prefpanel.py:915
 #: ../../lib/frontends/widgets/tablist.py:1108
 #: ../../lib/frontends/widgets/tablist.py:1122
 #: ../../lib/frontends/widgets/tablist.py:1128
@@ -288,62 +287,62 @@ msgstr "Sil"
 msgid "Remove"
 msgstr "Kaldır"
 
-#: ../../lib/dialogs.py:124
+#: ../../lib/dialogs.py:127
 msgid "Not Now"
 msgstr "Şimdi değil"
 
-#: ../../lib/dialogs.py:125
+#: ../../lib/dialogs.py:128
 msgid "Close to Tray"
 msgstr "Görev çubuğu çekmecesine kapat"
 
-#: ../../lib/dialogs.py:126
+#: ../../lib/dialogs.py:129
 msgid "Launch Miro"
 msgstr "Miro'yu Çalıştır"
 
-#: ../../lib/dialogs.py:127
+#: ../../lib/dialogs.py:130
 msgid "Download Anyway"
 msgstr "Her Hâlükârda İndir"
 
-#: ../../lib/dialogs.py:128
+#: ../../lib/dialogs.py:132
 msgid "Open in External Browser"
 msgstr "Harici Tarayıcıda Aç"
 
-#: ../../lib/dialogs.py:129
+#: ../../lib/dialogs.py:133
 msgid "Don't Install"
 msgstr "Yükleme"
 
-#: ../../lib/dialogs.py:130
+#: ../../lib/dialogs.py:134
 msgid "Subscribe"
 msgstr "Onayla"
 
-#: ../../lib/dialogs.py:131
+#: ../../lib/dialogs.py:135
 msgid "Stop Watching"
 msgstr "İzlemeyi durdur"
 
-#: ../../lib/dialogs.py:132
+#: ../../lib/dialogs.py:136
 msgid "Retry"
 msgstr "Tekrar dene"
 
-#: ../../lib/dialogs.py:133
+#: ../../lib/dialogs.py:137
 msgid "Start Fresh"
 msgstr "Yeniden Başla"
 
-#: ../../lib/dialogs.py:134
+#: ../../lib/dialogs.py:138
 msgid "Include Database"
 msgstr "Veritabanına dahil et"
 
-#: ../../lib/dialogs.py:135
+#: ../../lib/dialogs.py:140
 msgid "Don't Include Database"
 msgstr "Veritabanına dahil etme"
 
-#: ../../lib/dialogs.py:212
+#: ../../lib/dialogs.py:223
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
 "%(authtype)s %(url)s \"%(realm)s\" için kullanıcı adı ve şifre gerektiriyor."
 
-#: ../../lib/dialogs.py:215
+#: ../../lib/dialogs.py:226
 msgid "Login Required"
 msgstr "Giriş gerekli"
 
@@ -454,62 +453,62 @@ msgstr[0] "%(count)d dakika içinde silinecek"
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
-#: ../../lib/dl_daemon/download.py:700
+#: ../../lib/dl_daemon/download.py:701
 #: ../../lib/frontends/widgets/itemrenderer.py:106
 msgid "Error"
 msgstr "Hata"
 
-#: ../../lib/dl_daemon/download.py:825
+#: ../../lib/dl_daemon/download.py:833
 msgid "Error moving to movies directory"
 msgstr "Filmler klasörüne taşırken hata oluştu"
 
-#: ../../lib/dl_daemon/download.py:832 ../../lib/dl_daemon/download.py:1087
+#: ../../lib/dl_daemon/download.py:840 ../../lib/dl_daemon/download.py:1095
 msgid "Not enough disk space"
 msgstr "Yeterli disk alanı yok"
 
-#: ../../lib/dl_daemon/download.py:833 ../../lib/dl_daemon/download.py:1088
+#: ../../lib/dl_daemon/download.py:841 ../../lib/dl_daemon/download.py:1096
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "Bu videoyu saklamak için gerekli alan %(amount)s MB"
 
-#: ../../lib/dl_daemon/download.py:873
+#: ../../lib/dl_daemon/download.py:881
 msgid "no content"
 msgstr "içerik yok"
 
-#: ../../lib/dl_daemon/download.py:1141
+#: ../../lib/dl_daemon/download.py:1149
 msgid "BitTorrent failure"
 msgstr "BitTorrent hatası"
 
-#: ../../lib/dl_daemon/download.py:1142
+#: ../../lib/dl_daemon/download.py:1150
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrent başlarken hata verdi"
 
-#: ../../lib/dl_daemon/download.py:1284
+#: ../../lib/dl_daemon/download.py:1292
 msgid "waiting to check existing files"
 msgstr "Varolan dosyaları kontrol etmek için bekleniyor"
 
-#: ../../lib/dl_daemon/download.py:1286
+#: ../../lib/dl_daemon/download.py:1294
 msgid "checking existing files"
 msgstr "Varolan dosyalar kontrol ediliyor"
 
-#: ../../lib/dl_daemon/download.py:1288
+#: ../../lib/dl_daemon/download.py:1296
 msgid "allocating disk space"
 msgstr "Disk hafızası ayarlanıyor"
 
-#: ../../lib/dl_daemon/download.py:1537
+#: ../../lib/dl_daemon/download.py:1545
 msgid "Corrupt Torrent"
 msgstr "Bozuk Torrent"
 
-#: ../../lib/dl_daemon/download.py:1538
+#: ../../lib/dl_daemon/download.py:1546
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Torrent dosyasının %(url)s geçerli değil"
 
-#: ../../lib/dl_daemon/download.py:1582
+#: ../../lib/dl_daemon/download.py:1590
 msgid "Torrent file deleted"
 msgstr "Torrent dosyası silindi"
 
-#: ../../lib/dl_daemon/download.py:1583
+#: ../../lib/dl_daemon/download.py:1591
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr "Buna ait torrent dosyası %(appname)s dışında silinmiş."
@@ -542,16 +541,16 @@ msgstr "Bağlantı yok-Yeniden deneniyor."
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: ../../lib/feed.py:1035
+#: ../../lib/feed.py:1033
 msgid "Bad content-type"
 msgstr "Geçersiz içerik-tür"
 
-#: ../../lib/feed.py:1048
+#: ../../lib/feed.py:1046
 #, python-format
 msgid "Podcast is not compatible with %(appname)s"
 msgstr "Podcast %(appname)s ile uyumlu değil"
 
-#: ../../lib/feed.py:1051
+#: ../../lib/feed.py:1049
 #, python-format
 msgid ""
 "This podcast is not compatible with %(appname)s but we'll try our best to "
@@ -572,12 +571,12 @@ msgstr ""
 "\n"
 "Genede bu podcasti yüklemeyi denemek istiyor musunuz?"
 
-#: ../../lib/feed.py:2384 ../../lib/feed.py:2524
+#: ../../lib/feed.py:2383 ../../lib/feed.py:2523
 msgid "Local Files"
 msgstr "Yerel Dosyalar"
 
-#: ../../lib/feed.py:2393 ../../lib/feed.py:2499 ../../lib/feed.py:2509
-#: ../../lib/frontends/widgets/firsttimedialog.py:353
+#: ../../lib/feed.py:2392 ../../lib/feed.py:2498 ../../lib/feed.py:2508
+#: ../../lib/frontends/widgets/firsttimedialog.py:383
 msgid "Search"
 msgstr "Arama"
 
@@ -604,11 +603,12 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:221
 #, python-format
 msgid ""
-"%(shortappname)s can't use the primary video folder located at:\n"
+"%(shortappname)s can't use your primary video folder, which is currently set "
+"to:\n"
 "\n"
 "%(moviedirectory)s\n"
 "\n"
-"Reason: %(reason)s\n"
+"%(reason)s\n"
 "\n"
 msgstr ""
 
@@ -639,34 +639,52 @@ msgstr "%(filename)s dosyası %(appname)s dışından silinmiş."
 msgid "Open Files..."
 msgstr "Dosyaları Aç..."
 
+#: ../../lib/frontends/widgets/application.py:480
+msgid "All Media Files"
+msgstr ""
+
+#: ../../lib/frontends/widgets/application.py:481
+#: ../../lib/frontends/widgets/application.py:756
+msgid "Video Files"
+msgstr "Video Dosyaları"
+
 #: ../../lib/frontends/widgets/application.py:482
-#: ../../lib/frontends/widgets/application.py:487
+#: ../../lib/frontends/widgets/application.py:757
+msgid "Audio Files"
+msgstr "Ses Dosyaları"
+
+#: ../../lib/frontends/widgets/application.py:483
+msgid "Torrent Files"
+msgstr ""
+
+#: ../../lib/frontends/widgets/application.py:495
+#: ../../lib/frontends/widgets/application.py:500
 msgid "Open Files - Error"
 msgstr "Dosyaları Aç - Hata"
 
-#: ../../lib/frontends/widgets/application.py:483
-#: ../../lib/frontends/widgets/application.py:853
+#: ../../lib/frontends/widgets/application.py:496
+#: ../../lib/frontends/widgets/application.py:864
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "%(filename)s adlı dosya bulunmuyor"
 
-#: ../../lib/frontends/widgets/application.py:488
+#: ../../lib/frontends/widgets/application.py:501
 msgid "The following files do not exist:"
 msgstr "Aşağıdaki dosyalar mevcut değildir:"
 
-#: ../../lib/frontends/widgets/application.py:522
+#: ../../lib/frontends/widgets/application.py:535
 msgid "New Download"
 msgstr "Yeni indirme"
 
-#: ../../lib/frontends/widgets/application.py:523
+#: ../../lib/frontends/widgets/application.py:536
 msgid "Enter the URL of the item to download"
 msgstr "Indirmek için öğenin URL'sini girin"
 
-#: ../../lib/frontends/widgets/application.py:524
+#: ../../lib/frontends/widgets/application.py:537
 msgid "New Download - Invalid URL"
 msgstr "Yeni İndirme - Geçersiz URL Adresi"
 
-#: ../../lib/frontends/widgets/application.py:525
+#: ../../lib/frontends/widgets/application.py:538
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -678,22 +696,22 @@ msgstr ""
 "\n"
 "Enter the URL of the item to download"
 
-#: ../../lib/frontends/widgets/application.py:533
+#: ../../lib/frontends/widgets/application.py:546
 #, python-format
 msgid "%(appname)s is up to date"
 msgstr "%(appname)s güncel"
 
-#: ../../lib/frontends/widgets/application.py:535
+#: ../../lib/frontends/widgets/application.py:548
 #, python-format
 msgid "%(appname)s is up to date!"
 msgstr "%(appname)s güncel"
 
-#: ../../lib/frontends/widgets/application.py:584
+#: ../../lib/frontends/widgets/application.py:597
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "Öğe/leri sil"
 
-#: ../../lib/frontends/widgets/application.py:588
+#: ../../lib/frontends/widgets/application.py:601
 msgid ""
 "One of these items was not downloaded from a podcast. Would you like to "
 "delete it or just remove it from the Library?"
@@ -711,7 +729,7 @@ msgstr[0] ""
 "Objelerden bazıları podcastden indirilemedi. Silmek yoksa sadece "
 "kütüphanedenmi kaldırmak istersiniz."
 
-#: ../../lib/frontends/widgets/application.py:600
+#: ../../lib/frontends/widgets/application.py:613
 msgid ""
 "One of these items is a folder.  Deleting/Removing a folder will "
 "delete/remove it's contents"
@@ -724,7 +742,7 @@ msgstr[0] ""
 "Bu maddelerden baızları klasör. Bir klasörü Silmek/Kaldırmak onun "
 "içeriğinide siler/kaldırır."
 
-#: ../../lib/frontends/widgets/application.py:615
+#: ../../lib/frontends/widgets/application.py:628
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
@@ -733,7 +751,7 @@ msgstr[0] ""
 "\r\n"
 "%(count)d sayıda parçayı silmek istediğinizden emin misiniz?"
 
-#: ../../lib/frontends/widgets/application.py:622
+#: ../../lib/frontends/widgets/application.py:635
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
@@ -744,42 +762,34 @@ msgstr[0] ""
 "Bu öğelerden bazıları klasör. Bir klasörü silmek içindekilerin de "
 "silinmesine neden olur."
 
-#: ../../lib/frontends/widgets/application.py:680
+#: ../../lib/frontends/widgets/application.py:693
 msgid "Save Item As..."
 msgstr "Öğe/leri farklı kaydet.."
 
-#: ../../lib/frontends/widgets/application.py:730
-#: ../../lib/frontends/widgets/firsttimedialog.py:326
+#: ../../lib/frontends/widgets/application.py:743
+#: ../../lib/frontends/widgets/firsttimedialog.py:356
 msgid "Choose directory to search for media files"
 msgstr "Medya dosyalarını aramak için dizin seçin"
 
-#: ../../lib/frontends/widgets/application.py:743
+#: ../../lib/frontends/widgets/application.py:754
 msgid "Choose files to import"
 msgstr "İthal etmek istediğiniz dosyayı seçin"
 
-#: ../../lib/frontends/widgets/application.py:745
-msgid "Video Files"
-msgstr "Video Dosyaları"
-
-#: ../../lib/frontends/widgets/application.py:746
-msgid "Audio Files"
-msgstr "Ses Dosyaları"
-
-#: ../../lib/frontends/widgets/application.py:783
-#: ../../lib/frontends/widgets/menus.py:139
+#: ../../lib/frontends/widgets/application.py:794
+#: ../../lib/frontends/widgets/menus.py:141
 #: ../../lib/frontends/widgets/tabcontroller.py:496
 msgid "Add Source"
 msgstr "Kaynak Ekle"
 
-#: ../../lib/frontends/widgets/application.py:784
+#: ../../lib/frontends/widgets/application.py:795
 msgid "Enter the URL of the source to add"
 msgstr "Eklemek istediğiniz URL adresini girin"
 
-#: ../../lib/frontends/widgets/application.py:785
+#: ../../lib/frontends/widgets/application.py:796
 msgid "Add Source - Invalid URL"
 msgstr "Kaynak Ekle - Geçersiz URL"
 
-#: ../../lib/frontends/widgets/application.py:786
+#: ../../lib/frontends/widgets/application.py:797
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -791,98 +801,98 @@ msgstr ""
 "\n"
 "Eklemek istediğiniz URL adresini girin"
 
-#: ../../lib/frontends/widgets/application.py:843
+#: ../../lib/frontends/widgets/application.py:854
 msgid "Import OPML File"
 msgstr "İçe OPML Dosyası Aktar"
 
-#: ../../lib/frontends/widgets/application.py:845
+#: ../../lib/frontends/widgets/application.py:856
 msgid "OPML Files"
 msgstr "OPML Dosyaları"
 
-#: ../../lib/frontends/widgets/application.py:852
+#: ../../lib/frontends/widgets/application.py:863
 msgid "Import OPML File - Error"
 msgstr "OPML Dosyası Aktarımı - Hata"
 
-#: ../../lib/frontends/widgets/application.py:858
+#: ../../lib/frontends/widgets/application.py:869
 msgid "Export OPML File"
 msgstr "Dışa OPML Dosyası Aktar"
 
-#: ../../lib/frontends/widgets/application.py:888
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1242
+#: ../../lib/frontends/widgets/application.py:899
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1244
 msgid "Create Playlist"
 msgstr "Çalma Listesi Oluştur"
 
-#: ../../lib/frontends/widgets/application.py:889
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1243
+#: ../../lib/frontends/widgets/application.py:900
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1245
 msgid "Enter a name for the new playlist"
 msgstr "Yeni Çalma Listesi İçin İsim Girin"
 
-#: ../../lib/frontends/widgets/application.py:910
+#: ../../lib/frontends/widgets/application.py:921
 msgid "Create Playlist Folder"
 msgstr "Çalma Listesi Dizini Oluştur"
 
-#: ../../lib/frontends/widgets/application.py:911
+#: ../../lib/frontends/widgets/application.py:922
 msgid "Enter a name for the new playlist folder"
 msgstr "Yeni çalma listesi dizini için bir isim girin"
 
-#: ../../lib/frontends/widgets/application.py:932
+#: ../../lib/frontends/widgets/application.py:943
 #: ../../lib/frontends/widgets/tablist.py:1107
 msgid "Rename Podcast Folder"
 msgstr "Podcast Klasörününün İsmini Değiştir"
 
-#: ../../lib/frontends/widgets/application.py:933
+#: ../../lib/frontends/widgets/application.py:944
 #, python-format
 msgid "Enter a new name for the podcast folder %(name)s"
 msgstr "%(name)s podcast klasörü için yeni isim girin"
 
-#: ../../lib/frontends/widgets/application.py:937
-#: ../../lib/frontends/widgets/menus.py:150
+#: ../../lib/frontends/widgets/application.py:948
+#: ../../lib/frontends/widgets/menus.py:152
 msgid "Rename Podcast"
 msgstr "Podcasti Yeniden İsimlendirin"
 
-#: ../../lib/frontends/widgets/application.py:938
+#: ../../lib/frontends/widgets/application.py:949
 #, python-format
 msgid "Enter a new name for the podcast %(name)s"
 msgstr "%(name)s podcast için yeni isim girin"
 
-#: ../../lib/frontends/widgets/application.py:942
-#: ../../lib/frontends/widgets/menus.py:189
+#: ../../lib/frontends/widgets/application.py:953
+#: ../../lib/frontends/widgets/menus.py:191
 #: ../../lib/frontends/widgets/tablist.py:1179 ../../lib/playlist.py:203
 msgid "Rename Playlist"
 msgstr "Çalma Listesini Yeniden Adlandır"
 
-#: ../../lib/frontends/widgets/application.py:943
+#: ../../lib/frontends/widgets/application.py:954
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "%(name)s Çalma Listesine yeni bir as veriniz"
 
-#: ../../lib/frontends/widgets/application.py:947
+#: ../../lib/frontends/widgets/application.py:958
 #: ../../lib/frontends/widgets/tablist.py:1173
 msgid "Rename Playlist Folder"
 msgstr "Çalma Listesi Dizin Adını Değiştir"
 
-#: ../../lib/frontends/widgets/application.py:948
+#: ../../lib/frontends/widgets/application.py:959
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "%(name)s Çalma Listesi dosyasına yeni bir ad veriniz"
 
-#: ../../lib/frontends/widgets/application.py:951
-#: ../../lib/frontends/widgets/menus.py:151
+#: ../../lib/frontends/widgets/application.py:962
+#: ../../lib/frontends/widgets/menus.py:153
 #: ../../lib/frontends/widgets/tablist.py:1004
 msgid "Rename Source"
 msgstr "Kaynağı tekrar isimlendirin"
 
-#: ../../lib/frontends/widgets/application.py:952
+#: ../../lib/frontends/widgets/application.py:963
 #, python-format
 msgid "Enter a new name for the source %(name)s"
 msgstr "%(name)s kaynak için yeni isim girin"
 
-#: ../../lib/frontends/widgets/application.py:971
+#: ../../lib/frontends/widgets/application.py:982
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Çalma listesini sil"
 
-#: ../../lib/frontends/widgets/application.py:973
+#: ../../lib/frontends/widgets/application.py:984
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
@@ -890,32 +900,18 @@ msgstr[0] ""
 "Bu çalma listesini kaldırmak istediğinizden emin misiniz?Bu %(count)s çalma "
 "listelerini kaldırmak istediğinizden emin misiniz?"
 
-#: ../../lib/frontends/widgets/application.py:988
+#: ../../lib/frontends/widgets/application.py:999
 msgid "Remove source"
 msgid_plural "Remove sources"
 msgstr[0] "Kaynağı kaldır"
 
-#: ../../lib/frontends/widgets/application.py:990
+#: ../../lib/frontends/widgets/application.py:1001
 #, python-format
 msgid "Are you sure you want to remove this source?"
 msgid_plural "Are you sure you want to remove these %(count)s sources?"
 msgstr[0] ""
 "Bu kaynağı kaldırmak istediğinizden eminmisiniz?\r\n"
 "%(count)s tane kaynağı kaldırmak istediğinize eminmisiniz?"
-
-#: ../../lib/frontends/widgets/application.py:1014
-#, python-format
-msgid "Import Music from %(media_player)s?"
-msgstr "%(media_player)s den Müzik al?"
-
-#: ../../lib/frontends/widgets/application.py:1015
-#, python-format
-msgid ""
-"We see that you have %(media_player)s installed.  Would you like "
-"%(short_app_name)s to import the music from it?"
-msgstr ""
-"%(media_player)s kurulduğunu görüyoruz. %(short_app_name)s den müzik almak "
-"istermisin?"
 
 #: ../../lib/frontends/widgets/application.py:1057
 #: ../../lib/frontends/widgets/application.py:1102
@@ -999,14 +995,6 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:1656
 msgid "Message"
 msgstr "Mesaj"
-
-#: ../../lib/frontends/widgets/application.py:1712
-msgid "Online lookup data removed"
-msgstr ""
-
-#: ../../lib/frontends/widgets/application.py:1713
-msgid "All song info from online lookup has been removed"
-msgstr ""
 
 #: ../../lib/frontends/widgets/browser.py:161
 msgid "Open in browser"
@@ -1168,6 +1156,7 @@ msgstr "Ana"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:683
 #: ../../lib/frontends/widgets/itemfilter.py:249
+#: ../../lib/frontends/widgets/prefpanel.py:1444
 #: ../../lib/frontends/widgets/tablist.py:880
 #: ../../lib/frontends/widgets/tablist.py:1061
 #: ../../lib/frontends/widgets/tablist.py:1067
@@ -1292,14 +1281,14 @@ msgstr "%(databasecount)s: Sil"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:466
 #: ../../lib/frontends/widgets/itemedit.py:551
 #: ../../lib/frontends/widgets/itemedit.py:563
-#: ../../lib/frontends/widgets/style.py:418
+#: ../../lib/frontends/widgets/style.py:421
 #: ../../lib/frontends/widgets/widgetconst.py:79
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:140
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:144
 msgid "Show"
 msgstr "Göster"
 
 #: ../../lib/frontends/widgets/diagnostics.py:91
-#: ../../lib/frontends/widgets/menus.py:258
+#: ../../lib/frontends/widgets/menus.py:260
 msgid "Diagnostics"
 msgstr "Tanılar"
 
@@ -1343,7 +1332,7 @@ msgstr "Hafızadaki toplam vt nesnesi"
 msgid "Total db backups:"
 msgstr "Toplam veri tabanın yedeği:"
 
-#: ../../lib/frontends/widgets/displays.py:587
+#: ../../lib/frontends/widgets/displays.py:592
 #, python-format
 msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
@@ -1352,35 +1341,35 @@ msgstr ""
 "%(appname)s bu dosyayı açamaz. Belki bu dosyayı farklı bir programla "
 "açabilirsin."
 
-#: ../../lib/frontends/widgets/displays.py:597
+#: ../../lib/frontends/widgets/displays.py:602
 msgid "Filename:"
 msgstr "Dosya Adı:"
 
-#: ../../lib/frontends/widgets/displays.py:600
+#: ../../lib/frontends/widgets/displays.py:605
 msgid "File type:"
 msgstr "Dosya türü:"
 
-#: ../../lib/frontends/widgets/displays.py:605
+#: ../../lib/frontends/widgets/displays.py:610
 #: ../../lib/frontends/widgets/itemrenderer.py:100
 msgid "Reveal File"
 msgstr "Ortaya çıkan Dosya"
 
-#: ../../lib/frontends/widgets/displays.py:606
-#: ../../lib/frontends/widgets/displays.py:649
+#: ../../lib/frontends/widgets/displays.py:611
+#: ../../lib/frontends/widgets/displays.py:654
 #: ../../lib/frontends/widgets/itemcontextmenu.py:112
 #: ../../lib/frontends/widgets/itemcontextmenu.py:184
 msgid "Play Externally"
 msgstr "Dışardan Oynat"
 
-#: ../../lib/frontends/widgets/displays.py:609
+#: ../../lib/frontends/widgets/displays.py:614
 msgid "Skip"
 msgstr "Geç"
 
-#: ../../lib/frontends/widgets/displays.py:651
+#: ../../lib/frontends/widgets/displays.py:656
 msgid "Open Externally"
 msgstr "Dışarıdan Aç"
 
-#: ../../lib/frontends/widgets/displays.py:777
+#: ../../lib/frontends/widgets/displays.py:782
 #, python-format
 msgid "%(count)d Podcast Folder Selected"
 msgid_plural "%(count)d Podcast Folders Selected"
@@ -1388,7 +1377,7 @@ msgstr[0] ""
 "%(count)d Yayın Klasörü Seçildi\r\n"
 "%(count)d Yayın Klasörleri Seçildi"
 
-#: ../../lib/frontends/widgets/displays.py:782
+#: ../../lib/frontends/widgets/displays.py:787
 #, python-format
 msgid "(contains %(count)d podcast)"
 msgid_plural "(contains %(count)d podcasts)"
@@ -1396,20 +1385,20 @@ msgstr[0] ""
 "(%(count)d yayın içeriyor)\r\n"
 "(%(count)d yayın içeriyor)"
 
-#: ../../lib/frontends/widgets/displays.py:788
+#: ../../lib/frontends/widgets/displays.py:793
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
 msgstr[0] "%(count)d Seçilen Oynatma Listesi"
 
-#: ../../lib/frontends/widgets/displays.py:793
+#: ../../lib/frontends/widgets/displays.py:798
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlists)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:803
+#: ../../lib/frontends/widgets/displays.py:808
 #, python-format
 msgid "%(count)d Podcast Selected"
 msgid_plural "%(count)d Podcasts Selected"
@@ -1417,7 +1406,7 @@ msgstr[0] ""
 "%(count)d Yayın Seçildi\r\n"
 "%(count)d Yayın Seçildi"
 
-#: ../../lib/frontends/widgets/displays.py:809
+#: ../../lib/frontends/widgets/displays.py:814
 #, python-format
 msgid "%(count)d Source Selected"
 msgid_plural "%(count)d Sources Selected"
@@ -1425,22 +1414,22 @@ msgstr[0] ""
 "%(count)d Kaynak Seçildi\r\n"
 "%(count)d Kaynak Seçildi"
 
-#: ../../lib/frontends/widgets/displays.py:815
+#: ../../lib/frontends/widgets/displays.py:820
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
 msgstr[0] "%(count)d Oynatma Listesi Seçildi"
 
-#: ../../lib/frontends/widgets/displays.py:822
+#: ../../lib/frontends/widgets/displays.py:827
 msgid "Delete All"
 msgstr "Tümünü Sil"
 
-#: ../../lib/frontends/widgets/displays.py:826
+#: ../../lib/frontends/widgets/displays.py:831
 msgid "Put Into a New Folder"
 msgstr "Yeni Klasöre Yerleştir"
 
 #: ../../lib/frontends/widgets/donate.py:183
-#: ../../lib/frontends/widgets/menus.py:253
+#: ../../lib/frontends/widgets/menus.py:255
 msgid "Donate"
 msgstr ""
 
@@ -1453,9 +1442,9 @@ msgid "Ask me later"
 msgstr ""
 
 #: ../../lib/frontends/widgets/feedcontroller.py:74
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1228
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1286
-#: ../../lib/frontends/widgets/sharingcontroller.py:73
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1230
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1288
+#: ../../lib/frontends/widgets/sharingcontroller.py:74
 msgid "No Results"
 msgstr "Sonuç Yok"
 
@@ -1493,7 +1482,7 @@ msgstr[0] "%(count)d öğe eşleşti"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:55
 #: ../../lib/frontends/widgets/feedsettingspanel.py:103
-#: ../../lib/frontends/widgets/prefpanel.py:978
+#: ../../lib/frontends/widgets/prefpanel.py:1025
 msgid "never"
 msgstr "asla"
 
@@ -1609,40 +1598,40 @@ msgstr "15 çalınmayan dosya"
 msgid "Podcast Settings"
 msgstr "Yayın Ayarları"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:78
+#: ../../lib/frontends/widgets/firsttimedialog.py:112
 #, python-format
 msgid "%(appname)s Setup"
 msgstr "%(appname)s Kurulumu"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:181
+#: ../../lib/frontends/widgets/firsttimedialog.py:212
 #, python-format
 msgid ""
 "Welcome to %(name)s!  We have a couple of questions to help you get started."
 msgstr ""
 "%(name)s e hoşgeldiniz! Başlamanıza yardımcı olmak için bir kaç sorumuz var."
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:186
+#: ../../lib/frontends/widgets/firsttimedialog.py:217
 #, python-format
 msgid "What language would you like %(name)s to be in?"
 msgstr "Hangi dili kullanmak  istersiniz %(name)s?"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:190
-#: ../../lib/frontends/widgets/prefpanel.py:533
+#: ../../lib/frontends/widgets/firsttimedialog.py:221
+#: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "System default"
 msgstr "Sistem varsayılanı"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:224
+#: ../../lib/frontends/widgets/firsttimedialog.py:254
 msgid "Language:"
 msgstr "Dil:"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:231
-#: ../../lib/frontends/widgets/firsttimedialog.py:268
-#: ../../lib/frontends/widgets/firsttimedialog.py:356
-#: ../../lib/frontends/widgets/firsttimedialog.py:563
+#: ../../lib/frontends/widgets/firsttimedialog.py:261
+#: ../../lib/frontends/widgets/firsttimedialog.py:298
+#: ../../lib/frontends/widgets/firsttimedialog.py:386
+#: ../../lib/frontends/widgets/firsttimedialog.py:567
 msgid "Next >"
 msgstr "Sonraki >"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:247
+#: ../../lib/frontends/widgets/firsttimedialog.py:277
 #, python-format
 msgid ""
 "%(name)s can automatically run when you start your computer so that it can "
@@ -1651,19 +1640,19 @@ msgstr ""
 "Siz bilgisyarınızı açtığınızda %(name)s otomatik olarak çalışabilirç Böylece "
 "yayınları indirmeye ve güncellemeye devam edebilir."
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:253
+#: ../../lib/frontends/widgets/firsttimedialog.py:283
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
 msgstr "%(name)s açılışta başlatılsın mı?"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:265
-#: ../../lib/frontends/widgets/firsttimedialog.py:341
-#: ../../lib/frontends/widgets/firsttimedialog.py:509
-#: ../../lib/frontends/widgets/firsttimedialog.py:560
+#: ../../lib/frontends/widgets/firsttimedialog.py:295
+#: ../../lib/frontends/widgets/firsttimedialog.py:371
+#: ../../lib/frontends/widgets/firsttimedialog.py:539
+#: ../../lib/frontends/widgets/firsttimedialog.py:564
 msgid "< Previous"
 msgstr "< Önceki"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:286
+#: ../../lib/frontends/widgets/firsttimedialog.py:316
 #, python-format
 msgid ""
 "%(name)s can find music and video on your computer and show them in your "
@@ -1673,351 +1662,380 @@ msgstr ""
 "%(name)s kütüphanenizde gösterebilir. Hiçbir dosya kopyalanmayacak yada "
 "kopyalanmayacak."
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:292
+#: ../../lib/frontends/widgets/firsttimedialog.py:322
 #, python-format
 msgid "Would you like %(name)s to search your computer for media files?"
 msgstr ""
 "Bilgisayarınızdaki oynatılabilir dosyalarınızda %(name)s için arama yapmak "
 "İstermisiniz?"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:308
+#: ../../lib/frontends/widgets/firsttimedialog.py:338
 msgid "Search everywhere."
 msgstr "Heryerde ara."
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:310
+#: ../../lib/frontends/widgets/firsttimedialog.py:340
 msgid "Just search in this folder:"
 msgstr "Sadece bu klasörde ara:"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:318
+#: ../../lib/frontends/widgets/firsttimedialog.py:348
 #: ../../lib/frontends/widgets/newwatchedfolder.py:73
 msgid "Choose..."
 msgstr "Seç..."
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:357
-#: ../../lib/frontends/widgets/firsttimedialog.py:512
+#: ../../lib/frontends/widgets/firsttimedialog.py:387
+#: ../../lib/frontends/widgets/firsttimedialog.py:542
 msgid "Finish"
 msgstr "Bitti"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:428
+#: ../../lib/frontends/widgets/firsttimedialog.py:458
 msgid "Cancelled"
 msgstr "İptal edildi"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:444
+#: ../../lib/frontends/widgets/firsttimedialog.py:474
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
 msgstr[0] "%(count)s dosya bulundu"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:449
-#: ../../lib/frontends/widgets/firsttimedialog.py:465
+#: ../../lib/frontends/widgets/firsttimedialog.py:479
+#: ../../lib/frontends/widgets/firsttimedialog.py:495
 #: ../../lib/frontends/widgets/searchfilesdialog.py:237
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
 msgstr[0] "Bulunan %(count)s medya dosyaları"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:501
+#: ../../lib/frontends/widgets/firsttimedialog.py:531
 #: ../../lib/frontends/widgets/searchfilesdialog.py:145
 msgid "Cancel Search"
 msgstr "Aramadan Vazgeç"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:532
-#, python-format
-msgid ""
-"Would you like to display your %(player)s music and video in %(appname)s?"
+#: ../../lib/frontends/widgets/firsttimedialog.py:558
+#: ../../lib/frontends/widgets/firsttimedialog.py:639
+msgid "Music Setup"
 msgstr ""
-"%(player)s müziğinizi ve videonuzu %(appname)s uygulamasında görüntülemek "
-"istermisiniz?"
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:546
+#: ../../lib/frontends/widgets/firsttimedialog.py:596
 #, python-format
-msgid ""
-"Note: %(appname)s won't move or copy any files on your disk.  It will just "
-"add them to your %(appname)s library."
+msgid "Show my %(player)s music in my %(appname)s library."
 msgstr ""
-"%(appname)s  sabit diskinize herhangi bir dosya taşıma ya da kopyalama "
-"işlemi yapmayacak. %(appname)s kütüphanenize ekleme yapılacak."
 
-#: ../../lib/frontends/widgets/gst/renderer.py:436
+#: ../../lib/frontends/widgets/firsttimedialog.py:600
+msgid "(Don't worry, no files are copied.)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:606
+msgid "Cleanup Song Info and Album Art"
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:609
+msgid ""
+"Miro will use Echonest and 7Digital to cleanup all song titles, info, and "
+"album art.  Recommended."
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:618
+msgid "Note:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:623
+msgid ""
+"You can manually set or undo song info cleanup by right-clicking on a song "
+"or batch of songs.  You can adjust lookup settings at any time in Miro "
+"preferences.\n"
+"\n"
+"Online lookup involves sending anonymized data about your songs to Miro and "
+"indirectly to Echonest and 7Digital."
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:644
+msgid "First Time Music Setup"
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:646
+msgid "Get Started"
+msgstr ""
+
+#: ../../lib/frontends/widgets/gst/renderer.py:456
 #, python-format
 msgid "Track %(tracknumber)d"
 msgstr "Şarkı %(tracknumber)d"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:446
+#: ../../lib/frontends/widgets/gst/renderer.py:466
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
 msgstr "Altyazı dosyası %(tracknumber)d"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:540
+#: ../../lib/frontends/widgets/gst/renderer.py:560
 msgid "Eastern European"
 msgstr "Doğu Avrupa"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:541
-#: ../../lib/frontends/widgets/gst/renderer.py:542
-#: ../../lib/frontends/widgets/gst/renderer.py:543
+#: ../../lib/frontends/widgets/gst/renderer.py:561
+#: ../../lib/frontends/widgets/gst/renderer.py:562
+#: ../../lib/frontends/widgets/gst/renderer.py:563
 msgid "Baltic"
 msgstr "Baltık"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:544
+#: ../../lib/frontends/widgets/gst/renderer.py:564
 msgid "Croatian"
 msgstr "Hırvatça"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:545
-#: ../../lib/frontends/widgets/gst/renderer.py:546
-#: ../../lib/frontends/widgets/gst/renderer.py:547
-#: ../../lib/frontends/widgets/gst/renderer.py:548
-#: ../../lib/frontends/widgets/gst/renderer.py:549
-#: ../../lib/frontends/widgets/gst/renderer.py:550
+#: ../../lib/frontends/widgets/gst/renderer.py:565
+#: ../../lib/frontends/widgets/gst/renderer.py:566
+#: ../../lib/frontends/widgets/gst/renderer.py:567
+#: ../../lib/frontends/widgets/gst/renderer.py:568
+#: ../../lib/frontends/widgets/gst/renderer.py:569
+#: ../../lib/frontends/widgets/gst/renderer.py:570
 msgid "Cyrillic"
 msgstr "Kiril Alfabesi"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:551
+#: ../../lib/frontends/widgets/gst/renderer.py:571
 msgid "Cyrillic/Russian"
 msgstr "Kiril/Rusça"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:552
-#: ../../lib/frontends/widgets/gst/renderer.py:553
+#: ../../lib/frontends/widgets/gst/renderer.py:572
+#: ../../lib/frontends/widgets/gst/renderer.py:573
 msgid "Cyrillic/Ukrainian"
 msgstr "Kiril/Ukraynaca"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:555
-#: ../../lib/frontends/widgets/gst/renderer.py:556
-#: ../../lib/frontends/widgets/gst/renderer.py:557
+#: ../../lib/frontends/widgets/gst/renderer.py:575
+#: ../../lib/frontends/widgets/gst/renderer.py:576
+#: ../../lib/frontends/widgets/gst/renderer.py:577
 msgid "Central European"
 msgstr "Merkezi Avrupa"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:558
-#: ../../lib/frontends/widgets/gst/renderer.py:559
+#: ../../lib/frontends/widgets/gst/renderer.py:578
+#: ../../lib/frontends/widgets/gst/renderer.py:579
 msgid "Romanian"
 msgstr "Romanya"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:561
+#: ../../lib/frontends/widgets/gst/renderer.py:581
 msgid "Western European"
 msgstr "Batı Avrupa"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:562
+#: ../../lib/frontends/widgets/gst/renderer.py:582
 msgid "Celtic"
 msgstr "Keltçe"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:563
-#: ../../lib/frontends/widgets/gst/renderer.py:564
-#: ../../lib/frontends/widgets/gst/renderer.py:565
-msgid "Greek"
-msgstr "Yunanca"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:566
-msgid "Icelandic"
-msgstr "İzlandaca"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:567
-msgid "Nordic"
-msgstr "Kuzeybatı Avrupa"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:568
-msgid "South European"
-msgstr "Güney Avrupa"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:569
-#: ../../lib/frontends/widgets/gst/renderer.py:570
-#: ../../lib/frontends/widgets/gst/renderer.py:571
-#: ../../lib/frontends/widgets/gst/renderer.py:572
-#: ../../lib/frontends/widgets/gst/renderer.py:573
-msgid "Western"
-msgstr "Batı"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:575
-msgid "East Asian"
-msgstr "Doğu Asya"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:576
-#: ../../lib/frontends/widgets/gst/renderer.py:577
-#: ../../lib/frontends/widgets/gst/renderer.py:578
-#: ../../lib/frontends/widgets/gst/renderer.py:579
-msgid "Chinese Simplified"
-msgstr "Çince (Basitleştirilmiş)"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:580
-#: ../../lib/frontends/widgets/gst/renderer.py:581
-#: ../../lib/frontends/widgets/gst/renderer.py:582
-msgid "Chinese Traditional"
-msgstr "Çince (Geleneksel)"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:583
 #: ../../lib/frontends/widgets/gst/renderer.py:584
 #: ../../lib/frontends/widgets/gst/renderer.py:585
+msgid "Greek"
+msgstr "Yunanca"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:586
+msgid "Icelandic"
+msgstr "İzlandaca"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:587
+msgid "Nordic"
+msgstr "Kuzeybatı Avrupa"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:588
+msgid "South European"
+msgstr "Güney Avrupa"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:589
+#: ../../lib/frontends/widgets/gst/renderer.py:590
+#: ../../lib/frontends/widgets/gst/renderer.py:591
+#: ../../lib/frontends/widgets/gst/renderer.py:592
+#: ../../lib/frontends/widgets/gst/renderer.py:593
+msgid "Western"
+msgstr "Batı"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:595
+msgid "East Asian"
+msgstr "Doğu Asya"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:596
+#: ../../lib/frontends/widgets/gst/renderer.py:597
+#: ../../lib/frontends/widgets/gst/renderer.py:598
+#: ../../lib/frontends/widgets/gst/renderer.py:599
+msgid "Chinese Simplified"
+msgstr "Çince (Basitleştirilmiş)"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:600
+#: ../../lib/frontends/widgets/gst/renderer.py:601
+#: ../../lib/frontends/widgets/gst/renderer.py:602
+msgid "Chinese Traditional"
+msgstr "Çince (Geleneksel)"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:603
+#: ../../lib/frontends/widgets/gst/renderer.py:604
+#: ../../lib/frontends/widgets/gst/renderer.py:605
 msgid "Japanese"
 msgstr "Japonca"
 
-#: ../../lib/frontends/widgets/gst/renderer.py:586
-#: ../../lib/frontends/widgets/gst/renderer.py:587
-#: ../../lib/frontends/widgets/gst/renderer.py:588
-#: ../../lib/frontends/widgets/gst/renderer.py:589
-msgid "Korean"
-msgstr "Korece"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:591
-msgid "SE and SW Asian"
-msgstr "Güneydoğu ve Güney Batı Asya"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:592
-msgid "Armenian"
-msgstr "Ermenice"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:593
-msgid "Georgian"
-msgstr "Gürcü Dili"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:594
-msgid "Gujarati"
-msgstr "Gujarat"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:595
-msgid "Gurmukhi"
-msgstr "Gurmukhi"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:596
-msgid "Hindi"
-msgstr "Hintçe"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:597
-msgid "Thai"
-msgstr "Tai Dili"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:598
-#: ../../lib/frontends/widgets/gst/renderer.py:599
-#: ../../lib/frontends/widgets/gst/renderer.py:600
-#: ../../lib/frontends/widgets/gst/renderer.py:601
-msgid "Turkish"
-msgstr "Türkçe"
-
-#: ../../lib/frontends/widgets/gst/renderer.py:602
-#: ../../lib/frontends/widgets/gst/renderer.py:603
-#: ../../lib/frontends/widgets/gst/renderer.py:604
-msgid "Vietnamese"
-msgstr "Vietnamca"
-
 #: ../../lib/frontends/widgets/gst/renderer.py:606
-msgid "Middle Eastern"
-msgstr "Orta Doğu"
-
 #: ../../lib/frontends/widgets/gst/renderer.py:607
 #: ../../lib/frontends/widgets/gst/renderer.py:608
 #: ../../lib/frontends/widgets/gst/renderer.py:609
-#: ../../lib/frontends/widgets/gst/renderer.py:610
-msgid "Arabic"
-msgstr "Arapça"
+msgid "Korean"
+msgstr "Korece"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:611
+msgid "SE and SW Asian"
+msgstr "Güneydoğu ve Güney Batı Asya"
+
 #: ../../lib/frontends/widgets/gst/renderer.py:612
+msgid "Armenian"
+msgstr "Ermenice"
+
 #: ../../lib/frontends/widgets/gst/renderer.py:613
+msgid "Georgian"
+msgstr "Gürcü Dili"
+
 #: ../../lib/frontends/widgets/gst/renderer.py:614
-msgid "Hebrew"
-msgstr "İbranice"
+msgid "Gujarati"
+msgstr "Gujarat"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:615
-msgid "Hebrew Visual"
-msgstr "İbranice Görsel"
+msgid "Gurmukhi"
+msgstr "Gurmukhi"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:616
-msgid "Persian"
-msgstr "Farsça"
+msgid "Hindi"
+msgstr "Hintçe"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:617
+msgid "Thai"
+msgstr "Tai Dili"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:618
 #: ../../lib/frontends/widgets/gst/renderer.py:619
 #: ../../lib/frontends/widgets/gst/renderer.py:620
 #: ../../lib/frontends/widgets/gst/renderer.py:621
+msgid "Turkish"
+msgstr "Türkçe"
+
 #: ../../lib/frontends/widgets/gst/renderer.py:622
 #: ../../lib/frontends/widgets/gst/renderer.py:623
+#: ../../lib/frontends/widgets/gst/renderer.py:624
+msgid "Vietnamese"
+msgstr "Vietnamca"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:626
+msgid "Middle Eastern"
+msgstr "Orta Doğu"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:627
+#: ../../lib/frontends/widgets/gst/renderer.py:628
+#: ../../lib/frontends/widgets/gst/renderer.py:629
+#: ../../lib/frontends/widgets/gst/renderer.py:630
+msgid "Arabic"
+msgstr "Arapça"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:631
+#: ../../lib/frontends/widgets/gst/renderer.py:632
+#: ../../lib/frontends/widgets/gst/renderer.py:633
+#: ../../lib/frontends/widgets/gst/renderer.py:634
+msgid "Hebrew"
+msgstr "İbranice"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:635
+msgid "Hebrew Visual"
+msgstr "İbranice Görsel"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:636
+msgid "Persian"
+msgstr "Farsça"
+
+#: ../../lib/frontends/widgets/gst/renderer.py:638
+#: ../../lib/frontends/widgets/gst/renderer.py:639
+#: ../../lib/frontends/widgets/gst/renderer.py:640
+#: ../../lib/frontends/widgets/gst/renderer.py:641
+#: ../../lib/frontends/widgets/gst/renderer.py:642
+#: ../../lib/frontends/widgets/gst/renderer.py:643
 msgid "Unicode"
 msgstr "Unicode"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:97
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:120
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:124
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
 msgstr "Oynatlandan sonraki oynatılmamış (%(unplayed)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:101
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:124
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:128
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr "Oynatlandan sonraki tüm oynatılmamışlar (%(unplayed)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:104
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:127
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:131
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
 msgstr "Tüm indirmeleri Beklet (%(downloading)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:107
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:130
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:134
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
 msgstr "Tüm indirmeleri devamettir (%(paused)d)"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
-#: ../../linux/plat/frontends/widgets/miroappindicator.py:138
+#: ../../linux/plat/frontends/widgets/miroappindicator.py:142
 msgid "Hide"
 msgstr "Gizle"
 
-#: ../../lib/frontends/widgets/gtk/video.py:256
-#: ../../osx/plat/frontends/widgets/overlay.py:125
+#: ../../lib/frontends/widgets/gtk/video.py:262
+#: ../../osx/plat/frontends/widgets/overlay.py:127
 msgid "Fullscreen"
 msgstr "Tam ekran"
 
-#: ../../lib/frontends/widgets/gtk/video.py:265
+#: ../../lib/frontends/widgets/gtk/video.py:271
 msgid "Pop-in"
 msgstr "Küçült"
 
-#: ../../lib/frontends/widgets/gtk/video.py:271
+#: ../../lib/frontends/widgets/gtk/video.py:277
 msgid "Pop-out"
 msgstr "Yeni Pencere"
 
-#: ../../lib/frontends/widgets/gtk/video.py:314
+#: ../../lib/frontends/widgets/gtk/video.py:326
 msgid "Subtitles On"
 msgstr "Altyazılar Açık"
 
-#: ../../lib/frontends/widgets/gtk/video.py:320
+#: ../../lib/frontends/widgets/gtk/video.py:332
 msgid "Subtitles Found"
 msgstr "Altyazılar Bulundu"
 
-#: ../../lib/frontends/widgets/gtk/video.py:324
-#: ../../lib/frontends/widgets/menus.py:236
-#: ../../osx/plat/frontends/widgets/overlay.py:124
+#: ../../lib/frontends/widgets/gtk/video.py:336
+#: ../../lib/frontends/widgets/menus.py:238
+#: ../../osx/plat/frontends/widgets/overlay.py:126
 msgid "Subtitles"
 msgstr "Altyazılar"
 
-#: ../../lib/frontends/widgets/gtk/video.py:368
-#: ../../lib/frontends/widgets/menus.py:233
-#: ../../lib/frontends/widgets/menus.py:1083
-#: ../../lib/frontends/widgets/menus.py:1102
+#: ../../lib/frontends/widgets/gtk/video.py:382
+#: ../../lib/frontends/widgets/menus.py:235
+#: ../../lib/frontends/widgets/menus.py:1145
+#: ../../lib/frontends/widgets/menus.py:1164
 msgid "None Available"
 msgstr "Hiçbiri Uygun Değil"
 
-#: ../../lib/frontends/widgets/gtk/video.py:390
-#: ../../lib/frontends/widgets/menus.py:1178
+#: ../../lib/frontends/widgets/gtk/video.py:404
+#: ../../lib/frontends/widgets/menus.py:1240
 msgid "Disable Subtitles"
 msgstr "Altyazıları Kapat"
 
-#: ../../lib/frontends/widgets/gtk/video.py:401
-#: ../../lib/frontends/widgets/menus.py:1150
+#: ../../lib/frontends/widgets/gtk/video.py:415
+#: ../../lib/frontends/widgets/menus.py:1212
 msgid "Select a Subtitles file..."
 msgstr "Bir altyazı dosyası seçin..."
 
-#: ../../lib/frontends/widgets/gtk/window.py:475
+#: ../../lib/frontends/widgets/gtk/window.py:483
 msgid "All files"
 msgstr "Tüm Dosyalar"
 
-#: ../../lib/frontends/widgets/gtk/window.py:529
+#: ../../lib/frontends/widgets/gtk/window.py:537
 msgid "Choose"
 msgstr "Seçim"
 
-#: ../../lib/frontends/widgets/gtk/window.py:555
+#: ../../lib/frontends/widgets/gtk/window.py:563
 #, python-format
 msgid "About %(appname)s"
 msgstr "%(appname)s Hakkında"
 
-#: ../../lib/frontends/widgets/gtk/window.py:578
+#: ../../lib/frontends/widgets/gtk/window.py:586
 #, python-format
 msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
@@ -2026,13 +2044,13 @@ msgstr ""
 "%(copyright)s.  Ayrıntılar için license.txt dosyasına bakın.\n"
 "%(trademark)s"
 
-#: ../../lib/frontends/widgets/gtk/window.py:592
+#: ../../lib/frontends/widgets/gtk/window.py:600
 #, python-format
 msgid ""
 "Thank you to all the people who contributed to %(appname)s %(version)s:"
 msgstr "%(appname)s %(version)s ya katkıda bulunan herkese teşekkürler:"
 
-#: ../../lib/frontends/widgets/gtk/window.py:621
+#: ../../lib/frontends/widgets/gtk/window.py:629
 #, python-format
 msgid ""
 "To help fund continued %(appname)s development, visit the donation page at:"
@@ -2095,13 +2113,13 @@ msgstr ""
 #: ../../lib/frontends/widgets/itemcontextmenu.py:159
 #: ../../lib/frontends/widgets/itemcontextmenu.py:237
 #: ../../lib/frontends/widgets/itemcontextmenu.py:393
-#: ../../lib/frontends/widgets/menus.py:199
-#: ../../lib/frontends/widgets/menus.py:877
+#: ../../lib/frontends/widgets/menus.py:201
+#: ../../lib/frontends/widgets/menus.py:939
 msgid "Play"
 msgstr "Yürüt"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:161
-#: ../../lib/frontends/widgets/menus.py:879
+#: ../../lib/frontends/widgets/menus.py:941
 msgid "Pause"
 msgstr "Duraklat"
 
@@ -2176,7 +2194,7 @@ msgid "View Web Page"
 msgstr "Web sayfasını görüntüle"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:280
-#: ../../osx/plat/frontends/widgets/overlay.py:128
+#: ../../osx/plat/frontends/widgets/overlay.py:130
 msgid "Share"
 msgstr "Paylaş"
 
@@ -2227,25 +2245,25 @@ msgstr "Öğeleri düzenle"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:464
 #: ../../lib/frontends/widgets/itemedit.py:562
-#: ../../lib/frontends/widgets/style.py:416
+#: ../../lib/frontends/widgets/style.py:419
 msgid "Movie"
 msgstr "Film"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:468
 #: ../../lib/frontends/widgets/itemedit.py:564
-#: ../../lib/frontends/widgets/style.py:420
+#: ../../lib/frontends/widgets/style.py:423
 msgid "Clip"
 msgstr "Kırp"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:470
 #: ../../lib/frontends/widgets/itemedit.py:565
-#: ../../lib/frontends/widgets/style.py:422
+#: ../../lib/frontends/widgets/style.py:425
 msgid "Podcast"
 msgstr "Akıcı olmayan web yayını"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:486
 #: ../../lib/frontends/widgets/itemlistwidgets.py:684
-#: ../../lib/frontends/widgets/menus.py:304
+#: ../../lib/frontends/widgets/menus.py:308
 msgid "Show Conversion Folder"
 msgstr "Dönüşüm klasörünü göster"
 
@@ -2396,6 +2414,7 @@ msgid ""
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemedit.py:768
+#: ../../lib/frontends/widgets/prefpanel.py:1442
 msgid "General"
 msgstr "Genel"
 
@@ -2404,10 +2423,10 @@ msgid "View|All"
 msgstr "Hepsi Görüntüle"
 
 #: ../../lib/frontends/widgets/itemfilter.py:174
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1271
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1273
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1044
 #: ../../lib/frontends/widgets/itemrenderer.py:109
-#: ../../lib/frontends/widgets/style.py:598
+#: ../../lib/frontends/widgets/style.py:601
 msgid "Unplayed"
 msgstr "Oynatılmamış"
 
@@ -2440,12 +2459,12 @@ msgstr ""
 msgid "Source"
 msgstr "Kaynak"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1137
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1139
 #, python-format
 msgid "%(count)s items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:1256
+#: ../../lib/frontends/widgets/itemlistcontroller.py:1258
 msgid "Unwatched"
 msgstr "Izlenmemiş"
 
@@ -2496,7 +2515,7 @@ msgstr "İndiriliyor"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1047
 #: ../../lib/frontends/widgets/itemrenderer.py:111
-#: ../../lib/frontends/widgets/style.py:616
+#: ../../lib/frontends/widgets/style.py:619
 msgid "Newly Available"
 msgstr "Yeni"
 
@@ -2525,7 +2544,7 @@ msgstr "Sabit Diskte %(amount)s yer var"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1299
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1300
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1301
-#: ../../lib/frontends/widgets/prefpanel.py:596
+#: ../../lib/frontends/widgets/prefpanel.py:643
 msgid "All"
 msgstr "Hepsi"
 
@@ -2565,65 +2584,65 @@ msgstr "Hepsini otomatik yükle"
 msgid "Remove podcast"
 msgstr "Oynatıcı yayın aboneliklerini kaldır"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1768
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1765
 #, python-format
 msgid "Looking up album art and song info: %(number)d of %(total)d"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1771
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1768
 #, python-format
 msgid "Importing audio details and artwork: %(number)d of %(total)d"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1774
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1771
 #, python-format
 msgid ""
 "Importing video details and creating thumbnails: %(number)d of %(total)d"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1777
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1774
 #, python-format
 msgid "Importing file details: %(number)d of %(total)d"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1952
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1944
 msgid "Remaining"
 msgstr "Kalan"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1954
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1946
 msgid "Upload"
 msgstr "Karşıya yükle"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1955
-#: ../../lib/frontends/widgets/itemlistwidgets.py:1956
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1947
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1948
 msgid "Total"
 msgstr "Toplam"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2000
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1992
 msgid "Connected Peers"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2001
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1993
 msgid "Seeders"
 msgstr "Kaynaklar"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2002
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1994
 msgid "Leechers"
 msgstr "Asalaklar"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2003
+#: ../../lib/frontends/widgets/itemlistwidgets.py:1995
 msgid "Share Ratio"
 msgstr "Paylaşım Oranı"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2187
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2179
 msgid "View License"
 msgstr "Lisansı Göster"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2208
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2200
 msgid "Select an item to view more of its details"
 msgstr "Ayrıntılarını daha fazla görebilmek için bir öğe seçiniz"
 
-#: ../../lib/frontends/widgets/itemlistwidgets.py:2261
+#: ../../lib/frontends/widgets/itemlistwidgets.py:2253
 msgid "DRM Locked"
 msgstr "DRM kilitli"
 
@@ -2681,43 +2700,43 @@ msgstr "Paylaş"
 msgid "DRM locked"
 msgstr "DRM kilitli"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1343
+#: ../../lib/frontends/widgets/itemrenderer.py:1345
 #, python-format
 msgid "Conversion to %(format)s"
 msgstr "%(format)s' e çevir"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1346
+#: ../../lib/frontends/widgets/itemrenderer.py:1348
 #, python-format
 msgid "Conversion to %(format)s failed: %(error)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1353
-#: ../../lib/frontends/widgets/itemrenderer.py:1360
+#: ../../lib/frontends/widgets/itemrenderer.py:1355
+#: ../../lib/frontends/widgets/itemrenderer.py:1362
 msgid "Clear"
 msgstr "Temizle"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1355
+#: ../../lib/frontends/widgets/itemrenderer.py:1357
 msgid "Failed"
 msgstr "Başarısız"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1356
+#: ../../lib/frontends/widgets/itemrenderer.py:1358
 msgid "Troubleshoot"
 msgstr "Sorun giderme"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1357
+#: ../../lib/frontends/widgets/itemrenderer.py:1359
 msgid "Open Log"
 msgstr "Günlük Aç"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1362
+#: ../../lib/frontends/widgets/itemrenderer.py:1364
 msgid "Completed"
 msgstr "Tamamlandı"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1371
+#: ../../lib/frontends/widgets/itemrenderer.py:1373
 #, python-format
 msgid "%(percent)i%% done"
 msgstr "%(percent)i%% yapıldı"
 
-#: ../../lib/frontends/widgets/itemrenderer.py:1378
+#: ../../lib/frontends/widgets/itemrenderer.py:1380
 #: ../../lib/frontends/widgets/statictabs.py:167
 #: ../../lib/frontends/widgets/statictabs.py:174
 msgid "Converting"
@@ -2736,324 +2755,328 @@ msgid ""
 "%(url)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:91
+#: ../../lib/frontends/widgets/menus.py:93
 msgid "_File"
 msgstr "_Dosya"
 
-#: ../../lib/frontends/widgets/menus.py:92
+#: ../../lib/frontends/widgets/menus.py:94
 msgid "_Open"
 msgstr "_Aç"
 
-#: ../../lib/frontends/widgets/menus.py:94
+#: ../../lib/frontends/widgets/menus.py:96
 msgid "Import"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:95
+#: ../../lib/frontends/widgets/menus.py:97
 msgid "Search all my Files..."
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:98
+#: ../../lib/frontends/widgets/menus.py:100
 msgid "Search in a Folder..."
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:101
+#: ../../lib/frontends/widgets/menus.py:103
 msgid "Watch a Folder..."
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:104
+#: ../../lib/frontends/widgets/menus.py:106
 msgid "Choose Files...."
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:109
+#: ../../lib/frontends/widgets/menus.py:111
 msgid "Download from a URL"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:111
+#: ../../lib/frontends/widgets/menus.py:113
 msgid "Edit _Item Details..."
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:114
+#: ../../lib/frontends/widgets/menus.py:116
 msgid "Edit _Items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:115
+#: ../../lib/frontends/widgets/menus.py:117
 msgid "Use album art and song info from online lookup database (Echonest)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:119
+#: ../../lib/frontends/widgets/menus.py:121
 msgid "Remove Item"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:121
+#: ../../lib/frontends/widgets/menus.py:123
 msgid "Remove Items"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:122
+#: ../../lib/frontends/widgets/menus.py:124
 msgid "_Save Item As"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:125
+#: ../../lib/frontends/widgets/menus.py:127
 msgid "_Save Items As"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:126
+#: ../../lib/frontends/widgets/menus.py:128
 msgid "Copy Item _URL"
 msgstr "Parça _URL ni kopyala"
 
-#: ../../lib/frontends/widgets/menus.py:130
+#: ../../lib/frontends/widgets/menus.py:132
 msgid "Check Version"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:131
-#: ../../lib/frontends/widgets/prefpanel.py:1418
+#: ../../lib/frontends/widgets/menus.py:133
+#: ../../lib/frontends/widgets/prefpanel.py:1465
 msgid "Preferences"
 msgstr "Seçenekler"
 
-#: ../../lib/frontends/widgets/menus.py:132
+#: ../../lib/frontends/widgets/menus.py:134
 msgid "_Quit"
 msgstr "_Çık"
 
-#: ../../lib/frontends/widgets/menus.py:135
+#: ../../lib/frontends/widgets/menus.py:137
 msgid "_Sidebar"
 msgstr "_Kenar Çubuğu"
 
-#: ../../lib/frontends/widgets/menus.py:136
+#: ../../lib/frontends/widgets/menus.py:138
 #: ../../lib/frontends/widgets/newfeed.py:96
 msgid "Add Podcast"
 msgstr "Podcast Ekle"
 
-#: ../../lib/frontends/widgets/menus.py:141
+#: ../../lib/frontends/widgets/menus.py:143
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 msgid "New Search Podcast"
 msgstr "Yeni Podcast Ara"
 
-#: ../../lib/frontends/widgets/menus.py:143
+#: ../../lib/frontends/widgets/menus.py:145
 msgid "_New Folder"
 msgstr "_Yeni Klasör"
 
-#: ../../lib/frontends/widgets/menus.py:147
+#: ../../lib/frontends/widgets/menus.py:149
 #: ../../lib/frontends/widgets/tablist.py:1116
 msgid "Rename"
 msgstr "Ad değiştir"
 
-#: ../../lib/frontends/widgets/menus.py:155
+#: ../../lib/frontends/widgets/menus.py:157
 #: ../../lib/frontends/widgets/removefeeds.py:50
 msgid "Remove Podcast"
 msgid_plural "Remove Podcasts"
 msgstr[0] "Podcast'i Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:156
+#: ../../lib/frontends/widgets/menus.py:158
 msgid "Remove Podcasts"
 msgstr "Podcast'leri Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:157
+#: ../../lib/frontends/widgets/menus.py:159
 msgid "Remove Folder"
 msgstr "Klasörü Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:158
+#: ../../lib/frontends/widgets/menus.py:160
 msgid "Remove Folders"
 msgstr "Klasörleri Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:159
+#: ../../lib/frontends/widgets/menus.py:161
 #: ../../lib/frontends/widgets/tablist.py:1005
 msgid "Remove Source"
 msgstr "Kaynağı Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:160
+#: ../../lib/frontends/widgets/menus.py:162
 #: ../../lib/frontends/widgets/tablist.py:1008
 msgid "Remove Sources"
 msgstr "Kaynakları Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:161
+#: ../../lib/frontends/widgets/menus.py:163
 msgid "Update Podcast"
 msgstr "Podcast'i Güncelle"
 
-#: ../../lib/frontends/widgets/menus.py:164
+#: ../../lib/frontends/widgets/menus.py:166
 msgid "Update Podcasts"
 msgstr "Podcast' leri Güncelle"
 
-#: ../../lib/frontends/widgets/menus.py:165
+#: ../../lib/frontends/widgets/menus.py:167
 msgid "Update All Podcasts and Library"
 msgstr "Kütüphane ve Tüm Podcast'leri Güncelle"
 
-#: ../../lib/frontends/widgets/menus.py:170
+#: ../../lib/frontends/widgets/menus.py:172
 msgid "Import Podcasts (OPML)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:172
+#: ../../lib/frontends/widgets/menus.py:174
 msgid "Export Podcasts (OPML)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:175
+#: ../../lib/frontends/widgets/menus.py:177
 msgid "Share with a Friend"
 msgstr "Bir Arkadaş ile Paylaş"
 
-#: ../../lib/frontends/widgets/menus.py:177
+#: ../../lib/frontends/widgets/menus.py:179
 msgid "Copy URL"
 msgstr "Adresi Kopyala"
 
-#: ../../lib/frontends/widgets/menus.py:181
+#: ../../lib/frontends/widgets/menus.py:183
 msgid "_Playlists"
 msgstr "_Çalma Listeleri"
 
-#: ../../lib/frontends/widgets/menus.py:182
+#: ../../lib/frontends/widgets/menus.py:184
 msgid "New _Playlist"
 msgstr "Yeni _Oynatma Listesi"
 
-#: ../../lib/frontends/widgets/menus.py:185
+#: ../../lib/frontends/widgets/menus.py:187
 msgid "New Playlist Folder"
 msgstr "Yeni Çalma Listesi Klasörü"
 
-#: ../../lib/frontends/widgets/menus.py:191
+#: ../../lib/frontends/widgets/menus.py:193
 msgid "Remove Playlist"
 msgstr "Çalma Listesini Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:193
+#: ../../lib/frontends/widgets/menus.py:195
 msgid "Remove Playlists"
 msgstr "Çalma Listelerini Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:194
+#: ../../lib/frontends/widgets/menus.py:196
 msgid "Remove Playlist Folders"
 msgstr "Çalma Listesi Klasörlerini Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:195
+#: ../../lib/frontends/widgets/menus.py:197
 msgid "Remove Playlist Folder"
 msgstr "Çalma Listesi Klasörünü Kaldır"
 
-#: ../../lib/frontends/widgets/menus.py:201
+#: ../../lib/frontends/widgets/menus.py:203
 msgid "Stop"
 msgstr "Durdur"
 
-#: ../../lib/frontends/widgets/menus.py:204
+#: ../../lib/frontends/widgets/menus.py:206
 msgid "Next Item"
 msgstr "Sonraki Öğe"
 
-#: ../../lib/frontends/widgets/menus.py:207
+#: ../../lib/frontends/widgets/menus.py:209
 msgid "Previous Item"
 msgstr "Önceki Öğe"
 
-#: ../../lib/frontends/widgets/menus.py:211
+#: ../../lib/frontends/widgets/menus.py:213
 msgid "Skip Forward"
 msgstr "İleri Atla"
 
-#: ../../lib/frontends/widgets/menus.py:213
+#: ../../lib/frontends/widgets/menus.py:215
 msgid "Skip Back"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:216
+#: ../../lib/frontends/widgets/menus.py:218
 msgid "Volume Up"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:218
+#: ../../lib/frontends/widgets/menus.py:220
 msgid "Volume Down"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:221
+#: ../../lib/frontends/widgets/menus.py:223
 msgid "Go to Currently Playing"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:226
+#: ../../lib/frontends/widgets/menus.py:228
 msgid "_Fullscreen"
 msgstr "_Tamekran"
 
-#: ../../lib/frontends/widgets/menus.py:229
+#: ../../lib/frontends/widgets/menus.py:231
 msgid "_Toggle Detached/Attached"
 msgstr "_Geçiş Çıkar/Ekle"
 
-#: ../../lib/frontends/widgets/menus.py:232
+#: ../../lib/frontends/widgets/menus.py:234
 msgid "Audio Track"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:237
+#: ../../lib/frontends/widgets/menus.py:239
 msgid "_Encoding"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:244
+#: ../../lib/frontends/widgets/menus.py:246
 msgid "Sorts"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:245
+#: ../../lib/frontends/widgets/menus.py:247
 msgid "_Convert"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:246
+#: ../../lib/frontends/widgets/menus.py:248
 msgid "_Help"
 msgstr "_Yardım"
 
-#: ../../lib/frontends/widgets/menus.py:247
+#: ../../lib/frontends/widgets/menus.py:249
 #, python-format
 msgid "About %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:256
+#: ../../lib/frontends/widgets/menus.py:258
 msgid "Help"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:260
+#: ../../lib/frontends/widgets/menus.py:262
 msgid "Report a Bug"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:262
+#: ../../lib/frontends/widgets/menus.py:264
 msgid "Translate"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:264
+#: ../../lib/frontends/widgets/menus.py:266
 msgid "Planet Miro"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:270
+#: ../../lib/frontends/widgets/menus.py:272
 msgid "Dev"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:271
+#: ../../lib/frontends/widgets/menus.py:273
 msgid "Profile Message"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:272
+#: ../../lib/frontends/widgets/menus.py:274
 msgid "Profile Redraw"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:273
+#: ../../lib/frontends/widgets/menus.py:275
 msgid "Test Crash Reporter"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:274
+#: ../../lib/frontends/widgets/menus.py:276
 msgid "Test Soft Crash Reporter"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:276
+#: ../../lib/frontends/widgets/menus.py:278
 msgid "Memory Stats"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:277
+#: ../../lib/frontends/widgets/menus.py:279
 msgid "Force Feedparser Processing"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:279
+#: ../../lib/frontends/widgets/menus.py:281
 msgid "Clog Backend"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:280
+#: ../../lib/frontends/widgets/menus.py:282
 msgid "Run Echoprint"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:281
+#: ../../lib/frontends/widgets/menus.py:283
 msgid "Run ENMFP"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:282
+#: ../../lib/frontends/widgets/menus.py:284
 msgid "Force Main DB Save Error"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:284
+#: ../../lib/frontends/widgets/menus.py:286
 msgid "Force Device DB Save Error"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:286
+#: ../../lib/frontends/widgets/menus.py:288
 msgid "Run Donate Manager PowerToys"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:1246
+#: ../../lib/frontends/widgets/menus.py:290
+msgid "Image Render Test"
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:1308
 msgid "Default (UTF-8)"
 msgstr "Varsayılan (UTF-8)"
 
@@ -3111,7 +3134,7 @@ msgid "Search engine:"
 msgstr "Arama Motoru:"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:49
-#: ../../lib/frontends/widgets/prefpanel.py:909
+#: ../../lib/frontends/widgets/prefpanel.py:956
 msgid "Add Watched Folder"
 msgstr "İzlenen Klasör ekle"
 
@@ -3145,11 +3168,11 @@ msgid ""
 "again."
 msgstr ""
 
-#: ../../lib/frontends/widgets/playback.py:770
+#: ../../lib/frontends/widgets/playback.py:779
 msgid "Open Subtitles File..."
 msgstr "Altyazı Dosyalarını Aç..."
 
-#: ../../lib/frontends/widgets/playback.py:771
+#: ../../lib/frontends/widgets/playback.py:780
 msgid "Subtitle files"
 msgstr "Altyazı dosyaları"
 
@@ -3164,239 +3187,245 @@ msgstr ""
 "Bir öğe eklemek için, kenar çubuğunadaki çalma listesinin üzerine sürükleyin "
 "."
 
-#: ../../lib/frontends/widgets/prefpanel.py:487
+#: ../../lib/frontends/widgets/prefpanel.py:491
 msgid "Startup / Shutdown"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:491
+#: ../../lib/frontends/widgets/prefpanel.py:495
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
 msgstr "Başlangıçta %(appname)s otomatik başlat"
 
-#: ../../lib/frontends/widgets/prefpanel.py:497
+#: ../../lib/frontends/widgets/prefpanel.py:501
 #, python-format
 msgid ""
 "When starting up %(appname)s, remember what screen I was on when I last quit."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:504
+#: ../../lib/frontends/widgets/prefpanel.py:508
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr "Dosya indirme sırasında programdan çıkmaya çalışırsam uyar."
 
-#: ../../lib/frontends/widgets/prefpanel.py:510
+#: ../../lib/frontends/widgets/prefpanel.py:514
 msgid "Warn me if I attempt to quit with conversions in progress."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:516
+#: ../../lib/frontends/widgets/prefpanel.py:520
 msgid "Sidebar"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:519
+#: ../../lib/frontends/widgets/prefpanel.py:523
 msgid "Show videos from podcasts in the Videos section."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:524
+#: ../../lib/frontends/widgets/prefpanel.py:528
 msgid "Show audio from podcasts in the Music section."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:539
+#: ../../lib/frontends/widgets/prefpanel.py:543
 msgid "Language"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:544
+#: ../../lib/frontends/widgets/prefpanel.py:548
 #, python-format
 msgid "(Changing the language requires you to restart %(appname)s.)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:550
+#: ../../lib/frontends/widgets/prefpanel.py:554
 msgid "Display in:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:554
+#: ../../lib/frontends/widgets/prefpanel.py:558
 msgid "Music Album Art and Info Cleanup"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:557
+#: ../../lib/frontends/widgets/prefpanel.py:561
 msgid ""
 "Online lookup can find matching album art and song info for all your audio "
 "files (via Echonest and 7Digital)."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:563
+#: ../../lib/frontends/widgets/prefpanel.py:567
 msgid "Run Online Lookup for All Current Music"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:565
+#: ../../lib/frontends/widgets/prefpanel.py:571
 msgid "Remove All Lookup data"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:571
+#: ../../lib/frontends/widgets/prefpanel.py:581
 msgid ""
 "Automatically run online lookup for any new audio files that I add to Miro."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:587
+#: ../../lib/frontends/widgets/prefpanel.py:604
+#, python-format
+msgid ""
+"Using lookup data for %(net_lookup_count)s out of %(total_count)s items"
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:634
 msgid "Every day"
 msgstr "Her gün"
 
-#: ../../lib/frontends/widgets/prefpanel.py:588
+#: ../../lib/frontends/widgets/prefpanel.py:635
 msgid "Every hour"
 msgstr "Her saatte"
 
-#: ../../lib/frontends/widgets/prefpanel.py:589
+#: ../../lib/frontends/widgets/prefpanel.py:636
 msgid "Every 30 minutes"
 msgstr "Her 30 dakikada"
 
-#: ../../lib/frontends/widgets/prefpanel.py:590
+#: ../../lib/frontends/widgets/prefpanel.py:637
 msgid "Manually"
 msgstr "Siz istediğinizde"
 
-#: ../../lib/frontends/widgets/prefpanel.py:595
+#: ../../lib/frontends/widgets/prefpanel.py:642
 msgid "New"
 msgstr "Yeni"
 
-#: ../../lib/frontends/widgets/prefpanel.py:597
+#: ../../lib/frontends/widgets/prefpanel.py:644
 #: ../../lib/frontends/widgets/tabcontroller.py:128
 msgid "Off"
 msgstr "Kapalı"
 
-#: ../../lib/frontends/widgets/prefpanel.py:603
+#: ../../lib/frontends/widgets/prefpanel.py:650
 msgid "0"
 msgstr "0"
 
-#: ../../lib/frontends/widgets/prefpanel.py:604
+#: ../../lib/frontends/widgets/prefpanel.py:651
 msgid "20"
 msgstr "20"
 
-#: ../../lib/frontends/widgets/prefpanel.py:605
+#: ../../lib/frontends/widgets/prefpanel.py:652
 msgid "50"
 msgstr "50"
 
-#: ../../lib/frontends/widgets/prefpanel.py:606
+#: ../../lib/frontends/widgets/prefpanel.py:653
 msgid "100"
 msgstr "100"
 
-#: ../../lib/frontends/widgets/prefpanel.py:607
+#: ../../lib/frontends/widgets/prefpanel.py:654
 msgid "1000"
 msgstr "1000"
 
-#: ../../lib/frontends/widgets/prefpanel.py:613
+#: ../../lib/frontends/widgets/prefpanel.py:660
 msgid "Standard view"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:614
+#: ../../lib/frontends/widgets/prefpanel.py:661
 msgid "List view"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:615
+#: ../../lib/frontends/widgets/prefpanel.py:662
 msgid "Album view"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:622
+#: ../../lib/frontends/widgets/prefpanel.py:669
 msgid "Default settings for new podcasts:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:626
+#: ../../lib/frontends/widgets/prefpanel.py:673
 msgid "(These can be changed using the podcast's settings button)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:631
+#: ../../lib/frontends/widgets/prefpanel.py:678
 msgid "Check for new content:"
 msgstr "Yeni içerik için kontrol et"
 
-#: ../../lib/frontends/widgets/prefpanel.py:636
+#: ../../lib/frontends/widgets/prefpanel.py:683
 msgid "Auto-download setting:"
 msgstr "Otomatik indirme ayarları:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:641
+#: ../../lib/frontends/widgets/prefpanel.py:688
 msgid "Default view:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:647
+#: ../../lib/frontends/widgets/prefpanel.py:694
 msgid "Remember this many old items:"
 msgstr "Hatırlanmasını istediğinin eski öğe sayısı:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:648
+#: ../../lib/frontends/widgets/prefpanel.py:695
 msgid "(in addition to the current contents)"
 msgstr "(mevcut içeriğe ek olarak)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:661
+#: ../../lib/frontends/widgets/prefpanel.py:708
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Tek seferde maksimum el ile indirme sayısı"
 
-#: ../../lib/frontends/widgets/prefpanel.py:673
+#: ../../lib/frontends/widgets/prefpanel.py:720
 msgid "Maximum number of auto-downloads at a time:"
 msgstr "Tek seferde maksimum otomatik indirme sayısı"
 
-#: ../../lib/frontends/widgets/prefpanel.py:687
+#: ../../lib/frontends/widgets/prefpanel.py:734
 msgid "Bittorrent:"
 msgstr "Bittorrent"
 
-#: ../../lib/frontends/widgets/prefpanel.py:691
+#: ../../lib/frontends/widgets/prefpanel.py:738
 msgid "Limit upstream bandwidth to:"
 msgstr "Akış gönderme Limiti:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:705
-#: ../../lib/frontends/widgets/prefpanel.py:720
+#: ../../lib/frontends/widgets/prefpanel.py:752
+#: ../../lib/frontends/widgets/prefpanel.py:767
 msgid "KB/s"
 msgstr "KB/s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:709
+#: ../../lib/frontends/widgets/prefpanel.py:756
 msgid "Limit downstream bandwidth to:"
 msgstr "Akış İndirme limiti"
 
-#: ../../lib/frontends/widgets/prefpanel.py:724
+#: ../../lib/frontends/widgets/prefpanel.py:771
 msgid "Limit torrent connections to:"
 msgstr "Torrent bağlantılıarının sınırını:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:751
+#: ../../lib/frontends/widgets/prefpanel.py:798
 msgid "Starting port:"
 msgstr "Başlangıç Portu:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:757
+#: ../../lib/frontends/widgets/prefpanel.py:804
 msgid "Ending port:"
 msgstr "Bitiş Portu:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:765
+#: ../../lib/frontends/widgets/prefpanel.py:812
 msgid "Automatically forward ports.  (UPNP)"
 msgstr "Otomatik olarak Portları ilerlet. (UPNP)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:769
+#: ../../lib/frontends/widgets/prefpanel.py:816
 msgid "Use DHT to find more peers"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:773
+#: ../../lib/frontends/widgets/prefpanel.py:820
 msgid "Ignore unencrypted connections."
 msgstr "Şifrelenmemiş bağlantıları yoksay."
 
-#: ../../lib/frontends/widgets/prefpanel.py:778
+#: ../../lib/frontends/widgets/prefpanel.py:825
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Ratio bu sayıya ulaştığında torrent göndermelerini durdur:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:799
+#: ../../lib/frontends/widgets/prefpanel.py:846
 msgid "Change"
 msgstr "Değiştir"
 
-#: ../../lib/frontends/widgets/prefpanel.py:805
+#: ../../lib/frontends/widgets/prefpanel.py:852
 msgid "Choose Movies Directory"
 msgstr "Videolar İçin Dizin Seçin"
 
-#: ../../lib/frontends/widgets/prefpanel.py:816
+#: ../../lib/frontends/widgets/prefpanel.py:863
 msgid "Directory not valid"
 msgstr "Konum hatalı"
 
-#: ../../lib/frontends/widgets/prefpanel.py:817
+#: ../../lib/frontends/widgets/prefpanel.py:864
 #, python-format
 msgid ""
 "Directory '%(dir)s' could not be created.  Please choose a directory you "
 "have write access to."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:832
+#: ../../lib/frontends/widgets/prefpanel.py:879
 msgid "Migrate existing movies?"
 msgstr "Varolan filmler taşınsın mi?"
 
-#: ../../lib/frontends/widgets/prefpanel.py:834
+#: ../../lib/frontends/widgets/prefpanel.py:881
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %(appname)s "
@@ -3404,19 +3433,19 @@ msgid ""
 "not be moved until they finish.)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:852
+#: ../../lib/frontends/widgets/prefpanel.py:899
 msgid "folder"
 msgstr "klasör"
 
-#: ../../lib/frontends/widgets/prefpanel.py:858
+#: ../../lib/frontends/widgets/prefpanel.py:905
 msgid "visible"
 msgstr "Mevcut"
 
-#: ../../lib/frontends/widgets/prefpanel.py:928
+#: ../../lib/frontends/widgets/prefpanel.py:975
 msgid "Store downloads in this folder:"
 msgstr "İndirilen içeriği şu klasörde sakla"
 
-#: ../../lib/frontends/widgets/prefpanel.py:934
+#: ../../lib/frontends/widgets/prefpanel.py:981
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
@@ -3424,70 +3453,70 @@ msgstr ""
 "Bu dizinleri yeni video ve ses dosyaları için izle ve bunları kütüphaneye "
 "ekle:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:955
+#: ../../lib/frontends/widgets/prefpanel.py:1002
 msgid "Keep at least this much free space on my drive:"
 msgstr "Sabit diskimde en az bu kadar yer kalmasını sağla"
 
-#: ../../lib/frontends/widgets/prefpanel.py:969
+#: ../../lib/frontends/widgets/prefpanel.py:1016
 msgid "GB"
 msgstr "GB"
 
-#: ../../lib/frontends/widgets/prefpanel.py:973
+#: ../../lib/frontends/widgets/prefpanel.py:1020
 msgid "1 day"
 msgstr "1 gün"
 
-#: ../../lib/frontends/widgets/prefpanel.py:974
+#: ../../lib/frontends/widgets/prefpanel.py:1021
 msgid "3 days"
 msgstr "3 gün"
 
-#: ../../lib/frontends/widgets/prefpanel.py:975
+#: ../../lib/frontends/widgets/prefpanel.py:1022
 msgid "6 days"
 msgstr "6 gün"
 
-#: ../../lib/frontends/widgets/prefpanel.py:976
+#: ../../lib/frontends/widgets/prefpanel.py:1023
 msgid "10 days"
 msgstr "10 gün"
 
-#: ../../lib/frontends/widgets/prefpanel.py:977
+#: ../../lib/frontends/widgets/prefpanel.py:1024
 msgid "1 month"
 msgstr "1 ay"
 
-#: ../../lib/frontends/widgets/prefpanel.py:983
+#: ../../lib/frontends/widgets/prefpanel.py:1030
 msgid "By default, video and audio items expire after:"
 msgstr ""
 "Varsayılan olarak, video ve ses dosyalarının süresi şundan sonra dolmaktadır:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1000
+#: ../../lib/frontends/widgets/prefpanel.py:1047
 msgid "Share my media library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1002
+#: ../../lib/frontends/widgets/prefpanel.py:1049
 #: ../../lib/frontends/widgets/tabcontroller.py:280
 msgid "Warn on quit when others are connected to my media library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1005
+#: ../../lib/frontends/widgets/prefpanel.py:1052
 msgid "Share my music library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1006
+#: ../../lib/frontends/widgets/prefpanel.py:1053
 msgid "Share my video library."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1007
+#: ../../lib/frontends/widgets/prefpanel.py:1054
 msgid "Share my downloaded podcasts."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1047
+#: ../../lib/frontends/widgets/prefpanel.py:1094
 msgid "Share Name:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1058
+#: ../../lib/frontends/widgets/prefpanel.py:1105
 msgid ""
 "Bonjour is required for sharing. Click on 'Install Bonjour' to install."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1064
+#: ../../lib/frontends/widgets/prefpanel.py:1111
 #: ../../linux/plat/frontends/widgets/bonjour.py:45
 #: ../../osx/plat/frontends/widgets/bonjour.py:40
 #: ../../windows/plat/frontends/widgets/bonjour.py:46
@@ -3495,122 +3524,157 @@ msgstr ""
 msgid "Install Bonjour"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1093
+#: ../../lib/frontends/widgets/prefpanel.py:1140
 #, python-format
 msgid "Play media in %(appname)s."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1096
+#: ../../lib/frontends/widgets/prefpanel.py:1143
 msgid "Always play videos in a separate window."
 msgstr "Videoları her zaman ayrı bir pencerede oynat."
 
-#: ../../lib/frontends/widgets/prefpanel.py:1099
+#: ../../lib/frontends/widgets/prefpanel.py:1146
 msgid "Automatically enable movie subtitles when available."
 msgstr "Mümkünse altyazıları otomatik olarak aç"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1101
+#: ../../lib/frontends/widgets/prefpanel.py:1148
 msgid "Video Playback"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1103
+#: ../../lib/frontends/widgets/prefpanel.py:1150
 msgid "Resume playback from where the video was last stopped."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1105
-#: ../../lib/frontends/widgets/prefpanel.py:1111
-#: ../../lib/frontends/widgets/prefpanel.py:1117
+#: ../../lib/frontends/widgets/prefpanel.py:1152
+#: ../../lib/frontends/widgets/prefpanel.py:1158
+#: ../../lib/frontends/widgets/prefpanel.py:1164
 msgid ""
 "Play continuously - when one item finishes, play the next item in the list."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1107
+#: ../../lib/frontends/widgets/prefpanel.py:1154
 msgid "Music Playback"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1109
+#: ../../lib/frontends/widgets/prefpanel.py:1156
 msgid "Resume playback from where the song was last stopped."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1113
+#: ../../lib/frontends/widgets/prefpanel.py:1160
 msgid "Podcast Playback"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1115
+#: ../../lib/frontends/widgets/prefpanel.py:1162
 msgid "Resume playback from where the podcast was last stopped."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1182
+#: ../../lib/frontends/widgets/prefpanel.py:1229
 msgid "Allow this many concurrent conversions:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1183
+#: ../../lib/frontends/widgets/prefpanel.py:1230
 msgid "(changing this will not apply to currently running conversions)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1200
+#: ../../lib/frontends/widgets/prefpanel.py:1247
 msgid "Store"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1206
+#: ../../lib/frontends/widgets/prefpanel.py:1253
 msgid "Visible"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1246
+#: ../../lib/frontends/widgets/prefpanel.py:1293
 msgid "MP3 stores:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1269
+#: ../../lib/frontends/widgets/prefpanel.py:1316
 msgid "enabled"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1274
+#: ../../lib/frontends/widgets/prefpanel.py:1321
 msgid "extension"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1314
+#: ../../lib/frontends/widgets/prefpanel.py:1361
 #, python-format
 msgid "Name:  %(extensionname)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1316
+#: ../../lib/frontends/widgets/prefpanel.py:1363
 #, python-format
 msgid "Version:  %(extensionversion)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1319
+#: ../../lib/frontends/widgets/prefpanel.py:1366
 msgid "Description:"
 msgstr "Tanım:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:1337
+#: ../../lib/frontends/widgets/prefpanel.py:1384
 #, python-format
 msgid "Extension %(extensionname)s failed to load: %(errormessage)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1342
+#: ../../lib/frontends/widgets/prefpanel.py:1389
 msgid "Extension failed to load"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1355
+#: ../../lib/frontends/widgets/prefpanel.py:1402
 #, python-format
 msgid "Extension %(extensionname)s failed to unload: %(errormessage)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1360
+#: ../../lib/frontends/widgets/prefpanel.py:1407
 msgid "Extension failed to unload"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1376
+#: ../../lib/frontends/widgets/prefpanel.py:1423
 msgid ""
 "Extensions are a beta feature.  Developers interested in writing extensions "
 "can learn more on our wiki."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1380
+#: ../../lib/frontends/widgets/prefpanel.py:1427
 msgid "Extensions:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:1384
+#: ../../lib/frontends/widgets/prefpanel.py:1431
 msgid "Details:"
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:1446
+msgid "Downloads"
+msgstr "İndirilenler"
+
+#: ../../lib/frontends/widgets/prefpanel.py:1448
+msgid "Folders"
+msgstr "Klasörler"
+
+#: ../../lib/frontends/widgets/prefpanel.py:1450
+msgid "Disk space"
+msgstr "Disk alanı"
+
+#: ../../lib/frontends/widgets/prefpanel.py:1452
+msgid "Playback"
+msgstr "Oynat"
+
+#: ../../lib/frontends/widgets/prefpanel.py:1454
+msgid "Sharing"
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:1456
+msgid "Conversions"
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:1458
+#: ../../lib/frontends/widgets/tabcontroller.py:573
+#: ../../lib/frontends/widgets/tablist.py:1017
+#: ../../lib/frontends/widgets/tablist.py:1025
+msgid "Stores"
+msgstr ""
+
+#: ../../lib/frontends/widgets/prefpanel.py:1460
+msgid "Extensions"
 msgstr ""
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
@@ -3678,22 +3742,22 @@ msgstr[1] ""
 msgid "Videos"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:346
+#: ../../lib/frontends/widgets/style.py:349
 #, python-format
 msgid ""
 "S: %(seeders)s  |  L: %(leechers)s  |  UR: %(up_rate)s  |  UT: %(up_total)s  "
 "|  DR: %(down_rate)s  |  DT: %(down_total)s  |  R: %(ratio).2f"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:405 ../../lib/sharing.py:255
+#: ../../lib/frontends/widgets/style.py:408 ../../lib/sharing.py:255
 msgid "Locked"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:606
+#: ../../lib/frontends/widgets/style.py:609
 msgid "paused"
 msgstr "Duraklatıldı"
 
-#: ../../lib/frontends/widgets/style.py:608
+#: ../../lib/frontends/widgets/style.py:611
 msgid "queued"
 msgstr "kuyruğa eklendi"
 
@@ -3826,12 +3890,6 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:547
 msgid "Add Playlist"
-msgstr ""
-
-#: ../../lib/frontends/widgets/tabcontroller.py:573
-#: ../../lib/frontends/widgets/tablist.py:1017
-#: ../../lib/frontends/widgets/tablist.py:1025
-msgid "Stores"
 msgstr ""
 
 #: ../../lib/frontends/widgets/tabcontroller.py:589
@@ -4031,27 +4089,36 @@ msgstr "Websayfası"
 msgid "Proxy"
 msgstr "Proksi"
 
-#: ../../lib/item.py:1426 ../../lib/messages.py:1285
+#: ../../lib/item.py:1435 ../../lib/messages.py:1285
 msgid "queued for download"
 msgstr "indirmek için sırada"
 
-#: ../../lib/item.py:1530
+#: ../../lib/item.py:1539
 msgid "no title"
 msgstr "başlık yok"
 
-#: ../../lib/item.py:1831
+#: ../../lib/item.py:1840
 msgid "starting up..."
 msgstr "başlatılıyor..."
 
-#: ../../lib/messagehandler.py:1637
+#: ../../lib/messagehandler.py:1512
+msgid "Error saving file"
+msgstr ""
+
+#: ../../lib/messagehandler.py:1513
+#, python-format
+msgid "There was an error saving %(filename)s: %(error)s"
+msgstr ""
+
+#: ../../lib/messagehandler.py:1641
 msgid "Subscribed to new podcast:"
 msgstr ""
 
-#: ../../lib/messagehandler.py:1640
+#: ../../lib/messagehandler.py:1644
 msgid "Subscribed to new podcasts:"
 msgstr ""
 
-#: ../../lib/messagehandler.py:1661
+#: ../../lib/messagehandler.py:1665
 msgid "Migrating Files"
 msgstr "Dosyaları Yerdeğiştir"
 
@@ -4177,11 +4244,11 @@ msgid ""
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
 
-#: ../../lib/startup.py:136
+#: ../../lib/startup.py:134
 msgid "Database Error"
 msgstr "Veritabanı Hatası"
 
-#: ../../lib/startup.py:137
+#: ../../lib/startup.py:135
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to start up due to a problem with the "
@@ -4199,11 +4266,11 @@ msgid ""
 "%(url)s."
 msgstr ""
 
-#: ../../lib/startup.py:158
+#: ../../lib/startup.py:156
 msgid "Unknown Error"
 msgstr "Bilinmeyen Hata"
 
-#: ../../lib/startup.py:159
+#: ../../lib/startup.py:157
 #, python-format
 msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
@@ -4212,11 +4279,11 @@ msgstr ""
 "Bilinmeyen bir hata %(appname)s'nun başlatılmasını engelledi. Lütfen %(url)s "
 "adresinde bir hata raporu bildirin."
 
-#: ../../lib/startup.py:286
+#: ../../lib/startup.py:284
 msgid "Database too new"
 msgstr "Veritabanı çok yeni"
 
-#: ../../lib/startup.py:288
+#: ../../lib/startup.py:286
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
@@ -4225,23 +4292,25 @@ msgstr ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 
-#: ../../lib/startup.py:381
-msgid "couldn't create folder."
+#: ../../lib/startup.py:380
+#, python-format
+msgid "Permissions error: %(appname)s couldn't create the folder."
 msgstr ""
 
-#: ../../lib/startup.py:388
-msgid "can't write to folder"
+#: ../../lib/startup.py:389
+#, python-format
+msgid "Permissions error: %(appname)s can't write to the folder."
 msgstr ""
 
-#: ../../lib/startup.py:396
-msgid "folder contains no files -- is it disconnected?"
+#: ../../lib/startup.py:399
+msgid "The folder contains no files: is it on a drive that's disconnected?"
 msgstr ""
 
-#: ../../lib/startup.py:598
+#: ../../lib/startup.py:602
 msgid "Submitting Crash Report"
 msgstr "Çökme Rapotu İletiliyor"
 
-#: ../../lib/startup.py:600
+#: ../../lib/startup.py:604
 #, python-format
 msgid ""
 "%(appname)s will now submit a crash report to our crash database\n"
@@ -4250,24 +4319,24 @@ msgid ""
 "podcast metadata with crash report? This will help us diagnose the issue."
 msgstr ""
 
-#: ../../lib/storedatabase.py:186
+#: ../../lib/storedatabase.py:185
 #, python-format
 msgid "%(appname)s database corrupt."
 msgstr ""
 
-#: ../../lib/storedatabase.py:189
+#: ../../lib/storedatabase.py:188
 #, python-format
 msgid ""
 "Your %(appname)s database is corrupt.  It will be backed up in your Miro "
 "database directory and a new database will be created now."
 msgstr ""
 
-#: ../../lib/storedatabase.py:213
+#: ../../lib/storedatabase.py:212
 #, python-format
 msgid "%(appname)s database upgrade failed"
 msgstr "%(appname)s veritabanı yükseltmesi başarısız oldu"
 
-#: ../../lib/storedatabase.py:216
+#: ../../lib/storedatabase.py:215
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -4282,12 +4351,12 @@ msgid ""
 "you will have to re-add your podcasts and media files."
 msgstr ""
 
-#: ../../lib/storedatabase.py:247
+#: ../../lib/storedatabase.py:246
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s veritabanı kaydı yapılamadı"
 
-#: ../../lib/storedatabase.py:250
+#: ../../lib/storedatabase.py:249
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -4319,12 +4388,12 @@ msgstr ""
 "Hata: %(error_text)s\n"
 "\n"
 
-#: ../../lib/storedatabase.py:276
+#: ../../lib/storedatabase.py:275
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s veritabanı kaydı yapıldı"
 
-#: ../../lib/storedatabase.py:278
+#: ../../lib/storedatabase.py:277
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -4332,24 +4401,24 @@ msgstr ""
 "Veritabanı kaydı başarılı oldu. Güvenli bir şekilde veri kaybetmeden "
 "kaydedip çıkabilirsiniz."
 
-#: ../../lib/storedatabase.py:292
+#: ../../lib/storedatabase.py:291
 #, python-format
 msgid "database for device %(name)s corrupt."
 msgstr ""
 
-#: ../../lib/storedatabase.py:295
+#: ../../lib/storedatabase.py:294
 #, python-format
 msgid ""
 "The %(appname)s database on your device is corrupt and a new one will be "
 "created."
 msgstr ""
 
-#: ../../lib/storedatabase.py:312
+#: ../../lib/storedatabase.py:311
 #, python-format
 msgid "Database save failed for device %(name)s."
 msgstr ""
 
-#: ../../lib/storedatabase.py:315
+#: ../../lib/storedatabase.py:314
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database on %(device)s.\n"
@@ -4361,16 +4430,16 @@ msgid ""
 "one."
 msgstr ""
 
-#: ../../lib/storedatabase.py:336
+#: ../../lib/storedatabase.py:335
 msgid "Device database save succeeded"
 msgstr ""
 
-#: ../../lib/storedatabase.py:337
+#: ../../lib/storedatabase.py:336
 #, python-format
 msgid "The database for %(device)s has been successfully saved. "
 msgstr ""
 
-#: ../../lib/storedatabase.py:681
+#: ../../lib/storedatabase.py:695
 #, python-format
 msgid ""
 "Database was created by a newer version of %(appname)s (db version is "
@@ -4381,22 +4450,22 @@ msgstr ""
 msgid "Example Playlist"
 msgstr "Örnek Çalma Listesi"
 
-#: ../../lib/util.py:398 ../../lib/util.py:400
+#: ../../lib/util.py:400 ../../lib/util.py:402
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../lib/util.py:404 ../../lib/util.py:406
+#: ../../lib/util.py:406 ../../lib/util.py:408
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../lib/util.py:410 ../../lib/util.py:412
+#: ../../lib/util.py:412 ../../lib/util.py:414
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../lib/util.py:416 ../../lib/util.py:418
+#: ../../lib/util.py:418 ../../lib/util.py:420
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -4577,11 +4646,11 @@ msgstr "Pencere"
 msgid "%(appname)s Help"
 msgstr "%(appname)s Yardım"
 
-#: ../../osx/plat/frontends/widgets/overlay.py:218
+#: ../../osx/plat/frontends/widgets/overlay.py:220
 msgid "Pop Out"
 msgstr "Ayır"
 
-#: ../../osx/plat/frontends/widgets/overlay.py:221
+#: ../../osx/plat/frontends/widgets/overlay.py:223
 msgid "Pop In"
 msgstr "Birleştir"
 
@@ -4590,7 +4659,7 @@ msgstr "Birleştir"
 msgid "Track %(track)d (%(name)s)"
 msgstr ""
 
-#: ../../osx/plat/utils.py:601 ../../windows/plat/utils.py:495
+#: ../../osx/plat/utils.py:604 ../../windows/plat/utils.py:508
 msgid "iTunes"
 msgstr ""
 
@@ -4651,11 +4720,11 @@ msgstr ""
 msgid "Your PSP must be in USB Storage mode to sync files to it.\n"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:235
+#: ../../windows/plat/frontends/widgets/application.py:234
 msgid "Close to tray?"
 msgstr "Sistem tepsisine gönder?"
 
-#: ../../windows/plat/frontends/widgets/application.py:236
+#: ../../windows/plat/frontends/widgets/application.py:235
 #, python-format
 msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
@@ -4665,19 +4734,19 @@ msgstr ""
 "göndermeyi mi, ya da kapatmayı mı istersiniz? Bu ayarı daha sonra "
 "Seçenekler'den değiştirebilirsiniz."
 
-#: ../../windows/plat/frontends/widgets/application.py:304
+#: ../../windows/plat/frontends/widgets/application.py:303
 msgid "Error Bombing Item"
 msgstr "Hata: Nesne Başarısız"
 
-#: ../../windows/plat/frontends/widgets/application.py:306
+#: ../../windows/plat/frontends/widgets/application.py:305
 msgid "Error Recommending Item"
 msgstr "Hata: Nesne Önerilemedi"
 
-#: ../../windows/plat/frontends/widgets/application.py:308
+#: ../../windows/plat/frontends/widgets/application.py:307
 msgid "Error Opening Website"
 msgstr "İnternet Sayfası Açma Hatası"
 
-#: ../../windows/plat/frontends/widgets/application.py:313
+#: ../../windows/plat/frontends/widgets/application.py:312
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
@@ -5038,15 +5107,6 @@ msgstr "Altyazı Fontu:"
 
 #~ msgid "Feeds"
 #~ msgstr "Beslemeler"
-
-#~ msgid "Folders"
-#~ msgstr "Klasörler"
-
-#~ msgid "Disk space"
-#~ msgstr "Disk alanı"
-
-#~ msgid "Playback"
-#~ msgstr "Oynat"
 
 #~ msgid "New Search Feed"
 #~ msgstr "Yeni Besleme Ara"
@@ -5622,17 +5682,11 @@ msgstr "Altyazı Fontu:"
 #~ msgid "Comments"
 #~ msgstr "Yorumlar"
 
-#~ msgid "Select a Subtitles File..."
-#~ msgstr "Bir altyazı dosyası seçin"
-
 #~ msgid "Pipeline request never started"
 #~ msgstr "Sıralı istek hiç başlamadı"
 
 #~ msgid "All Items Match Search"
 #~ msgstr "Tüm öğeleri karşılaştır"
-
-#~ msgid "Downloads"
-#~ msgstr "İndirilenler"
 
 #~ msgid "Remove Feed"
 #~ msgid_plural "Remove Feeds"
@@ -5653,104 +5707,3 @@ msgstr "Altyazı Fontu:"
 
 #~ msgid "Length"
 #~ msgstr "Uzunluk"
-
-#~ msgid "Conversions"
-#~ msgstr "Dönüştürülenler"
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "If you continue, the primary video directory will be reset to a location on "
-#~ "this drive.  If you had videos downloaded this will cause %(shortappname)s "
-#~ "to lose details about those videos.\n"
-#~ " \n"
-#~ "If you quit, then you can connect the drive or otherwise fix the problem and "
-#~ "relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s öncelikli video yolunu kullanamıyor burda:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Şu anda bağlı olmayan harici sabit disk yolu olabilir, %(shortappname)s deki "
-#~ "klasöre yazma yetkiniz olmayabilir yada bu yoldaki klasörde olmayan bir şey "
-#~ "olabilir.\n"
-#~ "\n"
-#~ "\n"
-#~ "Eğer devam ederseniz, öncelikli video klasörü bu sürücüde yeniden "
-#~ "ayarlanacak.Eğer video indirdiyseniz, bu %(shortappname)s videolar "
-#~ "hakkındaki detayları kaybetmenize sebep olacak.\n"
-#~ " \n"
-#~ "Çıktıktan sonra sürücünüzü başlayabilirsiniz yada sorunu çözer ve "
-#~ "%(shortappname)s uygulamasını yeniden çalıştırabilirsiniz."
-
-#, python-format
-#~ msgid ""
-#~ "%(shortappname)s can't use the primary video directory located at:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "This may be because it is located on an external drive that is not "
-#~ "connected, is a directory that %(shortappname)s does not have write "
-#~ "permission to, or there is something that is not a directory at that path.\n"
-#~ "\n"
-#~ "%(shortappname)s will now exit. You can connect the drive or otherwise fix "
-#~ "the problem and relaunch %(shortappname)s."
-#~ msgstr ""
-#~ "%(shortappname)s öncelikli video yolunu kullanamıyor burda:\n"
-#~ "\n"
-#~ "%(moviedirectory)s\n"
-#~ "\n"
-#~ "Şu anda bağlı olmayan harici sabit disk yolu olabilir, %(shortappname)s deki "
-#~ "klasöre yazma yetkiniz olmayabilir yada bu yoldaki klasörde olmayan bir şey "
-#~ "olabilir.\n"
-#~ "\n"
-#~ "%(shortappname)s şimdi çıkacak. Sürücünüzü başlayabilirsiniz yada sorunu "
-#~ "çözer ve %(shortappname)s uygulamasını yeniden çalıştırabilirsiniz."
-
-#, python-format
-#~ msgid "%(used)s used / %(total)s total - %(percent)i%% full"
-#~ msgstr "%(total)s toplam / %(used)s kullanıldı - %(percent)i%% dolu"
-
-#~ msgid "Sync Now"
-#~ msgstr "Şimdi Güncelle"
-
-#, python-format
-#~ msgid "%(eta)s left (%(percent).1f%%)"
-#~ msgstr "%(eta)s kaldı (%(percent).1f%%)"
-
-#~ msgid "In Progress"
-#~ msgstr "İşlemde"
-
-#~ msgid "Use these options and the tabs above for automatic syncing."
-#~ msgstr ""
-#~ "Bu seçenekleri kullan ve yukarıdaki sekmeler otomatik olarak "
-#~ "güncellenecekler."
-
-#~ msgid "Sync automatically?"
-#~ msgstr "Otomatik olarak güncelle?"
-
-#, python-format
-#~ msgid "%(percent).1f%% complete"
-#~ msgstr "%(percent).1f%%  tamamlandı"
-
-#, python-format
-#~ msgid "1 file selected to sync"
-#~ msgid_plural "%(count)i files selected to sync"
-#~ msgstr[0] ""
-#~ "1 dosya güncelleme için seçildi\r\n"
-#~ "%(count)i dosya güncelleme için seçildi"
-
-#, python-format
-#~ msgid "Don't fill more than %(count)i percent of the free space on my device"
-#~ msgstr "Cihazımın boş alanın %(count)i den daha fazlasını doldurma."
-
-#, python-format
-#~ msgid "Track %(count)d"
-#~ msgstr "İzle %(count)d"

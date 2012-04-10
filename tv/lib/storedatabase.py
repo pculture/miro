@@ -46,7 +46,6 @@ The hope is that it will be human readable.  We use the type
 ``pythonrepr`` to label these columns.
 """
 
-import collections
 import glob
 import shutil
 import cPickle
@@ -166,7 +165,7 @@ class DatabaseObjectCache(object):
 
         :param category: category to clear
         """
-        for key in objects.keys():
+        for key in self._objects.keys():
             if key[0] == category:
                 del self._objects[key]
 
@@ -200,7 +199,7 @@ class LiveStorageErrorHandler(object):
         - ACTION_USE_TEMPORARY -- Use an in-memory database for now and try to
         save the database to disk every so often.
         """
-        return ACTION_RERAISE
+        return self.ACTION_RERAISE
 
     def handle_upgrade_error(self):
         """Handle an error upgrading the database.
@@ -351,7 +350,8 @@ class LiveStorage:
     - cache -- DatabaseObjectCache object
     """
     def __init__(self, path=None, error_handler=None, preallocate=None,
-                 object_schemas=None, schema_version=None):
+                 object_schemas=None, schema_version=None,
+                 start_in_temp_mode=False):
         """Create a LiveStorage for a database
 
         :param path: path to the database (or ":memory:")
@@ -362,6 +362,9 @@ class LiveStorage:
            schema.object_schemas
         :param schema_version: current version of the schema for upgrading
            purposes.  Defaults to schema.VERSION.
+        :param start_in_temp_mode: True if this database should start in
+                                   temporary mode (running in memory, but
+                                   checking if it can write to the disk)
         """
         if path is None:
             path = app.config.get(prefs.SQLITE_PATHNAME)
@@ -384,11 +387,16 @@ class LiveStorage:
         except AttributeError:
             logging.info("sqlite3 has no version attribute.")
 
-        self.created_new = not os.path.exists(path)
+        if path != ':memory:':
+            self.created_new = not os.path.exists(path)
+        else:
+            self.created_new = True
+        self.temp_mode = False
         self.preallocate = preallocate
         self.error_handler = error_handler
         self.cache = DatabaseObjectCache()
         self.raise_load_errors = False # only gets set in unittests
+        self.force_directory_creation = True # False for device databases
         self._dc = None
         self._query_times = {}
         self.path = path
@@ -412,36 +420,39 @@ class LiveStorage:
                 self._schema_column_map[oschema, name] = schema_item
         self._converter = SQLiteConverter()
 
-        self.open_connection()
+        self.open_connection(start_in_temp_mode=start_in_temp_mode)
 
         if self.created_new:
             self._init_database()
         if self.preallocate:
             self._preallocate_space()
 
-    def open_connection(self, path=None):
+    def open_connection(self, path=None, start_in_temp_mode=False):
         if path is None:
             path = self.path
-        self._ensure_database_directory_exists(path)
-        logging.info("opening database %s", path)
-        try:
-            self.connection = sqlite3.connect(path,
-                    isolation_level=None,
-                    detect_types=sqlite3.PARSE_DECLTYPES)
-        except sqlite3.Error, e:
-            logging.warn("Error opening sqlite database: %s", e)
-            action = self.error_handler.handle_open_error()
-            if action == LiveStorageErrorHandler.ACTION_RERAISE:
-                raise
-            elif action == LiveStorageErrorHandler.ACTION_USE_TEMPORARY:
-                logging.warn("Error opening database %s.  Opening an "
-                             "in-memory database instead", path)
-                self._switch_to_temp_mode()
-                self.created_new = True
-            else:
-                logging.warn("Bad return value for handle_open_error: %s",
-                             action)
-                raise
+        if start_in_temp_mode:
+            self._switch_to_temp_mode()
+        else:
+            self._ensure_database_directory_exists(path)
+            logging.info("opening database %s", path)
+            try:
+                self.connection = sqlite3.connect(path,
+                        isolation_level=None,
+                        detect_types=sqlite3.PARSE_DECLTYPES)
+            except sqlite3.Error, e:
+                logging.warn("Error opening sqlite database: %s", e)
+                action = self.error_handler.handle_open_error()
+                if action == LiveStorageErrorHandler.ACTION_RERAISE:
+                    raise
+                elif action == LiveStorageErrorHandler.ACTION_USE_TEMPORARY:
+                    logging.warn("Error opening database %s.  Opening an "
+                                 "in-memory database instead", path)
+                    self._switch_to_temp_mode()
+                    self.created_new = True
+                else:
+                    logging.warn("Bad return value for handle_open_error: %s",
+                                 action)
+                    raise
 
         self.cursor = self.connection.cursor()
         try:
@@ -455,6 +466,8 @@ class LiveStorage:
             self.cursor.execute("PRAGMA journal_mode=PERSIST");
 
     def _ensure_database_directory_exists(self, path):
+        if not self.force_directory_creation:
+            return
         if path != ':memory:' and not os.path.exists(os.path.dirname(path)):
             os.makedirs(os.path.dirname(path))
 
@@ -468,12 +481,15 @@ class LiveStorage:
         self.connection = sqlite3.connect(':memory:',
                                           isolation_level=None,
                                           detect_types=sqlite3.PARSE_DECLTYPES)
+        self.temp_mode = True
         self.created_new = True
         eventloop.add_timeout(300,
                               self._try_save_temp_to_disk,
                               "write in-memory sqlite database to disk")
 
     def _try_save_temp_to_disk(self):
+        if not self.temp_mode: # already fixed, move along
+            return
         try:
             self._change_path(self.path)
         except StandardError, e:
@@ -530,6 +546,7 @@ class LiveStorage:
         self.path = new_path
         self.connection.close()
         self.open_connection()
+        self.temp_mode = False
 
     def check_integrity(self):
         """Run an integrity check on our database
@@ -1089,14 +1106,12 @@ class LiveStorage:
         if values is None:
             values = ()
 
-        failed = False
         if is_update:
             self._statements_in_transaction.append((sql, values, many))
         try:
             self._time_execute(sql, values, many)
         except sqlite3.OperationalError, e:
             self._log_error(sql, values, many)
-            failed = True
             if is_update:
                 self._current_select_statement = None
             else:

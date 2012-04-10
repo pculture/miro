@@ -1,8 +1,10 @@
 # coding=latin-1
 # The above comment is required, because it includes non-latin characters
 # as an inline string in the source, we need to have this here as per PEP 263.
+import itertools
 import os
 import tempfile
+import time
 import shutil
 import unittest
 import sys
@@ -35,6 +37,19 @@ class FakeStream:
 
     def flush(self):
         pass
+
+class MockCache(util.Cache):
+    """
+    MockCache is used to test the Cache object.  The new values are a tuple of
+    the value passed in and a counter value, incremented each time a new value
+    is made.
+    """
+    def __init__(self, size):
+        util.Cache.__init__(self, size)
+        self.value_counter = itertools.count()
+
+    def create_new_value(self, val, invalidator=None):
+        return (val, self.value_counter.next())
 
 class AutoFlushingStreamTest(unittest.TestCase):
     def setUp(self):
@@ -996,3 +1011,79 @@ class TestBackupSupportDir(MiroTestCase):
         self.assertTrue(filesize <= 1100000,
                         "Backup file too big.  filesize: %s max_size: %s" %
                         (filesize, max_size))
+
+
+class MtimeInvalidatorTestCase(MiroTestCase):
+
+    def test_valid(self):
+        filename = os.path.join(self.tempdir, 'mtime_test')
+        file(filename, 'w').write('foo')
+        invalidator = util.mtime_invalidator(filename)
+        self.assertFalse(invalidator(None))
+
+    def test_invalid(self):
+        filename = os.path.join(self.tempdir, 'mtime_test_future')
+        file(filename, 'w').write('foo')
+        invalidator = util.mtime_invalidator(filename)
+        mtime = os.stat(filename).st_mtime
+        # pretend the file was modified in the future
+        os.utime(filename, (mtime + 10, mtime + 10))
+        self.assertTrue(invalidator(None))
+
+    def test_doesnotexist(self):
+        filename = os.path.join(self.tempdir,
+                                'mtime_test_doesnotexist')
+        invalidator = util.mtime_invalidator(filename)
+        self.assertTrue(invalidator(None))
+
+    def test_disappears(self):
+        filename = os.path.join(self.tempdir,
+                                'mtime_test_disappears')
+        file(filename, 'w').write('foo')
+        invalidator = util.mtime_invalidator(filename)
+        self.assertFalse(invalidator(None))
+        os.unlink(filename)
+        self.assertTrue(invalidator(None))
+
+class CacheTestCase(MiroTestCase):
+
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.cache = MockCache(2)
+
+    def test_set_get(self):
+        self.cache.set(1, 1)
+        self.assertEquals(self.cache.get(1), 1)
+
+    def test_create_new_value_get(self):
+        self.assertEquals(self.cache.get(1), (1, 0))
+        self.assertEquals(self.cache.get(3), (3, 1))
+
+    def test_remove(self):
+        self.cache.set(1, 1)
+        self.cache.remove(1)
+        self.assertFalse(1 in self.cache.keys())
+
+    def test_lru(self):
+        self.cache.get(1)
+        self.cache.get(2)
+        self.cache.get(3)
+        # 1 has expired out
+        self.assertEquals(set(self.cache.keys()), set((2, 3)))
+
+    def test_invalidator_set(self):
+        def invalidator(key):
+            return True
+        self.cache.set(1, 1, invalidator=invalidator)
+        # previous value is now invalid, get a new one
+        self.assertEquals(self.cache.get(1), (1, 0))
+
+    def test_invalidator_get(self):
+        def invalidator(key):
+            return True
+        self.assertEquals(self.cache.get(1, invalidator=invalidator),
+                          (1, 0))
+        # previous value was invalid, get a new one
+        self.assertEquals(self.cache.get(1, invalidator=invalidator),
+                          (1, 1))
+

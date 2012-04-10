@@ -98,10 +98,15 @@ class EmbeddingWidget(gtk.DrawingArea):
             self.embedding_window.reposition(*self._get_window_area())
 
     def destroy(self):
+        # NB: here we call the embedding_window's destroy() method after
+        # the DrawingArea's destroy() because apparently DrawingArea's
+        # destroy() can invoke do_unrealize(), which detaches the embedding
+        # window.  Therefore only free the embedding_window after we
+        # are adament that nobody can be using it.
+        gtk.DrawingArea.destroy(self)
         self.embedding_window.destroy()
         self.embedding_window = None
         # let DrawingArea take care of the rest
-        gtk.DrawingArea.destroy(self)
         _live_widgets.discard(self)
 
     # EmbeddingWindow callback functions.  Child classes can overide these if

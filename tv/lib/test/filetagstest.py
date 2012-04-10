@@ -50,8 +50,13 @@ class FileTagsTest(MiroTestCase):
             self.assertEquals(results.pop('created_cover_art'), True)
         else:
             self.assert_('cover_art' not in results)
+        if 'duration' in expected:
+            expected_duration = expected.pop('duration')
+            result_duration = results.pop('duration')
+            self.assertClose(result_duration, expected_duration)
+
         # for the rest, we just compare the dicts
-        self.assertEquals(results, expected)
+        self.assertDictEquals(results, expected)
 
     def test_shared_cover_art(self):
         # test what happens when 2 files with coverart share the same album.

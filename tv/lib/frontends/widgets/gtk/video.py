@@ -552,9 +552,9 @@ class VideoPlayer(player.GTKPlayer, VBox):
         self.on_mouse_motion(None)
 
     def play_from_time(self, resume_time=0):
-        # Note: This overrides player.Player's version of play_from_time, but
-        # this one seeks directly rather than fiddling with
-        # total_playback_time.
+        # FIXME: this overrides the default implementation.  The reason
+        # is going through the default implementation it requires the total
+        # time and it may not be ready at this point.
         self.seek_to_time(resume_time)
         self.play()
 

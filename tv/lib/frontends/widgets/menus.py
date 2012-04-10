@@ -46,11 +46,13 @@ from miro.frontends.widgets.keyboard import (Shortcut, CTRL, ALT, SHIFT, CMD,
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.widgetconst import COLUMN_LABELS
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
+from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 # import menu widgets into our namespace for easy access
 from miro.plat.frontends.widgets.widgetset import (Separator, Menu,
                                                    RadioMenuItem, CheckMenuItem)
 from miro.gtcache import gettext as _
+from miro.plat import resources
 from miro.plat import utils
 
 class MenuItem(widgetset.MenuItem):
@@ -284,7 +286,9 @@ def get_app_menu():
                 MenuItem(_("Force Device DB Save Error"),
                          "ForceDeviceDBSaveError"),
                 MenuItem(_("Run Donate Manager PowerToys"),
-                         "RunDonateManagerPowerToys")
+                         "RunDonateManagerPowerToys"),
+                MenuItem(_("Image Render Test"),
+                         "ImageRenderTest"),
                 ])
         )
     return all_menus
@@ -612,6 +616,64 @@ def on_run_enmfp():
 @action_handler("RunDonateManagerPowerToys")
 def on_run_donate_manager_powertoys():
     app.donate_manager.run_powertoys()
+
+@action_handler("ImageRenderTest")
+def on_image_render_test():
+    t = widgetset.Table(4, 4)
+    t.pack(widgetset.Label("ImageDisplay"), 1, 0)
+    t.pack(widgetset.Label("ImageSurface.draw"), 2, 0)
+    t.pack(widgetset.Label("ImageSurface.draw_rect"), 3, 0)
+    t.pack(widgetset.Label("Normal"), 0, 1)
+    t.pack(widgetset.Label("resize() called"), 0, 2)
+    t.pack(widgetset.Label("crop_and_scale() called"), 0, 3)
+    t.set_column_spacing(20)
+    t.set_row_spacing(20)
+    w = widgetset.Window("Image render test",
+                         widgetset.Rect(100, 300, 800, 600))
+    w.set_content_widget(t)
+
+    path = resources.path("images/album-view-default-audio.png")
+    image = widgetset.Image(path)
+    resize = image.resize(image.width / 2, image.height / 2)
+    crop_and_scale = image.crop_and_scale(20, 0,
+                                          image.width-40, image.height,
+                                          image.width, image.height)
+    def add_to_table(widget, col, row):
+        t.pack(widgetutil.align(widget, xalign=0, yalign=0), col, row)
+    add_to_table(widgetset.ImageDisplay(image), 1, 1)
+    add_to_table(widgetset.ImageDisplay(resize), 1, 2)
+    add_to_table(widgetset.ImageDisplay(crop_and_scale), 1, 3)
+
+    class ImageSurfaceDrawer(widgetset.DrawingArea):
+        def __init__(self, image, use_draw_rect):
+            self.image = widgetset.ImageSurface(image)
+            self.use_draw_rect = use_draw_rect
+            widgetset.DrawingArea.__init__(self)
+
+        def size_request(self, layout):
+            return self.image.width, self.image.height
+
+        def draw(self, context, layout):
+            if not self.use_draw_rect:
+                self.image.draw(context, 0, 0, image.width, image.height)
+            else:
+                x_stride = int(image.width // 10)
+                y_stride = int(image.height // 10)
+                for x in range(0, int(image.width), x_stride):
+                    for y in range(0, int(image.height), y_stride):
+                        width = min(x_stride, image.width-x)
+                        height = min(y_stride, image.height-y)
+                        print x, y, width, height
+                        self.image.draw_rect(context, x, y, x, y, width,
+                                             height)
+    add_to_table(ImageSurfaceDrawer(image, False), 2, 1)
+    add_to_table(ImageSurfaceDrawer(resize, False), 2, 2)
+    add_to_table(ImageSurfaceDrawer(crop_and_scale, False), 2, 3)
+    add_to_table(ImageSurfaceDrawer(image, True), 3, 1)
+    add_to_table(ImageSurfaceDrawer(resize, True), 3, 2)
+    add_to_table(ImageSurfaceDrawer(crop_and_scale, True), 3, 3)
+
+    w.show()
 
 @action_handler("ForceMainDBSaveError")
 def on_force_device_db_save_error():
