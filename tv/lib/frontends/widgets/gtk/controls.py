@@ -254,12 +254,11 @@ class Button(Widget, BinBaselineCalculator):
         self.create_signal('clicked')
         self.forward_signal('clicked')
         self.label = Label(text)
-        if width:
-            current_width = self.label.get_width()
-            padding = (width - current_width) // 2
-            odd = width - current_width - padding * 2
+        # only honor width if its bigger than the width we need to display the
+        # label (#18994)
+        if width and width > self.label.get_width():
             alignment = layout.Alignment(0.5, 0.5, 0, 0)
-            alignment.set_padding(0, 0, padding, padding+odd)
+            alignment.set_size_request(width, -1)
             alignment.add(self.label)
             self._widget.add(alignment._widget)
         else:
