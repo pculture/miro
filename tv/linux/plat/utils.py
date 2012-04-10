@@ -379,9 +379,11 @@ def setup_ffmpeg_presets():
     global ffmpeg_version
     if ffmpeg_version is None:
         commandline = [get_ffmpeg_executable_path(), '-version']
-        lines = subprocess.check_output(commandline,
-                                        stderr=file("/dev/null", "wb")
-                                        ).split('\n')
+        p = subprocess.Popen(commandline,
+                             stdout=subprocess.PIPE,
+                             stderr=file("/dev/null", "wb"))
+        stdout, _ = p.communicate()
+        lines = stdout.split('\n')
         version = lines[0].rsplit(' ', 1)[1].split('.')
         def maybe_int(v):
             try:
@@ -412,8 +414,11 @@ def customize_ffmpeg_parameters(params):
         # Fallback for older versions of FFmpeg (Ubuntu Natty, in particular).
         # see also #18969
         params = ['-vpre' if i == '-preset' else i for i in params]
-        profile_index = params.index('-profile:v')
-        if profile_index != -1:
+        try:
+            profile_index = params.index('-profile:v')
+        except ValueError:
+            pass
+        else:
             if params[profile_index + 1] == 'baseline':
                 params[profile_index:profile_index+2] = [
                     '-coder', '0', '-bf', '0', '-refs', '1',
