@@ -379,9 +379,11 @@ def setup_ffmpeg_presets():
     global ffmpeg_version
     if ffmpeg_version is None:
         commandline = [get_ffmpeg_executable_path(), '-version']
-        lines = subprocess.check_output(commandline,
-                                        stderr=file("/dev/null", "wb")
-                                        ).split('\n')
+        p = subprocess.Popen(commandline,
+                             stdout=subprocess.PIPE,
+                             stderr=file("/dev/null", "wb"))
+        stdout, _ = p.communicate()
+        lines = stdout.split('\n')
         version = lines[0].rsplit(' ', 1)[1].split('.')
         def maybe_int(v):
             try:
