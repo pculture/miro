@@ -979,7 +979,7 @@ class FoldersPanel(PanelBuilder):
         grid.end_line(spacing=18)
         grid.pack_label(
             _('Watch for new video and audio items in these folders '
-              'and include them in library:'), span=2)
+              'and include them in library:'), span=2, width=500)
         grid.end_line()
         grid.pack(self.watched_folder_helper.folder_list, pad_right=12)
         grid.pack(self.watched_folder_helper.button_box)

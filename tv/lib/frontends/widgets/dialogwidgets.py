@@ -119,7 +119,11 @@ class ControlGrid(object):
     def pack_label(self, text, *args, **kwargs):
         if 'extra_space' not in kwargs and len(args) == 0:
             kwargs['extra_space'] = ControlGrid.ALIGN_LEFT
-        self.pack(widgetset.Label(text), *args, **kwargs)
+        widget = widgetset.Label(text)
+        if 'width' in kwargs:
+            widget.set_wrap(True)
+            widget.set_size_request(kwargs.pop('width'), -1)
+        self.pack(widget, *args, **kwargs)
 
     def pack(self, widget, extra_space=FILL, pad_left=0,
             pad_right=6, span=1):
