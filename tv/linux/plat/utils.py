@@ -412,8 +412,9 @@ def customize_ffmpeg_parameters(params):
         # Fallback for older versions of FFmpeg (Ubuntu Natty, in particular).
         # see also #18969
         params = ['-vpre' if i == '-preset' else i for i in params]
-        profile_index = params.index('-profile:v')
-        if profile_index != -1:
+        try:
+            profile_index = params.index('-profile:v')
+        except ValueError:
             if params[profile_index + 1] == 'baseline':
                 params[profile_index:profile_index+2] = [
                     '-coder', '0', '-bf', '0', '-refs', '1',
