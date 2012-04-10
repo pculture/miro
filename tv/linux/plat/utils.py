@@ -417,6 +417,8 @@ def customize_ffmpeg_parameters(params):
         try:
             profile_index = params.index('-profile:v')
         except ValueError:
+            pass
+        else:
             if params[profile_index + 1] == 'baseline':
                 params[profile_index:profile_index+2] = [
                     '-coder', '0', '-bf', '0', '-refs', '1',
