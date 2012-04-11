@@ -62,7 +62,7 @@ class Pref:
         return self.key != other.key
 
 # These are normal user preferences.
-DONATE_PAYMENT_URL          = Pref(key='donatePaymentURL',      default='https://www.stayclassy.org/checkout/donation?cid=7214', platformSpecific=False)
+DONATE_PAYMENT_URL_TEMPLATE = Pref(key='donatePaymentURLTemplate', default='http://www.getmiro.com/give/?s=m%d', platformSpecific=False)
 DONATE_URL_TEMPLATE         = Pref(key='donateURLTemplate',     default='http://getmiro.com/give/m%s/', platformSpecific=False)
 DONATE_ASK1                 = Pref(key='donateAsk1',            default=10,    platformSpecific=False)
 DONATE_ASK2                 = Pref(key='donateAsk2',            default=50,    platformSpecific=False)
