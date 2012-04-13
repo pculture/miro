@@ -127,7 +127,8 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         subprocessmanager.SubprocessHandler.__init__(self)
         self.threads = []
         self.task_queue = WorkerTaskQueue()
-        self.pending_moviedata_tasks = deque()
+        self.main_thread_tasks = deque()
+        self.supports_alarm = util.supports_alarm()
 
     def call_handler(self, method, msg):
         try:
@@ -137,9 +138,17 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
             elif isinstance(msg, MovieDataProgramTask):
                 # we have to handle this message on this thread, since
                 # QtKit will break if we use it on any thread except the main
-                # one.  Put it in pending_moviedata_tasks and handle once
+                # one.  Put it in main_thread_tasks and handle once
                 # there's no more tasks waiting in to be processed
-                self.pending_moviedata_tasks.append((method, msg))
+                self.main_thread_tasks.append((method, msg))
+            elif isinstance(msg, MutagenTask):
+                # If we're using the alarm, then MutagenTasks need to run in
+                # the main thread as well.  Signals aren't support outside of
+                # the main thread.
+                if self.supports_alarm:
+                    self.main_thread_tasks.append((method, msg))
+                else:
+                    self.task_queue.add_task(method, msg)
             elif isinstance(msg, TaskMessage):
                 self.task_queue.add_task(method, msg)
             else:
@@ -150,8 +159,12 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
     def get_task_from_queue(self, queue):
         # handle movie data tasks if no more tasks are coming in right now
         ran_movie_data = False
-        while queue.empty() and self.pending_moviedata_tasks:
-            method, msg = self.pending_moviedata_tasks.popleft()
+        while queue.empty() and self.main_thread_tasks:
+            method, msg = self.main_thread_tasks.popleft()
+            if isinstance(msg, MutagenTask):
+                # if we're here, it means we want to use the signals
+                handle_task(self.handle_mutagen_task_with_alarm, msg)
+                continue
             MovieDataTaskStatus(msg.task_id).send_to_main_process()
             ran_movie_data = True
             handle_task(method, msg)
@@ -164,7 +177,7 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
         # following is True
         # - The queue has a message in it and therefore
         #   get_task_from_queue() will be called again soon
-        # - pending_moviedata_tasks is empty
+        # - main_thread_tasks is empty
         # 
         # So we don't have to worry about the blocking call preventing the
         # MovieDataProgramTasks from running
@@ -184,11 +197,11 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
     def handle_cancel_file_operations(self, msg):
         path_set = set(msg.paths)
         self.task_queue.cancel_file_operations(path_set)
-        # we need to handle pending_moviedata_tasks, since those skip the task
+        # we need to handle main_thread_tasks, since those skip the task
         # queue
-        filtered_tasks = deque(t for t in self.pending_moviedata_tasks
+        filtered_tasks = deque(t for t in self.main_thread_tasks
                                if t.source_path not in path_set)
-        self.pending_moviedata_tasks = filtered_tasks
+        self.main_thread_tasks = filtered_tasks
         return None
 
     # handle_movie_data_program_task gets called in the main thread, unlike
@@ -211,6 +224,10 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
 
     def handle_mutagen_task(self, msg):
         return filetags.process_file(msg.source_path, msg.cover_art_directory)
+
+    def handle_mutagen_task_with_alarm(self, msg):
+        with util.alarm(2):
+            return self.handle_mutagen_task(msg)
 
 class _SinglePriorityQueue(object):
     """Manages tasks at a single priority for WorkerTaskQueue
