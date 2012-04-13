@@ -1365,5 +1365,4 @@ def alarm(timeout, set_signal=True):
         signal.alarm(0)
 
 def supports_alarm():
-    with alarm(1) as result:
-        return result
+    return hasattr(signal, 'SIGALRM')
