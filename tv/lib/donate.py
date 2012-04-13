@@ -57,12 +57,12 @@ class DonateManager(object):
 
     There are some preferences to do various housekeeping.
 
-    DONATE_PAYMENT_URL - keeps track of the payment URL if user says yes
+    DONATE_PAYMENT_URL_TEMPLATE - keeps the payment URL if user says yes
     DONATE_URL_TEMPLATE - a template url is used to ask the user for donation
                           The template is transformed into an actual URL
     DONATE_ASK{1,2,3} - number of downloads completed before we show 
                         DONATE_URL_TEMPLATE
-    DONATE_NOTHANKS - the time the user last said no thanks to our request
+    DONATE_NOTHANKS - number of times user said no thanks to our request
     DONATE_COUNTER - count down timer.  When zero, the dialog will be shown.
                      When re-armed, it should be populated with values
                      from DONATE_ASK{1,2,3}
@@ -77,7 +77,8 @@ class DonateManager(object):
                                       app.config.get(prefs.DONATE_ASK2),
                                       app.config.get(prefs.DONATE_ASK3)]
         self.donate_url_template = app.config.get(prefs.DONATE_URL_TEMPLATE)
-        self.payment_url = app.config.get(prefs.DONATE_PAYMENT_URL)
+        self.payment_url_template = app.config.get(
+                                      prefs.DONATE_PAYMENT_URL_TEMPLATE)
         self.donate_nothanks = app.config.get(prefs.DONATE_NOTHANKS)
         self.donate_counter = app.config.get(prefs.DONATE_COUNTER)
         self.last_donate_time = app.config.get(prefs.LAST_DONATE_TIME)
@@ -219,7 +220,12 @@ class DonateManager(object):
             except IndexError:
                 url = self.donate_url_template % args[-1]
         if not payment_url:
-            payment_url = self.payment_url
+            args = [7, 8, 9]
+            try:
+                payment_url = (self.payment_url_template %
+                               args[self.donate_nothanks])
+            except IndexError: 
+                payment_url = self.payment_url_template % args[-1]
         if self.donate_window:
             self.last_donate_time = time.time()
             app.config.set(prefs.LAST_DONATE_TIME, self.last_donate_time)

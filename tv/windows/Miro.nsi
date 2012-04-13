@@ -344,6 +344,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Delete   "${directory}\miro-segmenter.exe"
   Delete   "${directory}\ffmpeg.exe"
   Delete   "${directory}\ffmpeg2theora.exe"
+  Delete   "${directory}\codegen.windows.exe"
   Delete   "${directory}\*.ffpreset"
 
   RMDir /r "${directory}\extensions"
@@ -620,6 +621,7 @@ StrCmp $ONLY_INSTALL_THEME "1" install_theme
   File  "miro-segmenter.exe"
   File  "ffmpeg.exe"
   File  "ffmpeg2theora.exe"
+  File  "codegen.windows.exe"
   File  "*.ffpreset"
   File  /r etc
   File  /r lib

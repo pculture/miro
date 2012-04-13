@@ -5,6 +5,7 @@ import itertools
 import os
 import tempfile
 import time
+import signal
 import shutil
 import unittest
 import sys
@@ -1087,3 +1088,29 @@ class CacheTestCase(MiroTestCase):
         self.assertEquals(self.cache.get(1, invalidator=invalidator),
                           (1, 1))
 
+
+class AlarmTestCase(MiroTestCase):
+
+    @staticmethod
+    def _long_function():
+        time.sleep(1.5)
+        return True
+
+    def _wrapped_function(self, set_signal=True):
+        with util.alarm(1, set_signal=set_signal):
+            return self._long_function()
+
+    if hasattr(signal, 'SIGALRM'):
+        def test_alarm_works(self):
+            self.assertRaises(IOError, self._wrapped_function)
+
+        def test_context_manager__True(self):
+            with util.alarm(1) as result:
+                self.assertTrue(result)
+
+    def test_alarm_noop(self):
+        self.assertTrue(self._wrapped_function(set_signal=False))
+
+    def test_context_manager__False(self):
+        with util.alarm(0, set_signal=False) as result:
+            self.assertFalse(result)

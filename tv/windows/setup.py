@@ -117,6 +117,7 @@ FFMPEG2THEORA_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg2theora')
 
 VCREDIST71_PATH = os.path.join(BINARY_KIT_ROOT, 'vc71redist')
 VCREDIST90_PATH = os.path.join(BINARY_KIT_ROOT, 'vc90redist')
+VCREDIST100_PATH = os.path.join(BINARY_KIT_ROOT, 'vc100redist')
 
 # so py2exe can find DLLs
 sys.path.append(VCREDIST71_PATH)
@@ -296,6 +297,11 @@ def fill_template(templatepath, outpath, **vars):
 
 # Data files
 data_files = []
+
+# add VC10.0 DLLs for ENMFP
+data_files.extend(find_data_files('.', VCREDIST100_PATH))
+
+# xulrunner
 data_files.extend(find_data_files('xulrunner', XULRUNNER_SDK_BIN_PATH))
 
 # Clearlooks-Visto theme files
