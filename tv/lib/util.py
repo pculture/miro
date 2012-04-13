@@ -35,6 +35,7 @@ any other Miro modules.
 
 from hashlib import sha1 as sha
 from StringIO import StringIO
+import contextlib
 import itertools
 import logging
 import os
@@ -43,6 +44,7 @@ import re
 import shutil
 import socket
 import string
+import signal
 import subprocess
 import sys
 import tempfile
@@ -1348,3 +1350,19 @@ def next_free_directory(name):
         candidate = candidates.next()
         if not os.path.exists(candidate):
             return candidate
+
+@contextlib.contextmanager
+def alarm(timeout, set_signal=True):
+    def alarm_handler(signum, frame):
+        raise IOError('timeout after %i seconds' % timeout)
+    if set_signal:
+        set_signal = hasattr(signal, 'SIGALRM')
+    if set_signal:
+        signal.signal(signal.SIGALRM, alarm_handler)
+        signal.alarm(timeout)
+    yield set_signal
+    if set_signal:
+        signal.alarm(0)
+
+def supports_alarm():
+    return hasattr(signal, 'SIGALRM')
