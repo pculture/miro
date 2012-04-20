@@ -2176,12 +2176,19 @@ class DirectoryScannerImplBase(FeedImpl):
 
         known_files = self.calc_known_files()
         my_files = set()
+        my_items = list(self.items)
+        # pause after doing prep work
+        yield
+        if should_halt_early():
+            return
 
         # Remove items with deleted files or that that are in feeds
         to_remove = []
         duplicate_paths = []
         start = time.time()
-        for item in self.items:
+        for item in my_items:
+            if not item.id_exists():
+                continue
             filename = item.get_filename()
             if (filename is None or
                 not fileutil.isfile(filename) or
@@ -2204,7 +2211,8 @@ class DirectoryScannerImplBase(FeedImpl):
         app.bulk_sql_manager.start()
         try:
             for item in to_remove:
-                item.remove()
+                if item.id_exists():
+                    item.remove()
         finally:
             app.bulk_sql_manager.finish()
 
