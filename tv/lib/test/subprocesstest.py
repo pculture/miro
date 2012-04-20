@@ -338,7 +338,7 @@ class MovieDataTest(WorkerProcessTest):
         else:
             self.assert_('file_type' not in self.result)
         if duration is not None:
-            self.assertEquals(self.get_from_result('duration'), duration)
+            self.assertClose(self.get_from_result('duration'), duration)
         else:
             self.assert_('duration' not in self.result)
         if file_type == 'video':
