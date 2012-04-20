@@ -8,7 +8,7 @@ from miro import subprocessmanager
 from miro import workerprocess
 from miro.plat import resources
 from miro.test import mock
-from miro.test.framework import EventLoopTest
+from miro.test.framework import EventLoopTest, only_on_platforms
 
 # setup some test messages/handlers
 class TestSubprocessHandler(subprocessmanager.SubprocessHandler):
@@ -245,6 +245,10 @@ class WorkerProcessTest(EventLoopTest):
         workerprocess._subprocess_manager.restart_delay = 0
         self.reset_results()
 
+    def tearDown(self):
+        EventLoopTest.tearDown(self)
+        workerprocess.shutdown()
+
     def reset_results(self):
         self.result = self.error = None
 
@@ -326,7 +330,8 @@ class MovieDataTest(WorkerProcessTest):
         except KeyError:
             raise AssertionError("result missing key %s: %s" % (key, self.result))
 
-    def check_movie_data_call(self, filename, file_type, duration):
+    def check_movie_data_call(self, filename, file_type, duration,
+                              has_screenshot):
         source_path = resources.path("testdata/metadata/" + filename)
         msg = workerprocess.MovieDataProgramTask(source_path, self.tempdir)
         workerprocess.send(msg, self.callback, self.errback)
@@ -338,10 +343,10 @@ class MovieDataTest(WorkerProcessTest):
         else:
             self.assert_('file_type' not in self.result)
         if duration is not None:
-            self.assertEquals(self.get_from_result('duration'), duration)
+            self.assertClose(self.get_from_result('duration'), duration)
         else:
             self.assert_('duration' not in self.result)
-        if file_type == 'video':
+        if has_screenshot:
             screenshot_name = os.path.basename(source_path) + '.png'
             self.assertEquals(self.get_from_result('screenshot'),
                               os.path.join(self.tempdir, screenshot_name))
@@ -349,12 +354,26 @@ class MovieDataTest(WorkerProcessTest):
             self.assert_('screenshot' not in self.result)
         self.reset_results()
 
-    def test_movie_data_worker_process(self):
+    def test_movie_data_worker_process_audio(self):
         workerprocess.startup()
-        self.check_movie_data_call('mp3-0.mp3', 'audio', 1044)
-        self.check_movie_data_call('mp3-1.mp3', 'audio', 1044)
-        self.check_movie_data_call('mp3-2.mp3', 'audio', 1044)
-        self.check_movie_data_call('drm.m4v', None, None)
+        self.check_movie_data_call('mp3-0.mp3', 'audio', 1044, False)
+        self.check_movie_data_call('mp3-1.mp3', 'audio', 1044, False)
+        self.check_movie_data_call('mp3-2.mp3', 'audio', 1044, False)
+
+    def test_movie_data_worker_process_video(self):
+        workerprocess.startup()
+        self.check_movie_data_call('webm-0.webm', 'video', 1044, True)
+
+    @only_on_platforms('linux', 'win32')
+    def test_moviedata_drm_gtk(self):
+        workerprocess.startup()
+        self.check_movie_data_call('drm.m4v', None, None, False)
+
+    @only_on_platforms('osx')
+    def test_movie_data_drm_osx(self):
+        workerprocess.startup()
+        self.check_movie_data_call('drm.m4v', 'video', 2668832, False)
+
 
 class MutagenTest(WorkerProcessTest):
     def check_successful_result(self):
