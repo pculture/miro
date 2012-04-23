@@ -41,3 +41,6 @@ ssize: 800x480
 
 [Xoom]
 ssize: 1280x800
+
+[Sensation / EVO 3D]
+ssize: 960x540
