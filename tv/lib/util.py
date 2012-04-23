@@ -603,7 +603,8 @@ def stringify(stringobj, handleerror="xmlcharrefreplace"):
         return stringobj.encode("ascii", handleerror)
     if isinstance(stringobj, str):
         # make sure bytestrings are ASCII
-         return stringobj.decode('ascii', 'replace')
+         return stringobj.decode('ascii', 'replace').encode('ascii',
+                                                            'replace')
     else:
         # convert objects to strings, then ensure they are ASCII
         return stringify(str(stringobj))
