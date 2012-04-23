@@ -40,6 +40,9 @@ htc_evo = DeviceInfo(u'HTC EVO',
 htc_evo_4g = DeviceInfo(u'HTC EVO 4G',
                         video_conversion='epic')
 
+htc_evo_3d = DeviceInfo('HTC EVO 3D',
+                        video_conversion='sensationevo3d')
+
 htc_legend = DeviceInfo(u'HTC Legend',
                         video_conversion='dreamg1',
                         video_path=u'/media/video',
@@ -73,7 +76,8 @@ generic_htc = DeviceInfo(_('Generic %(name)s Device', {'name': 'HTC'}),
                          video_conversion='hero')
 
 htc_android_device = MultipleDeviceInfo(
-    'HTC Android Phone', [htc_hero, htc_evo, htc_evo_4g, htc_legend,
+    'HTC Android Phone', [htc_hero, htc_evo, htc_evo_4g, htc_evo_3d,
+                          htc_legend,
                           tmobile_g1, tmobile_g2, htc_vision, htc_desire_z,
                           htc_incredible, htc_incredible_2, htc_sensation,
                           htc_aria,
@@ -102,6 +106,13 @@ htc_thunderbolt = DeviceInfo(u'HTC Thunderbolt',
                              device_name='HTC Android Phone',
                              video_conversion='epic',
                              **defaults)
+
+htc_sensation = DeviceInfo(u'HTC Sensation',
+                           vendor_id=0x0bb4,
+                           product_id=0x0c86,
+                           device_name='HTC Android Phone',
+                           video_conversion='sensationevo3d',
+                           **defaults)
 
 nexus_one = DeviceInfo(u'Nexus One',
                        vendor_id=0x18d1,
@@ -231,7 +242,7 @@ toshiba_thrive = DeviceInfo(
     audio_path=u'Music')
 
 devices = [htc_android_device, htc_desire, htc_desire_hd, htc_thunderbolt,
-           nexus_one,
+           htc_sensation, nexus_one,
            motorola_droid_one, motorola_droid_two, motorola_droid2,
            motorola_droidx, motorola_xoom, lg_optimus_2x, lg_optimus_s,
            galaxy_s2, galaxy_tab, epic, nookcolor, toshiba_thrive]
