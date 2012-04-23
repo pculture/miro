@@ -1258,11 +1258,22 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
 
         if channel_title != None and self._allow_feed_to_override_title():
             self.title = channel_title
-        if (parsed.feed.has_key('image') and
-                parsed.feed.image.has_key('url') and
-                self._allow_feed_to_override_thumbnail()):
-            self.thumbURL = parsed.feed.image.url
-            self.ufeed.icon_cache.request_update(is_vital=True)
+        if parsed.feed.has_key('image'):
+            image = parsed.feed['image']
+            image_url = None
+            if isinstance(image, dict):
+                if 'url' in image:
+                    image_url = image['url']
+                elif 'href' in image:
+                    image_url = image['href']
+            elif isinstance(image, basestring):
+                image_url = image
+            else:
+                logging.warn('strange image value from %r: %r',
+                             self.url, image)
+            if image_url and self._allow_feed_to_override_thumbnail():
+                self.thumbURL = image_url
+                self.ufeed.icon_cache.request_update(is_vital=True)
 
         items_byid = {}
         items_byURLTitle = {}
