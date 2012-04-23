@@ -213,10 +213,10 @@ class UtilTest(unittest.TestCase):
             ( u"abc\xe4", "replace", "abc?"),
             # test that bytestrings are converted to plain ASCII
             ( "abc", None, "abc"),
-            ( "abc\xe4", None, "abc\\xe4"),
+            ( "abc\xe4", None, "abc?"),
             # test that objects are converted to plain ASCII
             ( GoodStringObject(), None, "abc"),
-            ( BadStringObject(), None, "abc\\xe4"),
+            ( BadStringObject(), None, "abc?"),
             ]:
 
             if h == None:
