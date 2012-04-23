@@ -463,8 +463,10 @@ class SubprocessManager(object):
             # So if the self.thread attribute is None then it means we are done
             # and so things are all good.
             if self.thread is not None and thread.quit_type != thread.QUIT_NORMAL:
-                app.controller.failed_soft('handling subprocess',
-                        '_on_thread_quit called by an old thread')
+                msg = ('_on_thread_quit called by an old thread '
+                        'self.thread: %s thread: %s quit_type: %s' %
+                        (self.thread.name, thread.name, thread.quit_type))
+                app.controller.failed_soft('handling subprocess', msg)
             return
 
         if (self.thread.quit_type == self.thread.QUIT_NORMAL and
