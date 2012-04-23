@@ -34,6 +34,7 @@ import gtk
 from miro.frontends.widgets.gtk import layout
 from miro.frontends.widgets.gtk import simple
 from miro.frontends.widgets.gtk import window
+from miro.gtcache import gettext as _
 from miro.plat import resources
 
 class PreferencesWindow(window.Window):
@@ -43,6 +44,7 @@ class PreferencesWindow(window.Window):
         self.content_widget = gtk.VBox(spacing=12)
         self.content_widget.pack_start(self.tab_container._widget)
         close_button = gtk.Button(stock=gtk.STOCK_CLOSE)
+        close_button.set_label(_("Close"))
         close_button.connect_object('clicked', gtk.Window.hide, self._window)
         alignment = gtk.Alignment(xalign=1.0)
         alignment.set_padding(0, 10, 0, 10)
