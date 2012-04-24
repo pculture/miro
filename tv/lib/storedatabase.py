@@ -1111,7 +1111,7 @@ class LiveStorage:
         try:
             self._time_execute(sql, values, many)
         except sqlite3.OperationalError, e:
-            self._log_error(sql, values, many)
+            self._log_error(sql, values, many, e)
             if is_update:
                 self._current_select_statement = None
             else:
@@ -1119,6 +1119,9 @@ class LiveStorage:
                 # fetchall() at the end of this method works. (#12885)
                 self._current_select_statement = (sql, values, many)
             self._handle_operational_error(e, is_update)
+        except StandardError, e:
+            self._log_error(sql, values, many, e)
+            raise
 
         if is_update:
             return None
@@ -1134,16 +1137,14 @@ class LiveStorage:
         end = time.time()
         self._check_time(sql, end-start)
 
-    def _log_error(self, sql, values, many):
+    def _log_error(self, sql, values, many, e):
             # printing the traceback here in whole rather than doing
             # a logging.exception which seems to show the traceback
             # up to the try/except handler.
-            logging.exception("OperationalError\n"
-                              "statement: %s\n\n"
-                              "values: %s\n\n"
-                              "many: %s\n\n"
-                              "full stack:\n%s\n", sql, values, many,
-                              "".join(traceback.format_stack()))
+            logging.error("%s while executing SQL\n"
+                          "statement: %s\n\n"
+                          "values: %s\n\n"
+                          "many: %s\n\n", e, sql, values, many, exc_info=True)
 
     def _try_rerunning_transaction(self):
         if self._statements_in_transaction:
@@ -1157,7 +1158,7 @@ class LiveStorage:
             try:
                 self._time_execute(sql, values, many)
             except sqlite3.OperationalError:
-                self._log_error(sql, values, many)
+                self._log_error(sql, values, many, e)
                 return False
         return True
 
