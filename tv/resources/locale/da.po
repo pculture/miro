@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-04-09 11:50+0200\n"
-"PO-Revision-Date: 2012-03-27 22:53+0000\n"
-"Last-Translator: Kim Hansen <Unknown>\n"
+"PO-Revision-Date: 2012-04-11 01:58+0000\n"
+"Last-Translator: Aputsiaq Niels Janussen <aj@isit.gl>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-04-09 15:28+0000\n"
-"X-Generator: Launchpad (build 15060)\n"
+"X-Launchpad-Export-Date: 2012-04-24 06:49+0000\n"
+"X-Generator: Launchpad (build 15135)\n"
 
 #: ../../lib/commandline.py:153
 msgid "Subscription error"
@@ -618,7 +618,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:459
 msgid "Error Revealing File"
-msgstr "Kan ikke finde filen"
+msgstr "Fejl ved afkodning af fil"
 
 #: ../../lib/frontends/widgets/application.py:460
 #, python-format
@@ -4314,7 +4314,7 @@ msgstr ""
 #: ../../lib/storedatabase.py:246
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr "%(appname)s kunne ikke gemme databasen"
+msgstr "Lagring af %(appname)s-database mislykkedes"
 
 #: ../../lib/storedatabase.py:249
 #, python-format
@@ -5370,12 +5370,6 @@ msgstr "Undertekstskrifttype:"
 #~ msgstr[1] "%(count)d minutter"
 
 #, python-format
-#~ msgid "Skipped %(count)d feed already present."
-#~ msgid_plural "Skipped %(count)d feeds already present."
-#~ msgstr[0] "Sprang over %(count)d feed, da det allerede var tilstede."
-#~ msgstr[1] "Sprang over %(count)d feeds, da de allerede var tilstede."
-
-#, python-format
 #~ msgid "%(size)s gb/s"
 #~ msgstr "%(size)s gb/s"
 
@@ -5718,3 +5712,9 @@ msgstr "Undertekstskrifttype:"
 #~ msgid_plural "Successfully imported %(count)d feeds."
 #~ msgstr[0] "Problemfri import af %(count)d kilde."
 #~ msgstr[1] "Problemfri import af %(count)d kilder."
+
+#, python-format
+#~ msgid "Skipped %(count)d feed already present."
+#~ msgid_plural "Skipped %(count)d feeds already present."
+#~ msgstr[0] "Ignoreret %(count)d nyhedskilde var allerede til stede."
+#~ msgstr[1] "Sprang over %(count)d feeds, da de allerede var til stede."

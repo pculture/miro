@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-09 11:50+0200\n"
-"PO-Revision-Date: 2012-03-18 21:35+0000\n"
+"PO-Revision-Date: 2012-04-23 23:43+0000\n"
 "Last-Translator: Bjørn I. <Unknown>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-04-09 15:28+0000\n"
-"X-Generator: Launchpad (build 15060)\n"
+"X-Launchpad-Export-Date: 2012-04-24 06:49+0000\n"
+"X-Generator: Launchpad (build 15135)\n"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1244
 #, python-format
@@ -729,7 +729,7 @@ msgstr "Ny speleliste:"
 
 #: ../../lib/frontends/widgets/application.py:219
 msgid "Movies folder gone"
-msgstr ""
+msgstr "Film-mappe ikkje funnen"
 
 #: ../../lib/frontends/widgets/application.py:221
 #, python-format
@@ -772,7 +772,7 @@ msgstr "Opna filer …"
 
 #: ../../lib/frontends/widgets/application.py:480
 msgid "All Media Files"
-msgstr ""
+msgstr "Alle mediafiler"
 
 #: ../../lib/frontends/widgets/application.py:481
 #: ../../lib/frontends/widgets/application.py:756
@@ -786,7 +786,7 @@ msgstr "Lydfiler"
 
 #: ../../lib/frontends/widgets/application.py:483
 msgid "Torrent Files"
-msgstr ""
+msgstr "Torrentfiler"
 
 #: ../../lib/frontends/widgets/application.py:495
 #: ../../lib/frontends/widgets/application.py:500
@@ -1184,7 +1184,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:226
 msgid "Cancel Sync"
-msgstr ""
+msgstr "Avbryt synk"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:323
 msgid "Sync These Podcasts"
@@ -1540,7 +1540,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/donate.py:188
 msgid "Ask me later"
-msgstr ""
+msgstr "Spør meg seinare"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:74
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1230
@@ -1841,7 +1841,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:618
 msgid "Note:"
-msgstr ""
+msgstr "Merknad:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:623
 msgid ""
@@ -1859,7 +1859,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:646
 msgid "Get Started"
-msgstr ""
+msgstr "Kom i gang"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:456
 #, python-format
@@ -2366,7 +2366,7 @@ msgstr "Postkast"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:684
 #: ../../lib/frontends/widgets/menus.py:308
 msgid "Show Conversion Folder"
-msgstr ""
+msgstr "Vis konverteringsmappe"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:500
 msgid "Remove From Playlist"

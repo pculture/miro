@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-04-09 15:28+0000\n"
-"X-Generator: Launchpad (build 15060)\n"
+"X-Launchpad-Export-Date: 2012-04-24 06:49+0000\n"
+"X-Generator: Launchpad (build 15135)\n"
 
 #: ../../lib/commandline.py:153
 msgid "Subscription error"
@@ -4854,9 +4854,6 @@ msgstr "Subtekst-tiparo:"
 #~ msgstr[0] "Forigi retejon"
 #~ msgstr[1] "Forigi retejojn"
 
-#~ msgid "Seeding"
-#~ msgstr "Fontsendante"
-
 #~ msgid "Feed:"
 #~ msgstr "Fluo:"
 
@@ -4902,3 +4899,6 @@ msgstr "Subtekst-tiparo:"
 
 #~ msgid "Cu_t"
 #~ msgstr "El_tondi"
+
+#~ msgid "Seeding"
+#~ msgstr "Fontsendanta"
