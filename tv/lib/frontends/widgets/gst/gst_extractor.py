@@ -294,6 +294,9 @@ class Extractor:
                         pad.remove_buffer_probe(self.buffer_probes[name])
                         del self.buffer_probes[name]
             self.pipeline = None
+        if self.thumbnail_pipeline is not None:
+            self.thumbnail_pipeline.set_state(gst.STATE_NULL)
+            self.thumbnail_pipeline = None
 
         if self.bus is not None:
             self.bus.disconnect(self.watch_id)
