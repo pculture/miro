@@ -3791,3 +3791,12 @@ def upgrade177(cursor):
     # drop the current_processor column
     cursor.execute("DROP INDEX metadata_processor")
     remove_column(cursor, 'metadata_status', ['current_processor'])
+
+def upgrade178(cursor):
+    """Remove metadata for items flaged as deleted."""
+    cursor.execute("DELETE FROM metadata WHERE status_id IN "
+                   "(SELECT ms.id FROM metadata_status ms "
+                   "JOIN item on ms.path = item.filename "
+                   "WHERE item.deleted)")
+    cursor.execute("DELETE FROM metadata_status WHERE path IN "
+                   "(SELECT filename FROM item WHERE item.deleted)")

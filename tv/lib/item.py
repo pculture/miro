@@ -461,6 +461,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.setup_common()
         self.setup_links()
         if (self.filename is not None and
+            not self.deleted and
             not app.local_metadata_manager.path_in_system(self.filename)):
             logging.warn("Path for item not in MetadataManager (%s).  "
                          "Adding it now." % (self.filename))
@@ -2232,7 +2233,11 @@ class FileItem(Item):
     def make_undeleted(self):
         self.deleted = False
         self.signal_change()
-        app.local_metadata_manager.add_file(self.filename)
+        if not app.local_metadata_manager.path_in_system(self.filename):
+            app.local_metadata_manager.add_file(self.filename)
+        else:
+            logging.warn("Item.make_undeleted: path exists in "
+                         "MetadataManager (%r)" % self.filename)
 
     def delete_files(self):
         if self.has_parent():
