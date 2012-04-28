@@ -317,6 +317,11 @@ class FeedParserTest(WorkerProcessTest):
         self.check_successful_result()
 
 class MovieDataTest(WorkerProcessTest):
+
+    def setUp(self):
+        WorkerProcessTest.setUp(self)
+        workerprocess.startup()
+
     def check_successful_result(self):
         # just do some very basic test to see if the result is correct
         if self.error is not None:
@@ -355,23 +360,24 @@ class MovieDataTest(WorkerProcessTest):
         self.reset_results()
 
     def test_movie_data_worker_process_audio(self):
-        workerprocess.startup()
         self.check_movie_data_call('mp3-0.mp3', 'audio', 1044, False)
         self.check_movie_data_call('mp3-1.mp3', 'audio', 1044, False)
         self.check_movie_data_call('mp3-2.mp3', 'audio', 1044, False)
 
     def test_movie_data_worker_process_video(self):
-        workerprocess.startup()
-        self.check_movie_data_call('webm-0.webm', 'video', 1044, True)
+        self.check_movie_data_call('theora_with_ogg_extension.ogg', 'video',
+                                   1044, True)
 
     @only_on_platforms('linux', 'win32')
     def test_moviedata_drm_gtk(self):
-        workerprocess.startup()
         self.check_movie_data_call('drm.m4v', None, None, False)
 
     @only_on_platforms('osx')
+    def test_movie_data_webm(self):
+        self.check_movie_data_call('webm-0.webm', 'video', 1044, True)
+
+    @only_on_platforms('osx')
     def test_movie_data_drm_osx(self):
-        workerprocess.startup()
         self.check_movie_data_call('drm.m4v', 'video', 2668832, False)
 
 
