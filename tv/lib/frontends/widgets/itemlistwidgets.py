@@ -48,7 +48,6 @@ from miro import app
 from miro import prefs
 from miro import displaytext
 from miro import util
-from miro import eventloop
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemfilter
@@ -59,6 +58,7 @@ from miro.frontends.widgets import segmented
 from miro.frontends.widgets import separator
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.plat import resources
+from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import use_upside_down_sort
 from miro.plat.utils import get_available_bytes_for_movies
@@ -1446,19 +1446,18 @@ class FeedToolbar(widgetset.Background):
 
     def _on_autodownload_changed(self, widget):
         if self.autodownload_dc is not None:
-            self.autodownload_dc.cancel()
+            timer.cancel(self.autodownload_dc)
             self.autodownload_dc = None
 
         toggle_state = self.autodownload_button_actual.get_toggle_state()
         toggle_state = (toggle_state + 1) % 3
         self.autodownload_button_actual.set_toggle_state(toggle_state)
+        self.autodownload_dc = timer.add(
+            0.5, self._on_autodownload_changed_timeout)
+
+    def _on_autodownload_changed_timeout(self):
         value = self.autodownload_button_actual.get_toggle_state_information()
         value = value[0]
-        self.autodownload_dc = eventloop.add_timeout(
-            3, self._on_autodownload_changed_timeout, "autodownload change",
-            args=(value,))
-
-    def _on_autodownload_changed_timeout(self, value):
         self.emit('auto-download-changed', value)
 
 class HeaderToolbar(Toolbar, SorterOwner):

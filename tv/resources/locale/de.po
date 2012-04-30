@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-04-09 11:50+0200\n"
-"PO-Revision-Date: 2011-11-28 13:41+0000\n"
-"Last-Translator: netnyke <Unknown>\n"
+"PO-Revision-Date: 2012-04-20 17:50+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-04-09 15:29+0000\n"
-"X-Generator: Launchpad (build 15060)\n"
+"X-Launchpad-Export-Date: 2012-04-24 06:48+0000\n"
+"X-Generator: Launchpad (build 15135)\n"
 
 #: ../../lib/commandline.py:153
 msgid "Subscription error"
@@ -250,7 +250,7 @@ msgstr "Ordner erstellen"
 
 #: ../../lib/dialogs.py:120
 msgid "Choose New Folder"
-msgstr ""
+msgstr "Neues Verzeichnis auswählen"
 
 #: ../../lib/dialogs.py:121
 msgid "Add Folder"
@@ -609,7 +609,7 @@ msgstr "Neue Wiedergabeliste:"
 
 #: ../../lib/frontends/widgets/application.py:219
 msgid "Movies folder gone"
-msgstr ""
+msgstr "Filmordner nicht gefunden"
 
 #: ../../lib/frontends/widgets/application.py:221
 #, python-format
@@ -622,20 +622,30 @@ msgid ""
 "%(reason)s\n"
 "\n"
 msgstr ""
+"%(shortappname)s kann den primären folgenden Video-Ordner nicht benutzen:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"%(reason)s\n"
+"\n"
 
 #: ../../lib/frontends/widgets/application.py:234
 msgid ""
 "You may continue with the current folder, choose a new folder or quit and "
 "try to fix the issue manually."
 msgstr ""
+"Sie können den momentanen Ordner benutzen, wählen sie einen neuen Ordner "
+"oder beenden sie das Programm und versuchen das Problem manuell zu lösen."
 
 #: ../../lib/frontends/widgets/application.py:243
 msgid "You choose a new folder or quit and try to fix the issue manually."
 msgstr ""
+"Wählen Sie einen neuen Ordner oder beenden sie das Programm und versuchen "
+"das Problem manuell zu lösen."
 
 #: ../../lib/frontends/widgets/application.py:254
 msgid "Choose new primary video folder"
-msgstr ""
+msgstr "Wählen Sie ein neues primäres Videoverzeichnis"
 
 #: ../../lib/frontends/widgets/application.py:459
 msgid "Error Revealing File"
@@ -652,7 +662,7 @@ msgstr "Dateien öffnen..."
 
 #: ../../lib/frontends/widgets/application.py:480
 msgid "All Media Files"
-msgstr ""
+msgstr "Alle Mediendateien"
 
 #: ../../lib/frontends/widgets/application.py:481
 #: ../../lib/frontends/widgets/application.py:756
@@ -666,7 +676,7 @@ msgstr "Audio-Dateien"
 
 #: ../../lib/frontends/widgets/application.py:483
 msgid "Torrent Files"
-msgstr ""
+msgstr "Torrent-Dateien"
 
 #: ../../lib/frontends/widgets/application.py:495
 #: ../../lib/frontends/widgets/application.py:500
@@ -1071,27 +1081,27 @@ msgstr "Aktuell"
 #: ../../lib/frontends/widgets/devicecontroller.py:194
 #, python-format
 msgid "%(used)s used / %(total)s total"
-msgstr ""
+msgstr "%(used)s belegt / %(total)s gesamt"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:198
 #, python-format
 msgid "%(percent)i%% full"
-msgstr ""
+msgstr "%(percent)i%% voll"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:211
 #, python-format
 msgid "Sync 1 File"
 msgid_plural "Sync %(count)i Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 Datei synchronisieren"
+msgstr[1] "%(count)i Dateien synchronisieren"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:225
 msgid "Now Syncing"
-msgstr ""
+msgstr "Gegenwärtige Synchronisation"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:226
 msgid "Cancel Sync"
-msgstr ""
+msgstr "Synchronisation abbrechen"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:323
 msgid "Sync These Podcasts"
@@ -1115,7 +1125,7 @@ msgstr "Nur noch nicht wiedergegebene Dateien synchronisieren"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:469
 msgid "Delete expired podcasts from my device"
-msgstr ""
+msgstr "Abgelaufene Podcasts von meinem Gerät löschen"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:525
 msgid "Sync These Playlists"
@@ -1200,7 +1210,7 @@ msgstr "Einstellungen"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:706
 msgid "Individual Files"
-msgstr ""
+msgstr "Einzelne Dateien"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:709
 msgid ""
@@ -1212,24 +1222,28 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/devicecontroller.py:716
 msgid "Syncing"
-msgstr ""
+msgstr "Synchronisation"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:719
 msgid "Use the tabs above and these options for automatic syncing."
 msgstr ""
+"Benutzen Sie die Tabs oben und diese Optionen für die automatische "
+"Synchronisierung."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:725
 msgid "Sync automatically when this device is connected"
-msgstr ""
+msgstr "Automatische Synchronisation, wenn dieses Gerät angeschlossen wird"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:730
 #, python-format
 msgid "Don't fill more than %(count)i percent of the free space when syncing"
 msgstr ""
+"Nicht mehr als %(count)i Prozent des freien Speichers beim Synchronisieren "
+"benutzen"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:750
 msgid "Auto Fill"
-msgstr ""
+msgstr "Automatisches füllen"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:753
 msgid ""
@@ -1455,11 +1469,11 @@ msgstr "Spenden"
 
 #: ../../lib/frontends/widgets/donate.py:187
 msgid "Yes, I can donate now"
-msgstr ""
+msgstr "Ja, ich kann jetzt spenden"
 
 #: ../../lib/frontends/widgets/donate.py:188
 msgid "Ask me later"
-msgstr ""
+msgstr "Später nachfragen"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:74
 #: ../../lib/frontends/widgets/itemlistcontroller.py:1230
@@ -1743,30 +1757,32 @@ msgstr "Suche abbrechen"
 #: ../../lib/frontends/widgets/firsttimedialog.py:558
 #: ../../lib/frontends/widgets/firsttimedialog.py:639
 msgid "Music Setup"
-msgstr ""
+msgstr "Musik-Einrichtung"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:596
 #, python-format
 msgid "Show my %(player)s music in my %(appname)s library."
-msgstr ""
+msgstr "Zeige meine %(player)s Musik in meiner %(appname)s Bibliothek."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:600
 msgid "(Don't worry, no files are copied.)"
-msgstr ""
+msgstr "(Keine Sorge, es werden keine Dateien kopiert.)"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:606
 msgid "Cleanup Song Info and Album Art"
-msgstr ""
+msgstr "Informationen zu Liedern und Plattenhüllen löschen"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:609
 msgid ""
 "Miro will use Echonest and 7Digital to cleanup all song titles, info, and "
 "album art.  Recommended."
 msgstr ""
+"Miro benutzt Echonest und 7Digital um die Liedtitel, Informationen und "
+"Albumcover zu säubern. Empfohlen."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:618
 msgid "Note:"
-msgstr ""
+msgstr "Notiz:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:623
 msgid ""
@@ -1780,11 +1796,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:644
 msgid "First Time Music Setup"
-msgstr ""
+msgstr "Erstmalige Musik-Einrichtung"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:646
 msgid "Get Started"
-msgstr ""
+msgstr "Erste Schritte"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:456
 #, python-format
@@ -2127,7 +2143,7 @@ msgstr "Konvertieren zu..."
 #: ../../lib/frontends/widgets/itemcontextmenu.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:408
 msgid "Set media kind as..."
-msgstr ""
+msgstr "Art des Medium festlegen..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:412
@@ -2482,7 +2498,7 @@ msgstr "Videos"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:590
 msgid "Series"
-msgstr ""
+msgstr "Serien"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:592
 #: ../../lib/frontends/widgets/widgetconst.py:70
@@ -2621,6 +2637,7 @@ msgstr "Podcast entfernen"
 #, python-format
 msgid "Looking up album art and song info: %(number)d of %(total)d"
 msgstr ""
+"Suche nach Liedinformationen und Albencovern: %(number)d von %(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1768
 #, python-format
@@ -2674,7 +2691,7 @@ msgstr "Lizenz anzeigen"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2200
 msgid "Select an item to view more of its details"
-msgstr "Wählen Sie ein Eintrag, um weitere Details anzuzeigen"
+msgstr "Wählen Sie einen Eintrag, um weitere Details anzuzeigen"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:2253
 msgid "DRM Locked"
@@ -2827,7 +2844,7 @@ msgstr "Herunterladen von einer URL"
 
 #: ../../lib/frontends/widgets/menus.py:113
 msgid "Edit _Item Details..."
-msgstr ""
+msgstr "_Elementdetails bearbeiten..."
 
 #: ../../lib/frontends/widgets/menus.py:116
 msgid "Edit _Items"
@@ -3317,12 +3334,15 @@ msgstr ""
 msgid ""
 "Automatically run online lookup for any new audio files that I add to Miro."
 msgstr ""
+"Online-Abfrage beim Hinzufügen von beliebigen Dateien zu Miro automatisch "
+"ausführen."
 
 #: ../../lib/frontends/widgets/prefpanel.py:604
 #, python-format
 msgid ""
 "Using lookup data for %(net_lookup_count)s out of %(total_count)s items"
 msgstr ""
+"Abfragedaten für %(net_lookup_count)s von %(total_count)s Elementen verwenden"
 
 #: ../../lib/frontends/widgets/prefpanel.py:634
 msgid "Every day"
@@ -3744,7 +3764,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:1456
 msgid "Conversions"
-msgstr ""
+msgstr "Konvertierungen"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1458
 #: ../../lib/frontends/widgets/tabcontroller.py:573
@@ -3755,7 +3775,7 @@ msgstr "Stores"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1460
 msgid "Extensions"
-msgstr ""
+msgstr "Erweiterungen"
 
 #: ../../lib/frontends/widgets/removefeeds.py:58
 msgid "Are you sure you want to remove this podcast:"
@@ -4220,12 +4240,13 @@ msgstr "Wird gestartet..."
 
 #: ../../lib/messagehandler.py:1512
 msgid "Error saving file"
-msgstr ""
+msgstr "Fehler beim Speichern der Datei"
 
 #: ../../lib/messagehandler.py:1513
 #, python-format
 msgid "There was an error saving %(filename)s: %(error)s"
 msgstr ""
+"Beim Speichern der Datei %(filename)s ist ein Fehler aufgetreten: %(error)s"
 
 #: ../../lib/messagehandler.py:1641
 msgid "Subscribed to new podcast:"
@@ -4439,15 +4460,18 @@ msgstr ""
 #, python-format
 msgid "Permissions error: %(appname)s couldn't create the folder."
 msgstr ""
+"Berechtigungsfehler: %(appname)s konnte das Verzeichnis nicht erstellen."
 
 #: ../../lib/startup.py:389
 #, python-format
 msgid "Permissions error: %(appname)s can't write to the folder."
 msgstr ""
+"Berechtigungsfehler: %(appname)s konnte nicht in das Verzeichnis schreiben."
 
 #: ../../lib/startup.py:399
 msgid "The folder contains no files: is it on a drive that's disconnected?"
 msgstr ""
+"Das Verzeichnis enthält keine Dateien: Ist es auf einem getrennten Laufwerk?"
 
 #: ../../lib/startup.py:602
 msgid "Submitting Crash Report"
@@ -4569,7 +4593,7 @@ msgstr ""
 #: ../../lib/storedatabase.py:291
 #, python-format
 msgid "database for device %(name)s corrupt."
-msgstr ""
+msgstr "Datenbank für Gerät %(name)s ist kaputt."
 
 #: ../../lib/storedatabase.py:294
 #, python-format
@@ -4577,6 +4601,8 @@ msgid ""
 "The %(appname)s database on your device is corrupt and a new one will be "
 "created."
 msgstr ""
+"Die %(appname)s-Datenbank auf Ihrem Gerät ist kaputt und wird nun neu "
+"erstellt."
 
 #: ../../lib/storedatabase.py:311
 #, python-format
@@ -4597,12 +4623,12 @@ msgstr ""
 
 #: ../../lib/storedatabase.py:335
 msgid "Device database save succeeded"
-msgstr ""
+msgstr "Speichern der Gerätedatenbank war erfolgreich"
 
 #: ../../lib/storedatabase.py:336
 #, python-format
 msgid "The database for %(device)s has been successfully saved. "
-msgstr ""
+msgstr "Die Datenbank für %(device)s wurde erfolgreich gespeichert. "
 
 #: ../../lib/storedatabase.py:695
 #, python-format
@@ -4901,10 +4927,13 @@ msgstr ""
 #: ../../resources/devices/ereader.py:16
 msgid "Your Kindle must be mounted to sync files to it.\n"
 msgstr ""
+"Ihr Kindle muss gemountet sein, um Dateien damit zu synchronisieren.\n"
 
 #: ../../resources/devices/ereader.py:30
 msgid "Your Kindle must be in USB Storage mode to sync files to it.\n"
 msgstr ""
+"Ihr Kindle muss sich im USB-Speichermodus befinden, um Dateien damit zu "
+"synchronisieren.\n"
 
 #: ../../resources/devices/generic_phone.py:42
 #, python-format
@@ -4982,16 +5011,16 @@ msgid ""
 "Would you like to do this now?"
 msgstr ""
 "Für die beste Nutzung von %(appname)s, empfehlen wir Bonjour zu "
-"installieren, welches als ein Teil von Druckerdiensten ist.\n"
+"installieren, welches als ein Teil von Druckerdiensten vertrieben wird.\n"
 "\n"
 "Die Installation von Bonjour wird es Ihnen ermöglichen ihre Medien mit "
-"anderen %(appname)s Nutzern zu teilen, außerdem Bonjour es Ihnen Medien von "
-"anderen %(appname)s Nutzern abzurufen und zu Ihnen zu streamen.\n"
+"anderen %(appname)s Nutzern zu teilen, außerdem ermöglicht Bonjour es Ihnen "
+"Medien von anderen %(appname)s Nutzern abzurufen und zu Ihnen zu streamen.\n"
 "\n"
 "Nach der Installation des Druckerdienstes, müssen Sie %(appname)s "
 "neustarten.\n"
 "\n"
-"Möchten sie die Jetzt tun?"
+"Möchten sie dies Jetzt tun?"
 
 #: ../../windows/plat/frontends/widgets/bonjour.py:75
 #, python-format

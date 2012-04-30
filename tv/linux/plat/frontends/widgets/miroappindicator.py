@@ -80,7 +80,7 @@ class MiroAppIndicator:
         app.menu_manager.connect('menus-updated', self._on_menu_update)
 
     def _on_menu_update(self, manager, reason):
-        eventloop.add_idle(self.calculate_popup_menu, "Update app indicator menu")
+        self.calculate_popup_menu()
 
     def set_visible(self, visible):
         if visible:
@@ -149,8 +149,8 @@ class MiroAppIndicator:
         menu_items = self.make_popup_menu_items()
         if menu_items is None:
             return
-        popup_menu = gtk.Menu()
         if self.menu_items != menu_items:
+            popup_menu = gtk.Menu()
             for label, callback in menu_items:
                 if not label and not callback:
                     item = gtk.SeparatorMenuItem()

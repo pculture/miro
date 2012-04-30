@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-04-09 11:50+0200\n"
-"PO-Revision-Date: 2012-03-23 13:30+0000\n"
-"Last-Translator: Fitoschido <fitoschido@gmail.com>\n"
+"PO-Revision-Date: 2012-04-15 15:16+0000\n"
+"Last-Translator: Rodolfo <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-04-09 15:28+0000\n"
-"X-Generator: Launchpad (build 15060)\n"
+"X-Launchpad-Export-Date: 2012-04-24 06:48+0000\n"
+"X-Generator: Launchpad (build 15135)\n"
 
 #~ msgid "Miro Guide"
 #~ msgstr "Guía de Miro"
@@ -610,7 +610,7 @@ msgstr "Nueva lista de reproducción:"
 
 #: ../../lib/frontends/widgets/application.py:219
 msgid "Movies folder gone"
-msgstr ""
+msgstr "Carpeta de películas extinta"
 
 #: ../../lib/frontends/widgets/application.py:221
 #, python-format
@@ -623,20 +623,29 @@ msgid ""
 "%(reason)s\n"
 "\n"
 msgstr ""
+"%(shortappname)s no puede usar tu carpeta principal de video, que está "
+"actualmente especificada como:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"%(reason)s\n"
+"\n"
 
 #: ../../lib/frontends/widgets/application.py:234
 msgid ""
 "You may continue with the current folder, choose a new folder or quit and "
 "try to fix the issue manually."
 msgstr ""
+"Puede continuar en la carpeta actual, elegir una nueva o salir e intentar "
+"resolverlo en forma manual."
 
 #: ../../lib/frontends/widgets/application.py:243
 msgid "You choose a new folder or quit and try to fix the issue manually."
-msgstr ""
+msgstr "Elegir carpeta nueva o salir e intentar resolverlo en forma manual."
 
 #: ../../lib/frontends/widgets/application.py:254
 msgid "Choose new primary video folder"
-msgstr ""
+msgstr "Escoja la nueva carpeta de video principal"
 
 #: ../../lib/frontends/widgets/application.py:459
 msgid "Error Revealing File"
@@ -1087,7 +1096,7 @@ msgstr[1] "Sincronizar %(count)i archivos"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:225
 msgid "Now Syncing"
-msgstr ""
+msgstr "Se está sincronizando"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:226
 msgid "Cancel Sync"
@@ -1115,7 +1124,7 @@ msgstr "Sólo sincronizar elementos no reproducidos"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:469
 msgid "Delete expired podcasts from my device"
-msgstr ""
+msgstr "Eliminar podcast expirados de mi dispositivo"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:525
 msgid "Sync These Playlists"
@@ -1218,19 +1227,21 @@ msgstr "Sincronizando"
 #: ../../lib/frontends/widgets/devicecontroller.py:719
 msgid "Use the tabs above and these options for automatic syncing."
 msgstr ""
+"Usar las pestañas de arriba y estas opciones para sincronización automática."
 
 #: ../../lib/frontends/widgets/devicecontroller.py:725
 msgid "Sync automatically when this device is connected"
-msgstr ""
+msgstr "Sincronizar automáticamente cuando el dispositivo está conectado"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:730
 #, python-format
 msgid "Don't fill more than %(count)i percent of the free space when syncing"
 msgstr ""
+"No ocupar más del %(count)i por ciento del espacio libre cuando se sincroniza"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:750
 msgid "Auto Fill"
-msgstr ""
+msgstr "Auto completado"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:753
 msgid ""
@@ -1744,7 +1755,7 @@ msgstr "Configuración de música"
 #: ../../lib/frontends/widgets/firsttimedialog.py:596
 #, python-format
 msgid "Show my %(player)s music in my %(appname)s library."
-msgstr ""
+msgstr "Mostrar mi %(player)smúsica en mi %(appname)s librería."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:600
 msgid "(Don't worry, no files are copied.)"
@@ -1752,13 +1763,15 @@ msgstr "(No se preocupe, no se copian archivos.)"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:606
 msgid "Cleanup Song Info and Album Art"
-msgstr ""
+msgstr "Limpiar información de canción y arte del álbum"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:609
 msgid ""
 "Miro will use Echonest and 7Digital to cleanup all song titles, info, and "
 "album art.  Recommended."
 msgstr ""
+"Miro usará Echonest y 7Digital para arreglar todos los títulos musicales, "
+"información, y arte del album. Recomendado."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:618
 msgid "Note:"
@@ -1776,11 +1789,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:644
 msgid "First Time Music Setup"
-msgstr ""
+msgstr "Configuración por primera vez de la Música"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:646
 msgid "Get Started"
-msgstr ""
+msgstr "Empezar"
 
 #: ../../lib/frontends/widgets/gst/renderer.py:456
 #, python-format
@@ -2124,17 +2137,17 @@ msgstr "Convertir a..."
 #: ../../lib/frontends/widgets/itemcontextmenu.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:408
 msgid "Set media kind as..."
-msgstr ""
+msgstr "Elegir tipo de medio como..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:412
 msgid "Don't Use Online Lookup Data"
-msgstr ""
+msgstr "No utilizar búsqueda de datos online"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
 #: ../../lib/frontends/widgets/itemcontextmenu.py:416
 msgid "Use Online Lookup Data"
-msgstr ""
+msgstr "Utilizar búsqueda de datos online"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:157
 #: ../../lib/frontends/widgets/itemcontextmenu.py:159
@@ -2479,7 +2492,7 @@ msgstr "Clips"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:590
 msgid "Series"
-msgstr ""
+msgstr "Series"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:592
 #: ../../lib/frontends/widgets/widgetconst.py:70
@@ -2617,6 +2630,7 @@ msgstr "Eliminar podcast"
 #, python-format
 msgid "Looking up album art and song info: %(number)d of %(total)d"
 msgstr ""
+"Buscando arte de album e información de canción: %(number)d de %(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1768
 #, python-format
@@ -2822,7 +2836,7 @@ msgstr "Descargar desde una URL"
 
 #: ../../lib/frontends/widgets/menus.py:113
 msgid "Edit _Item Details..."
-msgstr ""
+msgstr "Editar detalles de _Item..."
 
 #: ../../lib/frontends/widgets/menus.py:116
 msgid "Edit _Items"
@@ -2831,6 +2845,8 @@ msgstr "Editar _elementos"
 #: ../../lib/frontends/widgets/menus.py:117
 msgid "Use album art and song info from online lookup database (Echonest)"
 msgstr ""
+"Utilizar arte de album e información de canción de la base de datos online "
+"(Echonest)"
 
 #: ../../lib/frontends/widgets/menus.py:121
 msgid "Remove Item"
@@ -3100,11 +3116,11 @@ msgstr "Ejecutar ENMFP"
 
 #: ../../lib/frontends/widgets/menus.py:284
 msgid "Force Main DB Save Error"
-msgstr ""
+msgstr "Error al forzar guardado de DB principal"
 
 #: ../../lib/frontends/widgets/menus.py:286
 msgid "Force Device DB Save Error"
-msgstr ""
+msgstr "Error al forzar guardado de DB del dispositivo"
 
 #: ../../lib/frontends/widgets/menus.py:288
 msgid "Run Donate Manager PowerToys"
@@ -3112,7 +3128,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:290
 msgid "Image Render Test"
-msgstr ""
+msgstr "Prueba de renderizado de imagen"
 
 #: ../../lib/frontends/widgets/menus.py:1308
 msgid "Default (UTF-8)"
@@ -3290,32 +3306,38 @@ msgstr "Mostrar en:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:558
 msgid "Music Album Art and Info Cleanup"
-msgstr ""
+msgstr "Arreglo de Arte de Album Musical e Información"
 
 #: ../../lib/frontends/widgets/prefpanel.py:561
 msgid ""
 "Online lookup can find matching album art and song info for all your audio "
 "files (via Echonest and 7Digital)."
 msgstr ""
+"Búsqueda en línea puede encontrar arte de album e información de canción "
+"para todos tus archivos de audio (via Echonest y 7Digital)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:567
 msgid "Run Online Lookup for All Current Music"
-msgstr ""
+msgstr "Correr una búsqueda en línea para Toda la música actual"
 
 #: ../../lib/frontends/widgets/prefpanel.py:571
 msgid "Remove All Lookup data"
-msgstr ""
+msgstr "Remover todos los datos de búsqueda"
 
 #: ../../lib/frontends/widgets/prefpanel.py:581
 msgid ""
 "Automatically run online lookup for any new audio files that I add to Miro."
 msgstr ""
+"Correr una búsqueda en línea automáticamente para cualquier archivo de audio "
+"que yo agregue a Miro."
 
 #: ../../lib/frontends/widgets/prefpanel.py:604
 #, python-format
 msgid ""
 "Using lookup data for %(net_lookup_count)s out of %(total_count)s items"
 msgstr ""
+"Usando datos de búsqueda para %(net_lookup_count)s de unos %(total_count)s "
+"ítems."
 
 #: ../../lib/frontends/widgets/prefpanel.py:634
 msgid "Every day"
@@ -4426,6 +4448,8 @@ msgstr "Error de permisos: %(appname)s no puede escribir en la carpeta."
 #: ../../lib/startup.py:399
 msgid "The folder contains no files: is it on a drive that's disconnected?"
 msgstr ""
+"La carpeta no contiene archivos: ¿Se encuentra en una unidad que está "
+"desconectada?"
 
 #: ../../lib/startup.py:602
 msgid "Submitting Crash Report"
@@ -4544,7 +4568,7 @@ msgstr ""
 #: ../../lib/storedatabase.py:291
 #, python-format
 msgid "database for device %(name)s corrupt."
-msgstr ""
+msgstr "base de datos para dispositivo %(name)s corrupta"
 
 #: ../../lib/storedatabase.py:294
 #, python-format
@@ -4552,11 +4576,13 @@ msgid ""
 "The %(appname)s database on your device is corrupt and a new one will be "
 "created."
 msgstr ""
+"La %(appname)s base de datos en tu dispositivo está corrupta y una nueva va "
+"a ser creada."
 
 #: ../../lib/storedatabase.py:311
 #, python-format
 msgid "Database save failed for device %(name)s."
-msgstr ""
+msgstr "Fallo guardar la base de datos para el dispositivo %(name)s."
 
 #: ../../lib/storedatabase.py:314
 #, python-format
@@ -4569,15 +4595,22 @@ msgid ""
 "If retrying does not work select start fresh to reset the database to a new "
 "one."
 msgstr ""
+"%(appname)s no pudo grabar su base de datos en %(device)s.\n"
+"\n"
+"Si tu dispositivo está lleno, te sugerimos liberar algo de espacio y "
+"reintentar. si tu disco no está lleno, es posible que reintentar funcione.\n"
+"\n"
+"Si reintentar no funciona elige inicio de cero para reinicializar la base de "
+"datos a una nueva."
 
 #: ../../lib/storedatabase.py:335
 msgid "Device database save succeeded"
-msgstr ""
+msgstr "Base de datos del dispositivo grabada con éxito"
 
 #: ../../lib/storedatabase.py:336
 #, python-format
 msgid "The database for %(device)s has been successfully saved. "
-msgstr ""
+msgstr "La base de datos para %(device)s se ha guardado con éxito. "
 
 #: ../../lib/storedatabase.py:695
 #, python-format
@@ -4869,11 +4902,13 @@ msgstr ""
 
 #: ../../resources/devices/ereader.py:16
 msgid "Your Kindle must be mounted to sync files to it.\n"
-msgstr ""
+msgstr "Su Kindle debe estar montado para poderle sincronizar archivos.\n"
 
 #: ../../resources/devices/ereader.py:30
 msgid "Your Kindle must be in USB Storage mode to sync files to it.\n"
 msgstr ""
+"Su Kindle debe estar en modo almacenamiento por USB para poderle sincronizar "
+"archivos.\n"
 
 #: ../../resources/devices/generic_phone.py:42
 #, python-format

@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-09 11:50+0200\n"
-"PO-Revision-Date: 2012-04-04 17:00+0000\n"
+"PO-Revision-Date: 2012-04-11 17:32+0000\n"
 "Last-Translator: Chimel <Unknown>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2012-04-09 15:28+0000\n"
-"X-Generator: Launchpad (build 15060)\n"
+"X-Launchpad-Export-Date: 2012-04-24 06:48+0000\n"
+"X-Generator: Launchpad (build 15135)\n"
 "X-Poedit-Language: French\n"
 
 #: ../../lib/commandline.py:153
@@ -3154,7 +3154,7 @@ msgstr "Démarrer le gestionnaire de donations PowerToys"
 
 #: ../../lib/frontends/widgets/menus.py:290
 msgid "Image Render Test"
-msgstr ""
+msgstr "Tester le rendu d'image"
 
 #: ../../lib/frontends/widgets/menus.py:1308
 msgid "Default (UTF-8)"
