@@ -34,10 +34,17 @@ import ctypes
 import ctypes.wintypes
 import _winreg
 
+# SystemParametersInfo controls the screensaver
 SystemParametersInfo = ctypes.windll.user32.SystemParametersInfoA
 
 SPI_GETSCREENSAVEACTIVE = 16
 SPI_SETSCREENSAVEACTIVE = 17
+
+# SetThreadExecutionState controls the display sleep settings
+SetThreadExecutionState = ctypes.windll.kernel32.SetThreadExecutionState
+ES_SYSTEM_REQUIRED = 0x00000001
+ES_DISPLAY_REQUIRED = 0x00000002
+ES_CONTINUOUS = 0x80000000
 
 class WindowsScreenSaverManager(object):
     def __init__(self):
@@ -67,17 +74,23 @@ class WindowsScreenSaverManager(object):
         return rv.value != 0
 
     def disable(self):
+        # For SystemParametersInfo, we need to remember the old setting
         if self.check_screen_saver_active():
             self.was_active = True
             SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, 0, None, 0)
         else:
             self.was_active = False
+        # For SetThreadExecutionState, we can just set the value for our own
+        # thread.
+        SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED |
+                ES_DISPLAY_REQUIRED)
 
     def enable(self):
         if self.was_active is None:
             raise AssertionError("disable() must be called before enable()")
         if self.was_active:
             SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, 1, None, 0)
+        SetThreadExecutionState(ES_CONTINUOUS)
         self.was_active = None
 
 def create_manager(toplevel_window):
