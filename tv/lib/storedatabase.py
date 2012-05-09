@@ -1324,7 +1324,7 @@ class LiveStorage:
                 types.append('%s %s PRIMARY KEY' % (name, typ))
         return ', '.join(types)
 
-    def reset_database(self, init_schema=False):
+    def reset_database(self, init_schema=True):
         """Saves the current database then starts fresh with an empty
         database.
 
