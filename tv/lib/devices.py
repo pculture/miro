@@ -1405,7 +1405,7 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
             #
             # FIXME: Need to write real upgrade code for post-5.0
             logging.warn("Reseting device database: %r", mount)
-            live_storage.reset_database(init_schema=True)
+            live_storage.reset_database()
         elif device_db_version > DB_VERSION:
             # Newer versions of miro should store their device databases in a
             # way that's compatible with previous ones.  We just have to hope
