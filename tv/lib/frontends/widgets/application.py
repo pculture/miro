@@ -1310,6 +1310,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self.progress_dialog = None
         self.dbupgrade_progress_dialog = None
         self._profile_info = None
+        self._startup_failure_mode = self._database_failure_mode = False
 
     def profile_next_message(self, message_obj, path):
         self._profile_info = (message_obj, path)
@@ -1440,7 +1441,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
             self.dbupgrade_progress_dialog = None
 
     def handle_startup_failure(self, message):
-        if hasattr(self, "_startup_failure_mode"):
+        if self._startup_failure_mode:
+            logging.info("already in startup failure mode--skipping")
             return
         self._startup_failure_mode = True
         # We may still have the DB upgrade dialog open.  If so, close it.
@@ -1451,7 +1453,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.do_quit()
 
     def handle_startup_database_failure(self, message):
-        if hasattr(self, "_database_failure_mode"):
+        if self._database_failure_mode:
             logging.info("already in db failure mode--skipping")
             return
         self._database_failure_mode = True
@@ -1475,6 +1477,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         else:
             app.widgetapp.do_quit()
 
+    def startup_failed(self):
+        return self._startup_failure_mode or self._database_failure_mode
+
     def handle_startup_success(self, message):
         app.widgetapp.startup_ui()
         signals.system.emit('startup-success')
@@ -1490,6 +1495,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
             app.widgetapp.build_window()
 
     def call_handler(self, method, message):
+        if self.startup_failed():
+            logging.warn("skipping message: %s because startup failed",
+                         message)
+            return
         # uncomment this next line if you need frontend messages
         # logging.debug("handling frontend %s", message)
         if (self._profile_info is not None and
