@@ -696,7 +696,12 @@ class CurlTransfer(object):
             # we have a chance to catch this.
             self._send_new_request()
             self.saw_head_success = True
-        elif info['status'] >= 500 and info['status'] < 600:
+        elif ((info['status'] >= 500 and info['status'] < 600) or
+              (info['status'] == 404 and
+               self.last_url.startswith(('http://vimeo.com',
+                                         'http://www.vimeo.com')))):
+            # 500 errors are hopefully temporary, as are 404s from Vimeo
+            # (#19066)
             logging.info("httpclient: possibly temporary http error: HTTP %s",
                          info['status'])
             self.call_errback(PossiblyTemporaryError(info['status']))
