@@ -57,4 +57,5 @@ then
     PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=$MIROPYTHONPATH dist/$PREFIX/bin/miro "$@"
 else
     echo "Compile failed.  Review the console text and make necessary changes."
+    exit 1
 fi
