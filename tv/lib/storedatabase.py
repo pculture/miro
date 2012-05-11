@@ -455,15 +455,31 @@ class LiveStorage:
                     raise
 
         self.cursor = self.connection.cursor()
+        if path != ':memory:' and not self.temp_mode:
+            self._switch_to_wal_mode()
+
+    def _switch_to_wal_mode(self):
+        """Switch to write-ahead logging mode for our connection
+
+        WAL mode allows for better concurency between readers and writers and
+        is generally faster than other modes.  See:
+        http://www.sqlite.org/wal.html
+        """
         try:
-            self.cursor.execute("PRAGMA journal_mode=PERSIST");
+            self.cursor.execute("PRAGMA journal_mode=wal");
         except sqlite3.DatabaseError:
-            msg = "Error running 'PRAGMA journal_mode=PERSIST'"
+            msg = "Error running 'PRAGMA journal_mode=wal'"
             self.error_handler.handle_load_error()
             self._handle_load_error(msg, init_schema=False)
             self.created_new = True
             # rerun the command with our fresh database
-            self.cursor.execute("PRAGMA journal_mode=PERSIST");
+            self.cursor.execute("PRAGMA journal_mode=wal");
+        # check that we actually succesfully switch to wal mode
+        actual_mode = self.cursor.fetchall()[0][0]
+        if actual_mode != u'wal':
+            msg = ("PRAGMA journal_mode=wal didn't change the mode.  "
+                   "journal_mode=%s" % actual_mode)
+            self._handle_load_error(msg, init_schema=False)
 
     def _ensure_database_directory_exists(self, path):
         if not self.force_directory_creation:
