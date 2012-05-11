@@ -285,28 +285,28 @@ def _scrape_green_peace_video_url(url, callback):
 
 VIMEO_RE = re.compile(r'http://([^/]+\.)?vimeo.com/(\d+)')
 
-def _scrape_vimeo_video_url(url, callback):
+def _scrape_vimeo_video_url(url, callback, countdown=10):
     try:
         id_ = VIMEO_RE.match(url).group(2)
         url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
         httpclient.grab_url(
             url,
             lambda x: _scrape_vimeo_callback(x, callback),
-            lambda x: _scrape_vimeo_errback(x, callback))
+            lambda x: _scrape_vimeo_errback(x, callback, url, countdown))
     except StandardError:
         logging.exception("Unable to scrape vimeo.com video URL: %s", url)
         callback(None)
 
 MEGALOOP_RE = re.compile(r'http://([^/]+\.)?vimeo.com/moogaloop.swf\?clip_id=(\d+)')
 
-def _scrape_vimeo_moogaloop_url(url, callback):
+def _scrape_vimeo_moogaloop_url(url, callback, countdown=10):
     try:
         id_ = MEGALOOP_RE.match(url).group(2)
         url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
         httpclient.grab_url(
             url,
             lambda x: _scrape_vimeo_callback(x, callback),
-            lambda x: _scrape_vimeo_errback(x, callback))
+            lambda x: _scrape_vimeo_errback(x, callback, url, countdown))
     except StandardError:
         logging.exception("Unable to scrape vimeo.com moogaloop URL: %s", url)
         callback(None)
@@ -331,9 +331,18 @@ def _scrape_vimeo_callback(info, callback):
         logging.exception("Unable to scrape XML for vimeo.com video URL: %s", url)
         callback(None)
 
-def _scrape_vimeo_errback(err, callback):
-    logging.warning("Network error scraping vimeo.com video URL")
-    callback(None)
+def _scrape_vimeo_errback(err, callback, url, countdown):
+    if countdown <= 0:
+        logging.warning("Network error scraping vimeo.com video URL")
+        callback(None)
+    else:
+        countdown -= 1
+        logging.warning('error while loading vimeo URL %r (countdown: %d): %r',
+                      url, countdown, err)
+        httpclient.grab_url(
+            url,
+            lambda x: _scrape_vimeo_callback(x, callback),
+            lambda x: _scrape_vimeo_errback(x, callback, url, countdown))
 
 # =============================================================================
 
