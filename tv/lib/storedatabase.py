@@ -477,9 +477,8 @@ class LiveStorage:
         # check that we actually succesfully switch to wal mode
         actual_mode = self.cursor.fetchall()[0][0]
         if actual_mode != u'wal':
-            msg = ("PRAGMA journal_mode=wal didn't change the mode.  "
-                   "journal_mode=%s" % actual_mode)
-            self._handle_load_error(msg, init_schema=False)
+            logging.warn("PRAGMA journal_mode=wal didn't change the "
+                         "mode.  journal_mode=%s", actual_mode)
 
     def _ensure_database_directory_exists(self, path):
         if not self.force_directory_creation:
