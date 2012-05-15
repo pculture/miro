@@ -434,6 +434,11 @@ class MetadataManagerTest(MiroTestCase):
         path = self.make_path(filename)
         self.user_info_data[path].update(info)
         self.metadata_manager.set_user_data(path, info)
+        # force the entry for the user data to be reloaded.  This ensures that
+        # the changes are actually reflected in the database
+        status = metadata.MetadataStatus.get_by_path(path)
+        entry = metadata.MetadataEntry.get_entry(u'user-data', status)
+        self.reload_object(entry)
         self.check_metadata(path)
 
     def test_video(self):
@@ -912,6 +917,13 @@ class MetadataManagerTest(MiroTestCase):
         self.reload_database(db_path)
         self.metadata_manager.db_info = app.db_info
         self.check_metadata('foo.mp3')
+
+    def test_set_user_info(self):
+        self.check_add_file('foo.avi')
+        self.check_set_user_info('foo.avi', title=u'New Foo',
+                                 album=u'First Name')
+        self.check_set_user_info('foo.avi', title=u'New Foo',
+                                 album=u'Second Name')
 
     def test_user_and_torrent_data(self):
         self.check_add_file('foo.avi')
