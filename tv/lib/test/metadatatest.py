@@ -149,6 +149,7 @@ class MetadataManagerTest(MiroTestCase):
         self.mutagen_data = collections.defaultdict(dict)
         self.movieprogram_data = collections.defaultdict(dict)
         self.echonest_data = collections.defaultdict(dict)
+        self.echonest_ids = {}
         self.user_info_data = collections.defaultdict(dict)
         # maps paths -> should we do an interent lookup
         self.net_lookup_enabled = {}
@@ -227,13 +228,17 @@ class MetadataManagerTest(MiroTestCase):
         correct_metadata = self._calc_correct_metadata(path)
         self.metadata_manager._process_metadata_finished()
         self.metadata_manager._process_metadata_errors()
-        metadata = self.metadata_manager.get_metadata(path)
+        metadata_for_path = self.metadata_manager.get_metadata(path)
         # don't check has_drm, we have a special test for that
-        for dct in (metadata, correct_metadata):
+        for dct in (metadata_for_path, correct_metadata):
             for key in ('has_drm', 'drm'):
                 if key in dct:
                     del dct[key]
-        self.assertDictEquals(metadata, correct_metadata)
+        self.assertDictEquals(metadata_for_path, correct_metadata)
+        # check echonest ids
+        status = metadata.MetadataStatus.get_by_path(path)
+        self.assertEquals(status.echonest_id,
+                          self.echonest_ids.get(path))
 
     def make_path(self, filename):
         """Create a pathname for that file in the "/videos" directory
@@ -405,8 +410,15 @@ class MetadataManagerTest(MiroTestCase):
             if not os.path.exists(cover_art):
                 open(cover_art, 'wb').write("FAKE FILE")
                 echonest_data['created_cover_art'] = True
+        # if any data is present, generate a fake echonest id
+        result_data = echonest_data.copy()
+        if (title, artist, album) != (None, None, None):
+            echonest_id = u''.join(random.choice(string.ascii_letters)
+                                  for i in xrange(10))
+            self.echonest_ids[path] = echonest_id
+            result_data['echonest_id'] = echonest_id
         self.echonest_data[path] = echonest_data
-        self.processor.run_echonest_callback(path, echonest_data)
+        self.processor.run_echonest_callback(path, result_data)
         self.check_metadata(path)
 
     def check_echonest_error(self, filename, http_error=False):
