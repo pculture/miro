@@ -216,10 +216,11 @@ class MetadataStatus(database.DDBObject):
         column_name = self._source_name_to_status_column[source_name]
         return getattr(self, column_name) == self.STATUS_NOT_RUN
 
-    def update_after_success(self, entry):
+    def update_after_success(self, entry, result):
         """Update after we succussfully extracted some metadata
 
         :param entry: MetadataEntry for the new data
+        :param result: dictionary from the processor
         """
         self._set_status_column(entry.source, self.STATUS_COMPLETE)
         if (entry.priority >= self.max_entry_priority and
@@ -233,6 +234,8 @@ class MetadataStatus(database.DDBObject):
         elif entry.source == 'movie-data':
             if entry.file_type != u'audio':
                 self.echonest_status = self.STATUS_SKIP
+        elif entry.source == 'echonest' and 'echonest_id' in result:
+            self.echonest_id = result['echonest_id']
         self.max_entry_priority = max(self.max_entry_priority, entry.priority)
         self._set_current_processor()
         self.signal_change()
@@ -1646,7 +1649,7 @@ class MetadataManagerBase(signals.SignalEmitter):
             can_skip_get_metadata = True
         else:
             can_skip_get_metadata = False
-        status.update_after_success(entry)
+        status.update_after_success(entry, result)
         if can_skip_get_metadata:
             self.new_metadata[path].update(result)
         else:
