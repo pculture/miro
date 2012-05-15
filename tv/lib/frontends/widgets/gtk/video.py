@@ -37,6 +37,7 @@ import gtk
 from miro import app
 from miro.gtcache import gettext as _
 from miro import messages
+from miro.plat.frontends.widgets import hidemouse
 from miro.plat import resources
 from miro.plat import screensaver
 from miro.frontends.widgets.gtk import player
@@ -112,11 +113,6 @@ class NullRenderer:
     def reset(self):
         pass
 
-
-def make_hidden_cursor():
-    pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
-    color = gtk.gdk.Color()
-    return gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
 
 
 def make_label(text, handler, visible=True):
@@ -501,7 +497,6 @@ class VideoPlayer(player.GTKPlayer, VBox):
         self.pack_start(self._video_details)
 
         self.hide_controls_timeout = None
-        self.hidden_cursor = make_hidden_cursor()
         # piggyback on the TrackItemsManually message that playback.py sends.
         app.info_updater.item_changed_callbacks.add('manual', 'playback-list',
                 self._on_items_changed)
@@ -669,15 +664,18 @@ class VideoPlayer(player.GTKPlayer, VBox):
         else:
             self.last_motion_time = time.time()
 
+    def hide_mouse(self):
+        hidemouse.hide(_window().window)
+
     def show_mouse(self):
-        _window().window.set_cursor(None)
+        hidemouse.unhide(_window().window)
 
     def show_controls(self):
         self.show_mouse()
         self.overlay.show()
 
     def hide_controls(self):
-        _window().window.set_cursor(self.hidden_cursor)
+        self.hide_mouse()
         if self.overlay and self.overlay.is_visible():
             self.overlay.close()
 
@@ -714,7 +712,7 @@ class VideoPlayer(player.GTKPlayer, VBox):
         # Undo above call to set_decorated()
         _window().set_decorated(True)
         self.cancel_hide_controls()
-        _window().window.set_cursor(None)
+        self.show_mouse()
 
     def select_subtitle_file(self, sub_path, handle_successful_select):
         app.video_renderer.select_subtitle_file(
