@@ -179,9 +179,10 @@ class MetadataStatus(database.DDBObject):
                              db_info=db_info)
 
     @classmethod
-    def failed_temporary_view(cls):
+    def failed_temporary_view(cls, db_info=None):
         return cls.make_view('echonest_status=?',
-                             (cls.STATUS_TEMPORARY_FAILURE,))
+                             (cls.STATUS_TEMPORARY_FAILURE,),
+                             db_info=db_info)
 
     def _add_to_cache(self):
         if self.db_info.db.cache.key_exists('metadata', self.path):
@@ -1522,7 +1523,7 @@ class MetadataManagerBase(signals.SignalEmitter):
     def retry_temporary_failures(self):
         app.bulk_sql_manager.start()
         try:
-            for status in MetadataStatus.failed_temporary_view():
+            for status in MetadataStatus.failed_temporary_view(self.db_info):
                 status.retry_echonest()
                 self.run_next_processor(status)
         finally:
