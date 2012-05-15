@@ -372,7 +372,9 @@ class MetadataEntry(database.DDBObject):
 
     def update_metadata(self, new_data):
         """Update the values for this object."""
-        self.__dict__.update(new_data)
+        for name in self.metadata_columns:
+            if name in new_data:
+                setattr(self, name, new_data[name])
         self.signal_change()
 
     def get_metadata(self):
