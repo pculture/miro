@@ -134,6 +134,8 @@ SHOW_PODCASTS_IN_VIDEO      = Pref(key='showPodcastsInVideo', default=True, plat
 SHOW_PODCASTS_IN_MUSIC      = Pref(key='showPodcastsInMusic', default=False, platformSpecific=False)
 REMEMBER_LAST_DISPLAY       = Pref(key='rememberLastDisplay', default=False, platformSpecific=False)
 PODCASTS_DEFAULT_VIEW       = Pref(key='podcastsDefaultView', default=0, platformSpecific=False)
+# metadata
+LAST_RETRY_NET_LOOKUP       = Pref(key='lastRetryNetLookup', default=0, platformSpecific=False)
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
 SHOW_ERROR_DIALOG           = Pref(key='showErrorDialog',       default=True,  platformSpecific=True)
 
