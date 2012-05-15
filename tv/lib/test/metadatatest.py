@@ -1531,6 +1531,15 @@ class TestEchonestQueries(MiroTestCase):
                                 None, 3.15, self.query_metadata,
                                 self.callback, self.errback)
 
+    def start_query_with_echonest_id(self):
+        """Send an echonest id to echonest.query_echonest()."""
+        # This tracks the metadata we expect to see back from query_echonest()
+        self.query_metadata['echonest_id'] = 'abcdef'
+        self.reply_metadata = {}
+        echonest.query_echonest(self.path, self.album_art_dir,
+                                None, 3.15, self.query_metadata,
+                                self.callback, self.errback)
+
     def start_query_with_code(self):
         """Send a generated code to echonest.query_echonest()."""
         # This tracks the metadata we expect to see back from query_echonest()
@@ -1639,6 +1648,18 @@ class TestEchonestQueries(MiroTestCase):
             },
         }
         self.check_grab_url(identify_url, post_vars=post_vars)
+
+    def check_echonest_grab_url_call_with_echonest_id(self):
+        """Check the url sent to grab_url to perform our echonest query."""
+
+        profile_url = 'http://echonest.pculture.org/api/v4/song/profile'
+        query_dict = {
+            'api_key': [echonest.ECHO_NEST_API_KEY],
+            # NOTE: either order of the bucket params is okay
+            'bucket': ['tracks', 'id:7digital'],
+            'id': [self.query_metadata['echonest_id']],
+        }
+        self.check_grab_url(profile_url, query_dict)
 
     def send_echonest_reply(self, response_file):
         """Send a reply back from echonest.
@@ -1783,6 +1804,17 @@ class TestEchonestQueries(MiroTestCase):
         # test normal operations
         self.start_query_with_code()
         self.check_echonest_grab_url_call_with_code()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
+        self.send_7digital_reply(self.bossanova_release_id)
+        self.check_album_art_grab_url_call()
+        self.send_album_art_reply()
+        self.check_callback()
+
+    def test_query_with_echonest_id(self):
+        # test queries where we already have an echonest id
+        self.start_query_with_echonest_id()
+        self.check_echonest_grab_url_call_with_echonest_id()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply(self.bossanova_release_id)
