@@ -29,6 +29,7 @@
 # statement from all source files in the program, then also delete it here.
 
 set -o errexit
+set -x
 
 # =============================================================================
 
@@ -38,17 +39,23 @@ BKIT_VERSION="$(cat binary_kit_version)"
 # =============================================================================
 
 OS_VERSION=$(uname -r | cut -d . -f 1)
-if [[ $OS_VERSION == "9" ]] || [[ $OS_VERSION == "10" ]]; then
-    TARGET_OS_VERSION=10.5
+if [[ $OS_VERSION == "10" ]] || [[ $OS_VERSION == "11" ]]; then
+    TARGET_OS_VERSION=10.6
 else
-    echo "## This script can only be used under Mac OS X 10.5 and 10.6."
+    echo "## This script can only be used under Mac OS X 10.6 and 10.7."
     exit 1
 fi
 
 # =============================================================================
 
 PYTHON_VERSION=2.7
-SDK_DIR="/Developer/SDKs/MacOSX$TARGET_OS_VERSION.sdk"
+SDK_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer
+SDK_DIR="$SDK_ROOT/SDKs/MacOSX$TARGET_OS_VERSION.sdk"
+
+if [[ ! -e $SDK_DIR ]]; then
+    echo "You don't seem to have XCode 4 installed."
+    exit 1
+fi
 
 ROOT_DIR=$(pushd ../../ >/dev/null; pwd; popd >/dev/null)
 BKIT_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
@@ -77,8 +84,8 @@ mkdir $WORK_DIR
 
 cd $WORK_DIR
 
-tar -zxf $BKIT_DIR/Python-2.7.2.tgz
-cd $WORK_DIR/Python-2.7.2
+tar -zxf $BKIT_DIR/Python-2.7.3.tgz
+cd $WORK_DIR/Python-2.7.3
 
 patch -p0 < $BKIT_DIR/patches/Python-2.7.2/setup.py.patch
 patch -p0 < $BKIT_DIR/patches/Python-2.7.2/Makefile.pre.in.patch
@@ -86,7 +93,7 @@ patch -p0 < $BKIT_DIR/patches/Python-2.7.2/Makefile.pre.in.patch
 ./configure --prefix=$SBOX_DIR \
             --enable-framework=$SBOX_DIR/Frameworks \
             --enable-universalsdk=$SDK_DIR \
-            --with-universal-archs=32-bit
+            --with-universal-archs=intel
 
 make frameworkinstall
 
@@ -94,18 +101,44 @@ PYTHON_ROOT=$SBOX_DIR/Frameworks/Python.framework/Versions/$PYTHON_VERSION
 PYTHON=$PYTHON_ROOT/bin/python
 PYTHON_SITE_DIR=$PYTHON_ROOT/lib/python$PYTHON_VERSION/site-packages
 
-export CFLAGS="`$SBOX_DIR/bin/python-config --cflags`"
-export LDFLAGS=$CFLAGS
+SDK_FLAGS="-isysroot $SDK_DIR"
 
 # libcurl =====================================================================
 
 cd $WORK_DIR
 
-tar -xzf $BKIT_DIR/curl-7.21.7.tar.gz
-cd $WORK_DIR/curl-7.21.7
+tar -xzf $BKIT_DIR/curl-7.25.0.tar.gz
+cd $WORK_DIR/curl-7.25.0
 
+
+# generate 32 bit file
+export CFLAGS="-arch i386 $SDK_FLAGS"
+export LDFLAGS=$CFLAGS
 ./configure --disable-dependency-tracking --with-ssl=/usr --prefix=$SBOX_DIR
+cp include/curl/curlbuild.h include/curl/curlbuild32.h
+
+# generate 64-bit file
+export CFLAGS="-arch x86_64 $SDK_FLAGS"
+export LDFLAGS=$CFLAGS
+./configure --disable-dependency-tracking --with-ssl=/usr --prefix=$SBOX_DIR
+cp include/curl/curlbuild.h include/curl/curlbuild64.h
+
+# Everybody can use these now
+export CFLAGS="-arch i386 -arch x86_64 $SDK_FLAGS"
+export LDFLAGS=$CFLAGS
+./configure --disable-dependency-tracking --with-ssl=/usr --prefix=$SBOX_DIR
+
+cat > include/curl/curlbuild.h << EOF
+#if defined(__LP64__)
+#include "curlbuild64.h"
+#else
+#include "curlbuild32.h"
+#endif
+EOF
+
 make install
+install -m644 include/curl/curlbuild64.h $SBOX_DIR/include
+install -m644 include/curl/curlbuild32.h $SBOX_DIR/include
 
 # pycurl ======================================================================
 
@@ -117,22 +150,13 @@ cd $WORK_DIR/pycurl-7.19.0
 $PYTHON setup.py build --curl-config=$SBOX_DIR/bin/curl-config
 $PYTHON setup.py install
 
-# PyObjC and friends, Pyrex and Psyco =========================================
+# PyObjC and friends, Pyrex =========================================
 
-for pkg in "setuptools-0.6c11" \
-           "pyobjc-core-2.2" \
-           "pyobjc-framework-Cocoa-2.2" \
-           "pyobjc-framework-ExceptionHandling-2.2" \
-           "pyobjc-framework-LaunchServices-2.2" \
-           "pyobjc-framework-Quartz-2.2" \
-           "pyobjc-framework-QTKit-2.2" \
-           "pyobjc-framework-ScriptingBridge-2.2" \
-           "pyobjc-framework-WebKit-2.2" \
-           "pyobjc-framework-FSEvents-2.2" \
+for pkg in "distribute-0.6.4" \
            "altgraph-0.9" \
-           "macholib-1.4.1" \
+           "macholib-1.4.3" \
            "mutagen-1.20" \
-           "modulegraph-0.9" \
+           "modulegraph-0.9.1" \
            "py2app-0.6.3" \
            "Pyrex-0.9.9"
 do
@@ -159,17 +183,74 @@ do
     $PYTHON setup.py install
 done
 
+cd $WORK_DIR
+tar -zxf $BKIT_DIR/pyobjc-32.tar.gz
+
+cd $WORK_DIR/pyobjc-32/pyobjc/pyobjc-core
+for patch_file in $BKIT_DIR/patches/pyobjc-core-2.2/*.patch; do
+    patch -p0 < $patch_file
+done
+
+cd $WORK_DIR/pyobjc-32/pyobjc/pyobjc-framework-Cocoa
+for p in $BKIT_DIR/patches/pyobjc-framework-Cocoa-2.2/*.patch; do
+    patch -p0 < $p
+done
+
+cd $WORK_DIR/pyobjc-32/pyobjc/pyobjc-framework-Quartz
+for p in $BKIT_DIR/patches/pyobjc-framework-Quartz-2.2/*.patch; do
+    patch -p0 < $p
+done
+
+# Apple patches
+cd $WORK_DIR/pyobjc-32/pyobjc
+
+# Note: Not needed: these have already been patched in the sources given.
+#for patch in "parser-fixes.diff" \
+#             "float.diff" \
+#             "CGFloat.diff" \
+#             "pyobjc-core_Modules_objc_selector.m.diff"
+#do
+#    patch -p0 < ../patches/$patch
+#done
+
+ed - pyobjc-framework-Cocoa/Lib/Foundation/PyObjC.bridgesupport < ../patches/pyobjc-framework-Cocoa_Lib_Foundation_PyObjC.bridgesupport.ed
+ed - pyobjc-framework-Cocoa/Lib/PyObjCTools/Conversion.py < ../patches/pyobjc-framework-Cocoa_Lib_PyObjCTools_Conversion.py.ed
+
+# Don't know why the install target for the pyobjc-core must be run twice
+# for files to install properly.  Oh well whatever works...
+for pkg in "pyobjc-core" \
+           "pyobjc-core" \
+           "pyobjc-framework-Cocoa" \
+           "pyobjc-framework-ExceptionHandling" \
+           "pyobjc-framework-LaunchServices" \
+           "pyobjc-framework-Quartz" \
+           "pyobjc-framework-QTKit" \
+           "pyobjc-framework-ScriptingBridge" \
+           "pyobjc-framework-WebKit" \
+          "pyobjc-framework-FSEvents"
+do
+    cd $WORK_DIR/pyobjc-32/pyobjc/$pkg
+
+    if [[ -e setup.cfg ]]; then
+        echo "[easy_install]" >> setup.cfg
+        echo "zip_ok = 0" >> setup.cfg
+    fi
+
+    $PYTHON setup.py install
+done
+
+
 # boost sources + bjam ========================================================
 
 cd $WORK_DIR
 
-BOOST_VERSION=1_46
-BOOST_VERSION_FULL=1_46_1
+BOOST_VERSION=1_49_0
+BOOST_VERSION_FULL=1_49_0
 
 tar -xzf $BKIT_DIR/boost_$BOOST_VERSION_FULL.tar.gz
 cd boost_$BOOST_VERSION_FULL
 
-cd tools/build/v2/engine/src
+cd tools/build/v2/engine
 ./build.sh
 cd `find . -type d -maxdepth 1 | grep bin.`
 mkdir -p $SBOX_DIR/bin
@@ -180,6 +261,8 @@ export BOOST_ROOT=$WORK_DIR/boost_$BOOST_VERSION_FULL
 # libtorrent ==================================================================
 
 cd $WORK_DIR
+DARWIN_CONFIG=`find $BOOST_ROOT -name darwin.jam`
+perl -pi -e "s|root.*\?=.*|root = $SDK_ROOT ;|" $DARWIN_CONFIG
 
 USER_CONFIG=`find $BOOST_ROOT -name user-config.jam`
 echo "using python : : $PYTHON_ROOT/bin/python$PYTHON_VERSION ;" >> $USER_CONFIG
@@ -192,7 +275,8 @@ cd libtorrent-rasterbar-*/bindings/python
 $SBOX_DIR/bin/bjam dht-support=on \
                    toolset=darwin \
                    macosx-version=$TARGET_OS_VERSION \
-                   architecture=combined \
+                   architecture=x86 \
+                   address-model=32_64 \
                    boost=source \
                    boost-link=static \
                    release

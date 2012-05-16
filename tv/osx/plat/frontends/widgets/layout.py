@@ -41,15 +41,17 @@ Check out the GTK tutorial for more info.
 """
 
 import itertools
+import struct
 
 from AppKit import *
 from Foundation import *
-from objc import YES, NO, nil, signature, loadBundle
+from objc import (YES, NO, nil, signature, loadBundle,
+                  _C_NSInteger, _C_NSUInteger, _C_NSBOOL)
 
 from miro.plat.frontends.widgets import tableview
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.base import Container, Bin, FlippedView
-from miro.util import Matrix
+from miro.util import Matrix, bitness
 
 try:
     from AppKit import NSScrollerKnobStyleLight
@@ -59,6 +61,28 @@ except ImportError:
 
 rbSplitViewBundlePath = '%s/RBSplitView.framework' % NSBundle.mainBundle().privateFrameworksPath()
 loadBundle('RBSplitView', globals(), bundle_path=rbSplitViewBundlePath)
+
+_nspointsignature = dict()
+_nssizesignature = dict()
+_nsrectsignature = dict()
+_cgfloatsignature = dict()
+
+_nspointsignature[32] = '{_NSPoint=ff}'
+_nspointsignature[64] = '{CGPoint=dd}'
+
+_nssizesignature[32] = '{_NSSize=ff}'
+_nssizesignature[64] = '{CGSize=dd}'
+
+_nsrectsignature[32] = ''.join(['{_NSRect=', _nspointsignature[32],
+                               _nssizesignature[32], '}'])
+_nsrectsignature[64] = ''.join(['{CGRect=', _nspointsignature[64],
+                               _nssizesignature[64], '}'])
+
+_cgfloatsignature[32] = 'f'
+_cgfloatsignature[64] = 'd'
+
+# ILP32/LP64
+_bitness = bitness()
 
 def _extra_space_iter(extra_length, count):
     """Utility function to allocate extra space left over in containers."""
@@ -331,32 +355,37 @@ class SplitterDelegate(NSObject):
         self.disabledColor = NSColor.colorWithDeviceWhite_alpha_(135.0/255.0, 1.0)
         return self
 
-    @signature("{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}i")
+    @signature("%s@:@%s%s" % (_nsrectsignature[_bitness],
+                              _nsrectsignature[_bitness], _C_NSUInteger))
     def splitView_cursorRect_forDivider_(self, sender, rect, divider):
         if divider == 0:
             rect.origin.x -= 3
             rect.size.width += 6
         return rect
 
-    @signature("i@:@{_NSPoint=ff}@")
+    @signature("%s@:@%s@" % (_C_NSInteger, _nspointsignature[_bitness]))
     def splitView_dividerForPoint_inSubview_(self, sender, point, subview):
         left_width = self.splitter.left_view.bounds().size.width
         if (subview.identifier() == 'left' and point.x >= left_width-3) or (subview.identifier() == 'right' and point.x-left_width <= 3):
             return 0
         return NSNotFound
 
-    @signature("v@:@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+    @signature("v@:@@%s%s" % (_nsrectsignature[_bitness],
+                              _nsrectsignature[_bitness]))
     def splitView_changedFrameOfSubview_from_to_(self, sender, subview, before, after):
         if subview.identifier() == 'left':
             self.splitter.place_left_children()
         else:
             self.splitter.place_right_children()
 
-    @signature("v@:@ff")
+    @signature("v@:@%s%s" % (_cgfloatsignature[_bitness],
+                             _cgfloatsignature[_bitness]))
     def splitView_wasResizedFrom_to_(self, sender, before, after):
         sender.adjustSubviewsExcepting_(self.splitter.left_view);
 
-    @signature("{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+    @signature("%s@:@%s@@%s" % (_nsrectsignature[_bitness],
+                                _nsrectsignature[_bitness],
+                                _nsrectsignature[_bitness]))
     def splitView_willDrawDividerInRect_betweenView_andView_withProposedRect_(self, sender, dividerRect, leading, trailing, imageRect):
         if self.splitter.view.window().isMainWindow():
             self.normalColor.set()
@@ -365,7 +394,7 @@ class SplitterDelegate(NSObject):
         NSRectFill(dividerRect)
         return NSZeroRect
 
-    @signature("i@:@i@@i")
+    @signature("%s@:@%s@@%s" % (_C_NSBOOL, _C_NSUInteger, _C_NSBOOL))
     def splitView_shouldResizeWindowForDivider_betweenView_andView_willGrow_(self, sender, divider, leading, trailing, grow):
         return (NSApp().currentEvent().modifierFlags() & NSAlternateKeyMask != 0)
 
