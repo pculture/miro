@@ -134,6 +134,8 @@ class _EchonestQuery(object):
         self.album_name_from_tags = metadata.get('album')
         if code is not None:
             self.query_echonest_with_code(code, version, metadata)
+        elif 'echonest_id' in metadata:
+            self.query_echonest_with_echonest_id(metadata['echonest_id'])
         else:
             self.query_echonest_with_tags(metadata)
 
@@ -173,6 +175,18 @@ class _EchonestQuery(object):
                 urllib.urlencode(url_data))
         httpclient.grab_url(url, self.echonest_callback,
                             self.echonest_errback)
+
+    def query_echonest_with_echonest_id(self, echonest_id):
+        url_data = [
+            ('api_key', ECHO_NEST_API_KEY),
+            ('bucket', 'tracks'),
+            ('bucket', 'id:7digital'),
+            ('id', echonest_id),
+        ]
+        url = ('http://echonest.pculture.org/api/v4/song/profile?' +
+                urllib.urlencode(url_data))
+        httpclient.grab_url(url,
+                            self.echonest_callback, self.echonest_errback)
 
     def _make_echonest_query(self, code, version, metadata):
         echonest_metadata = {'version': version}

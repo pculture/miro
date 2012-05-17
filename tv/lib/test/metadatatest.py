@@ -6,6 +6,7 @@ import urlparse
 import random
 import shutil
 import string
+import time
 import json
 
 from miro.test import mock
@@ -149,6 +150,7 @@ class MetadataManagerTest(MiroTestCase):
         self.mutagen_data = collections.defaultdict(dict)
         self.movieprogram_data = collections.defaultdict(dict)
         self.echonest_data = collections.defaultdict(dict)
+        self.echonest_ids = {}
         self.user_info_data = collections.defaultdict(dict)
         # maps paths -> should we do an interent lookup
         self.net_lookup_enabled = {}
@@ -227,13 +229,17 @@ class MetadataManagerTest(MiroTestCase):
         correct_metadata = self._calc_correct_metadata(path)
         self.metadata_manager._process_metadata_finished()
         self.metadata_manager._process_metadata_errors()
-        metadata = self.metadata_manager.get_metadata(path)
+        metadata_for_path = self.metadata_manager.get_metadata(path)
         # don't check has_drm, we have a special test for that
-        for dct in (metadata, correct_metadata):
+        for dct in (metadata_for_path, correct_metadata):
             for key in ('has_drm', 'drm'):
                 if key in dct:
                     del dct[key]
-        self.assertDictEquals(metadata, correct_metadata)
+        self.assertDictEquals(metadata_for_path, correct_metadata)
+        # check echonest ids
+        status = metadata.MetadataStatus.get_by_path(path)
+        self.assertEquals(status.echonest_id,
+                          self.echonest_ids.get(path))
 
     def make_path(self, filename):
         """Create a pathname for that file in the "/videos" directory
@@ -348,6 +354,9 @@ class MetadataManagerTest(MiroTestCase):
         self.check_metadata(path)
 
     def check_echonest_not_scheduled(self, filename):
+        """check that echonest is not running and that it won't be when
+        mutagen/moviedata finishes.
+        """
         self.check_echonest_not_running(filename)
         path = self.make_path(filename)
         status = metadata.MetadataStatus.get_by_path(path)
@@ -357,6 +366,15 @@ class MetadataManagerTest(MiroTestCase):
         path = self.make_path(filename)
         if path in self.processor.echonest_codegen_paths():
             raise AssertionError("echonest_codegen scheduled for %s" %
+                                 filename)
+        if path in self.processor.echonest_paths():
+            raise AssertionError("echonest scheduled for %s" %
+                                 filename)
+
+    def check_fetch_album_not_scheduled(self, filename):
+        path = self.make_path(filename)
+        if path in self.processor.fetch_album_paths():
+            raise AssertionError("fetch_album scheduled for %s" %
                                  filename)
 
     def calc_fake_echonest_code(self, path):
@@ -385,6 +403,10 @@ class MetadataManagerTest(MiroTestCase):
         self.assertDictEquals(self.processor.query_echonest_metadata[path],
                               echonest_metadata)
 
+    def allow_additional_echonest_query(self, filename):
+        path = self.make_path(filename)
+        del self.processor.query_echonest_codes[path]
+
     def check_echonest_codegen_error(self, filename):
         path = self.make_path(filename)
         error = IOError()
@@ -405,8 +427,18 @@ class MetadataManagerTest(MiroTestCase):
             if not os.path.exists(cover_art):
                 open(cover_art, 'wb').write("FAKE FILE")
                 echonest_data['created_cover_art'] = True
+        # if any data is present, generate a fake echonest id
+        result_data = echonest_data.copy()
+        if (title, artist, album) != (None, None, None):
+            if self.echonest_ids.get(path) is None:
+                echonest_id = u''.join(random.choice(string.ascii_letters)
+                                      for i in xrange(10))
+                self.echonest_ids[path] = echonest_id
+            else:
+                echonest_id = self.echonest_ids[path]
+            result_data['echonest_id'] = echonest_id
         self.echonest_data[path] = echonest_data
-        self.processor.run_echonest_callback(path, echonest_data)
+        self.processor.run_echonest_callback(path, result_data)
         self.check_metadata(path)
 
     def check_echonest_error(self, filename, http_error=False):
@@ -422,6 +454,11 @@ class MetadataManagerTest(MiroTestCase):
         path = self.make_path(filename)
         self.user_info_data[path].update(info)
         self.metadata_manager.set_user_data(path, info)
+        # force the entry for the user data to be reloaded.  This ensures that
+        # the changes are actually reflected in the database
+        status = metadata.MetadataStatus.get_by_path(path)
+        entry = metadata.MetadataEntry.get_entry(u'user-data', status)
+        self.reload_object(entry)
         self.check_metadata(path)
 
     def test_video(self):
@@ -799,6 +836,154 @@ class MetadataManagerTest(MiroTestCase):
         self.metadata_manager.restart_incomplete()
         self.check_queued_echonest_calls(['foo.mp3'])
 
+    @mock.patch('time.time')
+    @mock.patch('miro.eventloop.add_timeout')
+    def test_schedule_retry_net_lookup(self, mock_add_timeout, mock_time):
+        # make time stand still for this test to make checking add_timeout
+        # simpler
+        mock_time.return_value = 1000.0
+
+        caller = self.metadata_manager._retry_net_lookup_caller
+
+        # the first time the user starts up miro, the check should be
+        # scheduled in 10 minutes.
+        self.metadata_manager.schedule_retry_net_lookup()
+        mock_add_timeout.assert_called_once_with(
+            600, caller.call_now, MatchAny(),
+            args=(), kwargs={})
+        # test calling it once the timeout fires.  The next time it should be
+        # scheduled for 1 week later
+        self.metadata_manager.retry_net_lookup()
+        mock_add_timeout.reset_mock()
+        self.metadata_manager.schedule_retry_net_lookup()
+        mock_add_timeout.assert_called_once_with(
+            60 * 60 * 24 * 7, caller.call_now, MatchAny(),
+            args=(), kwargs={})
+
+    def test_retry_net_lookup(self):
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'title', 'album')
+        self.check_run_echonest('foo.mp3', 'title', 'Artist', None)
+        self.allow_additional_echonest_query('foo.mp3')
+        self.metadata_manager.retry_net_lookup()
+        self.check_run_echonest('foo.mp3', 'title', 'Artist', 'Album')
+        path = self.make_path('foo.mp3')
+        query_metadata = self.processor.query_echonest_metadata[path]
+        self.assertEquals(query_metadata['echonest_id'],
+                          self.echonest_ids[path])
+
+    def test_retry_net_lookup_no_echonest_id(self):
+        # test calling retry_net_lookup for items without an echonest id
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'title', 'album')
+        # this will simulates echonest not finding the album, so echonest_id
+        # will not be set
+        self.check_run_echonest('foo.mp3', None, None, None)
+        self.allow_additional_echonest_query('foo.mp3')
+        self.metadata_manager.retry_net_lookup()
+        self.check_run_echonest('foo.mp3', 'title', 'Artist', 'Album')
+        path = self.make_path('foo.mp3')
+        query_metadata = self.processor.query_echonest_metadata[path]
+        self.assert_('echonest_id' not in query_metadata)
+        # now that the second run worked, we should have an echonest id
+        status = metadata.MetadataStatus.get_by_path(path)
+        self.assertNotEquals(status.echonest_id, None)
+
+    def test_retry_net_lookup_errors(self):
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'title', 'album')
+        self.check_run_echonest('foo.mp3', 'title', 'Artist', None)
+        self.allow_additional_echonest_query('foo.mp3')
+        self.metadata_manager.retry_net_lookup()
+        self.check_echonest_error('foo.mp3')
+        path = self.make_path('foo.mp3')
+        query_metadata = self.processor.query_echonest_metadata[path]
+        self.assertEquals(query_metadata['echonest_id'],
+                          self.echonest_ids[path])
+        # test that the progress counter is updated
+        count_tracker = self.metadata_manager.count_tracker
+        self.assertEquals(count_tracker.get_count_info(u'audio'),
+                          (0, 0, 0))
+
+    def test_retry_net_lookup_called_twice(self):
+        # test if retry_net_lookup() is called a second time before the first
+        # pass finishes.  This seems pretty unlikely to happen in real life,
+        # but it's a good check for robustness anyways.
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'title', 'album')
+        self.check_run_echonest('foo.mp3', 'title', 'Artist', None)
+        self.allow_additional_echonest_query('foo.mp3')
+        self.crash_on_warning()
+        self.metadata_manager.retry_net_lookup()
+        self.metadata_manager.retry_net_lookup()
+        self.check_run_echonest('foo.mp3', 'title', 'Artist', 'Album')
+        path = self.make_path('foo.mp3')
+        query_metadata = self.processor.query_echonest_metadata[path]
+        self.assertEquals(query_metadata['echonest_id'],
+                          self.echonest_ids[path])
+
+    def test_retry_net_lookup_checks_net_lookup_enabled(self):
+        # test that retry_net_lookup() honors net_lookup_enabled being False
+        self.check_add_file('foo.mp3')
+        self.check_run_mutagen('foo.mp3', 'audio', 200, 'title', 'album')
+        self.check_run_echonest('foo.mp3', 'title', 'Artist', None)
+        self.check_set_net_lookup_enabled('foo.mp3', False)
+        self.allow_additional_echonest_query('foo.mp3')
+        self.metadata_manager.retry_net_lookup()
+        self.check_echonest_not_running('foo.mp3')
+        # test that the progress counter is not updated
+        count_tracker = self.metadata_manager.count_tracker
+        self.assertEquals(count_tracker.get_count_info(u'audio'),
+                          (0, 0, 0))
+
+    def test_retry_net_lookup_with_many_items(self):
+        should_retry = []
+        shouldnt_retry = []
+        # make items missing album data
+        for i in range(10):
+            name = 'noalbum-song-%d.mp3' % i
+            self.check_add_file(name)
+            self.check_run_mutagen(name,
+                                   'audio', 200, 'title', 'album')
+            self.check_run_echonest(name,
+                                    'title', 'Artist', None)
+            should_retry.append(name)
+        # make items with album data
+        for i in range(10):
+            name = 'withalbum-song-%d.mp3' % i
+            self.check_add_file(name)
+            self.check_run_mutagen(name,
+                                   'audio', 200, 'title', 'album')
+            self.check_run_echonest(name,
+                                    'title', 'Artist', 'Album')
+            shouldnt_retry.append(name)
+
+        # check what happens when retry_net_lookup is called
+        for name in should_retry:
+            self.allow_additional_echonest_query(name)
+        self.metadata_manager.retry_net_lookup()
+
+        for name in shouldnt_retry:
+            self.check_echonest_not_running(name)
+        # make some of the retries succeed
+        for i in range(5):
+            name = should_retry.pop(0)
+            self.check_run_echonest(name, 'title', 'Artist', 'Album')
+            shouldnt_retry.append(name)
+        # make some of them fail
+        for name in should_retry:
+            self.check_run_echonest(name, 'title', 'Artist', None)
+
+        # check what happens when retry_net_lookup is called again
+        for name in should_retry:
+            self.allow_additional_echonest_query(name)
+        self.metadata_manager.retry_net_lookup()
+        for name in shouldnt_retry:
+            self.check_echonest_not_running(name)
+        # this time let all the album succeed
+        for name in should_retry:
+            self.check_run_echonest(name, 'title', 'Artist', 'Album')
+
     def check_path_in_system(self, filename, correct_value):
         path = self.make_path(filename)
         self.assertEquals(self.metadata_manager.path_in_system(path),
@@ -900,6 +1085,13 @@ class MetadataManagerTest(MiroTestCase):
         self.reload_database(db_path)
         self.metadata_manager.db_info = app.db_info
         self.check_metadata('foo.mp3')
+
+    def test_set_user_info(self):
+        self.check_add_file('foo.avi')
+        self.check_set_user_info('foo.avi', title=u'New Foo',
+                                 album=u'First Name')
+        self.check_set_user_info('foo.avi', title=u'New Foo',
+                                 album=u'Second Name')
 
     def test_user_and_torrent_data(self):
         self.check_add_file('foo.avi')
@@ -1519,6 +1711,15 @@ class TestEchonestQueries(MiroTestCase):
                                 None, 3.15, self.query_metadata,
                                 self.callback, self.errback)
 
+    def start_query_with_echonest_id(self):
+        """Send an echonest id to echonest.query_echonest()."""
+        # This tracks the metadata we expect to see back from query_echonest()
+        self.query_metadata['echonest_id'] = 'abcdef'
+        self.reply_metadata = {}
+        echonest.query_echonest(self.path, self.album_art_dir,
+                                None, 3.15, self.query_metadata,
+                                self.callback, self.errback)
+
     def start_query_with_code(self):
         """Send a generated code to echonest.query_echonest()."""
         # This tracks the metadata we expect to see back from query_echonest()
@@ -1627,6 +1828,18 @@ class TestEchonestQueries(MiroTestCase):
             },
         }
         self.check_grab_url(identify_url, post_vars=post_vars)
+
+    def check_echonest_grab_url_call_with_echonest_id(self):
+        """Check the url sent to grab_url to perform our echonest query."""
+
+        profile_url = 'http://echonest.pculture.org/api/v4/song/profile'
+        query_dict = {
+            'api_key': [echonest.ECHO_NEST_API_KEY],
+            # NOTE: either order of the bucket params is okay
+            'bucket': ['tracks', 'id:7digital'],
+            'id': [self.query_metadata['echonest_id']],
+        }
+        self.check_grab_url(profile_url, query_dict)
 
     def send_echonest_reply(self, response_file):
         """Send a reply back from echonest.
@@ -1771,6 +1984,17 @@ class TestEchonestQueries(MiroTestCase):
         # test normal operations
         self.start_query_with_code()
         self.check_echonest_grab_url_call_with_code()
+        self.send_echonest_reply('rock-music')
+        self.check_7digital_grab_url_calls([self.bossanova_release_id])
+        self.send_7digital_reply(self.bossanova_release_id)
+        self.check_album_art_grab_url_call()
+        self.send_album_art_reply()
+        self.check_callback()
+
+    def test_query_with_echonest_id(self):
+        # test queries where we already have an echonest id
+        self.start_query_with_echonest_id()
+        self.check_echonest_grab_url_call_with_echonest_id()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_calls([self.bossanova_release_id])
         self.send_7digital_reply(self.bossanova_release_id)
