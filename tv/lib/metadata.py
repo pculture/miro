@@ -917,9 +917,14 @@ class LibraryProgressCountTracker(object):
         self.file_types[path] = file_type
 
     def file_net_lookup_restarted(self, path):
-        tracker = self.trackers[u'audio']
+        # assume that the file is audio, since we're only do internet lookups
+        # for those files
+        file_type = u'audio'
+        # start the file, then immediately move it to the net lookup stage.
+        tracker = self.trackers[file_type]
         tracker.file_started(path, {})
         tracker.file_finished_local_processing(path)
+        self.file_types[path] = file_type
 
     def file_moved(self, old_path, new_path):
         try:
