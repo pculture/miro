@@ -158,20 +158,13 @@ class WorkerProcessHandler(subprocessmanager.SubprocessHandler):
 
     def get_task_from_queue(self, queue):
         # handle movie data tasks if no more tasks are coming in right now
-        ran_movie_data = False
         while queue.empty() and self.main_thread_tasks:
             method, msg = self.main_thread_tasks.popleft()
             if isinstance(msg, MutagenTask):
                 # if we're here, it means we want to use the signals
                 handle_task(self.handle_mutagen_task_with_alarm, msg)
                 continue
-            MovieDataTaskStatus(msg.task_id).send_to_main_process()
-            ran_movie_data = True
             handle_task(method, msg)
-            # send status after all moviedata calls since we can't control
-            # how long they will take
-        if ran_movie_data:
-            MovieDataTaskStatus(None).send_to_main_process()
 
         # block waiting for the next message.  We know that one of the
         # following is True
@@ -356,6 +349,11 @@ class WorkerTaskQueue(object):
 
 def handle_task(handler_method, msg):
     """Process a TaskMessage."""
+    # If we are running movie data, send the MovieDataTaskStatus message.
+    # This starts a timer on the frontend to kill this process if movie data
+    # hangs
+    if isinstance(msg, MovieDataProgramTask):
+        MovieDataTaskStatus(msg.task_id).send_to_main_process()
     try:
         # normally we send the result of our handler method back
         logging.info("starting task: %s", msg)
@@ -366,6 +364,12 @@ def handle_task(handler_method, msg):
         logging.info("task error: %s (%s)", msg, e)
     else:
         logging.info("task finished: %s", msg)
+    # Send the MovieDataTaskStatus before the task result to avoid a race
+    # where the main thread gets a result, but then the timeout for movie data
+    # expires
+    if isinstance(msg, MovieDataProgramTask):
+        MovieDataTaskStatus(None).send_to_main_process()
+
     TaskResult(msg.task_id, rv).send_to_main_process()
 
 def worker_thread(task_queue):
