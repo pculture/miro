@@ -288,14 +288,33 @@ VIMEO_RE = re.compile(r'http://([^/]+\.)?vimeo.com/(\d+)')
 def _scrape_vimeo_video_url(url, callback, countdown=10):
     try:
         id_ = VIMEO_RE.match(url).group(2)
-        url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
+        url = 'http://vimeo.com/%s?action=download' % id_
         httpclient.grab_url(
             url,
-            lambda x: _scrape_vimeo_callback(x, callback),
-            lambda x: _scrape_vimeo_errback(x, callback, url, countdown))
+            lambda x: _scrape_vimeo_download_callback(x, callback),
+            lambda x: _scrape_vimeo_download_errback(x, callback),
+            headers = {
+                'Referer': 'http://vimeo.com/%s' % id_,
+                'X-Requested-With': 'XMLHttpRequest',
+                'User-Agent': ('Mozilla/5.0 (X11; Linux x86_64) '
+                               'AppleWebKit/536.11 (KHTML, like Gecko) '
+                               'Chrome/20.0.1132.8 Safari/536.11')
+                })
     except StandardError:
         logging.exception("Unable to scrape vimeo.com video URL: %s", url)
         callback(None)
+
+VIMEO_LINK_RE = '<a href="/(.*?)"'
+def _scrape_vimeo_download_callback(info, callback):
+    match = VIMEO_LINK_RE.search(info['body'])
+    if match:
+        callback('http://vimeo.com/%s' % match.group(0))
+    else:
+        _scrape_vimeo_download_errback(info, callback, info)
+
+def _scrape_vimeo_download_errback(info, callback):
+    logging.exception("Unable to scrape %r", info['original-url'])
+    callback(None)
 
 MEGALOOP_RE = re.compile(r'http://([^/]+\.)?vimeo.com/moogaloop.swf\?clip_id=(\d+)')
 
