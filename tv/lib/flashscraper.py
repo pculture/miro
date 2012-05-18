@@ -304,19 +304,30 @@ def _scrape_vimeo_video_url(url, callback, countdown=10):
         logging.exception("Unable to scrape vimeo.com video URL: %s", url)
         callback(None)
 
-VIMEO_LINK_RE = re.compile('<a href="/(.*?)"')
+VIMEO_LINK_RE = re.compile('<a href="/(.*?)" download=".*?_(\d+)x(\d+).mp4"')
 def _scrape_vimeo_download_callback(info, callback):
     """
-    Currently, Vimeo returns three links:
+    Currently, Vimeo returns links like this:
+    * Mobile HD
     * HD
     * SD
     * Original
 
-    Since HD is the first one, that's what we'll return to the callback.
+    We grab them all, and callback the one with the largest width by height.
     """
-    match = VIMEO_LINK_RE.search(info['body'])
-    if match:
-        callback(u'http://vimeo.com/%s' % match.group(0),
+    largest_url, size = None, 0
+    try:
+        for url, width, height in VIMEO_LINK_RE.findall(info['body']):
+            trial_size = int(width) * int(height)
+            if int(width) * int(height) > size:
+                largest_url, size = url, trial_size
+    except:
+        logging.exception('during parse of Vimeo response for %r',
+                          info['original-url'])
+        callback(None)
+
+    if largest_url is not None:
+        callback(u'http://vimeo.com/%s' % largest_url,
                  content_type='video/mp4')
     else:
         _scrape_vimeo_download_errback(info, callback, info)
