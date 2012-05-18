@@ -293,7 +293,7 @@ def _scrape_vimeo_video_url(url, callback, countdown=10):
             url,
             lambda x: _scrape_vimeo_download_callback(x, callback),
             lambda x: _scrape_vimeo_download_errback(x, callback),
-            headers = {
+            extra_headers={
                 'Referer': 'http://vimeo.com/%s' % id_,
                 'X-Requested-With': 'XMLHttpRequest',
                 'User-Agent': ('Mozilla/5.0 (X11; Linux x86_64) '
@@ -304,11 +304,12 @@ def _scrape_vimeo_video_url(url, callback, countdown=10):
         logging.exception("Unable to scrape vimeo.com video URL: %s", url)
         callback(None)
 
-VIMEO_LINK_RE = '<a href="/(.*?)"'
+VIMEO_LINK_RE = re.compile('<a href="/(.*?)"')
 def _scrape_vimeo_download_callback(info, callback):
     match = VIMEO_LINK_RE.search(info['body'])
     if match:
-        callback('http://vimeo.com/%s' % match.group(0))
+        callback(u'http://vimeo.com/%s' % match.group(0),
+                 content_type='video/mp4')
     else:
         _scrape_vimeo_download_errback(info, callback, info)
 
