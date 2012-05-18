@@ -288,14 +288,53 @@ VIMEO_RE = re.compile(r'http://([^/]+\.)?vimeo.com/(\d+)')
 def _scrape_vimeo_video_url(url, callback, countdown=10):
     try:
         id_ = VIMEO_RE.match(url).group(2)
-        url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
+        url = 'http://vimeo.com/%s?action=download' % id_
         httpclient.grab_url(
             url,
-            lambda x: _scrape_vimeo_callback(x, callback),
-            lambda x: _scrape_vimeo_errback(x, callback, url, countdown))
+            lambda x: _scrape_vimeo_download_callback(x, callback),
+            lambda x: _scrape_vimeo_download_errback(x, callback),
+            extra_headers={
+                'Referer': 'http://vimeo.com/%s' % id_,
+                'X-Requested-With': 'XMLHttpRequest',
+                'User-Agent': ('Mozilla/5.0 (X11; Linux x86_64) '
+                               'AppleWebKit/536.11 (KHTML, like Gecko) '
+                               'Chrome/20.0.1132.8 Safari/536.11')
+                })
     except StandardError:
         logging.exception("Unable to scrape vimeo.com video URL: %s", url)
         callback(None)
+
+VIMEO_LINK_RE = re.compile('<a href="/(.*?)" download=".*?_(\d+)x(\d+).mp4"')
+def _scrape_vimeo_download_callback(info, callback):
+    """
+    Currently, Vimeo returns links like this:
+    * Mobile HD
+    * HD
+    * SD
+    * Original
+
+    We grab them all, and callback the one with the largest width by height.
+    """
+    largest_url, size = None, 0
+    try:
+        for url, width, height in VIMEO_LINK_RE.findall(info['body']):
+            trial_size = int(width) * int(height)
+            if int(width) * int(height) > size:
+                largest_url, size = url, trial_size
+    except:
+        logging.exception('during parse of Vimeo response for %r',
+                          info['original-url'])
+        callback(None)
+
+    if largest_url is not None:
+        callback(u'http://vimeo.com/%s' % largest_url,
+                 content_type='video/mp4')
+    else:
+        _scrape_vimeo_download_errback(info, callback, info)
+
+def _scrape_vimeo_download_errback(info, callback):
+    logging.exception("Unable to scrape %r", info['original-url'])
+    callback(None)
 
 MEGALOOP_RE = re.compile(r'http://([^/]+\.)?vimeo.com/moogaloop.swf\?clip_id=(\d+)')
 

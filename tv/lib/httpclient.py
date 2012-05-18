@@ -203,10 +203,12 @@ class TransferOptions(object):
     """
 
     def __init__(self, url, etag=None, modified=None, resume=False,
-            post_vars=None, post_files=None, write_file=None):
+            post_vars=None, post_files=None, write_file=None,
+                 extra_headers=None):
         self.url = url
         self.etag = etag
         self.modified = modified
+        self.extra_headers = extra_headers
         self.resume = resume
         self.post_vars = post_vars
         self.post_files = post_files
@@ -245,6 +247,8 @@ class TransferOptions(object):
             out_headers['etag'] = self.etag
         if self.modified is not None:
             out_headers['If-Modified-Since'] = self.modified
+        if self.extra_headers is not None:
+            out_headers.update(self.extra_headers)
 
         handle = self._init_handle()
         self._setup_post(handle, out_headers)
@@ -1006,7 +1010,7 @@ def sanitize_url(url):
 def grab_url(url, callback, errback, header_callback=None,
         content_check_callback=None, write_file=None, etag=None, modified=None,
         default_mime_type=None, resume=False, post_vars=None,
-        post_files=None):
+        post_files=None, extra_headers=None):
     """Quick way to download a network resource
 
     grab_url is a simple interface to the HTTPClient class.
@@ -1027,6 +1031,7 @@ def grab_url(url, callback, errback, header_callback=None,
     :param post_vars: dictionary of variables to send as POST data
     :param post_files: files to send as POST data (see
         xhtmltools.multipart_encode for the format)
+    :param extra_headers: an option dictionary of extra headers to send
 
     The callback will be passed a dictionary that contains all the HTTP
     headers, as well as the following keys:
@@ -1050,7 +1055,7 @@ def grab_url(url, callback, errback, header_callback=None,
         return _grab_file_url(url, callback, errback, default_mime_type)
     else:
         options = TransferOptions(url, etag, modified, resume, post_vars,
-                post_files, write_file)
+                post_files, write_file, extra_headers)
         transfer = CurlTransfer(options, callback, errback, header_callback,
                 content_check_callback)
         transfer.start()
