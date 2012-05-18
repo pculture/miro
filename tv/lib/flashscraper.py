@@ -306,6 +306,14 @@ def _scrape_vimeo_video_url(url, callback, countdown=10):
 
 VIMEO_LINK_RE = re.compile('<a href="/(.*?)"')
 def _scrape_vimeo_download_callback(info, callback):
+    """
+    Currently, Vimeo returns three links:
+    * HD
+    * SD
+    * Original
+
+    Since HD is the first one, that's what we'll return to the callback.
+    """
     match = VIMEO_LINK_RE.search(info['body'])
     if match:
         callback(u'http://vimeo.com/%s' % match.group(0),
