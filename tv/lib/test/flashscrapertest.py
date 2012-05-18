@@ -35,3 +35,22 @@ class YouTubeScraper(FlashScraperBase):
             self.scrape_callback)
         self.run_event_loop()
         # print self._response
+
+class VimeoScraper(FlashScraperBase):
+    def setUp(self):
+        FlashScraperBase.setUp(self)
+        self._response = None
+
+    def scrape_callback(self, new_url, contentType=None, title=None):
+        self._response = (new_url, contentType, title)
+        self.stopEventLoop(abnormal=False)
+
+    @uses_httpclient
+    def test_scrape(self):
+        flashscraper.try_scraping_url(
+            u'http://vimeo.com/42231616',
+            self.scrape_callback)
+        self.run_event_loop()
+        self.assertNotEqual(self._response, None)
+        self.assertNotEqual(self._response[0], None)
+        self.assertEqual(self._response[1], 'video/mp4')
