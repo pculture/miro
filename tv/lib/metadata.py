@@ -38,6 +38,7 @@ import collections
 import contextlib
 import logging
 import os.path
+import time
 
 import sqlite3
 
@@ -179,9 +180,10 @@ class MetadataStatus(database.DDBObject):
                              db_info=db_info)
 
     @classmethod
-    def failed_temporary_view(cls):
+    def failed_temporary_view(cls, db_info=None):
         return cls.make_view('echonest_status=?',
-                             (cls.STATUS_TEMPORARY_FAILURE,))
+                             (cls.STATUS_TEMPORARY_FAILURE,),
+                             db_info=db_info)
 
     def _add_to_cache(self):
         if self.db_info.db.cache.key_exists('metadata', self.path):
@@ -216,10 +218,11 @@ class MetadataStatus(database.DDBObject):
         column_name = self._source_name_to_status_column[source_name]
         return getattr(self, column_name) == self.STATUS_NOT_RUN
 
-    def update_after_success(self, entry):
+    def update_after_success(self, entry, result):
         """Update after we succussfully extracted some metadata
 
         :param entry: MetadataEntry for the new data
+        :param result: dictionary from the processor
         """
         self._set_status_column(entry.source, self.STATUS_COMPLETE)
         if (entry.priority >= self.max_entry_priority and
@@ -233,8 +236,14 @@ class MetadataStatus(database.DDBObject):
         elif entry.source == 'movie-data':
             if entry.file_type != u'audio':
                 self.echonest_status = self.STATUS_SKIP
+        elif entry.source == 'echonest' and 'echonest_id' in result:
+            self.echonest_id = result['echonest_id']
         self.max_entry_priority = max(self.max_entry_priority, entry.priority)
         self._set_current_processor()
+        self.signal_change()
+
+    def set_echonest_id(self, echonest_id):
+        self.echonest_id = echonest_id
         self.signal_change()
 
     def retry_echonest(self):
@@ -368,7 +377,9 @@ class MetadataEntry(database.DDBObject):
 
     def update_metadata(self, new_data):
         """Update the values for this object."""
-        self.__dict__.update(new_data)
+        for name in self.metadata_columns:
+            if name in new_data:
+                setattr(self, name, new_data[name])
         self.signal_change()
 
     def get_metadata(self):
@@ -398,6 +409,15 @@ class MetadataEntry(database.DDBObject):
                              (source, status.id),
                              db_info=db_info)
         return view.get_singleton()
+
+    @classmethod
+    def incomplete_echonest_view(cls, db_info=None):
+        # if echonest didn't find the song, then title will be NULL if
+        # 7digital didn't find the album, then album will be NULL.  If either
+        # of those are true, then we want to retry re-querying
+        return cls.make_view('source="echonest" AND '
+                             '(album IS NULL or title IS NULL)',
+                             db_info=None)
 
     @classmethod
     def set_disabled(cls, source, status, disabled, db_info=None):
@@ -821,6 +841,10 @@ class ProgressCountTracker(object):
         """Add a file to the counts."""
         self.all_files.add(path)
 
+    def file_net_lookup_restarted(self, path):
+        self.file_started(path, {})
+        self.file_finished_local_processing(path)
+
     def file_updated(self, path, new_metadata):
         """Call this as we get new metadata."""
         # subclasses can deal with this, but we don't
@@ -890,6 +914,16 @@ class LibraryProgressCountTracker(object):
     def file_started(self, path, initial_metadata):
         file_type = initial_metadata.get('file_type', u'other')
         self.trackers[file_type].file_started(path, initial_metadata)
+        self.file_types[path] = file_type
+
+    def file_net_lookup_restarted(self, path):
+        # assume that the file is audio, since we're only do internet lookups
+        # for those files
+        file_type = u'audio'
+        # start the file, then immediately move it to the net lookup stage.
+        tracker = self.trackers[file_type]
+        tracker.file_started(path, {})
+        tracker.file_finished_local_processing(path)
         self.file_types[path] = file_type
 
     def file_moved(self, old_path, new_path):
@@ -1057,6 +1091,8 @@ class MetadataManagerBase(signals.SignalEmitter):
     # items at once.
     UPDATE_INTERVAL = 1.0
     RETRY_TEMPORARY_INTERVAL = 3600
+    # how often to re-try net lookups that have failed
+    NET_LOOKUP_RETRY_INTERVAL = 60 * 60 * 24 * 7 # 1 week
 
     def __init__(self, cover_art_dir, screenshot_dir, db_info=None):
         signals.SignalEmitter.__init__(self)
@@ -1098,6 +1134,9 @@ class MetadataManagerBase(signals.SignalEmitter):
         self._retry_temporary_failure_caller = \
                 eventloop.DelayedFunctionCaller(self.retry_temporary_failures)
         self._calc_incomplete()
+        self._retry_net_lookup_caller = \
+                eventloop.DelayedFunctionCaller(self.retry_net_lookup)
+        self._retry_net_lookup_entries = {}
         self._setup_path_placeholders()
         self._setup_net_lookup_count()
         # send initial NetLookupCounts message
@@ -1516,10 +1555,51 @@ class MetadataManagerBase(signals.SignalEmitter):
         del self.restart_ids
         self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
 
+    def schedule_retry_net_lookup(self):
+        last_refetch = app.config.get(prefs.LAST_RETRY_NET_LOOKUP)
+        if not last_refetch:
+            # never have done a refetch, do it in 10 minutes
+            timeout = 600
+        else:
+            timeout = (last_refetch + self.NET_LOOKUP_RETRY_INTERVAL -
+                       time.time())
+        self._retry_net_lookup_caller.call_after_timeout(timeout)
+
+    def retry_net_lookup(self):
+        """Re-download incomplete data from internet sources.  """
+        logging.info("Retrying incomplete internet lookups")
+        self._retry_net_lookup_caller.cancel_call()
+        for entry in MetadataEntry.incomplete_echonest_view(self.db_info):
+            try:
+                status = MetadataStatus.get_by_id(entry.status_id,
+                                                  self.db_info)
+            except database.ObjectNotFoundError:
+                logging.warn("retry_net_lookup: MetadataStatus not found: %i",
+                             entry.status_id)
+                continue
+            # check that we aren't already running metadata lookups for the
+            # file
+            if status.current_processor is not None:
+                logging.warn("retry_net_lookup: current_processor is %s",
+                             status.current_processor)
+                continue
+            if not status.net_lookup_enabled:
+                continue
+            if status.path in self._retry_net_lookup_entries:
+                # already retrying
+                logging.info("retry_net_lookup: already retrying %r",
+                             status.path)
+                continue
+            self.count_tracker.file_net_lookup_restarted(status.path)
+            self._run_echonest(status.path, status.echonest_id)
+            self._retry_net_lookup_entries[status.path] = entry
+
+        app.config.set(prefs.LAST_RETRY_NET_LOOKUP, int(time.time()))
+
     def retry_temporary_failures(self):
         app.bulk_sql_manager.start()
         try:
-            for status in MetadataStatus.failed_temporary_view():
+            for status in MetadataStatus.failed_temporary_view(self.db_info):
                 status.retry_echonest()
                 self.run_next_processor(status)
         finally:
@@ -1549,7 +1629,7 @@ class MetadataManagerBase(signals.SignalEmitter):
         task = workerprocess.MovieDataProgramTask(path, self.screenshot_dir)
         self.moviedata_processor.add_task(task)
 
-    def _run_echonest(self, path):
+    def _run_echonest(self, path, echonest_id=None):
         """Run echonest and other internet queries on a path."""
         self.check_image_directories()
         def metadata_fetcher():
@@ -1567,6 +1647,8 @@ class MetadataManagerBase(signals.SignalEmitter):
                     echonest_metadata[key] = metadata[key]
                 except KeyError:
                     pass
+            if echonest_id:
+                echonest_metadata['echonest_id'] = echonest_id
             return echonest_metadata
         self.echonest_processor.add_path(self._translate_path(path),
                                          metadata_fetcher)
@@ -1619,20 +1701,42 @@ class MetadataManagerBase(signals.SignalEmitter):
             try:
                 status = MetadataStatus.get_by_path(path, self.db_info)
             except database.ObjectNotFoundError:
-                logging.warn("_process_metadata_finished -- path removed: %s",
+                logging.warn("_process_metadata_finished -- path removed: %r",
                              path)
                 continue
-            if not status.need_metadata_for_source(processor.source_name):
-                logging.warn("_process_metadata_finished -- got duplicate "
-                             "metadata for %s (source: %s)", path,
-                             processor.source_name)
-                continue
-            self._make_new_metadata_entry(status, processor, path, result)
-            self.count_tracker.file_updated(path, result)
-            self.run_next_processor(status)
-            if status.current_processor == u'echonest':
-                self.count_tracker.file_finished_local_processing(status.path)
+            if path not in self._retry_net_lookup_entries:
+                self._process_metadata_result(status, processor, path, result)
+            else:
+                retry_entry = self._retry_net_lookup_entries.pop(path)
+                if retry_entry.id_exists():
+                    self._process_metadata_result_net_retry(status,
+                                                            retry_entry, path,
+                                                            result)
+                else:
+                    logging.warn("_process_metadata_finished -- entry "
+                                 "removed while retrying net lookup: %r",
+                                 path)
+
         self.metadata_finished = []
+
+    def _process_metadata_result(self, status, processor, path, result):
+        if not status.need_metadata_for_source(processor.source_name):
+            logging.warn("_process_metadata_finished -- got duplicate "
+                         "metadata for %s (source: %s)", path,
+                         processor.source_name)
+            return
+        self._make_new_metadata_entry(status, processor, path, result)
+        self.count_tracker.file_updated(path, result)
+        self.run_next_processor(status)
+        if status.current_processor == u'echonest':
+            self.count_tracker.file_finished_local_processing(status.path)
+
+    def _process_metadata_result_net_retry(self, status, entry, path, result):
+        if status.echonest_id is None and 'echonest_id' in result:
+            status.set_echonest_id(result['echonest_id'])
+        entry.update_metadata(result)
+        self.count_tracker.file_finished(path)
+        self.new_metadata[path].update(result)
 
     def _make_new_metadata_entry(self, status, processor, path, result):
         # pop off created_cover_art, that's for us not the MetadataEntry
@@ -1646,7 +1750,7 @@ class MetadataManagerBase(signals.SignalEmitter):
             can_skip_get_metadata = True
         else:
             can_skip_get_metadata = False
-        status.update_after_success(entry)
+        status.update_after_success(entry, result)
         if can_skip_get_metadata:
             self.new_metadata[path].update(result)
         else:

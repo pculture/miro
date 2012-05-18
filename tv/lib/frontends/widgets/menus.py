@@ -33,6 +33,7 @@ import collections
 import itertools
 import logging
 import subprocess
+import time
 
 from miro import app
 from miro import errors
@@ -289,6 +290,8 @@ def get_app_menu():
                          "RunDonateManagerPowerToys"),
                 MenuItem(_("Image Render Test"),
                          "ImageRenderTest"),
+                MenuItem(_("Set echonest retry timeout to 1 week ago"),
+                         "SetEchonestRetryTimeout"),
                 ])
         )
     return all_menus
@@ -674,6 +677,12 @@ def on_image_render_test():
     add_to_table(ImageSurfaceDrawer(crop_and_scale, True), 3, 3)
 
     w.show()
+
+@action_handler("SetEchonestRetryTimeout")
+def on_image_render_test():
+    # set LAST_RETRY_NET_LOOKUP to 1 week ago minus 1 minute
+    new_value = int(time.time()) - (60 * 60 * 24 * 7) + 60
+    app.config.set(prefs.LAST_RETRY_NET_LOOKUP, new_value)
 
 @action_handler("ForceMainDBSaveError")
 def on_force_device_db_save_error():
