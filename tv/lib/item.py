@@ -133,6 +133,7 @@ class FeedParserValues(object):
     def update_item(self, item):
         for key, value in self.data.items():
             setattr(item, key, value)
+        item.calc_title()
 
     def compare_to_item(self, item):
         for key, value in self.data.items():
@@ -429,10 +430,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.watchedTime = self.lastWatched = None
         self.pendingReason = u""
         entry_title = self.torrent_title = None
+        self.metadata_title = None
+        self.filename = None
         fp_values.update_item(self)
         self.expired = False
         self.keep = False
-        self.filename = None
         self.eligibleForAutoDownload = eligibleForAutoDownload
         self.duration = None
         self.screenshot = None
@@ -995,7 +997,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def update_from_metadata(self, metadata_dict):
         """Update our attributes from a metadata dictionary."""
+        # change the name of title to be "metadata_title"
+        if 'title' in metadata_dict:
+            metadata_dict['metadata_title'] = metadata_dict['title']
         self._bulk_update_db_values(metadata_dict)
+        self.calc_title()
 
     def set_user_metadata(self, metadata_dict):
         if not self.filename:
@@ -1529,15 +1535,26 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_title(self):
         """Returns the title of the item.
         """
-        if self.title:
-            return self.title
-        if self.torrent_title is not None:
-            return self.torrent_title
-        if self.entry_title is not None:
-            return self.entry_title
-        if self.filename:
-            return filename_to_unicode(os.path.basename(self.filename))
-        return _('no title')
+        return self.title
+
+    def calc_title(self):
+        """Set the title column
+
+        The title column store the official title for the item.  This may come
+        from torrent data, file metadata, feed data, and or our filename.
+        """
+        if self.metadata_title:
+            title = self.metadata_title
+        elif self.torrent_title is not None:
+            title = self.torrent_title
+        elif self.entry_title is not None:
+            title = self.entry_title
+        elif self.filename:
+            title = filename_to_unicode(os.path.basename(self.filename))
+        else:
+            title = _('no title')
+        if title != self.title:
+            self.title = title
 
     def set_channel_title(self, title):
         check_u(title)
@@ -1633,6 +1650,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             logging.exception("Error setting torrent name")
         else:
             self.torrent_title = title
+            self.calc_title()
             self.signal_change()
         self._update_title_from_torrent_client = None
 

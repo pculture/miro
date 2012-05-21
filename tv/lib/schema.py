@@ -430,6 +430,7 @@ class ItemSchema(MultiClassObjectSchema):
 
     fields = DDBObjectSchema.fields + [
         ('is_file_item', SchemaBool()),
+        ('title', SchemaString(noneOk=True)),
         ('feed_id', SchemaInt(noneOk=True)),
         ('downloader_id', SchemaInt(noneOk=True)),
         ('parent_id', SchemaInt(noneOk=True)),
@@ -475,7 +476,6 @@ class ItemSchema(MultiClassObjectSchema):
         ('skip_count', SchemaInt()),
         # metadata:
         ('cover_art', SchemaFilename(noneOk=True)),
-        ('title', SchemaString(noneOk=True)),
         ('description', SchemaString(noneOk=True)),
         ('album', SchemaString(noneOk=True)),
         ('album_artist', SchemaString(noneOk=True)),
@@ -493,6 +493,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('season_number', SchemaInt(noneOk=True)),
         ('kind', SchemaString(noneOk=True)),
         ('net_lookup_enabled', SchemaBool()),
+        ('metadata_title', SchemaString(noneOk=True)),
     ]
 
     indexes = (
@@ -879,7 +880,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 178
+VERSION = 179
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
