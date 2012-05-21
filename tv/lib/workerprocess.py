@@ -403,7 +403,6 @@ class WorkerProcessResponder(subprocessmanager.SubprocessResponder):
     def on_restart(self):
         self.worker_ready = False
 
-
     def handle_task_result(self, msg):
         _miro_task_queue.process_result(msg)
 
