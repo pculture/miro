@@ -54,3 +54,13 @@ class VimeoScraper(FlashScraperBase):
         self.assertNotEqual(self._response, None)
         self.assertNotEqual(self._response[0], None)
         self.assertEqual(self._response[1], 'video/mp4')
+
+    @uses_httpclient
+    def test_scrape_moogaloop(self):
+        flashscraper.try_scraping_url(
+            u'http://vimeo.com/moogaloop.swf?clip_id=42231616',
+            self.scrape_callback)
+        self.run_event_loop()
+        self.assertNotEqual(self._response, None)
+        self.assertNotEqual(self._response[0], None)
+        self.assertEqual(self._response[1], 'video/mp4')
