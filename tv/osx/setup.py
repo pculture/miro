@@ -286,6 +286,7 @@ class MiroBuild (py2app):
         self.distribution.packages = [
             'miro',
             'miro.libdaap',
+            'miro.data',
             'miro.dl_daemon',
             'miro.dl_daemon.private',
             'miro.frontends',

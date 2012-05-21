@@ -307,6 +307,7 @@ def finish_startup(obj, thread):
         mem_usage_test_event.set()
 
     item.setup_metadata_manager()
+    item.setup_change_tracker()
     app.item_info_cache = iteminfocache.ItemInfoCache()
     app.item_info_cache.load()
     dbupgradeprogress.upgrade_end()

@@ -1414,6 +1414,21 @@ class TabsChanged(FrontendMessage):
     '(%d added, %d changed, %d removed)>') % (self.type,
     len(self.added), len(self.changed), len(self.removed))
 
+class ItemChanges(FrontendMessage):
+    """Sent to the frontend when items change
+
+    :attribute added: set ids for added items
+    :attribute changed: set ids for changed items
+    :attribute removed: set ids for removed items
+    :attribute changed_columns: set columns that were changed (the union of
+    changes for all items)
+    """
+    def __init__(self, added, changed, removed, changed_columns):
+        self.added = added
+        self.changed = changed
+        self.removed = removed
+        self.changed_columns = changed_columns
+
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed
 

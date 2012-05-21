@@ -63,6 +63,7 @@ from miro import prefs
 from miro.plat import resources
 from miro import util
 from miro import filetypes
+from miro import messages
 from miro import searchengines
 from miro import fileutil
 from miro import signals
@@ -404,6 +405,38 @@ class _ItemsForPathCountTracker(object):
         except AttributeError:
             return # counts not created yet we can just ignore
 
+class ItemChangeTracker(object):
+    """Tracks changes to items and send the ItemsChanged message."""
+    def __init__(self):
+        self.reset()
+        eventloop.connect('event-finished', self.on_event_finished)
+
+    def reset(self):
+        self.added = set()
+        self.changed = set()
+        self.removed = set()
+        self.changed_columns = set()
+
+    def on_event_finished(self, eventloop, success):
+        self.send_changes()
+
+    def send_changes(self):
+        if self.added or self.changed or self.removed:
+            m = messages.ItemChanges(self.added, self.changed, self.removed,
+                                     self.changed_columns)
+            m.send_to_frontend()
+            self.reset()
+
+    def on_item_added(self, item):
+        self.added.add(item.id)
+
+    def on_item_changed(self, item):
+        self.changed.add(item.id)
+        self.changed_columns.update(item.changed_attributes)
+
+    def on_item_removed(self, item):
+        self.removed.add(item.id)
+
 class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
@@ -479,9 +512,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
+        Item.change_tracker.on_item_added(self)
 
     def signal_change(self, needs_save=True, can_change_views=True):
         app.item_info_cache.item_changed(self)
+        Item.change_tracker.on_item_changed(self)
         DDBObject.signal_change(self, needs_save, can_change_views)
 
     @classmethod
@@ -2047,6 +2082,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         # need to call this after DDBObject.remove(), so that the item info is
         # there for ItemInfoFetcher to see.
         app.item_info_cache.item_removed(self)
+        Item.change_tracker.on_item_removed(self)
 
     def setup_links(self):
         self.split_item()
@@ -2672,6 +2708,9 @@ def setup_metadata_manager(cover_art_dir=None, screenshot_dir=None):
     app.local_metadata_manager = metadata.LibraryMetadataManager(
         cover_art_dir, screenshot_dir)
     app.local_metadata_manager.connect('new-metadata', on_new_metadata)
+
+def setup_change_tracker():
+    Item.change_tracker = ItemChangeTracker()
 
 def on_new_metadata(metadata_manager, new_metadata):
     # Get all items that have changed using one query.  This is much faster

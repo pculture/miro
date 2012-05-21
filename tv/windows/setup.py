@@ -633,6 +633,7 @@ class bdist_nsis(Command):
 package_list=[
     'miro',
     'miro.libdaap',
+    'miro.data',
     'miro.dl_daemon',
     'miro.dl_daemon.private',
     'miro.frontends',

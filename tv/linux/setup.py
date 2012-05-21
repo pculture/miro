@@ -584,6 +584,7 @@ setup(name='miro',
     packages=[
         'miro',
         'miro.libdaap',
+        'miro.data',
         'miro.dl_daemon',
         'miro.test',
         'miro.dl_daemon.private',

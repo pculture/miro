@@ -86,6 +86,7 @@ from miro.test.subprocesstest import *
 from miro.test.itemfiltertest import *
 from miro.test.extensiontest import *
 from miro.test.idleiteratetest import *
+from miro.test.itemtracktest import *
 
 # platform specific tests
 
