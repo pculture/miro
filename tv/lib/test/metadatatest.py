@@ -955,7 +955,7 @@ class MetadataManagerTest(MiroTestCase):
             self.check_run_mutagen(name,
                                    'audio', 200, 'title', 'album')
             self.check_run_echonest(name,
-                                    'title', 'Artist', 'Album')
+                                    'title', 'Artist', 'better-album-title')
             shouldnt_retry.append(name)
 
         # check what happens when retry_net_lookup is called
@@ -968,7 +968,8 @@ class MetadataManagerTest(MiroTestCase):
         # make some of the retries succeed
         for i in range(5):
             name = should_retry.pop(0)
-            self.check_run_echonest(name, 'title', 'Artist', 'Album')
+            self.check_run_echonest(name, 'title', 'Artist',
+                                    'better-album-title')
             shouldnt_retry.append(name)
         # make some of them fail
         for name in should_retry:
@@ -982,7 +983,8 @@ class MetadataManagerTest(MiroTestCase):
             self.check_echonest_not_running(name)
         # this time let all the album succeed
         for name in should_retry:
-            self.check_run_echonest(name, 'title', 'Artist', 'Album')
+            self.check_run_echonest(name, 'title', 'Artist',
+                                    'better-album-title')
 
     def check_path_in_system(self, filename, correct_value):
         path = self.make_path(filename)
