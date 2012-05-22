@@ -32,6 +32,7 @@
 import collections
 import difflib
 import logging
+import os
 import os.path
 import urllib
 from xml.dom import minidom
@@ -58,6 +59,9 @@ class CodegenError(StandardError):
 class ResponseParsingError(StandardError):
     """Error parsing an echonest/7digital response."""
 
+class CodegenNotSupported(StandardError):
+    """ENMFP can't run in the user's architecture."""
+
 def exec_codegen(codegen_info, media_path, callback, errback):
     """Run an echonest codegen in a worker thread.
 
@@ -67,6 +71,14 @@ def exec_codegen(codegen_info, media_path, callback, errback):
 
     On error, errback(media_path, exception) will be called.
     """
+    if cant_run_codegen():
+        # use add_idle to send the errback to make the timing closer to normal
+        # operations.  Some code could potentially break if the errback runs
+        # before this function returns.
+        eventloop.add_idle(errback, 'exec_codegen errback',
+                           args=(CodegenNotSupported(),))
+        return
+
     codegen_path = codegen_info['path']
     codegen_env = codegen_info.get('env')
     def thread_function():
@@ -91,6 +103,11 @@ def exec_codegen(codegen_info, media_path, callback, errback):
     logging.debug("Invoking echonest codegen on %s", media_path)
     eventloop.call_in_thread(thread_callback, thread_errback, thread_function,
                              'exec echonest codegen')
+
+def cant_run_codegen():
+    uname = os.uname()
+    return (uname[0] == 'Darwin' and
+            (uname[4] != 'i386' and uname[4] != 'x86_64'))
 
 def query_echonest(path, cover_art_dir, code, version, metadata, callback,
                    errback):
