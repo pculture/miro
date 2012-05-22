@@ -180,7 +180,7 @@ class DatabaseItemSource(ItemSource):
             'release_date': item.get_release_date(),
             'size': item.get_size(),
             'duration': item.get_duration_value(),
-            'resume_time': item.resumeTime,
+            'resume_time': item.resume_time,
             'permalink': item.get_link(),
             'commentslink': item.get_comments_link(),
             'payment_link': item.get_payment_link(),
@@ -198,7 +198,7 @@ class DatabaseItemSource(ItemSource):
             'file_format': item.get_format(),
             'license': item.get_license(),
             'file_url': item.get_url(),
-            'is_container_item': item.isContainerItem,
+            'is_container_item': item.is_container_item,
             'is_file_item': item.is_file_item,
             'is_playable': item.is_playable(),
             'file_type': item.file_type,
@@ -207,8 +207,8 @@ class DatabaseItemSource(ItemSource):
             'mime_type': item.enclosure_type,
             'date_added': item.get_creation_time(),
             'last_played': item.get_watched_time(),
-            'last_watched': item.lastWatched,
-            'downloaded_time': item.downloadedTime,
+            'last_watched': item.last_watched,
+            'downloaded_time': item.downloaded_time,
             'children': [],
             'expiration_date': None,
             'download_info': None,
@@ -228,7 +228,7 @@ class DatabaseItemSource(ItemSource):
             'is_playing': item.is_playing(),
             }
         _add_metadata(info, item)
-        if item.isContainerItem:
+        if item.is_container_item:
             info['children'] = [DatabaseItemSource._item_info_for(i) for i in
                                 item.get_children()]
         if not item.keep and not item.is_external():

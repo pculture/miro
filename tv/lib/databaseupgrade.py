@@ -3828,3 +3828,24 @@ def upgrade179(cursor):
         if title != metadata_title:
             cursor.execute("UPDATE item SET title=? WHERE id=?", (title, id_))
 
+def upgrade180(cursor):
+    # Rename columns in the item table
+    rename_columns = {
+        'autoDownloaded': 'auto_downloaded',
+        'pendingManualDL': 'pending_manual_dl',
+        'pendingReason': 'pending_reason',
+        'creationTime': 'creation_time',
+        'linkNumber': 'link_number',
+        'downloadedTime': 'downloaded_time',
+        'watchedTime': 'watched_time',
+        'lastWatched': 'last_watched',
+        'isContainerItem': 'is_container_item',
+        'releaseDateObj': 'release_date',
+        'eligibleForAutoDownload': 'eligible_for_autodownload',
+        'resumeTime': 'resume_time',
+        'channelTitle': 'channel_title',
+        'shortFilename': 'short_filename',
+        'offsetPath': 'offset_path',
+    }
+
+    alter_table_columns(cursor, 'item', [], rename_columns)

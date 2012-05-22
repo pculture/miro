@@ -100,7 +100,7 @@ class ExpiredViewTest(MiroTestCase):
                 feed_id=f1.id)
 
         f1.set_expiration(u'never', 0)
-        i1.watchedTime = i2.watchedTime = datetime.now()
+        i1.watched_time = i2.watched_time = datetime.now()
 
         for obj in (f1, i1, i2):
             obj.signal_change()
@@ -118,8 +118,8 @@ class ExpiredViewTest(MiroTestCase):
         f2.set_expiration(u'system', 0)
         # system default is 6 days as set in setUp, so i3 should expire,
         # but i4 should not.
-        i3.watchedTime = datetime.now() - timedelta(days=12)
-        i4.watchedTime = datetime.now() - timedelta(days=3)
+        i3.watched_time = datetime.now() - timedelta(days=12)
+        i4.watched_time = datetime.now() - timedelta(days=3)
 
         for obj in (f2, i3, i4):
             obj.signal_change()
@@ -135,8 +135,8 @@ class ExpiredViewTest(MiroTestCase):
                 feed_id=f3.id)
 
         f3.set_expiration(u'feed', 24)
-        i5.watchedTime = datetime.now() - timedelta(days=3)
-        i6.watchedTime = datetime.now() - timedelta(hours=12)
+        i5.watched_time = datetime.now() - timedelta(days=3)
+        i6.watched_time = datetime.now() - timedelta(hours=12)
 
         for obj in (f3, i5, i6):
             obj.signal_change()
@@ -180,9 +180,9 @@ class ItemRemoveTest(MiroTestCase):
         feed = Feed(u'http://example.com/1')
         item = Item(fp_values_for_url(u'http://example.com/1/item1'),
                 feed_id=feed.id)
-        item.watchedTime = datetime.now()
+        item.watched_time = datetime.now()
         item.expire()
-        self.assertEquals(item.watchedTime, None)
+        self.assertEquals(item.watched_time, None)
 
     def test_remove_before_downloader_referenced(self):
         # when items are restored from the DB, the downloader

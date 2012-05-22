@@ -173,12 +173,12 @@ class SharingItem(object):
         self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
         self.keep = True
-        self.isContainerItem = False
+        self.is_container_item = False
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = None
         self.duration = self.screenshot = self.thumbnail_url = None
-        self.resumeTime = 0
+        self.resume_time = 0
         self.description = u''
         self.subtitle_encoding = self.enclosure_type = None
         self.metadata_version = 0
