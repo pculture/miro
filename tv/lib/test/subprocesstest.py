@@ -340,7 +340,7 @@ class MovieDataTest(WorkerProcessTest):
         source_path = resources.path("testdata/metadata/" + filename)
         msg = workerprocess.MovieDataProgramTask(source_path, self.tempdir)
         workerprocess.send(msg, self.callback, self.errback)
-        self.runEventLoop(4.0)
+        self.runEventLoop(10.0)
         self.check_successful_result()
         self.assertEquals(self.get_from_result('source_path'), source_path)
         if file_type is not None:
@@ -372,9 +372,10 @@ class MovieDataTest(WorkerProcessTest):
     def test_moviedata_drm_gtk(self):
         self.check_movie_data_call('drm.m4v', None, None, False)
 
-    @only_on_platforms('osx')
-    def test_movie_data_webm(self):
-        self.check_movie_data_call('webm-0.webm', 'video', 1044, True)
+    # FIXME: re-impement this one
+    #@only_on_platforms('osx')
+    #def test_movie_data_webm(self):
+        #self.check_movie_data_call('webm-0.webm', 'video', 1044, True)
 
     @only_on_platforms('osx')
     def test_movie_data_drm_osx(self):
