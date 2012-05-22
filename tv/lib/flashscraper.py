@@ -292,7 +292,7 @@ def _scrape_vimeo_video_url(url, callback, countdown=10):
         httpclient.grab_url(
             url,
             lambda x: _scrape_vimeo_download_callback(x, callback),
-            lambda x: _scrape_vimeo_download_errback(x, callback),
+            lambda x: _scrape_vimeo_download_errback(x, callback, url),
             extra_headers={
                 'Referer': 'http://vimeo.com/%s' % id_,
                 'X-Requested-With': 'XMLHttpRequest',
@@ -328,12 +328,13 @@ def _scrape_vimeo_download_callback(info, callback):
 
     if largest_url is not None:
         callback(u'http://vimeo.com/%s' % largest_url,
-                 content_type='video/mp4')
+                 content_type=u'video/mp4')
     else:
-        _scrape_vimeo_download_errback(info, callback, info)
+        _scrape_vimeo_download_errback("no largest url", callback,
+                                       info['original-url'])
 
-def _scrape_vimeo_download_errback(info, callback):
-    logging.exception("Unable to scrape %r", info['original-url'])
+def _scrape_vimeo_download_errback(err, callback, url):
+    logging.warning("Unable to scrape %r\nerror: %s", url, err)
     callback(None)
 
 # =============================================================================
