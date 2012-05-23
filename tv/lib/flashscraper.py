@@ -283,7 +283,7 @@ def _scrape_green_peace_video_url(url, callback):
     logging.warning("unable to scrape Green peace Video URL %s", url)
     callback(None)
 
-VIMEO_RE = re.compile(r'http://([^/]+\.)?vimeo.com/[^\d]*(\d+)$')
+VIMEO_RE = re.compile(r'http://([^/]+\.)?vimeo.com/[^\d]*(\d+)')
 
 def _scrape_vimeo_video_url(url, callback, countdown=10):
     try:
