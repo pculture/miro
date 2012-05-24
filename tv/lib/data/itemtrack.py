@@ -112,6 +112,11 @@ class ItemTrackerQuery(object):
                 order_by_parts.append("%s ASC" % ob.column)
         sql_parts.append("ORDER BY %s" % ', '.join(order_by_parts))
 
+    def copy(self):
+        retval = ItemTrackerQuery()
+        retval.conditions = self.conditions[:]
+        retval.order_by = self.order_by[:]
+        return retval
 
 class ItemTracker(signals.SignalEmitter):
     """Track items in the database

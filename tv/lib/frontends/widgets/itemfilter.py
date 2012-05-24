@@ -40,6 +40,7 @@ are selected for a given item list.
 
 from miro import app
 from miro import util
+from miro.data import itemtrack
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 
@@ -61,6 +62,15 @@ class ItemFilter(object):
 
         :returns: True if the ItemInfo should be included in the item list.
         """
+        raise NotImplementedError()
+
+    def add_to_query(self, item_tracker_query):
+        """Add this filter to an ItemTrackerQuery
+
+        subclasses must override this
+        """
+        # TODO: This is the new interface for ItemFilter.  We need to
+        # implement this method on all subclasses.
         raise NotImplementedError()
 
     def switch_to_filter(self, previous_filters):
@@ -145,6 +155,11 @@ class ItemFilterSet(object):
                 return False
         return True
 
+    def add_to_query(self, query):
+        """Add conditions to an ItemTrackerQuery object """
+        for f in self.active_filter_objects:
+            f.add_to_query(query)
+
 # define the actual filter classes we use
 
 class ItemFilterAll(ItemFilter):
@@ -156,6 +171,9 @@ class ItemFilterAll(ItemFilter):
 
     def filter(self, item_info):
         return True
+
+    def add_to_query(self, query):
+        return
 
 class ItemFilterAudioVideoHelper(ItemFilter):
     """Item filters that work in conjunction with the audio/video filters."""
@@ -250,6 +268,9 @@ class ItemFilterPodcasts(ItemFilter):
 
     def filter(self, item_info):
         return item_info.kind == 'podcast'
+
+    def add_to_query(self, query):
+        query.add_condition('kind', '=', u'podcast')
 
 def get_label(key):
     """Get the label to use for a filter key."""
