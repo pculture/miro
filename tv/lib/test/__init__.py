@@ -88,6 +88,7 @@ from miro.test.extensiontest import *
 from miro.test.idleiteratetest import *
 from miro.test.itemtracktest import *
 from miro.test.itemlisttest import *
+from miro.test.itemrenderertest import *
 
 # platform specific tests
 

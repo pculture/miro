@@ -34,10 +34,8 @@ import collections
 from miro import app
 from miro import schema
 from miro import signals
+from miro.data import item
 
-# ItemRow holds the data for one row of the item table
-_item_columns = [name for name, field in schema.ItemSchema.fields]
-ItemRow = collections.namedtuple("ItemRow", _item_columns)
 # ItemTrackerCondition and ItemTrackerOrderBy store parameters for
 # ItemTracker's queries
 ItemTrackerCondition = collections.namedtuple("ItemTrackerCondition",
@@ -179,7 +177,7 @@ class ItemTracker(signals.SignalEmitter):
     """
 
     # how many rows we fetch at one time in _ensure_row_loaded()
-    FETCH_ROW_CHUNK_SIZE = 50
+    FETCH_ROW_CHUNK_SIZE = 25
 
     def __init__(self, idle_scheduler, query):
         """Create an ItemTracker
@@ -192,6 +190,7 @@ class ItemTracker(signals.SignalEmitter):
         self.create_signal("items-changed")
         self.create_signal("list-changed")
         self.idle_scheduler = idle_scheduler
+        self.item_fetcher = item.ItemFetcher()
         self._get_connection()
         self._set_query(query)
         self._fetch_id_list()
@@ -304,15 +303,10 @@ class ItemTracker(signals.SignalEmitter):
         :param rows_to_load: indexes of the rows to load.
         """
         ids_to_load = [self.id_list[i] for i in rows_to_load]
-        sql_parts = []
-        sql_parts.append("SELECT %s" % ', '.join(_item_columns))
-        sql_parts.append("FROM item")
-        sql_parts.append("WHERE id in (%s)" %
-                         ', '.join(str(i) for i in ids_to_load))
-        for row in self.connection.execute(' '.join(sql_parts)):
-            item_row = ItemRow(*row)
-            pos = self.id_to_index[item_row.id]
-            self.row_data[item_row.id] = item_row
+        items = self.item_fetcher.fetch_many(self.connection, ids_to_load)
+        for item in items:
+            pos = self.id_to_index[item.id]
+            self.row_data[item.id] = item
 
     def get_item(self, id_):
         """Get an ItemRow for a given id.

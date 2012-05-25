@@ -261,13 +261,13 @@ class ItemRenderer(ItemRendererBase):
         self.torrent_folder_description = util.HTMLStripper().strip(text)
 
     def layout_all(self, layout_manager, width, height, selected, hotspot):
-        download_mode = (self.info.state in ('downloading', 'paused'))
+        download_mode = self.info.is_download
         self.canvas.start_new_cell(layout_manager, width, height, selected,
                 hotspot, download_mode)
         # add elements that are always present
         self.canvas.add_thumbnail(self.info.thumbnail,
                 self.calc_thumbnail_hotspot())
-        self.canvas.add_text(self.info.name, ITEM_TITLE_COLOR,
+        self.canvas.add_text(self.info.title, ITEM_TITLE_COLOR,
                 self.calc_description(), self.calc_extra_info())
         # add elements for download-mode or non-download-mode
         if download_mode:
@@ -339,50 +339,44 @@ class ItemRenderer(ItemRendererBase):
         self.canvas.add_menu_button_download_mode()
 
     def add_progress_bar(self):
-        dl_info = self.info.download_info
-        if dl_info.state == 'paused':
+        if self.info.is_paused:
             pause_button_mode = 'resume'
         else:
             pause_button_mode = 'pause'
-        if dl_info.downloaded_size == 0:
-            # show empty bar before we start up
-            self.canvas.add_progress_bar(0.0, pause_button_mode)
-        elif dl_info.total_size <= 0:
-            # show throbber once we've started, but still don't know the
-            # total_size
+        progress = self.info.download_progress
+        if progress is None:
+            # show throbber
             throbber_index = self.attrs.get('throbber-value', 0) % 10
             self.canvas.add_progress_throbber(throbber_index,
                     pause_button_mode)
             self.signals.emit('throbber-drawn', self.info)
         else:
-            # show regular bar otherwise
-            amount = float(dl_info.downloaded_size) / dl_info.total_size
-            self.canvas.add_progress_bar(amount, pause_button_mode)
+            # show regular bar
+            self.canvas.add_progress_bar(progress, pause_button_mode)
 
     def add_download_info(self):
-        dl_info = self.info.download_info
-        if self.info.state == 'paused':
+        if self.info.is_paused:
             eta = down_rate = 0
         else:
-            eta = dl_info.eta
-            down_rate = dl_info.rate
+            eta = self.info.eta
+            down_rate = self.info.rate
         download_info = ItemDownloadInfo()
         download_info.add_line('time-left',
                 displaytext.time_string_0_blank(eta), None)
         download_info.add_line('dl-speed',
                 displaytext.download_rate(down_rate),
-                displaytext.size_string(dl_info.downloaded_size))
-        if dl_info.torrent:
+                displaytext.size_string(self.info.downloaded_size))
+        if self.info.is_torrent:
             download_info.add_line('ul-speed',
                 displaytext.download_rate(self.info.up_rate),
                 displaytext.size_string(self.info.up_total))
         self.canvas.add_download_info(download_info)
-        if dl_info.state == 'paused':
+        if self.info.is_paused:
             pass
-        elif self.info.download_info.rate is None:
+        elif self.info.rate is None:
             self.canvas.add_startup_info(
-                self.info.download_info.startup_activity)
-        elif dl_info.torrent:
+                self.info.startup_activity)
+        elif self.info.is_torrent:
             self.add_torrent_info()
 
     def add_torrent_info(self):
@@ -404,8 +398,7 @@ class ItemRenderer(ItemRendererBase):
             return None
 
     def calc_description(self):
-        if (self.info.download_info and self.info.download_info.torrent and
-                self.info.children):
+        if self.info.is_torrent_folder:
             text, links = self.torrent_folder_description
         else:
             text, links = self.info.description_stripped
@@ -431,8 +424,7 @@ class ItemRenderer(ItemRendererBase):
 
         :returns: (text, hotspot_name) tuple, or None
         """
-        if (self.info.download_info and
-                self.info.download_info.state == 'uploading'):
+        if self.info.is_seeding:
             return (STOP_SEEDING_TEXT, 'stop_seeding')
         elif self.info.pending_auto_dl:
             return (CANCEL_TEXT, 'cancel_auto_download')
@@ -453,12 +445,11 @@ class ItemRenderer(ItemRendererBase):
         if self.info.has_drm:
             visuals = EMBLEM_VISUALS_DRM
             text = _('DRM locked')
-        elif (self.info.download_info
-                and self.info.download_info.state == 'failed'):
+        elif self.info.is_failed_download:
             visuals = EMBLEM_VISUALS_FAILED
             image = get_image('status-icon-alert')
             text = u"%s-%s" % (ERROR_TEXT,
-                    self.info.download_info.short_reason_failed)
+                    self.info.short_reason_failed)
         elif self.info.pending_auto_dl:
             visuals = EMBLEM_VISUALS_QUEUED
             text = QUEUED_TEXT
@@ -477,7 +468,7 @@ class ItemRenderer(ItemRendererBase):
             text = _("Resume at %(resumetime)s",
                      {"resumetime": displaytext.short_time_string(
                          self.info.resume_time)})
-        elif not self.info.item_viewed and self.info.state == "new":
+        elif self.info.new:
             visuals = EMBLEM_VISUALS_NEWLY_AVAILABLE
             text = NEWLY_AVAILABLE_TEXT
         else:
