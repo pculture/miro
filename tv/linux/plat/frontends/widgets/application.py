@@ -143,7 +143,7 @@ class LinuxApplication(Application):
         gobject.set_application_name(app.config.get(prefs.SHORT_APP_NAME))
         os.environ["PULSE_PROP_media.role"] = "video"
 
-        gtk.gdk.threads_init()
+        gobject.threads_init()
         self._setup_webkit()
         associate_protocols(self._get_command())
         gtkdirectorywatch.GTKDirectoryWatcher.install()
