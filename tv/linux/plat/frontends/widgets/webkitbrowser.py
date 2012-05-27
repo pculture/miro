@@ -65,11 +65,6 @@ class WebKitEmbed(webkit.WebView):
         webkit.WebView.__init__(self)
         settings = self.get_settings()
 
-        # this disables all plugins -- Miro has problems with the
-        # adobe flash plugin and hangs when the plugin loads and starts
-        # doing things.
-        settings.set_property('enable-plugins', False)
-
         # sets zoom to affect text and images
         self.set_full_content_zoom(True)
 
