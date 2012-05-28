@@ -302,6 +302,14 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
 ;; Macros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+!macro DISABLE_SECTION SECIDX
+Push $R0
+SectionGetFlags ${SECIDX} $R0
+IntOp $R0 $R0 & ${SECTION_OFF}
+SectionSetFlags ${SECIDX} $R0
+Pop $R0
+!macroend
+
 !macro checkExtensionHandled ext sectionName
   Push $0
   ReadRegStr $0 HKCR "${ext}" ""
@@ -1111,7 +1119,47 @@ NotOldInstalled:
   !insertmacro uninstall $INSTDIR
 
 StartInstall:
-  StrCmp $REINSTALL "1" SkipLanguageDLL
+  StrCmp $REINSTALL "0" CheckAdvanced
+  !insertmacro DISABLE_SECTION ${SecDesktop}
+  !insertmacro DISABLE_SECTION ${SecQuickLaunch}
+  !insertmacro DISABLE_SECTION ${SecRegisterMiro}
+  !insertmacro DISABLE_SECTION ${SecRegisterDemocracy}
+  !insertmacro DISABLE_SECTION ${SecRegisterAvi}
+  !insertmacro DISABLE_SECTION ${SecRegisterMpg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMpg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMpg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMpg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMpg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMpg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMpg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMpg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMp3}
+  !insertmacro DISABLE_SECTION ${SecRegisterMp3}
+  !insertmacro DISABLE_SECTION ${SecRegisterMov}
+  !insertmacro DISABLE_SECTION ${SecRegisterMov}
+  !insertmacro DISABLE_SECTION ${SecRegisterAsf}
+  !insertmacro DISABLE_SECTION ${SecRegisterWmv}
+  !insertmacro DISABLE_SECTION ${SecRegisterDts}
+  !insertmacro DISABLE_SECTION ${SecRegisterOgg}
+  !insertmacro DISABLE_SECTION ${SecRegisterOgg}
+  !insertmacro DISABLE_SECTION ${SecRegisterOgg}
+  !insertmacro DISABLE_SECTION ${SecRegisterOgg}
+  !insertmacro DISABLE_SECTION ${SecRegisterOgg}
+  !insertmacro DISABLE_SECTION ${SecRegisterMkv}
+  !insertmacro DISABLE_SECTION ${SecRegisterMkv}
+  !insertmacro DISABLE_SECTION ${SecRegisterMkv}
+  !insertmacro DISABLE_SECTION ${SecRegister3gp}
+  !insertmacro DISABLE_SECTION ${SecRegister3g2}
+  !insertmacro DISABLE_SECTION ${SecRegisterFlv}
+  !insertmacro DISABLE_SECTION ${SecRegisterNsv}
+  !insertmacro DISABLE_SECTION ${SecRegisterPva}
+  !insertmacro DISABLE_SECTION ${SecRegisterAnx}
+  !insertmacro DISABLE_SECTION ${SecRegisterXvid}
+  !insertmacro DISABLE_SECTION ${SecRegisterXvid}
+  !insertmacro DISABLE_SECTION ${SecRegisterTorrent}
+  Goto end
+
+CheckAdvanced:
   StrCmp "$ADVANCED" "1" SkipLanguageDLL
   !insertmacro MUI_LANGDLL_DISPLAY
 SkipLanguageDLL:
@@ -1166,9 +1214,7 @@ SkipLanguageDLL:
   !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "xvid" ${SecRegisterXvid}
   !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "3ivx" ${SecRegisterXvid}
   !insertmacro OI_SELSEC_BY_CMDPARAM $R1 $R2 "torrent" ${SecRegisterTorrent}
-
-
-
+end:
 FunctionEnd
 
 
