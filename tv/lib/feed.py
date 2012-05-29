@@ -438,7 +438,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expire = u"system"
         self.expireTime = None
         self.fallBehind = -1
-        self.last_viewed = datetime.min
 
         self.baseTitle = None
         self.origURL = url
@@ -626,26 +625,18 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                     self.auto_pending_items.count())
             return self._num_available
 
-    def get_viewed(self):
-        """Returns true iff this feed has been looked at
-        """
-        return self.last_viewed != datetime.min
-
     def mark_as_viewed(self):
         """Sets the last time the feed was viewed to now
         """
-        # get the list of available items before we reset the time
-        available_items = list(self.available_items)
-        self.last_viewed = datetime.now()
         try:
             del self._num_available
         except AttributeError:
             pass
+        for item in list(self.available_items):
+            item.unset_new()
         if self.in_folder():
             self.get_folder().signal_change()
         self.signal_change()
-        for item in available_items:
-            item.signal_change(needs_save=False)
 
     def start_manual_download(self):
         next_ = None
@@ -2414,7 +2405,6 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.set_update_frequency(-1)
         self.ufeed.autoDownloadable = False
         # keeps the items from being seen as 'newly available'
-        self.ufeed.last_viewed = datetime.max
         self.ufeed.signal_change()
 
     def setup_restored(self):
@@ -2535,7 +2525,6 @@ class ManualFeedImpl(FeedImpl):
                 title=None)
         self.ufeed.expire = u'never'
         self.set_update_frequency(-1)
-        self.ufeed.last_viewed = datetime.max
 
     @returns_unicode
     def get_title(self):

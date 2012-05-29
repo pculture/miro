@@ -188,7 +188,7 @@ class DatabaseItemSource(ItemSource):
             'can_be_saved': item.show_save_button(),
             'pending_manual_dl': item.is_pending_manual_download(),
             'pending_auto_dl': item.is_pending_auto_download(),
-            'item_viewed': item.get_viewed(),
+            'item_viewed': not item.new,
             'downloaded': item.is_downloaded(),
             'is_external': item.is_external(),
             'video_watched': item.get_seen(),

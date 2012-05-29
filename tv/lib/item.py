@@ -419,6 +419,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         for attr in metadata.attribute_names:
             setattr(self, attr, None)
         self.is_file_item = False
+        self.new = True
         self.feed_id = feed_id
         self.parent_id = parent_id
         self.channel_title = channel_title
@@ -677,12 +678,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def feed_available_view(cls, feed_id):
-        return cls.make_view("feed_id=? AND NOT auto_downloaded "
-                "AND downloaded_time IS NULL AND "
-                "NOT is_file_item AND " # FileItems are not available
-                "feed.last_viewed <= item.creation_time",
-                (feed_id,),
-                joins={'feed': 'item.feed_id=feed.id'})
+        return cls.make_view("feed_id=? AND new", (feed_id,))
 
     @classmethod
     def feed_auto_pending_view(cls, feed_id):
@@ -1070,18 +1066,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def recalc_feed_counts(self):
         self.get_feed().recalc_counts()
 
-    def get_viewed(self):
-        """Returns True iff this item has never been viewed in the
-        interface.
-
-        Note the difference between "viewed" and seen.
-        """
-        try:
-            # optimizing by trying the cached feed
-            return self._feed.last_viewed >= self.creation_time
-        except AttributeError:
-            return self.get_feed().last_viewed >= self.creation_time
-
     @returns_unicode
     def get_url(self):
         """Returns the URL associated with the first enclosure in the
@@ -1317,6 +1301,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     self.expiring = True
         return self.expiring
 
+    def unset_new(self):
+        """Unsets the "new" attribute of an item.
+
+        This should be done after:
+            The user, or the auto-downloader, downloads the item
+            The user has seen the item in a feed then switched away from it
+        """
+        self.new = False
+        self.signal_change()
+
     def get_seen(self):
         """Returns true iff video has been seen.
 
@@ -1437,6 +1431,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         manual_dl_count = Item.manual_downloads_view().count()
         self.expired = self.keep = self.seen = False
         self.was_downloaded = True
+        self.new = False
 
         if ((not autodl) and
                 manual_dl_count >= app.config.get(prefs.MAX_MANUAL_DOWNLOADS)):
@@ -1718,13 +1713,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self._state = u'downloading'
             elif self.expired:
                 self._state = u'expired'
-            elif (self.get_viewed() or
-                    (self.downloader and
-                        self.downloader.get_state() in (u'failed',
-                                                        u'stopped'))):
-                self._state = u'not-downloaded'
-            else:
+            elif self.new:
                 self._state = u'new'
+            else:
+                self._state = u'not-downloaded'
         elif self.downloader.get_state() in (u'offline', u'paused'):
             if self.pending_manual_dl:
                 self._state = u'downloading'
@@ -1760,16 +1752,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
 
         self.confirm_db_thread()
-        if self.downloader is None or not self.downloader.is_finished():
-            if not self.get_viewed():
-                return u'new'
+        if self.new:
+            return u'new'
+        elif self.downloader is None or not self.downloader.is_finished():
             if self.expired:
                 return u'expired'
             else:
                 return u'not-downloaded'
         elif not self.get_seen():
-            if not self.get_viewed():
-                return u'new'
             return u'newly-downloaded'
         elif self.get_expiring():
             return u'expiring'
@@ -2140,6 +2130,9 @@ class FileItem(Item):
             # not a container item.  Note that the opposite isn't true in the
             # case where we are a directory with only 1 file inside.
             self.is_container_item = False
+        # FileItems are never considered new.  The new flag only really makes
+        # sense inside a feed.
+        self.new = False
         self.split_item()
 
     # FileItem downloaders are always None
@@ -2193,9 +2186,6 @@ class FileItem(Item):
 
     def show_save_button(self):
         return False
-
-    def get_viewed(self):
-        return True
 
     def is_external(self):
         return self.parent_id is None

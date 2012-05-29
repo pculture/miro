@@ -430,6 +430,7 @@ class ItemSchema(MultiClassObjectSchema):
 
     fields = DDBObjectSchema.fields + [
         ('is_file_item', SchemaBool()),
+        ('new', SchemaBool()),
         ('title', SchemaString(noneOk=True)),
         ('feed_id', SchemaInt(noneOk=True)),
         ('downloader_id', SchemaInt(noneOk=True)),
@@ -528,7 +529,6 @@ class FeedSchema(DDBObjectSchema):
         ('expireTime', SchemaTimeDelta(noneOk=True)),
         ('section', SchemaString()), # not used anymore
         ('visible', SchemaBool()),
-        ('last_viewed', SchemaDateTime()),
     ]
 
     indexes = (
@@ -880,7 +880,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 180
+VERSION = 181
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

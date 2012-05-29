@@ -3849,3 +3849,25 @@ def upgrade180(cursor):
     }
 
     alter_table_columns(cursor, 'item', [], rename_columns)
+
+def upgrade181(cursor):
+    """Drop the feed.last_viewed column and add item.new.
+
+    This means we can tell an item's state without data from the feed table.
+    """
+    cursor.execute("ALTER TABLE item ADD new INTEGER")
+    # These next lines set new=1 for all items that would have matched the
+    # feed_available_view() before.
+    # Make a subquery for items that were created after we last viewed a feed
+    subquery = ("SELECT item.id "
+                "FROM item "
+                "JOIN feed "
+                "ON feed.id = item.feed_id "
+                "WHERE feed.last_viewed <= item.creation_time")
+    cursor.execute("UPDATE item SET new=1 "
+                   "WHERE NOT auto_downloaded AND "
+                   "downloaded_time IS NULL AND "
+                   "NOT is_file_item AND "
+                   "id in (%s)" % subquery)
+    # remove the last_viewed column
+    remove_column(cursor, 'feed', ['last_viewed'])
