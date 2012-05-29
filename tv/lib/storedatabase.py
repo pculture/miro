@@ -102,7 +102,6 @@ _sqlite_type_map = {
         schema.SchemaTuple: 'pythonrepr',
         schema.SchemaDict: 'pythonrepr',
         schema.SchemaList: 'pythonrepr',
-        schema.SchemaStatusContainer: 'pythonrepr',
         schema.SchemaFilename: 'text',
         schema.SchemaStringSet: 'text',
 }
@@ -1381,7 +1380,6 @@ class SQLiteConverter(object):
     def __init__(self):
         self._to_sql_converters = {
                 schema.SchemaBinary: self._binary_to_sql,
-                schema.SchemaStatusContainer: self._status_to_sql,
                 schema.SchemaFilename: self._filename_to_sql,
                 schema.SchemaStringSet: self._string_set_to_sql,
         }
@@ -1389,7 +1387,6 @@ class SQLiteConverter(object):
         self._from_sql_converters = {
                 schema.SchemaBool: self._bool_from_sql,
                 schema.SchemaBinary: self._binary_from_sql,
-                schema.SchemaStatusContainer: self._status_from_sql,
                 schema.SchemaFilename: self._filename_from_sql,
                 schema.SchemaStringSet: self._string_set_from_sql,
         }
@@ -1463,24 +1460,6 @@ class SQLiteConverter(object):
 
     def _repr_from_sql(self, value, schema_item):
         return eval(value, __builtins__, {'datetime': datetime, 'time': _TIME_MODULE_SHADOW})
-
-    def _status_from_sql(self, repr_value, schema_item):
-        status_dict = self._repr_from_sql(repr_value, schema_item)
-        filename_fields = schema.SchemaStatusContainer.filename_fields
-        for key in filename_fields:
-            value = status_dict.get(key)
-            if value is not None and PlatformFilenameType != unicode:
-                status_dict[key] = self._unicode_to_filename(value)
-        return status_dict
-
-    def _status_to_sql(self, status_dict, schema_item):
-        to_save = status_dict.copy()
-        filename_fields = schema.SchemaStatusContainer.filename_fields
-        for key in filename_fields:
-            value = to_save.get(key)
-            if value is not None:
-                to_save[key] = filename_to_unicode(value)
-        return repr(to_save)
 
     def _string_set_to_sql(self, value, schema_item):
         return schema_item.delimiter.join(value)

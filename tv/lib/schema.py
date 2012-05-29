@@ -306,34 +306,6 @@ class SchemaDict(SchemaReprContainer):
                 raise ValidationError("value %r (key: %r) has the wrong type: %s"
                         % (value, key, type(value)))
 
-class SchemaStatusContainer(SchemaReprContainer):
-    """Version of SchemaReprContainer that stores the status dict for
-    RemoteDownloaders.  It allows some values to be byte strings
-    rather than unicode objects.
-    """
-
-    filename_fields = ('channelName', 'shortFilename', 'filename')
-
-    def validate(self, data):
-        binary_fields = self._binary_fields()
-        self.validateType(data, dict)
-        for key, value in data.items():
-            self.validateTypes(key, [bool, int, long, float, unicode,
-                                     str, NoneType, datetime.datetime,
-                                     time.struct_time], "%s: %s" % (key, value))
-            if key not in binary_fields:
-                self.validateTypes(value, [bool, int, long, float, unicode,
-                                           NoneType, datetime.datetime,
-                                           time.struct_time], "%s: %s" % (key, value))
-            else:
-                self.validateType(value, str)
-
-    def _binary_fields(self):
-        rv = ('metainfo',)
-        if PlatformFilenameType != unicode:
-            rv += self.filename_fields
-        return rv
-
 class SchemaObject(SchemaItem):
     """SchemaObject type."""
     def __init__(self, klass, noneOk=False):
@@ -627,12 +599,31 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('dlid', SchemaString()),
         ('contentType', SchemaString(noneOk=True)),
         ('channelName', SchemaFilename(noneOk=True)),
-        ('status', SchemaStatusContainer()),
         ('metainfo', SchemaBinary(noneOk=True)),
         ('manualUpload', SchemaBool()),
         ('state', SchemaString()),
         ('main_item_id', SchemaInt(noneOk=True)),
         ('child_deleted', SchemaBool()),
+        ('totalSize', SchemaInt(noneOk=True)),
+        ('currentSize', SchemaInt()),
+        ('eta', SchemaInt(noneOk=True)),
+        ('rate', SchemaInt(noneOk=True)),
+        ('startTime', SchemaInt(noneOk=True)),
+        ('endTime', SchemaInt(noneOk=True)),
+        ('shortFilename', SchemaFilename(noneOk=True)),
+        ('filename', SchemaFilename(noneOk=True)),
+        ('reasonFailed', SchemaString(noneOk=True)),
+        ('shortReasonFailed', SchemaString(noneOk=True)),
+        ('dlerType', SchemaString(noneOk=True)),
+        ('retryTime', SchemaInt(noneOk=True)),
+        ('retryCount', SchemaInt(noneOk=True)),
+        ('upRate', SchemaInt(noneOk=True)),
+        ('uploaded', SchemaInt(noneOk=True)),
+        ('activity', SchemaString(noneOk=True)),
+        ('seeders', SchemaInt(noneOk=True)),
+        ('leechers', SchemaInt(noneOk=True)),
+        ('connections', SchemaInt(noneOk=True)),
+        ('info_hash', SchemaString(noneOk=True)),
     ]
 
     indexes = (
@@ -880,7 +871,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 181
+VERSION = 182
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

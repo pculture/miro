@@ -50,6 +50,7 @@ from miro import prefs
 from miro.plat.utils import samefile, unicode_to_filename
 from miro import flashscraper
 from miro import fileutil
+from miro import util
 from miro.fileobject import FilenameType
 
 class DownloadStateManager(object):
@@ -217,6 +218,39 @@ def generate_dlid():
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
     MIN_STATUS_UPDATE_SPACING = 0.7
+
+    # attributes that get set from the BatchUpdateDownloadStatus command
+    status_attributes = [
+        'state',
+        'totalSize',
+        'currentSize',
+        'eta',
+        'rate',
+        'startTime',
+        'endTime',
+        'shortFilename',
+        'filename',
+        'reasonFailed',
+        'shortReasonFailed',
+        'dlerType',
+        'retryTime',
+        'retryCount',
+        'upRate',
+        'uploaded',
+        'activity',
+        'seeders',
+        'leechers',
+        'connections',
+        'metainfo',
+        'info_hash',
+        'filename',
+    ]
+    # default values for attributes in status_attributes
+    status_attribute_defaults = {
+        'currentSize': 0,
+        'state': u'downloading',
+    }
+
     def setup_new(self, url, item, contentType=None, channelName=None):
         check_u(url)
         if contentType:
@@ -226,9 +260,6 @@ class RemoteDownloader(DDBObject):
         self.child_deleted = False
         self.main_item_id = None
         self.dlid = generate_dlid()
-        self.status = {}
-        self.metainfo = None
-        self.state = u'downloading'
         if contentType is None:
             # HACK: Some servers report the wrong content-type for
             # torrent files.  We try to work around that by assuming
@@ -244,6 +275,7 @@ class RemoteDownloader(DDBObject):
         self._update_retry_time_dc = None
         self.status_updates_frozen = False
         self.last_update = time.time()
+        self.reset_status_attributes()
         if contentType is None:
             self.contentType = u""
         else:
@@ -253,6 +285,35 @@ class RemoteDownloader(DDBObject):
             self.get_content_type()
         else:
             self.run_downloader()
+
+    def reset_status_attributes(self):
+        """Reset the attributes that track downloading info."""
+        for attr_name in self.status_attributes:
+            default = self.status_attribute_defaults.get(attr_name)
+            setattr(self, attr_name, default)
+
+    def update_status_attributes(self, status_dict):
+        """Reset the attributes that track downloading info."""
+        for attr_name in self.status_attributes:
+            if attr_name in status_dict:
+                value = status_dict[attr_name]
+            else:
+                value = self.status_attribute_defaults.get(attr_name)
+            # only set attributes if something's changed.  This makes our
+            # UPDATE statments contain less data
+            if getattr(self, attr_name) != value:
+                setattr(self, attr_name, value)
+
+    def get_status_for_downloader(self):
+        status = dict((name, getattr(self, name))
+                     for name in self.status_attributes)
+        # status_attributes only tracks the attributes that we update based on
+        # the downloader status updates.  Also add values for that we send to
+        # the downloader, but that don't change from status updates.
+        status['channelName'] = self.channelName
+        status['dlid'] = self.dlid
+        status['url'] = self.url
+        return status
 
     @classmethod
     def finished_view(cls):
@@ -338,7 +399,7 @@ class RemoteDownloader(DDBObject):
         if isinstance(error, httpclient.AuthorizationCanceled):
             # user canceled out of the authorization request, so stop the
             # download.
-            self.status['state'] = u'stopped'
+            self.state = u'stopped'
             self.signal_change()
             return
 
@@ -363,27 +424,29 @@ class RemoteDownloader(DDBObject):
     def _get_rates(self):
         state = self.get_state()
         if state == u'downloading':
-            return (self.status.get('rate', 0), self.status.get('upRate', 0))
+            return self.rate, self.upRate
         if state == u'uploading':
-            return (0, self.status.get('upRate', 0))
+            return (0, self.upRate)
         return (0, 0)
 
-    def before_changing_status(self):
+    def before_changing_rates(self):
         rates = self._get_rates()
-        app.download_state_manager.total_down_rate -= rates[0]
-        app.download_state_manager.total_up_rate -= rates[1]
+        if rates[0] is not None:
+            app.download_state_manager.total_down_rate -= rates[0]
+        if rates[1] is not None:
+            app.download_state_manager.total_up_rate -= rates[1]
 
-    def after_changing_status(self):
-        self._recalc_state()
+    def after_changing_rates(self):
         rates = self._get_rates()
-        app.download_state_manager.total_down_rate += rates[0]
-        app.download_state_manager.total_up_rate += rates[1]
+        if rates[0] is not None:
+            app.download_state_manager.total_down_rate += rates[0]
+        if rates[1] is not None:
+            app.download_state_manager.total_up_rate += rates[1]
 
     @classmethod
     def update_status(cls, data, cmd_done=False):
         for field in data:
-            if field not in ['filename', 'shortFilename', 'channelName',
-                             'metainfo']:
+            if field not in ['filename', 'shortFilename', 'metainfo']:
                 data[field] = unicodify(data[field])
 
         self = get_downloader_by_dlid(dlid=data['dlid'])
@@ -456,44 +519,27 @@ class RemoteDownloader(DDBObject):
 
             # We are updating!  Reset the status_updates_frozen flag.
             self.status_updates_frozen = False
- 
-            # FIXME - this should get fixed.
-            metainfo = data.pop('metainfo', self.metainfo)
-
-            # For metainfo, the downloader process doesn't send the
-            # keys if they haven't changed.  Therefore, use our
-            # current values if the key isn't present.
-            current = (self.status, self.metainfo)
-            new = (data, metainfo)
-            if current == new:
-                return True
 
             # We have something to update: update the last updated timestamp.
             self.last_update = now
 
             was_finished = self.is_finished()
             old_filename = self.get_filename()
-            self.before_changing_status()
+            self.before_changing_rates()
 
             # FIXME: how do we get all of the possible bit torrent
             # activity strings into gettext? --NN
             if data.has_key('activity') and data['activity']:
                 data['activity'] = _(data['activity'])
 
-            # only set attributes if something's changed.  This makes our
-            # UPDATE statments contain less data
-            if data != self.status:
-                self.status = data
-            if metainfo != self.metainfo:
-                self.metainfo = metainfo
-            self._recalc_state()
+            self.update_status_attributes(data)
 
             # Store the time the download finished
             finished = self.is_finished() and not was_finished
             name_changed = self.get_filename() != old_filename
             file_migrated = (self.is_finished() and name_changed)
             needs_signal_item = not (finished or file_migrated or rate_limit)
-            self.after_changing_status()
+            self.after_changing_rates()
 
             if ((self.get_state() == u'uploading'
                  and not self.manualUpload
@@ -501,38 +547,22 @@ class RemoteDownloader(DDBObject):
                       and self.get_upload_ratio() > app.config.get(prefs.UPLOAD_RATIO)))):
                 self.stop_upload()
 
-            if self.changed_attributes == set(('status',)):
-                # if we just changed status, then we can wait a while
-                # to store things to disk.  Since we go through
-                # update_status() often, this results in a fairly
-                # large performance gain and alleviates #12101
-                self._save_later()
-                self.signal_change(needs_signal_item=needs_signal_item,
-                                   needs_save=False)
-            else:
-                self.signal_change()
+            self.signal_change()
 
             if finished:
                 for item in self.item_list:
                     item.on_download_finished()
             elif file_migrated:
                 self._file_migrated(old_filename)
-            elif name_changed and old_filename:
-                # update the title; happens with magnet URLs since we don't
-                # have a real one when the download starts.  The old_filename
-                # check is to prevent things with existing titles from being
-                # renamed (#18656).
-                new_title = self.status['shortFilename']
-                if not isinstance(new_title, unicode):
-                    try:
-                        new_title = new_title.decode('utf-8')
-                    except UnicodeDecodeError:
-                        # if there's a problem with the filename, don't bother
-                        # changing
-                        return
+            elif name_changed and old_filename and self.metainfo is not None:
+                # update the torren title; happens with magnet URLs since we
+                # don't have a real one when the download starts.  The
+                # old_filename check is to prevent things with existing titles
+                # from being renamed (#18656).
+                title = util.get_name_from_torrent_metadata(self.metainfo)
                 for item in self.item_list:
-                    if item.title is None:
-                        item.title = new_title
+                    if item.torrent_title is None:
+                        item.torrent_title = new_title
                         item.signal_change()
 
         return True
@@ -562,11 +592,11 @@ class RemoteDownloader(DDBObject):
             app.download_state_manager.queue(self.dlid,
                                              app.download_state_manager.RESUME,
                                              args)
-            self.status["state"] = u"downloading"
+            self.state = u'downloading'
         else:
-            self.status["state"] = u'failed'
-            self.status["shortReasonFailed"] = _('File not found')
-            self.status["reasonFailed"] = _('Flash URL Scraping Error')
+            self.state = u'failed'
+            self.shortReasonFailed = _('File not found')
+            self.reasonFailed = _('Flash URL Scraping Error')
         self.signal_change()
 
     def pause(self):
@@ -576,9 +606,7 @@ class RemoteDownloader(DDBObject):
             app.download_state_manager.queue(self.dlid,
                                              app.download_state_manager.PAUSE,
                                              args)
-        self.before_changing_status()
-        self.status["state"] = u"paused"
-        self.after_changing_status()
+        self.state = u'paused'
         self.signal_change()
 
     def stop(self, delete):
@@ -597,21 +625,19 @@ class RemoteDownloader(DDBObject):
 
         if delete:
             self.delete()
-        self.status["state"] = u"stopped"
+        self.state = u'stopped'
         self.signal_change()
 
     def delete(self):
-        if "filename" in self.status:
-            filename = self.status['filename']
-        else:
+        if self.filename is None:
             return
         try:
-            fileutil.delete(filename)
+            fileutil.delete(self.filename)
         except OSError:
             logging.exception("Error deleting downloaded file: %s",
-                              to_uni(filename))
+                              to_uni(self.filename))
 
-        parent = os.path.join(fileutil.expand_filename(filename),
+        parent = os.path.join(fileutil.expand_filename(self.filename),
                               os.path.pardir)
         parent = os.path.normpath(parent)
         movies_dir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
@@ -623,6 +649,7 @@ class RemoteDownloader(DDBObject):
             except OSError:
                 logging.exception("Error deleting empty download directory: %s",
                                   to_uni(parent))
+        self.filename = None
 
     def start(self):
         """Continues a paused, stopped, or failed download thread
@@ -632,9 +659,9 @@ class RemoteDownloader(DDBObject):
             self.url = self.origURL
             app.download_state_manager.delete_download(self.dlid)
             self.dlid = generate_dlid()
-            self.before_changing_status()
-            self.status = {}
-            self.after_changing_status()
+            self.before_changing_rates()
+            self.reset_status_attributes()
+            self.after_changing_rates()
             if self.contentType == u"":
                 self.get_content_type()
             else:
@@ -648,7 +675,7 @@ class RemoteDownloader(DDBObject):
                     self.dlid,
                     app.download_state_manager.RESUME,
                     args)
-            self.status['state'] = u'downloading'
+            self.state = u'downloading'
             self.restart()
             self.signal_change()
 
@@ -659,21 +686,21 @@ class RemoteDownloader(DDBObject):
             c.send()
         else:
             # downloader doesn't have our dlid.  Move the file ourself.
-            short_filename = self.status.get("shortFilename")
+            short_filename = self.shortFilename
             if not short_filename:
                 logging.warning(
                     "can't migrate download; no shortfilename!  URL was %s",
                     self.url)
                 return
-            filename = self.status.get("filename")
+            filename = self.filename
             if not filename:
                 logging.warning(
                     "can't migrate download; no filename!  URL was %s",
                     self.url)
                 return
             if fileutil.exists(filename):
-                if self.status.get('channelName', None) is not None:
-                    channelName = filter_directory_name(self.status['channelName'])
+                if self.channelName is not None:
+                    channelName = filter_directory_name(self.channelName)
                     directory = os.path.join(directory, channelName)
                 if not os.path.exists(directory):
                     try:
@@ -702,7 +729,7 @@ class RemoteDownloader(DDBObject):
                                  func, newfilename)
                 else:
                     def callback():
-                        self.status['filename'] = newfilename
+                        self.filename = newfilename
                         self.signal_change(needs_signal_item=False)
                         self._file_migrated(filename)
                     fileutil.migrate_file(filename, newfilename, callback)
@@ -729,8 +756,10 @@ class RemoteDownloader(DDBObject):
         """Removes downloader from the database and deletes the file.
         """
         rates = self._get_rates()
-        app.download_state_manager.total_down_rate -= rates[0]
-        app.download_state_manager.total_up_rate -= rates[1]
+        if rates[0] is not None:
+            app.download_state_manager.total_down_rate -= rates[0]
+        if rates[1] is not None:
+            app.download_state_manager.total_up_rate -= rates[1]
         if self.is_finished():
             app.local_metadata_manager.remove_file(self.get_filename())
         self.stop(self.delete_files)
@@ -767,18 +796,18 @@ class RemoteDownloader(DDBObject):
 
     def get_rate(self):
         self.confirm_db_thread()
-        return self.status.get('rate', 0)
+        return self.rate
 
     def get_eta(self):
         self.confirm_db_thread()
-        return self.status.get('eta', 0)
+        return self.eta
 
     @returns_unicode
     def get_startup_activity(self):
         self.confirm_db_thread()
-        activity = self.status.get('activity')
-        if ((activity is None and self.status.get('retryCount', -1) > -1
-             and 'retryTime' in self.status)):
+        activity = self.activity
+        if (activity is None and self.retryCount is not None and
+             self.retryTime is not None):
             activity = self._calc_retry_time()
             if self._update_retry_time_dc is None:
                 self._update_retry_time_dc = eventloop.add_timeout(1,
@@ -788,8 +817,8 @@ class RemoteDownloader(DDBObject):
         return activity
 
     def _calc_retry_time(self):
-        if self.status['retryTime'] > datetime.datetime.now():
-            retry_delta = self.status['retryTime'] - datetime.datetime.now()
+        if self.retryTime > datetime.datetime.now():
+            retry_delta = self.retryTime - datetime.datetime.now()
             time_str = displaytext.time_string(retry_delta.seconds)
             return _('no connection - retrying in %(time)s', {"time": time_str})
         else:
@@ -817,7 +846,10 @@ class RemoteDownloader(DDBObject):
             msg = u"get_reason_failed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirm_db_thread()
-        return self.status.get('reasonFailed', _("Unknown"))
+        if self.reasonFailed is not None:
+            return self.reasonFailed
+        else:
+            return _("Unknown")
 
     @returns_unicode
     def get_short_reason_failed(self):
@@ -825,7 +857,10 @@ class RemoteDownloader(DDBObject):
             msg = u"get_short_reason_failed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirm_db_thread()
-        return self.status.get('shortReasonFailed', _("Unknown"))
+        if self.shortReasonFailed is not None:
+            return self.shortReasonFailed
+        else:
+            return _("Unknown")
 
     @returns_unicode
     def get_url(self):
@@ -837,7 +872,7 @@ class RemoteDownloader(DDBObject):
     @returns_unicode
     def get_state(self):
         """Returns the state of the download: downloading, paused,
-        stopped, failed, or finished.
+        uploading, uploading-paused, stopped, failed, or finished.
         """
         self.confirm_db_thread()
         return self.state
@@ -850,13 +885,13 @@ class RemoteDownloader(DDBObject):
         """Returns the total size of the download in bytes.
         """
         self.confirm_db_thread()
-        return self.status.get('totalSize', -1)
+        return self.totalSize
 
     def get_current_size(self):
         """Returns the current amount downloaded in bytes.
         """
         self.confirm_db_thread()
-        return self.status.get('currentSize', 0)
+        return self.currentSize
 
     @returns_filename
     def get_filename(self):
@@ -864,9 +899,7 @@ class RemoteDownloader(DDBObject):
         called until state is "finished."
         """
         self.confirm_db_thread()
-        # FIXME - FilenameType('') is a bogus value, but looks like a
-        # filename.  should return None.
-        return self.status.get('filename', FilenameType(''))
+        return self.filename
 
     def setup_restored(self):
         self.status_updates_frozen = False
@@ -878,24 +911,15 @@ class RemoteDownloader(DDBObject):
         if self.dlid == 'noid':
             # this won't happen nowadays, but it can for old databases
             self.dlid = generate_dlid()
-        self.status['rate'] = 0
-        self.status['upRate'] = 0
-        self.status['eta'] = 0
-
-    def on_signal_change(self):
-        self._recalc_state()
-
-    def _recalc_state(self):
-        new_state = self.status.get('state', u'downloading')
-        # avoid altering changed_attributes if we don't need to
-        if new_state != self.state:
-            self.state = new_state
+        self.rate = 0
+        self.upRate = 0
+        self.eta = 0
 
     def get_upload_ratio(self):
         size = self.get_current_size()
         if size == 0:
             return 0
-        return self.status.get('uploaded', 0) / size
+        return self.uploaded / size
 
     def restart_on_startup_if_needed(self):
         if not self.id_exists():
@@ -916,26 +940,19 @@ class RemoteDownloader(DDBObject):
                 self.stop_upload()
 
     def restart(self):
-        if not self.status or self.status.get('dlerType') is None:
+        if self.dlerType is None:
             if self.contentType == u"":
                 self.get_content_type()
             else:
                 self.run_downloader()
         else:
             app.download_state_manager.add_download(self.dlid, self)
-            dler_status = self.status
-            # FIXME: not sure why this is necessary
-            if self.contentType ==  u'application/x-magnet':
-                dler_status['url'] = self.url
-            dler_status['metainfo'] = self.metainfo
-            args = dict(downloader=dler_status)
+            self.status = u'downloading'
+            args = dict(downloader=self.get_status_for_downloader())
             app.download_state_manager.queue(
                 self.dlid,
                 app.download_state_manager.RESTORE,
                 args)
-            self.before_changing_status()
-            self.status['state'] = u'downloading'
-            self.after_changing_status()
 
     def start_upload(self):
         """
@@ -962,9 +979,9 @@ class RemoteDownloader(DDBObject):
                                              app.download_state_manager.RESUME,
                                              args)
         else:
-            self.before_changing_status()
-            self.status['state'] = u'uploading'
-            self.after_changing_status()
+            self.before_changing_rates()
+            self.state = u'uploading'
+            self.after_changing_rates()
             self.restart()
             self.signal_change()
 
@@ -977,9 +994,9 @@ class RemoteDownloader(DDBObject):
             app.download_state_manager.queue(self.dlid,
                 app.download_state_manager.STOP, args)
             app.download_state_manager.delete_download(self.dlid)
-        self.before_changing_status()
-        self.status["state"] = u"finished"
-        self.after_changing_status()
+        self.before_changing_rates()
+        self.state = u'finished'
+        self.after_changing_rates()
         self.signal_change()
 
     def pause_upload(self):
@@ -992,9 +1009,9 @@ class RemoteDownloader(DDBObject):
                 app.download_state_manager.PAUSE,
                 args)
             app.download_state_manager.delete_download(self.dlid)
-        self.before_changing_status()
-        self.status["state"] = u"uploading-paused"
-        self.after_changing_status()
+        self.before_changing_rates()
+        self.state = u"uploading-paused"
+        self.after_changing_rates()
         self.signal_change()
 
 def cleanup_incomplete_downloads():
@@ -1009,7 +1026,7 @@ def cleanup_incomplete_downloads():
                                      'offline', 'uploading', 'finished',
                                      'uploading-paused'):
             filename = downloader.get_filename()
-            if len(filename) > 0:
+            if filename:
                 if not fileutil.isabs(filename):
                     filename = os.path.join(download_dir, filename)
                 files_in_use.add(filename)

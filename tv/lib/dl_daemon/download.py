@@ -467,16 +467,16 @@ class BGDownloader(object):
     def __init__(self, url, dlid):
         self.dlid = dlid
         self.url = url
-        self.startTime = clock()
-        self.endTime = self.startTime
+        self.startTime = int(clock())
+        self.endTime = None
         self.shortFilename = filename_from_url(url)
         self.pick_initial_filename()
         self.state = u"downloading"
         self.currentSize = 0
-        self.totalSize = -1
+        self.totalSize = None
         self.shortReasonFailed = self.reasonFailed = u"No Error"
         self.retryTime = None
-        self.retryCount = -1
+        self.retryCount = None
 
     def get_url(self):
         return self.url
@@ -498,8 +498,7 @@ class BGDownloader(object):
             'shortReasonFailed': self.shortReasonFailed,
             'dlerType': None,
             'retryTime': self.retryTime,
-            'retryCount': self.retryCount,
-            'channelName': self.channelName}
+            'retryCount': self.retryCount}
 
     def update_client(self, now=False):
         if not now:
@@ -631,24 +630,20 @@ class BGDownloader(object):
         fileutil.migrate_file(src, dest, callback)
 
     def get_eta(self):
-        """Returns a float with the estimated number of seconds left.
+        """Returns a int with the estimated number of seconds left.
         """
-        if self.totalSize == -1:
-            return -1
+        if self.totalSize is None:
+            return None
         rate = self.get_rate()
         if rate > 0:
-            return (self.totalSize - self.currentSize) / rate
+            return (self.totalSize - self.currentSize) // rate
         else:
             return 0
 
     def get_rate(self):
-        """Returns a float with the download rate in bytes per second
+        """Returns a int with the download rate in bytes per second
         """
-        if self.endTime != self.startTime:
-            rate = self.currentSize / (self.endTime - self.startTime)
-        else:
-            rate = self.rate
-        return rate
+        return self.rate
 
     def retry_download(self):
         self.retryDC = None
@@ -656,8 +651,9 @@ class BGDownloader(object):
 
     def handle_temporary_error(self, short_reason, reason):
         self.state = u"offline"
-        self.endTime = self.startTime = 0
-        self.rate = 0
+        self.startTime = 0
+        self.endTime = None
+        self.rate = None
         self.reasonFailed = reason
         self.shortReasonFailed = short_reason
         self.retryCount = self.retryCount + 1
@@ -688,7 +684,7 @@ class BGDownloader(object):
                                    httpclient.UnexpectedStatusCode))):
                 self.handle_error(error.getFriendlyDescription(),
                                   error.getLongDescription())
-                self.retryCount = -1 # reset retryCount
+                self.retryCount = None # reset retryCount
             else:
                 self.handle_temporary_error(error.getFriendlyDescription(),
                                             error.getLongDescription())
@@ -711,11 +707,11 @@ class BGDownloader(object):
             preserved = (app.config.get(prefs.PRESERVE_X_GB_FREE) *
                          1024 * 1024 * 1024)
             # below code gets the additional space we expect to be taken by
-            # in-progress downloads.  totalSize == -1 when the download doesn't
-            # know how big it is.
+            # in-progress downloads.  totalSize is None when the download
+            # doesn't know how big it is.
             additional_space =  sum(dl.totalSize - dl.currentSize
                                     for dl in _downloads.values()
-                                    if dl.totalSize != -1)
+                                    if dl.totalSize is not None)
             available = (get_available_bytes_for_movies() - preserved -
                          additional_space)
             accept = (size <= available)
@@ -730,17 +726,13 @@ class HTTPDownloader(BGDownloader):
         self.channelName = None
         self.expectedContentType = expectedContentType
         if restore is not None:
-            if not isinstance(restore.get('totalSize', 0), int):
-                # Sometimes restoring old downloaders caused errors
-                # because their totalSize wasn't an int.  (see #3965)
-                restore['totalSize'] = int(restore['totalSize'])
             self.__dict__.update(restore)
             self.restartOnError = True
         else:
             BGDownloader.__init__(self, url, dlid)
             self.restartOnError = False
         self.client = None
-        self.rate = 0
+        self.rate = None
         if self.state == u'downloading':
             self.start_download()
         elif self.state == u'offline':
@@ -751,7 +743,7 @@ class HTTPDownloader(BGDownloader):
     def start_new_download(self):
         """Start a download, discarding any existing data"""
         self.currentSize = 0
-        self.totalSize = -1
+        self.totalSize = None
         self.start_download(resume=False)
 
     def start_download(self, resume=True):
@@ -819,7 +811,7 @@ class HTTPDownloader(BGDownloader):
             except OSError:
                 pass
         self.currentSize = 0
-        self.totalSize = -1
+        self.totalSize = None
 
     def handle_temporary_error(self, short_reason, reason):
         self.cancel_request()
@@ -858,7 +850,7 @@ class HTTPDownloader(BGDownloader):
         if isinstance(error, httpclient.ResumeFailed):
             # try starting from scratch
             self.currentSize = 0
-            self.totalSize = -1
+            self.totalSize = None
             self.start_new_download()
         elif isinstance(error, httpclient.AuthorizationCanceled):
             self.destroy_client()
@@ -873,7 +865,8 @@ class HTTPDownloader(BGDownloader):
     def on_download_finished(self, response):
         self.destroy_client()
         self.state = u"finished"
-        self.endTime = clock()
+        self.endTime = int(clock())
+        self.rate = None
         # bug 14131 -- if there's nothing here, treat it like a temporary
         # error
         if self.currentSize == 0:
@@ -881,7 +874,7 @@ class HTTPDownloader(BGDownloader):
                 _("no content")))
 
         else:
-            if self.totalSize == -1:
+            if self.totalSize == None:
                 self.totalSize = self.currentSize
             try:
                 self.move_to_movies_directory()
@@ -1043,7 +1036,7 @@ class BTDownloader(BGDownloader):
     def __init__(self, url=None, item=None, restore=None, magnet=None):
         self.metainfo = None
         self.torrent = None
-        self.rate = self.eta = 0
+        self.rate = self.eta = None
         self.upRate = self.uploaded = 0
         self.activity = None
         self.fast_resume_data = None
@@ -1085,7 +1078,7 @@ class BTDownloader(BGDownloader):
 
             if duplicate is not None:
                 c = command.DuplicateTorrent(daemon.LAST_DAEMON,
-                        duplicate.dlid, self.dlid)
+                                             duplicate.dlid, self.dlid)
                 c.send()
                 return
 
@@ -1271,17 +1264,17 @@ class BTDownloader(BGDownloader):
         """
         status = self.torrent.status()
         self.totalSize = status.total_wanted
-        self.rate = status.download_payload_rate
-        self.upRate = status.upload_payload_rate
+        self.rate = int(status.download_payload_rate)
+        self.upRate = int(status.upload_payload_rate)
         self.uploaded = status.total_payload_upload + self.uploadedStart
         self.seeders = status.num_complete
         self.leechers = status.num_incomplete
         self.connections = status.num_connections
         try:
-            self.eta = ((status.total_wanted - status.total_wanted_done) /
-                        float(status.download_payload_rate))
+            self.eta = ((status.total_wanted - status.total_wanted_done) //
+                        status.download_payload_rate)
         except ZeroDivisionError:
-            self.eta = 0
+            self.eta = None
 
         # FIXME - this needs some more examination before it's
         # enabled.
@@ -1307,7 +1300,8 @@ class BTDownloader(BGDownloader):
              and status.state == lt.torrent_status.states.seeding)):
             self.move_to_movies_directory()
             self.state = u"uploading"
-            self.endTime = clock()
+            self.endTime = int(clock())
+            self.rate = 0
 
         self.update_client()
 
@@ -1382,7 +1376,7 @@ class BTDownloader(BGDownloader):
             self.magnet = data['url']
             data['url'] = None
         self.__dict__.update(data)
-        self.rate = self.eta = 0
+        self.rate = self.eta = None
         self.upRate = 0
         self.uploadedStart = self.uploaded
         if self.state in (u'downloading', u'uploading'):

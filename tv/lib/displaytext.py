@@ -57,6 +57,8 @@ def strftime_to_unicode(nbytes):
             return nbytes.decode('utf-8', 'replace')
 
 def download_rate(rate):
+    if rate is None:
+        return ""
     if rate >= (1 << 30):
         value = "%1.1f" % (rate / float(1 << 30))
         return _("%(size)s GB/s", {"size": value})

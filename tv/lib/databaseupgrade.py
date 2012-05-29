@@ -3871,3 +3871,84 @@ def upgrade181(cursor):
                    "id in (%s)" % subquery)
     # remove the last_viewed column
     remove_column(cursor, 'feed', ['last_viewed'])
+
+def upgrade182(cursor):
+    """Unroll the remote_downloader.status column """
+
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN totalSize INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN currentSize INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN eta INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN rate INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN startTime INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN endTime INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN shortFilename TEXT")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN filename TEXT")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN reasonFailed TEXT")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN shortReasonFailed TEXT")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN dlerType TEXT")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN retryTime INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN retryCount INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN upRate INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN uploaded INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN activity text")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN seeders INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN leechers INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN connections INTEGER")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN info_hash TEXT")
+    columns = [ 'totalSize', 'currentSize', 'eta', 'rate', 'startTime',
+               'endTime', 'shortFilename', 'filename', 'retryTime',
+               'retryCount', 'upRate', 'uploaded', 'seeders', 'leechers',
+               'connections', 'info_hash', 'reasonFailed',
+               'shortReasonFailed', 'dlerType', 'activity',
+              ]
+    cursor.execute("SELECT id, status from remote_downloader")
+    update_sql = ("UPDATE remote_downloader SET %s WHERE id=?" %
+                  ", ".join("%s=? " % name for name in columns))
+    for id_, status_repr in cursor.fetchall():
+        try:
+            status = eval(status_repr, {}, {})
+        except StandardErrror:
+            logging.warn("Error evaluating status repr: %r" % status_repr)
+            continue
+        values = []
+        for column in columns:
+            value = status.get(column)
+            # Most of the time we can just use the value from status column,
+            # but for some special cases we need to tweak it.
+            if (column == 'endTime' and
+                value == status.get('startTime')):
+                value = None
+            elif column in ['eta', 'rate'] and value == 0:
+                value = None
+            elif column == 'currentSize' and value is None:
+                value = 0
+            elif column in ('retryCount', 'totalSize') and value == -1:
+                value = None
+            elif (column in ['startTime', 'endTime', 'eta', 'rate'] and
+                  value is not None):
+                value = int(value)
+            values.append(value)
+        values.append(id_)
+        cursor.execute(update_sql, values)
+
+    remove_column(cursor, 'remote_downloader', 'status')

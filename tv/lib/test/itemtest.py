@@ -376,8 +376,8 @@ class ItemMetadataTest(MiroTestCase):
     def test_expire(self):
         # Test calling expire() on a item downloaded from a feed
         item = self.make_regular_item(self.regular_feed)
-        item.downloader.status['filename'] = self.path
-        item.downloader.state = item.downloader.status['state'] = u'finished'
+        item.downloader.filename = self.path
+        item.downloader.state = u'finished'
         item.on_download_finished()
         self.check_path_in_metadata_manager()
 
@@ -388,8 +388,8 @@ class ItemMetadataTest(MiroTestCase):
     def test_expire_external_item(self):
         # Test calling expire() on a item downloaded by itself
         item = self.make_regular_item(self.manual_feed)
-        item.downloader.status['filename'] = self.path
-        item.downloader.state = item.downloader.status['state'] = u'finished'
+        item.downloader.filename = self.path
+        item.downloader.state = u'finished'
         item.on_download_finished()
         self.check_path_in_metadata_manager()
 
