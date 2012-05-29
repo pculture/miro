@@ -440,7 +440,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.fallBehind = -1
 
         self.baseTitle = None
-        self.origURL = url
+        self.orig_url = url
         self.errorState = False
         self.loading = True
         self._actualFeed = None
@@ -482,7 +482,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                     pass
         # otherwise, make a new FeedImpl
         if self._actualFeed is None:
-            self._set_feed_impl(FeedImpl(self.origURL, self))
+            self._set_feed_impl(FeedImpl(self.orig_url, self))
             self.signal_change()
         return self._actualFeed
 
@@ -490,15 +490,15 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def get_by_url(cls, url):
-        return cls.make_view('origURL=?', (url,)).get_singleton()
+        return cls.make_view('orig_url=?', (url,)).get_singleton()
 
     @classmethod
     def get_by_url_and_search(cls, url, searchTerm):
         if searchTerm is not None:
-            view = cls.make_view('origURL=? AND searchTerm=?',
+            view = cls.make_view('orig_url=? AND searchTerm=?',
                     (url, searchTerm))
         else:
-            view = cls.make_view('origURL=? AND searchTerm IS NULL', (url,))
+            view = cls.make_view('orig_url=? AND searchTerm IS NULL', (url,))
         return view.get_singleton()
 
     @classmethod
@@ -527,7 +527,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def watched_folder_view(cls):
-        return cls.make_view("origURL LIKE 'dtv:directoryfeed:%'")
+        return cls.make_view("orig_url LIKE 'dtv:directoryfeed:%'")
 
     def on_db_insert(self):
         self.generate_feed(True)
@@ -852,35 +852,36 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def generate_feed(self, removeOnError=False):
         newFeed = None
-        if self.origURL == u"dtv:directoryfeed":
+        if self.orig_url == u"dtv:directoryfeed":
             newFeed = DirectoryFeedImpl(self)
             self.visible = False
-        elif (self.origURL.startswith(u"dtv:directoryfeed:")):
-            url = self.origURL[len(u"dtv:directoryfeed:"):]
+        elif (self.orig_url.startswith(u"dtv:directoryfeed:")):
+            url = self.orig_url[len(u"dtv:directoryfeed:"):]
             dir_ = unmake_url_safe(url)
             newFeed = DirectoryWatchFeedImpl(self, dir_)
-        elif self.origURL == u"dtv:search":
+        elif self.orig_url == u"dtv:search":
             newFeed = SearchFeedImpl(self)
             self.visible = False
-        elif self.origURL == u"dtv:searchDownloads":
+        elif self.orig_url == u"dtv:searchDownloads":
             newFeed = SearchDownloadsFeedImpl(self)
             self.visible = False
-        elif self.origURL == u"dtv:manualFeed":
+        elif self.orig_url == u"dtv:manualFeed":
             newFeed = ManualFeedImpl(self)
             self.visible = False
-        elif SEARCH_URL_MATCH_RE.match(self.origURL):
-            newFeed = SavedSearchFeedImpl(self.origURL, self)
+        elif SEARCH_URL_MATCH_RE.match(self.orig_url):
+            newFeed = SavedSearchFeedImpl(self.orig_url, self)
         else:
-            self.download = grab_url(self.origURL,
+            self.download = grab_url(self.orig_url,
                     lambda info: self._generate_feed_callback(info, removeOnError),
                     lambda error: self._generate_feed_errback(error, removeOnError),
                     default_mime_type=u'application/rss+xml')
-            logging.debug("added async callback to create feed %s", self.origURL)
+            logging.debug("added async callback to create feed %s",
+                          self.orig_url)
         if newFeed:
             self.finish_generate_feed(newFeed)
 
     def is_watched_folder(self):
-        return self.origURL.startswith("dtv:directoryfeed:")
+        return self.orig_url.startswith("dtv:directoryfeed:")
 
     def _handle_feed_loading_error(self, errorDescription):
         self.download = None
@@ -916,7 +917,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if not self.id_exists():
             return
         logging.warning("Couldn't load podcast at %s (%s)",
-                        self.origURL, error)
+                        self.orig_url, error)
         self._handle_feed_loading_error(error.getFriendlyDescription())
 
     def _generate_feed_callback(self, info, removeOnError):
@@ -931,8 +932,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
         if not self.id_exists():
             return
-        if info['updated-url'] != self.origURL and \
-                not self.origURL.startswith('dtv:'): # we got redirected
+        if info['updated-url'] != self.orig_url and \
+                not self.orig_url.startswith('dtv:'): # we got redirected
             f = lookup_feed(info['updated-url'], self.searchTerm)
             if f is not None: # already have this feed, so delete us
                 self.remove()

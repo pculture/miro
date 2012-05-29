@@ -3876,35 +3876,35 @@ def upgrade182(cursor):
     """Unroll the remote_downloader.status column """
 
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN totalSize INTEGER")
+                   "ADD COLUMN total_size INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN currentSize INTEGER")
+                   "ADD COLUMN current_size INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN eta INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN rate INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN startTime INTEGER")
+                   "ADD COLUMN start_time INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN endTime INTEGER")
+                   "ADD COLUMN end_time INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN shortFilename TEXT")
+                   "ADD COLUMN short_filename TEXT")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN filename TEXT")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN reasonFailed TEXT")
+                   "ADD COLUMN reason_failed TEXT")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN shortReasonFailed TEXT")
+                   "ADD COLUMN short_reason_failed TEXT")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN dlerType TEXT")
+                   "ADD COLUMN dler_type TEXT")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN retryTime INTEGER")
+                   "ADD COLUMN retry_time INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN retryCount INTEGER")
+                   "ADD COLUMN retry_count INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN upRate INTEGER")
+                   "ADD COLUMN upload_rate INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN uploaded INTEGER")
+                   "ADD COLUMN upload_size INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN activity text")
     cursor.execute("ALTER TABLE remote_downloader "
@@ -3915,11 +3915,11 @@ def upgrade182(cursor):
                    "ADD COLUMN connections INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN info_hash TEXT")
-    columns = [ 'totalSize', 'currentSize', 'eta', 'rate', 'startTime',
-               'endTime', 'shortFilename', 'filename', 'retryTime',
-               'retryCount', 'upRate', 'uploaded', 'seeders', 'leechers',
-               'connections', 'info_hash', 'reasonFailed',
-               'shortReasonFailed', 'dlerType', 'activity',
+    columns = [ 'total_size', 'current_size', 'eta', 'rate', 'start_time',
+               'end_time', 'short_filename', 'filename', 'retry_time',
+               'retry_count', 'upload_rate', 'upload_size', 'seeders',
+               'leechers', 'connections', 'info_hash', 'reason_failed',
+               'short_reason_failed', 'dler_type', 'activity',
               ]
     cursor.execute("SELECT id, status from remote_downloader")
     update_sql = ("UPDATE remote_downloader SET %s WHERE id=?" %
@@ -3935,16 +3935,16 @@ def upgrade182(cursor):
             value = status.get(column)
             # Most of the time we can just use the value from status column,
             # but for some special cases we need to tweak it.
-            if (column == 'endTime' and
-                value == status.get('startTime')):
+            if (column == 'end_time' and
+                value == status.get('start_time')):
                 value = None
             elif column in ['eta', 'rate'] and value == 0:
                 value = None
-            elif column == 'currentSize' and value is None:
+            elif column == 'current_size' and value is None:
                 value = 0
-            elif column in ('retryCount', 'totalSize') and value == -1:
+            elif column in ('retry_count', 'total_size') and value == -1:
                 value = None
-            elif (column in ['startTime', 'endTime', 'eta', 'rate'] and
+            elif (column in ['start_time', 'end_time', 'eta', 'rate'] and
                   value is not None):
                 value = int(value)
             values.append(value)
@@ -3952,3 +3952,14 @@ def upgrade182(cursor):
         cursor.execute(update_sql, values)
 
     remove_column(cursor, 'remote_downloader', 'status')
+
+def upgrade183(cursor):
+    """Rename downloader columns to use PEP 8."""
+    rename_columns = {
+        'contentType': 'content_type',
+        'origURL': 'orig_url',
+        'channelName': 'channel_name',
+    }
+    alter_table_columns(cursor, 'remote_downloader', [], rename_columns)
+    # as long as we're changing origURL, change if for feed too
+    rename_column(cursor, 'feed', 'origURL', 'orig_url')

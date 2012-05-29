@@ -222,21 +222,21 @@ class RemoteDownloader(DDBObject):
     # attributes that get set from the BatchUpdateDownloadStatus command
     status_attributes = [
         'state',
-        'totalSize',
-        'currentSize',
+        'total_size',
+        'current_size',
         'eta',
         'rate',
-        'startTime',
-        'endTime',
-        'shortFilename',
+        'start_time',
+        'end_time',
+        'short_filename',
         'filename',
-        'reasonFailed',
-        'shortReasonFailed',
-        'dlerType',
-        'retryTime',
-        'retryCount',
-        'upRate',
-        'uploaded',
+        'reason_failed',
+        'short_reason_failed',
+        'dler_type',
+        'retry_time',
+        'retry_count',
+        'upload_rate',
+        'upload_size',
         'activity',
         'seeders',
         'leechers',
@@ -247,41 +247,41 @@ class RemoteDownloader(DDBObject):
     ]
     # default values for attributes in status_attributes
     status_attribute_defaults = {
-        'currentSize': 0,
+        'current_size': 0,
         'state': u'downloading',
     }
 
-    def setup_new(self, url, item, contentType=None, channelName=None):
+    def setup_new(self, url, item, content_type=None, channel_name=None):
         check_u(url)
-        if contentType:
-            check_u(contentType)
-        self.origURL = self.url = url
+        if content_type:
+            check_u(content_type)
+        self.orig_url = self.url = url
         self.item_list = []
         self.child_deleted = False
         self.main_item_id = None
         self.dlid = generate_dlid()
-        if contentType is None:
+        if content_type is None:
             # HACK: Some servers report the wrong content-type for
             # torrent files.  We try to work around that by assuming
             # if the enclosure states that something is a torrent,
             # it's a torrent.  Thanks to j@v2v.cc.
             if item.enclosure_type == u'application/x-bittorrent':
-                contentType = item.enclosure_type
-        self.contentType = u""
+                content_type = item.enclosure_type
+        self.content_type = u""
         self.delete_files = True
-        self.channelName = channelName
+        self.channel_name = channel_name
         self.manualUpload = False
         self._save_later_dc = None
         self._update_retry_time_dc = None
         self.status_updates_frozen = False
         self.last_update = time.time()
         self.reset_status_attributes()
-        if contentType is None:
-            self.contentType = u""
+        if content_type is None:
+            self.content_type = u""
         else:
-            self.contentType = contentType
+            self.content_type = content_type
 
-        if self.contentType == u'':
+        if self.content_type == u'':
             self.get_content_type()
         else:
             self.run_downloader()
@@ -310,7 +310,7 @@ class RemoteDownloader(DDBObject):
         # status_attributes only tracks the attributes that we update based on
         # the downloader status updates.  Also add values for that we send to
         # the downloader, but that don't change from status updates.
-        status['channelName'] = self.channelName
+        status['channel_name'] = self.channel_name
         status['dlid'] = self.dlid
         status['url'] = self.url
         return status
@@ -330,7 +330,7 @@ class RemoteDownloader(DDBObject):
 
     @classmethod
     def get_by_url(cls, url):
-        return cls.make_view('origURL=?', (url,)).get_singleton()
+        return cls.make_view('orig_url=?', (url,)).get_singleton()
 
     @classmethod
     def orphaned_view(cls):
@@ -381,12 +381,12 @@ class RemoteDownloader(DDBObject):
 
         if info['status'] == 200:
             self.url = info['updated-url'].decode('ascii','replace')
-            self.contentType = None
+            self.content_type = None
             try:
-                self.contentType = info['content-type'].decode('ascii',
-                                                               'replace')
+                self.content_type = info['content-type'].decode('ascii',
+                                                                'replace')
             except (KeyError, UnicodeDecodeError):
-                self.contentType = None
+                self.content_type = None
             self.run_downloader()
         else:
             error = httpclient.UnexpectedStatusCode(info['status'])
@@ -404,15 +404,15 @@ class RemoteDownloader(DDBObject):
             return
 
         # we can't get a content type.  it's possible that this is a
-        # retryable error so we're going to set the contentType to
+        # retryable error so we're going to set the content_type to
         # None and run the downloader.  it'll handle HTTP errors
         # better than we will.
-        self.contentType = None
+        self.content_type = None
         self.run_downloader()
 
     def get_content_type(self):
         if is_magnet_uri(self.url):
-            self.contentType = u'application/x-magnet'
+            self.content_type = u'application/x-magnet'
             return 
         httpclient.grab_headers(self.url, self.on_content_type,
                                 self.on_content_type_error)
@@ -424,9 +424,9 @@ class RemoteDownloader(DDBObject):
     def _get_rates(self):
         state = self.get_state()
         if state == u'downloading':
-            return self.rate, self.upRate
+            return self.rate, self.upload_rate
         if state == u'uploading':
-            return (0, self.upRate)
+            return (0, self.upload_rate)
         return (0, 0)
 
     def before_changing_rates(self):
@@ -446,7 +446,7 @@ class RemoteDownloader(DDBObject):
     @classmethod
     def update_status(cls, data, cmd_done=False):
         for field in data:
-            if field not in ['filename', 'shortFilename', 'metainfo']:
+            if field not in ['filename', 'short_filename', 'metainfo']:
                 data[field] = unicodify(data[field])
 
         self = get_downloader_by_dlid(dlid=data['dlid'])
@@ -572,12 +572,12 @@ class RemoteDownloader(DDBObject):
         """
         flashscraper.try_scraping_url(self.url, self._run_downloader)
 
-    def _run_downloader(self, url, contentType=None, title=None):
+    def _run_downloader(self, url, content_type=None, title=None):
         if not self.id_exists():
             # we got deleted while we were doing the flash scraping
             return
-        if contentType is not None:
-            self.contentType = contentType
+        if content_type is not None:
+            self.content_type = content_type
         if url is not None:
             if title is not None:
                 for mem in self.item_list:
@@ -586,8 +586,8 @@ class RemoteDownloader(DDBObject):
 
             self.url = url
             logging.debug("downloading url %s", self.url)
-            args = dict(url=self.url, content_type=self.contentType,
-                        channel_name=self.channelName)
+            args = dict(url=self.url, content_type=self.content_type,
+                        channel_name=self.channel_name)
             app.download_state_manager.add_download(self.dlid, self)
             app.download_state_manager.queue(self.dlid,
                                              app.download_state_manager.RESUME,
@@ -595,8 +595,8 @@ class RemoteDownloader(DDBObject):
             self.state = u'downloading'
         else:
             self.state = u'failed'
-            self.shortReasonFailed = _('File not found')
-            self.reasonFailed = _('Flash URL Scraping Error')
+            self.short_reason_failed = _('File not found')
+            self.reason_failed = _('Flash URL Scraping Error')
         self.signal_change()
 
     def pause(self):
@@ -656,21 +656,21 @@ class RemoteDownloader(DDBObject):
         """
         if self.get_state() == u'failed':
             # For failed downloads, don't trust the redirected URL (#14232)
-            self.url = self.origURL
+            self.url = self.orig_url
             app.download_state_manager.delete_download(self.dlid)
             self.dlid = generate_dlid()
             self.before_changing_rates()
             self.reset_status_attributes()
             self.after_changing_rates()
-            if self.contentType == u"":
+            if self.content_type == u"":
                 self.get_content_type()
             else:
                 self.run_downloader()
             self.signal_change()
         elif self.get_state() in (u'stopped', u'paused', u'offline'):
             if app.download_state_manager.get_download(self.dlid):
-                args = dict(url=self.url, content_type=self.contentType,
-                            channel_name=self.channelName)
+                args = dict(url=self.url, content_type=self.content_type,
+                            channel_name=self.channel_name)
                 app.download_state_manager.queue(
                     self.dlid,
                     app.download_state_manager.RESUME,
@@ -686,7 +686,7 @@ class RemoteDownloader(DDBObject):
             c.send()
         else:
             # downloader doesn't have our dlid.  Move the file ourself.
-            short_filename = self.shortFilename
+            short_filename = self.short_filename
             if not short_filename:
                 logging.warning(
                     "can't migrate download; no shortfilename!  URL was %s",
@@ -699,9 +699,9 @@ class RemoteDownloader(DDBObject):
                     self.url)
                 return
             if fileutil.exists(filename):
-                if self.channelName is not None:
-                    channelName = filter_directory_name(self.channelName)
-                    directory = os.path.join(directory, channelName)
+                if self.channel_name is not None:
+                    channel_name = filter_directory_name(self.channel_name)
+                    directory = os.path.join(directory, channel_name)
                 if not os.path.exists(directory):
                     try:
                         fileutil.makedirs(directory)
@@ -746,11 +746,11 @@ class RemoteDownloader(DDBObject):
     def set_delete_files(self, delete_files):
         self.delete_files = delete_files
 
-    def set_channel_name(self, channelName):
-        if self.channelName is None:
-            if channelName:
-                check_f(channelName)
-            self.channelName = channelName
+    def set_channel_name(self, channel_name):
+        if self.channel_name is None:
+            if channel_name:
+                check_f(channel_name)
+            self.channel_name = channel_name
 
     def remove(self):
         """Removes downloader from the database and deletes the file.
@@ -770,8 +770,8 @@ class RemoteDownloader(DDBObject):
         "bittorrent".
         """
         self.confirm_db_thread()
-        if ((self.contentType == u'application/x-bittorrent'
-             or self.contentType == u'application/x-magnet')):
+        if ((self.content_type == u'application/x-bittorrent'
+             or self.content_type == u'application/x-magnet')):
             return u"bittorrent"
 
         return u"http"
@@ -806,8 +806,8 @@ class RemoteDownloader(DDBObject):
     def get_startup_activity(self):
         self.confirm_db_thread()
         activity = self.activity
-        if (activity is None and self.retryCount is not None and
-             self.retryTime is not None):
+        if (activity is None and self.retry_count is not None and
+             self.retry_time is not None):
             activity = self._calc_retry_time()
             if self._update_retry_time_dc is None:
                 self._update_retry_time_dc = eventloop.add_timeout(1,
@@ -817,8 +817,8 @@ class RemoteDownloader(DDBObject):
         return activity
 
     def _calc_retry_time(self):
-        if self.retryTime > datetime.datetime.now():
-            retry_delta = self.retryTime - datetime.datetime.now()
+        if self.retry_time > datetime.datetime.now():
+            retry_delta = self.retry_time - datetime.datetime.now()
             time_str = displaytext.time_string(retry_delta.seconds)
             return _('no connection - retrying in %(time)s', {"time": time_str})
         else:
@@ -846,8 +846,8 @@ class RemoteDownloader(DDBObject):
             msg = u"get_reason_failed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirm_db_thread()
-        if self.reasonFailed is not None:
-            return self.reasonFailed
+        if self.reason_failed is not None:
+            return self.reason_failed
         else:
             return _("Unknown")
 
@@ -857,8 +857,8 @@ class RemoteDownloader(DDBObject):
             msg = u"get_short_reason_failed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirm_db_thread()
-        if self.shortReasonFailed is not None:
-            return self.shortReasonFailed
+        if self.short_reason_failed is not None:
+            return self.short_reason_failed
         else:
             return _("Unknown")
 
@@ -885,13 +885,13 @@ class RemoteDownloader(DDBObject):
         """Returns the total size of the download in bytes.
         """
         self.confirm_db_thread()
-        return self.totalSize
+        return self.total_size
 
     def get_current_size(self):
         """Returns the current amount downloaded in bytes.
         """
         self.confirm_db_thread()
-        return self.currentSize
+        return self.current_size
 
     @returns_filename
     def get_filename(self):
@@ -912,14 +912,14 @@ class RemoteDownloader(DDBObject):
             # this won't happen nowadays, but it can for old databases
             self.dlid = generate_dlid()
         self.rate = 0
-        self.upRate = 0
+        self.upload_rate = 0
         self.eta = 0
 
     def get_upload_ratio(self):
         size = self.get_current_size()
         if size == 0:
             return 0
-        return self.uploaded / size
+        return self.upload_size / size
 
     def restart_on_startup_if_needed(self):
         if not self.id_exists():
@@ -940,8 +940,8 @@ class RemoteDownloader(DDBObject):
                 self.stop_upload()
 
     def restart(self):
-        if self.dlerType is None:
-            if self.contentType == u"":
+        if self.dler_type is None:
+            if self.content_type == u"":
                 self.get_content_type()
             else:
                 self.run_downloader()
@@ -973,8 +973,8 @@ class RemoteDownloader(DDBObject):
             return
         self.manualUpload = True
         if app.download_state_manager.get_download(self.dlid):
-            args = dict(url=self.url, content_type=self.contentType,
-                        channel_name=self.channelName)
+            args = dict(url=self.url, content_type=self.content_type,
+                        channel_name=self.channel_name)
             app.download_state_manager.queue(self.dlid,
                                              app.download_state_manager.RESUME,
                                              args)
@@ -1132,9 +1132,9 @@ def get_downloader_for_item(item):
     existing = get_existing_downloader_by_url(url)
     if existing:
         return existing
-    channelName = unicode_to_filename(item.get_channel_title(True))
-    if not channelName:
-        channelName = None
+    channel_name = unicode_to_filename(item.get_channel_title(True))
+    if not channel_name:
+        channel_name = None
     if url.startswith(u'file://'):
         path = get_file_url_path(url)
         try:
@@ -1145,11 +1145,11 @@ def get_downloader_for_item(item):
             return None
         else:
             return RemoteDownloader(url, item, u'application/x-bittorrent',
-                                    channelName=channelName)
+                                    channel_name=channel_name)
     elif is_magnet_uri(url):
         return RemoteDownloader(url, item, u'application/x-magnet')
     else:
-        return RemoteDownloader(url, item, channelName=channelName)
+        return RemoteDownloader(url, item, channel_name=channel_name)
 
 def shutdown_downloader_objects():
     """Perform shutdown code for RemoteDownloaders.

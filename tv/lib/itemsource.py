@@ -247,12 +247,12 @@ class DatabaseItemSource(ItemSource):
                 info['leechers'] = status.get('leechers', 0)
                 info['seeders'] = status.get('seeders', 0)
                 info['connections'] = status.get('connections', 0)
-                info['up_rate'] = status.get('upRate', 0)
+                info['up_rate'] = status.get('upload_rate', 0)
                 info['down_rate'] = status.get('rate', 0)
 
             # gettorrentdetailsfinished & gettorrentdetails
-            info['up_total'] = status.get('uploaded', 0)
-            info['down_total'] = status.get('currentSize', 0)
+            info['up_total'] = status.get('upload_size', 0)
+            info['down_total'] = status.get('current_size', 0)
             if info['down_total'] > 0:
                 info['up_down_ratio'] = (float(info['up_total']) /
                                               info['down_total'])

@@ -515,7 +515,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 "(rd.state in ('downloading', 'paused', 'uploading', "
                 "'uploading-paused', 'offline') OR "
                 "(rd.state == 'failed' AND "
-                "feed.origURL == 'dtv:manualFeed')) AND "
+                "feed.orig_url == 'dtv:manualFeed')) AND "
                 "rd.main_item_id=item.id)",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id',
                     'feed': 'item.feed_id=feed.id'})
@@ -613,7 +613,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         joins = {'remote_downloader AS rd': 'item.downloader_id=rd.id'}
         if not include_podcasts:
             query = query + (" AND (feed_id IS NULL OR "
-                             "feed.origURL == 'dtv:manualFeed' OR "
+                             "feed.orig_url == 'dtv:manualFeed' OR "
                              "is_file_item)")
             joins['feed'] = 'feed_id = feed.id'
         return cls.make_view(query, joins=joins)
@@ -628,7 +628,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         joins = {'remote_downloader AS rd': 'item.downloader_id=rd.id'}
         if not include_podcasts:
             query = query + (" AND (feed_id IS NULL OR "
-                             "feed.origURL == 'dtv:manualFeed' OR "
+                             "feed.orig_url == 'dtv:manualFeed' OR "
                              "is_file_item)")
             joins['feed'] = 'feed_id = feed.id'
         return cls.make_view(query, joins=joins)
@@ -636,8 +636,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def toplevel_view(cls):
         return cls.make_view('feed_id IS NOT NULL AND '
-                             "feed.origURL != 'dtv:manualFeed' AND "
-                             "feed.origURL NOT LIKE 'dtv:search%'",
+                             "feed.orig_url != 'dtv:manualFeed' AND "
+                             "feed.orig_url NOT LIKE 'dtv:search%'",
                              joins={'feed': 'item.feed_id = feed.id'})
 
     @classmethod
@@ -716,7 +716,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def search_item_view(cls):
-        return cls.make_view("feed.origURL == 'dtv:search'",
+        return cls.make_view("feed.orig_url == 'dtv:search'",
                 joins={'feed': 'item.feed_id=feed.id'})
 
     @classmethod
@@ -727,9 +727,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                  "item.file_type='video'")
         if not include_podcasts:
             query = query + (" AND (feed_id IS NULL OR "
-                             "feed.origURL == 'dtv:manualFeed' OR "
-                             "feed.origURL == 'dtv:searchDownloads' OR "
-                             "feed.origURL == 'dtv:search' OR "
+                             "feed.orig_url == 'dtv:manualFeed' OR "
+                             "feed.orig_url == 'dtv:searchDownloads' OR "
+                             "feed.orig_url == 'dtv:search' OR "
                              "is_file_item)")
         return cls.make_view(query,
             joins={'feed': 'item.feed_id=feed.id',
@@ -753,9 +753,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                  "item.file_type='audio'")
         if not include_podcasts:
             query = query + (" AND (feed_id IS NULL OR "
-                             "feed.origURL == 'dtv:manualFeed' OR "
-                             "feed.origURL == 'dtv:searchDownloads' OR "
-                             "feed.origURL == 'dtv:search' OR "
+                             "feed.orig_url == 'dtv:manualFeed' OR "
+                             "feed.orig_url == 'dtv:searchDownloads' OR "
+                             "feed.orig_url == 'dtv:search' OR "
                              "is_file_item)")
         return cls.make_view(query,
             joins={'feed': 'item.feed_id=feed.id',
@@ -1119,13 +1119,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returns_unicode
     def get_feed_url(self):
-        return self.get_feed().origURL
+        return self.get_feed().orig_url
 
     @returns_unicode
     def get_source(self):
         if self.feed_id is not None:
             feed_ = self.get_feed()
-            if feed_.origURL != 'dtv:manualFeed':
+            if feed_.orig_url != 'dtv:manualFeed':
                 # we do this manually so we don't pick up the name of a search
                 # query (#16044)
                 return feed_.userTitle or feed_.actualFeed.get_title()
@@ -1880,9 +1880,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return self.enclosure_format
 
         if self.downloader:
-            if ((self.downloader.contentType
-                 and "/" in self.downloader.contentType)):
-                mtype, subtype = self.downloader.contentType.split('/', 1)
+            if ((self.downloader.content_type
+                 and "/" in self.downloader.content_type)):
+                mtype, subtype = self.downloader.content_type.split('/', 1)
                 mtype = mtype.lower()
                 if mtype in KNOWN_MIME_TYPES:
                     format_ = subtype.split(';')[0].upper()

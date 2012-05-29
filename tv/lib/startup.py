@@ -195,7 +195,7 @@ def install_first_time_handler(callback):
     _first_time_handler = callback
 
 def setup_global_feed(url, *args, **kwargs):
-    view = feed.Feed.make_view('origURL=?', (url,))
+    view = feed.Feed.make_view('orig_url=?', (url,))
     view_count = view.count()
     if view_count == 0:
         logging.info("Spawning global feed %s", url)

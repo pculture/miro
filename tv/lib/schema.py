@@ -483,7 +483,7 @@ class FeedSchema(DDBObjectSchema):
     klass = Feed
     table_name = 'feed'
     fields = DDBObjectSchema.fields + [
-        ('origURL', SchemaURL()),
+        ('orig_url', SchemaURL()),
         ('baseTitle', SchemaString(noneOk=True)),
         ('errorState', SchemaBool()),
         ('loading', SchemaBool()),
@@ -595,30 +595,30 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     table_name = 'remote_downloader'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL()),
-        ('origURL', SchemaURL()),
+        ('orig_url', SchemaURL()),
         ('dlid', SchemaString()),
-        ('contentType', SchemaString(noneOk=True)),
-        ('channelName', SchemaFilename(noneOk=True)),
+        ('content_type', SchemaString(noneOk=True)),
+        ('channel_name', SchemaFilename(noneOk=True)),
         ('metainfo', SchemaBinary(noneOk=True)),
         ('manualUpload', SchemaBool()),
         ('state', SchemaString()),
         ('main_item_id', SchemaInt(noneOk=True)),
         ('child_deleted', SchemaBool()),
-        ('totalSize', SchemaInt(noneOk=True)),
-        ('currentSize', SchemaInt()),
+        ('total_size', SchemaInt(noneOk=True)),
+        ('current_size', SchemaInt()),
         ('eta', SchemaInt(noneOk=True)),
         ('rate', SchemaInt(noneOk=True)),
-        ('startTime', SchemaInt(noneOk=True)),
-        ('endTime', SchemaInt(noneOk=True)),
-        ('shortFilename', SchemaFilename(noneOk=True)),
+        ('start_time', SchemaInt(noneOk=True)),
+        ('end_time', SchemaInt(noneOk=True)),
+        ('short_filename', SchemaFilename(noneOk=True)),
         ('filename', SchemaFilename(noneOk=True)),
-        ('reasonFailed', SchemaString(noneOk=True)),
-        ('shortReasonFailed', SchemaString(noneOk=True)),
-        ('dlerType', SchemaString(noneOk=True)),
-        ('retryTime', SchemaInt(noneOk=True)),
-        ('retryCount', SchemaInt(noneOk=True)),
-        ('upRate', SchemaInt(noneOk=True)),
-        ('uploaded', SchemaInt(noneOk=True)),
+        ('reason_failed', SchemaString(noneOk=True)),
+        ('short_reason_failed', SchemaString(noneOk=True)),
+        ('dler_type', SchemaString(noneOk=True)),
+        ('retry_time', SchemaInt(noneOk=True)),
+        ('retry_count', SchemaInt(noneOk=True)),
+        ('upload_rate', SchemaInt(noneOk=True)),
+        ('upload_size', SchemaInt(noneOk=True)),
         ('activity', SchemaString(noneOk=True)),
         ('seeders', SchemaInt(noneOk=True)),
         ('leechers', SchemaInt(noneOk=True)),
@@ -871,7 +871,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 182
+VERSION = 183
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

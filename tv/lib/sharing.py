@@ -1417,8 +1417,8 @@ class SharingManagerBackend(object):
             # First, playlists.
             playlists = playlist.SavedPlaylist.make_view()
             # Grab feeds.  We like the feeds, but don't grab fake ersatz stuff. 
-            feeds = [f for f in feed.Feed.make_view() if not f.origURL or
-                     (f.origURL and not f.origURL.startswith('dtv:'))]
+            feeds = [f for f in feed.Feed.make_view() if not f.orig_url or
+                     (f.orig_url and not f.orig_url.startswith('dtv:'))]
             playlist_ids = [p.id for p in playlists]
             feed_ids = [f.id for f in feeds]
             self.make_daap_playlists(playlist.SavedPlaylist.make_view(),

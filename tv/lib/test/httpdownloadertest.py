@@ -91,14 +91,14 @@ class HTTPDownloaderTest(EventLoopTest):
         self.downloader = TestingDownloader(self, self.download_url, "ID1")
         def stopOnData():
             if (self.downloader.state == 'downloading' and
-                    self.downloader.currentSize == 10000):
+                    self.downloader.current_size == 10000):
                 self.downloader.stop(False)
                 self.stopEventLoop(False)
         self.downloader.statusCallback = stopOnData
         self.httpserver.pause_after(10000)
         self.runEventLoop()
         self.assertEquals(self.downloader.state, 'stopped')
-        self.assertEquals(self.downloader.currentSize, 0)
+        self.assertEquals(self.downloader.current_size, 0)
         self.wait_for_libcurl_manager()
         self.assert_(not os.path.exists(self.downloader.filename))
         self.assertEquals(self.countConnections(), 0)
@@ -108,22 +108,22 @@ class HTTPDownloaderTest(EventLoopTest):
         self.downloader.statusCallback = self.stopOnFinished
         self.httpserver.pause_after(-1)
         self.runEventLoop()
-        self.assertEquals(self.downloader.currentSize, self.download_size)
-        self.assertEquals(self.downloader.totalSize, self.download_size)
+        self.assertEquals(self.downloader.current_size, self.download_size)
+        self.assertEquals(self.downloader.total_size, self.download_size)
 
     @uses_httpclient
     def test_pause(self):
         self.downloader = TestingDownloader(self, self.download_url, "ID1")
         def pauseOnData():
             if (self.downloader.state == 'downloading' and
-                    self.downloader.currentSize == 10000):
+                    self.downloader.current_size == 10000):
                 self.downloader.pause()
                 self.stopEventLoop(False)
         self.downloader.statusCallback = pauseOnData
         self.httpserver.pause_after(10000)
         self.runEventLoop()
         self.assertEquals(self.downloader.state, 'paused')
-        self.assertEquals(self.downloader.currentSize, 10000)
+        self.assertEquals(self.downloader.current_size, 10000)
         self.assert_(os.path.exists(self.downloader.filename))
         self.assertEquals(self.countConnections(), 0)
         def restart():
@@ -132,28 +132,28 @@ class HTTPDownloaderTest(EventLoopTest):
         self.downloader.statusCallback = self.stopOnFinished
         self.httpserver.pause_after(-1)
         self.runEventLoop()
-        self.assertEquals(self.downloader.currentSize, self.download_size)
-        self.assertEquals(self.downloader.totalSize, self.download_size)
+        self.assertEquals(self.downloader.current_size, self.download_size)
+        self.assertEquals(self.downloader.total_size, self.download_size)
 
     @uses_httpclient
     def test_restore(self):
         self.downloader = TestingDownloader(self, self.download_url, "ID1")
         def pauseInMiddle():
             if (self.downloader.state == 'downloading' and
-                    self.downloader.currentSize == 10000):
+                    self.downloader.current_size == 10000):
                 self.downloader.pause()
                 self.stopEventLoop(False)
         self.downloader.statusCallback = pauseInMiddle
         self.httpserver.pause_after(10000)
         self.runEventLoop()
         self.assertEquals(self.downloader.state, 'paused')
-        self.assertEquals(self.downloader.currentSize, 10000)
+        self.assertEquals(self.downloader.current_size, 10000)
         restore = self.downloader.lastStatus.copy()
         restore['state'] = 'downloading'
         download._downloads = {}
         self.httpserver.pause_after(-1)
         self.downloader2 = TestingDownloader(self, restore=restore)
-        restoreSize = restore['currentSize']
+        restoreSize = restore['current_size']
         self.restarted = False
         def start_new_download_intercept():
             self.restarted = True
