@@ -999,7 +999,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Update our attributes from a metadata dictionary."""
         # change the name of title to be "metadata_title"
         if 'title' in metadata_dict:
-            metadata_dict['metadata_title'] = metadata_dict['title']
+            metadata_dict['metadata_title'] = metadata_dict.pop('title')
         self._bulk_update_db_values(metadata_dict)
         self.calc_title()
 
