@@ -249,7 +249,7 @@ class ItemSearchTest(MiroTestCase):
                 feed_id=self.feed.id)
 
     def test_matches_search(self):
-        self.item1.entry_title = u"miro is cool"
+        self.item1.title = u"miro is cool"
         self.item1.signal_change()
         self.assertEquals(self.item1.matches_search('miro'), True)
         self.assertEquals(self.item1.matches_search('iro'), True)
@@ -412,9 +412,10 @@ class ItemMetadataTest(MiroTestCase):
             if item.filename in new_metadata:
                 md = new_metadata[item.filename]
                 self.assertEquals(item.album, md['album'])
+                self.assertEquals(item.metadata_title, md['title'])
                 self.assertEquals(item.title, md['title'])
                 self.assertEquals(item.duration, md['duration'])
             else:
                 self.assertEquals(item.album, None)
-                self.assertEquals(item.title, None)
+                self.assertEquals(item.metadata_title, None)
                 self.assertEquals(item.duration, None)
