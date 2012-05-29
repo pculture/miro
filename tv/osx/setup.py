@@ -487,7 +487,10 @@ class MiroBuild (py2app):
     def copy_conversion_helpers(self):
         print 'Copying video conversion helpers to application bundle'
         copy_binaries('segmenter/bin/', self.helpersRoot, ["miro-segmenter"])
-        copy_binaries('ffmpeg/bin/', self.helpersRoot, ["ffmpeg"])
+        ffmpeg_files = ["ffmpeg"]
+        lib_paths = glob(os.path.join(BKIT_DIR, "ffmpeg", "bin", "*.dylib"))
+        ffmpeg_files.extend(os.path.basename(p) for p in lib_paths)
+        copy_binaries('ffmpeg/bin/', self.helpersRoot, ffmpeg_files)
         copy_binaries('ffmpeg2theora/bin/', self.helpersRoot, ["ffmpeg2theora"])
 
     def copy_codegen_helpers(self):
