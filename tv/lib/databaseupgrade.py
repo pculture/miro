@@ -3800,3 +3800,31 @@ def upgrade178(cursor):
                    "WHERE item.deleted)")
     cursor.execute("DELETE FROM metadata_status WHERE path IN "
                    "(SELECT filename FROM item WHERE item.deleted)")
+
+def upgrade179(cursor):
+    # Rename title -> metadata_title and add a title column that stores the
+    # computed title (AKA what get_title() returned)
+
+    # translated from Item.get_title() circa 5ed4c4a6
+    def get_title(metadata_title, torrent_title, entry_title, filename):
+        if metadata_title:
+            return metadata_title
+        elif torrent_title is not None:
+            return torrent_title
+        elif entry_title is not None:
+            return entry_title
+        elif filename:
+            return filename_to_unicode(os.path.basename(filename))
+        else:
+            return _('no title')
+    cursor.execute("ALTER TABLE item ADD COLUMN metadata_title TEXT")
+    cursor.execute("UPDATE item SET metadata_title=title")
+    cursor.execute("SELECT id, metadata_title, torrent_title, entry_title, "
+                   "filename FROM item")
+    rows = cursor.fetchall()
+    for id_, metadata_title, torrent_title, entry_title, filename in rows:
+        title = get_title(metadata_title, torrent_title, entry_title,
+                          filename)
+        if title != metadata_title:
+            cursor.execute("UPDATE item SET title=? WHERE id=?", (title, id_))
+
