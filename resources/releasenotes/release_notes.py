@@ -63,7 +63,6 @@ def get_name(item):
 def get_bugfixes(rows):
 
     bugs = dict((row["bug_id"], row) for row in rows)
-    nixing = []
 
     for bug_id in bugs.keys():
         logging.info("... working on bug %s", bug_id)
@@ -72,23 +71,6 @@ def get_bugfixes(rows):
         except socket.error, se:
             logging.error("... error %s -- skipping", se)
         bug = etree.find("bug")
-        version = bug.find("version")
-        if version is None:
-            logging.info("version is None")
-            continue
-
-        version = get_name(version)
-        version = clean_up_name(version)
-        if version in ("git-master", "unknown", "nightly build"):
-            logging.info("... nixing %s", bug_id)
-            nixing.append((bug_id, bugs[bug_id]["short_desc"]))
-            del bugs[bug_id]
-            continue
-
-    logging.info("Writing nixing.csv....")
-    with open("nixing.csv", "wb") as fp:
-        writer = csv.writer(fp)
-        writer.writerows(nixing)
 
     return bugs.values()
 
