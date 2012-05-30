@@ -41,15 +41,26 @@ ItemRow = collections.namedtuple("ItemRow", _item_columns)
 # ItemTrackerCondition and ItemTrackerOrderBy store parameters for
 # ItemTracker's queries
 ItemTrackerCondition = collections.namedtuple("ItemTrackerCondition",
-                                              "column operator value")
+                                              "table column operator value")
 ItemTrackerOrderBy = collections.namedtuple("ItemTrackerOrderBy",
-                                            "column descending")
+                                            "table column descending")
 
 class ItemTrackerQuery(object):
     """Define the query used to get items for ItemTracker."""
     def __init__(self):
         self.conditions = []
-        self.order_by = [ItemTrackerOrderBy('id', False)]
+        self.order_by = [ItemTrackerOrderBy('item', 'id', False)]
+
+    def _parse_column(self, column):
+        """Parse a column specification.
+
+        Returns a (table, column) tuple.  If the table is explicitly
+        specified, we will use that.  If not, we will default to item.
+        """
+        if '.' in column:
+            return column.split('.', 1)
+        else:
+            return ('item', column)
 
     def add_condition(self, column, operator, value):
         """Add a condition to the WHERE clause
@@ -58,7 +69,9 @@ class ItemTrackerQuery(object):
         example to add "feed_id = ?" and have 100 be the value for the "?",
         then use "feed_id", "=", 100 for column, operator, and value.
         """
-        self.conditions.append(ItemTrackerCondition(column, operator, value))
+        table, column = self._parse_column(column)
+        cond = ItemTrackerCondition(table, column, operator, value)
+        self.conditions.append(cond)
 
     def set_order_by(self, *columns):
         """Change the ORDER BY clause.
@@ -73,13 +86,24 @@ class ItemTrackerQuery(object):
                 column = column[1:]
             else:
                 descending = False
-            self.order_by.append(ItemTrackerOrderBy(column, descending))
+            table, column = self._parse_column(column)
+            ob = ItemTrackerOrderBy(table, column, descending)
+            self.order_by.append(ob)
 
     def get_columns_to_track(self):
         """Get the columns that affect the results of the query """
-        columns = [c.column for c in self.conditions]
-        columns.extend(ob.column for ob in self.order_by)
+        columns = [c.column for c in self.conditions if c.table == 'item']
+        columns.extend(ob.column for ob in self.order_by if ob.table == 'item')
         return columns
+
+    def tracking_download_columns(self):
+        for c in self.conditions:
+            if c.table in ('remote_downloader', 'dlstats'):
+                return True
+        for ob in self.order_by:
+            if ob.table in ('remote_downloader', 'dlstats'):
+                return True
+        return False
 
     def execute(self, connection):
         """Run the select statement for this query
@@ -88,18 +112,33 @@ class ItemTrackerQuery(object):
         """
         sql_parts = []
         arg_list = []
-        sql_parts.append("SELECT id FROM item")
+        sql_parts.append("SELECT item.id FROM item")
+        self._add_joins(sql_parts, arg_list)
         self._add_conditions(sql_parts, arg_list)
         self._add_order_by(sql_parts, arg_list)
         sql = ' '.join(sql_parts)
         return connection.execute(sql, arg_list)
+
+    def _calc_tables(self):
+        """Calculate which tables we need to execute the query."""
+        all_tables = ([c.table for c in self.conditions] + 
+                      [ob.table for ob in self.order_by])
+        return set(all_tables)
+
+    def _add_joins(self, sql_parts, arg_list):
+        tables = self._calc_tables()
+        if 'remote_downloader' in tables:
+            sql_parts.append("JOIN remote_downloader "
+                             "ON remote_downloader.id=item.downloader_id")
+        if 'dlstats' in tables:
+            sql_parts.append("JOIN dlstats ON dlstats.id=item.downloader_id")
 
     def _add_conditions(self, sql_parts, arg_list):
         if not self.conditions:
             return
         where_parts = []
         for c in self.conditions:
-            where_parts.append("%s%s?" % (c.column, c.operator))
+            where_parts.append("%s.%s%s?" % (c.table, c.column, c.operator))
             arg_list.append(c.value)
         sql_parts.append("WHERE %s" % ' AND '.join(where_parts))
 
@@ -107,9 +146,9 @@ class ItemTrackerQuery(object):
         order_by_parts = []
         for ob in self.order_by:
             if ob.descending:
-                order_by_parts.append("%s DESC" % ob.column)
+                order_by_parts.append("%s.%s DESC" % (ob.table, ob.column))
             else:
-                order_by_parts.append("%s ASC" % ob.column)
+                order_by_parts.append("%s.%s ASC" % (ob.table, ob.column))
         sql_parts.append("ORDER BY %s" % ', '.join(order_by_parts))
 
     def copy(self):
@@ -163,6 +202,7 @@ class ItemTracker(signals.SignalEmitter):
         """Change our ItemTrackerQuery object."""
         self.query = query
         self.tracked_columns = set(self.query.get_columns_to_track())
+        self.track_dl_columns = self.query.tracking_download_columns()
 
     def _fetch_id_list(self):
         """Fetch the ids for this list.
@@ -321,4 +361,5 @@ class ItemTracker(signals.SignalEmitter):
     def _could_list_change(self, message):
         """Calculate if an ItemsChanged means the list may have changed."""
         return bool(message.added or message.removed or
+                    (message.dlstats_changed and self.track_dl_columns) or
                     message.changed_columns.intersection(self.tracked_columns))

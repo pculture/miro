@@ -394,6 +394,7 @@ class MiroTestCase(unittest.TestCase):
         """Make a new item."""
         fp_values = item.FeedParserValues({})
         fp_values.data['entry_title'] = title
+        fp_values.data['url'] = u'http://example.com/%s.mkv' % title
         # pick a random recent date for the release date
         seconds_ago = random.randint(0, 60 * 60 * 24 * 7)
         release_date = (datetime.datetime.now() -

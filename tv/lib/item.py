@@ -416,6 +416,7 @@ class ItemChangeTracker(object):
         self.changed = set()
         self.removed = set()
         self.changed_columns = set()
+        self.dlstats_changed = False
 
     def on_event_finished(self, live_storage, success):
         self.send_changes()
@@ -423,7 +424,8 @@ class ItemChangeTracker(object):
     def send_changes(self):
         if self.added or self.changed or self.removed:
             m = messages.ItemChanges(self.added, self.changed, self.removed,
-                                     self.changed_columns)
+                                     self.changed_columns,
+                                     self.dlstats_changed)
             m.send_to_frontend()
             self.reset()
 
@@ -518,6 +520,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         app.item_info_cache.item_changed(self)
         Item.change_tracker.on_item_changed(self)
         DDBObject.signal_change(self, needs_save, can_change_views)
+
+    def download_stats_changed(self):
+        Item.change_tracker.dlstats_changed = True
+        # TODO: I don't think we need the signal_change() call here once we
+        # finissh replacing the ViewTracker code.
+        self.signal_change(needs_save=False)
 
     @classmethod
     def auto_pending_view(cls):
@@ -2035,6 +2043,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             new_downloader.add_item(self)
         else:
             self.downloader_id = None
+        self.download_stats_changed()
         self.signal_change()
 
     def save(self, always_signal=False):

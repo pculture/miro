@@ -1422,12 +1422,15 @@ class ItemChanges(FrontendMessage):
     :attribute removed: set ids for removed items
     :attribute changed_columns: set columns that were changed (the union of
     changes for all items)
+    :attribute dlstats_changed: Did we get new download stats?
     """
-    def __init__(self, added, changed, removed, changed_columns):
+    def __init__(self, added, changed, removed, changed_columns,
+                 dlstats_changed):
         self.added = added
         self.changed = changed
         self.removed = removed
         self.changed_columns = changed_columns
+        self.dlstats_changed = dlstats_changed
 
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed

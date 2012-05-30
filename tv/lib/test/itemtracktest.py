@@ -33,6 +33,7 @@ import datetime
 import itertools
 
 from miro import app
+from miro import downloader
 from miro import eventloop
 from miro import item
 from miro import messages
@@ -147,7 +148,17 @@ class ItemTrackTest(MiroTestCase):
         for i in item.Item.make_view():
             meets_conditions = True
             for condition in self.tracker.query.conditions:
-                item_value = getattr(i, condition.column)
+                if condition.table == 'item':
+                    item_value = getattr(i, condition.column)
+                elif condition.table == 'remote_downloader':
+                    dler = i.downloader
+                    if dler is None:
+                        item_value = None
+                    else:
+                        item_value = getattr(dler, condition.column)
+                else:
+                    raise AssertionError("Don't know how to get value for %s"
+                                         % condition.table)
                 if condition.operator == '=':
                     if item_value != condition.value:
                         meets_conditions = False
@@ -278,6 +289,23 @@ class ItemTrackTest(MiroTestCase):
         self.check_one_signal('list-changed')
         self.check_tracker_items()
 
+    def test_downloader_conditions(self):
+        # change the query to something that involves downloader columns
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('remote_downloader.state', '=', 'downloading')
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        # start downloading some items
+        downloads = self.tracked_items[:4]
+        for i in downloads:
+            i.download()
+        self.check_list_change_after_message()
+        self.check_tracker_items()
+        for i in downloads[2:]:
+            i.expire()
+        self.check_list_change_after_message()
+        self.check_tracker_items()
+
     def test_order(self):
         # test order by a different column
         query = itemtrack.ItemTrackerQuery()
@@ -296,6 +324,35 @@ class ItemTrackTest(MiroTestCase):
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items()
+
+    def test_downloader_order(self):
+        downloads = self.tracked_items[:4]
+        for i, item_ in enumerate(downloads):
+            # simulate a the download being in progress
+            item_.download()
+            # ensure that the downloads goes from slowest to fastest
+            rate = i * 1024
+            fake_status = {
+                'current_size': 0,
+                'total_size': None,
+                'state': u'downloading',
+                'rate': rate,
+                'eta': None,
+                'dler_type': 'HTTP',
+                'dlid': item_.downloader.dlid,
+            }
+            downloader.RemoteDownloader.update_status(fake_status)
+
+        app.db.finish_transaction()
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('remote_downloader.state', '=', 'downloading')
+        query.set_order_by('dlstats.rate')
+        self.tracker.change_query(query)
+        # we can't call check_tracker_items, because that doesn't handle
+        # ordering by dlstats.  Do the comparison manually.
+        tracker_items = [self.tracker.get_row(i).id
+                         for i in range(len(self.tracker))]
+        self.assertEquals([i.id for i in downloads], tracker_items)
 
     def test_change_while_loading_data(self):
         # test the backend writing to the DB before all data is loaded.

@@ -33,6 +33,8 @@ The dlstats table is a table in the tempdb that tracks statistics for
 in-progress downloads.
 """
 
+from miro import app
+
 def create_table(connection):
     """Create the dlstats table."""
     columns = [
@@ -50,3 +52,17 @@ def create_table(connection):
     ]
     connection.execute("CREATE TABLE mirotemp.dlstats(%s)" %
                        ", ".join(columns))
+
+def update_stats(downloader_id, new_stats):
+    """Update the dlstats table based on new stats from the downloader."""
+    stat_names = ( "eta", "rate", "upload_rate", "current_size",
+                  "total_size", "upload_size", "activity", "seeders",
+                  "leechers", "connections",)
+    column_names = ('id',) + stat_names
+    values = (downloader_id,) + tuple(new_stats.get(n) for n in stat_names)
+
+    sql = ("INSERT OR REPLACE INTO dlstats (%s) VALUES (%s)" %
+           (', '.join(column_names),
+            ', '.join('?' for i in xrange(len(values)))))
+    # FIXME: We should have a cleaner system for this.
+    app.db._execute(sql, values, is_update=True)

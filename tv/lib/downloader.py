@@ -51,6 +51,7 @@ from miro.plat.utils import samefile, unicode_to_filename
 from miro import flashscraper
 from miro import fileutil
 from miro import util
+from miro.data import dlstats
 from miro.fileobject import FilenameType
 
 class DownloadStateManager(object):
@@ -375,7 +376,7 @@ class RemoteDownloader(DDBObject):
         DDBObject.signal_change(self, needs_save=needs_save)
         if needs_signal_item:
             for item in self.item_list:
-                item.signal_change(needs_save=False)
+                item.download_stats_changed()
         if needs_save:
             self._cancel_save_later()
 
@@ -484,8 +485,13 @@ class RemoteDownloader(DDBObject):
                 data[field] = unicodify(data[field])
 
         self = get_downloader_by_dlid(dlid=data['dlid'])
+        # FIXME: how do we get all of the possible bit torrent
+        # activity strings into gettext? --NN
+        if data.has_key('activity') and data['activity']:
+            data['activity'] = _(data['activity'])
 
         if self is not None:
+            dlstats.update_stats(self.id, data)
             now = time.time()
             last_update = self.last_update
             rate_limit = False
@@ -559,11 +565,6 @@ class RemoteDownloader(DDBObject):
 
             was_finished = self.is_finished()
             old_filename = self.get_filename()
-
-            # FIXME: how do we get all of the possible bit torrent
-            # activity strings into gettext? --NN
-            if data.has_key('activity') and data['activity']:
-                data['activity'] = _(data['activity'])
 
             self.before_changing_rates()
             self.update_status_attributes(data)
