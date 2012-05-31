@@ -67,7 +67,7 @@ def try_scraping_url(url, callback):
 def _actual_url_callback(url, callback, new_url, content_type, title):
     if new_url:
         check_u(new_url)
-    callback(new_url, contentType=content_type, title=title)
+    callback(new_url, content_type=content_type, title=title)
 
 def _get_scrape_function_for(url):
     check_u(url)

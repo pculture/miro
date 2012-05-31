@@ -656,7 +656,10 @@ class BGDownloader(object):
         self.rate = None
         self.reason_failed = reason
         self.short_reason_failed = short_reason
-        self.retry_count = self.retry_count + 1
+        if self.retry_count is None:
+            self.retry_count = 0
+        else:
+            self.retry_count = self.retry_count + 1
         if self.retry_count >= len(RETRY_TIMES):
             self.retry_count = len(RETRY_TIMES) - 1
         self.retry_dc = eventloop.add_timeout(

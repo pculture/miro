@@ -242,17 +242,18 @@ class DatabaseItemSource(ItemSource):
         ## Torrent-specific stuff
         if item.looks_like_torrent() and hasattr(item.downloader, 'status'):
             status = item.downloader.status
+            dler = item.downloader
             if item.is_transferring():
                 # gettorrentdetails only
-                info['leechers'] = status.get('leechers', 0)
-                info['seeders'] = status.get('seeders', 0)
-                info['connections'] = status.get('connections', 0)
-                info['up_rate'] = status.get('upload_rate', 0)
-                info['down_rate'] = status.get('rate', 0)
+                info['leechers'] = dler.leechers
+                info['seeders'] = dler.seeders
+                info['connections'] = dler.connections
+                info['up_rate'] = dler.upload_rate
+                info['down_rate'] = dler.rate
 
             # gettorrentdetailsfinished & gettorrentdetails
-            info['up_total'] = status.get('upload_size', 0)
-            info['down_total'] = status.get('current_size', 0)
+            info['up_total'] = dler.upload_size
+            info['down_total'] = dler.current_size
             if info['down_total'] > 0:
                 info['up_down_ratio'] = (float(info['up_total']) /
                                               info['down_total'])

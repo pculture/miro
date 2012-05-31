@@ -559,12 +559,11 @@ class RemoteDownloader(DDBObject):
                 # don't have a real one when the download starts.  The
                 # old_filename check is to prevent things with existing titles
                 # from being renamed (#18656).
-                title = util.get_name_from_torrent_metadata(self.metainfo)
+                new_title = util.get_name_from_torrent_metadata(self.metainfo)
                 for item in self.item_list:
                     if item.torrent_title is None:
                         item.torrent_title = new_title
                         item.signal_change()
-
         return True
 
     def run_downloader(self):
