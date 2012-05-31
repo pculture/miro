@@ -106,7 +106,13 @@ from miro import buildutils
 def copy_binaries(source, target, binaries):
     mkpath(target)
     for mem in binaries:
-        copy_file(os.path.join(BKIT_DIR, source, mem), target, update=True)
+        src = os.path.join(BKIT_DIR, source, mem)
+        if os.path.islink(src):
+            dst = os.path.join(target, mem)
+            linkto = os.readlink(src)
+            os.symlink(linkto, dst)
+        else:
+            copy_file(src, target, update=True)
 
 def extract_binaries(source, target, force=True):
     if force and os.path.exists(target):
