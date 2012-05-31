@@ -946,7 +946,7 @@ class RemoteDownloader(DDBObject):
                 self.run_downloader()
         else:
             app.download_state_manager.add_download(self.dlid, self)
-            self.status = u'downloading'
+            self.state = u'downloading'
             args = dict(downloader=self.get_status_for_downloader())
             app.download_state_manager.queue(
                 self.dlid,
