@@ -260,6 +260,11 @@ class RemoteDownloader(DDBObject):
         'leechers',
         'connections'
     ]
+    # status attributes that we can wait a little while to save to disk
+    status_attributes_to_defer = set([
+        'current_size',
+        'upload_size',
+    ])
 
     def setup_new(self, url, item, content_type=None, channel_name=None):
         check_u(url)
@@ -575,7 +580,17 @@ class RemoteDownloader(DDBObject):
                       and self.get_upload_ratio() > app.config.get(prefs.UPLOAD_RATIO)))):
                 self.stop_upload()
 
-            self.signal_change()
+            if self.changed_attributes.issubset(
+                self.status_attributes_to_defer):
+                # we changed some of our data, but we can wait a while to
+                # store things to disk.  Since we go through update_status()
+                # often, this results in a fairly large performance gain and
+                # alleviates #12101
+                self._save_later()
+                self.signal_change(needs_signal_item=needs_signal_item,
+                                   needs_save=False)
+            else:
+                self.signal_change()
 
             if finished:
                 for item in self.item_list:
