@@ -105,6 +105,10 @@ def exec_codegen(codegen_info, media_path, callback, errback):
                              'exec echonest codegen')
 
 def cant_run_codegen():
+    # Windows doesn't support uname, but we know we can run ENMFP-codegen
+    # there.
+    if not hasattr(os, 'uname'):
+        return False
     uname = os.uname()
     return (uname[0] == 'Darwin' and
             (uname[4] != 'i386' and uname[4] != 'x86_64'))
