@@ -240,8 +240,7 @@ class DatabaseItemSource(ItemSource):
             info['download_info'] = messages.PendingDownloadInfo()
 
         ## Torrent-specific stuff
-        if item.looks_like_torrent() and hasattr(item.downloader, 'status'):
-            status = item.downloader.status
+        if item.looks_like_torrent() and item.downloader is not None:
             dler = item.downloader
             if item.is_transferring():
                 # gettorrentdetails only
