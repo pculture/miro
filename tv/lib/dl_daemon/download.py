@@ -1041,16 +1041,17 @@ class BTDownloader(BGDownloader):
         self.metainfo = None
         self.torrent = None
         self.rate = self.eta = None
-        self.upload_rate = self.upload_size = 0
+        self.upload_rate = None
+        self.upload_size = 0
         self.activity = None
         self.fast_resume_data = None
         self.retry_dc = None
         self.channel_name = None
         self.uploaded_start = 0
         self.restarting = False
-        self.seeders = -1
-        self.leechers = -1
-        self.connections = -1
+        self.seeders = None
+        self.leechers = None
+        self.connections = None
         self.metainfo_updated = False
         self.info_hash = None
         self.magnet = magnet
