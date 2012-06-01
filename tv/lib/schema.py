@@ -606,8 +606,6 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('child_deleted', SchemaBool()),
         ('total_size', SchemaInt(noneOk=True)),
         ('current_size', SchemaInt()),
-        ('eta', SchemaInt(noneOk=True)),
-        ('rate', SchemaInt(noneOk=True)),
         ('start_time', SchemaInt(noneOk=True)),
         ('end_time', SchemaInt(noneOk=True)),
         ('short_filename', SchemaFilename(noneOk=True)),
@@ -617,12 +615,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('dler_type', SchemaString(noneOk=True)),
         ('retry_time', SchemaInt(noneOk=True)),
         ('retry_count', SchemaInt(noneOk=True)),
-        ('upload_rate', SchemaInt(noneOk=True)),
         ('upload_size', SchemaInt(noneOk=True)),
-        ('activity', SchemaString(noneOk=True)),
-        ('seeders', SchemaInt(noneOk=True)),
-        ('leechers', SchemaInt(noneOk=True)),
-        ('connections', SchemaInt(noneOk=True)),
         ('info_hash', SchemaString(noneOk=True)),
     ]
 

@@ -250,6 +250,16 @@ class RemoteDownloader(DDBObject):
         'current_size': 0,
         'state': u'downloading',
     }
+    # status attributes that don't get saved to disk
+    temp_status_attributes = [
+        'eta',
+        'rate',
+        'upload_rate',
+        'activity',
+        'seeders',
+        'leechers',
+        'connections'
+    ]
 
     def setup_new(self, url, item, content_type=None, channel_name=None):
         check_u(url)
@@ -296,13 +306,17 @@ class RemoteDownloader(DDBObject):
         if self.dlid == 'noid':
             # this won't happen nowadays, but it can for old databases
             self.dlid = generate_dlid()
-        self.rate = 0
-        self.upload_rate = 0
-        self.eta = 0
+        self.reset_temp_status_attributes()
 
     def reset_status_attributes(self):
         """Reset the attributes that track downloading info."""
         for attr_name in self.status_attributes:
+            default = self.status_attribute_defaults.get(attr_name)
+            setattr(self, attr_name, default)
+
+    def reset_temp_status_attributes(self):
+        """Reset the attributes that track downloading info."""
+        for attr_name in self.temp_status_attributes:
             default = self.status_attribute_defaults.get(attr_name)
             setattr(self, attr_name, default)
 

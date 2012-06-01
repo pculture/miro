@@ -3880,10 +3880,6 @@ def upgrade182(cursor):
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN current_size INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN eta INTEGER")
-    cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN rate INTEGER")
-    cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN start_time INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN end_time INTEGER")
@@ -3902,24 +3898,13 @@ def upgrade182(cursor):
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN retry_count INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN upload_rate INTEGER")
-    cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN upload_size INTEGER")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN activity text")
-    cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN seeders INTEGER")
-    cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN leechers INTEGER")
-    cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN connections INTEGER")
-    cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN info_hash TEXT")
-    columns = [ 'total_size', 'current_size', 'eta', 'rate', 'start_time',
-               'end_time', 'short_filename', 'filename', 'retry_time',
-               'retry_count', 'upload_rate', 'upload_size', 'seeders',
-               'leechers', 'connections', 'info_hash', 'reason_failed',
-               'short_reason_failed', 'dler_type', 'activity',
+    columns = [ 'total_size', 'current_size', 'start_time', 'end_time',
+               'short_filename', 'filename', 'retry_time', 'retry_count',
+               'upload_size', 'info_hash', 'reason_failed',
+               'short_reason_failed', 'dler_type',
               ]
     cursor.execute("SELECT id, status from remote_downloader")
     update_sql = ("UPDATE remote_downloader SET %s WHERE id=?" %
@@ -3938,14 +3923,11 @@ def upgrade182(cursor):
             if (column == 'end_time' and
                 value == status.get('start_time')):
                 value = None
-            elif column in ['eta', 'rate'] and value == 0:
-                value = None
             elif column == 'current_size' and value is None:
                 value = 0
             elif column in ('retry_count', 'total_size') and value == -1:
                 value = None
-            elif (column in ['start_time', 'end_time', 'eta', 'rate'] and
-                  value is not None):
+            elif (column in ['start_time', 'end_time'] and value is not None):
                 value = int(value)
             values.append(value)
         values.append(id_)
