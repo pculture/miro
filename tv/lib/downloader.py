@@ -286,6 +286,20 @@ class RemoteDownloader(DDBObject):
         else:
             self.run_downloader()
 
+    def setup_restored(self):
+        self.status_updates_frozen = False
+        self.last_update = time.time()
+        self._save_later_dc = None
+        self._update_retry_time_dc = None
+        self.delete_files = True
+        self.item_list = []
+        if self.dlid == 'noid':
+            # this won't happen nowadays, but it can for old databases
+            self.dlid = generate_dlid()
+        self.rate = 0
+        self.upload_rate = 0
+        self.eta = 0
+
     def reset_status_attributes(self):
         """Reset the attributes that track downloading info."""
         for attr_name in self.status_attributes:
@@ -899,20 +913,6 @@ class RemoteDownloader(DDBObject):
         """
         self.confirm_db_thread()
         return self.filename
-
-    def setup_restored(self):
-        self.status_updates_frozen = False
-        self.last_update = time.time()
-        self._save_later_dc = None
-        self._update_retry_time_dc = None
-        self.delete_files = True
-        self.item_list = []
-        if self.dlid == 'noid':
-            # this won't happen nowadays, but it can for old databases
-            self.dlid = generate_dlid()
-        self.rate = 0
-        self.upload_rate = 0
-        self.eta = 0
 
     def get_upload_ratio(self):
         size = self.get_current_size()
