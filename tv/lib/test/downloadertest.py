@@ -11,7 +11,7 @@ class DownloaderTest(EventLoopTest):
     """Test feeds that download things.
     """
     def setup_state(self):
-        self.url = u'http://pculture.org/feeds_test/unittest-feed-1.rss'
+        self.url = u'http://qa.pculture.org/feeds_test/unittest-feed-1.rss'
         self.feed = models.Feed(self.url)
         self.log_file = os.path.join(self.tempdir, 'miro-download-unit-tests')
         app.config.set(prefs.DOWNLOADER_LOG_PATHNAME, self.log_file)
