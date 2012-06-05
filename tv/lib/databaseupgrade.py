@@ -3817,7 +3817,7 @@ def upgrade179(cursor):
             return filename_to_unicode(os.path.basename(filename))
         else:
             return _('no title')
-    cursor.execute("ALTER TABLE item ADD COLUMN metadata_title TEXT")
+    cursor.execute("ALTER TABLE item ADD COLUMN metadata_title text")
     cursor.execute("UPDATE item SET metadata_title=title")
     cursor.execute("SELECT id, metadata_title, torrent_title, entry_title, "
                    "filename FROM item")
@@ -3855,7 +3855,7 @@ def upgrade181(cursor):
 
     This means we can tell an item's state without data from the feed table.
     """
-    cursor.execute("ALTER TABLE item ADD new INTEGER")
+    cursor.execute("ALTER TABLE item ADD new integer")
     # These next lines set new=1 for all items that would have matched the
     # feed_available_view() before.
     # Make a subquery for items that were created after we last viewed a feed
@@ -3876,31 +3876,31 @@ def upgrade182(cursor):
     """Unroll the remote_downloader.status column """
 
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN total_size INTEGER")
+                   "ADD COLUMN total_size integer")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN current_size INTEGER")
+                   "ADD COLUMN current_size integer")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN start_time INTEGER")
+                   "ADD COLUMN start_time integer")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN end_time INTEGER")
+                   "ADD COLUMN end_time integer")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN short_filename TEXT")
+                   "ADD COLUMN short_filename text")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN filename TEXT")
+                   "ADD COLUMN filename text")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN reason_failed TEXT")
+                   "ADD COLUMN reason_failed text")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN short_reason_failed TEXT")
+                   "ADD COLUMN short_reason_failed text")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN dler_type TEXT")
+                   "ADD COLUMN dler_type text")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN retry_time INTEGER")
+                   "ADD COLUMN retry_time integer")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN retry_count INTEGER")
+                   "ADD COLUMN retry_count integer")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN upload_size INTEGER")
+                   "ADD COLUMN upload_size integer")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN info_hash TEXT")
+                   "ADD COLUMN info_hash text")
     columns = [ 'total_size', 'current_size', 'start_time', 'end_time',
                'short_filename', 'filename', 'retry_time', 'retry_count',
                'upload_size', 'info_hash', 'reason_failed',
