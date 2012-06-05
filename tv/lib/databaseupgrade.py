@@ -3855,7 +3855,7 @@ def upgrade181(cursor):
 
     This means we can tell an item's state without data from the feed table.
     """
-    cursor.execute("ALTER TABLE item ADD new integer")
+    cursor.execute("ALTER TABLE item ADD COLUMN new integer")
     # These next lines set new=1 for all items that would have matched the
     # feed_available_view() before.
     # Make a subquery for items that were created after we last viewed a feed
