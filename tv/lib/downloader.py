@@ -558,21 +558,21 @@ class RemoteDownloader(DDBObject):
 
             was_finished = self.is_finished()
             old_filename = self.get_filename()
-            self.before_changing_rates()
 
             # FIXME: how do we get all of the possible bit torrent
             # activity strings into gettext? --NN
             if data.has_key('activity') and data['activity']:
                 data['activity'] = _(data['activity'])
 
+            self.before_changing_rates()
             self.update_status_attributes(data)
+            self.after_changing_rates()
 
             # Store the time the download finished
             finished = self.is_finished() and not was_finished
             name_changed = self.get_filename() != old_filename
             file_migrated = (self.is_finished() and name_changed)
             needs_signal_item = not (finished or file_migrated or rate_limit)
-            self.after_changing_rates()
 
             if ((self.get_state() == u'uploading'
                  and not self.manualUpload
