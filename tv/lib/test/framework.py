@@ -496,6 +496,7 @@ class MiroTestCase(unittest.TestCase):
                 # normal case: use _upgrade_database() because we want
                 # exceptions to keep propagating
                 app.db._upgrade_database()
+        app.db.attach_temp_db()
         database.initialize()
 
     def init_data_package(self):

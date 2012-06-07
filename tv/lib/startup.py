@@ -294,6 +294,7 @@ def finish_startup(obj, thread):
         return
     except storedatabase.UpgradeError:
         raise StartupError(None, None)
+    app.db.attach_temp_db()
     database.initialize()
     end = time.time()
     logging.timing("Database upgrade time: %.3f", end - start)
