@@ -289,7 +289,6 @@ class MiroTestCase(unittest.TestCase):
         self.reload_database()
         self.setup_new_item_info_cache()
         item.setup_metadata_manager(self.tempdir)
-        item.setup_change_tracker()
         searchengines._engines = [
             searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
             ]
@@ -497,6 +496,7 @@ class MiroTestCase(unittest.TestCase):
                 # exceptions to keep propagating
                 app.db._upgrade_database()
         app.db.attach_temp_db()
+        item.setup_change_tracker()
         database.initialize()
 
     def init_data_package(self):

@@ -74,6 +74,7 @@ from miro import fileutil
 from miro import iteminfocache
 from miro import messages
 from miro import schema
+from miro import signals
 from miro import prefs
 from miro import util
 from miro.gtcache import gettext as _
@@ -337,7 +338,7 @@ class DeviceLiveStorageErrorHandler(LiveStorageErrorHandler):
                         "saved. ", {'device': self.name})
         dialogs.MessageBoxDialog(title, description).run()
 
-class LiveStorage:
+class LiveStorage(signals.SignalEmitter):
     """Handles the storage of DDBObjects.
 
     This class does basically two things:
@@ -348,6 +349,11 @@ class LiveStorage:
     Attributes:
 
     - cache -- DatabaseObjectCache object
+
+    Signals:
+
+    - transaction-finished(success) -- We committed or rolled back a
+    transaction
     """
     def __init__(self, path=None, error_handler=None, preallocate=None,
                  object_schemas=None, schema_version=None,
@@ -366,6 +372,8 @@ class LiveStorage:
                                    temporary mode (running in memory, but
                                    checking if it can write to the disk)
         """
+        signals.SignalEmitter.__init__(self)
+        self.create_signal("transaction-finished")
         if path is None:
             path = app.config.get(prefs.SQLITE_PATHNAME)
         if error_handler is None:
@@ -1112,6 +1120,7 @@ class LiveStorage:
             else:
                 self.cursor.execute("ROLLBACK TRANSACTION")
         self._statements_in_transaction = []
+        self.emit("transaction-finished", commit)
 
     def _execute(self, sql, values, is_update=False, many=False):
         if is_update and self._quitting_from_operational_error:
