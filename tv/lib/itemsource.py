@@ -191,7 +191,7 @@ class DatabaseItemSource(ItemSource):
             'item_viewed': not item.new,
             'downloaded': item.is_downloaded(),
             'is_external': item.is_external(),
-            'video_watched': item.get_seen(),
+            'video_watched': item.get_watched(),
             'video_path': item.get_filename(),
             'thumbnail': item.get_thumbnail(),
             'thumbnail_url': item.get_thumbnail_url(),
@@ -290,7 +290,7 @@ class DatabaseItemHandler(ItemHandler):
         """
         try:
             item_ = item.Item.get_by_id(info.id)
-            item_.mark_item_seen()
+            item_.mark_watched()
         except database.ObjectNotFoundError:
             logging.warning("mark_watched: can't find item by id %s" % info.id)
 
@@ -301,7 +301,7 @@ class DatabaseItemHandler(ItemHandler):
         """
         try:
             item_ = item.Item.get_by_id(info.id)
-            item_.mark_item_unseen()
+            item_.mark_unwatched()
         except database.ObjectNotFoundError:
             logging.warning("mark_unwatched: can't find item by id %s" % (
                 info.id,))

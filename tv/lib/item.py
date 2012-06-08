@@ -424,7 +424,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.parent_id = parent_id
         self.channel_title = channel_title
         self.is_container_item = None
-        self.seen = False
         self.auto_downloaded = False
         self.pending_manual_dl = False
         self.downloaded_time = None
@@ -540,14 +539,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def unwatched_downloaded_items(cls):
-        return cls.make_view("NOT item.seen AND "
+        return cls.make_view("item.watched_time IS NULL AND "
                 "item.parent_id IS NULL AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def newly_downloaded_view(cls):
-        return cls.make_view("NOT item.seen AND "
+        return cls.make_view("item.watched_time IS NULL AND "
                 "(item.file_type in ('audio', 'video')) AND "
                 "((is_file_item AND NOT deleted) OR "
                 "(rd.main_item_id=item.id AND "
@@ -605,7 +604,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def unique_new_video_view(cls, include_podcasts=False):
-        query = ("NOT item.seen AND "
+        query = ("item.watched_time IS NULL AND "
                  "item.file_type='video' AND "
                  "((is_file_item AND NOT deleted) OR "
                  "(rd.main_item_id=item.id AND "
@@ -620,7 +619,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def unique_new_audio_view(cls, include_podcasts=False):
-        query = ("NOT item.seen AND "
+        query = ("item.watched_time IS NULL AND "
                  "item.file_type='audio' AND "
                  "((is_file_item AND NOT deleted) OR "
                  "(rd.main_item_id=item.id AND "
@@ -690,7 +689,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def feed_unwatched_view(cls, feed_id):
-        return cls.make_view("feed_id=? AND not seen AND "
+        return cls.make_view("feed_id=? AND item.watched_time IS NULL AND "
                 "file_type in ('audio', 'video') AND "
                 "(is_file_item OR rd.state in ('finished', 'uploading', "
                 "'uploading-paused'))",
@@ -811,7 +810,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def recently_downloaded_view(cls):
-        return cls.make_view("NOT seen AND "
+        return cls.make_view("item.watched_time IS NULL AND "
                 "item.parent_id IS NULL AND "
                 "NOT is_file_item AND downloaded_time AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
@@ -1171,35 +1170,41 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def expire(self):
         self.confirm_db_thread()
         self._remove_from_playlists()
-        self.resume_time = 0
         if self.is_external():
-            if self.is_downloaded():
-                if self.is_container_item:
-                    for item in self.get_children():
-                        item.make_deleted()
-                elif self.get_filename():
-                    FileItem(self.get_filename(), feed_id=self.feed_id,
-                             parent_id=self.parent_id, deleted=True)
-                if self.has_downloader():
-                    self.downloader.set_delete_files(False)
-            self.remove()
+            self.delete_files_and_remove()
         else:
+            self.delete_files_and_expire()
+        self.recalc_feed_counts()
+
+    def delete_files_and_remove(self):
+        if self.is_downloaded():
             if self.is_container_item:
-                # remove our children, since we're about to set
-                # is_container_item to None
                 for item in self.get_children():
                     item.make_deleted()
-                    item.remove()
-            Item._path_count_tracker.remove_item(self)
-            self.delete_files()
-            self.expired = True
-            self.seen = self.keep = self.pending_manual_dl = False
-            self.filename = None
-            self.file_type = self.watched_time = self.last_watched = None
-            self.duration = None
-            self.is_container_item = None
-            self.signal_change()
-        self.recalc_feed_counts()
+            elif self.get_filename():
+                FileItem(self.get_filename(), feed_id=self.feed_id,
+                         parent_id=self.parent_id, deleted=True)
+            if self.has_downloader():
+                self.downloader.set_delete_files(False)
+        self.remove()
+
+    def delete_files_and_expire(self):
+        if self.is_container_item:
+            # remove our children, since we're about to set
+            # is_container_item to None
+            for item in self.get_children():
+                item.make_deleted()
+                item.remove()
+        Item._path_count_tracker.remove_item(self)
+        self.delete_files()
+        self.resume_time = 0
+        self.expired = True
+        self.keep = self.pending_manual_dl = False
+        self.filename = None
+        self.file_type = self.watched_time = self.last_watched = None
+        self.duration = None
+        self.is_container_item = None
+        self.signal_change()
 
     def has_downloader(self):
         return self.downloader_id is not None and self.downloader is not None
@@ -1270,7 +1275,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         Returns a datetime.datetime instance or None if the item and none
         of its children have been watched.
         """
-        if not self.get_seen():
+        if not self.get_watched():
             return None
         if self.is_container_item and self.watched_time == None:
             self.watched_time = datetime.min
@@ -1286,7 +1291,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def get_expiring(self):
         if self.expiring is None:
-            if not self.get_seen():
+            if not self.get_watched():
                 self.expiring = False
             elif self.keep:
                 self.expiring = False
@@ -1311,69 +1316,80 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.new = False
         self.signal_change()
 
-    def get_seen(self):
-        """Returns true iff video has been seen.
-
-        Note the difference between "viewed" and "seen".
-        """
+    def get_watched(self):
+        """Check if the media file has been watched by the user """
         self.confirm_db_thread()
-        return self.seen
+        return self.watched_time is not None
 
-    def mark_item_seen(self, mark_other_items=True):
+    def set_watched(self):
+        """Set that this item has been watched by the user
+
+        If this item has been watched before, this sets last_watched to the
+        current time.  If it hasn't been watched, this sets both watched_time
+        and last_watched.
+        """
+        self.last_watched = datetime.now()
+        if self.watched_time is None:
+            self.watched_time = self.last_watched
+        self.signal_change()
+
+    def unset_watched(self):
+        """Act like this item has never been watched by the user."""
+        self.resume_time = 0
+        self.watched_time = self.last_watched = None
+        self.signal_change()
+
+    def mark_watched(self, mark_other_items=True):
         """Marks the item as seen.
         """
         self.confirm_db_thread()
         self.has_drm = False
         if self.is_container_item:
             for child in self.get_children():
-                child.seen = True
-                child.signal_change()
-        if self.seen == False:
-            self.seen = True
+                child.set_watched()
+        was_watched = self.get_watched()
+        self.set_watched()
+        if not was_watched:
+            # need to do some extra work if this is the first time we're
+            # watching the video
             if self.subtitle_encoding is None:
                 config_value = app.config.get(prefs.SUBTITLE_ENCODING)
                 if config_value:
                     self.subtitle_encoding = unicode(config_value)
-            if self.watched_time is None:
-                self.watched_time = datetime.now()
-            self.last_watched = datetime.now()
-            self.signal_change()
             self.update_parent_seen()
-            if mark_other_items and self.downloader:
-                for item in self.downloader.item_list:
-                    if item != self:
-                        item.mark_item_seen(False)
             self.recalc_feed_counts()
-        else:
-            self.last_watched = datetime.now()
-            self.signal_change()
+
+        if mark_other_items and self.downloader:
+            for item in self.downloader.item_list:
+                if item != self:
+                    item.mark_watched(False)
 
     def update_parent_seen(self):
         if self.parent_id:
-            unseen_children = self.make_view('parent_id=? AND NOT seen AND '
-                    "file_type in ('audio', 'video')", (self.parent_id,))
+            unseen_children = self.make_view(
+                'parent_id=? AND watched_time IS NULL AND '
+                "file_type in ('audio', 'video')", (self.parent_id,))
             new_seen = (unseen_children.count() == 0)
             parent = self.get_parent()
-            if parent.seen != new_seen:
-                parent.seen = new_seen
-                parent.signal_change()
+            if parent.get_watched() != new_seen:
+                if new_seen:
+                    parent.set_watched()
+                else:
+                    parent.unset_watched()
 
-    def mark_item_unseen(self, mark_other_items=True):
+    def mark_unwatched(self, mark_other_items=True):
         self.confirm_db_thread()
         if self.is_container_item:
             for item in self.get_children():
-                item.seen = False
-                item.signal_change()
-        if self.seen:
-            self.seen = False
-            self.watched_time = self.last_watched = None
-            self.resume_time = 0
-            self.signal_change()
+                item.unset_watched()
+
+        if self.get_watched():
+            self.unset_watched()
             self.update_parent_seen()
             if mark_other_items and self.downloader:
                 for item in self.downloader.item_list:
                     if item != self:
-                        item.mark_item_unseen(False)
+                        item.mark_unwatched(False)
             self.recalc_feed_counts()
 
     # TODO: played/seen count updates need to trigger recalculation of auto
@@ -1429,9 +1445,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         self.confirm_db_thread()
         manual_dl_count = Item.manual_downloads_view().count()
-        self.expired = self.keep = self.seen = False
+        self.expired = self.keep = False
         self.was_downloaded = True
         self.new = False
+        self.watched_time = None
 
         if ((not autodl) and
                 manual_dl_count >= app.config.get(prefs.MAX_MANUAL_DOWNLOADS)):
@@ -1724,7 +1741,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self._state = u'paused'
         elif not self.downloader.is_finished():
             self._state = u'downloading'
-        elif not self.get_seen():
+        elif not self.get_watched():
             self._state = u'newly-downloaded'
         elif self.get_expiring():
             self._state = u'expiring'
@@ -1759,7 +1776,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 return u'expired'
             else:
                 return u'not-downloaded'
-        elif not self.get_seen():
+        elif not self.get_watched():
             return u'newly-downloaded'
         elif self.get_expiring():
             return u'expiring'
@@ -2124,7 +2141,6 @@ class FileItem(Item):
         self.was_downloaded = False
         if mark_seen:
             self.watched_time = datetime.now()
-            self.seen = True
         if not fileutil.isdir(self.filename):
             # If our file isn't a directory, then we know we are definitely
             # not a container item.  Note that the opposite isn't true in the
@@ -2142,7 +2158,7 @@ class FileItem(Item):
     def get_state(self):
         if self.deleted:
             return u"expired"
-        elif self.get_seen():
+        elif self.get_watched():
             return u"saved"
         else:
             return u"newly-downloaded"
@@ -2173,7 +2189,7 @@ class FileItem(Item):
         self.confirm_db_thread()
         if self.deleted:
             return u'expired'
-        elif not self.get_seen():
+        elif not self.get_watched():
             return u'newly-downloaded'
 
         if self.parent_id and self.get_parent().get_expiring():

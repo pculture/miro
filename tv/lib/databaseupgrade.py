@@ -3933,7 +3933,7 @@ def upgrade182(cursor):
         values.append(id_)
         cursor.execute(update_sql, values)
 
-    remove_column(cursor, 'remote_downloader', 'status')
+    remove_column(cursor, 'remote_downloader', ['status'])
 
 def upgrade183(cursor):
     """Rename downloader columns to use PEP 8."""
@@ -3945,3 +3945,7 @@ def upgrade183(cursor):
     alter_table_columns(cursor, 'remote_downloader', [], rename_columns)
     # as long as we're changing origURL, change if for feed too
     rename_column(cursor, 'feed', 'origURL', 'orig_url')
+
+def upgrade184(cursor):
+    """Drop the seen column from item."""
+    remove_column(cursor, 'item', ['seen'])

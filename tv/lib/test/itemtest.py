@@ -45,23 +45,23 @@ class ContainerItemTest(EventLoopTest):
         f.close()
 
 class ItemSeenTest(ContainerItemTest):
-    def test_seen_attribute(self):
-        # parents should be consider "seen" when all of their
-        # audio/video children are marked seen.
+    def test_get_watched_attribute(self):
+        # parents should be consider watched when all of their
+        # audio/video children are marked watched.
         children = list(self.container_item.get_children())
         media_children = [i for i in children if i.is_playable()]
         other_children = [i for i in children if not i.is_playable()]
         self.assertEquals(len(media_children), 2)
         self.assertEquals(len(other_children), 1)
-        self.assert_(not self.container_item.seen)
-        media_children[0].mark_item_seen()
-        self.assert_(not self.container_item.seen)
-        media_children[1].mark_item_seen()
-        self.assert_(self.container_item.seen)
-        media_children[1].mark_item_unseen()
-        self.assert_(not self.container_item.seen)
-        media_children[1].mark_item_seen()
-        self.assert_(self.container_item.seen)
+        self.assert_(not self.container_item.get_watched())
+        media_children[0].mark_watched()
+        self.assert_(not self.container_item.get_watched())
+        media_children[1].mark_watched()
+        self.assert_(self.container_item.get_watched())
+        media_children[1].mark_unwatched()
+        self.assert_(not self.container_item.get_watched())
+        media_children[1].mark_watched()
+        self.assert_(self.container_item.get_watched())
 
 class ChildRemoveTest(ContainerItemTest):
     def test_expire_all_children(self):
@@ -223,20 +223,20 @@ class SubtitleEncodingTest(MiroTestCase):
         # subtitle encoding.
         self.item1.set_subtitle_encoding('latin-9')
         self.assertEquals(self.item2.subtitle_encoding, None)
-        self.item2.mark_item_seen()
+        self.item2.mark_watched()
         self.assertEquals(self.item2.subtitle_encoding, 'latin-9')
         # Test the value isn't re-set the next time it's marked watched
         self.item1.set_subtitle_encoding('latin-5')
-        self.item2.mark_item_seen()
+        self.item2.mark_watched()
         self.assertEquals(self.item2.subtitle_encoding, 'latin-9')
 
     def test_set_none(self):
-        # Test an item is marked seen when the subtitle encoding is None)
-        self.item1.mark_item_seen()
+        # Test an item is marked watched when the subtitle encoding is None)
+        self.item1.mark_watched()
         self.assertEquals(self.item2.subtitle_encoding, None)
         self.item2.set_subtitle_encoding('latin-7')
-        self.item2.mark_item_seen()
-        self.item1.mark_item_seen()
+        self.item2.mark_watched()
+        self.item1.mark_watched()
         self.assertEquals(self.item1.subtitle_encoding, None)
 
 class ItemSearchTest(MiroTestCase):
