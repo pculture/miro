@@ -75,49 +75,6 @@ class ItemListDragHandler(object):
         else:
             return {}
 
-class FilteredListMixin(object):
-    """Track a filter switch attached to an ItemListController
-    """
-    def __init__(self):
-        filters = app.widget_state.get_filters(self.type, self.id)
-        try:
-            self.item_list.set_filters(filters)
-        except KeyError:
-            logging.warn("Error setting initial filters to %s "
-                    "(type: %s, id: %s)", filters, self.type, self.id)
-            self.item_list.set_filters([u'all'])
-            app.widget_state.set_filters(self.type, self.id,
-                self.item_list.get_filters())
-        self.after_filters_changed()
-        self.add_extension_filters()
-
-    def on_filter_clicked(self, button, filter_key):
-        """Handle the filter switch changing state."""
-        self.item_list.select_filter(filter_key)
-        self.after_filters_changed()
-        app.widget_state.set_filters(self.type, self.id,
-                self.item_list.get_filters())
-
-    def after_filters_changed(self):
-        self.item_list_will_change()
-        self.item_list.recalculate_hidden_items()
-        self.send_model_changed()
-        self.titlebar.set_filters(self.item_list.get_filters())
-        self.check_for_empty_list()
-
-    def add_extension_filters(self):
-        hook_results = api.hook_invoke('item_list_filters', self.type,
-                self.id)
-        for filter_list in hook_results:
-            try:
-                self._add_extension_filter_list(filter_list)
-            except StandardError:
-                logging.exception("Error adding extension item filter")
-
-    def _add_extension_filter_list(self, filter_list):
-        for filter_ in filter_list:
-            self.titlebar.filter_box.add_filter(filter_.key)
-
 class ProgressTrackingListMixin(object):
     """Controller that cares about item metadata extraction progress."""
     def __init__(self):
@@ -270,10 +227,53 @@ class ItemListController(object):
         self._playback_callbacks = []
         self.throbber_manager = ThrobberAnimationManager(self.item_list,
                 self.all_item_views())
+        self._set_initial_filters()
 
     def get_item_list(self):
         return self.item_tracker.item_list
     item_list = property(get_item_list)
+
+    # filter handling code
+    def _set_initial_filters(self):
+        filters = app.widget_state.get_filters(self.type, self.id)
+        try:
+            self.item_list.set_filters(filters)
+        except KeyError:
+            logging.warn("Error setting initial filters to %s "
+                    "(type: %s, id: %s)", filters, self.type, self.id)
+            self.item_list.set_filters([u'all'])
+            app.widget_state.set_filters(self.type, self.id,
+                self.item_list.get_filters())
+        self.after_filters_changed()
+        self.add_extension_filters()
+
+    def on_filter_clicked(self, button, filter_key):
+        """Handle the filter switch changing state."""
+        self.item_list.select_filter(filter_key)
+        self.after_filters_changed()
+        app.widget_state.set_filters(self.type, self.id,
+                self.item_list.get_filters())
+
+    def after_filters_changed(self):
+        self.item_list_will_change()
+        self.item_list.recalculate_hidden_items()
+        self.send_model_changed()
+        self.titlebar.set_filters(self.item_list.get_filters())
+        self.check_for_empty_list()
+
+    def add_extension_filters(self):
+        hook_results = api.hook_invoke('item_list_filters', self.type,
+                self.id)
+        for filter_list in hook_results:
+            try:
+                self._add_extension_filter_list(filter_list)
+            except StandardError:
+                logging.exception("Error adding extension item filter")
+
+    def _add_extension_filter_list(self, filter_list):
+        for filter_ in filter_list:
+            self.titlebar.filter_box.add_filter(filter_.key)
+
 
     def on_become_primary(self):
         """This has become the primary item_list_controller; this is like
@@ -1215,11 +1215,10 @@ class SimpleItemListController(ItemListController):
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
 
-class AudioVideoItemsController(SimpleItemListController, FilteredListMixin,
-        ProgressTrackingListMixin):
+class AudioVideoItemsController(SimpleItemListController,
+                                ProgressTrackingListMixin):
     def __init__(self):
         SimpleItemListController.__init__(self)
-        FilteredListMixin.__init__(self)
         ProgressTrackingListMixin.__init__(self)
 
     def build_widget(self):

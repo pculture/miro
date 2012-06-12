@@ -42,8 +42,7 @@ from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import widgetutil
 
-class FeedController(itemlistcontroller.ItemListController,
-                     itemlistcontroller.FilteredListMixin):
+class FeedController(itemlistcontroller.ItemListController):
     """Controller object for feeds."""
     TYPE = u'feed'
     def __init__(self, id_, is_folder, is_directory_feed):
@@ -51,7 +50,6 @@ class FeedController(itemlistcontroller.ItemListController,
         self.is_directory_feed = is_directory_feed
         self.titlebar = None
         itemlistcontroller.ItemListController.__init__(self, self.TYPE, id_)
-        itemlistcontroller.FilteredListMixin.__init__(self)
         self.show_resume_playing_button = True
 
     def make_context_menu_handler(self):
