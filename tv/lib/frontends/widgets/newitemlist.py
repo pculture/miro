@@ -29,8 +29,11 @@
 
 """itemlist.py -- Handles item data for our table views
 
-This module uses the miro.data.itemtrack module as a base and adds
-widget-specific functionality and convenience methods.
+This module defines ItemLists, which integres ItemTracker with the rest of the
+widgets code.
+
+It also defines several ItemTrackerQuery subclasses that correspond to tabs
+in the interface.
 """
 
 import collections
@@ -50,8 +53,18 @@ class ItemList(itemtrack.ItemTracker):
             - set_filters/select_filter changes the filters
             - set_sort changes the sort
     """
-    def __init__(self, base_query):
-        self.base_query = base_query
+    def __init__(self, tab_type, tab_id):
+        """Create a new ItemList
+
+        Note: outside classes shouldn't call this directly.  Instead, they
+        should use the app.item_list_pool.get() method.
+
+        :param tab_type: type of tab that this list is for
+        :parab tab_id: id of the tab that this list is for
+        """
+        self.tab_type = tab_type
+        self.tab_id = tab_id
+        self.base_query = self._make_base_query(tab_type, tab_id)
         self.item_attributes = collections.defaultdict(dict)
         self.filter_set = itemfilter.ItemFilterSet()
         self.sorter = itemsort.DateSort()
@@ -62,6 +75,14 @@ class ItemList(itemtrack.ItemTracker):
     def _fetch_id_list(self):
         itemtrack.ItemTracker._fetch_id_list(self)
         self._reset_group_info()
+
+    def _make_base_query(self, tab_type, tab_id):
+        query = itemtrack.ItemTrackerQuery()
+        if tab_type == 'feed':
+            query.add_condition('feed_id', '=', tab_id)
+        else:
+            raise ValueError("Can't handle tab type %r" % tab_type)
+        return query
 
     def _make_query(self):
         query = self.base_query.copy()
@@ -148,9 +169,52 @@ class ItemList(itemtrack.ItemTracker):
         for row in xrange(start, end+1):
             self.group_info[row] = (row-start, total)
 
-class FeedItemList(ItemList):
-    def __init__(self, feed_id):
-        base_query = itemtrack.ItemTrackerQuery()
-        base_query.add_condition('feed_id', '=', feed_id)
-        ItemList.__init__(self, base_query)
-        self.feed_id = feed_id
+class ItemListPool(object):
+    """Pool of ItemLists that the frontend is using.
+
+    This class keeps track of all active ItemList objects so that we can avoid
+    creating 2 ItemLists for the same tab.  This helps with performance
+    because we don't have to process the ItemsChanged message twice.  Also, we
+    want changes to the item list to be shared.  For example, if a user is
+    playing items from a given tab and they change the filters on that tab, we
+    want the PlaybackPlaylist to reflect those changes.
+    """
+    def __init__(self):
+        self.all_item_lists = set()
+        self._refcounts = {}
+
+    def get(self, tab_type, tab_id):
+        """Get an ItemList to use.
+
+        This method will first try to re-use an existing ItemList from the
+        pool.  If it can't, then a new ItemList will be created.
+
+        :returns: ItemList object.  When you are done with it, you must pass
+        the ItemList to the release() method.
+        """
+        for obj in self.all_item_lists:
+            if obj.tab_type == tab_type and obj.tab_id == tab_id:
+                self._refcounts[obj] += 1
+                return obj
+        new_list = ItemList(tab_type, tab_id)
+        self.all_item_lists.add(new_list)
+        self._refcounts[new_list] = 1
+        return new_list
+
+    def release(self, item_list):
+        """Release an item list.
+
+        Call this when you're done using an ItemList.  Once this has been
+        called for each time the list has been returned from get(), then that
+        list will be removed from the pool and no longer get callbacks for the
+        ItemsChanged message.
+        """
+        self._refcounts[item_list] -= 1
+        if self._refcounts[item_list] <= 0:
+            self.all_item_lists.remove(item_list)
+            del self._refcounts[item_list]
+
+    def on_item_changes(self, message):
+        """Call on_item_changes for each ItemList in the pool."""
+        for obj in self.all_item_lists:
+            obj.on_item_changes(message)

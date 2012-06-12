@@ -30,6 +30,7 @@
 """miro.data.itemtrack -- Track Items in the database
 """
 import collections
+import weakref
 
 from miro import app
 from miro import schema
@@ -195,7 +196,7 @@ class ItemTracker(signals.SignalEmitter):
         self._set_query(query)
         self._fetch_id_list()
         self._reset_row_data()
-        self.idle_scheduler(self.fetch_rows_during_idle)
+        ItemTracker._schedule_fetch_rows_during_idle(self)
 
     def _set_query(self, query):
         """Change our ItemTrackerQuery object."""
@@ -235,7 +236,7 @@ class ItemTracker(signals.SignalEmitter):
         # If we had a connection open before, that means we also had an idle
         # callback scheduled.  No need to schedule another one.
         if not had_connection:
-            self.idle_scheduler(self.fetch_rows_during_idle)
+            ItemTracker._schedule_fetch_rows_during_idle(self)
         self.emit("list-changed")
 
     def items(self):
@@ -261,13 +262,33 @@ class ItemTracker(signals.SignalEmitter):
         cursor = self.query.execute(self.connection)
         return cursor.fetchall()
 
+    @staticmethod
+    def _schedule_fetch_rows_during_idle(item_list):
+        """Schedule fetch_rows_during_idle to be called some time in the
+        future using idle_scheduler.
+
+        This function avoids keeping a reference around to the ItemList.  This
+        way, if other components stop using the ItemTracker before the
+        callback, then we can destroy the object and skip the processing
+        """
+        # make a weak reference to the object to use when the callback is
+        # called
+        ref = weakref.ref(item_list)
+        def callback():
+            item_list = ref()
+            if item_list is not None:
+                item_list.fetch_rows_during_idle()
+        item_list.idle_scheduler(callback)
+        # delete original reference
+        del item_list
+
     def fetch_rows_during_idle(self):
         for i in xrange(len(self.id_list)):
             if not self._row_loaded(i):
                 # row data unloaded, call _ensure_row_loaded to load this row
                 # and adjecent rows then schedule another run later
                 self._ensure_row_loaded(i)
-                self.idle_scheduler(self.fetch_rows_during_idle)
+                ItemTracker._schedule_fetch_rows_during_idle(self)
                 return
         # all row data is loaded.  We're all done
         self._release_connection()

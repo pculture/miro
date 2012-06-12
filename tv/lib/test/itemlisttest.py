@@ -29,9 +29,11 @@
 
 """itemlisttest -- Test ItemList"""
 
+import gc
 import itertools
 import random
 import string
+import weakref
 
 from miro import app
 from miro import models
@@ -48,7 +50,7 @@ class ItemListTest(MiroTestCase):
         self.items = [self.make_item(self.feed, u'item-%s' % i)
                       for i in xrange(10)]
         app.db.finish_transaction()
-        self.item_list = itemlist.FeedItemList(self.feed.id)
+        self.item_list = itemlist.ItemList('feed', self.feed.id)
         self.items_changed_handler = mock.Mock()
         self.list_changed_handler = mock.Mock()
         self.item_list.connect("items-changed", self.items_changed_handler)
@@ -169,3 +171,47 @@ class ItemListTest(MiroTestCase):
         # test grouping is correct after changing the sort
         self.item_list.set_sort(itemsort.TitleSort())
         self.check_group_info(last_letter_grouping)
+
+class TestItemListPool(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.init_data_package()
+        self.feed = models.Feed(u'http://example.com/feed.rss')
+        self.items = [self.make_item(self.feed, u'item-%s' % i)
+                      for i in xrange(10)]
+        app.db.finish_transaction()
+        self.pool = itemlist.ItemListPool()
+        self.item_list = self.pool.get('feed', self.feed.id)
+        self.item_list2 = self.pool.get('feed', self.feed.id + 1)
+
+    def test_reuse(self):
+        # test that we re-use ItemList objects rather than creating multiples.
+        dup_item_list = self.pool.get('feed', self.feed.id)
+        if dup_item_list is not self.item_list:
+            raise AssertionError("Didn't re-use item list")
+        non_dup_item_list = self.pool.get('feed', -1)
+        if (non_dup_item_list is self.item_list or
+            non_dup_item_list is self.item_list2):
+            raise AssertionError("Re-used item list when we shouldn't have")
+
+    def test_on_item_changes(self):
+        # Test that calling on_item_changes on the ItemListPool calls it on
+        # all lists inside that pool.
+        self.item_list.on_item_changes = mock.Mock()
+        self.item_list2.on_item_changes = mock.Mock()
+        fake_message = mock.Mock()
+        self.pool.on_item_changes(fake_message)
+        self.item_list.on_item_changes.assert_called_once_with(fake_message)
+        self.item_list2.on_item_changes.assert_called_once_with(fake_message)
+
+    def test_release(self):
+        # Test that we actually remove objects from the pool once there are no
+        # more references to them.
+        self.pool.release(self.item_list)
+        self.assertSameSet(self.pool.all_item_lists, [self.item_list2])
+        # try it with 2 references
+        dup_item_list2 = self.pool.get('feed', self.feed.id + 1)
+        self.pool.release(self.item_list2)
+        self.assertSameSet(self.pool.all_item_lists, [self.item_list2])
+        self.pool.release(dup_item_list2)
+        self.assertSameSet(self.pool.all_item_lists, [])

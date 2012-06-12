@@ -69,6 +69,7 @@ from miro.frontends.widgets import searchfilesdialog
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
+from miro.frontends.widgets import newitemlist as itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets import displays
@@ -102,6 +103,7 @@ class Application:
         self.window = None
         self.ui_initialized = False
         messages.FrontendMessage.install_handler(self.message_handler)
+        app.item_list_pool = itemlist.ItemListPool()
         app.info_updater = InfoUpdater()
         app.saved_items = set()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
