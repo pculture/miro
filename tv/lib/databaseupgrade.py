@@ -3832,7 +3832,7 @@ def upgrade180(cursor):
     # Rename columns in the item table
     rename_columns = {
         'autoDownloaded': 'auto_downloaded',
-        'pendingManualDL': 'pending_manual_dl',
+        'pendingManualDL': 'pending_manual_download',
         'pendingReason': 'pending_reason',
         'creationTime': 'creation_time',
         'linkNumber': 'link_number',

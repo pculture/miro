@@ -408,7 +408,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('downloader_id', SchemaInt(noneOk=True)),
         ('parent_id', SchemaInt(noneOk=True)),
         ('auto_downloaded', SchemaBool()),
-        ('pending_manual_dl', SchemaBool()),
+        ('pending_manual_download', SchemaBool()),
         ('pending_reason', SchemaString()),
         ('expired', SchemaBool()),
         ('keep', SchemaBool()),

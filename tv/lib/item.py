@@ -425,7 +425,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.channel_title = channel_title
         self.is_container_item = None
         self.auto_downloaded = False
-        self.pending_manual_dl = False
+        self.pending_manual_download = False
         self.downloaded_time = None
         self.watched_time = self.last_watched = None
         self.pending_reason = u""
@@ -493,7 +493,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def manual_pending_view(cls):
-        return cls.make_view('pending_manual_dl')
+        return cls.make_view('pending_manual_download')
 
     @classmethod
     def auto_downloads_view(cls):
@@ -504,13 +504,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def manual_downloads_view(cls):
         return cls.make_view("NOT item.auto_downloaded AND "
-                "NOT item.pending_manual_dl AND "
+                "NOT item.pending_manual_download AND "
                 "rd.state in ('downloading', 'paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def download_tab_view(cls):
-        return cls.make_view("(item.pending_manual_dl OR "
+        return cls.make_view("(item.pending_manual_download OR "
                 "(rd.state in ('downloading', 'paused', 'uploading', "
                 "'uploading-paused', 'offline') OR "
                 "(rd.state == 'failed' AND "
@@ -1199,7 +1199,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.delete_files()
         self.resume_time = 0
         self.expired = True
-        self.keep = self.pending_manual_dl = False
+        self.keep = self.pending_manual_download = False
         self.filename = None
         self.file_type = self.watched_time = self.last_watched = None
         self.duration = None
@@ -1452,7 +1452,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         if ((not autodl) and
                 manual_dl_count >= app.config.get(prefs.MAX_MANUAL_DOWNLOADS)):
-            self.pending_manual_dl = True
+            self.pending_manual_download = True
             self.pending_reason = _("queued for download")
             self.signal_change()
             if self.looks_like_torrent():
@@ -1460,7 +1460,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return
         else:
             self.set_auto_downloaded(autodl)
-            self.pending_manual_dl = False
+            self.pending_manual_download = False
 
         dler = downloader.get_downloader_for_item(self)
         if dler is not None:
@@ -1483,7 +1483,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def is_pending_manual_download(self):
         self.confirm_db_thread()
-        return self.pending_manual_dl
+        return self.pending_manual_download
 
     def cancel_auto_download(self):
         # FIXME - this is cheating and abusing the was_downloaded flag
@@ -1726,7 +1726,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         # into the stopped state).
         if (self.downloader is None  or
                 self.downloader.get_state() in (u'failed', u'stopped')):
-            if self.pending_manual_dl:
+            if self.pending_manual_download:
                 self._state = u'downloading'
             elif self.expired:
                 self._state = u'expired'
@@ -1735,7 +1735,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             else:
                 self._state = u'not-downloaded'
         elif self.downloader.get_state() in (u'offline', u'paused'):
-            if self.pending_manual_dl:
+            if self.pending_manual_download:
                 self._state = u'downloading'
             else:
                 self._state = u'paused'
@@ -1860,7 +1860,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returns_unicode
     def get_startup_activity(self):
-        if self.pending_manual_dl:
+        if self.pending_manual_download:
             return self.pending_reason
         elif self.downloader:
             return self.downloader.get_startup_activity()
