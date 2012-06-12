@@ -1936,7 +1936,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                                 item_info.description)
             fi = item.FileItem(final_path, feed_id=manual_feed.id,
                                fp_values=fp_values)
-            fi.releaseDateObj = item_info.release_date
+            fi.release_date = item_info.release_date
             fi.duration = item_info.duration
             fi.permalink = item_info.permalink
             if item_info.commentslink:
@@ -1951,7 +1951,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             if item_info.file_url:
                 fi.url = item_info.file_url
             fi.mime_type = item_info.mime_type
-            fi.creationTime = item_info.date_added
+            fi.creation_time = item_info.date_added
             fi.artist = item_info.artist
             fi.album = item_info.album
             fi.track = item_info.track

@@ -139,7 +139,7 @@ def add_torrent(path, torrent_info_hash):
     manual_feed = feed.Feed.get_manual_feed()
     for i in manual_feed.items:
         if ((i.downloader is not None
-             and i.downloader.status.get('infohash') == torrent_info_hash)):
+             and i.downloader.info_hash == torrent_info_hash)):
             logging.info("not downloading %s, it's already a download for %s",
                          path, i)
             if i.downloader.get_state() in ('paused', 'stopped'):

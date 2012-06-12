@@ -438,10 +438,9 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expire = u"system"
         self.expireTime = None
         self.fallBehind = -1
-        self.last_viewed = datetime.min
 
         self.baseTitle = None
-        self.origURL = url
+        self.orig_url = url
         self.errorState = False
         self.loading = True
         self._actualFeed = None
@@ -483,7 +482,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                     pass
         # otherwise, make a new FeedImpl
         if self._actualFeed is None:
-            self._set_feed_impl(FeedImpl(self.origURL, self))
+            self._set_feed_impl(FeedImpl(self.orig_url, self))
             self.signal_change()
         return self._actualFeed
 
@@ -491,15 +490,15 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def get_by_url(cls, url):
-        return cls.make_view('origURL=?', (url,)).get_singleton()
+        return cls.make_view('orig_url=?', (url,)).get_singleton()
 
     @classmethod
     def get_by_url_and_search(cls, url, searchTerm):
         if searchTerm is not None:
-            view = cls.make_view('origURL=? AND searchTerm=?',
+            view = cls.make_view('orig_url=? AND searchTerm=?',
                     (url, searchTerm))
         else:
-            view = cls.make_view('origURL=? AND searchTerm IS NULL', (url,))
+            view = cls.make_view('orig_url=? AND searchTerm IS NULL', (url,))
         return view.get_singleton()
 
     @classmethod
@@ -528,7 +527,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def watched_folder_view(cls):
-        return cls.make_view("origURL LIKE 'dtv:directoryfeed:%'")
+        return cls.make_view("orig_url LIKE 'dtv:directoryfeed:%'")
 
     def on_db_insert(self):
         self.generate_feed(True)
@@ -626,26 +625,18 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                     self.auto_pending_items.count())
             return self._num_available
 
-    def get_viewed(self):
-        """Returns true iff this feed has been looked at
-        """
-        return self.last_viewed != datetime.min
-
     def mark_as_viewed(self):
         """Sets the last time the feed was viewed to now
         """
-        # get the list of available items before we reset the time
-        available_items = list(self.available_items)
-        self.last_viewed = datetime.now()
         try:
             del self._num_available
         except AttributeError:
             pass
+        for item in list(self.available_items):
+            item.unset_new()
         if self.in_folder():
             self.get_folder().signal_change()
         self.signal_change()
-        for item in available_items:
-            item.signal_change(needs_save=False)
 
     def start_manual_download(self):
         next_ = None
@@ -702,7 +693,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         for item in self.items:
             if not item.icon_cache or not (item.icon_cache.is_valid() or
                     item.screenshot or
-                    item.isContainerItem):
+                    item.is_container_item):
                 item.signal_change(needs_save=False)
 
     def get_id(self):
@@ -861,35 +852,36 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def generate_feed(self, removeOnError=False):
         newFeed = None
-        if self.origURL == u"dtv:directoryfeed":
+        if self.orig_url == u"dtv:directoryfeed":
             newFeed = DirectoryFeedImpl(self)
             self.visible = False
-        elif (self.origURL.startswith(u"dtv:directoryfeed:")):
-            url = self.origURL[len(u"dtv:directoryfeed:"):]
+        elif (self.orig_url.startswith(u"dtv:directoryfeed:")):
+            url = self.orig_url[len(u"dtv:directoryfeed:"):]
             dir_ = unmake_url_safe(url)
             newFeed = DirectoryWatchFeedImpl(self, dir_)
-        elif self.origURL == u"dtv:search":
+        elif self.orig_url == u"dtv:search":
             newFeed = SearchFeedImpl(self)
             self.visible = False
-        elif self.origURL == u"dtv:searchDownloads":
+        elif self.orig_url == u"dtv:searchDownloads":
             newFeed = SearchDownloadsFeedImpl(self)
             self.visible = False
-        elif self.origURL == u"dtv:manualFeed":
+        elif self.orig_url == u"dtv:manualFeed":
             newFeed = ManualFeedImpl(self)
             self.visible = False
-        elif SEARCH_URL_MATCH_RE.match(self.origURL):
-            newFeed = SavedSearchFeedImpl(self.origURL, self)
+        elif SEARCH_URL_MATCH_RE.match(self.orig_url):
+            newFeed = SavedSearchFeedImpl(self.orig_url, self)
         else:
-            self.download = grab_url(self.origURL,
+            self.download = grab_url(self.orig_url,
                     lambda info: self._generate_feed_callback(info, removeOnError),
                     lambda error: self._generate_feed_errback(error, removeOnError),
                     default_mime_type=u'application/rss+xml')
-            logging.debug("added async callback to create feed %s", self.origURL)
+            logging.debug("added async callback to create feed %s",
+                          self.orig_url)
         if newFeed:
             self.finish_generate_feed(newFeed)
 
     def is_watched_folder(self):
-        return self.origURL.startswith("dtv:directoryfeed:")
+        return self.orig_url.startswith("dtv:directoryfeed:")
 
     def _handle_feed_loading_error(self, errorDescription):
         self.download = None
@@ -925,7 +917,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if not self.id_exists():
             return
         logging.warning("Couldn't load podcast at %s (%s)",
-                        self.origURL, error)
+                        self.orig_url, error)
         self._handle_feed_loading_error(error.getFriendlyDescription())
 
     def _generate_feed_callback(self, info, removeOnError):
@@ -940,8 +932,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
         if not self.id_exists():
             return
-        if info['updated-url'] != self.origURL and \
-                not self.origURL.startswith('dtv:'): # we got redirected
+        if info['updated-url'] != self.orig_url and \
+                not self.orig_url.startswith('dtv:'): # we got redirected
             f = lookup_feed(info['updated-url'], self.searchTerm)
             if f is not None: # already have this feed, so delete us
                 self.remove()
@@ -1229,7 +1221,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     feed_id=self.ufeed.id, channel_title=channel_title)
         else:
             item = models.Item(fp_values, feed_id=self.ufeed.id,
-                    eligibleForAutoDownload=not self.initialUpdate,
+                    eligible_for_autodownload=not self.initialUpdate,
                     channel_title=channel_title)
             if not item.matches_search(self.ufeed.searchTerm):
                 item.remove()
@@ -1348,7 +1340,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         if self.initialUpdate:
             self.initialUpdate = False
             for latest in models.Item.latest_in_feed_view(self.ufeed_id):
-                latest.eligibleForAutoDownload = True
+                latest.eligible_for_autodownload = True
                 latest.signal_change()
             if self.ufeed.is_autodownloadable():
                 self.ufeed.mark_as_viewed()
@@ -1384,7 +1376,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         candidates = []
         for item in self.old_items:
             if item.downloader is None:
-                candidates.append((item.creationTime, item))
+                candidates.append((item.creation_time, item))
         candidates.sort()
         for time_, item in candidates[:extra]:
             item.remove()
@@ -1757,7 +1749,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             self.linkHistory[url] = self.tempHistory[url]
         self.tempHistory = {}
 
-    def get_html(self, urlList, depth=0, linkNumber=0, top=False):
+    def get_html(self, urlList, depth=0, link_number=0, top=False):
         """Grabs HTML at the given URL, then processes it
         """
         url = urlList.pop(0)
@@ -1772,7 +1764,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 return
             self.downloads.discard(download)
             try:
-                self.process_downloaded_html(info, urlList, depth, linkNumber,
+                self.process_downloaded_html(info, urlList, depth, link_number,
                                            top)
             finally:
                 self.check_done()
@@ -1787,7 +1779,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 modified=modified, default_mime_type='text/html')
         self.downloads.add(download)
 
-    def process_downloaded_html(self, info, urlList, depth, linkNumber,
+    def process_downloaded_html(self, info, urlList, depth, link_number,
                               top=False):
         self.ufeed.confirm_db_thread()
         #print "Done grabbing %s" % info['updated-url']
@@ -1805,11 +1797,11 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             else:
                 subLinks = self.scrape_links(info['body'], info['redirected-url'], setTitle=top)
             if top:
-                self.process_links(subLinks, 0, linkNumber)
+                self.process_links(subLinks, 0, link_number)
             else:
-                self.process_links(subLinks, depth+1, linkNumber)
+                self.process_links(subLinks, depth+1, link_number)
         if len(urlList) > 0:
-            self.get_html(urlList, depth, linkNumber)
+            self.get_html(urlList, depth, link_number)
 
     def check_done(self):
         if len(self.downloads) == 0:
@@ -1818,7 +1810,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             self.ufeed.signal_change()
             self.schedule_update_events(-1)
 
-    def add_video_item(self, link, dict_, linkNumber):
+    def add_video_item(self, link, dict_, link_number):
         link = unicodify(link.strip())
         if dict_.has_key('title'):
             title = dict_['title']
@@ -1840,14 +1832,14 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 'enclosures': [FeedParserDict({'url': link})]
                 })
         i = models.Item(FeedParserValues(fp_dict),
-                             linkNumber=linkNumber, feed_id=self.ufeed.id,
-                             eligibleForAutoDownload=False)
+                             link_number=link_number, feed_id=self.ufeed.id,
+                             eligible_for_autodownload=False)
         if ((self.ufeed.searchTerm is not None
              and not i.matches_search(self.ufeed.searchTerm))):
             i.remove()
             return
 
-    def process_links(self, links, depth=0, linkNumber=0):
+    def process_links(self, links, depth=0, link_number=0):
         # FIXME: compound names for titles at each depth??
         maxDepth = 2
         urls = links[0]
@@ -1858,8 +1850,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         if depth < maxDepth:
             for link in urls:
                 if depth == 0:
-                    linkNumber += 1
-                #print "Processing %s (%d)" % (link,linkNumber)
+                    link_number += 1
+                #print "Processing %s (%d)" % (link,link_number)
 
                 # FIXME: Using file extensions totally breaks the
                 # standard and won't work with Broadcast Machine or
@@ -1890,9 +1882,9 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                       mimetype == "application/ogg" or
                       mimetype == "application/x-annodex" or
                       mimetype == "application/x-bittorrent"):
-                    self.add_video_item(link, links[link], linkNumber)
+                    self.add_video_item(link, links[link], link_number)
             if len(newURLs) > 0:
-                self.get_html(newURLs, depth, linkNumber)
+                self.get_html(newURLs, depth, link_number)
 
     def on_remove(self):
         for download in self.downloads:
@@ -2414,7 +2406,6 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.set_update_frequency(-1)
         self.ufeed.autoDownloadable = False
         # keeps the items from being seen as 'newly available'
-        self.ufeed.last_viewed = datetime.max
         self.ufeed.signal_change()
 
     def setup_restored(self):
@@ -2535,7 +2526,6 @@ class ManualFeedImpl(FeedImpl):
                 title=None)
         self.ufeed.expire = u'never'
         self.set_update_frequency(-1)
-        self.ufeed.last_viewed = datetime.max
 
     @returns_unicode
     def get_title(self):

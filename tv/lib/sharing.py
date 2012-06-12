@@ -173,12 +173,12 @@ class SharingItem(object):
         self.file_format = self.size = None
         self.release_date = self.feed_name = self.feed_id = None
         self.keep = True
-        self.isContainerItem = False
+        self.is_container_item = False
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = None
         self.duration = self.screenshot = self.thumbnail_url = None
-        self.resumeTime = 0
+        self.resume_time = 0
         self.description = u''
         self.subtitle_encoding = self.enclosure_type = None
         self.metadata_version = 0
@@ -1417,8 +1417,8 @@ class SharingManagerBackend(object):
             # First, playlists.
             playlists = playlist.SavedPlaylist.make_view()
             # Grab feeds.  We like the feeds, but don't grab fake ersatz stuff. 
-            feeds = [f for f in feed.Feed.make_view() if not f.origURL or
-                     (f.origURL and not f.origURL.startswith('dtv:'))]
+            feeds = [f for f in feed.Feed.make_view() if not f.orig_url or
+                     (f.orig_url and not f.orig_url.startswith('dtv:'))]
             playlist_ids = [p.id for p in playlists]
             feed_ids = [f.id for f in feeds]
             self.make_daap_playlists(playlist.SavedPlaylist.make_view(),

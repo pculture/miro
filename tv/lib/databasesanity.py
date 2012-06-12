@@ -87,7 +87,7 @@ class PhantomFeedTest(SanityTest):
                 self.feeds_in_items.add(obj.feed_id)
             if obj.parent_id is not None:
                 self.parents_in_items.add(obj.parent_id)
-            if obj.isContainerItem in (None, True):
+            if obj.is_container_item in (None, True):
                 self.top_level_parents.add(obj.id)
         elif isinstance(obj, feed.Feed):
             self.top_level_feeds.add(obj.id)

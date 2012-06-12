@@ -39,10 +39,10 @@ def _key_for_feed(feed):
     the search downloads feed gets combined with the search feed
     (ss #11778)
     """
-    if feed.origURL == u'dtv:searchDownloads':
+    if feed.orig_url == u'dtv:searchDownloads':
         return u"dtv:search"
 
-    return feed.origURL
+    return feed.orig_url
 
 class Downloader:
     def __init__(self, is_auto):

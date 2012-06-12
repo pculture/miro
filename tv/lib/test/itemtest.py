@@ -45,23 +45,23 @@ class ContainerItemTest(EventLoopTest):
         f.close()
 
 class ItemSeenTest(ContainerItemTest):
-    def test_seen_attribute(self):
-        # parents should be consider "seen" when all of their
-        # audio/video children are marked seen.
+    def test_get_watched_attribute(self):
+        # parents should be consider watched when all of their
+        # audio/video children are marked watched.
         children = list(self.container_item.get_children())
         media_children = [i for i in children if i.is_playable()]
         other_children = [i for i in children if not i.is_playable()]
         self.assertEquals(len(media_children), 2)
         self.assertEquals(len(other_children), 1)
-        self.assert_(not self.container_item.seen)
-        media_children[0].mark_item_seen()
-        self.assert_(not self.container_item.seen)
-        media_children[1].mark_item_seen()
-        self.assert_(self.container_item.seen)
-        media_children[1].mark_item_unseen()
-        self.assert_(not self.container_item.seen)
-        media_children[1].mark_item_seen()
-        self.assert_(self.container_item.seen)
+        self.assert_(not self.container_item.get_watched())
+        media_children[0].mark_watched()
+        self.assert_(not self.container_item.get_watched())
+        media_children[1].mark_watched()
+        self.assert_(self.container_item.get_watched())
+        media_children[1].mark_unwatched()
+        self.assert_(not self.container_item.get_watched())
+        media_children[1].mark_watched()
+        self.assert_(self.container_item.get_watched())
 
 class ChildRemoveTest(ContainerItemTest):
     def test_expire_all_children(self):
@@ -100,7 +100,7 @@ class ExpiredViewTest(MiroTestCase):
                 feed_id=f1.id)
 
         f1.set_expiration(u'never', 0)
-        i1.watchedTime = i2.watchedTime = datetime.now()
+        i1.watched_time = i2.watched_time = datetime.now()
 
         for obj in (f1, i1, i2):
             obj.signal_change()
@@ -118,8 +118,8 @@ class ExpiredViewTest(MiroTestCase):
         f2.set_expiration(u'system', 0)
         # system default is 6 days as set in setUp, so i3 should expire,
         # but i4 should not.
-        i3.watchedTime = datetime.now() - timedelta(days=12)
-        i4.watchedTime = datetime.now() - timedelta(days=3)
+        i3.watched_time = datetime.now() - timedelta(days=12)
+        i4.watched_time = datetime.now() - timedelta(days=3)
 
         for obj in (f2, i3, i4):
             obj.signal_change()
@@ -135,8 +135,8 @@ class ExpiredViewTest(MiroTestCase):
                 feed_id=f3.id)
 
         f3.set_expiration(u'feed', 24)
-        i5.watchedTime = datetime.now() - timedelta(days=3)
-        i6.watchedTime = datetime.now() - timedelta(hours=12)
+        i5.watched_time = datetime.now() - timedelta(days=3)
+        i6.watched_time = datetime.now() - timedelta(hours=12)
 
         for obj in (f3, i5, i6):
             obj.signal_change()
@@ -180,9 +180,9 @@ class ItemRemoveTest(MiroTestCase):
         feed = Feed(u'http://example.com/1')
         item = Item(fp_values_for_url(u'http://example.com/1/item1'),
                 feed_id=feed.id)
-        item.watchedTime = datetime.now()
+        item.watched_time = datetime.now()
         item.expire()
-        self.assertEquals(item.watchedTime, None)
+        self.assertEquals(item.watched_time, None)
 
     def test_remove_before_downloader_referenced(self):
         # when items are restored from the DB, the downloader
@@ -223,20 +223,20 @@ class SubtitleEncodingTest(MiroTestCase):
         # subtitle encoding.
         self.item1.set_subtitle_encoding('latin-9')
         self.assertEquals(self.item2.subtitle_encoding, None)
-        self.item2.mark_item_seen()
+        self.item2.mark_watched()
         self.assertEquals(self.item2.subtitle_encoding, 'latin-9')
         # Test the value isn't re-set the next time it's marked watched
         self.item1.set_subtitle_encoding('latin-5')
-        self.item2.mark_item_seen()
+        self.item2.mark_watched()
         self.assertEquals(self.item2.subtitle_encoding, 'latin-9')
 
     def test_set_none(self):
-        # Test an item is marked seen when the subtitle encoding is None)
-        self.item1.mark_item_seen()
+        # Test an item is marked watched when the subtitle encoding is None)
+        self.item1.mark_watched()
         self.assertEquals(self.item2.subtitle_encoding, None)
         self.item2.set_subtitle_encoding('latin-7')
-        self.item2.mark_item_seen()
-        self.item1.mark_item_seen()
+        self.item2.mark_watched()
+        self.item1.mark_watched()
         self.assertEquals(self.item1.subtitle_encoding, None)
 
 class ItemSearchTest(MiroTestCase):
@@ -376,8 +376,8 @@ class ItemMetadataTest(MiroTestCase):
     def test_expire(self):
         # Test calling expire() on a item downloaded from a feed
         item = self.make_regular_item(self.regular_feed)
-        item.downloader.status['filename'] = self.path
-        item.downloader.state = item.downloader.status['state'] = u'finished'
+        item.downloader.filename = self.path
+        item.downloader.state = u'finished'
         item.on_download_finished()
         self.check_path_in_metadata_manager()
 
@@ -388,8 +388,8 @@ class ItemMetadataTest(MiroTestCase):
     def test_expire_external_item(self):
         # Test calling expire() on a item downloaded by itself
         item = self.make_regular_item(self.manual_feed)
-        item.downloader.status['filename'] = self.path
-        item.downloader.state = item.downloader.status['state'] = u'finished'
+        item.downloader.filename = self.path
+        item.downloader.state = u'finished'
         item.on_download_finished()
         self.check_path_in_metadata_manager()
 

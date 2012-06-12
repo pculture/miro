@@ -195,7 +195,7 @@ def install_first_time_handler(callback):
     _first_time_handler = callback
 
 def setup_global_feed(url, *args, **kwargs):
-    view = feed.Feed.make_view('origURL=?', (url,))
+    view = feed.Feed.make_view('orig_url=?', (url,))
     view_count = view.count()
     if view_count == 0:
         logging.info("Spawning global feed %s", url)
@@ -622,6 +622,6 @@ def reconnect_downloaders():
     manualItems = item.Item.feed_view(feed.Feed.get_manual_feed().get_id())
     for item_ in manualItems:
         if (item_.__class__ == item.Item and not item_.has_downloader() and
-          not item_.pendingManualDL):
+          not item_.pending_manual_download):
             logging.warn("removing cancelled external torrent: %s", item_)
             item_.remove()

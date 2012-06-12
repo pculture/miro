@@ -666,7 +666,7 @@ class DeviceSyncManager(object):
                         view = url_to_view[info.feed_url]
                         new_view = database.View(
                             view.fetcher,
-                            view.where + (' AND (rd.origURL=? OR rd.url=? '
+                            view.where + (' AND (rd.orig_url=? OR rd.url=? '
                                           'OR item.url=?)'),
                             view.values + (info.file_url, info.file_url,
                                            info.file_url),

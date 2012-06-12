@@ -379,7 +379,7 @@ class ItemRenderer(ItemRendererBase):
         self.canvas.add_download_info(download_info)
         if dl_info.state == 'paused':
             pass
-        elif self.info.download_info.rate == 0:
+        elif self.info.download_info.rate is None:
             self.canvas.add_startup_info(
                 self.info.download_info.startup_activity)
         elif dl_info.torrent:

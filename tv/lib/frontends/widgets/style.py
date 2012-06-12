@@ -604,7 +604,7 @@ class StatusRenderer(ListViewRenderer):
                             self.info.expiration_date)
                     return (text, EXPIRING_TEXT_COLOR)
         elif (self.info.download_info and
-                self.info.download_info.rate == 0):
+              self.info.download_info.rate is None):
             if self.info.download_info.state == 'paused':
                 return (_('paused'), DOWNLOADING_COLOR)
             elif self.info.download_info.state == 'pending':

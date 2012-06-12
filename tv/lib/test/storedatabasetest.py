@@ -230,7 +230,7 @@ class DBUpgradeTest(StoreDatabaseTest):
         app.db.cursor.execute("SELECT name FROM sqlite_master "
                               "WHERE type='table'")
         rv = {}
-        for table_name in app.db.cursor.fetchall():
+        for table_name in [r[0] for r in app.db.cursor.fetchall()]:
             app.db.cursor.execute('pragma table_info(%s)' % table_name)
             rv[table_name] = set((r[1], r[2].lower()) for r in app.db.cursor)
         return rv
@@ -622,14 +622,6 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         sql_value = app.db._converter.to_sql(obj_schema, column_name,
                 schema_item, disk_value)
         self.assertEqual(row[0], sql_value)
-
-    def test_corrupt_status(self):
-        app.db.cursor.execute("UPDATE remote_downloader "
-                "SET status='{baddata' WHERE id=?", (self.downloader.id,))
-        # setup_restored sets some values for status, so we will have
-        # more than an empty dict
-        self.check_fixed_value(self.downloader, 'status',
-                {'rate': 0, 'upRate': 0, 'eta': 0}, disk_value={})
 
     def test_corrupt_etag(self):
         app.db.cursor.execute("UPDATE saved_search_feed_impl "
