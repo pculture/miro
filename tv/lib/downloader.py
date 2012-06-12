@@ -232,7 +232,7 @@ class RemoteDownloader(DDBObject):
         'filename',
         'reason_failed',
         'short_reason_failed',
-        'dler_type',
+        'type',
         'retry_time',
         'retry_count',
         'upload_rate',
@@ -968,7 +968,7 @@ class RemoteDownloader(DDBObject):
                 self.stop_upload()
 
     def restart(self):
-        if self.dler_type is None:
+        if self.type is None:
             if self.content_type == u"":
                 self.get_content_type()
             else:

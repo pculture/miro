@@ -611,7 +611,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('filename', SchemaFilename(noneOk=True)),
         ('reason_failed', SchemaString(noneOk=True)),
         ('short_reason_failed', SchemaString(noneOk=True)),
-        ('dler_type', SchemaString(noneOk=True)),
+        ('type', SchemaString(noneOk=True)),
         ('retry_time', SchemaInt(noneOk=True)),
         ('retry_count', SchemaInt(noneOk=True)),
         ('upload_size', SchemaInt(noneOk=True)),

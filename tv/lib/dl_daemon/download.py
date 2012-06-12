@@ -200,13 +200,13 @@ def restore_downloader(downloader):
         return
 
     downloader = copy(downloader)
-    dler_type = downloader.get('dler_type')
-    if dler_type == u'HTTP':
+    type_ = downloader.get('type')
+    if type_ == u'HTTP':
         dl = HTTPDownloader(restore=downloader)
-    elif dler_type == u'BitTorrent':
+    elif type_ == u'BitTorrent':
         dl = BTDownloader(restore=downloader)
     else:
-        err = u"in restore_downloader(): unknown dler_type: %s" % dler_type
+        err = u"in restore_downloader(): unknown type: %s" % type_
         c = command.DownloaderErrorCommand(daemon.LAST_DAEMON, err)
         c.send()
         return
@@ -496,7 +496,7 @@ class BGDownloader(object):
             'short_filename': self.short_filename,
             'reason_failed': self.reason_failed,
             'short_reason_failed': self.short_reason_failed,
-            'dler_type': None,
+            'type': None,
             'retry_time': self.retry_time,
             'retry_count': self.retry_count}
 
@@ -888,7 +888,7 @@ class HTTPDownloader(BGDownloader):
 
     def get_status(self):
         data = BGDownloader.get_status(self)
-        data['dler_type'] = 'HTTP'
+        data['type'] = 'HTTP'
         return data
 
     def update_stats(self):
@@ -1397,7 +1397,7 @@ class BTDownloader(BGDownloader):
             data['metainfo'] = self.metainfo
             self.metainfo_updated = False
         data['activity'] = self.activity
-        data['dler_type'] = 'BitTorrent'
+        data['type'] = 'BitTorrent'
         data['seeders'] = self.seeders
         data['leechers'] = self.leechers
         data['connections'] = self.connections

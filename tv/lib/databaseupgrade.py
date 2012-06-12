@@ -3892,7 +3892,7 @@ def upgrade182(cursor):
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN short_reason_failed text")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN dler_type text")
+                   "ADD COLUMN type text")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN retry_time integer")
     cursor.execute("ALTER TABLE remote_downloader "
@@ -3904,8 +3904,24 @@ def upgrade182(cursor):
     columns = [ 'total_size', 'current_size', 'start_time', 'end_time',
                'short_filename', 'filename', 'retry_time', 'retry_count',
                'upload_size', 'info_hash', 'reason_failed',
-               'short_reason_failed', 'dler_type',
+               'short_reason_failed', 'type',
               ]
+    # map new column names to their old keys in the status dict
+    rename_map = {
+        'short_filename': 'shortFilename',
+        'short_reason_failed': 'shortReasonFailed',
+        'reason_failed': 'reasonFailed',
+        'type': 'dlerType',
+        'start_time': 'startTime',
+        'end_time': 'endTime',
+        'retry_time': 'retryTime',
+        'retry_count': 'retryCount',
+        'channel_name': 'channelName',
+        'current_size': 'currentSize',
+        'total_size': 'totalSize',
+        'upload_size': 'uploadSize',
+    }
+
     cursor.execute("SELECT id, status from remote_downloader")
     update_sql = ("UPDATE remote_downloader SET %s WHERE id=?" %
                   ", ".join("%s=? " % name for name in columns))
@@ -3917,11 +3933,12 @@ def upgrade182(cursor):
             continue
         values = []
         for column in columns:
-            value = status.get(column)
+            status_key = rename_map.get(column, column)
+            value = status.get(status_key)
             # Most of the time we can just use the value from status column,
             # but for some special cases we need to tweak it.
             if (column == 'end_time' and
-                value == status.get('start_time')):
+                value == status.get('startTime')):
                 value = None
             elif column == 'current_size' and value is None:
                 value = 0
