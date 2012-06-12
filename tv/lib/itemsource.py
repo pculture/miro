@@ -180,7 +180,7 @@ class DatabaseItemSource(ItemSource):
             'release_date': item.get_release_date(),
             'size': item.get_size(),
             'duration': item.get_duration_value(),
-            'resume_time': item.resumeTime,
+            'resume_time': item.resume_time,
             'permalink': item.get_link(),
             'commentslink': item.get_comments_link(),
             'payment_link': item.get_payment_link(),
@@ -188,17 +188,17 @@ class DatabaseItemSource(ItemSource):
             'can_be_saved': item.show_save_button(),
             'pending_manual_dl': item.is_pending_manual_download(),
             'pending_auto_dl': item.is_pending_auto_download(),
-            'item_viewed': item.get_viewed(),
+            'item_viewed': not item.new,
             'downloaded': item.is_downloaded(),
             'is_external': item.is_external(),
-            'video_watched': item.get_seen(),
+            'video_watched': item.get_watched(),
             'video_path': item.get_filename(),
             'thumbnail': item.get_thumbnail(),
             'thumbnail_url': item.get_thumbnail_url(),
             'file_format': item.get_format(),
             'license': item.get_license(),
             'file_url': item.get_url(),
-            'is_container_item': item.isContainerItem,
+            'is_container_item': item.is_container_item,
             'is_file_item': item.is_file_item,
             'is_playable': item.is_playable(),
             'file_type': item.file_type,
@@ -207,8 +207,8 @@ class DatabaseItemSource(ItemSource):
             'mime_type': item.enclosure_type,
             'date_added': item.get_creation_time(),
             'last_played': item.get_watched_time(),
-            'last_watched': item.lastWatched,
-            'downloaded_time': item.downloadedTime,
+            'last_watched': item.last_watched,
+            'downloaded_time': item.downloaded_time,
             'children': [],
             'expiration_date': None,
             'download_info': None,
@@ -228,7 +228,7 @@ class DatabaseItemSource(ItemSource):
             'is_playing': item.is_playing(),
             }
         _add_metadata(info, item)
-        if item.isContainerItem:
+        if item.is_container_item:
             info['children'] = [DatabaseItemSource._item_info_for(i) for i in
                                 item.get_children()]
         if not item.keep and not item.is_external():
@@ -240,19 +240,19 @@ class DatabaseItemSource(ItemSource):
             info['download_info'] = messages.PendingDownloadInfo()
 
         ## Torrent-specific stuff
-        if item.looks_like_torrent() and hasattr(item.downloader, 'status'):
-            status = item.downloader.status
+        if item.looks_like_torrent() and item.downloader is not None:
+            dler = item.downloader
             if item.is_transferring():
                 # gettorrentdetails only
-                info['leechers'] = status.get('leechers', 0)
-                info['seeders'] = status.get('seeders', 0)
-                info['connections'] = status.get('connections', 0)
-                info['up_rate'] = status.get('upRate', 0)
-                info['down_rate'] = status.get('rate', 0)
+                info['leechers'] = dler.leechers
+                info['seeders'] = dler.seeders
+                info['connections'] = dler.connections
+                info['up_rate'] = dler.upload_rate
+                info['down_rate'] = dler.rate
 
             # gettorrentdetailsfinished & gettorrentdetails
-            info['up_total'] = status.get('uploaded', 0)
-            info['down_total'] = status.get('currentSize', 0)
+            info['up_total'] = dler.upload_size
+            info['down_total'] = dler.current_size
             if info['down_total'] > 0:
                 info['up_down_ratio'] = (float(info['up_total']) /
                                               info['down_total'])
@@ -290,7 +290,7 @@ class DatabaseItemHandler(ItemHandler):
         """
         try:
             item_ = item.Item.get_by_id(info.id)
-            item_.mark_item_seen()
+            item_.mark_watched()
         except database.ObjectNotFoundError:
             logging.warning("mark_watched: can't find item by id %s" % info.id)
 
@@ -301,7 +301,7 @@ class DatabaseItemHandler(ItemHandler):
         """
         try:
             item_ = item.Item.get_by_id(info.id)
-            item_.mark_item_unseen()
+            item_.mark_unwatched()
         except database.ObjectNotFoundError:
             logging.warning("mark_unwatched: can't find item by id %s" % (
                 info.id,))

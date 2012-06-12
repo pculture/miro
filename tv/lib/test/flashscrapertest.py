@@ -24,8 +24,8 @@ class YouTubeScraper(FlashScraperBase):
         FlashScraperBase.setUp(self)
         self._response = None
 
-    def scrape_callback(self, new_url, contentType=None, title=None):
-        self._response = (new_url, contentType, title)
+    def scrape_callback(self, new_url, content_type=None, title=None):
+        self._response = (new_url, content_type, title)
         self.stopEventLoop(abnormal=False)
 
     @uses_httpclient
@@ -41,8 +41,8 @@ class VimeoScraper(FlashScraperBase):
         FlashScraperBase.setUp(self)
         self._response = None
 
-    def scrape_callback(self, new_url, contentType=None, title=None):
-        self._response = (new_url, contentType, title)
+    def scrape_callback(self, new_url, content_type=None, title=None):
+        self._response = (new_url, content_type, title)
         self.stopEventLoop(abnormal=False)
 
     @uses_httpclient

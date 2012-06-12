@@ -3817,7 +3817,7 @@ def upgrade179(cursor):
             return filename_to_unicode(os.path.basename(filename))
         else:
             return _('no title')
-    cursor.execute("ALTER TABLE item ADD COLUMN metadata_title TEXT")
+    cursor.execute("ALTER TABLE item ADD COLUMN metadata_title text")
     cursor.execute("UPDATE item SET metadata_title=title")
     cursor.execute("SELECT id, metadata_title, torrent_title, entry_title, "
                    "filename FROM item")
@@ -3828,3 +3828,141 @@ def upgrade179(cursor):
         if title != metadata_title:
             cursor.execute("UPDATE item SET title=? WHERE id=?", (title, id_))
 
+def upgrade180(cursor):
+    # Rename columns in the item table
+    rename_columns = {
+        'autoDownloaded': 'auto_downloaded',
+        'pendingManualDL': 'pending_manual_download',
+        'pendingReason': 'pending_reason',
+        'creationTime': 'creation_time',
+        'linkNumber': 'link_number',
+        'downloadedTime': 'downloaded_time',
+        'watchedTime': 'watched_time',
+        'lastWatched': 'last_watched',
+        'isContainerItem': 'is_container_item',
+        'releaseDateObj': 'release_date',
+        'eligibleForAutoDownload': 'eligible_for_autodownload',
+        'resumeTime': 'resume_time',
+        'channelTitle': 'channel_title',
+        'shortFilename': 'short_filename',
+        'offsetPath': 'offset_path',
+    }
+
+    alter_table_columns(cursor, 'item', [], rename_columns)
+
+def upgrade181(cursor):
+    """Drop the feed.last_viewed column and add item.new.
+
+    This means we can tell an item's state without data from the feed table.
+    """
+    cursor.execute("ALTER TABLE item ADD COLUMN new integer")
+    # These next lines set new=1 for all items that would have matched the
+    # feed_available_view() before.
+    # Make a subquery for items that were created after we last viewed a feed
+    subquery = ("SELECT item.id "
+                "FROM item "
+                "JOIN feed "
+                "ON feed.id = item.feed_id "
+                "WHERE feed.last_viewed <= item.creation_time")
+    cursor.execute("UPDATE item SET new=1 "
+                   "WHERE NOT auto_downloaded AND "
+                   "downloaded_time IS NULL AND "
+                   "NOT is_file_item AND "
+                   "id in (%s)" % subquery)
+    # remove the last_viewed column
+    remove_column(cursor, 'feed', ['last_viewed'])
+
+def upgrade182(cursor):
+    """Unroll the remote_downloader.status column """
+
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN total_size integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN current_size integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN start_time integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN end_time integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN short_filename text")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN filename text")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN reason_failed text")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN short_reason_failed text")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN type text")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN retry_time integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN retry_count integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN upload_size integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN info_hash text")
+    columns = [ 'total_size', 'current_size', 'start_time', 'end_time',
+               'short_filename', 'filename', 'retry_time', 'retry_count',
+               'upload_size', 'info_hash', 'reason_failed',
+               'short_reason_failed', 'type',
+              ]
+    # map new column names to their old keys in the status dict
+    rename_map = {
+        'short_filename': 'shortFilename',
+        'short_reason_failed': 'shortReasonFailed',
+        'reason_failed': 'reasonFailed',
+        'type': 'dlerType',
+        'start_time': 'startTime',
+        'end_time': 'endTime',
+        'retry_time': 'retryTime',
+        'retry_count': 'retryCount',
+        'channel_name': 'channelName',
+        'current_size': 'currentSize',
+        'total_size': 'totalSize',
+        'upload_size': 'uploadSize',
+    }
+
+    cursor.execute("SELECT id, status from remote_downloader")
+    update_sql = ("UPDATE remote_downloader SET %s WHERE id=?" %
+                  ", ".join("%s=? " % name for name in columns))
+    for id_, status_repr in cursor.fetchall():
+        try:
+            status = eval(status_repr, {}, {})
+        except StandardErrror:
+            logging.warn("Error evaluating status repr: %r" % status_repr)
+            continue
+        values = []
+        for column in columns:
+            status_key = rename_map.get(column, column)
+            value = status.get(status_key)
+            # Most of the time we can just use the value from status column,
+            # but for some special cases we need to tweak it.
+            if (column == 'end_time' and
+                value == status.get('startTime')):
+                value = None
+            elif column == 'current_size' and value is None:
+                value = 0
+            elif column in ('retry_count', 'total_size') and value == -1:
+                value = None
+            elif (column in ['start_time', 'end_time'] and value is not None):
+                value = int(value)
+            values.append(value)
+        values.append(id_)
+        cursor.execute(update_sql, values)
+
+    remove_column(cursor, 'remote_downloader', ['status'])
+
+def upgrade183(cursor):
+    """Rename downloader columns to use PEP 8."""
+    rename_columns = {
+        'contentType': 'content_type',
+        'origURL': 'orig_url',
+        'channelName': 'channel_name',
+    }
+    alter_table_columns(cursor, 'remote_downloader', [], rename_columns)
+    # as long as we're changing origURL, change if for feed too
+    rename_column(cursor, 'feed', 'origURL', 'orig_url')
+
+def upgrade184(cursor):
+    """Drop the seen column from item."""
+    remove_column(cursor, 'item', ['seen'])

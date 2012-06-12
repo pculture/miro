@@ -306,34 +306,6 @@ class SchemaDict(SchemaReprContainer):
                 raise ValidationError("value %r (key: %r) has the wrong type: %s"
                         % (value, key, type(value)))
 
-class SchemaStatusContainer(SchemaReprContainer):
-    """Version of SchemaReprContainer that stores the status dict for
-    RemoteDownloaders.  It allows some values to be byte strings
-    rather than unicode objects.
-    """
-
-    filename_fields = ('channelName', 'shortFilename', 'filename')
-
-    def validate(self, data):
-        binary_fields = self._binary_fields()
-        self.validateType(data, dict)
-        for key, value in data.items():
-            self.validateTypes(key, [bool, int, long, float, unicode,
-                                     str, NoneType, datetime.datetime,
-                                     time.struct_time], "%s: %s" % (key, value))
-            if key not in binary_fields:
-                self.validateTypes(value, [bool, int, long, float, unicode,
-                                           NoneType, datetime.datetime,
-                                           time.struct_time], "%s: %s" % (key, value))
-            else:
-                self.validateType(value, str)
-
-    def _binary_fields(self):
-        rv = ('metainfo',)
-        if PlatformFilenameType != unicode:
-            rv += self.filename_fields
-        return rv
-
 class SchemaObject(SchemaItem):
     """SchemaObject type."""
     def __init__(self, klass, noneOk=False):
@@ -430,30 +402,30 @@ class ItemSchema(MultiClassObjectSchema):
 
     fields = DDBObjectSchema.fields + [
         ('is_file_item', SchemaBool()),
+        ('new', SchemaBool()),
         ('title', SchemaString(noneOk=True)),
         ('feed_id', SchemaInt(noneOk=True)),
         ('downloader_id', SchemaInt(noneOk=True)),
         ('parent_id', SchemaInt(noneOk=True)),
-        ('seen', SchemaBool()),
-        ('autoDownloaded', SchemaBool()),
-        ('pendingManualDL', SchemaBool()),
-        ('pendingReason', SchemaString()),
+        ('auto_downloaded', SchemaBool()),
+        ('pending_manual_download', SchemaBool()),
+        ('pending_reason', SchemaString()),
         ('expired', SchemaBool()),
         ('keep', SchemaBool()),
-        ('creationTime', SchemaDateTime()),
-        ('linkNumber', SchemaInt(noneOk=True)),
+        ('creation_time', SchemaDateTime()),
+        ('link_number', SchemaInt(noneOk=True)),
         ('icon_cache_id', SchemaInt(noneOk=True)),
-        ('downloadedTime', SchemaDateTime(noneOk=True)),
-        ('watchedTime', SchemaDateTime(noneOk=True)),
-        ('lastWatched', SchemaDateTime(noneOk=True)),
+        ('downloaded_time', SchemaDateTime(noneOk=True)),
+        ('watched_time', SchemaDateTime(noneOk=True)),
+        ('last_watched', SchemaDateTime(noneOk=True)),
         ('subtitle_encoding', SchemaString(noneOk=True)),
-        ('isContainerItem', SchemaBool(noneOk=True)),
-        ('releaseDateObj', SchemaDateTime()),
-        ('eligibleForAutoDownload', SchemaBool()),
+        ('is_container_item', SchemaBool(noneOk=True)),
+        ('release_date', SchemaDateTime()),
+        ('eligible_for_autodownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
         ('screenshot', SchemaFilename(noneOk=True)),
-        ('resumeTime', SchemaInt()),
-        ('channelTitle', SchemaString(noneOk=True)),
+        ('resume_time', SchemaInt()),
+        ('channel_title', SchemaString(noneOk=True)),
         ('license', SchemaString(noneOk=True)),
         ('rss_id', SchemaString(noneOk=True)),
         ('thumbnail_url', SchemaURL(noneOk=True)),
@@ -470,8 +442,8 @@ class ItemSchema(MultiClassObjectSchema):
         ('was_downloaded', SchemaBool()),
         ('filename', SchemaFilename(noneOk=True)),
         ('deleted', SchemaBool(noneOk=True)),
-        ('shortFilename', SchemaFilename(noneOk=True)),
-        ('offsetPath', SchemaFilename(noneOk=True)),
+        ('short_filename', SchemaFilename(noneOk=True)),
+        ('offset_path', SchemaFilename(noneOk=True)),
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
         # metadata:
@@ -510,7 +482,7 @@ class FeedSchema(DDBObjectSchema):
     klass = Feed
     table_name = 'feed'
     fields = DDBObjectSchema.fields + [
-        ('origURL', SchemaURL()),
+        ('orig_url', SchemaURL()),
         ('baseTitle', SchemaString(noneOk=True)),
         ('errorState', SchemaBool()),
         ('loading', SchemaBool()),
@@ -528,7 +500,6 @@ class FeedSchema(DDBObjectSchema):
         ('expireTime', SchemaTimeDelta(noneOk=True)),
         ('section', SchemaString()), # not used anymore
         ('visible', SchemaBool()),
-        ('last_viewed', SchemaDateTime()),
     ]
 
     indexes = (
@@ -623,16 +594,28 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     table_name = 'remote_downloader'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL()),
-        ('origURL', SchemaURL()),
+        ('orig_url', SchemaURL()),
         ('dlid', SchemaString()),
-        ('contentType', SchemaString(noneOk=True)),
-        ('channelName', SchemaFilename(noneOk=True)),
-        ('status', SchemaStatusContainer()),
+        ('content_type', SchemaString(noneOk=True)),
+        ('channel_name', SchemaFilename(noneOk=True)),
         ('metainfo', SchemaBinary(noneOk=True)),
         ('manualUpload', SchemaBool()),
         ('state', SchemaString()),
         ('main_item_id', SchemaInt(noneOk=True)),
         ('child_deleted', SchemaBool()),
+        ('total_size', SchemaInt(noneOk=True)),
+        ('current_size', SchemaInt()),
+        ('start_time', SchemaInt(noneOk=True)),
+        ('end_time', SchemaInt(noneOk=True)),
+        ('short_filename', SchemaFilename(noneOk=True)),
+        ('filename', SchemaFilename(noneOk=True)),
+        ('reason_failed', SchemaString(noneOk=True)),
+        ('short_reason_failed', SchemaString(noneOk=True)),
+        ('type', SchemaString(noneOk=True)),
+        ('retry_time', SchemaInt(noneOk=True)),
+        ('retry_count', SchemaInt(noneOk=True)),
+        ('upload_size', SchemaInt(noneOk=True)),
+        ('info_hash', SchemaString(noneOk=True)),
     ]
 
     indexes = (
@@ -880,7 +863,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 179
+VERSION = 184
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
