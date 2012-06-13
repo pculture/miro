@@ -1,0 +1,33 @@
+;; -*- scheme -*-
+; object definitions ...
+(define-object FixedListStore
+  (in-module "Miro")
+  (parent "GObject")
+  (c-name "MiroFixedListStore")
+  (gtype-id "MIRO_TYPE_FIXED_LIST_STORE")
+)
+
+;; Enumerations and flags ...
+
+
+;; From fixed-list-store.h
+
+(define-function miro_fixed_list_store_new
+  (c-name "miro_fixed_list_store_new")
+  (is-constructor-of "MiroFixedListStore")
+  (return-type "MiroFixedListStore*")
+  (properties
+    '("row_count")
+  )
+)
+
+(define-method row_of_iter
+  (of-object "MiroFixedListStore")
+  (c-name "miro_fixed_list_store_row_of_iter")
+  (return-type "gint")
+  (parameters
+    '("GtkTreeIter*" "iter")
+  )
+)
+
+

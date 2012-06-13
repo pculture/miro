@@ -255,6 +255,19 @@ pygtkhacks_ext = \
             'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
     )
 
+fixedliststore_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
+                                  'fixedliststore')
+fixedliststore_ext = \
+    Extension("miro.frontends.widgets.gtk.fixedliststore",
+          [
+              os.path.join(fixedliststore_dir, 'fixed-list-store.c'),
+              os.path.join(fixedliststore_dir, 'fixed-list-store-module.c'),
+              os.path.join(fixedliststore_dir, 'fixed-list-store-wrapper.c'),
+          ],
+          **parse_pkg_config('pkg-config',
+                             'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
+    )
+
 webkitgtkhacks_ext = \
     Extension("miro.frontends.widgets.gtk.webkitgtkhacks",
         [os.path.join(portable_frontend_dir, 'widgets', 'gtk',
@@ -564,6 +577,7 @@ ext_modules = []
 ext_modules.append(ngrams_ext)
 ext_modules.append(xlib_ext)
 ext_modules.append(pygtkhacks_ext)
+ext_modules.append(fixedliststore_ext)
 ext_modules.append(webkitgtkhacks_ext)
 ext_modules.append(infolist_ext)
 
