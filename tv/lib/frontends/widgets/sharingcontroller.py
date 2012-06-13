@@ -37,15 +37,12 @@ from miro.gtcache import gettext as _
 # The spinning progress bar while a user connects is done by the backend
 # with messages sent to the frontend, the idea is the backend should know
 # when it is a connect or not so let it handle that case.
-class SharingView(itemlistcontroller.SimpleItemListController,
-                  itemlistcontroller.FilteredListMixin):
-
+class SharingView(itemlistcontroller.SimpleItemListController):
     def __init__(self, share):
         self.type = u'sharing'
         self.share = share
         self.id = share.id
         itemlistcontroller.SimpleItemListController.__init__(self)
-        itemlistcontroller.FilteredListMixin.__init__(self)
 
     def make_drag_handler(self):
         return None
