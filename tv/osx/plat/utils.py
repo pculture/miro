@@ -36,6 +36,7 @@ import sys
 import time
 import errno
 import signal
+import struct
 import subprocess
 import plistlib
 
@@ -47,7 +48,9 @@ from miro import app
 from miro import prefs
 from miro.gtcache import gettext_lazy as _
 from miro.importmedia import import_itunes_path
-from miro.util import returns_unicode, returns_binary, check_u, check_b
+from miro.util import (returns_unicode,
+                       returns_binary, check_u, check_b,
+                       bits_32)
 from miro.plat.filenames import (PlatformFilenameType,
                                  os_filename_to_filename_type,
                                  filename_type_to_os_filename)
@@ -348,20 +351,20 @@ def _app_command_line():
     """Get the command line to lanch the Miro.app bundle. """
     exe = NSBundle.mainBundle().executablePath()
 
-    os_info = os.uname()
-    os_version = int(os_info[2].split('.')[0])
-    if os_version < 9:
-        return [exe]
+    # If we are running in 32 bit mode we want our spawned stuff to be
+    # 32-bit too.  Otherwise we running in the "best" mode so do nothing.
+    if bits_32():
+        return ['/usr/bin/arch', '-32', exe]
     else:
-        arch = Popen("/usr/bin/arch", stdout=subprocess.PIPE).communicate()[0].strip()
-        return ['/usr/bin/arch', '-%s' % arch, exe]
+        return [exe]
 
 @on_ui_thread
 def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
 
     env['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    env['VERSIONER_PYTHON_PREFER_32_BIT'] = "yes"
+    if bits_32():
+        env['VERSIONER_PYTHON_PREFER_32_BIT'] = "yes"
     env["MIRO_APP_VERSION"] = app.config.get(prefs.APP_VERSION)
     env.update(os.environ)
 
@@ -452,9 +455,10 @@ def run_media_metadata_extractor(movie_path, thumbnail_path):
 def miro_helper_program_info():
     cmd_line = _app_command_line() + [u'--miro-helper']
     env = {
-            'VERSIONER_PYTHON_PREFER_32_BIT': 'yes',
             'MIRO_APP_VERSION': app.config.get(prefs.APP_VERSION)
     }
+    if bits_32():
+        env['VERSIONER_PYTHON_PREFER_32_BIT'] = 'yes'
     return cmd_line, env
 
 ###############################################################################

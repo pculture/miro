@@ -37,6 +37,7 @@ import os
 
 from miro.frontends.widgets import widgetconst
 from miro.plat import resources
+from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
@@ -183,7 +184,9 @@ class SecureTextEntry(BaseTextEntry):
 class MiroSearchTextField(NSSearchField):
     def init(self):
         self = super(MiroSearchTextField, self).init()
-        image = NSImage.alloc().initByReferencingFile_(resources.path('images/search_icon_all.png'))
+        imagepath = filename_to_unicode(
+                    resources.path('images/search_icon_all.png'))
+        image = NSImage.alloc().initByReferencingFile_(imagepath)
         self.cell().searchButtonCell().setImage_(image)
         self.cell().searchButtonCell().setAlternateImage_(image)
         return self
@@ -625,7 +628,8 @@ def _getEngineIcon(engine):
                     'images/search_icon_%s.png' % engine.name)
     if not os.path.exists(engineIconPath):
         return nil
-    return NSImage.alloc().initByReferencingFile_(engineIconPath)
+    return NSImage.alloc().initByReferencingFile_(
+      filename_to_unicode(engineIconPath))
 
 searchIcons = dict()
 def _getSearchIcon(engine):
@@ -640,7 +644,8 @@ def _makeSearchIcon(engine):
     engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
     if not os.path.exists(engineIconPath):
         return nil
-    engineIcon = NSImage.alloc().initByReferencingFile_(engineIconPath)
+    engineIcon = NSImage.alloc().initByReferencingFile_(
+      filename_to_unicode(engineIconPath))
     engineIconSize = engineIcon.size()
 
     searchIconSize = (engineIconSize.width + popupRectangleSize.width + 2, engineIconSize.height)

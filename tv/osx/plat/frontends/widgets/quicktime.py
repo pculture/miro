@@ -49,14 +49,6 @@ from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.util import copy_subtitle_file
 
-###############################################################################
-
-qt_framework = pathForFramework("QuickTime.framework")
-qt_bundle = NSBundle.bundleWithPath_(qt_framework)
-loadBundleFunctions(qt_bundle, globals(), (('GetMediaLanguage', 's^^{}'),))
-
-###############################################################################
-
 def register_components():
     bundlePath = bundle.getBundlePath()
     componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
@@ -268,19 +260,7 @@ class Player(player.Player):
             for track in self.movie.tracks():
                 if self.is_subtitle_track(track):
                     media = track.media().quickTimeMedia()
-                    lang = GetMediaLanguage(media)
-                    display_name = track.attributeForKey_(QTTrackDisplayNameAttribute)
-                    if lang == 32767:    # 32764 = langUndefined
-                        name = display_name
-                    else:
-                        lang_code = script_codes.map_to_two_letters_code(lang)
-                        lang_info = iso639.find(lang_code)
-                        if lang_info is None:
-                            name = display_name
-                        else:
-                            name = lang_info["name"]
-                    if name != display_name:
-                        name = "%s (%s)" % (name, display_name)
+                    name = track.attributeForKey_(QTTrackDisplayNameAttribute)
                     track_id = track.attributeForKey_(QTTrackIDAttribute)
                     tracks.append((track_id, name))
         return tracks

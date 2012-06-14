@@ -38,6 +38,7 @@ from miro import messages
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.plat import resources
+from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import drawing
 from miro.plat.frontends.widgets import osxmenus
@@ -122,7 +123,7 @@ class OverlayPalette (NSWindowController):
 
     def awakeFromNib(self):
         image_path = resources.path('images/subtitles_down.png')
-        self.subtitlesButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
+        self.subtitlesButton.setImage_(NSImage.alloc().initWithContentsOfFile_(filename_to_unicode(image_path)))
         self.subtitlesLabel.setTitleWithMnemonic_(_("Subtitles"))
         self.fsLabel.setTitleWithMnemonic_(_("Fullscreen"))
         self.shareButton.setImage_(getOverlayButtonImage(self.shareButton.bounds().size))
@@ -213,7 +214,7 @@ class OverlayPalette (NSWindowController):
             self.popInOutButton.setHidden_(YES)
             self.popInOutLabel.setHidden_(YES)
             image_path = resources.path('images/fullscreen_exit.png')
-            self.fsButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
+            self.fsButton.setImage_(NSImage.alloc().initWithContentsOfFile_(filename_to_unicode(image_path)))
         else:
             if app.playback_manager.detached_window is None:
                 image_path = resources.path('images/popout.png')
@@ -221,12 +222,12 @@ class OverlayPalette (NSWindowController):
             else:
                 image_path = resources.path('images/popin.png')
                 label = _('Pop In')
-            self.popInOutButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
+            self.popInOutButton.setImage_(NSImage.alloc().initWithContentsOfFile_(filename_to_unicode(image_path)))
             self.popInOutButton.setHidden_(NO)
             self.popInOutLabel.setHidden_(NO)
             self.popInOutLabel.setStringValue_(label)
             image_path = resources.path('images/fullscreen_enter.png')
-            self.fsButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
+            self.fsButton.setImage_(NSImage.alloc().initWithContentsOfFile_(filename_to_unicode(image_path)))
 
         newFrame = self.window().frame() 
         if videoWindow.is_fullscreen or app.playback_manager.detached_window is not None: 

@@ -385,7 +385,7 @@
 	<key>CFBundleVersion</key>
 	<string>$appVersion</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.5</string>
+	<string>10.6</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>$copyright, $publisher</string>
 	<key>SUEnableAutomaticChecks</key>
@@ -396,17 +396,12 @@
 	<string></string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>0</integer>
-	<key>LSEnvironment</key>
-	<dict>
-	    <key>VERSIONER_PYTHON_PREFER_32_BIT</key>
-	    <string>yes</string>
-    </dict>
-    <key>LSApplicationCategoryType</key>
-    <string>public.app-category.video</string>
-    <key>LSArchitecturePriority</key>
-    <array>
-        <string>i386</string>
-        <string>ppc</string>
-    </array>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.video</string>
+	<key>LSArchitecturePriority</key>
+	<array>
+		<string>i386</string>
+		<string>x86_64</string>
+	</array>
 </dict>
 </plist>

@@ -45,6 +45,7 @@ import shutil
 import socket
 import string
 import signal
+import struct
 import subprocess
 import sys
 import tempfile
@@ -81,6 +82,15 @@ PREFERRED_TYPES_ORDER = dict((typ, i) for i, typ in
                              enumerate(PREFERRED_TYPES))
 
 MAX_TORRENT_SIZE = 500 * (2**10) # 500k
+
+def bitness():
+    return struct.calcsize('L') * 8
+
+def bits_32():
+    return bitness() == 32
+
+def bits_64():
+    return bitness() == 64
 
 def get_nice_stack():
     """Get a stack trace that's a easier to read that the full one."""
