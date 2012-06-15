@@ -177,7 +177,7 @@ class MiroTableCell(NSTextFieldCell):
         return NSTextFieldCell.drawInteriorWithFrame_inView_(self,
                 _calc_interior_frame(frame, view), view)
 
-class MiroTableInfoListTextCell(MiroTableCell):
+class MiroTableItemListTextCell(MiroTableCell):
     def initWithAttrGetter_(self, attr_getter):
         self = self.init()
         self.setWraps_(NO)
@@ -442,20 +442,20 @@ class CustomCellRenderer(CellRendererBase):
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
     
-class InfoListTableCell(CustomTableCell):
+class ItemListTableCell(CustomTableCell):
     def set_wrapper_data(self):
         self.wrapper.info, self.wrapper.attrs, self.wrapper.group_info = \
                 self.object_value
 
-class InfoListRenderer(CustomCellRenderer):
-    CellClass = InfoListTableCell
+class ItemListRenderer(CustomCellRenderer):
+    CellClass = ItemListTableCell
 
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
 
-class InfoListRendererText(CellRenderer):
+class ItemListRendererText(CellRenderer):
     def build_cell(self):
-        cell = MiroTableInfoListTextCell.alloc()
+        cell = MiroTableItemListTextCell.alloc()
         return cell.initWithAttrGetter_(self.get_value)
 
 def calc_row_height(view, model_row):
@@ -747,7 +747,7 @@ class TableViewCommon(object):
 
     def drawGroupLine_(self, row):
         infolist = wrappermap.wrapper(self).model
-        if (not isinstance(infolist, tablemodel.InfoListModel) or
+        if (not isinstance(infolist, tablemodel.ItemListModel) or
                 infolist.get_grouping() is None):
             return
 
@@ -871,7 +871,7 @@ class TableViewCommon(object):
     def selectAllItemsInGroupForRow_(self, row):
         wrapper = wrappermap.wrapper(self)
         infolist = wrapper.model
-        if (not isinstance(infolist, tablemodel.InfoListModel) or
+        if (not isinstance(infolist, tablemodel.ItemListModel) or
                 infolist.get_grouping() is None):
             return
 
@@ -1257,9 +1257,9 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.columns = []
         self.drag_source = self.drag_dest = None
         self.context_menu_callback = None
-        if isinstance(model, tablemodel.InfoListModel):
+        if isinstance(model, tablemodel.ItemListModel):
             self.tableview = MiroTableView.alloc().init()
-            self.data_source = tablemodel.MiroInfoListDataSource.alloc()
+            self.data_source = tablemodel.MiroItemListDataSource.alloc()
         elif self.is_tree():
             self.create_signal('row-expanded')
             self.create_signal('row-collapsed')

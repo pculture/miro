@@ -1662,10 +1662,15 @@ class ItemListModel(TableModelBase):
         return self.item_list.get_row(self._model.row_of_iter(it))
 
     def __getitem__(self, it):
-        item = self.get_item(it)
-        # __getitem__ is supposed to get an entire row of data.  So return a
-        # tuple containing the item.
-        return (item,)
+        """Get a row of data
+        
+        For ItemListModel, this is the tuple (info, attrs, group_info)
+        """
+        index = self._model.row_of_iter(it)
+        item = self.item_list.get_row(index)
+        attrs = self.item_list.get_attrs(item.id)
+        group_info = self.item_list.get_group_info(index)
+        return (item, attrs, group_info)
 
     def check_new_column(self, column):
         if not (isinstance(column.renderer, ItemListRenderer) or

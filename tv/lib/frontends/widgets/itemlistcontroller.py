@@ -775,7 +775,7 @@ class ItemListController(object):
     def on_hotspot_clicked(self, itemview, name, iter_):
         """Hotspot handler for ItemViews."""
 
-        (item_info,) = itemview.model[iter_]
+        (item_info, attrs, group_info) = itemview.model[iter_]
         if name == 'download':
             if item_info.remote:
                 name = 'download-sharing-item'
