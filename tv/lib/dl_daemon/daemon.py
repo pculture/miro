@@ -45,7 +45,7 @@ from miro import trapcall
 from miro.net import ConnectionHandler
 from miro import util
 
-SIZE_OF_INT = calcsize("I")
+SIZEOF_LONG = calcsize("Q")
 
 class DaemonError(StandardError):
     """Exception while communicating to a daemon (either controller or
@@ -163,8 +163,8 @@ class Daemon(ConnectionHandler):
         self.queued_commands = []
 
     def on_size(self):
-        if self.buffer.length >= SIZE_OF_INT:
-            (self.size,) = unpack("I", self.buffer.read(SIZE_OF_INT))
+        if self.buffer.length >= SIZEOF_LONG:
+            (self.size,) = unpack("Q", self.buffer.read(SIZEOF_LONG))
             self.change_state('command')
 
     def on_command(self):
@@ -193,7 +193,7 @@ class Daemon(ConnectionHandler):
             self.queued_commands.append((comm, callback))
         else:
             raw = cPickle.dumps(comm, cPickle.HIGHEST_PROTOCOL)
-            self.send_data(pack("I", len(raw)) + raw, callback)
+            self.send_data(pack("Q", len(raw)) + raw, callback)
 
 class DownloaderDaemon(Daemon):
     def __init__(self, host, port, short_app_name):

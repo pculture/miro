@@ -261,7 +261,7 @@ class SubprocessResponder(messagetools.MessageHandler):
 class LoadError(StandardError):
     """Exception for corrupt data when reading from a pipe."""
 
-SIZEOF_LONG = struct.calcsize("L")
+SIZEOF_LONG = struct.calcsize("Q")
 
 def _read_bytes_from_pipe(pipe, length):
     """Read size bytes from a pipe.
@@ -296,7 +296,7 @@ def _load_obj(pipe):
     if len(size_data) < SIZEOF_LONG:
         raise LoadError("EOF reached while reading size field "
                 "(read %s bytes)" % len(size_data))
-    size = struct.unpack("L", size_data)[0]
+    size = struct.unpack("Q", size_data)[0]
     pickle_data = _read_bytes_from_pipe(pipe, size)
     if len(pickle_data) < size:
         raise LoadError("EOF reached while reading pickle data "
@@ -320,7 +320,7 @@ def _dump_obj(obj, pipe):
     """
 
     pickle_data = pickle.dumps(obj)
-    size_data = struct.pack("L", len(pickle_data))
+    size_data = struct.pack("Q", len(pickle_data))
     # NOTE: We do a blocking write here.  This should be fine, since on both
     # sides we have a thread dedicated to just reading from the pipe and
     # pushing the data into a Queue.  However, there's some chance that the
