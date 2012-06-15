@@ -35,14 +35,32 @@ import weakref
 from miro import app
 from miro import schema
 from miro import signals
+from miro import util
 from miro.data import item
 
-# ItemTrackerCondition and ItemTrackerOrderBy store parameters for
-# ItemTracker's queries
-ItemTrackerCondition = collections.namedtuple("ItemTrackerCondition",
-                                              "table column operator value")
-ItemTrackerOrderBy = collections.namedtuple("ItemTrackerOrderBy",
-                                            "table column descending")
+ItemTrackerCondition = util.namedtuple(
+    "ItemTrackerCondition",
+    "table column sql values",
+
+    """ItemTrackerCondition defines one term for the WHERE clause of a query.
+
+    :attribute table: table that contains column
+    :attribute column: column that this condition refers to.  If this changes
+    in the DB, then we should re-run the query.
+    :attribute sql: sql string for the clause
+    :attribute values: list of values to use to fill in sql
+    """)
+
+ItemTrackerOrderBy = util.namedtuple(
+    "ItemTrackerOrderBy",
+    "table column descending",
+
+    """ItemTrackerOrderBy defines one term for the ORDER BY clause of a query.
+
+    :attribute table: table that contains column
+    :attribute column: column to sort on
+    :attribute descending: should we add the DESC clause?
+    """)
 
 class ItemTrackerQuery(object):
     """Define the query used to get items for ItemTracker."""
@@ -69,7 +87,26 @@ class ItemTrackerQuery(object):
         then use "feed_id", "=", 100 for column, operator, and value.
         """
         table, column = self._parse_column(column)
-        cond = ItemTrackerCondition(table, column, operator, value)
+        sql = "%s.%s %s ?" % (table, column, operator)
+        cond = ItemTrackerCondition(table, column, sql, (value,))
+        self.conditions.append(cond)
+
+    def add_complex_condition(self, column, sql, values):
+        """Add a complex condition to the WHERE clause
+
+        This method can be used to add conditions that don't fit into the
+        "<column> <op> ?" form.
+
+        NOTE: this doesn't support all possible conditions, since some may
+        depend on multiple columns, or None.  But this is good enough for how
+        we use it.
+
+        :param column: column that this condition depends on
+        :param sql: sql that defines the condition
+        :param values: tuple of values to substitute into sql
+        """
+        table, column = self._parse_column(column)
+        cond = ItemTrackerCondition(table, column, sql, values)
         self.conditions.append(cond)
 
     def set_order_by(self, *columns):
@@ -120,7 +157,7 @@ class ItemTrackerQuery(object):
 
     def _calc_tables(self):
         """Calculate which tables we need to execute the query."""
-        all_tables = ([c.table for c in self.conditions] + 
+        all_tables = ([c.table for c in self.conditions] +
                       [ob.table for ob in self.order_by])
         return set(all_tables)
 
@@ -132,13 +169,16 @@ class ItemTrackerQuery(object):
         if 'dlstats' in tables:
             sql_parts.append("JOIN dlstats ON dlstats.id=item.downloader_id")
 
+        if 'feed' in tables:
+            sql_parts.append("JOIN feed ON feed.id=item.feed_id")
+
     def _add_conditions(self, sql_parts, arg_list):
         if not self.conditions:
             return
         where_parts = []
         for c in self.conditions:
-            where_parts.append("%s.%s%s?" % (c.table, c.column, c.operator))
-            arg_list.append(c.value)
+            where_parts.append(c.sql)
+            arg_list.extend(c.values)
         sql_parts.append("WHERE %s" % ' AND '.join(where_parts))
 
     def _add_order_by(self, sql_parts, arg_list):
@@ -188,6 +228,7 @@ class ItemTracker(signals.SignalEmitter):
         idletime.
         """
         signals.SignalEmitter.__init__(self)
+        self.create_signal("will-change")
         self.create_signal("items-changed")
         self.create_signal("list-changed")
         self.idle_scheduler = idle_scheduler
@@ -224,22 +265,11 @@ class ItemTracker(signals.SignalEmitter):
     def _refetch_id_list(self):
         """Refetch a new id list after we already have one."""
 
-        # Check if we still had a connection open to load rows in during idle
-        # time.
-        had_connection = self.connection is not None
-        if had_connection:
-            # need to finish the transaction so that we can fetch fresh data.
-            self.connection.commit()
-        else:
-            self._get_connection()
+        self.emit('will-change')
         self._fetch_id_list()
-        # If we had a connection open before, that means we also had an idle
-        # callback scheduled.  No need to schedule another one.
-        if not had_connection:
-            ItemTracker._schedule_fetch_rows_during_idle(self)
         self.emit("list-changed")
 
-    def items(self):
+    def get_items(self):
         """Get a list of all items in sorted order."""
         return [self.get_row(i) for i in xrange(len(self.id_list))]
 
@@ -346,6 +376,10 @@ class ItemTracker(signals.SignalEmitter):
         id_ = self.id_list[index]
         return self.row_data[id_]
 
+    def get_index(self, item_id):
+        """Get the index of an item in the list."""
+        return self.id_to_index[item_id]
+
     def change_query(self, new_query):
         """Change the query for this select
 
@@ -354,7 +388,23 @@ class ItemTracker(signals.SignalEmitter):
         :param new_query: ItemTrackerQuery object
         """
         self._set_query(new_query)
+        self._handle_connection_after_changes()
         self._refetch_id_list()
+
+    def _handle_connection_after_changes(self):
+        """Call this if the data we're tracking has changed, either because we
+        have a new query, or because the backend has updated the data.
+        """
+        if self.connection is not None:
+            # We already have a connection and are currently fetching items
+            # with it.  Finish our transaction so that we can fetch fresh
+            # data.
+            self.connection.commit()
+        else:
+            # We have released our connection.  Get a new one and schedule
+            # fetching our items.
+            self._get_connection()
+            ItemTracker._schedule_fetch_rows_during_idle(self)
 
     def on_item_changes(self, message):
         """Call this when items get changed and the list needs to be
@@ -366,9 +416,11 @@ class ItemTracker(signals.SignalEmitter):
         :param message: an ItemsChanged message
         """
         self._uncache_row_data(message.changed)
+        self._handle_connection_after_changes()
         if self._could_list_change(message):
             self._refetch_id_list()
         else:
+            self.emit('will-change')
             changed_ids = [id_ for id_ in message.changed
                            if id_ in self.id_to_index]
             self.emit('items-changed', changed_ids)

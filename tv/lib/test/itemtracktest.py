@@ -38,6 +38,7 @@ from miro import eventloop
 from miro import item
 from miro import messages
 from miro import models
+from miro.data.item import ItemFetcher
 from miro.data import itemtrack
 from miro.test import mock
 from miro.test.framework import MiroTestCase, MatchAny
@@ -126,15 +127,21 @@ class ItemTrackTest(MiroTestCase):
             self.assertEquals(len(args), 1)
         return args
 
-    def check_tracker_items(self):
+    def check_tracker_items(self, correct_items=None):
         """Calculate which items should be in our ItemTracker and check if
         it's data agrees with this.
+
+        :param correct_items: items that should be in our ItemTracker.  If
+        None, we will use calc_items_in_tracker() to calculate this.
         """
-        item_list = self.calc_items_in_tracker()
+        if correct_items:
+            item_list = correct_items
+        else:
+            item_list = self.calc_items_in_tracker()
         self.sort_item_list(item_list)
         self.assertEquals(len(item_list), len(self.tracker))
-        # test the items() method
-        tracker_items = self.tracker.items()
+        # test the get_items() method
+        tracker_items = self.tracker.get_items()
         self.assertEquals(len(tracker_items), len(item_list))
         for i, ti in zip(item_list, tracker_items):
             self.assertEquals(i.id, ti.id)
@@ -156,21 +163,33 @@ class ItemTrackTest(MiroTestCase):
                         item_value = None
                     else:
                         item_value = getattr(dler, condition.column)
+                elif condition.table == 'feed':
+                    item_value = getattr(i.get_feed(), condition.column)
                 else:
                     raise AssertionError("Don't know how to get value for %s"
                                          % condition.table)
-                if condition.operator == '=':
-                    if item_value != condition.value:
+                full_column = "%s.%s" % (condition.table, condition.column)
+                if condition.sql == '%s = ?' % full_column:
+                    if item_value != condition.values[0]:
                         meets_conditions = False
                         break
-                elif condition.operator == '<':
-                    if item_value >= condition.value:
+                elif condition.sql == '%s < ?' % full_column:
+                    if item_value >= condition.values[0]:
                         meets_conditions = False
                         break
-                elif condition.operator == '<':
-                    if item_value <= condition.value:
+                elif condition.sql == '<':
+                    if item_value <= condition.values[0]:
                         meets_conditions = False
                         break
+                elif condition.sql == '%s LIKE ?' % full_column:
+                    value = condition.values[0]
+                    if (value[0] != '%' or
+                        value[-1] != '%'):
+                        raise ValueError("Can't handle like without % on "
+                                         "both ends")
+                    inner_part = value[1:-1]
+                    meets_conditions = inner_part in item_value
+                    break
                 else:
                     raise ValueError("Can't handle condition operator: %s" %
                                      condition.operater)
@@ -257,6 +276,21 @@ class ItemTrackTest(MiroTestCase):
         self.check_list_change_after_message()
         self.check_tracker_items()
 
+    def test_item_changes_after_connection_finished(self):
+        # test that if we fetch an item, then it changes, we re-fetch it.
+        while self.tracker.connection is not None:
+            self.tracker.fetch_rows_during_idle()
+        # at this point, our ItemTracker has fetched all its data, and it's
+        # released its connection.
+        item1 = self.tracked_items[0]
+        item2 = self.tracked_items[1]
+        item1.title = u'new title'
+        item1.signal_change()
+        item2.title = u'new title2'
+        item2.signal_change()
+        self.check_items_changed_after_message([item1, item2])
+        self.check_tracker_items()
+
     def test_add_remove(self):
         # adding items to our tracked feed should result in the list-changed
         # signal
@@ -286,6 +320,36 @@ class ItemTrackTest(MiroTestCase):
         query.set_order_by('release_date')
         self.tracker.change_query(query)
         # changing the query should emit list-changed
+        self.check_one_signal('list-changed')
+        self.check_tracker_items()
+
+    def test_complex_conditions(self):
+        # test adding more conditions
+        query = itemtrack.ItemTrackerQuery()
+
+        sql = "feed_id IN (SELECT id FROM feed WHERE id in (?, ?))"
+        values = (self.tracked_feed.id, self.other_feed1.id)
+        query.add_complex_condition("feed_id", sql, values)
+        query.set_order_by('release_date')
+        self.tracker.change_query(query)
+        # changing the query should emit list-changed
+        self.check_one_signal('list-changed')
+        self.check_tracker_items(self.tracked_items + self.other_items1)
+
+    def test_like(self):
+        # test adding more conditions
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('title', 'LIKE', '%feed1%')
+        self.tracker.change_query(query)
+        # changing the query should emit list-changed
+        self.check_one_signal('list-changed')
+        self.check_tracker_items()
+
+    def test_feed_conditions(self):
+        # change the query to something that involves downloader columns
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed.orig_url', '=', self.tracked_feed.orig_url)
+        self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items()
 
@@ -348,11 +412,9 @@ class ItemTrackTest(MiroTestCase):
         query.add_condition('remote_downloader.state', '=', 'downloading')
         query.set_order_by('dlstats.rate')
         self.tracker.change_query(query)
-        # we can't call check_tracker_items, because that doesn't handle
-        # ordering by dlstats.  Do the comparison manually.
-        tracker_items = [self.tracker.get_row(i).id
-                         for i in range(len(self.tracker))]
-        self.assertEquals([i.id for i in downloads], tracker_items)
+        correct_items = ItemFetcher().fetch_many(self.tracker.connection,
+                                                 [i.id for i in downloads])
+        self.check_tracker_items(correct_items)
 
     def test_change_while_loading_data(self):
         # test the backend writing to the DB before all data is loaded.

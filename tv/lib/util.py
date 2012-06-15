@@ -35,6 +35,7 @@ any other Miro modules.
 
 from hashlib import sha1 as sha
 from StringIO import StringIO
+import collections
 import contextlib
 import itertools
 import logging
@@ -1377,3 +1378,15 @@ def alarm(timeout, set_signal=True):
 
 def supports_alarm():
     return hasattr(signal, 'SIGALRM')
+
+def namedtuple(class_name, fields, docstring=None, verbose=False,
+               rename=False):
+    """Version of collections.namedtuple that adds docstring support."""
+    # make the base class using the standard namedtuple
+    nt = collections.namedtuple(class_name + "Tuple", fields, verbose, rename)
+    # make a subclass that adds the docstring and doesn't add a per-instance
+    # dict.
+    dct = { '__slots__': () }
+    if docstring:
+        dct['__doc__'] = docstring
+    return type(class_name, (nt,), dct)
