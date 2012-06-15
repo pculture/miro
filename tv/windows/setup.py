@@ -205,6 +205,25 @@ pygtkhacks_ext = Extension(
         ]
     )
 
+fixedliststore_dir = os.path.join(portable_widgets_dir, 'gtk', 'fixedliststore')
+fixedliststore_ext = Extension(
+        "miro.frontends.widgets.gtk.fixedliststore",
+        [
+            os.path.join(fixedliststore_dir, 'fixed-list-store.c'),
+            os.path.join(fixedliststore_dir, 'fixed-list-store-module.c'),
+            os.path.join(fixedliststore_dir, 'fixed-list-store-wrapper.c'),
+        ],
+        include_dirs=GTK_INCLUDE_DIRS + [PYGOBJECT_INCLUDE_DIR],
+        library_dirs=[GTK_LIB_PATH],
+        libraries=[
+            'gtk-win32-2.0',
+            'gdk-win32-2.0',
+            'glib-2.0',
+            'gobject-2.0',
+            'gthread-2.0',
+        ]
+    )
+
 embeddingwindow_ext = \
     Extension("miro.plat.frontends.widgets.embeddingwindow",
         [os.path.join(widgets_dir, 'embeddingwindow.c')],
@@ -282,6 +301,7 @@ os.environ['PATH'] = ';'.join([
 ext_modules = [
     ngrams_ext,
     pygtkhacks_ext,
+    fixedliststore_ext,
     embeddingwindow_ext,
     xulrunnerbrowser_ext,
     infolist_ext,

@@ -1379,11 +1379,10 @@ def alarm(timeout, set_signal=True):
 def supports_alarm():
     return hasattr(signal, 'SIGALRM')
 
-def namedtuple(class_name, fields, docstring=None, verbose=False,
-               rename=False):
+def namedtuple(class_name, fields, docstring=None):
     """Version of collections.namedtuple that adds docstring support."""
     # make the base class using the standard namedtuple
-    nt = collections.namedtuple(class_name + "Tuple", fields, verbose, rename)
+    nt = collections.namedtuple(class_name + "Tuple", fields)
     # make a subclass that adds the docstring and doesn't add a per-instance
     # dict.
     dct = { '__slots__': () }

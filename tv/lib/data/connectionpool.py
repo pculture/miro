@@ -49,8 +49,6 @@ class ConnectionPool(object):
         self.max_connections = max_connections
         self.all_connections = set()
         self.free_connections = []
-        for i in xrange(min_connections):
-            self._make_new_connection()
 
     def _make_new_connection(self):
         # TODO: should have error handling here, but what should we do?
