@@ -33,6 +33,7 @@ import collections
 import os
 
 from miro import app
+from miro import displaytext
 from miro import filetypes
 from miro import fileutil
 from miro import prefs
@@ -75,7 +76,7 @@ _select_columns = [
     _SelectColumn('item', 'enclosure_type', 'mime_type'),
     _SelectColumn('item', 'enclosure_format'),
     _SelectColumn('item', 'enclosure_size'),
-    _SelectColumn('item', 'link'),
+    _SelectColumn('item', 'link', 'permalink'),
     _SelectColumn('item', 'payment_link'),
     _SelectColumn('item', 'comments_link'),
     _SelectColumn('item', 'url'),
@@ -121,7 +122,7 @@ _select_columns = [
     _SelectColumn('dlstats', 'current_size', 'downloaded_size'),
     _SelectColumn('dlstats', 'total_size', 'downloader_size'),
     _SelectColumn('dlstats', 'upload_size'),
-    _SelectColumn('dlstats', 'activity'),
+    _SelectColumn('dlstats', 'activity', 'startup_activity'),
     _SelectColumn('dlstats', 'seeders'),
     _SelectColumn('dlstats', 'leechers'),
     _SelectColumn('dlstats', 'connections'),
@@ -139,13 +140,15 @@ class ItemInfo(ItemRow):
     html_stripper = util.HTMLStripper()
 
     source_type = 'database'
+    remote = False
+    device = None
 
     # NOTE: The previous ItemInfo API was all attributes, so we use properties
     # to try to match that.
 
     @property
     def downloaded(self):
-        return self.filename is None
+        return self.filename is not None
 
     @property
     def is_playable(self):
@@ -176,7 +179,7 @@ class ItemInfo(ItemRow):
 
     @property
     def thumbnail(self):
-        if self.cover_art and fileutil.exists(path):
+        if self.cover_art and fileutil.exists(self.cover_art):
             return self.cover_art
         if (self.icon_cache_filename and
             fileutil.exists(self.icon_cache_filename)):
@@ -247,6 +250,10 @@ class ItemInfo(ItemRow):
         return u""
 
     @property
+    def video_watched(self):
+        return self.watched_time is not None
+
+    @property
     def expiration_date(self):
         """When will this item expire?
 
@@ -255,15 +262,15 @@ class ItemInfo(ItemRow):
         if self.watched_time is None or self.filename is None or self.keep:
             return None
 
-        if feed_expire == u'never':
+        if self.feed_expire == u'never':
             return None
-        elif feed_expire == u"feed":
+        elif self.feed_expire == u"feed":
             expire_time = feed_expire_time
-        elif feed_expire == u"system":
+        elif self.feed_expire == u"system":
             expire_time = timedelta(
                 days=app.config.get(prefs.EXPIRE_AFTER_X_DAYS))
         else:
-            raise AssertionError("Unknown expire value: %s" % feed_expire)
+            raise AssertionError("Unknown expire value: %s" % self.feed_expire)
         if expire_time <= 0:
             return None
         return self.get_watched_time() + expire_time
@@ -287,14 +294,42 @@ class ItemInfo(ItemRow):
         :returns: [0.0, 1.0] depending on how much has been downloaded, or
         None if we don't have the info to make this calculation
         """
-        if self.downloaded_size == 0:
-            # if downloaded_size is 0, then this download probably hasn't
-            # started.  Even if we don't know the total size, return 0.0
+        if self.downloaded_size in (0, None):
+            # Download hasn't started yet.  Give the downloader a little more
+            # time before deciding that the eta is unknown.
             return 0.0
         if self.downloaded_size is None or self.downloader_size is None:
             # unknown total size, return None
             return None
         return float(self.downloaded_size) / self.downloader_size
+
+    @property
+    def download_rate_text(self):
+        return displaytext.download_rate(self.download_rate)
+
+    @property
+    def upload_rate_text(self):
+        return displaytext.download_rate(self.upload_rate)
+
+    @property
+    def upload_ratio(self):
+        return float(self.upload_size) / self.downloaded_size
+
+    @property
+    def upload_ratio_text(self):
+        return "%0.2f" % self.upload_ratio
+
+    @property
+    def eta_text(self):
+        return displaytext.time_string_0_blank(self.eta)
+
+    @property
+    def current_size_text(self):
+        return displaytext.size_string(self.current_size)
+
+    @property
+    def upload_size_text(self):
+        return displaytext.size_string(self.upload_size)
 
     @property
     def is_failed_download(self):
@@ -306,6 +341,57 @@ class ItemInfo(ItemRow):
                 not self.was_downloaded and
                 self.feed_auto_downloadable and
                 (self.feed_get_everything or self.eligible_for_autodownload))
+
+    @property
+    def title_sort_key(self):
+        return util.name_sort_key(self.title)
+
+    @property
+    def artist_sort_key(self):
+        return util.name_sort_key(self.artist)
+
+    @property
+    def album_sort_key(self):
+        return util.name_sort_key(self.album)
+
+    @property
+    def parent_sort_key(self):
+        # FIXME: implement this
+        return None
+
+    @property
+    def album_artist_sort_key(self):
+        if self.album_artist:
+            return util.name_sort_key(self.album_artist)
+        else:
+            return self.artist_sort_key
+
+    @property
+    def description_oneline(self):
+        return self.description_stripped[0].replace('\n', '$')
+
+    @property
+    def auto_rating(self):
+        """Guess at a rating based on the number of times the files has been
+        played vs. skipped and the item's age.
+        """
+        # TODO: we may want to take into consideration average ratings for this
+        # artist and this album, total play count and skip counts, and average
+        # manual rating
+        SKIP_FACTOR = 1.5 # rating goes to 1 when user skips 40% of the time
+        UNSKIPPED_FACTOR = 2 # rating goes to 5 when user plays 3 times without
+                             # skipping
+        # TODO: should divide by log of item's age
+        if self.play_count > 0:
+            if self.skip_count > 0:
+                return min(5, max(1, int(self.play_count -
+                    SKIP_FACTOR * self.skip_count)))
+            else:
+                return min(5, int(UNSKIPPED_FACTOR * self.play_count))
+        elif self.skip_count > 0:
+            return 1
+        else:
+            return None
 
 class ItemFetcher(object):
     """Fetches items from a database."""

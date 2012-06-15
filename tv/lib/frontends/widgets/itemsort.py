@@ -33,14 +33,16 @@ This module defines the ItemSort base class and subclasses that define
 concrete ways of sorting item lists.
 """
 
+from miro import util
+
 class ItemSort(object):
     """Class that sorts items in an item list.
 
     :attribute columns: list of columns to pass to set_order_by().  These
     should specify an ascending search.  Subclasses must set this.
 
-    :attribute table_column: string specifying the table column that this sort
-    should be used for.  Subclasses must set this.
+    :attribute key: string specifying the name of the column for an ItemView
+    that this sort should be used for.  Subclasses must set this.
     """
 
     def __init__(self, ascending=True):
@@ -69,9 +71,28 @@ class ItemSort(object):
             query.set_order_by(*self.reverse_columns())
 
 class TitleSort(ItemSort):
-    table_column = 'name'
+    key = 'name'
     columns = ['title']
 
 class DateSort(ItemSort):
-    table_column = 'date'
+    key = 'date'
     columns = ['release_date']
+
+class ArtistSort(ItemSort):
+    key = 'artist'
+    # FIXME: should sort using the result of name_sort_key rather than the raw
+    # values
+    columns = ['artist', 'album', 'track']
+
+class AlbumSort(ItemSort):
+    key = 'album'
+    # FIXME: should sort using the result of name_sort_key rather than the raw
+    # values
+    columns = ['album', 'track']
+
+class FeedNameSort(ItemSort):
+    # FIXME: need to implement this
+    key = 'feed-name'
+    columns = ['id']
+
+SORT_KEY_MAP = dict((sort.key, sort) for sort in util.all_subclasses(ItemSort))

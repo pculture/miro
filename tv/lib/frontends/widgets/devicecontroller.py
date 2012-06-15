@@ -1149,8 +1149,9 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         titlebar.connect('filter-clicked', self.on_filter_clicked)
         return titlebar
 
-    def build_item_tracker(self):
-        return itemtrack.ItemListTracker.create('device', self.device)
+    def build_item_list(self):
+        # FIXME: Make this work again
+        raise NotImplementedError()
 
     def build_renderer(self):
         return itemrenderer.DeviceItemRenderer(display_channel=False)

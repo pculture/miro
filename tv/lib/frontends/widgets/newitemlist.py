@@ -53,22 +53,31 @@ class ItemList(itemtrack.ItemTracker):
             - set_filters/select_filter changes the filters
             - set_sort changes the sort
     """
-    def __init__(self, tab_type, tab_id):
+    def __init__(self, tab_type, tab_id, sort=None, group_func=None,
+                 filters=None):
         """Create a new ItemList
 
         Note: outside classes shouldn't call this directly.  Instead, they
         should use the app.item_list_pool.get() method.
 
         :param tab_type: type of tab that this list is for
-        :parab tab_id: id of the tab that this list is for
+        :param tab_id: id of the tab that this list is for
+        :param sort: initial sort to use
+        :param group_func: initial grouping to use
+        :param filters: initial filters
         """
         self.tab_type = tab_type
         self.tab_id = tab_id
         self.base_query = self._make_base_query(tab_type, tab_id)
         self.item_attributes = collections.defaultdict(dict)
         self.filter_set = itemfilter.ItemFilterSet()
-        self.sorter = itemsort.DateSort()
-        self.group_func = None
+        if filters is not None:
+            self.filter_set.set_filters(filters)
+        if sort is None:
+            self.sorter = itemsort.DateSort()
+        else:
+            self.sorter = sort
+        self.group_func = group_func
         itemtrack.ItemTracker.__init__(self, call_on_ui_thread,
                                        self._make_query())
 
@@ -78,10 +87,36 @@ class ItemList(itemtrack.ItemTracker):
 
     def _make_base_query(self, tab_type, tab_id):
         query = itemtrack.ItemTrackerQuery()
-        if tab_type == 'feed':
+        if tab_type == 'videos':
+            query.add_condition('file_type', '=', 'video')
+        elif tab_type == 'music':
+            query.add_condition('file_type', '=', 'audio')
+        elif tab_type == 'search':
+            query.add_condition('feed.orig_url', '=', 'dtv:search')
+        elif tab_type == 'downloading':
+            # FIXME: this should also include failed downloads from the manual
+            # feed
+            sql = ("remote_downloader.state IN ('downloading', 'uploading', "
+                   "'paused', 'uploading-paused', 'offline')")
+            query.add_complex_condition('remote_downloader.state', sql, ())
+        elif tab_type == 'feed':
             query.add_condition('feed_id', '=', tab_id)
+        elif tab_type == 'feed-folder' and tab_id == 'feed-base-tab':
+            # all feeds tab
+            query.add_condition('feed.orig_url', 'IS NOT', None)
+            query.add_condition('feed.orig_url', '!=', 'dtv:manualFeed')
+            query.add_condition('feed.orig_url', 'NOT LIKE', 'dtv:search%')
+        elif tab_type == 'feed-folder':
+            # NOTE: this also depends on the folder_id column of feed, but we
+            # don't track that in any way.  If that changed while the user was
+            # viewing the display, then they wouldn't see the changes.
+            # However, the only way for this to change is drag and drop, so we
+            # can ignore this.
+            sql = ("feed_id in "
+                   "(SELECT feed.id FROM feed WHERE feed.folder_id=?)")
+            query.add_complex_condition('feed_id', sql, (tab_id,))
         else:
-            raise ValueError("Can't handle tab type %r" % tab_type)
+            raise ValueError("Can't handle tab (%r, %r)" % (tab_type, tab_id))
         return query
 
     def _make_query(self):
@@ -113,8 +148,11 @@ class ItemList(itemtrack.ItemTracker):
     def set_attr(self, id, name, value):
         self.item_attributes[id][name] = value
 
-    def get_attr(self, id, name):
-        return self.item_attributes[id][name]
+    def get_attr(self, id, name, default=None):
+        return self.item_attributes[id].get(name, default)
+
+    def get_attrs(self, id):
+        return self.item_attributes[id]
 
     def unset_attr(self, id, name):
         if name in self.item_attributes[id]:
@@ -124,10 +162,10 @@ class ItemList(itemtrack.ItemTracker):
     def get_group_info(self, row):
         """Get the info about the group an info is inside.
 
-        This method fetches the index of the info inside the group and the
-        total size of the group.
+        This method fetches the index of the info inside the group, the total
+        size of the group, and the first info in the group.
 
-        :returns: an (index, count) tuple
+        :returns: an (index, count, first_info) tuple
         :raises ValueError: if no groupping is set
         """
         if self.group_func is None:
@@ -157,6 +195,14 @@ class ItemList(itemtrack.ItemTracker):
         self.group_info = [None] * len(self)
 
     def _calc_group_info(self, row):
+        # FIXME: for normal item lists, this is fairly fast, but it is slow in
+        # a specific case:
+        #
+        # When the group function returns the same value for many items and
+        # those items need to be loaded.  This actually can happen pretty
+        # easily when you add a bunch of music files to miro, and we haven't
+        # run mutagen on them yet.  In that case, when you first switch to the
+        # music tab, basically all items will be in the same group.
         key = self.group_func(self.get_row(row))
         start = end = row
         while (start > 0 and
@@ -167,7 +213,7 @@ class ItemList(itemtrack.ItemTracker):
             end += 1
         total = end - start + 1
         for row in xrange(start, end+1):
-            self.group_info[row] = (row-start, total)
+            self.group_info[row] = (row-start, total, self.get_row(start))
 
 class ItemListPool(object):
     """Pool of ItemLists that the frontend is using.
@@ -183,11 +229,14 @@ class ItemListPool(object):
         self.all_item_lists = set()
         self._refcounts = {}
 
-    def get(self, tab_type, tab_id):
+    def get(self, tab_type, tab_id, sort=None, group_func=None, filters=None):
         """Get an ItemList to use.
 
         This method will first try to re-use an existing ItemList from the
         pool.  If it can't, then a new ItemList will be created.
+
+        sort, group_func, and filters are only used if a new ItemList is
+        created.
 
         :returns: ItemList object.  When you are done with it, you must pass
         the ItemList to the release() method.
@@ -196,7 +245,8 @@ class ItemListPool(object):
             if obj.tab_type == tab_type and obj.tab_id == tab_id:
                 self._refcounts[obj] += 1
                 return obj
-        new_list = ItemList(tab_type, tab_id)
+        # no existing list found, make new list
+        new_list = ItemList(tab_type, tab_id, sort, group_func, filters)
         self.all_item_lists.add(new_list)
         self._refcounts[new_list] = 1
         return new_list
@@ -218,3 +268,28 @@ class ItemListPool(object):
         """Call on_item_changes for each ItemList in the pool."""
         for obj in self.all_item_lists:
             obj.on_item_changes(message)
+
+# grouping functions
+def album_grouping(info):
+    """Grouping function that groups infos by albums."""
+    return (info.album_artist_sort_key, info.album_sort_key)
+
+def feed_grouping(info):
+    """Grouping function that groups infos by their feed."""
+    return info.feed_id
+
+def video_grouping(info):
+    """Grouping function that groups infos for the videos tab.
+
+    For this group, we try to figure out what "show" the item is in.  If the
+    user has set a show we use that, otherwise we use the podcast.
+
+    """
+    if info.show:
+        return info.show
+    elif info.parent_sort_key:
+        return info.parent_sort_key
+    elif info.feed_name:
+        return info.feed_name
+    else:
+        return None

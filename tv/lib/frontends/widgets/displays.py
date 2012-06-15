@@ -148,6 +148,8 @@ class DisplayManager(object):
     def __init__(self):
         # displays that we construct when the user clicks on them
         self.on_demand_display_classes = [
+                VideoItemsDisplay,
+                AudioItemsDisplay,
                 FeedDisplay,
                 AllFeedsDisplay,
                 PlaylistDisplay,
@@ -174,15 +176,12 @@ class DisplayManager(object):
         self.change_non_video_displays_dc = None
         # displays that we keep alive all the time
         self.permanent_displays = set()
-        self.add_permanent_display(VideoItemsDisplay())
-        self.add_permanent_display(AudioItemsDisplay())
         self.display_stack = []
         self.selected_tab_list = self.selected_tabs = None
         app.info_updater.connect('sites-removed', SiteDisplay.on_sites_removed)
 
     def add_permanent_display(self, display):
         self.permanent_displays.add(display)
-        display.on_selected()
 
     def get_current_display(self):
         try:
@@ -370,7 +369,6 @@ class SiteDisplay(TabDisplay):
 class ItemListDisplayMixin(object):
     def on_selected(self):
         app.item_list_controller_manager.controller_created(self.controller)
-        self.controller.start_tracking()
 
     def on_activate(self, is_push):
         app.item_list_controller_manager.controller_displayed(self.controller)
@@ -388,7 +386,7 @@ class ItemListDisplayMixin(object):
                 self.controller)
 
     def cleanup(self):
-        self.controller.stop_tracking()
+        self.controller.cleanup()
         app.item_list_controller_manager.controller_destroyed(self.controller)
 
     def toggle_column_enabled(self, name):
@@ -441,7 +439,7 @@ class AllFeedsDisplay(FeedDisplay):
                selected_tabs[0].tab_class == u'feed')
 
     def make_controller(self, tab):
-        return feedcontroller.AllFeedsController(tab.id, True, True)
+        return feedcontroller.AllFeedsController()
 
     def cleanup(self):
         ItemListDisplay.cleanup(self)
@@ -449,6 +447,8 @@ class AllFeedsDisplay(FeedDisplay):
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
+        # FIXME: re-implement PlaylistItemController with the new ItemList code
+        return False
         return tab_type == 'playlist' and len(selected_tabs) == 1 and \
                selected_tabs[0].type != u'tab'
 
@@ -476,15 +476,14 @@ class DeviceDisplayMixin(object):
 class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
+        # FIXME: re-implement DeviceItemController with the new ItemList code
+        return False
         return tab_type == u'device' and len(selected_tabs) == 1 and \
                isinstance(selected_tabs[0], messages.DeviceInfo) and \
                not getattr(selected_tabs[0], 'fake', False)
 
-    def on_selected(self):
-        self.controller.start_tracking()
-
     def cleanup(self):
-        self.controller.stop_tracking()
+        self.controller.cleanup()
 
     def handle_current_sync_information(self, message):
         if not getattr(self.controller.device, 'fake', False):
@@ -497,6 +496,8 @@ class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
 class DeviceItemDisplay(DeviceDisplayMixin, ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
+        # FIXME: re-implement DeviceItemController with the new ItemList code
+        return False
         return tab_type == u'device' and len(selected_tabs) == 1 and \
                isinstance(selected_tabs[0], messages.DeviceInfo) and \
                getattr(selected_tabs[0], 'fake', False)
@@ -504,6 +505,8 @@ class DeviceItemDisplay(DeviceDisplayMixin, ItemListDisplay):
 class SharingDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
+        # FIXME: re-implement SharingController with the new ItemList code
+        return False
         return tab_type == u'sharing' and len(selected_tabs) == 1
 
     def make_controller(self, tab):
@@ -518,13 +521,6 @@ class SearchDisplay(ItemListDisplay):
         return searchcontroller.SearchController()
 
 class AudioVideoItemsDisplay(ItemListDisplay):
-    def __init__(self):
-        Display.__init__(self)
-        self.controller = self.make_controller()
-        self.widget = self.controller.widget
-        self.type = self.__class__.tab_type
-        self.id = self.__class__.tab_id
-
     @classmethod
     def should_display(cls, tab_type, selected_tabs):
         return (hasattr(selected_tabs[0], 'type') and selected_tabs[0].type ==
@@ -534,14 +530,14 @@ class VideoItemsDisplay(AudioVideoItemsDisplay):
     tab_type = u'videos'
     tab_id = u'videos'
 
-    def make_controller(self):
+    def make_controller(self, tab):
         return itemlistcontroller.VideoItemsController()
 
 class AudioItemsDisplay(AudioVideoItemsDisplay):
     tab_type = u'music'
     tab_id = u'music'
 
-    def make_controller(self):
+    def make_controller(self, tab):
         return itemlistcontroller.AudioItemsController()
 
 class OtherItemsDisplay(ItemListDisplay):

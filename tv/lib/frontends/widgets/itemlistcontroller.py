@@ -51,10 +51,10 @@ from miro import subscription
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
-from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import newitemlist as itemlist
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
-from miro.frontends.widgets import itemtrack
+from miro.frontends.widgets import itemsort
 from miro.frontends.widgets import keyboard
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
@@ -161,10 +161,12 @@ class ThrobberAnimationManager(AnimationManager):
         return 0.2
 
     def continue_animation(self, item_info):
-        if item_info.state == 'downloading':
-            self.item_list.update_throbber(item_info.id)
+        if item_info.is_download:
+            value = self.item_list.get_attr(item_info.id, 'throbber-value', 0)
+            self.item_list.set_attr(item_info.id, 'throbber-value',
+                                    value + 1)
         else:
-            self.item_list.finish_throbber(item_info.id)
+            self.item_list.unset_attr(item_info.id, 'throbber-value')
             return False
 
 class ItemSelectionInfo(object):
@@ -210,54 +212,31 @@ class ItemListController(object):
         self.id = id_
         self.views = {}
         self._search_text = ''
-        self._got_initial_list = False
         self._playing_items = False
         self._selection_to_restore = None
         self.config_change_handle = None
         self.show_resume_playing_button = False
-        self.item_tracker = self.build_item_tracker()
-        self.item_list.set_grouping(self.get_item_list_grouping())
+        self.add_extension_filters()
+        self.item_list = self.build_item_list()
+        self.model = widgetset.ItemListModel(self.item_list)
         self._init_widget()
-        self._check_for_initial_items()
+        self.restore_scroll_positions()
+        self.restore_selection()
 
-        self._init_sort()
         self._init_item_views()
         self.initialize_search()
-        self._item_tracker_callbacks = []
+        self._item_list_callbacks = []
         self._playback_callbacks = []
         self.throbber_manager = ThrobberAnimationManager(self.item_list,
                 self.all_item_views())
-        self._set_initial_filters()
-
-    def get_item_list(self):
-        return self.item_tracker.item_list
-    item_list = property(get_item_list)
+        self.connect_to_signals()
 
     # filter handling code
-    def _set_initial_filters(self):
-        filters = app.widget_state.get_filters(self.type, self.id)
-        try:
-            self.item_list.set_filters(filters)
-        except KeyError:
-            logging.warn("Error setting initial filters to %s "
-                    "(type: %s, id: %s)", filters, self.type, self.id)
-            self.item_list.set_filters([u'all'])
-            app.widget_state.set_filters(self.type, self.id,
-                self.item_list.get_filters())
-        self.after_filters_changed()
-        self.add_extension_filters()
-
     def on_filter_clicked(self, button, filter_key):
         """Handle the filter switch changing state."""
         self.item_list.select_filter(filter_key)
-        self.after_filters_changed()
         app.widget_state.set_filters(self.type, self.id,
                 self.item_list.get_filters())
-
-    def after_filters_changed(self):
-        self.item_list_will_change()
-        self.item_list.recalculate_hidden_items()
-        self.send_model_changed()
         self.titlebar.set_filters(self.item_list.get_filters())
         self.check_for_empty_list()
 
@@ -273,7 +252,6 @@ class ItemListController(object):
     def _add_extension_filter_list(self, filter_list):
         for filter_ in filter_list:
             self.titlebar.filter_box.add_filter(filter_.key)
-
 
     def on_become_primary(self):
         """This has become the primary item_list_controller; this is like
@@ -343,11 +321,6 @@ class ItemListController(object):
             app.widgetapp.handle_soft_failure('_handle_playback_did_stop',
                     "did-repeat sent to wrong ILC", with_exception=False)
 
-    def _init_sort(self):
-        sorter = self.get_sorter()
-        self.change_sort_indicators(sorter.KEY, sorter.is_ascending())
-        self.item_list.set_sort(sorter)
-
     def get_saved_search_text(self):
         """Get the text we would use to create a saved search.
 
@@ -380,11 +353,11 @@ class ItemListController(object):
 
     def make_sorter(self, column, ascending):
         try:
-            sorter = itemlist.SORT_KEY_MAP[column](ascending)
+            sorter = itemsort.SORT_KEY_MAP[column](ascending)
         except KeyError:
             column = WidgetStateStore.DEFAULT_SORT_COLUMN[self.type]
             column, ascending = self.parse_sort_key(column)
-            sorter = itemlist.SORT_KEY_MAP[column](ascending)
+            sorter = itemsort.SORT_KEY_MAP[column](ascending)
         if column == 'multi-row-album':
             sorter.switch_mode(self.get_multi_row_album_mode())
         return sorter
@@ -402,7 +375,7 @@ class ItemListController(object):
         pass
 
     def make_sort_key(self, sorter):
-        key = unicode(sorter.KEY)
+        key = unicode(sorter.key)
         if sorter.is_ascending():
             state = key
         else:
@@ -427,6 +400,9 @@ class ItemListController(object):
         self.standard_item_view = self.build_standard_view()
         self.album_item_view = self.build_album_view()
         self.expand_or_contract_item_details()
+        # set sort indicators
+        sorter = self.item_list.sorter
+        self.change_sort_indicators(sorter.key, sorter.is_ascending())
         # connect to signals
         list_view = WidgetStateStore.get_list_view_type()
         standard_view = WidgetStateStore.get_standard_view_type()
@@ -509,16 +485,10 @@ class ItemListController(object):
 
     def build_standard_view(self):
         # make the widget
-        standard_view = itemlistwidgets.StandardView(self.item_list,
-                self.build_renderer())
-        # put background behind it
-        standard_view_background = widgetset.SolidBackground(
-                standard_view.BACKGROUND_COLOR)
-        standard_view_background.add(widgetutil.pad(standard_view,
-            top=10, bottom=10))
-        # put scroller behind the background
+        standard_view = itemlistwidgets.StandardView(self.model,
+                                                     self.build_renderer())
         scroller = widgetset.Scroller(False, True)
-        scroller.add(standard_view_background)
+        scroller.add(standard_view)
         standard_view.set_scroller(scroller)
         scroller.set_background_color(standard_view.BACKGROUND_COLOR)
         scroller.prepare_for_dark_content()
@@ -537,7 +507,7 @@ class ItemListController(object):
         list_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, list_view_type)
         column_renderers = self.build_column_renderers()
-        list_view = itemlistwidgets.ListView(self.item_list, column_renderers,
+        list_view = itemlistwidgets.ListView(self.model, column_renderers,
                 columns, list_view_widths)
         scroller = widgetset.Scroller(True, True)
         scroller.add(list_view)
@@ -560,7 +530,7 @@ class ItemListController(object):
         album_view_widths = app.widget_state.get_column_widths(
                 self.type, self.id, album_view_type)
         column_renderers = self.build_column_renderers()
-        album_view = itemlistwidgets.AlbumView(self.item_list,
+        album_view = itemlistwidgets.AlbumView(self.model,
                 column_renderers, columns, album_view_widths)
         # add widget to a scroller
         scroller = widgetset.Scroller(True, True)
@@ -597,23 +567,15 @@ class ItemListController(object):
                 self.id, WidgetStateStore.get_standard_view_type())
         return itemlistwidgets.HeaderToolbar(sorts_enabled)
 
-    def build_item_tracker(self):
-        return itemtrack.ItemListTracker.create(self.type, self.id)
+    def build_item_list(self):
+        filters = app.widget_state.get_filters(self.type, self.id)
+        sorter = self.get_sorter()
+        group_func = self.get_item_list_grouping()
+        return app.item_list_pool.get(self.type, self.id, sorter, group_func,
+                                      filters)
 
     def get_item_list_grouping(self):
         return itemlist.album_grouping
-
-    def _check_for_initial_items(self):
-        """Check if our the ItemList from our itemtrack already has items
-
-        If so, simulate the getting the initial-list signal.
-        """
-        initial_items = self.item_list.get_items()
-        if len(initial_items) > 0:
-            # simulate getting the initial-list signal
-            self.handle_items_will_change(self.item_tracker, initial_items,
-                    [], [])
-            self.handle_item_list(self.item_tracker, initial_items)
 
     def expand_or_contract_item_details(self):
         expanded = app.widget_state.get_item_details_expanded(
@@ -671,6 +633,8 @@ class ItemListController(object):
     def play_selection(self, presentation_mode='fit-to-bounds',
             force_resume=False):
         """Play the currently selected items."""
+        # FIXME: rewrite this code
+        raise NotImplementedError()
         selection = self.get_selection()
         if len(selection) == 0:
             start_id = None
@@ -688,14 +652,20 @@ class ItemListController(object):
         self._play_item_list(None, presentation_mode, force_resume)
 
     def can_play_items(self):
-        return any(i.is_playable for i in self.item_list.model.info_list())
+        # FIXME: rewrite this code.  We should definitely avoid iterating over
+        # all items in the item list, since this prevents us from loading them
+        # lazily.
+        return False
+        return any(i.is_playable for i in self.item_list.get_items())
 
     def _play_item_list(self, start_id, presentation_mode='fit-to-bounds',
             force_resume=False):
+        # FIXME: rewrite this code
+        raise NotImplementedError()
         if start_id is None:
             start_info = None
         else:
-            start_info = self.item_list.model.get_info(start_id)
+            start_info = self.item_list.model.get_item(start_id)
         if start_info is None and not self.can_play_items():
             return
         app.playback_manager.stop()
@@ -721,8 +691,7 @@ class ItemListController(object):
         """Set the search for all ItemViews managed by this controller.
         """
         self._search_text = search_text
-        if self.item_tracker:
-            self.item_tracker.set_search(search_text)
+        self.item_list.set_search(search_text)
         app.inline_search_memory.set_search(self.type, self.id, search_text)
 
     def on_row_activated(self, item_view, iter_):
@@ -731,19 +700,17 @@ class ItemListController(object):
             app.playback_manager.toggle_paused()
         elif info.is_playable:
             self._play_item_list(info.id)
-        elif info.state == 'downloading':
+        elif info.is_download and not info.is_paused:
             messages.PauseDownload(info.id).send_to_backend()
-        elif info.state == 'paused':
+        elif info.is_download and info.is_paused:
             messages.ResumeDownload(info.id).send_to_backend()
-        elif info.download_info is None and not info.has_drm:
+        elif not info.is_download and not info.has_drm:
             messages.StartDownload(info.id).send_to_backend()
 
     def on_sort_changed(self, object, sort_key, ascending, view):
         self.views[view].reset_scroll()
-        self.item_list_will_change()
         sorter = self.make_sorter(sort_key, ascending)
         self.item_list.set_sort(sorter)
-        self.send_model_changed()
         self.change_sort_indicators(sort_key, ascending)
         sort_key = self.make_sort_key(sorter)
         app.widget_state.set_sort_state(self.type, self.id, sort_key)
@@ -756,7 +723,7 @@ class ItemListController(object):
             return
         if last_played_id:
             try:
-                info = self.item_list.model.get_info(last_played_id)
+                info = self.item_list.model.get_item(last_played_id)
             except KeyError:
                 logging.warn("Resume playing clicked, but last_played_info "
                         "not found")
@@ -808,7 +775,7 @@ class ItemListController(object):
     def on_hotspot_clicked(self, itemview, name, iter_):
         """Hotspot handler for ItemViews."""
 
-        item_info, attrs, group_info = itemview.model[iter_]
+        (item_info,) = itemview.model[iter_]
         if name == 'download':
             if item_info.remote:
                 name = 'download-sharing-item'
@@ -917,7 +884,8 @@ class ItemListController(object):
         iters = []
         for id_ in selected_ids:
             try:
-                iters.append(self.item_list.get_iter(id_))
+                index = self.item_list.get_index(id_)
+                iters.append(self.model.nth_iter(index))
             except KeyError:
                 # item was removed since we saved the selection, no big deal
                 pass
@@ -975,41 +943,38 @@ class ItemListController(object):
             # restore_only so it can't overwrite an early scroll_to_item
             view.set_scroll_position(position, restore_only=True)
 
-    def start_tracking(self):
+    def connect_to_signals(self):
         """Send the message to start tracking items."""
-        self.track_item_lists()
-        self.track_playback()
-        self.track_config_changes()
+        self.connect_to_item_list_signals()
+        self.connect_to_playback_signals()
+        self.connect_to_config_signals()
 
-    def stop_tracking(self):
+    def cleanup(self):
         """Send the message to stop tracking items."""
-        self.cancel_track_item_lists()
-        self.cancel_track_playback()
-        self.cancel_track_config_changes()
+        self.disconnect_from_item_list_signals()
+        self.disconnect_from_playback_signals()
+        self.disconnect_from_config_signals()
         for item_view in self.all_item_views():
             item_view.unset_model()
+        app.item_list_pool.release(self.item_list)
+        self.item_list = None
 
-    def track_item_lists(self):
-        if self._item_tracker_callbacks:
-            raise AssertionError("called track_item_lists() twice")
-        self.item_tracker.set_search(self._search_text)
-        self._item_tracker_callbacks = [
-            self.item_tracker.connect("items-will-change",
-                self.handle_items_will_change),
-            self.item_tracker.connect("initial-list", self.handle_item_list),
-            self.item_tracker.connect("items-changed",
+    def connect_to_item_list_signals(self):
+        self._item_list_callbacks = [
+            self.item_list.connect("will-change",
+                self.handle_will_change),
+            self.item_list.connect("items-changed",
                 self.handle_items_changed),
+            self.item_list.connect("list-changed",
+                self.handle_list_changed),
         ]
 
-    def cancel_track_item_lists(self):
-        if self.item_tracker is None:
-            return # never started tracking
-        for handle in self._item_tracker_callbacks:
-            self.item_tracker.disconnect(handle)
-        self.item_tracker = None
-        self._item_tracker_callbacks = []
+    def disconnect_from_item_list_signals(self):
+        for handle in self._item_list_callbacks:
+            self.item_list.disconnect(handle)
+        self._item_list_callbacks = []
 
-    def track_playback(self):
+    def connect_to_playback_signals(self):
         self._playback_callbacks.extend([
             app.playback_manager.connect('selecting-file',
                 self._on_playback_change),
@@ -1019,16 +984,16 @@ class ItemListController(object):
                 self._playback_will_play),
         ])
 
-    def cancel_track_playback(self):
+    def disconnect_from_playback_signals(self):
         for handle in self._playback_callbacks:
             app.playback_manager.disconnect(handle)
         self._playback_callbacks = []
 
-    def track_config_changes(self):
+    def connect_to_config_signals(self):
         self.config_change_handle = app.frontend_config_watcher.connect(
                 'changed', self.on_config_change)
 
-    def cancel_track_config_changes(self):
+    def disconnect_from_config_signals(self):
         if self.config_change_handle:
             app.frontend_config_watcher.disconnect(self.config_change_handle)
             self.config_change_handle = None
@@ -1053,19 +1018,6 @@ class ItemListController(object):
             self.update_resume_button()
             self.scroll_to_item(item, manual=False, recenter=False)
 
-    def item_list_will_change(self):
-        """Call this before making any changes to the item list.  """
-        # Remember our current selection.  If we are adding/removing items
-        # from the list, we may lose it.
-        self._selection_to_restore = self.get_selected_ids()
-        # forget the selection for now.  GTK has code that tries to preserve
-        # the selection.  That's wasted effort since we do the same thing.
-        self.current_item_view.unselect_all()
-
-    def start_bulk_change(self):
-        for item_view in self.all_item_views():
-            item_view.start_bulk_change()
-
     def send_model_changed(self):
         for item_view in self.all_item_views():
             item_view.model_changed()
@@ -1076,26 +1028,19 @@ class ItemListController(object):
             app.widgetapp.handle_soft_failure('send_model_changed()',
                     "_selection_to_restore was not set", with_exception=False)
 
-    def handle_items_will_change(self, obj, added, changed, removed):
-        self.item_list_will_change()
-        if len(added) + len(removed) > 100:
-            # Lots of changes are happening, so call start_bulk_change() to
-            # speed things up.  The reason we don't call this always is that
-            # it looses the scroll position on GTK.  But when lots of rows are
-            # changing, trying to keep the scroll position is pointless.
-            self.start_bulk_change()
-        self.on_items_will_change(added, changed, removed)
+    def handle_will_change(self, item_list):
+        # Remember our current selection.  If we are adding/removing items
+        # from the list, we may lose it.
+        self._selection_to_restore = self.get_selected_ids()
+        # forget the selection for now.  GTK has code that tries to preserve
+        # the selection.  That's wasted effort since we do the same thing.
+        self.current_item_view.unselect_all()
 
-    def handle_item_list(self, obj, items):
-        """Handle an ItemList message meant for this ItemContainer."""
+    def handle_items_changed(self, item_list, changed_ids):
         self.handle_item_list_changes()
-        self._got_initial_list = True
-        self.restore_scroll_positions()
-        self.restore_selection()
-        self.on_initial_list()
+        self.on_items_changed()
 
-    def handle_items_changed(self, obj, added, changed, removed):
-        """Handle an ItemsChanged message meant for this ItemContainer."""
+    def handle_list_changed(self, item_list):
         self.handle_item_list_changes()
         self.on_items_changed()
 
@@ -1114,8 +1059,7 @@ class ItemListController(object):
         self.widget.set_list_empty_mode(self.calc_list_empty_mode())
 
     def calc_list_empty_mode(self):
-        return (self.item_list.get_count() == 0 and
-                self.item_tracker.is_filtering())
+        return len(self.item_list) == 0
 
     def update_resume_button(self):
         if not self.show_resume_playing_button:
@@ -1125,7 +1069,7 @@ class ItemListController(object):
         last_played = None
         if last_played_id:
             try:
-                last_played = self.item_list.model.get_info(last_played_id)
+                last_played = self.item_list.model.get_item(last_played_id)
             except KeyError:
                 pass
         if (last_played is None or not last_played.is_playable or
@@ -1136,22 +1080,8 @@ class ItemListController(object):
                     last_played.resume_time)
 
     def update_count_label(self):
-        _("%(count)s items", {'count': self.item_list.get_count()})
+        _("%(count)s items", {'count': len(self.item_list)})
         # FIXME: need to have a place to put this text
-
-    def on_items_will_change(self, added, changed, removed):
-        """Called before we change the list.
-
-        Subclasses can override this method if they want.
-        """
-        pass
-
-    def on_initial_list(self):
-        """Called after we have receieved the initial list of items.
-
-        Subclasses can override this method if they want.
-        """
-        pass
 
     def on_items_changed(self):
         """Called after we have changes to items
@@ -1167,11 +1097,10 @@ class ItemListController(object):
         return ItemListDragHandler()
 
     def no_longer_displayed(self):
-        if self._got_initial_list:
-            # rember our selection, and scroll position, but only if we had a
-            # chance to call restore_selection() on the initial item list.
-            self.save_selection()
-            self.save_scroll_positions()
+        # rember our selection, and scroll position, but only if we had a
+        # chance to call restore_selection() on the initial item list.
+        self.save_selection()
+        self.save_scroll_positions()
         self.save_columns()
 
     def no_longer_primary(self):
@@ -1301,8 +1230,9 @@ class FolderContentsController(SimpleItemListController):
         self.type = u'folder-contents'
         self.id = folder_info.id
         self.info = folder_info
-        self.play_initial_list = play_initial_list
         SimpleItemListController.__init__(self)
+        if play_initial_list:
+            self.play_items()
 
     def make_titlebar(self):
         titlebar = itemlistwidgets.FolderContentsTitlebar()
@@ -1312,11 +1242,6 @@ class FolderContentsController(SimpleItemListController):
 
     def _on_podcast_clicked(self, titlebar, button):
         app.display_manager.pop_display()
-
-    def on_initial_list(self):
-        SimpleItemListController.on_initial_list(self)
-        if self.play_initial_list:
-            self.play_items()
 
 class ItemListControllerManager(object):
     """Manages ItemListController objects.

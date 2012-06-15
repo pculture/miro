@@ -44,12 +44,15 @@ from miro.frontends.widgets import widgetutil
 
 class FeedController(itemlistcontroller.ItemListController):
     """Controller object for feeds."""
-    TYPE = u'feed'
     def __init__(self, id_, is_folder, is_directory_feed):
         self.is_folder = is_folder
         self.is_directory_feed = is_directory_feed
         self.titlebar = None
-        itemlistcontroller.ItemListController.__init__(self, self.TYPE, id_)
+        if is_folder:
+            type_ = u'feed-folder'
+        else:
+            type_ = u'feed'
+        itemlistcontroller.ItemListController.__init__(self, type_, id_)
         self.show_resume_playing_button = True
 
     def make_context_menu_handler(self):
@@ -132,9 +135,6 @@ class FeedController(itemlistcontroller.ItemListController):
     def _on_auto_download_changed(self, widget, setting):
         messages.AutodownloadChange(self.id, setting).send_to_backend()
 
-    def on_initial_list(self):
-        self._update_counts()
-
     def on_items_changed(self):
         self._update_counts()
 
@@ -212,8 +212,9 @@ class FeedController(itemlistcontroller.ItemListController):
 
 class AllFeedsController(FeedController):
     TYPE = u'tab'
-    def build_item_tracker(self):
-        return itemtrack.ItemListTracker.create(u'feed', self.id)
+
+    def __init__(self):
+        FeedController.__init__(self, u'feed-base-tab', True, True)
 
     def make_titlebar(self, feed_info):
         return itemlistwidgets.AllFeedsTitlebar()

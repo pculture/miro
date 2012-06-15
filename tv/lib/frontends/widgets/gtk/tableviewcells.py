@@ -44,8 +44,11 @@ class CellRenderer(object):
     """Simple Cell Renderer
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
-        self._renderer = gtk.CellRendererText()
+        self._renderer = self.build_renderer()
         self.want_hover = False
+
+    def build_renderer(self):
+        return gtk.CellRendererText()
 
     def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'text', attr_map['value'])
@@ -85,12 +88,11 @@ class CellRenderer(object):
     def set_font_scale(self, scale_factor):
         self._renderer.props.scale = scale_factor
 
-class ImageCellRenderer(object):
+class ImageCellRenderer(CellRenderer):
     """Cell Renderer for images
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
-    def __init__(self):
-        self._renderer = gtk.CellRendererPixbuf()
-        self.want_hover = False
+    def build_renderer(self):
+        return gtk.CellRendererPixbuf()
 
     def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'pixbuf', attr_map['image'])
@@ -204,16 +206,18 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
         pass
 gobject.type_register(GTKCustomCellRenderer)
 
-class CustomCellRenderer(object):
+class CustomCellRenderer(CellRenderer):
     """Customizable Cell Renderer
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     IGNORE_PADDING = False
 
     def __init__(self):
-        self._renderer = GTKCustomCellRenderer()
-        self.want_hover = False
+        CellRenderer.__init__(self)
         wrappermap.add(self._renderer, self)
+
+    def build_renderer(self):
+        return GTKCustomCellRenderer()
 
     def setup_attributes(self, column, attr_map):
         column.set_cell_data_func(self._renderer, self.cell_data_func,
@@ -231,20 +235,34 @@ class CustomCellRenderer(object):
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
 
-class InfoListRenderer(CustomCellRenderer):
+class ItemListRenderer(CustomCellRenderer):
     """Custom Renderer for InfoListModels
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
-    def cell_data_func(self, column, cell, model, iter, attr_map):
-        self.info, self.attrs, self.group_info = \
-                wrappermap.wrapper(model).row_for_iter(iter)
+    def cell_data_func(self, column, cell, model, it, attr_map):
+        item_list = wrappermap.wrapper(model).item_list
+        row = model.row_of_iter(it)
+        self.info = item_list.get_row(row)
+        self.attrs = item_list.get_attrs(self.info.id)
+        self.group_info = item_list.get_group_info(row)
         cell.column = column
-        cell.path = model.get_path(iter)
+        cell.path = row
 
-class InfoListRendererText(CellRenderer):
+class ItemListRendererText(CellRenderer):
     """Renderer for InfoListModels that only display text
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     def setup_attributes(self, column, attr_map):
-        infolist.gtk.setup_text_cell_data_func(column, self._renderer,
-                self.get_value)
+        column.set_cell_data_func(self._renderer, self.cell_data_func,
+                attr_map)
+
+    def cell_data_func(self, column, cell, model, it, attr_map):
+        item_list = wrappermap.wrapper(model).item_list
+        info = item_list.get_row(model.row_of_iter(it))
+        cell.set_property("text", self.get_value(info))
+
+    def get_value(self, info):
+        """Get the text to render for this cell
+
+        :param info: ItemInfo to render.
+        """

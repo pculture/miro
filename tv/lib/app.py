@@ -103,6 +103,10 @@ debugmode = None
 # application object
 widgetapp = None
 
+# ConnectionPool -- Note: this object could be made thread-safe pretty easily,
+# but right now it only should be used in the frontend thread.
+connection_pool = None
+
 # handles the right-hand display
 display_manager = None
 

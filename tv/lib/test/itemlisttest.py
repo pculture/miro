@@ -115,8 +115,8 @@ class ItemListTest(MiroTestCase):
         self.assertEquals(self.item_list.get_attr(id1, 'key'), 'value')
         self.assertEquals(self.item_list.get_attr(id2, 'key'), 'value2')
         # test missing attributes
-        self.assertRaises(KeyError, self.item_list.get_attr, id1, 'otherkey')
-        self.assertRaises(KeyError, self.item_list.get_attr, id3, 'key')
+        self.assertEquals(self.item_list.get_attr(id1, 'otherkey'), None)
+        self.assertEquals(self.item_list.get_attr(id3, 'key', 123), 123)
         # test changing attributes
         self.item_list.set_attr(id1, 'key', 'new-value')
         self.assertEquals(self.item_list.get_attr(id1, 'key'), 'new-value')
@@ -128,7 +128,7 @@ class ItemListTest(MiroTestCase):
         self.assertEquals(self.item_list.get_attr(id2, 'key'), 'value2')
         # test unsetting attributes
         self.item_list.unset_attr(id1, 'key')
-        self.assertRaises(KeyError, self.item_list.get_attr, id1, 'key')
+        self.assertEquals(self.item_list.get_attr(id1, 'key'), None)
         # test that a second unset is okay
         self.item_list.unset_attr(id1, 'key')
 
@@ -139,7 +139,7 @@ class ItemListTest(MiroTestCase):
         for key, group in itertools.groupby(items, grouping_func):
             group_list = list(group)
             for i, item in enumerate(group_list):
-                correct_group_info = (i, len(group_list))
+                correct_group_info = (i, len(group_list), group_list[0])
                 group_info = self.item_list.get_group_info(row_counter.next())
                 self.assertEquals(group_info, correct_group_info)
 

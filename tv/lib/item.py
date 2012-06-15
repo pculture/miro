@@ -409,7 +409,7 @@ class ItemChangeTracker(object):
     """Tracks changes to items and send the ItemsChanged message."""
     def __init__(self):
         self.reset()
-        app.db.connect('transaction-finished', self.on_event_finished)
+        app.db.connect('transaction-finished', self.on_transaction_finished)
 
     def reset(self):
         self.added = set()
@@ -418,11 +418,11 @@ class ItemChangeTracker(object):
         self.changed_columns = set()
         self.dlstats_changed = False
 
-    def on_event_finished(self, live_storage, success):
+    def on_transaction_finished(self, live_storage, success):
         self.send_changes()
 
     def send_changes(self):
-        if self.added or self.changed or self.removed:
+        if self.added or self.changed or self.removed or self.dlstats_changed:
             m = messages.ItemChanges(self.added, self.changed, self.removed,
                                      self.changed_columns,
                                      self.dlstats_changed)

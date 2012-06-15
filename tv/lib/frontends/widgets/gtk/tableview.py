@@ -44,20 +44,20 @@ CUSTOM_HEADER_HEIGHT = 25
 HEADER_HEIGHT = 25
 
 from miro import signals
-from miro import infolist
 from miro.errors import (WidgetActionError, WidgetDomainError, WidgetRangeError,
         WidgetNotReadyError)
 from miro.frontends.widgets.tableselection import SelectionOwnerMixin
 from miro.frontends.widgets.tablescroll import ScrollbarOwnerMixin
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
+from miro.frontends.widgets.gtk import fixedliststore
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.base import Widget
 from miro.frontends.widgets.gtk.simple import Image
 from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 from miro.frontends.widgets.gtk.tableviewcells import (GTKCustomCellRenderer,
-     GTKCheckboxCellRenderer, InfoListRenderer, InfoListRendererText)
+     GTKCheckboxCellRenderer, ItemListRenderer, ItemListRendererText)
 
 PathInfo = namedtuple('PathInfo', 'path column x y') 
 Rect = namedtuple('Rect', 'x y width height') 
@@ -311,11 +311,11 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
             self.draw_group_lines(event)
 
     def draw_group_lines(self, expose_event):
-        # we need both the GTK TreeModel and the InfoList for this one
+        # we need both the GTK TreeModel and the ItemList for this one
         gtk_model = self.get_model()
-        infolist = wrappermap.wrapper(self).model
-        if (not isinstance(infolist, InfoListModel) or
-                infolist.get_grouping() is None):
+        modelwrapper = wrappermap.wrapper(self).model
+        if (not isinstance(modelwrapper, ItemListModel) or
+                modelwrapper.item_list.group_func is None):
             return
         # prepare a couple variables for the drawing
         expose_bottom = expose_event.area.y + expose_event.area.height
@@ -338,7 +338,8 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
             if background_area.y > expose_bottom:
                 break
             # draw stuff if we're on the last row
-            info, attrs, group_info = infolist.row_for_iter(gtk_iter)
+            index = gtk_model.row_of_iter(gtk_iter)
+            group_info = modelwrapper.item_list.get_group_info(index)
             if group_info[0] == group_info[1] - 1:
                 y = (background_area.y + background_area.height -
                         self.group_line_width)
@@ -579,11 +580,11 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         self.selection.unselect_all()
 
     def _iter_to_string(self, iter_):
-        return self._model.get_string_from_iter(iter_)
+        return self.gtk_model.get_string_from_iter(iter_)
 
     def _iter_from_string(self, string):
         try:
-            return self._model.get_iter_from_string(string)
+            return self.gtk_model.get_iter_from_string(string)
         except ValueError:
             raise WidgetDomainError(
                   "model iters", string, "%s other iters" % len(self.model))
@@ -598,7 +599,7 @@ class GTKSelectionOwnerMixin(SelectionOwnerMixin):
         real_model = self._widget.get_model()
         if not real_model:
             raise WidgetActionError("no model")
-        elif real_model != self._model:
+        elif real_model != self.gtk_model:
             raise WidgetActionError("wrong model?")
 
     def get_cursor(self):
@@ -710,7 +711,7 @@ class DNDHandlerMixin(object):
         equivalent position to send to the GTK code if the drag_dest validates
         the drop.
         """
-        model = self._model
+        model = self.gtk_model
         try:
             gtk_path, gtk_position = self._widget.get_dest_row_at_pos(x, y)
         except TypeError:
@@ -843,13 +844,8 @@ class HotspotTrackingMixin(object):
             'row-changed': self.on_row_changed,
         }
         self._hotspot_callback_handles.extend(
-                weak_connect(self._model, signal, handler)
+                weak_connect(self.gtk_model, signal, handler)
                 for signal, handler in SIGNALS.iteritems())
-
-    def _disconnect_hotspot_signals(self):
-        for handle in self._hotspot_callback_handles:
-            self._model.disconnect(handle)
-        self._hotspot_callback_handles = []
 
     def on_row_inserted(self, model, path, iter_):
         if self.hotspot_tracker:
@@ -909,13 +905,6 @@ class HotspotTrackingMixin(object):
             hotspot_tracker.redraw_cell()
             self.hotspot_tracker = None
             return True
-
-    def hotspot_model_changed(self):
-        """A bulk change has ended; reconnect signals and update hotspots."""
-        self._connect_hotspot_signals()
-        if self.hotspot_tracker:
-            self.hotspot_tracker.redraw_cell()
-            self.hotspot_tracker.update_hit()
 
 class ColumnOwnerMixin(object):
     """Keeps track of the table's columns - including the list of columns, and
@@ -1134,14 +1123,10 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
     def __init__(self, model, custom_headers=False):
         Widget.__init__(self)
         self.set_widget(MiroTreeView())
-        self.model = model
-        self.model.add_to_tableview(self._widget)
-        self._model = self._widget.get_model()
-        wrappermap.add(self._model, model)
+        self.init_model(model)
         self._setup_colors()
         self.background_color = None
         self.context_menu_callback = None
-        self.in_bulk_change = False
         self.delaying_press = False
         self._use_custom_headers = False
         self.layout_manager = LayoutManager(self._widget)
@@ -1157,6 +1142,14 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         if custom_headers:
             self._enable_custom_headers()
 
+    def init_model(self, model):
+        self.model = model
+        self.model_handler = make_model_handler(model, self._widget)
+
+    @property
+    def gtk_model(self):
+        return self.model._model
+
     # FIXME: should implement set_model() and make None a special case.
     def unset_model(self):
         """Disconnect our model from this table view.
@@ -1164,8 +1157,9 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         This should be called when you want to destroy a TableView and
         there's a new TableView sharing its model.
         """
+        self.model.cleanup()
         self._widget.set_model(None)
-        self.model = None
+        self.model_handler = self.model = None
 
     def _connect_signals(self):
         self.create_signal('row-expanded')
@@ -1198,7 +1192,7 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
     def set_group_lines_enabled(self, enabled):
         """Enable/Disable group lines.
 
-        This only has an effect if our model is an InfoListModel and it has a
+        This only has an effect if our model is an ItemListModel and it has a
         grouping set.
 
         If group lines are enabled, we will draw a line below the last item in
@@ -1358,13 +1352,13 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
 
         # FIXME: this is very tightly coupled with the portable code.
 
-        infolist = self.model
+        modelwrapper = self.model
         gtk_model = treeview.get_model()
-        if (not isinstance(infolist, InfoListModel) or
-                infolist.get_grouping() is None):
+        if (not isinstance(modelwrapper, ItemListModel) or
+            modelwrapper.item_list.group_func is None):
             return
-        it = gtk_model.get_iter(path)
-        info, attrs, group_info = infolist.row_for_iter(it)
+        modelwrapper.item_list.group_info(path[0])
+
         start_row = path[0] - group_info[0]
         total_rows = group_info[1]
 
@@ -1488,18 +1482,8 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         self.potential_drag_motion(treeview, event)
         return None # XXX: used to fall through; not sure what retval does here
 
-    def start_bulk_change(self):
-        self._widget.freeze_child_notify()
-        self._widget.set_model(None)
-        self._disconnect_hotspot_signals()
-        self.in_bulk_change = True
-
     def model_changed(self):
-        if self.in_bulk_change:
-            self._widget.set_model(self._model)
-            self._widget.thaw_child_notify()
-            self.hotspot_model_changed()
-            self.in_bulk_change = False
+        self.model_handler.model_changed()
 
     def get_path(self, iter_):
         """Always use this rather than the model's get_path directly -
@@ -1508,9 +1492,33 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         AssertionError. Example related bug: #17362.
         """
         assert self.model.iter_is_valid(iter_)
+        return self.gtk_model.get_path(iter_)
+
+class TableModelBase(object):
+    """Base class for all TableModels."""
+    def cleanup(self):
+        pass
+
+    def first_iter(self):
+        return self._model.get_iter_first()
+
+    def next_iter(self, iter_):
+        return self._model.iter_next(iter_)
+
+    def nth_iter(self, index):
+        assert index >= 0
+        return self._model.iter_nth_child(None, index)
+
+    def get_path(self, iter_):
         return self._model.get_path(iter_)
 
-class TableModel(object):
+    def iter_is_valid(self, iter_):
+        return self._model.iter_is_valid(iter_)
+
+    def __len__(self):
+        return len(self._model)
+
+class TableModel(TableModelBase):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     MODEL_CLASS = gtk.ListStore
 
@@ -1523,9 +1531,6 @@ class TableModel(object):
         else:
             self.convert_row_for_gtk = self.convert_row_for_gtk_fast
             self.convert_value_for_gtk = self.convert_value_for_gtk_fast
-
-    def add_to_tableview(self, widget):
-        widget.set_model(self._model)
 
     def map_types(self, miro_column_types):
         type_map = {
@@ -1589,33 +1594,14 @@ class TableModel(object):
         row = self.convert_row_for_gtk(column_values)
         return self._model.insert_before(iter_, row)
 
-    def first_iter(self):
-        return self._model.get_iter_first()
-
-    def next_iter(self, iter_):
-        return self._model.iter_next(iter_)
-
-    def nth_iter(self, index):
-        assert index >= 0
-        return self._model.iter_nth_child(None, index)
-
     def __iter__(self):
         return iter(self._model)
-
-    def __len__(self):
-        return len(self._model)
 
     def __getitem__(self, iter_):
         return self._model[iter_]
 
     def get_rows(self, row_paths):
         return [self._model[path] for path in row_paths]
-
-    def get_path(self, iter_):
-        return self._model.get_path(iter_)
-
-    def iter_is_valid(self, iter_):
-        return self._model.iter_is_valid(iter_)
 
 class TreeTableModel(TableModel):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
@@ -1651,20 +1637,86 @@ class TreeTableModel(TableModel):
         assert self._model.iter_is_valid(iter_)
         return self._model.iter_parent(iter_)
 
-class InfoListModel(infolist.InfoList):
-    # InfoList is a special model for quick handling of ItemInfo lists
-    # we we wrap it slightly so that it matches some of the TableModel
-    # interface
+class ItemListModel(TableModelBase):
+    """Special model to use with ItemLists
+    """
+
+    def __init__(self, item_list):
+        self.item_list = item_list
+        self.list_changed_handle = self.item_list.connect("list-changed",
+                                                          self.on_list_changed)
+        self._model = fixedliststore.FixedListStore(len(item_list))
+
+    def cleanup(self):
+        if self.list_changed_handle is not None:
+            self.item_list.disconnect(self.list_changed_handle)
+            self.list_changed_handle = None
+
+    def on_list_changed(self, item_list):
+        # When the list changes, we need to create a new FixedListStore object
+        # to handle it.  ItemListModelHandler then updates the GtkTreeView
+        # with this new model.
+        self._model = fixedliststore.FixedListStore(len(item_list))
+
+    def get_item(self, it):
+        return self.item_list.get_row(self._model.row_of_iter(it))
+
+    def __getitem__(self, it):
+        item = self.get_item(it)
+        # __getitem__ is supposed to get an entire row of data.  So return a
+        # tuple containing the item.
+        return (item,)
+
     def check_new_column(self, column):
-        if not (isinstance(column.renderer, InfoListRenderer) or
-                isinstance(column.renderer, InfoListRendererText)):
-            raise TypeError("InfoListModel only supports InfoListRenderer "
-                    "or InfoListRendererText")
+        if not (isinstance(column.renderer, ItemListRenderer) or
+                isinstance(column.renderer, ItemListRendererText)):
+            raise TypeError("ItemListModel only supports ItemListRenderer "
+                    "or ItemListRendererText")
 
     def get_rows(self, row_paths):
-        return [self.nth_row(path[0]) for path in row_paths]
+        return [(self.item_list.get_row(path[0]),) for path in row_paths]
 
-    def iter_is_valid(self, iter_):
-        # it may be useful to do something here, but invalid iters are more of a
-        # problem for GTK's models.
-        return True
+class ModelHandler(object):
+    """Used by TableModel to handle its TableModel
+
+    This class defines the default behavior.  Subclasses extend it handle
+    specific models.  make_model_handler() is a factory method to create the
+    correct ModelHandler for a given TableModel.
+    """
+    def __init__(self, model, gtk_treeview):
+        self.model = model
+        self.gtk_treeview = gtk_treeview
+        self.set_gtk_model()
+
+    def set_gtk_model(self):
+        gtk_model = self.model._model
+        self.gtk_treeview.set_model(gtk_model)
+        wrappermap.add(gtk_model, self.model)
+
+    # Note: by default, we don't need to do anything special for
+    # model_changed().
+    def model_changed(self):
+        return
+
+class ItemListModelHandler(ModelHandler):
+    """
+    """
+    def __init__(self, model, gtk_treeview):
+        ModelHandler.__init__(self, model, gtk_treeview)
+        item_list = self.model.item_list
+
+    def model_changed(self):
+        if self.model._model != self.gtk_treeview.get_model():
+            # Items have been added or removed and ItemListModel has created a
+            # FixedListStore for the new list.  Update our widget.
+            self.set_gtk_model()
+        else:
+            # Some of the items have changed, but the list is the same.  Ask
+            # the treeview to redraw itself.
+            self.gtk_treeview.queue_draw()
+
+def make_model_handler(model, gtk_treeview):
+    if isinstance(model, ItemListModel):
+        return ItemListModelHandler(model, gtk_treeview)
+    else:
+        return ModelHandler(model, gtk_treeview)

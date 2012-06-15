@@ -117,11 +117,7 @@ def time_string_0_blank(secs):
         return time_string(secs)
 
 def size_string(nbytes):
-    # when switching from the enclosure reported size to the
-    # downloader reported size, it takes a while to get the new size
-    # and the downloader returns -1.  the user sees the size go to -1B
-    # which is weird....  better to return an empty string.
-    if nbytes == -1 or nbytes == 0:
+    if nbytes is None:
         return ""
 
     # FIXME this is a repeat of util.format_size_for_user ...  should

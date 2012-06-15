@@ -207,12 +207,12 @@ def _load_image(image_name):
     path = os.path.join('images', filename)
     return imagepool.get_surface(resources.path(path))
 
-class ItemRendererBase(widgetset.InfoListRenderer):
+class ItemRendererBase(widgetset.ItemListRenderer):
     MIN_WIDTH = 600
     HEIGHT = 147
 
     def __init__(self, wide_image=False):
-        widgetset.InfoListRenderer.__init__(self)
+        widgetset.ItemListRenderer.__init__(self)
         self.canvas = ItemRendererCanvas(wide_image)
 
     def get_size(self, style, layout_manager):

@@ -60,8 +60,9 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def handle_delete(self):
         pass
 
-    def build_item_tracker(self):
-        return itemtrack.ItemListTracker.create(self.type, self.share)
+    def build_item_list(self):
+        # FIXME: Make this work again
+        raise NotImplementedError()
 
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)

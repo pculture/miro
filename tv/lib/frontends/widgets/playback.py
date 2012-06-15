@@ -1193,17 +1193,14 @@ class PlaybackPlaylist(signals.SignalEmitter):
             item_info = iter_func(item_info.id)
         return item_info
 
-    def _send_item_is_playing(self, info, value):
-        play_in_miro = app.config.get(prefs.PLAY_IN_MIRO)
-        if play_in_miro:
-            messages.SetItemIsPlaying(info, value).send_to_backend()
-
     def _change_currently_playing(self, new_info):
-        if self.currently_playing:
-            self._send_item_is_playing(self.currently_playing, False)
         self.currently_playing = new_info
-        if self.currently_playing:
-            self._send_item_is_playing(self.currently_playing, True)
+        # FIXME: should notify the item list code and so that it can redraw
+        # the item.
+
+    def is_playing_item(self, info):
+        return (self.currently_playing is not None and 
+                self.currently_playing.id == info.id)
 
 class DetachedWindow(widgetset.Window):
     def __init__(self, title, rect):

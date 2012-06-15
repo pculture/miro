@@ -32,6 +32,7 @@
 import logging
 import math
 
+from miro import app
 from miro import displaytext
 from miro import util
 from miro.gtcache import gettext as _
@@ -293,7 +294,7 @@ class ConnectTabRenderer(TabRenderer):
             return hotspot_info[0]
 
 # Renderers for the list view
-class ListViewRendererText(widgetset.InfoListRendererText):
+class ListViewRendererText(widgetset.ItemListRendererText):
     """Renderer for list view columns that are just plain text"""
 
     bold = False
@@ -303,7 +304,7 @@ class ListViewRendererText(widgetset.InfoListRendererText):
     right_aligned = False
 
     def __init__(self):
-        widgetset.InfoListRendererText.__init__(self)
+        widgetset.ItemListRendererText.__init__(self)
         self.set_bold(self.bold)
         self.set_color(self.color)
         self.set_font_scale(self.font_size)
@@ -334,7 +335,7 @@ class ETARenderer(ListViewRendererText):
     right_aligned = True
 
     def get_value(self, info):
-        if info.state == 'downloading':
+        if info.is_download and not info.is_paused:
             dl_info = info.download_info
             if dl_info.eta > 0:
                 return displaytext.time_string(dl_info.eta)
@@ -352,21 +353,21 @@ class TorrentDetailsRenderer(ListViewRendererText):
             "UT: %(up_total)s  |  "
             "DR: %(down_rate)s  |  "
             "DT: %(down_total)s  |  "
-            "R: %(ratio).2f",
+            "R: %(upload_ratio)s",
             {"seeders": info.seeders,
              "leechers": info.leechers,
-             "up_rate": info.up_rate,
-             "up_total": info.up_total,
-             "down_rate": info.down_rate,
-             "down_total": info.down_total,
-             "ratio": info.up_down_ratio})
+             "up_rate": info.upload_rate_text,
+             "up_total": info.upload_size_text,
+             "down_rate": info.download_rate_text,
+             "down_total": info.current_size_text,
+             "ratio": info.upload_ratio_text})
         return details
 
 class DownloadRateRenderer(ListViewRendererText):
     right_aligned = True
 
     def get_value(self, info):
-        if info.state == 'downloading':
+        if info.is_download and not info.is_paused:
             dl_info = info.download_info
             return displaytext.download_rate(dl_info.rate)
         else:
@@ -436,7 +437,7 @@ class PlaylistOrderRenderer(ListViewRendererText):
     def get_value(self, info):
         return str(self.playlist_sorter.sort_key(info) + 1)
 
-class ListViewRenderer(widgetset.InfoListRenderer):
+class ListViewRenderer(widgetset.ItemListRenderer):
     """Renderer for more complex list view columns.
 
     This class is useful for renderers that use the cellpack.Layout class.
@@ -495,7 +496,7 @@ class NameRenderer(ListViewRenderer):
         # make a Layout Object
         layout = cellpack.Layout()
         # add the text
-        textbox = layout_manager.textbox(self.info.name)
+        textbox = layout_manager.textbox(self.info.title)
         textbox.set_wrap_style('truncated-char')
         # 4px here is half of ListView.COLUMN_PADDING - 2px for luck
         layout.add_text_line(textbox, 4, 0, width)
@@ -530,8 +531,7 @@ class StatusRenderer(ListViewRenderer):
             layout.center_y(top=0, bottom=height)
             return layout
 
-        if (self.info.state in ('downloading', 'paused') and
-            self.info.download_info.state != 'pending'):
+        if self.info.is_download:
             return self.layout_progress(layout_manager, width, height)
         else:
             return self.layout_text(layout_manager, width, height)
@@ -548,15 +548,14 @@ class StatusRenderer(ListViewRenderer):
 
     def should_show_download_button(self):
         nonlocal = self.info.device or self.info.remote
-        return ((not self.info.downloaded and
-                self.info.state not in ('downloading', 'paused')) or nonlocal)
+        return (not self.info.downloaded and not self.info.is_download)
 
     def layout_progress(self, layout_manager, width, height):
         """Handle layout when we should display a progress bar """
 
         layout = cellpack.Layout()
         # add left button
-        if self.info.state == 'downloading':
+        if not info.is_paused:
             left_button = 'pause'
         else:
             left_button = 'resume'
@@ -603,19 +602,17 @@ class StatusRenderer(ListViewRenderer):
                     text = displaytext.expiration_date_short(
                             self.info.expiration_date)
                     return (text, EXPIRING_TEXT_COLOR)
-        elif (self.info.download_info and
-              self.info.download_info.rate is None):
-            if self.info.download_info.state == 'paused':
-                return (_('paused'), DOWNLOADING_COLOR)
-            elif self.info.download_info.state == 'pending':
-                return (_('queued'), DOWNLOADING_COLOR)
-            elif self.info.download_info.state == 'failed':
-                return (self.info.download_info.short_reason_failed,
-                        ERROR_COLOR)
-            else:
-                return (self.info.download_info.startup_activity,
-                        DOWNLOADING_COLOR)
-        elif not self.info.item_viewed:
+        elif self.info.is_paused:
+            return (_('paused'), DOWNLOADING_COLOR)
+        elif self.info.pending_manual_download:
+            return (_('queued'), DOWNLOADING_COLOR)
+        elif self.info.is_failed_download:
+            return (self.info.download_info.short_reason_failed,
+                    ERROR_COLOR)
+        elif self.info.is_download and self.info.rate is None:
+            return (self.info.download_info.startup_activity,
+                    DOWNLOADING_COLOR)
+        elif self.info.new:
             return (_('Newly Available'), AVAILABLE_COLOR)
         return ('', self.default_text_color)
 
@@ -624,8 +621,7 @@ class StatusRenderer(ListViewRenderer):
 
         if self.info.expiration_date:
             button_name = 'keep'
-        elif (self.info.state == 'downloading' and
-              self.info.download_info.state == 'pending'):
+        elif self.info.pending_manual_download:
             button_name = 'cancel'
         else:
             return
@@ -633,7 +629,7 @@ class StatusRenderer(ListViewRenderer):
         button_x = width - button.width # right-align
         layout.add_image(button, button_x, 0, hotspot=button_name)
 
-class RatingRenderer(widgetset.InfoListRenderer):
+class RatingRenderer(widgetset.ItemListRenderer):
     """Render ratings column
 
     This cell supports updating based on hover states and rates items based on
@@ -648,7 +644,7 @@ class RatingRenderer(widgetset.InfoListRenderer):
     ICON_COUNT = 5
 
     def __init__(self):
-        widgetset.InfoListRenderer.__init__(self)
+        widgetset.ItemListRenderer.__init__(self)
         self.want_hover = True
         self.icon = {}
         # TODO: to support scaling, we need not to check min_height until after
@@ -735,7 +731,7 @@ class RatingRenderer(widgetset.InfoListRenderer):
                 state = 'unset'
         return self.icon[state]
 
-class StateCircleRenderer(widgetset.InfoListRenderer):
+class StateCircleRenderer(widgetset.ItemListRenderer):
     """Renderer for the state circle column."""
 
     # NOTE: we don't inherit from ListViewRenderer because we handle
@@ -747,7 +743,7 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
     min_height = 9
 
     def __init__(self):
-        widgetset.InfoListRenderer.__init__(self)
+        widgetset.ItemListRenderer.__init__(self)
         self.icon = {}
         for state in StateCircleRenderer.ICON_STATES:
             path = resources.path('images/status-icon-%s.png' % state)
@@ -773,18 +769,14 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
 
         :returns: ImageSurface to display
         """
-        if self.info.state == 'downloading':
+        if self.info.is_download:
             return self.icon['downloading']
-        elif self.info.is_playing:
+        elif app.playback_manager.is_playing_item(self.info):
             return self.icon['playing']
-        elif self.info.state == 'newly-downloaded':
+        elif self.info.new:
+            return self.icon['new']
+        elif self.info.downloaded and not self.info.video_watched:
             return self.icon['unplayed']
-        elif (self.info.downloaded and self.info.is_playable and
-              not self.info.video_watched):
-            return self.icon['new']
-        elif (not self.info.item_viewed and not self.info.expiration_date and
-                not self.info.is_external and not self.info.downloaded):
-            return self.icon['new']
         else:
             return None
 
@@ -868,7 +860,7 @@ class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_track_number(self, item_info, first_info):
         return ''
 
-class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
+class MultiRowAlbumRenderer(widgetset.ItemListRenderer):
     """Renderer for album view."""
 
     IGNORE_PADDING = True
@@ -892,7 +884,7 @@ class MultiRowAlbumRenderer(widgetset.InfoListRenderer):
     min_width = 260
 
     def __init__(self):
-        widgetset.InfoListRenderer.__init__(self)
+        widgetset.ItemListRenderer.__init__(self)
         self._render_strategy = _StandardRenderStrategy()
         self._setup_default_image_map()
 
