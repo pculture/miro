@@ -110,6 +110,8 @@ def copy_binaries(source, target, binaries):
         if os.path.islink(src):
             dst = os.path.join(target, mem)
             linkto = os.readlink(src)
+            if os.path.exists(dst):
+                os.remove(dst) 
             os.symlink(linkto, dst)
         else:
             copy_file(src, target, update=True)
