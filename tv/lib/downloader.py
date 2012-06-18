@@ -248,6 +248,7 @@ class RemoteDownloader(DDBObject):
     # default values for attributes in status_attributes
     status_attribute_defaults = {
         'current_size': 0,
+        'upload_size': 0,
         'state': u'downloading',
     }
     # status attributes that don't get saved to disk
