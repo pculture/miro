@@ -3894,7 +3894,7 @@ def upgrade182(cursor):
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN type text")
     cursor.execute("ALTER TABLE remote_downloader "
-                   "ADD COLUMN retry_time integer")
+                   "ADD COLUMN retry_time timestamp")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN retry_count integer")
     cursor.execute("ALTER TABLE remote_downloader "
@@ -3927,8 +3927,8 @@ def upgrade182(cursor):
                   ", ".join("%s=? " % name for name in columns))
     for id_, status_repr in cursor.fetchall():
         try:
-            status = eval(status_repr, {}, {})
-        except StandardErrror:
+            status = eval(status_repr, {}, {'datetime': datetime})
+        except StandardError:
             logging.warn("Error evaluating status repr: %r" % status_repr)
             continue
         values = []

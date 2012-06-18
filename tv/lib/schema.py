@@ -612,7 +612,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('reason_failed', SchemaString(noneOk=True)),
         ('short_reason_failed', SchemaString(noneOk=True)),
         ('type', SchemaString(noneOk=True)),
-        ('retry_time', SchemaInt(noneOk=True)),
+        ('retry_time', SchemaDateTime(noneOk=True)),
         ('retry_count', SchemaInt(noneOk=True)),
         ('upload_size', SchemaInt(noneOk=True)),
         ('info_hash', SchemaString(noneOk=True)),
