@@ -863,7 +863,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 184
+VERSION = 185
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
