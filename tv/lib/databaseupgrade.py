@@ -3940,7 +3940,7 @@ def upgrade182(cursor):
             if (column == 'end_time' and
                 value == status.get('startTime')):
                 value = None
-            elif column == 'current_size' and value is None:
+            elif column in ('current_size', 'upload_size') and value is None:
                 value = 0
             elif column in ('retry_count', 'total_size') and value == -1:
                 value = None
