@@ -3966,3 +3966,7 @@ def upgrade183(cursor):
 def upgrade184(cursor):
     """Drop the seen column from item."""
     remove_column(cursor, 'item', ['seen'])
+
+def upgrade185(cursor):
+    """Use NULL for empty item descriptions."""
+    cursor.execute("UPDATE item SET description=NULL WHERE description=''")
