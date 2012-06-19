@@ -410,7 +410,7 @@ class ItemTrackTest(MiroTestCase):
         app.db.finish_transaction()
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('remote_downloader.state', '=', 'downloading')
-        query.set_order_by('dlstats.rate')
+        query.set_order_by('remote_downloader.rate')
         self.tracker.change_query(query)
         correct_items = ItemFetcher().fetch_many(self.tracker.connection,
                                                  [i.id for i in downloads])

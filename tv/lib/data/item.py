@@ -116,16 +116,16 @@ _select_columns = [
     _SelectColumn('remote_downloader', 'short_reason_failed'),
     _SelectColumn('remote_downloader', 'type', 'downloader_type'),
     _SelectColumn('remote_downloader', 'retry_time'),
-    _SelectColumn('dlstats', 'eta'),
-    _SelectColumn('dlstats', 'rate'),
-    _SelectColumn('dlstats', 'upload_rate'),
-    _SelectColumn('dlstats', 'current_size', 'downloaded_size'),
-    _SelectColumn('dlstats', 'total_size', 'downloader_size'),
-    _SelectColumn('dlstats', 'upload_size'),
-    _SelectColumn('dlstats', 'activity', 'startup_activity'),
-    _SelectColumn('dlstats', 'seeders'),
-    _SelectColumn('dlstats', 'leechers'),
-    _SelectColumn('dlstats', 'connections'),
+    _SelectColumn('remote_downloader', 'eta'),
+    _SelectColumn('remote_downloader', 'rate'),
+    _SelectColumn('remote_downloader', 'upload_rate'),
+    _SelectColumn('remote_downloader', 'current_size', 'downloaded_size'),
+    _SelectColumn('remote_downloader', 'total_size', 'downloader_size'),
+    _SelectColumn('remote_downloader', 'upload_size'),
+    _SelectColumn('remote_downloader', 'activity', 'startup_activity'),
+    _SelectColumn('remote_downloader', 'seeders'),
+    _SelectColumn('remote_downloader', 'leechers'),
+    _SelectColumn('remote_downloader', 'connections'),
 ]
 
 # ItemRow is the base class for item.
@@ -413,8 +413,6 @@ class ItemFetcher(object):
         sql_parts.append("LEFT JOIN icon_cache ON feed.id=item.icon_cache_id")
         sql_parts.append("LEFT JOIN remote_downloader "
                          "ON remote_downloader.id=item.downloader_id")
-        sql_parts.append("LEFT JOIN dlstats "
-                         "ON dlstats.id=item.downloader_id")
         self._sql = ' '.join(sql_parts)
 
     def fetch(self, connection, id):

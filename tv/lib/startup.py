@@ -294,8 +294,8 @@ def finish_startup(obj, thread):
         return
     except storedatabase.UpgradeError:
         raise StartupError(None, None)
-    app.db.attach_temp_db()
     database.initialize()
+    downloader.reset_download_stats()
     end = time.time()
     logging.timing("Database upgrade time: %.3f", end - start)
     if app.db.startup_version != app.db.current_version:

@@ -31,7 +31,6 @@
 import contextlib
 import sqlite3
 
-from miro.data import tempdb
 
 class ConnectionLimitError(StandardError):
     """We've hit our connection limits."""
@@ -56,7 +55,6 @@ class ConnectionPool(object):
                                      isolation_level=None,
                                      detect_types=sqlite3.PARSE_DECLTYPES)
         connection.execute("PRAGMA journal_mode=wal");
-        tempdb.attach_temp_db(connection, self.db_path)
         self.free_connections.append(connection)
         self.all_connections.add(connection)
 

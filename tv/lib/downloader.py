@@ -51,7 +51,6 @@ from miro.plat.utils import samefile, unicode_to_filename
 from miro import flashscraper
 from miro import fileutil
 from miro import util
-from miro.data import dlstats
 from miro.fileobject import FilenameType
 
 class DownloadStateManager(object):
@@ -218,7 +217,6 @@ def generate_dlid():
 
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
-    MIN_STATUS_UPDATE_SPACING = 0.7
 
     # attributes that get set from the BatchUpdateDownloadStatus command
     status_attributes = [
@@ -245,6 +243,13 @@ class RemoteDownloader(DDBObject):
         'metainfo',
         'info_hash',
         'filename',
+        'eta',
+        'rate',
+        'upload_rate',
+        'activity',
+        'seeders',
+        'leechers',
+        'connections'
     ]
     # default values for attributes in status_attributes
     status_attribute_defaults = {
@@ -288,7 +293,6 @@ class RemoteDownloader(DDBObject):
         self.delete_files = True
         self.channel_name = channel_name
         self.manualUpload = False
-        self._save_later_dc = None
         self._update_retry_time_dc = None
         self.status_updates_frozen = False
         self.last_update = time.time()
@@ -306,24 +310,16 @@ class RemoteDownloader(DDBObject):
     def setup_restored(self):
         self.status_updates_frozen = False
         self.last_update = time.time()
-        self._save_later_dc = None
         self._update_retry_time_dc = None
         self.delete_files = True
         self.item_list = []
         if self.dlid == 'noid':
             # this won't happen nowadays, but it can for old databases
             self.dlid = generate_dlid()
-        self.reset_temp_status_attributes()
 
     def reset_status_attributes(self):
         """Reset the attributes that track downloading info."""
         for attr_name in self.status_attributes:
-            default = self.status_attribute_defaults.get(attr_name)
-            setattr(self, attr_name, default)
-
-    def reset_temp_status_attributes(self):
-        """Reset the attributes that track downloading info."""
-        for attr_name in self.temp_status_attributes:
             default = self.status_attribute_defaults.get(attr_name)
             setattr(self, attr_name, default)
 
@@ -377,38 +373,6 @@ class RemoteDownloader(DDBObject):
         if needs_signal_item:
             for item in self.item_list:
                 item.download_stats_changed()
-        if needs_save:
-            self._cancel_save_later()
-
-
-    def _save_later(self):
-        """Save the remote downloader at some point in the future.
-
-        This is used to handle the fact that remote downloaders are
-        updated often, but those updates are usually just the status
-        dict, which is never used for SELECT statements.  Continually
-        saving those changes to disk is just a waste of time and IO.
-
-        Instead, we schedule the save to happen sometime in the
-        future.  When miro quits, we call the module-level function
-        run_delayed_saves(), which makes sure any pending objects are
-        saved to disk.
-        """
-        if self._save_later_dc is None:
-            self._save_later_dc = eventloop.add_timeout(15,
-                    self._save_now, "Delayed RemoteDownloader save")
-
-    def _save_now(self):
-        """If _save_later() was called and we haven't saved the
-        downloader to disk, do it now.
-        """
-        if self.id_exists() and self._save_later_dc is not None:
-            self.signal_change(needs_signal_item=False)
-
-    def _cancel_save_later(self):
-        if self._save_later_dc is not None:
-            self._save_later_dc.cancel()
-            self._save_later_dc = None
 
     def on_content_type(self, info):
         if not self.id_exists():
@@ -491,10 +455,8 @@ class RemoteDownloader(DDBObject):
             data['activity'] = _(data['activity'])
 
         if self is not None:
-            dlstats.update_stats(self.id, data)
             now = time.time()
             last_update = self.last_update
-            rate_limit = False
             state = self.get_state()
             new_state = data.get('state', u'downloading')
 
@@ -508,20 +470,6 @@ class RemoteDownloader(DDBObject):
                               self, state, new_state)
                 # treat as stale
                 return False
-
-            # If the timing between the status updates is too narrow,
-            # try to skip it because it makes the UI jerky otherwise.
-            if now < last_update:
-                logging.debug('time.time() gone backwards last = %s now = %s',
-                              last_update, now)
-            else:
-                diff = now - last_update
-                if diff < self.MIN_STATUS_UPDATE_SPACING:
-                    logging.debug('Rate limit: '
-                                  'self = %s, now - last_update = %s, '
-                                  'MIN_STATUS_UPDATE_SPACING = %s.',
-                                  self, diff, self.MIN_STATUS_UPDATE_SPACING)
-                    rate_limit = True
 
             # If the state is one which we set and was meant to be passed
             # through to the downloader (valid_states), and the downloader
@@ -574,7 +522,6 @@ class RemoteDownloader(DDBObject):
             finished = self.is_finished() and not was_finished
             name_changed = self.get_filename() != old_filename
             file_migrated = (self.is_finished() and name_changed)
-            needs_signal_item = not (finished or file_migrated or rate_limit)
 
             if ((self.get_state() == u'uploading'
                  and not self.manualUpload
@@ -582,17 +529,7 @@ class RemoteDownloader(DDBObject):
                       and self.get_upload_ratio() > app.config.get(prefs.UPLOAD_RATIO)))):
                 self.stop_upload()
 
-            if self.changed_attributes.issubset(
-                self.status_attributes_to_defer):
-                # we changed some of our data, but we can wait a while to
-                # store things to disk.  Since we go through update_status()
-                # often, this results in a fairly large performance gain and
-                # alleviates #12101
-                self._save_later()
-                self.signal_change(needs_signal_item=needs_signal_item,
-                                   needs_save=False)
-            else:
-                self.signal_change()
+            self.signal_change()
 
             if finished:
                 for item in self.item_list:
@@ -1189,5 +1126,18 @@ def shutdown_downloader_objects():
       - Cancel the update retry time callbacks
     """
     for downloader in RemoteDownloader.make_view():
-        downloader._save_now()
         downloader._cancel_retry_time_update()
+
+def reset_download_stats():
+    """Set columns in the remote_downloader table to None if they track
+    temporary data, like eta or rate.
+    """
+    # FIXME: it's a little weird to be using app.db's cursor here
+    setters = ['%s=NULL' % name
+               for name in RemoteDownloader.temp_status_attributes
+              ]
+    app.db.cursor.execute("UPDATE remote_downloader SET %s" %
+                          ', '.join(setters))
+    app.db.connection.commit()
+
+

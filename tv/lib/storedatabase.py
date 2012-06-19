@@ -78,7 +78,6 @@ from miro import signals
 from miro import prefs
 from miro import util
 from miro.gtcache import gettext as _
-from miro.data import tempdb
 from miro.plat.utils import PlatformFilenameType, filename_to_unicode
 
 class UpgradeError(StandardError):
@@ -586,9 +585,6 @@ class LiveStorage(signals.SignalEmitter):
             logging.warn("error running PRAGMA integrity_check: %s",
                          exc_info=True)
             return False
-
-    def attach_temp_db(self):
-        tempdb.attach_new_temp_db(self.connection, self.path)
 
     def close(self, ignore_vacuum_error=True):
         logging.info("closing database")

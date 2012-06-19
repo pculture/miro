@@ -834,49 +834,5 @@ class TemporaryModeTest(MiroTestCase):
             self.last_connect_path = path
             return self.real_sqlite3_connect(path, *args, **kwargs)
 
-class TempDBTest(MiroTestCase):
-    def check_tempdb(self, correct_path):
-        app.db.cursor.execute("PRAGMA database_list")
-        db_name_to_path = {}
-        for id_, name, path in app.db.cursor.fetchall():
-            db_name_to_path[name] = path
-        if 'mirotemp' not in db_name_to_path:
-            raise AssertionError("No mirotemp database (databases: %s)" %
-                                 db_name_to_path.keys())
-        self.assertEquals(db_name_to_path['mirotemp'], correct_path)
-
-    def test_tempdb_normal(self):
-        # Test that we attach the mirotemp database when using a file
-        path = FilenameType(self.make_temp_path(extension=""))
-        if os.path.exists(path):
-            os.unlink(path)
-        self.reload_database(path)
-        self.check_tempdb(path + "-temp")
-
-    def test_tempdb_memory(self):
-        # Test that we attach the mirotemp database when using ":memory:"
-        # We should also create mirotemp in memory, which makes sqlite return
-        # "" for its path
-        self.check_tempdb("")
-
-    def test_dlstats_table(self):
-        # Test that we create the dlstats table correctly
-        app.db.cursor.execute('pragma table_info(dlstats)')
-        db_stats_columns = [(r[1], r[2].lower()) for r in app.db.cursor]
-        correct_columns = [
-             ('id', 'integer'),
-             ('eta', 'integer'),
-             ('rate', 'integer'),
-             ('current_size', 'integer'),
-             ('total_size', 'integer'),
-             ('upload_size', 'integer'),
-             ('upload_rate', 'integer'),
-             ('activity', 'text'),
-             ('seeders', 'integer'),
-             ('leechers', 'integer'),
-             ('connections', 'integer'),
-        ]
-        self.assertSameSet(db_stats_columns, correct_columns)
-
 if __name__ == '__main__':
     unittest.main()

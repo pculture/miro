@@ -3970,3 +3970,18 @@ def upgrade184(cursor):
 def upgrade185(cursor):
     """Use NULL for empty item descriptions."""
     cursor.execute("UPDATE item SET description=NULL WHERE description=''")
+
+def upgrade186(cursor):
+    """Add columns no the remote_downloader table to track stats."""
+
+    cursor.execute("ALTER TABLE remote_downloader ADD COLUMN eta integer")
+    cursor.execute("ALTER TABLE remote_downloader ADD COLUMN rate integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN upload_rate integer")
+    cursor.execute("ALTER TABLE remote_downloader ADD COLUMN activity text")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN seeders integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN leechers integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN connections integer")

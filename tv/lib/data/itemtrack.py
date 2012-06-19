@@ -134,10 +134,10 @@ class ItemTrackerQuery(object):
 
     def tracking_download_columns(self):
         for c in self.conditions:
-            if c.table in ('remote_downloader', 'dlstats'):
+            if c.table == 'remote_downloader':
                 return True
         for ob in self.order_by:
-            if ob.table in ('remote_downloader', 'dlstats'):
+            if ob.table == 'remote_downloader':
                 return True
         return False
 
@@ -166,9 +166,6 @@ class ItemTrackerQuery(object):
         if 'remote_downloader' in tables:
             sql_parts.append("JOIN remote_downloader "
                              "ON remote_downloader.id=item.downloader_id")
-        if 'dlstats' in tables:
-            sql_parts.append("JOIN dlstats ON dlstats.id=item.downloader_id")
-
         if 'feed' in tables:
             sql_parts.append("JOIN feed ON feed.id=item.feed_id")
 
@@ -250,6 +247,14 @@ class ItemTracker(signals.SignalEmitter):
 
         This method assumes that self.connection has been already set up.
         """
+        # Strategy here is to start a transaction, fetch only the item ids,
+        # then keep it open to fetch the rest of the data.  This works great
+        # an WAL mode, since writer transactions can still happen.  If we
+        # can't switch to WAL mode though, this blocks the backend from
+        # commiting any write transactions.  It may be possible to deadlock as
+        # well.
+        #
+        # FIXME: use alternate strategy if we couldn't switch to wal mode.
         rowlist = self._execute_query()
         self.id_list = [r[0] for r in rowlist]
         self.id_to_index = dict((id_, i) for i, id_ in enumerate(self.id_list))

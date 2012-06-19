@@ -616,6 +616,13 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('retry_count', SchemaInt(noneOk=True)),
         ('upload_size', SchemaInt(noneOk=True)),
         ('info_hash', SchemaString(noneOk=True)),
+        ('eta', SchemaInt(noneOk=True)),
+        ('rate', SchemaInt(noneOk=True)),
+        ('upload_rate', SchemaInt(noneOk=True)),
+        ('activity', SchemaString(noneOk=True)),
+        ('seeders', SchemaInt(noneOk=True)),
+        ('leechers', SchemaInt(noneOk=True)),
+        ('connections', SchemaInt(noneOk=True)),
     ]
 
     indexes = (
@@ -863,7 +870,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 185
+VERSION = 186
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
