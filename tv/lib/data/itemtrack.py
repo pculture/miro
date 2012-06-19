@@ -236,6 +236,18 @@ class ItemTracker(signals.SignalEmitter):
         self._reset_row_data()
         ItemTracker._schedule_fetch_rows_during_idle(self)
 
+    def destroy(self):
+        """Call this when you're done with the ItemTracker
+
+        We will release any open connections to the database and reset our
+        self to an empty list.
+        """
+        if self.connection is not None:
+            self._release_connection()
+        self.id_list = []
+        self.id_to_index = {}
+        self._reset_row_data()
+
     def _set_query(self, query):
         """Change our ItemTrackerQuery object."""
         self.query = query
@@ -318,6 +330,9 @@ class ItemTracker(signals.SignalEmitter):
         del item_list
 
     def fetch_rows_during_idle(self):
+        if self.connection is None:
+            # destroy() was called before we fetch all rows.  Just return now
+            return
         for i in xrange(len(self.id_list)):
             if not self._row_loaded(i):
                 # row data unloaded, call _ensure_row_loaded to load this row

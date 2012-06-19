@@ -263,6 +263,7 @@ class ItemListPool(object):
         if self._refcounts[item_list] <= 0:
             self.all_item_lists.remove(item_list)
             del self._refcounts[item_list]
+            item_list.destroy()
 
     def on_item_changes(self, message):
         """Call on_item_changes for each ItemList in the pool."""
