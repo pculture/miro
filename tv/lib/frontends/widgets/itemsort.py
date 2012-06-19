@@ -95,4 +95,71 @@ class FeedNameSort(ItemSort):
     key = 'feed-name'
     columns = ['id']
 
+class StateCircleSort(ItemSort):
+    # FIXME: need to implement this
+    key = 'state'
+    columns = ['id']
+
+class StatusSort(ItemSort):
+    # FIXME: need to implement this
+    key = 'status'
+    columns = ['id']
+
+class LengthSort(ItemSort):
+    key = 'length'
+    columns = ['duration']
+
+class DateAddedSort(ItemSort):
+    key = 'date-added'
+    columns = ['creation_time']
+
+class SizeSort(ItemSort):
+    # FIXME: need to implement this.
+    key = 'size'
+    columns = ['id']
+
+class DescriptionSort(ItemSort):
+    # FIXME: This should either take into account entry_description, or we
+    # should copy entry_description to the description column, like we do for
+    # entry_title/torrent_title
+    key = 'description'
+    columns = ['description']
+
+class FileTypeSort(ItemSort):
+    key = 'file-type'
+    columns = ['file_type']
+
+class RatingSort(ItemSort):
+    # TODO: should this also include auto rating?
+    key = 'rating'
+    columns = ['rating']
+
+class GenreSort(ItemSort):
+    key = 'genre'
+    columns = ['genre']
+
+class ShowSort(ItemSort):
+    key = 'show'
+    columns = ['show']
+
+class TrackSort(ItemSort):
+    key = 'track'
+    columns = ['track']
+
+class YearSort(ItemSort):
+    key = 'year'
+    columns = ['year']
+
+class VideoKindSort(ItemSort):
+    key = 'kind'
+    columns = ['kind']
+
+class MultiRowAlbum(ItemSort):
+    # FIXME need to implement this
+    key = 'multi-row-album'
+    columns = ['id']
+
+    def switch_mode(self, mode):
+        pass
+
 SORT_KEY_MAP = dict((sort.key, sort) for sort in util.all_subclasses(ItemSort))

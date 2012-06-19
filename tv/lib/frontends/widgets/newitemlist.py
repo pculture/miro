@@ -131,6 +131,7 @@ class ItemList(itemtrack.ItemTracker):
     # filters
     def select_filter(self, key):
         self.filter_set.select(key)
+        self._update_query()
 
     def set_filters(self, filter_keys):
         self.filter_set.set_filters(filter_keys)
@@ -173,6 +174,15 @@ class ItemList(itemtrack.ItemTracker):
         if self.group_info[row] is None:
             self._calc_group_info(row)
         return self.group_info[row]
+
+    def get_group_top(self, item_id):
+        """Get the first info for an item's group.
+
+        :param item_id: id of an item in the group
+        """
+        row = self.get_index(item_id)
+        index, count, first_info = self.get_group_info(row)
+        return first_info
 
     def get_grouping(self):
         """Get the function set with set_grouping."""

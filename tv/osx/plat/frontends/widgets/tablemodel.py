@@ -258,19 +258,23 @@ class ItemListModel(signals.SignalEmitter):
     def on_list_changed(self, item_list):
         self.emit("structure-will-change")
 
-    def first_iter(self):
-        if len(self) == 0:
-            raise IndexError(0)
-        else:
-            return 0 # iterators are just the row index
-
-    def iter_for_row(self, tableview, row):
+    def _iter_for_row(self, row):
         if row < 0:
             raise IndexError(row)
         elif row >= len(self):
             raise WidgetActionError("iter past end of table")
         else:
             return row # iterators are just the row index
+
+    def first_iter(self):
+        return self._iter_for_row(0)
+
+    def iter_for_row(self, tableview, row):
+        return self._iter_for_row(row)
+
+    def iter_for_id(self, item_id):
+        row = self.item_list.get_index(item_id)
+        return self._iter_for_row(row)
 
     def row_of_iter(self, tableview, iter):
         return iter # iterators are just the row index

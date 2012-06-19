@@ -236,11 +236,11 @@ class ItemContextMenuHandler(object):
                 # Play
                 section.append((_('Play'), app.widgetapp.play_selection))
 
-        if item.seeding_status == 'seeding':
+        if item.is_seeding:
             section.append((
                     _('Stop Seeding'),
                     messages.StopUpload(item.id).send_to_backend))
-        elif item.seeding_status == 'stopped':
+        elif not item.is_seeding and item.is_torrent:
             section.append((
                     _('Resume Seeding'),
                     messages.StartUpload(item.id).send_to_backend))

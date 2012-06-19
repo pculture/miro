@@ -30,6 +30,7 @@
 """miro.data.item -- Defines ItemInfo and ways to fetch them."""
 
 import collections
+import datetime
 import os
 
 from miro import app
@@ -61,6 +62,7 @@ _select_columns = [
     _SelectColumn('item', 'pending_reason'),
     _SelectColumn('item', 'expired'),
     _SelectColumn('item', 'keep'),
+    _SelectColumn('item', 'creation_time', 'date_added'),
     _SelectColumn('item', 'downloaded_time'),
     _SelectColumn('item', 'watched_time'),
     _SelectColumn('item', 'last_watched'),
@@ -205,6 +207,15 @@ class ItemInfo(ItemRow):
             return self.feed_url == 'dtv:manualFeed'
 
     @property
+    def has_shareable_url(self):
+        """Does this item have a URL that the user can share with
+        others?
+
+        This returns True when the item has a non-file URL.
+        """
+        return self.url != u'' and not self.url.startswith(u"file:")
+
+    @property
     def size(self):
         """Get the size for an item.
 
@@ -267,13 +278,13 @@ class ItemInfo(ItemRow):
         elif self.feed_expire == u"feed":
             expire_time = feed_expire_time
         elif self.feed_expire == u"system":
-            expire_time = timedelta(
-                days=app.config.get(prefs.EXPIRE_AFTER_X_DAYS))
+            days = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
+            if days <= 0:
+                return None
+            expire_time = datetime.timedelta(days=days)
         else:
             raise AssertionError("Unknown expire value: %s" % self.feed_expire)
-        if expire_time <= 0:
-            return None
-        return self.get_watched_time() + expire_time
+        return self.watched_time + expire_time
 
     @property
     def is_download(self):

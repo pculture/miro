@@ -1661,6 +1661,11 @@ class ItemListModel(TableModelBase):
     def get_item(self, it):
         return self.item_list.get_row(self._model.row_of_iter(it))
 
+    def iter_for_id(self, item_id):
+        """Get an iter that points to an item in this list."""
+        row = self.item_list.get_index(item_id)
+        return self._model.iter_nth_child(None, row)
+
     def __getitem__(self, it):
         """Get a row of data
         

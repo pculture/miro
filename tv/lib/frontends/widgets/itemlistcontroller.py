@@ -355,6 +355,8 @@ class ItemListController(object):
         try:
             sorter = itemsort.SORT_KEY_MAP[column](ascending)
         except KeyError:
+            logging.warn("Error looking up sort: %s (item list type: %s)",
+                         column, self.type)
             column = WidgetStateStore.DEFAULT_SORT_COLUMN[self.type]
             column, ascending = self.parse_sort_key(column)
             sorter = itemsort.SORT_KEY_MAP[column](ascending)
@@ -846,7 +848,7 @@ class ItemListController(object):
         elif name == 'download-sharing-item':
             messages.DownloadSharingItems([item_info]).send_to_backend()
         elif name == 'album-click':
-            first_track = itemview.model.get_group_top(item_info.id)
+            first_track = self.item_list.get_group_top(item_info.id)
             first_track_iter = itemview.model.iter_for_id(first_track.id)
             itemview.unselect_all()
             itemview.select(first_track_iter)
