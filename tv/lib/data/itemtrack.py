@@ -30,6 +30,7 @@
 """miro.data.itemtrack -- Track Items in the database
 """
 import collections
+import logging
 import weakref
 
 from miro import app
@@ -66,6 +67,7 @@ class ItemTrackerQuery(object):
     """Define the query used to get items for ItemTracker."""
     def __init__(self):
         self.conditions = []
+        self.match_string = None
         self.order_by = [ItemTrackerOrderBy('item', 'id', False)]
 
     def _parse_column(self, column):
@@ -90,6 +92,31 @@ class ItemTrackerQuery(object):
         sql = "%s.%s %s ?" % (table, column, operator)
         cond = ItemTrackerCondition(table, column, sql, (value,))
         self.conditions.append(cond)
+
+    def set_search(self, search_string):
+        """Set the full-text search to use for this item tracker."""
+        if search_string is None:
+            self.match_string = None
+            return
+        # parse search_string and make a string for the sqlite3 match command
+        # We do the following:
+        #  - lowercase the terms to ensure that they don't contain any sqlite3
+        #  fts operators
+        #  - remove the "*" charactor from search_string
+        #  - add a prefix search to the last term, since the user can still be
+        #  typing it out.
+        terms = search_string.lower().replace("*", "").split()
+        if 'torrent' in terms:
+            # as a special case, the search string "torrent" matches torrent
+            # items
+            terms.remove('torrent')
+            self.add_condition("remote_downloader.type", '=', 'BitTorrent')
+            if not terms:
+                self.match_string = None
+                return
+        self.match_string = " ".join(terms)
+        if self.match_string and search_string[-1] != ' ':
+            self.match_string += "*"
 
     def add_complex_condition(self, column, sql, values):
         """Add a complex condition to the WHERE clause
@@ -153,6 +180,7 @@ class ItemTrackerQuery(object):
         self._add_conditions(sql_parts, arg_list)
         self._add_order_by(sql_parts, arg_list)
         sql = ' '.join(sql_parts)
+        logging.debug("ItemTracker: running query %s (%s)", sql, arg_list)
         return connection.execute(sql, arg_list)
 
     def _calc_tables(self):
@@ -168,6 +196,8 @@ class ItemTrackerQuery(object):
                              "ON remote_downloader.id=item.downloader_id")
         if 'feed' in tables:
             sql_parts.append("JOIN feed ON feed.id=item.feed_id")
+        if self.match_string:
+            sql_parts.append("JOIN item_fts ON item.id=item_fts.docid")
 
     def _add_conditions(self, sql_parts, arg_list):
         if not self.conditions:
@@ -176,6 +206,9 @@ class ItemTrackerQuery(object):
         for c in self.conditions:
             where_parts.append(c.sql)
             arg_list.extend(c.values)
+        if self.match_string:
+            where_parts.append("item_fts MATCH ?")
+            arg_list.append(self.match_string)
         sql_parts.append("WHERE %s" % ' AND '.join(where_parts))
 
     def _add_order_by(self, sql_parts, arg_list):
@@ -191,6 +224,7 @@ class ItemTrackerQuery(object):
         retval = ItemTrackerQuery()
         retval.conditions = self.conditions[:]
         retval.order_by = self.order_by[:]
+        retval.match_string = self.match_string
         return retval
 
 class ItemTracker(signals.SignalEmitter):

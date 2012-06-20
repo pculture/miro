@@ -77,6 +77,7 @@ class ItemList(itemtrack.ItemTracker):
             self.sorter = itemsort.DateSort()
         else:
             self.sorter = sort
+        self.search_text = None
         self.group_func = group_func
         itemtrack.ItemTracker.__init__(self, call_on_ui_thread,
                                        self._make_query())
@@ -123,12 +124,14 @@ class ItemList(itemtrack.ItemTracker):
         query = self.base_query.copy()
         self.filter_set.add_to_query(query)
         self.sorter.add_to_query(query)
+        if self.search_text:
+            query.set_search(self.search_text)
         return query
 
     def _update_query(self):
         self.change_query(self._make_query())
 
-    # filters
+    # sorts/filters/search
     def select_filter(self, key):
         self.filter_set.select(key)
         self._update_query()
@@ -140,9 +143,12 @@ class ItemList(itemtrack.ItemTracker):
     def get_filters(self):
         return self.filter_set.active_filters
 
-    # sorts
     def set_sort(self, sorter):
         self.sorter = sorter
+        self._update_query()
+
+    def set_search(self, search_text):
+        self.search_text = search_text
         self._update_query()
 
     # attributes

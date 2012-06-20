@@ -134,7 +134,7 @@ class ItemTrackTest(MiroTestCase):
         :param correct_items: items that should be in our ItemTracker.  If
         None, we will use calc_items_in_tracker() to calculate this.
         """
-        if correct_items:
+        if correct_items is not None:
             item_list = correct_items
         else:
             item_list = self.calc_items_in_tracker()
@@ -345,6 +345,73 @@ class ItemTrackTest(MiroTestCase):
         self.check_one_signal('list-changed')
         self.check_tracker_items()
 
+    def test_search(self):
+        # test full-text search
+
+        # manually set some titles so that we can test searching those
+        item1, item2, item3 = self.tracked_items[:3]
+        item1.title = u'foo bar'
+        item1.signal_change()
+        item2.title = u'bar baz'
+        item2.signal_change()
+        item3.title = u'foo bar baz'
+        item3.signal_change()
+        app.db.finish_transaction()
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed_id', '=', self.tracked_feed.id)
+        query.set_search('foo')
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        self.check_tracker_items([item1, item3])
+        # test two terms
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed_id', '=', self.tracked_feed.id)
+        query.set_search('foo baz')
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        self.check_tracker_items([item3])
+        # test that we do a prefix search for the last term
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed_id', '=', self.tracked_feed.id)
+        query.set_search('fo')
+        query.set_order_by('release_date')
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        self.check_tracker_items([item1, item3])
+        # But we should'nt do a prefix search for terms other than the last
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed_id', '=', self.tracked_feed.id)
+        query.set_search('fo bar')
+        query.set_order_by('release_date')
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        self.check_tracker_items([])
+
+    def test_search_for_torrent(self):
+        # test searching for the string "torrent" in this case, we should 
+        # match items that are torrents.
+
+        item1 = self.tracked_items[0]
+        # item1 will be a torrent download
+        item1.download()
+        downloader.RemoteDownloader.update_status({
+            'current_size': 0,
+            'total_size': None,
+            'state': u'downloading',
+            'rate': 0,
+            'eta': None,
+            'type': 'BitTorrent',
+            'dlid': item1.downloader.dlid,
+        })
+        app.db.finish_transaction()
+        # a search for torrent should match both of them
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed_id', '=', self.tracked_feed.id)
+        query.set_search('torrent')
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        self.check_tracker_items([item1])
+
     def test_feed_conditions(self):
         # change the query to something that involves downloader columns
         query = itemtrack.ItemTrackerQuery()
@@ -402,7 +469,7 @@ class ItemTrackTest(MiroTestCase):
                 'state': u'downloading',
                 'rate': rate,
                 'eta': None,
-                'dler_type': 'HTTP',
+                'type': 'HTTP',
                 'dlid': item_.downloader.dlid,
             }
             downloader.RemoteDownloader.update_status(fake_status)

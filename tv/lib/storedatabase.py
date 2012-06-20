@@ -77,6 +77,7 @@ from miro import schema
 from miro import signals
 from miro import prefs
 from miro import util
+from miro.data import fulltextsearch
 from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType, filename_to_unicode
 
@@ -1279,6 +1280,7 @@ class LiveStorage(signals.SignalEmitter):
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
         self.set_version()
+        fulltextsearch.setup_fulltext_search(self.connection)
 
     def _get_size_info(self):
         """Get info about the database size

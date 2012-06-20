@@ -3985,3 +3985,39 @@ def upgrade186(cursor):
                    "ADD COLUMN leechers integer")
     cursor.execute("ALTER TABLE remote_downloader "
                    "ADD COLUMN connections integer")
+
+def upgrade187(cursor):
+    """Add the item_fts table"""
+
+    columns = ['title', 'description', 'artist', 'album', 'genre',
+               'filename', ]
+    column_list = ', '.join(c for c in columns)
+    column_list_for_new = ', '.join("new.%s" % c for c in columns)
+    column_list_with_types = ', '.join('%s text' % c for c in columns)
+    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4"
+                   "(content='item', %s)" % column_list_with_types)
+    cursor.execute("INSERT INTO item_fts(docid, %s)"
+                   "SELECT item.id, %s FROM item" %
+                   (column_list, column_list))
+    # make triggers to keep item_fts up to date
+    cursor.execute("CREATE TRIGGER item_bu "
+                   "BEFORE UPDATE ON item BEGIN "
+                   "DELETE FROM item_fts WHERE docid=old.id; "
+                   "END;")
+
+    cursor.execute("CREATE TRIGGER item_bd "
+                   "BEFORE DELETE ON item BEGIN "
+                   "DELETE FROM item_fts WHERE docid=old.id; "
+                   "END;")
+
+    cursor.execute("CREATE TRIGGER item_au "
+                   "AFTER UPDATE ON item BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (column_list, column_list_for_new))
+
+    cursor.execute("CREATE TRIGGER item_ai "
+                   "AFTER INSERT ON item BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (column_list, column_list_for_new))
