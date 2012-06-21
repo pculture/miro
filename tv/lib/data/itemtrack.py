@@ -324,6 +324,33 @@ class ItemTracker(signals.SignalEmitter):
         """Get a list of all items in sorted order."""
         return [self.get_row(i) for i in xrange(len(self.id_list))]
 
+    def get_playable_ids(self):
+        """Get a list of ids for items that can be played."""
+        # If we have loaded all items, then we can just use that data
+        if self.connection is None:
+            return [i.id for i in self.get_items() if i.is_playable]
+        # If we havn't then it can be very slow to iterate through all items.
+        # Instead, use an SQL query
+        query = self.query.copy()
+        query.add_condition('filename', 'IS NOT', None)
+        query.add_condition('file_type', '!=', u'other')
+        return [row[0] for row in query.execute(self.connection)]
+
+    def has_playables(self):
+        """Can we play any items from this item list?"""
+        if self.connection is None:
+            return any(i for i in self.get_items() if i.is_playable)
+        for id_list_chunk in util.split_values_for_sqlite(self.id_list):
+            placeholders = ",".join("?" for i in xrange(len(id_list_chunk)))
+            sql = ("SELECT COUNT(1) FROM item "
+                   "WHERE id IN (%s) AND "
+                   "filename IS NOT NULL AND "
+                   "file_type != 'other'" % placeholders)
+            cursor = self.connection.execute(sql, id_list_chunk)
+            if cursor.fetchone()[0] > 0:
+                return True
+        return False
+
     def __len__(self):
         return len(self.id_list)
 
@@ -413,6 +440,11 @@ class ItemTracker(signals.SignalEmitter):
             pos = self.id_to_index[item.id]
             self.row_data[item.id] = item
 
+    def item_in_list(self, item_id):
+        """Test if an item is in the list.
+        """
+        return item_id in self.id_to_index
+
     def get_item(self, id_):
         """Get an ItemRow for a given id.
 
@@ -429,6 +461,12 @@ class ItemTracker(signals.SignalEmitter):
         self._ensure_row_loaded(index)
         id_ = self.id_list[index]
         return self.row_data[id_]
+
+    def get_first_item(self):
+        return self.get_row(0)
+
+    def get_last_item(self):
+        return self.get_row(len(self)-1)
 
     def get_index(self, item_id):
         """Get the index of an item in the list."""

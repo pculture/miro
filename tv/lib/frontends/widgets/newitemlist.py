@@ -116,6 +116,12 @@ class ItemList(itemtrack.ItemTracker):
             sql = ("feed_id in "
                    "(SELECT feed.id FROM feed WHERE feed.folder_id=?)")
             query.add_complex_condition('feed_id', sql, (tab_id,))
+        elif tab_type == 'manual':
+            # for the manual tab, tab_id is a list of ids to play
+            id_list = tab_id
+            placeholders = ",".join("?" for i in xrange(len(id_list)))
+            sql = "item.id IN (%s)" % placeholders
+            query.add_complex_condition('item.id', sql, id_list)
         else:
             raise ValueError("Can't handle tab (%r, %r)" % (tab_type, tab_id))
         return query
@@ -257,10 +263,11 @@ class ItemListPool(object):
         :returns: ItemList object.  When you are done with it, you must pass
         the ItemList to the release() method.
         """
-        for obj in self.all_item_lists:
-            if obj.tab_type == tab_type and obj.tab_id == tab_id:
-                self._refcounts[obj] += 1
-                return obj
+        if tab_type != u'manual':
+            for obj in self.all_item_lists:
+                if obj.tab_type == tab_type and obj.tab_id == tab_id:
+                    self._refcounts[obj] += 1
+                    return obj
         # no existing list found, make new list
         new_list = ItemList(tab_type, tab_id, sort, group_func, filters)
         self.all_item_lists.add(new_list)

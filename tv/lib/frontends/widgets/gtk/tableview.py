@@ -724,9 +724,7 @@ class DNDHandlerMixin(object):
                 gtk.TREE_VIEW_DROP_INTO_OR_AFTER):
             yield (iter_, -1, gtk_path, gtk_position)
 
-        if hasattr(model, 'iter_is_valid'):
-            # tablist has this; item list does not
-            assert model.iter_is_valid(iter_)
+        assert model.iter_is_valid(iter_)
         parent_iter = model.iter_parent(iter_)
         position = gtk_path[-1]
         if gtk_position in (gtk.TREE_VIEW_DROP_BEFORE,
@@ -1685,6 +1683,11 @@ class ItemListModel(TableModelBase):
 
     def get_rows(self, row_paths):
         return [(self.item_list.get_row(path[0]),) for path in row_paths]
+
+    def iter_is_valid(self, iter_):
+        # there's no way to check this for FixedListStore.  Let's just assume
+        # that iters are valid, since the model never changes.
+        return True
 
 class ModelHandler(object):
     """Used by TableModel to handle its TableModel

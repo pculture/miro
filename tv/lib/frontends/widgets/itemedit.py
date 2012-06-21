@@ -496,7 +496,7 @@ class GeneralPanel(DialogPanel):
         """Pack the left column into the middle HBox of the main VBox."""
         widget = widgetset.VBox()
         left = []
-        left.append(TextField('name', self.items, _("Name")))
+        left.append(TextField('title', self.items, _("Name")))
         left.append(TextField('artist', self.items, _("Artist")))
         left.append(TextField('album', self.items, _("Album")))
         left.append(TextField('genre', self.items, _("Genre")))
@@ -534,7 +534,7 @@ class GeneralPanel(DialogPanel):
 
     def _pack_bottom(self):
         """Pack the bottom row into the VBox."""
-        bottom = [PathField('video_path', self.items, _("Path"), readonly=True)]
+        bottom = [PathField('filename', self.items, _("Path"), readonly=True)]
         self.vbox.pack_start(widgetutil.pad(widgetset.HLine(), top=25, bottom=10,
             left=15, right=15))
         for field in bottom:

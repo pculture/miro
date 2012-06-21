@@ -153,7 +153,7 @@ class Renderer(object):
 
         self.iteminfo = iteminfo
         self.playbin.set_property("uri",
-                gstutil._get_file_url(iteminfo.video_path))
+                                  gstutil._get_file_url(iteminfo.filename))
 
     def finish_select_file(self):
         pass
@@ -457,7 +457,7 @@ class VideoRenderer(Renderer):
                                    {"tracknumber": track_index})
                 tracks[track_index] = (track_name, None)
 
-        files = util.gather_subtitle_files(self.iteminfo.video_path)
+        files = util.gather_subtitle_files(self.iteminfo.filename)
 
         external_track_id = 100
         for i, mem in enumerate(files):
@@ -553,7 +553,7 @@ class VideoRenderer(Renderer):
         filenames = [filename
                      for lang, filename in self.get_subtitles().values()]
         if sub_path is not None and sub_path not in filenames:
-            sub_path = util.copy_subtitle_file(sub_path, iteminfo.video_path)
+            sub_path = util.copy_subtitle_file(sub_path, iteminfo.filename)
         self.select_file(iteminfo, handle_ok, handle_err, sub_path)
 
     def setup_subtitle_encoding_menu(self):

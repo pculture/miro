@@ -28,8 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import logging
-from random import randrange
-from random import shuffle
+import random
 
 from miro import app
 from miro import prefs
@@ -41,7 +40,6 @@ from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
-from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import keyboard
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
@@ -122,8 +120,9 @@ class PlaybackManager (signals.SignalEmitter):
 
     def start_with_items(self, item_infos):
         """Start playback, playing a static list of ItemInfos."""
-        tracker = itemtrack.ManualItemListTracker.create(item_infos)
-        self.start(None, tracker)
+        id_list = [i.id for i in item_infos]
+        item_list = app.item_list_pool.get(u'manual', id_list)
+        self.start(None, item_list)
 
     def goto_currently_playing(self):
         """Jump to the currently playing item in the display."""
@@ -150,7 +149,7 @@ class PlaybackManager (signals.SignalEmitter):
             logging.debug("current display doesn't have a controller - "
                     "can't switch to")
 
-    def start(self, start_id, item_tracker,
+    def start(self, start_id, item_list,
             presentation_mode='fit-to-bounds', force_resume=False):
         """Start playback, playing the items from an ItemTracker"""
         if self.is_playing:
@@ -168,19 +167,17 @@ class PlaybackManager (signals.SignalEmitter):
         # concept of a playlist doesn't really make sense.
         start_item = None
         if play_in_miro:
-            self.playlist = PlaybackPlaylist(item_tracker, start_id)
+            self.playlist = PlaybackPlaylist(item_list, start_id,
+                                             self.shuffle, self.repeat)
             self.playlist.connect("position-changed",
                 self._on_position_changed)
             self.playlist.connect("playing-info-changed",
                 self._on_playing_changed)
-            self.playlist.set_shuffle(self.shuffle)
-            self.playlist.set_repeat(self.repeat)
         else:
-            model = item_tracker.item_list.model
             if start_id:
-                start_item = model.get_info(start_id)
+                start_item = item_list.get_item(start_id)
             else:
-                start_item = model.get_first_info()
+                start_item = item_list.get_first_item()
         self.should_mark_watched = []
         self.presentation_mode = presentation_mode
         self.force_resume = force_resume
@@ -195,8 +192,8 @@ class PlaybackManager (signals.SignalEmitter):
     def _on_playing_changed(self, playlist):
         new_info = self.get_playing_item()
         if self.detached_window:
-            if self.detached_window.get_title() != new_info.name:
-                self.detached_window.set_title(new_info.name)
+            if self.detached_window.get_title() != new_info.title:
+                self.detached_window.set_title(new_info.title)
         if app.config.get(prefs.PLAY_IN_MIRO) and new_info:
             # if playlist is None, new_info will be none as well.
             # Since emitting playing-info-changed with a "None"
@@ -230,7 +227,7 @@ class PlaybackManager (signals.SignalEmitter):
             detached_window_frame = widgetset.Rect(0, 0, 800, 600)
         else:
             detached_window_frame = widgetset.Rect.from_string(detached_window_frame)
-        title = self.playlist.currently_playing.name
+        title = self.playlist.currently_playing.title
         self.detached_window = DetachedWindow(title, detached_window_frame)
         self.align = widgetset.DetachedWindowHolder()
         self.align.add(self.video_display.widget)
@@ -564,11 +561,11 @@ class PlaybackManager (signals.SignalEmitter):
     def _setup_player(self, item_info, volume):
         def _handle_successful_sniff(item_type):
             logging.debug("sniffer got '%s' for %s", item_type,
-                          item_info.video_path)
+                          item_info.filename)
             self._finish_setup_player(item_info, item_type, volume)
         def _handle_unsuccessful_sniff():
             logging.debug("sniffer got 'unplayable' for %s",
-                          item_info.video_path)
+                          item_info.filename)
             self._finish_setup_player(item_info, "unplayable", volume)
         typ = item_info.file_type
         if typ == 'other':
@@ -601,7 +598,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.is_playing = True
             self.video_display.setup(item_info, item_type, volume)
             if self.detached_window is not None:
-                self.detached_window.set_title(item_info.name)
+                self.detached_window.set_title(item_info.title)
         self.emit('did-start-playing')
         app.menu_manager.update_menus('playback-changed')
 
@@ -643,7 +640,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.player.stop(will_play_another=play_in_miro)
 
         if not play_in_miro:
-            app.widgetapp.open_file(info_to_play.video_path)
+            app.widgetapp.open_file(info_to_play.filename)
             messages.MarkItemWatched(info_to_play).send_to_backend()
             return
 
@@ -845,362 +842,229 @@ class PlaybackManager (signals.SignalEmitter):
 
         result = continuous_playback and app.config.get(prefs.PLAY_IN_MIRO)
         return result
-    
 
 class PlaybackPlaylist(signals.SignalEmitter):
-    def __init__(self, item_tracker, start_id):
+    def __init__(self, item_list, start_id, shuffle, repeat):
+        """Create a playlist of items we are playing
+
+        :param item_list: ItemList that we're playing from
+        :param start_id: id of the first item to play, or None to play a
+        random item.
+        :param shuffle: should we start in shuffle mode?
+        :param repeat: repeate mode to start in.
+        """
         signals.SignalEmitter.__init__(self, 'position-changed',
                 'playing-info-changed')
-        self.item_tracker = item_tracker
-        self.model = item_tracker.item_list.model
-        self._tracker_callbacks = [
-                item_tracker.connect('items-will-change',
-                    self._on_items_will_change),
-                item_tracker.connect('items-changed', self._on_items_changed),
-                item_tracker.connect('items-removed-from-source',
-                    self._on_items_removed_from_source)
+        self.item_list = item_list
+        self._item_list_callbacks = [
+                item_list.connect('items-changed', self._on_items_changed),
+                item_list.connect('list-changed', self._on_list_changed),
         ]
-        self.repeat = WidgetStateStore.get_repeat_off()
-        self.shuffle = False
-        self.shuffle_history = []
-        self.currently_playing = None
-        self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
-        self._pick_initial_item(start_id)
-
-    def _pick_initial_item(self, start_id):
-        if start_id:
-            # The call to _find_playable here covers the corner case where
-            # start_id belogns to a container item with playable children.  In
-            # that case is_playing is True, but we still can't directly play
-            # it
-            start_item = self._find_playable(self.model.get_info(start_id))
+        self.shuffle = shuffle
+        self.repeat = repeat
+        # If we get be passed a torrent folder item, we can't play it
+        # directly.  We use _find_playable to find its first playable child in
+        # that case.
+        if start_id is None:
+            start_id = self.item_list.get_first_item().id
+        start_id = self._find_playable(start_id)
+        if start_id is not None:
+            self.currently_playing = self.item_list.get_item(start_id)
+            self._create_navigation_strategy()
         else:
-            start_item = self._find_playable(self.model.get_first_info())
-        self._change_currently_playing(start_item)
-
-    def finished(self):
-        self._change_currently_playing(None)
-        for handle in self._tracker_callbacks:
-            self.item_tracker.disconnect(handle)
-        self.item_tracker = None
-        self.model = None
-        self.disconnect_all()
-
-    def prev_shuffle_item(self):
-        while len(self.shuffle_history) > 0:
-            try:
-                return self.model.get_info(self.shuffle_history[-1])
-            except KeyError:
-                # Item was removed from our InfoList by a ItemList filter
-                # (#17500).  Try the previous item in the list.
-                self.shuffle_history.pop()
-                continue
-        # no items in our history, return None
-        return
-
-    def next_shuffle_item(self):
-        while len(self.shuffle_upcoming) > 0:
-            next_id = self.shuffle_upcoming.pop()
-            try:
-                return self.model.get_info(next_id)
-            except KeyError:
-                # Item was removed from our InfoList by a ItemList filter
-                # (#17500).  Try the next item in the list.
-                continue
-        # no items left in shuffle_upcoming
-        return None
-
-    def find_next_item(self, skipped_by_user=True):
-        #if track repeat is on and the user doesn't skip, 
-        #shuffle doesn't matter
-        if ((self.repeat == WidgetStateStore.get_repeat_track()
-             and not skipped_by_user)):
-            return self.currently_playing
-        elif ((not self.shuffle and
-             self.repeat == WidgetStateStore.get_repeat_playlist()
-             and self.is_playing_last_item())):
-            return self._find_playable(self.model.get_first_info())
-        elif (self.shuffle and self.repeat == WidgetStateStore.get_repeat_off()
-             or self.shuffle and self.repeat == WidgetStateStore.get_repeat_track()):
-            next_item = self.next_shuffle_item()
-            if next_item is None:
-                self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
-                self.shuffle_history = []
-                return None #stop playback 
-            else:
-                # Remove currently playing item from history if it
-                # was removed from the playlist.
-                if not self.shuffle_history:
-                    logging.info('find_next_item: shuffle history empty: '
-                                 'case 1')
-                else:
-                    if self._is_playing_filtered_item():
-                        self.shuffle_history.pop()
-                self.shuffle_history.append(next_item.id)
-                return next_item
-        elif self.shuffle and WidgetStateStore.get_repeat_playlist():
-            next_item = self.next_shuffle_item()
-            if next_item is None:
-                #populate with new items
-                self.shuffle_upcoming = self.generate_upcoming_shuffle_items() 
-                next_item = self.next_shuffle_item()
-                if next_item is None:
-                    #17492 - nothing playable in list
-                    return None
-            # Remove currently playing item from history if it
-            # was removed from the playlist.
-            if not self.shuffle_history:
-                logging.info('find_next_item: shuffle history empty: case 2')
-            else:
-                if self._is_playing_filtered_item():
-                    self.shuffle_history.pop()
-            self.shuffle_history.append(next_item.id)
-            return next_item
-        else:
-            if self._is_playing_filtered_item():
-                return self.model.get_first_info()
-            else:
-                next_item = self.model.get_next_info(self.currently_playing.id)
-                return self._find_playable(next_item)
-
-    def find_previous_item(self):
-        if self.shuffle:
-            if not self.shuffle_history:
-                return None
-            current_item = self.shuffle_history.pop()
-            # Only add the currently playing item to upcoming shuffle items
-            # if it exists in the playlist
-            if not self._is_playing_filtered_item():
-                self.shuffle_upcoming.append(current_item)
-            return self.prev_shuffle_item()
-        elif (not self.shuffle 
-              and self.repeat == WidgetStateStore.get_repeat_playlist()
-              and self.is_playing_first_item()):
-            last_item = self._find_playable(self.model.get_last_info(), True)
-            return last_item
-        else:
-            if self._is_playing_filtered_item():
-                return None
-            else:
-                prev_item = self.model.get_prev_info(self.currently_playing.id)
-                return self._find_playable(prev_item, backwards=True)
-
-    def generate_upcoming_shuffle_items(self):
-        if not self.shuffle:
-            return []
-        elif (self.repeat == WidgetStateStore.get_repeat_off()
-             or self.repeat == WidgetStateStore.get_repeat_track()):
-            #random order
-            items = self.get_all_playable_items()
-            shuffle(items)
-            #do not include currently playing item
-            if self.currently_playing:
-                try:
-                    items.remove(self.currently_playing.id)
-                except ValueError:
-                    pass
-            return items
-        elif self.repeat == WidgetStateStore.get_repeat_playlist():
-            #random items
-            items = self.get_all_playable_items()
-            if items:
-                return self.random_sequence(items, self.currently_playing.id)
-            else: 
-                return []
-        else:
-            return []
-
-    def random_sequence(self, pool, do_not_begin_with=None):
-        """
-        Returns a list of random elements taken from the pool 
-        parameter (which is a list). This means that the 
-        returned list might contain elements from the pool 
-        several times while others might not appear at all.
-
-        The returned list has the following contraints:
-
-        An element will never appear twice in a row.
-
-        If an element from the pool is passed as do_no_begin_with 
-        the returned list will not begin with that element.
-        """
-        random_items = []
-        previous_index = None
-
-        if do_not_begin_with:
-            try:
-                previous_index = pool.index(do_not_begin_with)
-            except ValueError:
-                pass
-
-        if len(pool) < 2:
-            #17493: infinite loop when trying to shuffle 1 item
-            return pool
-        for i in range(len(pool)):
-            random_index = randrange(0, len(pool))
-            while random_index == previous_index:
-                random_index = randrange(0, len(pool))
-            random_items.append(pool[random_index])
-            previous_index = random_index
-        return random_items
-
-    def select_previous_item(self):
-        previous_item = self.find_previous_item()
-        self._change_currently_playing(previous_item)
-
-    def select_next_item(self, skipped_by_user=False):
-        next_item = self.find_next_item(skipped_by_user)
-        self._change_currently_playing(next_item)
-
-    def _is_playing_filtered_item(self):
-        """Are we playing an item that is filtered out of our InfoList?
-
-        This method should only be called if currently_playing is not None
-        """
-
-        if self.currently_playing is None:
-            app.widgetapp.handle_soft_failure('_is_playing_filtered_item',
-                "currently_playing is None", with_exception=False)
-            return True # I guess this is most likely to make things work
-        try:
-            self.model.get_info(self.currently_playing.id)
-        except KeyError:
-            return True
-        else:
-            return False
-
-    def is_playing_last_item(self):
-        if self._is_playing_filtered_item():
-            return False
-        next_item = self.model.get_next_info(self.currently_playing.id)
-        return self._find_playable(next_item) == None
-
-    def is_playing_first_item(self):
-        if self._is_playing_filtered_item():
-            return False
-        previous_item = self.model.get_prev_info(self.currently_playing.id)
-        return self._find_playable(previous_item, True) == None
-
-    def get_all_playable_items(self):
-        item_info = self.model.get_first_info()
-        items = []
-        while item_info is not None:
-            if item_info.is_playable:
-                items.append(item_info.id)
-            item_info = self.model.get_next_info(item_info.id)
-        return items
+            self.currently_playing = None
 
     def is_playing_id(self, id_):
         return self.currently_playing and self.currently_playing.id == id_
 
+    def is_playing_item(self, info):
+        return self.is_playing_id(info.id)
+
     def set_shuffle(self, value):
         self.shuffle = value
-        self.shuffle_upcoming = self.generate_upcoming_shuffle_items()
-        if self.currently_playing:
-            self.shuffle_history = [self.currently_playing.id]
-        else:
-            self.shuffle_history = []
+        self._create_navigation_strategy()
 
     def set_repeat(self, value):
         self.repeat = value
+        self._create_navigation_strategy()
 
-    def _on_items_will_change(self, tracker, added, changed, removed):
-        if self.currently_playing:
-            self._items_before_change = self.model.info_list()
-            if self._is_playing_filtered_item():
-                self._index_before_change = -1
-            else:
-                self._index_before_change = self.model.index_of_id(
-                        self.currently_playing.id)
-           
-    def _on_items_removed_from_source(self, tracker, ids_removed):
-        if self.currently_playing:
-            old_currently_playing = self.currently_playing
-            removed_set = set(ids_removed)
-            if self.currently_playing.id in removed_set:
-                self._change_currently_playing_after_removed(ids_removed)
-            
-        if (self.currently_playing is None
-                or old_currently_playing.id is not self.currently_playing.id):
-            self.emit("position-changed")
-
-    def _update_currently_playing(self, new_info):
-        """Update our currently-playing ItemInfo."""
-        self.currently_playing = new_info
-
-    def _change_currently_playing_after_removed(self, removed_set):
-        def position_removed(old_index):
-            old_info = self._items_before_change[old_index]
-            try:
-                return (old_info.id in removed_set
-                        or not self.model.get_info(old_info.id).is_playable)
-            except KeyError:
-                # info was removed by the ItemList's internal filter
-                return True
-
-        new_position = self._index_before_change
-        if new_position == -1:
-            # we were playing an item that was filtered by the search and
-            # it got removed.  Start with the top of the list
-            new_position = 0
-        while True:
-            if new_position >= len(self._items_before_change):
-                # moved past the end of our old item list, stop playback
-                self._change_currently_playing(None)
-                return
-            if not position_removed(new_position):
-                break
-            new_position += 1
-        item = self.model.get_info(self._items_before_change[new_position].id)
-        self._change_currently_playing(item)
-
-    def _on_items_changed(self, tracker, added, changed, removed):
-        if self.shuffle:
-            for id_ in removed:
-                while True:
-                    try:
-                        self.shuffle_upcoming.remove(id_)
-                    except ValueError:
-                        break
-                while True:
-                    try:
-                        self.shuffle_history.remove(id_)
-                    except ValueError:
-                        break
-            for item in added:
-                shuffle_upcoming_len = len(self.shuffle_upcoming)
-                if shuffle_upcoming_len:
-                    index = randrange(0, shuffle_upcoming_len)
-                else:
-                    index = 0
-                self.shuffle_upcoming.insert(index, item.id)
-        self._index_before_change = None
-        self._items_before_change = None
-        for info in changed:
-            if (self.currently_playing is not None and
-                    info.id == self.currently_playing.id):
-                self._update_currently_playing(info)
-                self.emit("playing-info-changed")
-                break
-
-    def _find_playable(self, item_info, backwards=False):
-        if backwards:
-            iter_func = self.model.get_prev_info
+    def _create_navigation_strategy(self):
+        if self.item_list.item_in_list(self.currently_playing.id):
+            initial_item = self.currently_playing
         else:
-            iter_func = self.model.get_next_info
+            initial_item = None
+        repeat = (self.repeat == WidgetStateStore.get_repeat_playlist())
+        if self.shuffle:
+            self.navigation_strategy = ShuffleNavigationStrategy(
+                initial_item, self.item_list, repeat)
+        else:
+            self.navigation_strategy = LinearNavigationStrategy(
+                initial_item, self.item_list, repeat)
 
-        while item_info is not None and not item_info.is_playable:
-            item_info = iter_func(item_info.id)
-        return item_info
+    def select_previous_item(self):
+        prev_item = self.navigation_strategy.previous_item()
+        self._change_currently_playing(prev_item)
+
+    def select_next_item(self, skipped_by_user=False):
+        if (self.repeat == WidgetStateStore.get_repeat_track() and
+            not skipped_by_user):
+            next_item = self.currently_playing
+        else:
+            next_item = self.navigation_strategy.next_item()
+        self._change_currently_playing(next_item)
+
+    def finished(self):
+        """Call this when we're finished with the playlist."""
+        self._change_currently_playing(None)
+        for handle in self._item_list_callbacks:
+            self.item_list.disconnect(handle)
+        self.navigation_strategy = self.item_list = None
+        self._item_list_callbacks = []
+        self.disconnect_all()
+
+    def _find_playable(self, item_id):
+        """Find the first playable item in our item list starting with
+        item_info and moving down.
+        """
+        try:
+            item_info = self.item_list.get_item(item_id)
+        except KeyError:
+            return None
+        if item_info.is_playable:
+            return item_info.id
+        current_row = self.item_list.get_index(current_item)
+        for i in xrange(current_row + 1, len(self.item_list)):
+            item_info = self.item_list.get_row(i)
+            if item_info.is_playable:
+                return item_info.id
+        # no playable items
+        return None
+
+    def _on_items_changed(self, item_list, changed_ids):
+        if (self.currently_playing is not None and
+            self.currently_playing.id in changed_ids):
+            # we only have to call handle_changes() if the item that's playing
+            # was actually changed.
+            self.handle_changes()
+
+    def _on_list_changed(self, item_list):
+        self.handle_changes()
+
+    def handle_changes(self):
+        # FIXME: we should check if the current item is still playable.  If
+        # not, we should stop playback.
+
+        # we don't know if our info has changed, but emit
+        # playing-info-changed just in case
+        self.emit("playing-info-changed")
 
     def _change_currently_playing(self, new_info):
         self.currently_playing = new_info
         # FIXME: should notify the item list code and so that it can redraw
         # the item.
 
-    def is_playing_item(self, info):
-        return (self.currently_playing is not None and 
-                self.currently_playing.id == info.id)
+class PlaylistNavigationStrategy(object):
+    """Handles moving back/forward for PlaybackPlaylist."""
+    def __init__(self, initial_item, item_list, repeat):
+        """Create a PlaylistNavigationStrategy
+
+        :param initial_item: the first item in the playlist, or None
+        :param item_list: ItemList we're playing from
+        :param repeat: repeat mode
+        """
+
+    def next_item(self):
+        """Pick the next item to play.
+
+        :returns: ItemInfo to play
+        """
+        raise NotImplementedError()
+
+    def previous_item(self):
+        """Pick the previous item to play.
+
+        :returns: ItemInfo to play
+        """
+        raise NotImplementedError()
+
+class LinearNavigationStrategy(PlaylistNavigationStrategy):
+    """Play items in the same order as the item list."""
+
+    def __init__(self, initial_item, item_list, repeat):
+        self.repeat = repeat
+        self.current_item = initial_item
+        self.item_list = item_list
+
+    def next_item(self):
+        return self._pick_item(+1)
+
+    def previous_item(self):
+        return self._pick_item(-1)
+
+    def _pick_item(self, delta):
+        if (self.current_item is None or
+            not self.item_list.item_in_list(self.current_item.id)):
+            # item no longer in item list.  Return None to stop playback
+            self.current_item = None
+            return None
+        row = self.item_list.get_index(self.current_item.id)
+        new_row = row + delta
+        if 0 <= new_row < len(self.item_list):
+            # normal case, play the next item
+            self.current_item = self.item_list.get_row(new_row)
+        elif self.repeat and len(self.item_list) > 0:
+            # if we are in repeat mode, wrap around
+            self.current_item = self.item_list.get_row(new_row %
+                                                       len(self.item_list))
+        else:
+            # no items left to pick, return None to stop playback
+            self.current_item = None
+        return self.current_item
+
+class ShuffleNavigationStrategy(PlaylistNavigationStrategy):
+    """Play items in shuffle mode."""
+    def __init__(self, initial_item, item_list, repeat):
+        self.repeat = repeat
+        self.item_list = item_list
+        # history of items that we've already played
+        self.history = []
+        # history of items that we've already played, then skipped back to
+        self.forward_history = []
+        if initial_item is not None:
+            self.history.append(initial_item)
+
+    def next_item(self):
+        retval = self._next_from_history_list(self.forward_history)
+        if retval is None:
+            retval = self._random_item()
+        if retval is not None:
+            self.history.append(retval)
+        return retval
+
+    def previous_item(self):
+        retval = self._next_from_history_list(self.history)
+        if retval is None:
+            retval = self._random_item()
+        if retval is not None:
+            self.forward_history.append(retval)
+        return retval
+
+    def _random_item(self):
+        choices = self.item_list.get_playable_ids()
+        if not self.repeat:
+            history_ids = set((i.id for i in self.history))
+            history_ids.update(i.id for i in self.forward_history)
+            choices = list(set(choices) - history_ids)
+        if choices:
+            return self.item_list.get_item(random.choice(choices))
+        else:
+            return None
+
+    def _next_from_history_list(self, history_list):
+        while history_list:
+            item = history_list.pop()
+            if self.item_list.item_in_list(item.id):
+                return item
 
 class DetachedWindow(widgetset.Window):
     def __init__(self, title, rect):

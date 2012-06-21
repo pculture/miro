@@ -103,7 +103,7 @@ class ItemContextMenuHandler(object):
         section = []
 
         def play_externally():
-            app.widgetapp.open_file(item.video_path)
+            app.widgetapp.open_file(item.filename)
             messages.MarkItemWatched(item).send_to_backend()
 
         # drm items seem to go in misc and are always unplayable.
@@ -253,7 +253,7 @@ class ItemContextMenuHandler(object):
                 reveal_text = _('File on Disk')
 
             section.append((reveal_text,
-                lambda: app.widgetapp.check_then_reveal_file(item.video_path)))
+                lambda: app.widgetapp.check_then_reveal_file(item.filename)))
             remove = self._remove_context_menu_item([item])
             if remove:
                 section.append(remove)

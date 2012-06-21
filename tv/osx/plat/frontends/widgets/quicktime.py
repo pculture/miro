@@ -162,7 +162,7 @@ class Player(player.Player):
     def set_item(self, item_info, callback, errback, force_subtitles=False):
         threads.warn_if_not_on_main_thread('quicktime.Player.set_item')
         self.reset()
-        qtmovie = self.get_movie_from_file(item_info.video_path)
+        qtmovie = self.get_movie_from_file(item_info.filename)
         self.callback = callback
         self.errback = errback
         self.force_subtitles = force_subtitles
@@ -330,7 +330,7 @@ class Player(player.Player):
             handle_successful_select()
         def handle_err():
             app.playback_manager.stop()
-        copy_subtitle_file(sub_path, self.item_info.video_path)
+        copy_subtitle_file(sub_path, self.item_info.filename)
         self.set_item(self.item_info, handle_ok, handle_err, True)
 
     def select_subtitle_encoding(self, encoding):

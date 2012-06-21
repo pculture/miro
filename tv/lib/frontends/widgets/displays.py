@@ -629,19 +629,19 @@ class CantPlayWidget(widgetset.SolidBackground):
         return label
 
     def _on_reveal(self, button):
-        app.widgetapp.reveal_file(self.video_path)
+        app.widgetapp.reveal_file(self.filename)
 
     def _on_play_externally(self, button):
-        app.widgetapp.open_file(self.video_path)
+        app.widgetapp.open_file(self.filename)
 
     def _on_skip(self, button):
         app.playback_manager.play_next_item()
 
-    def set_video_path(self, video_path):
-        self.video_path = video_path
-        self.filename_label.set_text(os.path.split(video_path)[-1])
-        self.filetype_label.set_text(os.path.splitext(video_path)[1])
-        if filetypes.is_playable_filename(video_path):
+    def set_filename(self, filename):
+        self.filename = filename
+        self.filename_label.set_text(os.path.split(filename)[-1])
+        self.filetype_label.set_text(os.path.splitext(filename)[1])
+        if filetypes.is_playable_filename(filename):
             self.play_externally_button.set_text(_('Play Externally'))
         else:
             self.play_externally_button.set_text(_('Open Externally'))
@@ -690,7 +690,7 @@ class VideoDisplay(Display):
     def setup(self, item_info, item_type, volume):
         self.show_renderer()
         self.cant_play_widget.set_remote(item_info.remote)
-        self.cant_play_widget.set_video_path(item_info.video_path)
+        self.cant_play_widget.set_filename(item_info.filename)
         self.item_info = item_info
         if item_type != 'video':
             self._open_error()

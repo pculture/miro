@@ -124,7 +124,7 @@ class PlaybackInfo(widgetset.CustomButton):
         app.playback_manager.connect('will-stop', self.handle_stop)
 
     def on_info_change(self, obj, item_info):
-        self.item_name = item_info.name
+        self.item_name = item_info.title
         self.feed_name = item_info.feed_name
         self.is_feed = not item_info.is_external
         self.album = item_info.album

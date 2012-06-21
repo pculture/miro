@@ -473,7 +473,7 @@ class ItemListController(object):
     def focus_view(self):
         self.current_item_view.focus()
         if len(self.get_selection()) == 0:
-            first = self.current_item_view.model.get_first_info()
+            first = self.current_item_view.model.get_first_item()
             if first is not None:
                 iter_ = self.current_item_view.model.iter_for_id(first.id)
                 self.current_item_view.select(iter_)
@@ -635,8 +635,6 @@ class ItemListController(object):
     def play_selection(self, presentation_mode='fit-to-bounds',
             force_resume=False):
         """Play the currently selected items."""
-        # FIXME: rewrite this code
-        raise NotImplementedError()
         selection = self.get_selection()
         if len(selection) == 0:
             start_id = None
@@ -644,7 +642,7 @@ class ItemListController(object):
             start_id = selection[0].id
         else:
             selected_ids = [i.id for i in selection]
-            selected_ids.sort(key=self.item_list.model.index_of_id)
+            selected_ids.sort(key=self.item_list.get_index(id))
             start_id = selected_ids[0]
         self._play_item_list(start_id, presentation_mode,
                 force_resume=force_resume)
@@ -654,20 +652,14 @@ class ItemListController(object):
         self._play_item_list(None, presentation_mode, force_resume)
 
     def can_play_items(self):
-        # FIXME: rewrite this code.  We should definitely avoid iterating over
-        # all items in the item list, since this prevents us from loading them
-        # lazily.
-        return False
-        return any(i.is_playable for i in self.item_list.get_items())
+        return self.item_list.has_playables()
 
     def _play_item_list(self, start_id, presentation_mode='fit-to-bounds',
             force_resume=False):
-        # FIXME: rewrite this code
-        raise NotImplementedError()
         if start_id is None:
             start_info = None
         else:
-            start_info = self.item_list.model.get_item(start_id)
+            start_info = self.item_list.get_item(start_id)
         if start_info is None and not self.can_play_items():
             return
         app.playback_manager.stop()
@@ -678,7 +670,7 @@ class ItemListController(object):
                     start_playing=True)
             return
         self._playing_items = True
-        app.playback_manager.start(start_id, self.item_tracker,
+        app.playback_manager.start(start_id, self.item_list,
                 presentation_mode, force_resume)
         shuffle = app.widget_state.get_shuffle(self.type, self.id)
         app.playback_manager.set_shuffle(shuffle)
@@ -725,7 +717,7 @@ class ItemListController(object):
             return
         if last_played_id:
             try:
-                info = self.item_list.model.get_item(last_played_id)
+                info = self.item_list.get_item(last_played_id)
             except KeyError:
                 logging.warn("Resume playing clicked, but last_played_info "
                         "not found")
@@ -812,7 +804,7 @@ class ItemListController(object):
         elif name == 'visit_license':
             app.widgetapp.open_url(item_info.license)
         elif name == 'show_local_file':
-            app.widgetapp.check_then_reveal_file(item_info.video_path)
+            app.widgetapp.check_then_reveal_file(item_info.filename)
         elif name == 'show_contents':
             app.display_manager.push_folder_contents_display(item_info)
         elif name == 'cancel_auto_download':
@@ -1071,7 +1063,7 @@ class ItemListController(object):
         last_played = None
         if last_played_id:
             try:
-                last_played = self.item_list.model.get_item(last_played_id)
+                last_played = self.item_list.get_item(last_played_id)
             except KeyError:
                 pass
         if (last_played is None or not last_played.is_playable or
@@ -1160,6 +1152,11 @@ class AudioVideoItemsController(SimpleItemListController,
         text = _('No Results')
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListHeader(text))
+
+    def can_play_items(self):
+        # we can shortcut the logic here since we know all items in this list
+        # are playable
+        return len(self.item_list) > 0
 
     def make_titlebar(self):
         titlebar = self.titlebar_class()

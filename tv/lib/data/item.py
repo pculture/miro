@@ -40,6 +40,7 @@ from miro import fileutil
 from miro import prefs
 from miro import util
 from miro.plat import resources
+from miro.plat.utils import PlatformFilenameType
 
 class _SelectColumn(object):
     """Describes a single column that we use in our SELECT statement."""
@@ -83,7 +84,7 @@ _select_columns = [
     _SelectColumn('item', 'comments_link'),
     _SelectColumn('item', 'url'),
     _SelectColumn('item', 'was_downloaded'),
-    _SelectColumn('item', 'filename'),
+    _SelectColumn('item', 'filename', 'raw_filename'),
     _SelectColumn('item', 'play_count'),
     _SelectColumn('item', 'skip_count'),
     _SelectColumn('item', 'cover_art'),
@@ -110,7 +111,7 @@ _select_columns = [
     _SelectColumn('feed', 'expireTime', 'feed_expire_time'),
     _SelectColumn('feed', 'autoDownloadable', 'feed_auto_downloadable'),
     _SelectColumn('feed', 'getEverything', 'feed_get_everything'),
-    _SelectColumn('icon_cache', 'filename', 'icon_cache_filename'),
+    _SelectColumn('icon_cache', 'filename', 'raw_icon_cache_filename'),
     _SelectColumn('remote_downloader', 'content_type',
                   'downloader_content_type'),
     _SelectColumn('remote_downloader', 'state', 'downloader_state'),
@@ -134,6 +135,15 @@ _select_columns = [
 ItemRow = collections.namedtuple("ItemRow",
                                  [c.attr_name for c in _select_columns])
 
+def _unicode_to_filename(unicode_value):
+    # Convert a unicode value from the database to FilenameType
+    # FIXME: This code is not very good and should be replaces as part of
+    # #13182
+    if unicode_value is not None and PlatformFilenameType != unicode:
+        return unicode_value.encode('utf-8')
+    else:
+        return unicode_value
+
 class ItemInfo(ItemRow):
     """ItemInfo represents a row in one of the item lists.
 
@@ -149,12 +159,24 @@ class ItemInfo(ItemRow):
     # to try to match that.
 
     @property
+    def filename(self):
+        return _unicode_to_filename(self.raw_filename)
+
+    @property
     def downloaded(self):
-        return self.filename is not None
+        return self.has_filename
+
+    @property
+    def has_filename(self):
+        return self.raw_filename is not None
+
+    @property
+    def icon_cache_filename(self):
+        return _unicode_to_filename(self.raw_icon_cache_filename)
 
     @property
     def is_playable(self):
-        return self.filename is not None and self.file_type != u'other'
+        return self.has_filename and self.file_type != u'other'
 
     @property
     def is_torrent(self):
@@ -183,7 +205,7 @@ class ItemInfo(ItemRow):
     def thumbnail(self):
         if self.cover_art and fileutil.exists(self.cover_art):
             return self.cover_art
-        if (self.icon_cache_filename and
+        if (self.raw_icon_cache_filename is not None and
             fileutil.exists(self.icon_cache_filename)):
             return self.icon_cache_filename
         if self.screenshot and fileutil.exists(self.screenshot):
@@ -225,7 +247,7 @@ class ItemInfo(ItemRow):
         2. HTTP content-length
         3. RSS enclosure tag value
         """
-        if self.filename is not None:
+        if self.has_filename:
             try:
                 return os.path.getsize(self.filename)
             except OSError:
@@ -270,7 +292,7 @@ class ItemInfo(ItemRow):
 
         :returns: a datetime.datetime object or None if it doesn't expire.
         """
-        if self.watched_time is None or self.filename is None or self.keep:
+        if self.watched_time is None or not self.has_filename or self.keep:
             return None
 
         if self.feed_expire == u'never':
@@ -285,6 +307,10 @@ class ItemInfo(ItemRow):
         else:
             raise AssertionError("Unknown expire value: %s" % self.feed_expire)
         return self.watched_time + expire_time
+
+    @property
+    def can_be_saved(self):
+        return self.has_filename and not self.keep
 
     @property
     def is_download(self):

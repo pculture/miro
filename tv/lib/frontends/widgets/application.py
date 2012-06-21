@@ -696,7 +696,7 @@ class Application:
             return
 
         title = _('Save Item As...')
-        filename = selection[0].video_path
+        filename = selection[0].filename
         filename = os.path.basename(filename)
         filename = dialogs.ask_for_save_pathname(title, filename)
 
