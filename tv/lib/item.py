@@ -491,6 +491,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.link_number = link_number
         self.creation_time = datetime.now()
         self._look_for_downloader()
+        self._calc_parent_title()
         self.setup_common()
         self.split_item()
 
@@ -1214,6 +1215,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         # _feed is created by get_feed which caches the result
         if hasattr(self, "_feed"):
             del self._feed
+        self._calc_parent_title()
         if self.is_container_item:
             for item in self.get_children():
                 if hasattr(item, "_feed"):
@@ -1802,6 +1804,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             self._state = u'saved'
 
+    def _calc_parent_title(self):
+        if self.feed_id is not None:
+            self.parent_title = self.get_feed().get_title()
+        elif self.has_parent():
+            self.parent_title = self.get_parent().get_title()
+        else:
+            self.parent_title = None
+
     @returns_unicode
     def get_channel_category(self):
         """Get the category to use for the channel template.
@@ -2310,6 +2320,7 @@ class FileItem(Item):
         self.parent_id = None
         self.feed_id = models.Feed.get_manual_feed().id
         self.deleted = True
+        self._calc_parent_title()
         self.signal_change()
 
     def make_undeleted(self):

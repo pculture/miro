@@ -4096,3 +4096,20 @@ def upgrade189(cursor):
     cursor.execute("UPDATE item SET parent_title="
                    "(SELECT i2.title FROM item i2 WHERE item.parent_id=i2.id) "
                    "WHERE parent_title IS NULL and parent_id IS NOT NULL")
+
+    # Update the item_fts table.  Unfortunately, we can't alter a virtual
+    # table, so we basically need to re-do upgrade 187
+    cursor.execute("DROP TABLE item_fts")
+
+    columns = ['title', 'description', 'artist', 'album', 'genre',
+               'filename', 'parent_title', ]
+    column_list = ', '.join(c for c in columns)
+    column_list_for_new = ', '.join("new.%s" % c for c in columns)
+    column_list_with_types = ', '.join('%s text' % c for c in columns)
+    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4"
+                   "(content='item', %s)" % column_list_with_types)
+    cursor.execute("INSERT INTO item_fts(docid, %s)"
+                   "SELECT item.id, %s FROM item" %
+                   (column_list, column_list))
+    # The triggers are still present even though we dropped item_fts, no need
+    # to re-make them.

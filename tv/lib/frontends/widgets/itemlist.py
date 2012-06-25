@@ -98,9 +98,10 @@ class DescriptionSort(ItemSort):
 class FeedNameSort(ItemSort):
     KEY = 'feed-name'
     def sort_key(self, info):
-        if info.feed_name:
-            return info.feed_name.lower()
-        return info.feed_name
+        if info.parent_title is not None:
+            return info.parent_title.lower()
+        else:
+            return None
 
 class StatusCircleSort(ItemSort):
     KEY = 'state'
@@ -220,7 +221,7 @@ class MultiRowAlbumSort(ItemSort):
 
     def sort_key_feed(self, info):
         return (self._watched_folder_key(info),
-                info.feed_name.lower(),
+                info.parent_title.lower(),
                 info.release_date)
 
     def sort_key_video(self, info):
@@ -228,8 +229,8 @@ class MultiRowAlbumSort(ItemSort):
             show_name = info.show
         elif info.parent_sort_key:
             show_name = info.parent_sort_key
-        elif info.feed_name:
-            show_name = info.feed_name
+        elif info.parent_title:
+            show_name = info.parent_title
         else:
             show_name = ''
         return (self._watched_folder_key(info),
@@ -437,8 +438,8 @@ def video_grouping(info):
         return info.show
     elif info.parent_sort_key:
         return info.parent_sort_key
-    elif info.feed_name:
-        return info.feed_name
+    elif info.parent_title:
+        return info.parent_title
     else:
         return None
 

@@ -407,9 +407,9 @@ class ItemRenderer(ItemRendererBase):
                 preface_color)
 
     def calc_description_preface(self):
-        if (self.display_channel and self.info.feed_name and
+        if (self.display_channel and self.info.parent_title and
                 not self.info.is_external):
-            return ("%s: " % self.info.feed_name, FEED_NAME_COLOR)
+            return ("%s: " % self.info.parent_title, FEED_NAME_COLOR)
         return '', widgetutil.WHITE
 
     def calc_extra_info(self):

@@ -309,11 +309,9 @@ def video_grouping(info):
     user has set a show we use that, otherwise we use the podcast.
 
     """
-    if info.show:
+    if info.show is not None:
         return info.show
-    elif info.parent_sort_key:
-        return info.parent_sort_key
-    elif info.feed_name:
-        return info.feed_name
+    elif info.parent_title is not None:
+        return info.parent_title_for_sort
     else:
         return None

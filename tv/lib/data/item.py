@@ -57,6 +57,7 @@ _select_columns = [
     _SelectColumn('item', 'title'),
     _SelectColumn('item', 'feed_id'),
     _SelectColumn('item', 'parent_id'),
+    _SelectColumn('item', 'parent_title'),
     _SelectColumn('item', 'downloader_id'),
     _SelectColumn('item', 'is_file_item'),
     _SelectColumn('item', 'pending_manual_download'),
@@ -197,11 +198,6 @@ class ItemInfo(ItemRow):
         return self._description_stripped
 
     @property
-    def feed_name(self):
-        # TODO: implement me
-        return None
-
-    @property
     def thumbnail(self):
         if self.cover_art and fileutil.exists(self.cover_art):
             return self.cover_art
@@ -224,7 +220,7 @@ class ItemInfo(ItemRow):
         """Was this item downloaded by Miro, but not part of a feed?
         """
         if self.is_file_item:
-            return self.parent_id is not None
+            return self.has_parent
         else:
             return self.feed_url == 'dtv:manualFeed'
 
@@ -392,9 +388,18 @@ class ItemInfo(ItemRow):
         return util.name_sort_key(self.album)
 
     @property
-    def parent_sort_key(self):
-        # FIXME: implement this
-        return None
+    def has_parent(self):
+        return self.parent_id is not None
+
+    @property
+    def parent_title_for_sort(self):
+        """value to use for sorting by parent title.
+
+        This will sort items by their parent title (torrent folder name or
+        feed name, but if 2 torrents have the same name, or a torrent and a
+        feed have the same name, then they will be separated)
+        """
+        return (self.parent_title, self.feed_id, self.parent_id)
 
     @property
     def album_artist_sort_key(self):

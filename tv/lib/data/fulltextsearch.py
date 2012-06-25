@@ -37,10 +37,9 @@ def setup_fulltext_search(connection):
         # handle unittests not defining the item table in their schemas
         return
 
-    # FIXME: should include source name here.  Also description should also
-    # match entry_description
+    # FIXME: Description should also match entry_description
     columns = ['title', 'description', 'artist', 'album', 'genre',
-               'filename', ]
+               'filename', 'parent_title', ]
     column_list = ', '.join(c for c in columns)
     column_list_for_new = ', '.join("new.%s" % c for c in columns)
     column_list_with_types = ', '.join('%s text' % c for c in columns)

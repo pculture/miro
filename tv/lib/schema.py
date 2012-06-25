@@ -407,6 +407,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('feed_id', SchemaInt(noneOk=True)),
         ('downloader_id', SchemaInt(noneOk=True)),
         ('parent_id', SchemaInt(noneOk=True)),
+        ('parent_title', SchemaString(noneOk=True)),
         ('auto_downloaded', SchemaBool()),
         ('pending_manual_download', SchemaBool()),
         ('pending_reason', SchemaString()),
@@ -870,7 +871,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 188
+VERSION = 189
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

@@ -319,7 +319,7 @@ class DescriptionRenderer(ListViewRendererText):
     attr_name = 'description_oneline'
 
 class FeedNameRenderer(ListViewRendererText):
-    attr_name = 'feed_name'
+    attr_name = 'parent_title'
 
 class DateRenderer(ListViewRendererText):
     min_width = 70
@@ -837,7 +837,7 @@ class _FeedRenderStrategy(_MultiRowAlbumRenderStrategy):
         return ''
 
     def get_artist(self, item_info, first_info):
-        return item_info.feed_name
+        return item_info.parent_title
 
     def get_track_number(self, item_info, first_info):
         return ''
@@ -849,8 +849,8 @@ class _VideoRenderStrategy(_MultiRowAlbumRenderStrategy):
     def get_album(self, item_info, first_info):
         if item_info.show:
             return item_info.show
-        elif item_info.feed_name:
-            return item_info.feed_name
+        elif item_info.parent_title:
+            return item_info.parent_title
         else:
             return None
 
