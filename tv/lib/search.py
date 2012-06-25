@@ -141,22 +141,32 @@ def _ngrams_for_item(item_info):
 
     return ngrams.breakup_list(item_info.search_terms, NGRAM_MIN, NGRAM_MAX)
 
-def item_matches(item_info, search_text):
+def item_matches(item, search_text):
     """Test if a single ItemInfo matches a search
 
-    :param item_info: ItemInfo to test
+    :param item: Item to test
     :param search_text: search_text to search with
 
     :returns: True if the item matches the search string
     """
     parsed_search = _get_boolean_search(search_text)
-    item_ngrams = _ngrams_for_item(item_info)
+
+    match_against = [item.title, item.description]
+    match_against.append(item.artist)
+    match_against.append(item.album)
+    match_against.append(item.genre)
+    match_against.append(item.get_source_for_search())
+    if item.filename:
+        filename = os.path.basename(item.filename)
+        match_against.append(filename_to_unicode(filename))
+    match_against_text = (' '.join(term.lower() for term in match_against
+                                   if term is not None))
 
     for term in parsed_search.positive_terms:
-        if not set(_ngrams_for_term(term)).issubset(item_ngrams):
+        if term not in match_against_text:
             return False
     for term in parsed_search.negative_terms:
-        if set(_ngrams_for_term(term)).issubset(item_ngrams):
+        if term in match_against_text:
             return False
     return True
 
@@ -258,3 +268,19 @@ class ItemSearcher(object):
         for term in negative_terms:
             matching_ids.difference_update(self._term_search(term))
         return matching_ids
+
+        match_against = [item_info.name, item_info.description]
+        if item_info.artist is not None:
+            match_against.append(item_info.artist)
+        if item_info.album is not None:
+            match_against.append(item_info.album)
+        if item_info.genre is not None:
+            match_against.append(item_info.genre)
+        if item_info.feed_name is not None:
+            match_against.append(item_info.feed_name)
+        if item_info.download_info and item_info.download_info.torrent:
+            match_against.append(u'torrent')
+        if item_info.video_path:
+            filename = os.path.basename(item_info.video_path)
+            match_against.append(filename_to_unicode(filename))
+        return (' '.join(match_against)).lower()

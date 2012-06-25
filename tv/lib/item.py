@@ -1058,8 +1058,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def matches_search(self, search_string):
         if search_string is None or search_string == '':
             return True
-        my_info = app.item_info_cache.get_info(self.id)
-        return search.item_matches(my_info, search_string)
+        return search.item_matches(self, search_string)
 
     def _remove_from_playlists(self):
         models.PlaylistItemMap.remove_item_from_playlists(self)
@@ -1166,11 +1165,23 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @returns_unicode
     def get_source(self):
         if self.feed_id is not None:
-            feed_ = self.get_feed()
-            if feed_.orig_url != 'dtv:manualFeed':
-                # we do this manually so we don't pick up the name of a search
-                # query (#16044)
-                return feed_.userTitle or feed_.actualFeed.get_title()
+            return self.get_feed().get_title()
+        if self.has_parent():
+            try:
+                return self.get_parent().get_title()
+            except ObjectNotFoundError:
+                return None
+        return None
+
+    @returns_unicode
+    def get_source_for_search(self):
+        """Get the source name to match against for a search.
+
+        This is the same as get_source(), except it doesn't include the feed
+        search terms for saved searches (see #16044)
+        """
+        if self.feed_id is not None:
+            return self.get_feed().get_title_without_search_terms()
         if self.has_parent():
             try:
                 return self.get_parent().get_title()
