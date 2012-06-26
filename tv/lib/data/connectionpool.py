@@ -36,6 +36,10 @@ class ConnectionLimitError(StandardError):
     """We've hit our connection limits."""
 
 class ConnectionPool(object):
+    """Pool of SQLite database connections
+
+    :attribute wal_mode: Is the database using WAL mode for its journal?
+    """
     def __init__(self, db_path, min_connections=2, max_connections=4):
         """Create a new ConnectionPool
 
@@ -48,13 +52,20 @@ class ConnectionPool(object):
         self.max_connections = max_connections
         self.all_connections = set()
         self.free_connections = []
+        self.wal_mode = self._check_wal_mode()
+
+    def _check_wal_mode(self):
+        """Try to set journal_mode=wall and return if it was successful
+        """
+        connection = self.get_connection()
+        cursor = connection.execute("PRAGMA journal_mode=wal");
+        self.wal_mode = cursor.fetchone()[0] == u'wal'
 
     def _make_new_connection(self):
         # TODO: should have error handling here, but what should we do?
         connection = sqlite3.connect(self.db_path,
                                      isolation_level=None,
                                      detect_types=sqlite3.PARSE_DECLTYPES)
-        connection.execute("PRAGMA journal_mode=wal");
         self.free_connections.append(connection)
         self.all_connections.add(connection)
 
@@ -88,16 +99,16 @@ class ConnectionPool(object):
             self.free_connections.append(connection)
 
     @contextlib.contextmanager
-    def connection_context(self):
+    def context(self):
         """ContextManager used to get a connection.
 
         Usage:
-            with connection_pool.connection_context() as connection:
+            with connection_pool.context() as connection:
                 cursor = connection.cursor()
                 cursor.execute("blah blah blah")
         """
         connection = self.get_connection()
         yield connection
         # Rollback any changes not committed
-        connection.rolback()
+        connection.rollback()
         self.release_connection(connection)
