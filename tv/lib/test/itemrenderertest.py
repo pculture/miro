@@ -33,7 +33,6 @@ from miro import app
 from miro import downloader
 from miro import models
 from miro.data import itemtrack
-from miro.data import item
 from miro.frontends.widgets import itemrenderer
 from miro.test import mock
 from miro.test.framework import MiroTestCase
@@ -48,13 +47,16 @@ class ItemRendererTest(MiroTestCase):
                                        initiallyAutoDownloadable=False)
         self.file_item = models.FileItem(self.make_temp_path(),
                                          self.manual_feed.id)
-        self.item_fetcher = item.ItemFetcher()
         app.saved_items = set()
         app.playback_manager = mock.Mock()
         app.playback_manager.item_resume_policy.return_value = False
 
     def _get_item(self, item_id):
-        return self.item_fetcher.fetch(app.db.connection, item_id)
+        app.connection_pool = mock.Mock()
+        fetcher = itemtrack.ItemFetcher.create(app.db.connection, [item_id])
+        item_info = fetcher.fetch_items([item_id])[0]
+        fetcher.destroy()
+        return item_info
 
     def check_render(self, item):
         """Check that ItemRenderer can sucessfully render a row.

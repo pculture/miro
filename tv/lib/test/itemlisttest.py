@@ -58,7 +58,6 @@ class ItemListTest(MiroTestCase):
 
     def refresh_item_list(self):
         app.db.finish_transaction()
-        self.item_list._handle_connection_after_changes()
         self.item_list._refetch_id_list()
 
     def check_list_changed_signal(self):
@@ -152,9 +151,7 @@ class ItemListTest(MiroTestCase):
                                    random.choice(string.letters),
                                    last_letter.next()))
             item.signal_change()
-        app.db.finish_transaction()
-        self.item_list._handle_connection_after_changes()
-        self.item_list._refetch_id_list()
+        self.refresh_item_list()
         # check that get_group_info() raises a ValueError before a grouping
         # func is set
         for i in xrange(len(self.item_list)):
