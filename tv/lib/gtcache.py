@@ -101,6 +101,12 @@ def init(languages=None, localedir=None):
     except locale.Error:
         print "gtcache.init: setlocale failed.  setting locale to 'C'"
         locale.setlocale(locale.LC_ALL, 'C')
+    try:
+        codeset = locale.getlocale()[1]
+    except (TypeError, ValueError):
+        print "gtcache.init: getlocale failed.  Reinit with 'C'"
+        locale.setlocale(locale.LC_ALL, 'C')
+        codeset = locale.getlocale()[1]
 
     # bz:17713 - convert to str in utf-8 encoding before trying to use.
     if languages:
@@ -112,8 +118,6 @@ def init(languages=None, localedir=None):
             languages=languages,
             codeset="UTF-8",
             fallback=True)
-
-    codeset = locale.getlocale()[1]
 
     _gtcache = {}
 
