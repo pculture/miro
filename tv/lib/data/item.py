@@ -38,12 +38,25 @@ from miro import displaytext
 from miro import filetypes
 from miro import fileutil
 from miro import prefs
+from miro import schema
 from miro import util
 from miro.plat import resources
 from miro.plat.utils import PlatformFilenameType
 
-class _SelectColumn(object):
-    """Describes a single column that we use in our SELECT statement."""
+class SelectColumn(object):
+    """Describes a single column that we select for ItemInfo.
+
+    :attribute table: name of the table that contains the column
+    :attribute column: column nabe
+    :attribute attr_name: attribute name in ItemInfo
+    """
+
+    # _schema_map maps (table, column) tuples to their SchemaItem objects
+    _schema_map = {}
+    for object_schema in schema.object_schemas:
+        for column_name, schema_item in object_schema.fields:
+            _schema_map[object_schema.table_name, column_name] = schema_item
+
     def __init__(self, table, column, attr_name=None):
         if attr_name is None:
             attr_name = column
@@ -51,90 +64,112 @@ class _SelectColumn(object):
         self.column = column
         self.attr_name = attr_name
 
-_select_columns = [
-    _SelectColumn('item', 'id'),
-    _SelectColumn('item', 'new'),
-    _SelectColumn('item', 'title'),
-    _SelectColumn('item', 'feed_id'),
-    _SelectColumn('item', 'parent_id'),
-    _SelectColumn('item', 'parent_title'),
-    _SelectColumn('item', 'downloader_id'),
-    _SelectColumn('item', 'is_file_item'),
-    _SelectColumn('item', 'pending_manual_download'),
-    _SelectColumn('item', 'pending_reason'),
-    _SelectColumn('item', 'expired'),
-    _SelectColumn('item', 'keep'),
-    _SelectColumn('item', 'creation_time', 'date_added'),
-    _SelectColumn('item', 'downloaded_time'),
-    _SelectColumn('item', 'watched_time'),
-    _SelectColumn('item', 'last_watched'),
-    _SelectColumn('item', 'subtitle_encoding'),
-    _SelectColumn('item', 'is_container_item'),
-    _SelectColumn('item', 'release_date'),
-    _SelectColumn('item', 'duration'),
-    _SelectColumn('item', 'screenshot'),
-    _SelectColumn('item', 'resume_time'),
-    _SelectColumn('item', 'license'),
-    _SelectColumn('item', 'rss_id'),
-    _SelectColumn('item', 'entry_description'),
-    _SelectColumn('item', 'enclosure_type', 'mime_type'),
-    _SelectColumn('item', 'enclosure_format'),
-    _SelectColumn('item', 'enclosure_size'),
-    _SelectColumn('item', 'link', 'permalink'),
-    _SelectColumn('item', 'payment_link'),
-    _SelectColumn('item', 'comments_link'),
-    _SelectColumn('item', 'url'),
-    _SelectColumn('item', 'was_downloaded'),
-    _SelectColumn('item', 'filename', 'raw_filename'),
-    _SelectColumn('item', 'play_count'),
-    _SelectColumn('item', 'skip_count'),
-    _SelectColumn('item', 'cover_art'),
-    _SelectColumn('item', 'description'),
-    _SelectColumn('item', 'album'),
-    _SelectColumn('item', 'album_artist'),
-    _SelectColumn('item', 'artist'),
-    _SelectColumn('item', 'track'),
-    _SelectColumn('item', 'album_tracks'),
-    _SelectColumn('item', 'year'),
-    _SelectColumn('item', 'genre'),
-    _SelectColumn('item', 'rating'),
-    _SelectColumn('item', 'file_type'),
-    _SelectColumn('item', 'has_drm'),
-    _SelectColumn('item', 'show'),
-    _SelectColumn('item', 'episode_id'),
-    _SelectColumn('item', 'episode_number'),
-    _SelectColumn('item', 'season_number'),
-    _SelectColumn('item', 'kind'),
-    _SelectColumn('item', 'net_lookup_enabled'),
-    _SelectColumn('item', 'eligible_for_autodownload'),
-    _SelectColumn('feed', 'orig_url', 'feed_url'),
-    _SelectColumn('feed', 'expire', 'feed_expire'),
-    _SelectColumn('feed', 'expireTime', 'feed_expire_time'),
-    _SelectColumn('feed', 'autoDownloadable', 'feed_auto_downloadable'),
-    _SelectColumn('feed', 'getEverything', 'feed_get_everything'),
-    _SelectColumn('icon_cache', 'filename', 'raw_icon_cache_filename'),
-    _SelectColumn('remote_downloader', 'content_type',
+    def sqlite_type(self):
+        """Get the sqlite type specification for this column."""
+        schema_item = self._schema_map[self.table, self.column]
+        return app.db.get_sqlite_type(schema_item)
+
+# Construct the values for column_info() now, since they don't change.
+_column_info = [
+    SelectColumn('item', 'id'),
+    SelectColumn('item', 'new'),
+    SelectColumn('item', 'title'),
+    SelectColumn('item', 'feed_id'),
+    SelectColumn('item', 'parent_id'),
+    SelectColumn('item', 'parent_title'),
+    SelectColumn('item', 'downloader_id'),
+    SelectColumn('item', 'is_file_item'),
+    SelectColumn('item', 'pending_manual_download'),
+    SelectColumn('item', 'pending_reason'),
+    SelectColumn('item', 'expired'),
+    SelectColumn('item', 'keep'),
+    SelectColumn('item', 'creation_time', 'date_added'),
+    SelectColumn('item', 'downloaded_time'),
+    SelectColumn('item', 'watched_time'),
+    SelectColumn('item', 'last_watched'),
+    SelectColumn('item', 'subtitle_encoding'),
+    SelectColumn('item', 'is_container_item'),
+    SelectColumn('item', 'release_date'),
+    SelectColumn('item', 'duration'),
+    SelectColumn('item', 'screenshot'),
+    SelectColumn('item', 'resume_time'),
+    SelectColumn('item', 'license'),
+    SelectColumn('item', 'rss_id'),
+    SelectColumn('item', 'entry_description'),
+    SelectColumn('item', 'enclosure_type', 'mime_type'),
+    SelectColumn('item', 'enclosure_format'),
+    SelectColumn('item', 'enclosure_size'),
+    SelectColumn('item', 'link', 'permalink'),
+    SelectColumn('item', 'payment_link'),
+    SelectColumn('item', 'comments_link'),
+    SelectColumn('item', 'url'),
+    SelectColumn('item', 'was_downloaded'),
+    SelectColumn('item', 'filename', 'raw_filename'),
+    SelectColumn('item', 'play_count'),
+    SelectColumn('item', 'skip_count'),
+    SelectColumn('item', 'cover_art'),
+    SelectColumn('item', 'description'),
+    SelectColumn('item', 'album'),
+    SelectColumn('item', 'album_artist'),
+    SelectColumn('item', 'artist'),
+    SelectColumn('item', 'track'),
+    SelectColumn('item', 'album_tracks'),
+    SelectColumn('item', 'year'),
+    SelectColumn('item', 'genre'),
+    SelectColumn('item', 'rating'),
+    SelectColumn('item', 'file_type'),
+    SelectColumn('item', 'has_drm'),
+    SelectColumn('item', 'show'),
+    SelectColumn('item', 'episode_id'),
+    SelectColumn('item', 'episode_number'),
+    SelectColumn('item', 'season_number'),
+    SelectColumn('item', 'kind'),
+    SelectColumn('item', 'net_lookup_enabled'),
+    SelectColumn('item', 'eligible_for_autodownload'),
+    SelectColumn('feed', 'orig_url', 'feed_url'),
+    SelectColumn('feed', 'expire', 'feed_expire'),
+    SelectColumn('feed', 'expireTime', 'feed_expire_time'),
+    SelectColumn('feed', 'autoDownloadable', 'feed_auto_downloadable'),
+    SelectColumn('feed', 'getEverything', 'feed_get_everything'),
+    SelectColumn('icon_cache', 'filename', 'raw_icon_cache_filename'),
+    SelectColumn('remote_downloader', 'content_type',
                   'downloader_content_type'),
-    _SelectColumn('remote_downloader', 'state', 'downloader_state'),
-    _SelectColumn('remote_downloader', 'reason_failed'),
-    _SelectColumn('remote_downloader', 'short_reason_failed'),
-    _SelectColumn('remote_downloader', 'type', 'downloader_type'),
-    _SelectColumn('remote_downloader', 'retry_time'),
-    _SelectColumn('remote_downloader', 'eta'),
-    _SelectColumn('remote_downloader', 'rate'),
-    _SelectColumn('remote_downloader', 'upload_rate'),
-    _SelectColumn('remote_downloader', 'current_size', 'downloaded_size'),
-    _SelectColumn('remote_downloader', 'total_size', 'downloader_size'),
-    _SelectColumn('remote_downloader', 'upload_size'),
-    _SelectColumn('remote_downloader', 'activity', 'startup_activity'),
-    _SelectColumn('remote_downloader', 'seeders'),
-    _SelectColumn('remote_downloader', 'leechers'),
-    _SelectColumn('remote_downloader', 'connections'),
+    SelectColumn('remote_downloader', 'state', 'downloader_state'),
+    SelectColumn('remote_downloader', 'reason_failed'),
+    SelectColumn('remote_downloader', 'short_reason_failed'),
+    SelectColumn('remote_downloader', 'type', 'downloader_type'),
+    SelectColumn('remote_downloader', 'retry_time'),
+    SelectColumn('remote_downloader', 'eta'),
+    SelectColumn('remote_downloader', 'rate'),
+    SelectColumn('remote_downloader', 'upload_rate'),
+    SelectColumn('remote_downloader', 'current_size', 'downloaded_size'),
+    SelectColumn('remote_downloader', 'total_size', 'downloader_size'),
+    SelectColumn('remote_downloader', 'upload_size'),
+    SelectColumn('remote_downloader', 'activity', 'startup_activity'),
+    SelectColumn('remote_downloader', 'seeders'),
+    SelectColumn('remote_downloader', 'leechers'),
+    SelectColumn('remote_downloader', 'connections'),
 ]
+
+def column_info():
+    """Get the columns used to create the ItemInfo objects
+
+    :returns: list of SelectColumn objects
+    """
+    return _column_info
+
+def join_sql():
+    """Returns SQL specifying the tables needing to be joined to the item
+    table in order to create an ItemInfo.
+    """
+    return """\
+LEFT JOIN feed ON feed.id=item.feed_id
+LEFT JOIN remote_downloader ON remote_downloader.id=item.downloader_id
+LEFT JOIN icon_cache ON icon_cache.id=item.icon_cache_id"""
 
 # ItemRow is the base class for item.
 ItemRow = collections.namedtuple("ItemRow",
-                                 [c.attr_name for c in _select_columns])
+                                 [c.attr_name for c in column_info()])
 
 def _unicode_to_filename(unicode_value):
     # Convert a unicode value from the database to FilenameType
@@ -155,6 +190,14 @@ class ItemInfo(ItemRow):
     source_type = 'database'
     remote = False
     device = None
+
+    def __init__(self, *row_data):
+        """Create an ItemInfo object.
+
+        :param *row_data: data from sqlite.  There should be a value for each
+        SelectColumn that column_info() returns.
+        """
+        ItemRow.__init__(self, *row_data)
 
     # NOTE: The previous ItemInfo API was all attributes, so we use properties
     # to try to match that.
@@ -435,38 +478,3 @@ class ItemInfo(ItemRow):
         else:
             return None
 
-class ItemFetcher(object):
-    """Fetches items from a database."""
-
-    def __init__(self):
-        self._prepare_sql()
-
-    def _prepare_sql(self):
-        """Get an SQL statement ready to fire when fetch() is called.
-
-        The statement will be ready to go, except the WHERE clause will not be
-        present, since we can't know that in advance.
-        """
-        columns = ['%s.%s' % (c.table, c.column) for c in _select_columns]
-        sql_parts = []
-        sql_parts.append("SELECT %s" % ', '.join(columns))
-        sql_parts.append("FROM item")
-        sql_parts.append("LEFT JOIN feed ON feed.id=item.feed_id")
-        sql_parts.append("LEFT JOIN icon_cache ON feed.id=item.icon_cache_id")
-        sql_parts.append("LEFT JOIN remote_downloader "
-                         "ON remote_downloader.id=item.downloader_id")
-        self._sql = ' '.join(sql_parts)
-
-    def fetch(self, connection, id):
-        """Create Item objects."""
-        where = "WHERE item.id=?"
-        sql = ' '.join((self._sql, where))
-        cursor = connection.execute(sql, (id,))
-        return ItemInfo(*cursor.fetchone())
-
-    def fetch_many(self, connection, id_list):
-        """Create Item objects."""
-        where = "WHERE item.id in (%s)" % ', '.join(str(i) for i in id_list)
-        sql = ' '.join((self._sql, where))
-        cursor = connection.execute(sql)
-        return [ItemInfo(*row) for row in cursor]

@@ -38,15 +38,15 @@ from miro import eventloop
 from miro import item
 from miro import messages
 from miro import models
-from miro.data.item import ItemFetcher
 from miro.data import itemtrack
 from miro.test import mock
 from miro.test.framework import MiroTestCase, MatchAny
 
-class ItemTrackTest(MiroTestCase):
+class ItemTrackTestWALMode(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.init_data_package()
+        self.force_wal_mode()
         self.feed_counter = itertools.count()
         self.tracked_feed, self.tracked_items = self.make_feed_with_items(10)
         self.other_feed1, self.other_items1 = self.make_feed_with_items(12)
@@ -65,6 +65,14 @@ class ItemTrackTest(MiroTestCase):
         messages.FrontendMessage.install_handler(self.mock_message_handler)
         # reset item chages that occured from setUp()
         item.Item.change_tracker.reset()
+
+    def force_wal_mode(self):
+        """Force WAL mode to be a certain value.
+
+        By default we set wal_mode to be True.  ItemTrackTestNonWALMode
+        overrides this and sets it to False.
+        """
+        app.connection_pool.wal_mode = True
 
     def check_no_idles_scheduled(self):
         self.assertEqual(self.mock_idle_scheduler.call_count, 0)
@@ -276,12 +284,10 @@ class ItemTrackTest(MiroTestCase):
         self.check_list_change_after_message()
         self.check_tracker_items()
 
-    def test_item_changes_after_connection_finished(self):
-        # test that if we fetch an item, then it changes, we re-fetch it.
-        while self.tracker.connection is not None:
-            self.tracker.fetch_rows_during_idle()
-        # at this point, our ItemTracker has fetched all its data, and it's
-        # released its connection.
+    def test_item_changes_after_finished(self):
+        # test item changes after we've finished fetching all rows
+        while not self.tracker.idle_work_scheduled:
+            self.tracker.do_idle_work()
         item1 = self.tracked_items[0]
         item2 = self.tracked_items[1]
         item1.title = u'new title'
@@ -357,6 +363,7 @@ class ItemTrackTest(MiroTestCase):
         item3.title = u'foo bar baz'
         item3.signal_change()
         app.db.finish_transaction()
+        self.check_items_changed_after_message([item1, item2, item3])
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_search('foo')
@@ -404,6 +411,7 @@ class ItemTrackTest(MiroTestCase):
             'dlid': item1.downloader.dlid,
         })
         app.db.finish_transaction()
+        self.check_items_changed_after_message([item1])
         # a search for torrent should match both of them
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
@@ -475,12 +483,16 @@ class ItemTrackTest(MiroTestCase):
             downloader.RemoteDownloader.update_status(fake_status)
 
         app.db.finish_transaction()
+        self.check_items_changed_after_message(downloads)
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('remote_downloader.state', '=', 'downloading')
         query.set_order_by('remote_downloader.rate')
         self.tracker.change_query(query)
-        correct_items = ItemFetcher().fetch_many(self.tracker.connection,
-                                                 [i.id for i in downloads])
+        # Need to manually fetch the items that we :bn
+        with app.connection_pool.context() as connection:
+            id_list = [i.id for i in downloads]
+            fetcher = itemtrack.ItemFetcher.create(connection, id_list)
+            correct_items = fetcher.fetch_items(id_list)
         self.check_tracker_items(correct_items)
 
     def test_change_while_loading_data(self):
@@ -505,3 +517,8 @@ class ItemTrackTest(MiroTestCase):
         self.assertEquals(self.tracker.get_item(item1.id).title,
                           u'new title')
         self.assertRaises(KeyError, self.tracker.get_item, item2.id)
+
+class ItemTrackTestNonWALMode(ItemTrackTestWALMode):
+    def force_wal_mode(self):
+        app.connection_pool.wal_mode = False
+

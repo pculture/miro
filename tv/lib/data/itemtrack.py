@@ -31,6 +31,8 @@
 """
 import collections
 import logging
+import string
+import random
 import weakref
 
 from miro import app
@@ -168,7 +170,7 @@ class ItemTrackerQuery(object):
                 return True
         return False
 
-    def execute(self, connection):
+    def select_ids(self, connection):
         """Run the select statement for this query
 
         :returns: sqlite Cursor object
@@ -181,7 +183,7 @@ class ItemTrackerQuery(object):
         self._add_order_by(sql_parts, arg_list)
         sql = ' '.join(sql_parts)
         logging.debug("ItemTracker: running query %s (%s)", sql, arg_list)
-        return connection.execute(sql, arg_list)
+        return [row[0] for row in connection.execute(sql, arg_list)]
 
     def _calc_tables(self):
         """Calculate which tables we need to execute the query."""
@@ -263,12 +265,11 @@ class ItemTracker(signals.SignalEmitter):
         self.create_signal("items-changed")
         self.create_signal("list-changed")
         self.idle_scheduler = idle_scheduler
-        self.item_fetcher = item.ItemFetcher()
-        self._get_connection()
+        self.idle_work_scheduled = False
+        self.item_fetcher = None
         self._set_query(query)
         self._fetch_id_list()
-        self._reset_row_data()
-        ItemTracker._schedule_fetch_rows_during_idle(self)
+        self._schedule_idle_work()
 
     def destroy(self):
         """Call this when you're done with the ItemTracker
@@ -276,11 +277,13 @@ class ItemTracker(signals.SignalEmitter):
         We will release any open connections to the database and reset our
         self to an empty list.
         """
-        if self.connection is not None:
-            self._release_connection()
-        self.id_list = []
-        self.id_to_index = {}
-        self._reset_row_data()
+        self._destroy_item_fetcher()
+        self.id_list = self.id_to_index = self.row_data = None
+
+    def _destroy_item_fetcher(self):
+        if self.item_fetcher:
+            self.item_fetcher.destroy()
+            self.item_fetcher = None
 
     def _set_query(self, query):
         """Change our ItemTrackerQuery object."""
@@ -289,24 +292,37 @@ class ItemTracker(signals.SignalEmitter):
         self.track_dl_columns = self.query.tracking_download_columns()
 
     def _fetch_id_list(self):
-        """Fetch the ids for this list.
-
-        This method assumes that self.connection has been already set up.
-        """
-        # Strategy here is to start a transaction, fetch only the item ids,
-        # then keep it open to fetch the rest of the data.  This works great
-        # an WAL mode, since writer transactions can still happen.  If we
-        # can't switch to WAL mode though, this blocks the backend from
-        # commiting any write transactions.  It may be possible to deadlock as
-        # well.
-        #
-        # FIXME: use alternate strategy if we couldn't switch to wal mode.
-        rowlist = self._execute_query()
-        self.id_list = [r[0] for r in rowlist]
+        """Fetch the ids for this list.  """
+        self._destroy_item_fetcher()
+        connection = app.connection_pool.get_connection()
+        self.id_list = self.query.select_ids(connection)
         self.id_to_index = dict((id_, i) for i, id_ in enumerate(self.id_list))
-
-    def _reset_row_data(self):
         self.row_data = {}
+        self.item_fetcher = ItemFetcher.create(connection, self.id_list)
+
+    def _schedule_idle_work(self):
+        """Schedule do_idle_work to be called some time in the
+        future using idle_scheduler.
+        """
+        if not self.idle_work_scheduled:
+            self.idle_scheduler(self.do_idle_work)
+            self.idle_work_scheduled = True
+
+    def do_idle_work(self):
+        self.idle_work_scheduled = False
+        if self.item_fetcher is None:
+            # destroy() was called while the idle callback was still
+            # scheduled.  Just return.
+            return
+        for i in xrange(len(self.id_list)):
+            if not self._row_loaded(i):
+                # row data unloaded, call _ensure_row_loaded to load this row
+                # and adjecent rows then schedule another run later
+                self._ensure_row_loaded(i)
+                self._schedule_idle_work()
+                return
+        # no rows need loading
+        self.item_fetcher.done_fetching()
 
     def _uncache_row_data(self, id_list):
         for id_ in id_list:
@@ -327,82 +343,20 @@ class ItemTracker(signals.SignalEmitter):
     def get_playable_ids(self):
         """Get a list of ids for items that can be played."""
         # If we have loaded all items, then we can just use that data
-        if self.connection is None:
+        if not self.idle_work_scheduled:
             return [i.id for i in self.get_items() if i.is_playable]
-        # If we havn't then it can be very slow to iterate through all items.
-        # Instead, use an SQL query
-        query = self.query.copy()
-        query.add_condition('filename', 'IS NOT', None)
-        query.add_condition('file_type', '!=', u'other')
-        return [row[0] for row in query.execute(self.connection)]
+        else:
+            return self.item_fetcher.select_playable_ids()
 
     def has_playables(self):
         """Can we play any items from this item list?"""
-        if self.connection is None:
+        if not self.idle_work_scheduled:
             return any(i for i in self.get_items() if i.is_playable)
-        for id_list_chunk in util.split_values_for_sqlite(self.id_list):
-            placeholders = ",".join("?" for i in xrange(len(id_list_chunk)))
-            sql = ("SELECT COUNT(1) FROM item "
-                   "WHERE id IN (%s) AND "
-                   "filename IS NOT NULL AND "
-                   "file_type != 'other'" % placeholders)
-            cursor = self.connection.execute(sql, id_list_chunk)
-            if cursor.fetchone()[0] > 0:
-                return True
-        return False
+        else:
+            return self.item_fetcher.select_has_playables()
 
     def __len__(self):
         return len(self.id_list)
-
-    def _get_connection(self):
-        self.connection = app.connection_pool.get_connection()
-        # We need to start a connection to make our lazy fetching of the item
-        # rows work.  We need to have the same view of our data when we
-        # initially fetch the id list, and when we fetch the rows later.
-        self.connection.execute("BEGIN TRANSACTION")
-
-    def _release_connection(self):
-        self.connection.commit()
-        app.connection_pool.release_connection(self.connection)
-        self.connection = None
-
-    def _execute_query(self):
-        cursor = self.query.execute(self.connection)
-        return cursor.fetchall()
-
-    @staticmethod
-    def _schedule_fetch_rows_during_idle(item_list):
-        """Schedule fetch_rows_during_idle to be called some time in the
-        future using idle_scheduler.
-
-        This function avoids keeping a reference around to the ItemList.  This
-        way, if other components stop using the ItemTracker before the
-        callback, then we can destroy the object and skip the processing
-        """
-        # make a weak reference to the object to use when the callback is
-        # called
-        ref = weakref.ref(item_list)
-        def callback():
-            item_list = ref()
-            if item_list is not None:
-                item_list.fetch_rows_during_idle()
-        item_list.idle_scheduler(callback)
-        # delete original reference
-        del item_list
-
-    def fetch_rows_during_idle(self):
-        if self.connection is None:
-            # destroy() was called before we fetch all rows.  Just return now
-            return
-        for i in xrange(len(self.id_list)):
-            if not self._row_loaded(i):
-                # row data unloaded, call _ensure_row_loaded to load this row
-                # and adjecent rows then schedule another run later
-                self._ensure_row_loaded(i)
-                ItemTracker._schedule_fetch_rows_during_idle(self)
-                return
-        # all row data is loaded.  We're all done
-        self._release_connection()
 
     def _row_loaded(self, index):
         id_ = self.id_list[index]
@@ -435,7 +389,7 @@ class ItemTracker(signals.SignalEmitter):
         :param rows_to_load: indexes of the rows to load.
         """
         ids_to_load = [self.id_list[i] for i in rows_to_load]
-        items = self.item_fetcher.fetch_many(self.connection, ids_to_load)
+        items = self.item_fetcher.fetch_items(ids_to_load)
         for item in items:
             pos = self.id_to_index[item.id]
             self.row_data[item.id] = item
@@ -480,23 +434,7 @@ class ItemTracker(signals.SignalEmitter):
         :param new_query: ItemTrackerQuery object
         """
         self._set_query(new_query)
-        self._handle_connection_after_changes()
         self._refetch_id_list()
-
-    def _handle_connection_after_changes(self):
-        """Call this if the data we're tracking has changed, either because we
-        have a new query, or because the backend has updated the data.
-        """
-        if self.connection is not None:
-            # We already have a connection and are currently fetching items
-            # with it.  Finish our transaction so that we can fetch fresh
-            # data.
-            self.connection.commit()
-        else:
-            # We have released our connection.  Get a new one and schedule
-            # fetching our items.
-            self._get_connection()
-            ItemTracker._schedule_fetch_rows_during_idle(self)
 
     def on_item_changes(self, message):
         """Call this when items get changed and the list needs to be
@@ -507,14 +445,14 @@ class ItemTracker(signals.SignalEmitter):
 
         :param message: an ItemsChanged message
         """
-        self._uncache_row_data(message.changed)
-        self._handle_connection_after_changes()
+        changed_ids = [item_id for item_id in message.changed
+                       if self.item_in_list(item_id)]
+        self._uncache_row_data(changed_ids)
         if self._could_list_change(message):
             self._refetch_id_list()
         else:
+            self.item_fetcher.refresh_items(changed_ids)
             self.emit('will-change')
-            changed_ids = [id_ for id_ in message.changed
-                           if id_ in self.id_to_index]
             self.emit('items-changed', changed_ids)
 
     def _could_list_change(self, message):
@@ -522,3 +460,225 @@ class ItemTracker(signals.SignalEmitter):
         return bool(message.added or message.removed or
                     (message.dlstats_changed and self.track_dl_columns) or
                     message.changed_columns.intersection(self.tracked_columns))
+
+class ItemFetcher(object):
+    """Create ItemInfo objects for ItemTracker
+
+    ItemFetcher gets constructed with the connection that ItemTracker used to
+    select the ids for the item list along with those ids.  It's responsible
+    for fetching data and creating ItemInfo objects as they are needed.
+
+    The connection that gets passed to ItemFetcher still has a read
+    transaction open from the query that selected the item ids.  ItemFetcher
+    should ensure that the data it fetches to create the ItemInfo is from that
+    same transaction.  ItemFetcher should take ownership of the connection and
+    ensure that it gets released.
+
+    We handle this 2 ways.  If we are using the WAL journal mode, then we can
+    just keep the transaction open, since it won't block writers from
+    committing data.
+
+    If we aren't using WAL journal mode, then we select the data we need into
+    a temporary table to freeze it in place.  This is slower than the WAL
+    version, but not much.
+
+    The two strategies are implemented by the 2 subclasses of ItemFetcher:
+    ItemFetcherWAL and ItemFetcherNoWAL.
+
+    Finally ItemFetcher has 2 methods, select_playable_ids and
+    select_has_playables() which figure out which items in the list are
+    playable using an SQL select.  This is needed because we want to calculate
+    this without having to load all the ItemInfos in the list.
+    """
+
+    @staticmethod
+    def create(connection, id_list):
+        """Factory function to create an ItemFetcher.
+
+        This method checks if we are in wal mode and either returns
+        ItemFetcherWAL or ItemFetcherNoWAL
+
+        :param connection: sqlite Connection to use.  We will return data from
+        this connection without commiting any pending read transaction.
+        :param id_list: list of ids that we will have to fetch.
+        """
+        if app.connection_pool.wal_mode:
+            return ItemFetcherWAL(connection, id_list)
+        else:
+            return ItemFetcherNoWAL(connection, id_list)
+
+    def __init__(self, connection, id_list):
+        pass
+
+    def destroy(self):
+        """Called when the ItemFetcher is no longer needed.  Release any
+        resources.
+        """
+        pass
+
+    def done_fetching(self):
+        """Called when ItemTracker has fetched all the ItemInfos in its list
+
+        ItemFetcher should release resources that are no longer needed,
+        however it should be ready to fetch items again if refresh_items() is
+        called.
+        """
+        pass
+
+    def fetch_items(self, item_ids):
+        """Get a list of ItemInfo
+
+        :param item_ids: list of ids to fetch
+        :returns: list of ItemInfo objects.  This is not necessarily in the
+        same order as item_ids.
+        """
+        raise NotImplementedError()
+
+    def refresh_items(self, changed_ids):
+        """Refresh item data.
+
+        Normally ItemFetcher uses data from the read transaction that the
+        connection it was created with was in.  Use this method to force
+        ItemFetcher to use new data for a list of items.
+        """
+        raise NotImplementedError()
+
+    def select_playable_ids(self):
+        """Calculate which items are playable using a select statement
+
+        :returns: list of item ids
+        """
+        raise NotImplementedError()
+
+    def select_has_playables(self):
+        """Calculate if any items are playable using a select statement.
+
+        :returns: True/False
+        """
+        raise NotImplementedError()
+
+class ItemFetcherWAL(ItemFetcher):
+    def __init__(self, connection, id_list):
+        self._prepare_sql()
+        self.connection = connection
+        self.id_list = id_list
+
+    def destroy(self):
+        self._release_connection()
+
+    def done_fetching(self):
+        self._release_connection()
+
+    def _release_connection(self):
+        if self.connection is not None:
+            app.connection_pool.release_connection(self.connection)
+            self.connection = None
+
+    def _prepare_sql(self):
+        """Get an SQL statement ready to fire when fetch() is called.
+
+        The statement will be ready to go, except the WHERE clause will not be
+        present, since we can't know that in advance.
+        """
+        columns = ['%s.%s' % (c.table, c.column) for c in item.column_info()]
+        self._sql = ("SELECT %s FROM item %s" %
+                     (', '.join(columns), item.join_sql()))
+
+    def fetch_items(self, id_list):
+        """Create Item objects."""
+        where = "WHERE item.id in (%s)" % ', '.join(str(i) for i in id_list)
+        sql = ' '.join((self._sql, where))
+        cursor = self.connection.execute(sql)
+        return [item.ItemInfo(*row) for row in cursor]
+
+    def refresh_items(self, changed_ids):
+        # We ignore changed_ids and either get a new transaction or a new
+        # connection depending on if done_fetching() was called.
+        if self.connection is None:
+            self.connection = app.connection_pool.get_connection()
+        else:
+            self.connection.commit()
+
+    def select_playable_ids(self):
+        sql = ("SELECT id FROM item "
+               "WHERE filename IS NOT NULL AND "
+               "file_type != 'other' AND "
+               "id in (%s)" % ','.join(str(id_) for id_ in self.id_list))
+        return [row[0] for row in self.connection.execute(sql)]
+
+    def select_has_playables(self):
+        sql = ("SELECT EXISTS (SELECT 1 FROM item "
+               "WHERE filename IS NOT NULL AND "
+               "file_type != 'other' AND "
+               "id in (%s))" % ','.join(str(id_) for id_ in self.id_list))
+        return self.connection.execute(sql).fetchone()[0] == 1
+
+class ItemFetcherNoWAL(ItemFetcher):
+    def __init__(self, connection, id_list):
+        self.connection = connection
+        self._make_temp_table()
+        self._select_into_temp_table(id_list)
+        self.id_list = id_list
+
+    def _make_temp_table(self):
+        randstr = ''.join(random.choice(string.letters) for i in xrange(10))
+        self.table_name = 'itemtmp_' + randstr
+        col_specs = ["%s %s" % (ci.attr_name, ci.sqlite_type())
+                     for ci in item.column_info()]
+        create_sql = ("CREATE TABLE temp.%s(%s)" %
+               (self.table_name, ', '.join(col_specs)))
+        index_sql = ("CREATE UNIQUE INDEX temp.%s_id ON %s (id)" %
+                     (self.table_name, self.table_name))
+        self.connection.execute(create_sql)
+        self.connection.execute(index_sql)
+
+    def _select_into_temp_table(self, id_list):
+        template = string.Template("""\
+INSERT OR REPLACE INTO $table_name($dest_columns)
+SELECT $source_columns
+FROM item
+$join_sql
+WHERE item.id in ($id_list)""")
+        d = {
+            'table_name': self.table_name,
+            'join_sql': item.join_sql(),
+            'id_list': ', '.join(str(id_) for id_ in id_list),
+            'dest_columns': ','.join(ci.attr_name
+                                     for ci in item.column_info()),
+            'source_columns': ','.join('%s.%s' % (ci.table, ci.column)
+                                       for ci in item.column_info()),
+        }
+        sql = template.substitute(d)
+        self.connection.execute(sql)
+
+    def destroy(self):
+        self.connection.execute("DROP TABLE %s" % self.table_name)
+        self.connection.commit()
+        app.connection_pool.release_connection(self.connection)
+        self.connection = self.table_name = None
+
+    def fetch_items(self, id_list):
+        """Create Item objects."""
+        # We can use SELECT * here because we know that we defined the columns
+        # in the same order as column_info() returned them.
+        id_list_str = ', '.join(str(i) for i in id_list)
+        sql = "SELECT * FROM %s WHERE id IN (%s)" % (self.table_name,
+                                                     id_list_str)
+        return [item.ItemInfo(*row) for row in self.connection.execute(sql)]
+
+    def refresh_items(self, changed_ids):
+        self._select_into_temp_table(changed_ids)
+
+    def select_playable_ids(self):
+        sql = ("SELECT id FROM item "
+               "WHERE filename IS NOT NULL AND "
+               "file_type != 'other' AND "
+               "id in (%s)" % ','.join(str(id_) for id_ in self.id_list))
+        return [row[0] for row in self.connection.execute(sql)]
+
+    def select_has_playables(self):
+        sql = ("SELECT EXISTS (SELECT 1 FROM item "
+               "WHERE filename IS NOT NULL AND "
+               "file_type != 'other' AND "
+               "id in (%s))" % ','.join(str(id_) for id_ in self.id_list))
+        return self.connection.execute(sql).fetchone()[0] == 1
