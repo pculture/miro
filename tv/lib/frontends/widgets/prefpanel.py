@@ -559,9 +559,26 @@ class GeneralPanel(PanelBuilder):
         v.pack_start(heading)
 
         help_text = _('Online lookup can find matching album art and song '
-                      'info for all your audio files (via Echonest and '
-                      '7Digital).')
+                      'info for all your audio files')
         v.pack_start(widgetset.Label(help_text))
+
+        # Link to the data providers for net lookup.  This method doesn't look
+        # the best, but hopefully it can be translated somewhat decently.
+        provider_links = widgetset.HBox()
+        provider_links.pack_start(widgetset.Label(_("Via:")))
+        provider_links.pack_start(widgetset.Label(" "))
+        echonest_link = widgetutil.LinkButton(_('Echonest'))
+        provider_links.pack_start(widgetset.Label(" "))
+        seven_digital_link = widgetutil.LinkButton(_('7Digital'))
+        provider_links.pack_start(echonest_link)
+        provider_links.pack_start(seven_digital_link)
+        def on_echonest_click(button):
+            app.widgetapp.open_url("http://the.echonest.com/")
+        echonest_link.connect("clicked", on_echonest_click)
+        def on_7digital_click(button):
+            app.widgetapp.open_url("http://www.7digital.com/")
+        seven_digital_link.connect("clicked", on_7digital_click)
+        v.pack_start(widgetutil.align_center(provider_links))
 
         self.run_net_lookup_button = widgetset.Button(
             _('Run Online Lookup for All Current Music'))
