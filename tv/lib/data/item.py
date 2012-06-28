@@ -27,7 +27,14 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.data.item -- Defines ItemInfo and ways to fetch them."""
+"""miro.data.item -- Defines ItemInfo and describes how to create them
+
+ItemInfo is the read-only interface to database items.  To create one you need
+to run a SELECT on the database and pass in the data from one row.
+
+column_info() and join_sql() describe what columns need to be selected and how
+to join the tables together in order to create an ItemInfo.
+"""
 
 import collections
 import datetime

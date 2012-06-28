@@ -41,18 +41,21 @@ from miro.plat.frontends.widgets import widgetset
 
 from miro.conversions import conversion_manager
 
-class ConvertingSort(itemlist.ItemSort):
-    KEY = None
+# FIXME: The old itemlist module is no longer around.  We need to reimplement
+# this
+if 0:
+    class ConvertingSort(itemlist.ItemSort):
+        KEY = None
 
-    def __init__(self):
-        itemlist.ItemSort.__init__(self, True)
-        self.positions = []
+        def __init__(self):
+            itemlist.ItemSort.__init__(self, True)
+            self.positions = []
 
-    def sort_key(self, item):
-        id_ = item.id
-        if not id_ in self.positions:
-            self.positions.append(id_)
-        return self.positions.index(id_)
+        def sort_key(self, item):
+            id_ = item.id
+            if not id_ in self.positions:
+                self.positions.append(id_)
+            return self.positions.index(id_)
 
 # XXX: why doesn't this guy derive from something sensible and use 
 # ItemListController instead?

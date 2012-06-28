@@ -37,7 +37,7 @@ import weakref
 
 from miro import app
 from miro import models
-from miro.frontends.widgets import newitemlist as itemlist
+from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemsort
 from miro.test import mock
 from miro.test.framework import MiroTestCase

@@ -42,11 +42,9 @@ from miro.gtcache import ngettext
 from miro import messages
 
 from miro.frontends.widgets import imagepool
-from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
-from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import segmented
 from miro.frontends.widgets import tabcontroller
 from miro.frontends.widgets import widgetconst
@@ -943,10 +941,6 @@ class DeviceMountedView(widgetset.VBox):
         self.device_size.set_in_progress(False)
         self.device_size.set_size(self.device.size, self.device.remaining)
         self.sync_settings_changed(self)
-
-class DeviceItemList(itemlist.ItemList):
-    def filter(self, item_info):
-        return True
 
 class UnknownDeviceView(widgetset.VBox):
     def __init__(self):

@@ -1,6 +1,6 @@
 from miro.test.framework import MiroTestCase
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
-from miro.frontends.widgets.itemlist import SORT_KEY_MAP
+from miro.frontends.widgets.itemsort import SORT_KEY_MAP
 
 class WidgetStateConstants(MiroTestCase):
     def setUp(self):

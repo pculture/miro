@@ -38,7 +38,6 @@ from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
-from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import widgetutil
 

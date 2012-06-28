@@ -40,7 +40,6 @@ are selected for a given item list.
 
 from miro import app
 from miro import util
-from miro.data import itemtrack
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 

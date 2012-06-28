@@ -162,4 +162,29 @@ class MultiRowAlbum(ItemSort):
     def switch_mode(self, mode):
         pass
 
+class DRMSort(ItemSort):
+    key  = 'drm'
+    columns = ['-has_drm']
+
+class RateSort(ItemSort):
+    # FIXME: need to implement this
+    key  = 'rate'
+    columns = ['id']
+
+class ETASort(ItemSort):
+    # FIXME: need to implement this
+    key  = 'eta'
+    columns = ['id']
+
+class TorrentDetailsSort(ItemSort):
+    # FIXME: need to implement this
+    key  = 'torrent-details'
+    columns = ['id']
+
+class PlaylistSort(ItemSort):
+    # FIXME: need to implement this
+    key  = 'playlist'
+    columns = ['id']
+
+
 SORT_KEY_MAP = dict((sort.key, sort) for sort in util.all_subclasses(ItemSort))

@@ -51,7 +51,7 @@ from miro import subscription
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
-from miro.frontends.widgets import newitemlist as itemlist
+from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
 from miro.frontends.widgets import itemsort

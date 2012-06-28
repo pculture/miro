@@ -31,7 +31,6 @@
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
-from miro.frontends.widgets import itemtrack
 from miro.gtcache import gettext as _
 
 # The spinning progress bar while a user connects is done by the backend
