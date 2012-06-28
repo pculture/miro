@@ -413,7 +413,11 @@ class ItemTracker(signals.SignalEmitter):
         :raises IndexError: index out of range
         """
         self._ensure_row_loaded(index)
-        id_ = self.id_list[index]
+        try:
+            id_ = self.id_list[index]
+        except IndexError:
+            # re-raise the error with a bit more information
+            raise IndexError("%s is out of range" % index)
         return self.row_data[id_]
 
     def get_first_item(self):
@@ -564,15 +568,13 @@ class ItemFetcherWAL(ItemFetcher):
         self.id_list = id_list
 
     def destroy(self):
-        self._release_connection()
-
-    def done_fetching(self):
-        self._release_connection()
-
-    def _release_connection(self):
         if self.connection is not None:
             app.connection_pool.release_connection(self.connection)
             self.connection = None
+
+    def done_fetching(self):
+        # We can safely finish the read transaction here
+        self.connection.commit()
 
     def _prepare_sql(self):
         """Get an SQL statement ready to fire when fetch() is called.
@@ -592,12 +594,9 @@ class ItemFetcherWAL(ItemFetcher):
         return [item.ItemInfo(*row) for row in cursor]
 
     def refresh_items(self, changed_ids):
-        # We ignore changed_ids and either get a new transaction or a new
-        # connection depending on if done_fetching() was called.
-        if self.connection is None:
-            self.connection = app.connection_pool.get_connection()
-        else:
-            self.connection.commit()
+        # We ignore changed_ids and just start a new transaction which will
+        # refresh all the data.
+        self.connection.commit()
 
     def select_playable_ids(self):
         sql = ("SELECT id FROM item "

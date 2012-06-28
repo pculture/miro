@@ -92,6 +92,8 @@ class ItemList(itemtrack.ItemTracker):
             query.add_condition('file_type', '=', 'video')
         elif tab_type == 'music':
             query.add_condition('file_type', '=', 'audio')
+        elif tab_type == 'others':
+            query.add_condition('file_type', '=', 'other')
         elif tab_type == 'search':
             query.add_condition('feed.orig_url', '=', 'dtv:search')
         elif tab_type == 'downloading':
@@ -273,6 +275,18 @@ class ItemListPool(object):
         self.all_item_lists.add(new_list)
         self._refcounts[new_list] = 1
         return new_list
+
+    def add_ref(self, item_list):
+        """Add a reference to an existing ItemList
+
+        Use this method if you are given an ItemList by another component and
+        intend on keeping it around.  The ItemList will stay in the poll until
+        both components call release()
+        """
+        if item_list in self._refcounts:
+            self._refcounts[item_list] += 1
+        else:
+            raise ValueError("%s has already been released" % item_list)
 
     def release(self, item_list):
         """Release an item list.

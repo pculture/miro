@@ -856,6 +856,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, 'position-changed',
                 'playing-info-changed')
         self.item_list = item_list
+        app.item_list_pool.add_ref(item_list)
         self._item_list_callbacks = [
                 item_list.connect('items-changed', self._on_items_changed),
                 item_list.connect('list-changed', self._on_list_changed),
@@ -918,6 +919,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self._change_currently_playing(None)
         for handle in self._item_list_callbacks:
             self.item_list.disconnect(handle)
+        app.item_list_pool.release(self.item_list)
         self.navigation_strategy = self.item_list = None
         self._item_list_callbacks = []
         self.disconnect_all()
