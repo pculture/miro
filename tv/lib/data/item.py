@@ -313,20 +313,8 @@ class ItemInfo(ItemRow):
         if self.enclosure_format is not None:
             return self.enclosure_format
 
-        if (self.downloader_content_type is not None and
-            "/" in self.downloader_content_type):
-            mtype, subtype = self.downloader_content_type.split('/', 1)
-            mtype = mtype.lower()
-            if mtype in KNOWN_MIME_TYPES:
-                format_ = subtype.split(';')[0].upper()
-                if mtype == u'audio':
-                    format_ += u' AUDIO'
-                if format_.startswith(u'X-'):
-                    format_ = format_[2:]
-                return (u'.%s' %
-                        MIME_SUBSITUTIONS.get(format_, format_).lower())
-
-        return u""
+        return filetypes.calc_file_format(self.filename,
+                                          self.downloader_content_type)
 
     @property
     def video_watched(self):

@@ -39,6 +39,7 @@ import logging
 import re
 import shutil
 import time
+import urlparse
 
 from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
@@ -72,16 +73,6 @@ from miro import models
 from miro import metadata
 
 _charset = locale.getpreferredencoding()
-
-KNOWN_MIME_TYPES = (u'audio', u'video')
-KNOWN_MIME_SUBTYPES = (
-    u'mov', u'wmv', u'mp4', u'mp3',
-    u'mpg', u'mpeg', u'avi', u'x-flv',
-    u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg'
-    )
-MIME_SUBSITUTIONS = {
-    u'QUICKTIME': u'MOV',
-}
 
 # We don't mdp_state as of version 5.0, but we need to set this for
 # DeviceItems so that older versions can read the device DB
@@ -267,34 +258,17 @@ class FeedParserValues(object):
 
     def _calc_enclosure_format(self):
         enclosure = self.first_video_enclosure
-        if enclosure:
-            try:
-                extension = enclosure['url'].split('.')[-1]
-                extension = extension.lower().encode('ascii', 'replace')
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except KeyError:
-                extension = u''
-            # Hack for mp3s, "mpeg audio" isn't clear enough
-            if extension.lower() == u'mp3':
-                return u'.mp3'
-            if enclosure.get('type'):
-                enc = enclosure['type'].decode('ascii', 'replace')
-                if "/" in enc:
-                    mtype, subtype = enc.split('/', 1)
-                    mtype = mtype.lower()
-                    if mtype in KNOWN_MIME_TYPES:
-                        format = subtype.split(';')[0].upper()
-                        if mtype == u'audio':
-                            format += u' AUDIO'
-                        if format.startswith(u'X-'):
-                            format = format[2:]
-                        return (u'.%s' %
-                                MIME_SUBSITUTIONS.get(format, format).lower())
-
-            if extension in KNOWN_MIME_SUBTYPES:
-                return u'.%s' % extension
-        return None
+        if enclosure is None:
+            return None
+        if 'url' in enclosure:
+            filename = urlparse.urlparse(enclosure['url']).path
+        else:
+            filename = None
+        if enclosure.get('type'):
+            mime_type = enclosure['type'].decode('ascii', 'replace')
+        else:
+            mime_type = None
+        return filetypes.calc_file_format(filename, mime_type)
 
     def _calc_release_date(self):
         # FIXME - this is awful.  need to handle site-specific things
@@ -1961,19 +1935,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return self.enclosure_format
 
         if self.downloader:
-            if ((self.downloader.content_type
-                 and "/" in self.downloader.content_type)):
-                mtype, subtype = self.downloader.content_type.split('/', 1)
-                mtype = mtype.lower()
-                if mtype in KNOWN_MIME_TYPES:
-                    format_ = subtype.split(';')[0].upper()
-                    if mtype == u'audio':
-                        format_ += u' AUDIO'
-                    if format_.startswith(u'X-'):
-                        format_ = format_[2:]
-                    return (u'.%s' %
-                            MIME_SUBSITUTIONS.get(format_, format_).lower())
-
+            return filetypes.calc_file_format(self.filename,
+                                              self.downloader.content_type)
         if empty_for_unknown:
             return u""
         return u"unknown"
