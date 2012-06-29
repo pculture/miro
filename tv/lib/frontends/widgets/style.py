@@ -335,15 +335,11 @@ class ETARenderer(ListViewRendererText):
     right_aligned = True
 
     def get_value(self, info):
-        if info.is_download and not info.is_paused:
-            dl_info = info.download_info
-            if dl_info.eta > 0:
-                return displaytext.time_string(dl_info.eta)
-        return ''
+        return info.eta_text
 
 class TorrentDetailsRenderer(ListViewRendererText):
     def get_value(self, info):
-        if not info.download_info or not info.download_info.torrent:
+        if not info.is_torrent:
             return ''
 
         details = _(
@@ -367,11 +363,7 @@ class DownloadRateRenderer(ListViewRendererText):
     right_aligned = True
 
     def get_value(self, info):
-        if info.is_download and not info.is_paused:
-            dl_info = info.download_info
-            return displaytext.download_rate(dl_info.rate)
-        else:
-            return ''
+        return info.download_rate_text
 
 class SizeRenderer(ListViewRendererText):
     right_aligned = True
@@ -555,7 +547,7 @@ class StatusRenderer(ListViewRenderer):
 
         layout = cellpack.Layout()
         # add left button
-        if not info.is_paused:
+        if not self.info.is_paused:
             left_button = 'pause'
         else:
             left_button = 'resume'
@@ -607,11 +599,9 @@ class StatusRenderer(ListViewRenderer):
         elif self.info.pending_manual_download:
             return (_('queued'), DOWNLOADING_COLOR)
         elif self.info.is_failed_download:
-            return (self.info.download_info.short_reason_failed,
-                    ERROR_COLOR)
+            return (self.info.short_reason_failed, ERROR_COLOR)
         elif self.info.is_download and self.info.rate is None:
-            return (self.info.download_info.startup_activity,
-                    DOWNLOADING_COLOR)
+            return (self.info.startup_activity, DOWNLOADING_COLOR)
         elif self.info.new:
             return (_('Newly Available'), AVAILABLE_COLOR)
         return ('', self.default_text_color)
@@ -1272,9 +1262,5 @@ class ProgressBarDrawer(cellpack.Packer):
 
 class ItemProgressBarDrawer(ProgressBarDrawer):
     def __init__(self, info):
-        ProgressBarDrawer.__init__(self, 0, ProgressBarColorSet)
-        if info.download_info and info.size > 0.0:
-            self.progress_ratio = (float(info.download_info.downloaded_size) /
-                    info.size)
-        else:
-            self.progress_ratio = 0.0
+        ProgressBarDrawer.__init__(self, info.download_progress,
+                                   ProgressBarColorSet)

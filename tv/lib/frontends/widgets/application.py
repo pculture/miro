@@ -583,10 +583,9 @@ class Application:
                     app.playback_manager.on_movie_finished()
 
         external_count = len([s for s in selection if s.is_external])
-        failed_count = len([s for s in selection if s.download_info and
-                            s.download_info.state == u'failed'])
+        failed_count = len([s for s in selection if s.is_failed_download])
         folder_count = len([s for s in selection if s.is_container_item])
-        total_count = len(selection)
+        total_count = len([selection])
 
         if total_count == 1 and external_count == folder_count == 0:
             playback_finished_if_playing_selection()
