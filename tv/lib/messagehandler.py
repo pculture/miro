@@ -1832,7 +1832,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         message.device.sqlite_database.close()
         app.device_tracker.eject(message.device)
 
-
     def handle_query_sync_information(self, message):
         dsm = app.device_manager.get_sync_for_device(message.device)
         infos, expired = dsm.get_sync_items(message.device.max_sync_size())
