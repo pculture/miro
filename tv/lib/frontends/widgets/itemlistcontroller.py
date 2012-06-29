@@ -759,10 +759,10 @@ class ItemListController(object):
     def handle_escape(self):
         handled = False
         for info in self.get_selection():
-            if info.state == 'downloading':
+            if info.is_download:
                 messages.CancelDownload(info.id).send_to_backend()
                 handled = True
-            elif info.state == 'uploading':
+            elif info.is_seeding:
                 messages.StopUpload(info.id).send_to_backend()
                 handled = True
         return handled
