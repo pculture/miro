@@ -473,11 +473,10 @@ class ItemListController(object):
 
     def focus_view(self):
         self.current_item_view.focus()
-        if len(self.get_selection()) == 0:
+        if len(self.get_selection()) == 0 and len(self.item_list) > 0:
             first = self.item_list.get_first_item()
-            if first is not None:
-                iter_ = self.item_list.model.iter_for_id(first.id)
-                self.current_item_view.select(iter_)
+            iter_ = self.current_item_view.model.iter_for_id(first.id)
+            self.current_item_view.select(iter_)
 
     def build_widget(self):
         """Build the container widget for this controller."""
