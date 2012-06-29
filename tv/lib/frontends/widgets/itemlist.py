@@ -54,7 +54,7 @@ class ItemList(itemtrack.ItemTracker):
             - set_sort changes the sort
     """
     def __init__(self, tab_type, tab_id, sort=None, group_func=None,
-                 filters=None):
+                 filters=None, search_text=None):
         """Create a new ItemList
 
         Note: outside classes shouldn't call this directly.  Instead, they
@@ -65,6 +65,7 @@ class ItemList(itemtrack.ItemTracker):
         :param sort: initial sort to use
         :param group_func: initial grouping to use
         :param filters: initial filters
+        :param search_text: initial search text
         """
         self.tab_type = tab_type
         self.tab_id = tab_id
@@ -77,7 +78,7 @@ class ItemList(itemtrack.ItemTracker):
             self.sorter = itemsort.DateSort()
         else:
             self.sorter = sort
-        self.search_text = None
+        self.search_text = search_text
         self.group_func = group_func
         itemtrack.ItemTracker.__init__(self, call_on_ui_thread,
                                        self._make_query())
@@ -253,7 +254,8 @@ class ItemListPool(object):
         self.all_item_lists = set()
         self._refcounts = {}
 
-    def get(self, tab_type, tab_id, sort=None, group_func=None, filters=None):
+    def get(self, tab_type, tab_id, sort=None, group_func=None, filters=None,
+           search_text=None):
         """Get an ItemList to use.
 
         This method will first try to re-use an existing ItemList from the
@@ -271,7 +273,8 @@ class ItemListPool(object):
                     self._refcounts[obj] += 1
                     return obj
         # no existing list found, make new list
-        new_list = ItemList(tab_type, tab_id, sort, group_func, filters)
+        new_list = ItemList(tab_type, tab_id, sort, group_func, filters,
+                            search_text)
         self.all_item_lists.add(new_list)
         self._refcounts[new_list] = 1
         return new_list

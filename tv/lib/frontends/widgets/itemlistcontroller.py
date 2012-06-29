@@ -211,7 +211,8 @@ class ItemListController(object):
         self.type = typ
         self.id = id_
         self.views = {}
-        self._search_text = ''
+        self._search_text = app.inline_search_memory.get_search(self.type,
+                                                                self.id)
         self._playing_items = False
         self._selection_to_restore = None
         self.config_change_handle = None
@@ -574,8 +575,7 @@ class ItemListController(object):
         sorter = self.get_sorter()
         group_func = self.get_item_list_grouping()
         return app.item_list_pool.get(self.type, self.id, sorter, group_func,
-                                      filters)
-
+                                      filters, self._search_text)
     def get_item_list_grouping(self):
         return itemlist.album_grouping
 
@@ -619,7 +619,6 @@ class ItemListController(object):
         search = app.inline_search_memory.get_search(self.type, self.id)
         if search != '':
             self.titlebar.set_search_text(search)
-            self.set_search(search)
 
     def get_selection(self):
         """Get the currently selected items.  Returns a list of
@@ -684,6 +683,8 @@ class ItemListController(object):
     def set_search(self, search_text):
         """Set the search for all ItemViews managed by this controller.
         """
+        if search_text == self._search_text:
+            return
         self._search_text = search_text
         self.item_list.set_search(search_text)
         app.inline_search_memory.set_search(self.type, self.id, search_text)
