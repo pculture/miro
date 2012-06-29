@@ -525,7 +525,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def download_stats_changed(self):
         Item.change_tracker.dlstats_changed = True
         # TODO: I don't think we need the signal_change() call here once we
-        # finissh replacing the ViewTracker code.
+        # finish replacing the ViewTracker code.
         self.signal_change(needs_save=False)
 
     @classmethod

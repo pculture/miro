@@ -160,18 +160,18 @@ class ItemList(itemtrack.ItemTracker):
         self._update_query()
 
     # attributes
-    def set_attr(self, id, name, value):
-        self.item_attributes[id][name] = value
+    def set_attr(self, item_id, name, value):
+        self.item_attributes[item_id][name] = value
 
-    def get_attr(self, id, name, default=None):
-        return self.item_attributes[id].get(name, default)
+    def get_attr(self, item_id, name, default=None):
+        return self.item_attributes[item_id].get(name, default)
 
-    def get_attrs(self, id):
-        return self.item_attributes[id]
+    def get_attrs(self, item_id):
+        return self.item_attributes[item_id]
 
-    def unset_attr(self, id, name):
-        if name in self.item_attributes[id]:
-            del self.item_attributes[id][name]
+    def unset_attr(self, item_id, name):
+        if name in self.item_attributes[item_id]:
+            del self.item_attributes[item_id][name]
 
     # grouping
     def get_group_info(self, row):
