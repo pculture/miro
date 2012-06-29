@@ -1071,7 +1071,7 @@ class ItemListController(object):
                 self._playing_items):
             self.titlebar.update_resume_button(None, None)
         else:
-            self.titlebar.update_resume_button(last_played.name,
+            self.titlebar.update_resume_button(last_played.title,
                     last_played.resume_time)
 
     def update_count_label(self):
