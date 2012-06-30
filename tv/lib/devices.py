@@ -1110,6 +1110,8 @@ class DeviceSyncManager(object):
         def callback():
             if not os.path.exists(new_path):
                 return # copy failed, just give up
+            if _stop()
+                return # Device has been ejected, give up.
 
             device_item = item.DeviceItem(
                 device=self.device,
