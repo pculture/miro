@@ -1110,7 +1110,7 @@ class DeviceSyncManager(object):
         def callback():
             if not os.path.exists(new_path):
                 return # copy failed, just give up
-            if _stop()
+            if _stop():
                 return # Device has been ejected, give up.
 
             device_item = item.DeviceItem(
@@ -1529,6 +1529,19 @@ def on_mount(info):
         message.send_to_backend()
     scan_device_for_files(info)
 
+def _stop():
+    if not app.device_manager.running: # user quit, so we will too
+        logging.debug('stopping scan on %r: user quit', device.mount)
+        return True
+    if not os.path.exists(device.mount): # device disappeared
+        logging.debug('stopping scan on %r: disappeared', device.mount)
+        return True
+    if app.device_manager._is_hidden(device): # device no longer being
+                                              # shown
+        logging.debug('stopping scan on %r: hidden', device.mount)
+        return True
+    return False
+
 @eventloop.idle_iterator
 def scan_device_for_files(device):
     # XXX is this as_idle() safe?
@@ -1542,18 +1555,6 @@ def scan_device_for_files(device):
     item_data = []
     start = time.time()
     filenames = []
-    def _stop():
-        if not app.device_manager.running: # user quit, so we will too
-            logging.debug('stopping scan on %r: user quit', device.mount)
-            return True
-        if not os.path.exists(device.mount): # device disappeared
-            logging.debug('stopping scan on %r: disappeared', device.mount)
-            return True
-        if app.device_manager._is_hidden(device): # device no longer being
-                                                  # shown
-            logging.debug('stopping scan on %r: hidden', device.mount)
-            return True
-        return False
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
