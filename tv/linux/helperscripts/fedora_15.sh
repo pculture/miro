@@ -34,5 +34,4 @@ yum install \
    boost-devel \
    taglib-devel \
    zlib-devel \
-   ffmpeg \
-   ffmpeg2theora
+   ffmpeg

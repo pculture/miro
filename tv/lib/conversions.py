@@ -425,9 +425,6 @@ class ConversionManager(signals.SignalEmitter):
         if converter_info.executable == 'ffmpeg':
             return FFMpegConversionTask(converter_info, item_info,
                                         target_folder, create_item)
-        elif converter_info.executable == 'ffmpeg2theora':
-            return FFMpeg2TheoraConversionTask(converter_info, item_info,
-                                               target_folder, create_item)
         return None
 
     def _check_task_loop(self):
@@ -1078,63 +1075,6 @@ class FFMpegConversionTask(ConversionTask):
             if match is not None:
                 return 1.0
         return self.progress
-
-
-class FFMpeg2TheoraConversionTask(ConversionTask):
-    DURATION_RE = re.compile(r'f2t ;duration: ([^;]*);')
-
-    PROGRESS_RE1 = re.compile(r'\{"duration":(.*), "position":(.*), '
-                              '"audio_kbps":.*, "video_kbps":.*, '
-                              '"remaining":.*\}')
-    RESULT_RE1 = re.compile(r'\{"result": "(.*)"\}')
-
-    PROGRESS_RE2 = re.compile(r'f2t ;position: ([^;]*);')
-    RESULT_RE2 = re.compile(r'f2t ;result: ([^;]*);')
-
-    def __init__(self, converter_info, item_info, target_folder, create_item):
-        ConversionTask.__init__(self, converter_info, item_info,
-                                target_folder, create_item)
-        self.platform = app.config.get(prefs.APP_PLATFORM)
-
-    def get_executable(self):
-        return utils.get_ffmpeg2theora_executable_path()
-
-    def get_parameters(self):
-        try:
-            media_info = get_media_info(self.input_path)
-        except ValueError:
-            media_info = {}
-
-        default_parameters = build_parameters(
-            self.input_path, self.temp_output_path, self.converter_info, media_info)
-        return utils.customize_ffmpeg2theora_parameters(default_parameters)
-
-    def check_for_errors(self, line):
-        return
-
-    def monitor_progress(self, line):
-        if line.startswith('f2t'):
-            if self.duration is None:
-                match = FFMpeg2TheoraConversionTask.DURATION_RE.match(line)
-                if match is not None:
-                    self.duration = float(match.group(1))
-            match = FFMpeg2TheoraConversionTask.PROGRESS_RE2.match(line)
-            if match is not None:
-                return float(match.group(1)) / self.duration
-            match = FFMpeg2TheoraConversionTask.RESULT_RE2.match(line)
-            if match is not None:
-                return 1.0
-        else:
-            match = FFMpeg2TheoraConversionTask.PROGRESS_RE1.match(line)
-            if match is not None:
-                if self.duration is None:
-                    self.duration = float(match.group(1))
-                return float(match.group(2)) / self.duration
-            match = FFMpeg2TheoraConversionTask.RESULT_RE1.match(line)
-            if match is not None:
-                return 1.0
-        return self.progress
-
 
 def convert(converter_id, item_info, update_last=False):
     """Given a converter and an item, this starts the conversion for

@@ -55,12 +55,6 @@ FFMPEG_BINARY = LinuxPref(
     alias="ffmpeg",
     helptext="Absolute path for ffmpeg binary.")
 
-FFMPEG2THEORA_BINARY = LinuxPref(
-    key="ffmpeg2TheoraBinary",
-    default="/usr/bin/ffmpeg2theora",
-    alias="ffmpeg2theora",
-    helptext="Absolute path for ffmpeg2theora binary.")
-
 FIRST_TIME = LinuxPref(
     key="startupTasksDone",
     default=True,

@@ -113,7 +113,6 @@ ENMFP_PATH = os.path.join(BINARY_KIT_ROOT, 'enmfp-codegen')
 SEGMENTER_PATH = os.path.join(BINARY_KIT_ROOT, 'segmenter')
 FFMPEG_PATH = os.path.join(
     BINARY_KIT_ROOT, 'ffmpeg', 'libav-win32-20111229')
-FFMPEG2THEORA_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg2theora')
 
 VCREDIST71_PATH = os.path.join(BINARY_KIT_ROOT, 'vc71redist')
 VCREDIST90_PATH = os.path.join(BINARY_KIT_ROOT, 'vc90redist')
@@ -323,8 +322,7 @@ data_files.append(('', [
             os.path.join(SEGMENTER_PATH, 'miro-segmenter.exe'),
             os.path.join(ENMFP_PATH, 'codegen.windows.exe'),
             os.path.join(ENMFP_PATH, 'codegen.dll'),
-            os.path.join(FFMPEG_PATH, 'usr', 'bin', 'ffmpeg.exe'),
-            os.path.join(FFMPEG2THEORA_PATH, 'bin', 'ffmpeg2theora.exe')]))
+            os.path.join(FFMPEG_PATH, 'usr', 'bin', 'ffmpeg.exe')]))
 data_files.append(('', glob(os.path.join(FFMPEG_PATH, 'usr', 'bin', '*.dll'))))
 data_files.append(('', glob(os.path.join(FFMPEG_PATH, '..', 'presets', '*.ffpreset'))))
 data_files.append(('', glob(os.path.join(VCREDIST71_PATH, '*.dll'))))

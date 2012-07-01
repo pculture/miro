@@ -42,6 +42,5 @@ aptitude install \
     gstreamer0.10-plugins-bad \
     gstreamer0.10-plugins-ugly \
     ffmpeg \
-    ffmpeg2theora \
     libavcodec-unstripped-52 \
     libfaac0
