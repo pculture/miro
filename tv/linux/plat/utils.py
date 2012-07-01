@@ -425,28 +425,6 @@ def customize_ffmpeg_parameters(params):
                     '-flags2', '-wpred-dct8x8']
     return params
 
-
-def get_ffmpeg2theora_executable_path():
-    """Returns the location of the ffmpeg2theora binary.
-
-    :returns: string
-    """
-    return app.config.get(options.FFMPEG2THEORA_BINARY)
-
-
-def customize_ffmpeg2theora_parameters(params):
-    """Takes a list of parameters and modifies it based on
-    platform-specific issues.  Returns the newly modified list of
-    parameters.
-
-    :param params: list of parameters to modify
-
-    :returns: list of modified parameters that will get passed to
-        ffmpeg2theora
-    """
-    return params
-
-
 def begin_thread_loop(context_object):
     # used for testing
     pass

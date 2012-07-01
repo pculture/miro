@@ -106,13 +106,6 @@ def _conversions_panel():
 
     grid.end_line(spacing=4)
 
-    grid.pack_label(_("ffmpeg2theora binary path:"), grid.ALIGN_RIGHT)
-    ffmpeg2theora_binary = widgetset.TextEntry()
-    attach_text(ffmpeg2theora_binary, options.FFMPEG2THEORA_BINARY)
-    grid.pack(ffmpeg2theora_binary)
-
-    grid.end_line(spacing=4)
-
     extras.append(align_left(grid.make_table()))
 
     return extras

@@ -501,15 +501,6 @@ def get_ffmpeg_executable_path():
 def customize_ffmpeg_parameters(default_parameters):
     return default_parameters
 
-def get_ffmpeg2theora_executable_path():
-    bundle_path = NSBundle.mainBundle().bundlePath()
-    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
-    path = os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg2theora")
-    return path.encode('utf-8')
-
-def customize_ffmpeg2theora_parameters(default_parameters):
-    return default_parameters
-
 def get_enmfp_executable_info():
     bundle_path = NSBundle.mainBundle().bundlePath()
     # XXX Unicode kludge.  This wouldn't be a problem once we switch to 
