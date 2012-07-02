@@ -38,12 +38,16 @@ from miro import util
 class ItemSort(object):
     """Class that sorts items in an item list.
 
+    :attribute key: string specifying the name of the column for an ItemView
+    that this sort should be used for.  Subclasses must set this.
+
     :attribute columns: list of columns to pass to set_order_by().  These
     should specify an ascending search.  Subclasses must set this.
 
-    :attribute key: string specifying the name of the column for an ItemView
-    that this sort should be used for.  Subclasses must set this.
+    :attribute collations: list of collations for each column.  By default
+    this is None, which specifies the default collations
     """
+    collations = None
 
     def __init__(self, ascending=True):
         self.ascending = ascending
@@ -66,13 +70,14 @@ class ItemSort(object):
 
     def add_to_query(self, query):
         if self.ascending:
-            query.set_order_by(*self.columns)
+            query.set_order_by(self.columns, self.collations)
         else:
-            query.set_order_by(*self.reverse_columns())
+            query.set_order_by(self.reverse_columns(), self.collations)
 
 class TitleSort(ItemSort):
     key = 'name'
     columns = ['title']
+    collations = ['name']
 
 class DateSort(ItemSort):
     key = 'date'
@@ -80,15 +85,13 @@ class DateSort(ItemSort):
 
 class ArtistSort(ItemSort):
     key = 'artist'
-    # FIXME: should sort using the result of name_sort_key rather than the raw
-    # values
     columns = ['artist', 'album', 'track']
+    collations = ['name', 'name', None]
 
 class AlbumSort(ItemSort):
     key = 'album'
-    # FIXME: should sort using the result of name_sort_key rather than the raw
-    # values
     columns = ['album', 'track']
+    collations = ['name', None]
 
 class FeedNameSort(ItemSort):
     # FIXME: need to implement this
@@ -185,6 +188,5 @@ class PlaylistSort(ItemSort):
     # FIXME: need to implement this
     key  = 'playlist'
     columns = ['id']
-
 
 SORT_KEY_MAP = dict((sort.key, sort) for sort in util.all_subclasses(ItemSort))

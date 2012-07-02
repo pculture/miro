@@ -56,12 +56,13 @@ ItemTrackerCondition = util.namedtuple(
 
 ItemTrackerOrderBy = util.namedtuple(
     "ItemTrackerOrderBy",
-    "table column descending",
+    "table column collation descending",
 
     """ItemTrackerOrderBy defines one term for the ORDER BY clause of a query.
 
     :attribute table: table that contains column
     :attribute column: column to sort on
+    :attribute collation: collation to use
     :attribute descending: should we add the DESC clause?
     """)
 
@@ -70,7 +71,7 @@ class ItemTrackerQuery(object):
     def __init__(self):
         self.conditions = []
         self.match_string = None
-        self.order_by = [ItemTrackerOrderBy('item', 'id', False)]
+        self.order_by = [ItemTrackerOrderBy('item', 'id', None, False)]
 
     def _parse_column(self, column):
         """Parse a column specification.
@@ -138,21 +139,30 @@ class ItemTrackerQuery(object):
         cond = ItemTrackerCondition(table, column, sql, values)
         self.conditions.append(cond)
 
-    def set_order_by(self, *columns):
+    def set_order_by(self, columns, collations=None):
         """Change the ORDER BY clause.
 
         :param columns: list of columns name to sort by.  To do a descending
         search, prefix the name with "-".
+        :param collations: list of collations to use to sort by.  None
+        specifies the default collation.  Otherwise, there must be 1 value for
+        each column and it should specify the collation to use for that
+        column.
         """
         self.order_by = []
-        for column in columns:
+        if collations is None:
+            collations = (None,) * len(columns)
+        elif len(collations) != len(columns):
+            raise ValueError("sequence length mismatch")
+
+        for column, collation in zip(columns, collations):
             if column[0] == '-':
                 descending = True
                 column = column[1:]
             else:
                 descending = False
             table, column = self._parse_column(column)
-            ob = ItemTrackerOrderBy(table, column, descending)
+            ob = ItemTrackerOrderBy(table, column, collation, descending)
             self.order_by.append(ob)
 
     def get_columns_to_track(self):
@@ -214,13 +224,20 @@ class ItemTrackerQuery(object):
         sql_parts.append("WHERE %s" % ' AND '.join(where_parts))
 
     def _add_order_by(self, sql_parts, arg_list):
-        order_by_parts = []
-        for ob in self.order_by:
-            if ob.descending:
-                order_by_parts.append("%s.%s DESC" % (ob.table, ob.column))
-            else:
-                order_by_parts.append("%s.%s ASC" % (ob.table, ob.column))
+        order_by_parts = [self._make_order_by_expression(ob)
+                          for ob in self.order_by]
         sql_parts.append("ORDER BY %s" % ', '.join(order_by_parts))
+
+    def _make_order_by_expression(self, ob):
+        parts = []
+        parts.append("%s.%s" % (ob.table, ob.column))
+        if ob.collation is not None:
+            parts.append("collate %s" % ob.collation)
+        if ob.descending:
+            parts.append("DESC")
+        else:
+            parts.append("ASC")
+        return " ".join(parts)
 
     def copy(self):
         retval = ItemTrackerQuery()

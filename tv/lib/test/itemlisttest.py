@@ -37,6 +37,7 @@ import weakref
 
 from miro import app
 from miro import models
+from miro import util
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemsort
 from miro.test import mock
@@ -90,18 +91,33 @@ class ItemListTest(MiroTestCase):
         # give each items a random title
         for i in self.items:
             i.title = u''.join(random.choice(string.letters) for i in range(5))
+        self.items.sort(key=lambda i: i.title)
+        for i in self.items:
             i.signal_change()
         app.db.finish_transaction()
         # test that the default sort is release date
         self.items.sort(key=lambda i: i.release_date)
         self.check_sort_order(self.items)
-        # test TitleSort
-        self.item_list.set_sort(itemsort.TitleSort(True))
-        self.items.sort(key=lambda i: i.title)
-        self.check_sort_order(self.items)
         # test reversing a sort
-        self.item_list.set_sort(itemsort.TitleSort(False))
-        self.items.sort(key=lambda i: i.title, reverse=True)
+        self.item_list.set_sort(itemsort.DateSort(False))
+        self.items.sort(key=lambda i: i.release_date, reverse=True)
+        self.check_sort_order(self.items)
+
+    def test_name_sort(self):
+        # Test that name sort does a natural sort on the items, and removes
+        # "the" / "a" from the begining
+        self.items[0].title = u'Podcast Item'
+        self.items[1].title = u'The Podcast Item'
+        self.items[2].title = u'A Podcast Item'
+        self.items[3].title = u'SeriesItem9'
+        self.items[4].title = u'SeriesItem10'
+        self.items[5].title = u'SeriesItem11'
+        for i in self.items[:6]:
+            i.signal_change()
+        app.db.finish_transaction()
+        # test that the default sort is release date
+        self.item_list.set_sort(itemsort.TitleSort(True))
+        self.items.sort(key=lambda i: util.name_sort_key(i.title))
         self.check_sort_order(self.items)
 
     def test_attrs(self):

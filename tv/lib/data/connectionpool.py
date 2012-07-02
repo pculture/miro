@@ -31,6 +31,7 @@
 import contextlib
 import sqlite3
 
+from miro.data import dbcollations
 
 class ConnectionLimitError(StandardError):
     """We've hit our connection limits."""
@@ -66,6 +67,7 @@ class ConnectionPool(object):
         connection = sqlite3.connect(self.db_path,
                                      isolation_level=None,
                                      detect_types=sqlite3.PARSE_DECLTYPES)
+        dbcollations.setup_collations(connection)
         self.free_connections.append(connection)
         self.all_connections.add(connection)
 

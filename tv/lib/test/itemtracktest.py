@@ -55,7 +55,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.mock_idle_scheduler = mock.Mock()
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
-        query.set_order_by('release_date')
+        query.set_order_by(['release_date'])
         self.tracker = itemtrack.ItemTracker(self.mock_idle_scheduler, query)
         self.signal_handlers = {}
         for signal in ("items-changed", "list-changed"):
@@ -323,7 +323,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.add_condition('title', '<', middle_title)
-        query.set_order_by('release_date')
+        query.set_order_by(['release_date'])
         self.tracker.change_query(query)
         # changing the query should emit list-changed
         self.check_one_signal('list-changed')
@@ -336,7 +336,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         sql = "feed_id IN (SELECT id FROM feed WHERE id in (?, ?))"
         values = (self.tracked_feed.id, self.other_feed1.id)
         query.add_complex_condition("feed_id", sql, values)
-        query.set_order_by('release_date')
+        query.set_order_by(['release_date'])
         self.tracker.change_query(query)
         # changing the query should emit list-changed
         self.check_one_signal('list-changed')
@@ -381,7 +381,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_search('fo')
-        query.set_order_by('release_date')
+        query.set_order_by(['release_date'])
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items([item1, item3])
@@ -389,7 +389,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_search('fo bar')
-        query.set_order_by('release_date')
+        query.set_order_by(['release_date'])
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items([])
@@ -449,17 +449,17 @@ class ItemTrackTestWALMode(MiroTestCase):
         # test order by a different column
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
-        query.set_order_by('title')
+        query.set_order_by(['title'])
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items()
         # test reverse ordering
-        query.set_order_by('-title')
+        query.set_order_by(['-title'])
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items()
         # test order by multiple column
-        query.set_order_by('title', '-release_date')
+        query.set_order_by(['title', '-release_date'])
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items()
@@ -486,7 +486,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.check_items_changed_after_message(downloads)
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('remote_downloader.state', '=', 'downloading')
-        query.set_order_by('remote_downloader.rate')
+        query.set_order_by(['remote_downloader.rate'])
         self.tracker.change_query(query)
         # Need to manually fetch the items that we :bn
         with app.connection_pool.context() as connection:
