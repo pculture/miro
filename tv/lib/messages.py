@@ -1727,8 +1727,8 @@ class MessageToUser(FrontendMessage):
         self.title = title
         self.desc = desc
 
-class PlayMovie(FrontendMessage):
-    """Starts playing a specific movie.
+class PlayMovies(FrontendMessage):
+    """Play a list of files
     """
     def __init__(self, item_infos):
         self.item_infos = item_infos

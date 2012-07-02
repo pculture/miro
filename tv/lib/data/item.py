@@ -473,3 +473,10 @@ class ItemInfo(ItemRow):
         else:
             return None
 
+def fetch_item_infos(connection, item_ids):
+    """Fetch a list of ItemInfos """
+    columns = ','.join('%s.%s' % (c.table, c.column) for c in column_info())
+    item_ids = ','.join(str(item_id) for item_id in item_ids)
+    sql = ("SELECT %s FROM item %s WHERE item.id IN (%s)" %
+           (columns, join_sql(), item_ids))
+    return [ItemInfo(*row) for row in connection.execute(sql)]

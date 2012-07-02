@@ -78,6 +78,7 @@ from miro import signals
 from miro import prefs
 from miro import util
 from miro.data import fulltextsearch
+from miro.data import item
 from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType, filename_to_unicode
 
@@ -947,6 +948,9 @@ class LiveStorage(signals.SignalEmitter):
     def id_alive(self, id_, klass):
         """Check if an id exists and is loaded in the database."""
         return (id_, app.db.table_name(klass)) in self._object_map
+
+    def fetch_item_infos(self, item_ids):
+        return item.fetch_item_infos(self.connection, item_ids)
 
     def table_name(self, klass):
         return self._schema_map[klass].table_name
