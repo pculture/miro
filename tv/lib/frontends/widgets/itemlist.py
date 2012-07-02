@@ -119,6 +119,8 @@ class ItemList(itemtrack.ItemTracker):
             sql = ("feed_id in "
                    "(SELECT feed.id FROM feed WHERE feed.folder_id=?)")
             query.add_complex_condition('feed_id', sql, (tab_id,))
+        elif tab_type == 'folder-contents':
+            query.add_condition('parent_id', '=', tab_id)
         elif tab_type == 'manual':
             # for the manual tab, tab_id is a list of ids to play
             id_list = tab_id

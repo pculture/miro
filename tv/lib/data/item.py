@@ -231,7 +231,7 @@ class ItemInfo(ItemRow):
 
     @property
     def is_torrent(self):
-        return self.downloader_type == u'bittorrent'
+        return self.downloader_type == u'BitTorrent'
 
     @property
     def is_torrent_folder(self):
