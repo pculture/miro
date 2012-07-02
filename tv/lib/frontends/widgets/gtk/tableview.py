@@ -241,6 +241,7 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
         self.group_lines_enabled = False
         self.group_line_color = (0, 0, 0)
         self.group_line_width = 1
+        self._scroll_before_model_change = None
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
@@ -302,6 +303,8 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
         self.set_drag_dest_at_bottom(False)
 
     def do_expose_event(self, event):
+        if self._scroll_before_model_change is not None:
+            self._restore_scroll_after_model_change()
         gtk.TreeView.do_expose_event(self, event)
         if self.drag_dest_at_bottom:
             gc = self.get_style().fg_gc[self.state]
@@ -368,6 +371,29 @@ class MiroTreeView(gtk.TreeView, TreeViewScrolling):
         path_info = self.get_path_at_pos(int(round(x)), int(round(y)))
         if path_info:
             return PathInfo(*path_info)
+
+    def save_scroll_position_before_model_change(self):
+        """This method implements a hack to keep our scroll position when we
+        change our model.
+
+        For performance reasons, sometimes it's better to to change a model
+        than keep a model in place and make a bunch of changes to it (we
+        currently do this for ItemListModel).  However, one issue that we run
+        into is that when we set the new model, the scroll position is lost.
+
+        Call this method before changing the model to keep the scroll
+        position between changes.
+        """
+        vadjustment = self.get_vadjustment()
+        hadjustment = self.get_hadjustment()
+        self._scroll_before_model_change = \
+                (vadjustment.get_value(), hadjustment.get_value())
+
+    def _restore_scroll_after_model_change(self):
+        v_value, h_value = self._scroll_before_model_change
+        self._scroll_before_model_change = None
+        self.get_vadjustment().set_value(v_value)
+        self.get_hadjustment().set_value(h_value)
 
 gobject.type_register(MiroTreeView)
 
@@ -1699,12 +1725,16 @@ class ModelHandler(object):
     def __init__(self, model, gtk_treeview):
         self.model = model
         self.gtk_treeview = gtk_treeview
-        self.set_gtk_model()
+        self._set_gtk_model()
 
-    def set_gtk_model(self):
+    def _set_gtk_model(self):
         gtk_model = self.model._model
         self.gtk_treeview.set_model(gtk_model)
         wrappermap.add(gtk_model, self.model)
+
+    def reset_gtk_model(self):
+        self.gtk_treeview.save_scroll_position_before_model_change()
+        self._set_gtk_model()
 
     # Note: by default, we don't need to do anything special for
     # model_changed().
@@ -1722,7 +1752,7 @@ class ItemListModelHandler(ModelHandler):
         if self.model._model != self.gtk_treeview.get_model():
             # Items have been added or removed and ItemListModel has created a
             # FixedListStore for the new list.  Update our widget.
-            self.set_gtk_model()
+            self.reset_gtk_model()
         else:
             # Some of the items have changed, but the list is the same.  Ask
             # the treeview to redraw itself.
