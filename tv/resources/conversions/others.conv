@@ -42,11 +42,11 @@ parameters: -i {input} -f mp3 -y {output}
 mediatype: audio
 
 [Ogg Theora]
-executable: ffmpeg2theora
+executable: ffmpeg
 extension: ogv
 # below is a guess!
 bitrate: 1200000
-parameters: --videoquality 8 --audioquality 6 --frontend -o {output} {input}
+parameters: -i {input} -f ogg -vcodec libtheora -acodec libvorbis -aq 60 {output}
 mediatype: video
 
 [Ogg Vorbis]

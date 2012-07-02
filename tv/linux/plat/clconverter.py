@@ -88,9 +88,6 @@ def convert(args):
         if converter_info.executable == "ffmpeg":
             cmd = utils.get_ffmpeg_executable_path()
             params = utils.customize_ffmpeg_parameters(params)
-        else:
-            cmd = utils.get_ffmpeg2theora_executable_path()
-            params = utils.customize_ffmpeg2theora_parameters(params)
 
         params.insert(0, cmd)
 

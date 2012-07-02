@@ -499,7 +499,6 @@ class MiroBuild (py2app):
         lib_paths = glob(os.path.join(BKIT_DIR, "ffmpeg", "bin", "*.dylib"))
         ffmpeg_files.extend(os.path.basename(p) for p in lib_paths)
         copy_binaries('ffmpeg/bin/', self.helpersRoot, ffmpeg_files)
-        copy_binaries('ffmpeg2theora/bin/', self.helpersRoot, ["ffmpeg2theora"])
 
     def copy_codegen_helpers(self):
         print 'Copying ENMFP code generate to the application bundle'

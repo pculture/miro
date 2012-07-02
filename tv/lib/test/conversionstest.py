@@ -129,38 +129,6 @@ class FFMpegConversionTaskTest(MiroTestCase):
         finally:
             f.close()
 
-
-class MockFFMpeg2TheoraConversionTask(conversions.FFMpeg2TheoraConversionTask):
-    def __init__(self):
-        # not calling superclass init because it does a bunch of
-        # stuff we don't want to deal with mocking.
-
-        # instead, initialize the bits we're testing
-        self.error = None
-        self.progress = 0
-        self.duration = None
-
-    def _log_progress(self, line):
-        pass
-
-    def _notify_progress(self):
-        pass
-
-class FFMpeg2TheoraConversionTaskTest(MiroTestCase):
-    def test_ffmpeg2theora_mp4_to_oggtheora(self):
-        f = open(os.path.join(DATA, "ffmpeg2theora.mp4.oggtheora.txt"), "r")
-        try:
-            lines = conversions.line_reader(f)
-            mock = MockFFMpeg2TheoraConversionTask()
-            mock.process_output(lines)
-
-            # no errors and progress equals 1.0
-            self.assertEquals(mock.error, None)
-            self.assertEquals(mock.progress, 1.0)
-            self.assertEquals(mock.duration, 368)
-        finally:
-            f.close()
-
 class ConversionInfoTest(MiroTestCase):
     def get_output_file(self, filepath):
         filename = os.path.basename(filepath)
