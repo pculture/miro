@@ -255,6 +255,12 @@ pygtkhacks_ext = \
             'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
     )
 
+namecollation_ext = \
+    Extension("miro.data.namecollation",
+        [os.path.join(portable_dir, 'data', 'namecollation.cpp')],
+        libraries=['sqlite3'],
+    )
+
 fixedliststore_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
                                   'fixedliststore')
 fixedliststore_ext = \
@@ -577,6 +583,7 @@ ext_modules = []
 ext_modules.append(ngrams_ext)
 ext_modules.append(xlib_ext)
 ext_modules.append(pygtkhacks_ext)
+ext_modules.append(namecollation_ext)
 ext_modules.append(fixedliststore_ext)
 ext_modules.append(webkitgtkhacks_ext)
 ext_modules.append(infolist_ext)

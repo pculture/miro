@@ -31,14 +31,10 @@
 
 Once setup_collations() is called, the following collations will be defined:
 
-- name -- use util.name_sort_key()
+- name -- collation to use for names (title, artist, album, etc).
 """
-from miro import util
-
-def name_collation(string1, string2):
-    return cmp(util.name_sort_key(string1),
-               util.name_sort_key(string2))
+from miro.data import namecollation
 
 def setup_collations(connection):
     """Setup collections on a connection."""
-    connection.create_collation("name", name_collation)
+    namecollation.setup_collation(connection)

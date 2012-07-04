@@ -183,7 +183,7 @@ class ItemTrackerQuery(object):
     def select_ids(self, connection):
         """Run the select statement for this query
 
-        :returns: sqlite Cursor object
+        :returns: list of item ids
         """
         sql_parts = []
         arg_list = []
@@ -193,7 +193,9 @@ class ItemTrackerQuery(object):
         self._add_order_by(sql_parts, arg_list)
         sql = ' '.join(sql_parts)
         logging.debug("ItemTracker: running query %s (%s)", sql, arg_list)
-        return [row[0] for row in connection.execute(sql, arg_list)]
+        item_ids = [row[0] for row in connection.execute(sql, arg_list)]
+        logging.debug("ItemTracker: done running query")
+        return item_ids
 
     def _calc_tables(self):
         """Calculate which tables we need to execute the query."""

@@ -106,9 +106,9 @@ class ItemListTest(MiroTestCase):
     def test_name_sort(self):
         # Test that name sort does a natural sort on the items, and removes
         # "the" / "a" from the begining
-        self.items[0].title = u'Podcast Item'
-        self.items[1].title = u'The Podcast Item'
-        self.items[2].title = u'A Podcast Item'
+        self.items[0].title = u'Podcast Item A'
+        self.items[1].title = u'The Podcast Item B'
+        self.items[2].title = u'A Podcast Item C'
         self.items[3].title = u'SeriesItem9'
         self.items[4].title = u'SeriesItem10'
         self.items[5].title = u'SeriesItem11'

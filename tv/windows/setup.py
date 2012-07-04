@@ -104,6 +104,8 @@ PYGTK_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygtk')
 XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
+SQLITE3_PATH = os.path.join(BINARY_KIT_ROOT, 'sqlite3')
+
 GSTREAMER_PATH = os.path.join(BINARY_KIT_ROOT, 'gstreamer')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
@@ -205,6 +207,15 @@ pygtkhacks_ext = Extension(
         ]
     )
 
+namecollation_ext = \
+    Extension("miro.data.namecollation",
+        [os.path.join(portable_dir, 'data', 'namecollation.cpp')],
+        # borrow sqlite3.h from xulrunner
+        include_dirs=[os.path.join(XULRUNNER_SDK_PATH, 'include')],
+        library_dirs=[SQLITE3_PATH],
+        libraries=['sqlite3'],
+    )
+
 fixedliststore_dir = os.path.join(portable_widgets_dir, 'gtk', 'fixedliststore')
 fixedliststore_ext = Extension(
         "miro.frontends.widgets.gtk.fixedliststore",
@@ -301,6 +312,7 @@ os.environ['PATH'] = ';'.join([
 ext_modules = [
     ngrams_ext,
     pygtkhacks_ext,
+    namecollation_ext,
     fixedliststore_ext,
     embeddingwindow_ext,
     xulrunnerbrowser_ext,
@@ -362,6 +374,9 @@ data_files.append(('resources', [os.path.join(root_dir, 'CREDITS')]))
 data_files.append(('resources', [os.path.join(resources_dir, 'donate.html')]))
 
 data_files.extend(find_data_files("extensions", extensions_dir))
+# use the sqlite3.dll from our binary kit.  It's a newer version that comes
+# with python.
+data_files.append(('', [os.path.join(SQLITE3_PATH, 'sqlite3.dll')]))
 
 locale_temp_dir = os.path.join(os.path.dirname(__file__), "build", "locale")
 

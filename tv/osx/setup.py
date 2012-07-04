@@ -280,6 +280,7 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_growl_ext())
         self.distribution.ext_modules.append(self.get_growl_image_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
+        self.distribution.ext_modules.append(self.get_namecollation_ext())
         self.distribution.ext_modules.append(self.get_ngrams_ext())
         self.distribution.ext_modules.append(self.get_infolist_ext())
 
@@ -358,6 +359,13 @@ class MiroBuild (py2app):
     def get_fasttypes_ext(self):
         return Extension("miro.fasttypes",
                 [os.path.join(PORTABLE_DIR, 'fasttypes.c')])
+
+    def get_namecollation_ext(self):
+        namecollation_ext = \
+            Extension("miro.data.namecollation",
+                [os.path.join(portable_dir, 'data', 'namecollation.cpp')],
+                libraries=['sqlite3'],
+            )
 
     def get_ngrams_ext(self):
         return Extension("miro.ngrams",
