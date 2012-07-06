@@ -1110,7 +1110,7 @@ class DeviceSyncManager(object):
         def callback():
             if not os.path.exists(new_path):
                 return # copy failed, just give up
-            if _stop(self.device):
+            if _device_not_valid(self.device):
                 return # Device has been ejected, give up.
 
             device_item = item.DeviceItem(
@@ -1529,9 +1529,11 @@ def on_mount(info):
         message.send_to_backend()
     scan_device_for_files(info)
 
-def _stop(device):
+def _device_not_valid(device):
     if not app.device_manager.running: # user quit, so we will too
         logging.debug('stopping scan on %r: user quit', device.mount)
+        return True
+    if device.metadata_manager.closed: # device was ejected
         return True
     if not os.path.exists(device.mount): # device disappeared
         logging.debug('stopping scan on %r: disappeared', device.mount)
@@ -1571,7 +1573,7 @@ def scan_device_for_files(device):
             filenames.append(filename)
         if time.time() - start > 0.3:
             yield # let other stuff run
-            if _stop(device):
+            if _device_not_valid(device):
                 break
             start = time.time()
             filenames = []
@@ -1593,7 +1595,7 @@ def scan_device_for_files(device):
             if time.time() - start > 0.4:
                 device.database.set_bulk_mode(False) # save the database
                 yield # let other idle functions run
-                if _stop(device):
+                if _device_not_valid(device):
                     break
                 device.database.set_bulk_mode(True)
                 start = time.time()
