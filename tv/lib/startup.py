@@ -419,9 +419,6 @@ def fix_movies_gone(new_movies_directory):
     eventloop.add_urgent_call(check_movies_gone, "check movies gone",
                               kwargs={'check_unmounted': False})
 
-def start_sharing():
-    app.sharing_tracker.start_tracking()
-
 @startup_function
 def finish_backend_startup():
     """Last bit of startup required before we load the frontend.  """
@@ -452,7 +449,6 @@ def on_frontend_started():
             "start downloader daemon")
     eventloop.add_timeout(10, workerprocess.startup,
             "start worker process")
-    eventloop.add_timeout(15, start_sharing, "start sharing")
     eventloop.add_timeout(20, item.start_deleted_checker,
             "start checking deleted items")
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
