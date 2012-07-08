@@ -266,6 +266,11 @@ class StopTrackingWatchedFolders(BackendMessage):
     """
     pass
 
+class TrackSharing(BackendMessage):
+    """Start tracking media shares.
+    """
+    pass
+
 class TrackDevices(BackendMessage):
     """Start tracking devices.
     """
