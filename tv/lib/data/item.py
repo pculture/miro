@@ -97,7 +97,7 @@ _column_info = [
     SelectColumn('item', 'subtitle_encoding'),
     SelectColumn('item', 'is_container_item'),
     SelectColumn('item', 'release_date'),
-    SelectColumn('item', 'duration'),
+    SelectColumn('item', 'duration', 'duration_ms'),
     SelectColumn('item', 'screenshot'),
     SelectColumn('item', 'resume_time'),
     SelectColumn('item', 'license'),
@@ -472,6 +472,13 @@ class ItemInfo(ItemRow):
             return 1
         else:
             return None
+
+    @property
+    def duration(self):
+        if self.duration_ms is None:
+            return None
+        else:
+            return self.duration_ms // 1000
 
 def fetch_item_infos(connection, item_ids):
     """Fetch a list of ItemInfos """
