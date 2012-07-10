@@ -477,13 +477,9 @@ class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         # FIXME: re-implement DeviceItemController with the new ItemList code
-        return False
         return tab_type == u'device' and len(selected_tabs) == 1 and \
                isinstance(selected_tabs[0], messages.DeviceInfo) and \
                not getattr(selected_tabs[0], 'fake', False)
-
-    def cleanup(self):
-        self.controller.cleanup()
 
     def handle_current_sync_information(self, message):
         if not getattr(self.controller.device, 'fake', False):
