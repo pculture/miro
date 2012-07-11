@@ -3994,8 +3994,8 @@ def upgrade187(cursor):
     column_list = ', '.join(c for c in columns)
     column_list_for_new = ', '.join("new.%s" % c for c in columns)
     column_list_with_types = ', '.join('%s text' % c for c in columns)
-    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4"
-                   "(content='item', %s)" % column_list_with_types)
+    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4(%s)" %
+                   column_list_with_types)
     cursor.execute("INSERT INTO item_fts(docid, %s)"
                    "SELECT item.id, %s FROM item" %
                    (column_list, column_list))
@@ -4106,8 +4106,8 @@ def upgrade189(cursor):
     column_list = ', '.join(c for c in columns)
     column_list_for_new = ', '.join("new.%s" % c for c in columns)
     column_list_with_types = ', '.join('%s text' % c for c in columns)
-    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4"
-                   "(content='item', %s)" % column_list_with_types)
+    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4(%s)" %
+                   column_list_with_types)
     cursor.execute("INSERT INTO item_fts(docid, %s)"
                    "SELECT item.id, %s FROM item" %
                    (column_list, column_list))
