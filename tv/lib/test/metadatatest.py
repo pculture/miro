@@ -1378,6 +1378,7 @@ class DeviceMetadataTest(EventLoopTest):
         # make a device manager
         app.device_manager = mock.Mock()
         app.device_manager.connected = {self.device.id: self.device}
+        app.device_manager._is_hidden.return_value = False
         # Set NET_LOOKUP_BY_DEFAULT to True.  We should ignore it for device
         # items and always set net_lookup_enabled to False.
         app.config.set(prefs.NET_LOOKUP_BY_DEFAULT, True)
