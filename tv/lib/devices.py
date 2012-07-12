@@ -1588,29 +1588,28 @@ def scan_device_for_files(device):
             start = time.time()
             filenames = []
 
-    if app.device_manager.running and os.path.exists(device.mount):
-        # we don't re-check if the device is hidden because we still want to
-        # save the items we found in that case
-        yield # yield after prep work
+    yield # yield after prep work
+    if _device_not_valid(device):
+        return
 
-        device.database.setdefault(u'sync', {})
-        logging.debug('scanned %r, found %i files (%i total)',
-                      device.mount, len(item_data),
-                      len(known_files) + len(item_data))
+    device.database.setdefault(u'sync', {})
+    logging.debug('scanned %r, found %i files (%i total)',
+                  device.mount, len(item_data),
+                  len(known_files) + len(item_data))
 
-        device.database.set_bulk_mode(True)
-        start = time.time()
-        for ufilename, item_type in item_data:
-            create_item_for_file(device, ufilename, item_type)
-            if time.time() - start > 0.4:
-                device.database.set_bulk_mode(False) # save the database
-                yield # let other idle functions run
-                if _device_not_valid(device):
-                    break
-                device.database.set_bulk_mode(True)
-                start = time.time()
+    device.database.set_bulk_mode(True)
+    start = time.time()
+    for ufilename, item_type in item_data:
+        create_item_for_file(device, ufilename, item_type)
+        if time.time() - start > 0.4:
+            device.database.set_bulk_mode(False) # save the database
+            yield # let other idle functions run
+            if _device_not_valid(device):
+                break
+            device.database.set_bulk_mode(True)
+            start = time.time()
 
-        device.database.set_bulk_mode(False)
+    device.database.set_bulk_mode(False)
 
 def create_item_for_file(device, video_path, file_type):
     i = item.DeviceItem(video_path=video_path,
