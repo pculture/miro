@@ -1543,7 +1543,7 @@ def _device_not_valid(device):
     if not app.device_manager.running: # user quit, so we will too
         logging.debug('stopping scan on %r: user quit', device.mount)
         return True
-    if device.metadata_manager.closed: # device was ejected
+    if device.metadata_manager is None or device.metadata_manager.closed: # device was ejected
         return True
     if not os.path.exists(device.mount): # device disappeared
         logging.debug('stopping scan on %r: disappeared', device.mount)
