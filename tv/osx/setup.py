@@ -361,9 +361,8 @@ class MiroBuild (py2app):
                 [os.path.join(PORTABLE_DIR, 'fasttypes.c')])
 
     def get_namecollation_ext(self):
-        namecollation_ext = \
-            Extension("miro.data.namecollation",
-                [os.path.join(portable_dir, 'data', 'namecollation.cpp')],
+        return Extension("miro.data.namecollation",
+                [os.path.join(PORTABLE_DIR, 'data', 'namecollation.cpp')],
                 libraries=['sqlite3'],
             )
 
