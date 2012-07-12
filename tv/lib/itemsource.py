@@ -63,7 +63,7 @@ class ItemSource(signals.SignalEmitter):
     # Methods to implement for sources
     def fetch_all(self):
         """
-        Returns a list of ItemInfo objects representing all the A/V items this
+        Returns a list of 
         source knows about.
         """
         raise NotImplementedError

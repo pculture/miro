@@ -788,12 +788,12 @@ class LiveStorage(signals.SignalEmitter):
                       ('simulate_db_save_error', 1), is_update=True)
 
     def remember_object(self, obj):
-        key = (obj.id, app.db.table_name(obj.__class__))
+        key = (obj.id, obj.db_info.db.table_name(obj.__class__))
         self._object_map[key] = obj
         self._ids_loaded.add(key)
 
     def forget_object(self, obj):
-        key = (obj.id, app.db.table_name(obj.__class__))
+        key = (obj.id, obj.db_info.db.table_name(obj.__class__))
         try:
             del self._object_map[key]
         except KeyError:
@@ -814,8 +814,8 @@ class LiveStorage(signals.SignalEmitter):
             value = getattr(obj, name)
             try:
                 schema_item.validate(value)
-            except schema.ValidationError:
-                logging.warn("error validating %s for %s", name, obj)
+            except schema.ValidationError, e:
+                logging.warn("error validating %s for %s (%s)", name, obj, e)
                 raise
             values.append(self._converter.to_sql(obj_schema, name,
                 schema_item, value))
@@ -935,11 +935,11 @@ class LiveStorage(signals.SignalEmitter):
         This will throw a KeyError if id is not in the database, or if the
         object for id has not been loaded yet.
         """
-        return self._object_map[(id_, app.db.table_name(klass))]
+        return self._object_map[(id_, self.table_name(klass))]
 
     def id_alive(self, id_, klass):
         """Check if an id exists and is loaded in the database."""
-        return (id_, app.db.table_name(klass)) in self._object_map
+        return (id_, self.table_name(klass)) in self._object_map
 
     def fetch_item_infos(self, item_ids):
         return item.fetch_item_infos(self.connection, item_ids)
@@ -972,7 +972,7 @@ class LiveStorage(signals.SignalEmitter):
 
         :returns: True iff we needed to load objects
         """
-        table_name = app.db.table_name(klass)
+        table_name = self.table_name(klass)
         unrestored_ids = []
         for id_ in id_list:
             if (id_, table_name) not in self._ids_loaded:

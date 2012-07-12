@@ -361,7 +361,7 @@ from miro.feed import ManualFeedImpl
 from miro.folder import (HideableTab, ChannelFolder, PlaylistFolder,
                          PlaylistFolderItemMap)
 from miro.guide import ChannelGuide
-from miro.item import Item, FileItem
+from miro.item import Item, FileItem, DeviceItem
 from miro.iconcache import IconCache
 from miro.metadata import MetadataStatus, MetadataEntry
 from miro.playlist import SavedPlaylist, PlaylistItemMap
@@ -478,6 +478,63 @@ class ItemSchema(MultiClassObjectSchema):
             ('item_file_type', ('file_type',)),
             ('item_filename', ('filename',)),
     )
+
+class DeviceItemSchema(MultiClassObjectSchema):
+    """Schema for items on devices.  This only gets used for device databases
+    """
+    klass = DeviceItem
+    table_name = 'device_item'
+
+    fields = DDBObjectSchema.fields + [
+        ('title', SchemaString()),
+        ('creation_time', SchemaDateTime()),
+        ('watched_time', SchemaDateTime(noneOk=True)),
+        ('last_watched', SchemaDateTime(noneOk=True)),
+        ('subtitle_encoding', SchemaString(noneOk=True)),
+        ('release_date', SchemaDateTime(noneOk=True)),
+        ('parent_title', SchemaString(noneOk=True)),
+        ('feed_url', SchemaString(noneOk=True)),
+        ('license', SchemaString(noneOk=True)),
+        ('rss_id', SchemaString(noneOk=True)),
+        ('entry_title', SchemaString(noneOk=True)),
+        ('torrent_title', SchemaString(noneOk=True)),
+        ('entry_description', SchemaString(noneOk=True)),
+        ('permalink', SchemaURL(noneOk=True)),
+        ('payment_link', SchemaURL(noneOk=True)),
+        ('comments_link', SchemaURL(noneOk=True)),
+        ('url', SchemaURL(noneOk=True)),
+        ('size', SchemaInt()),
+        ('enclosure_size', SchemaInt(noneOk=True)),
+        ('enclosure_type', SchemaString(noneOk=True)),
+        ('enclosure_format', SchemaString(noneOk=True)),
+        ('filename', SchemaFilename(noneOk=True)),
+        ('resume_time', SchemaInt()),
+        ('play_count', SchemaInt()),
+        ('skip_count', SchemaInt()),
+        ('auto_sync', SchemaBool()),
+        # metadata:
+        ('screenshot', SchemaFilename(noneOk=True)),
+        ('duration', SchemaInt(noneOk=True)),
+        ('cover_art', SchemaFilename(noneOk=True)),
+        ('description', SchemaString(noneOk=True)),
+        ('album', SchemaString(noneOk=True)),
+        ('album_artist', SchemaString(noneOk=True)),
+        ('artist', SchemaString(noneOk=True)),
+        ('track', SchemaInt(noneOk=True)),
+        ('album_tracks', SchemaInt(noneOk=True)),
+        ('year', SchemaInt(noneOk=True)),
+        ('genre', SchemaString(noneOk=True)),
+        ('rating', SchemaInt(noneOk=True)),
+        ('file_type', SchemaString(noneOk=True)),
+        ('has_drm', SchemaBool(noneOk=True)),
+        ('show', SchemaString(noneOk=True)),
+        ('episode_id', SchemaString(noneOk=True)),
+        ('episode_number', SchemaInt(noneOk=True)),
+        ('season_number', SchemaInt(noneOk=True)),
+        ('kind', SchemaString(noneOk=True)),
+        ('net_lookup_enabled', SchemaBool()),
+        ('metadata_title', SchemaString(noneOk=True)),
+    ]
 
 class FeedSchema(DDBObjectSchema):
     klass = Feed
@@ -885,4 +942,10 @@ object_schemas = [
     TabOrderSchema, ThemeHistorySchema, DisplayStateSchema, GlobalStateSchema,
     DBLogEntrySchema, ViewStateSchema, MetadataStatusSchema,
     MetadataEntrySchema
+]
+
+device_object_schemas = [
+    MetadataEntrySchema,
+    MetadataStatusSchema,
+    DeviceItemSchema,
 ]

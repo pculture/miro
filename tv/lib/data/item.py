@@ -81,6 +81,8 @@ _column_info = [
     SelectColumn('item', 'id'),
     SelectColumn('item', 'new'),
     SelectColumn('item', 'title'),
+    SelectColumn('item', 'entry_title'),
+    SelectColumn('item', 'torrent_title'),
     SelectColumn('item', 'feed_id'),
     SelectColumn('item', 'parent_id'),
     SelectColumn('item', 'parent_title'),

@@ -29,6 +29,7 @@
 
 """Upgrade old device databases """
 
+import datetime
 import itertools
 import logging
 import os.path
@@ -40,17 +41,19 @@ from miro import databaseupgrade
 from miro import item
 from miro import metadata
 from miro import prefs
+from miro import schema
 from miro import storedatabase
 
 def import_old_items(live_storage, json_db, mount):
     """Import items in a JSON database from old versions.
 
     For each item in the JSON db that doesn't have a corresponding entry in
-    the metadata status table, we import that data into the metadata table.
-    This method basically does upgrades 166 through 173 for those items.
+    the metadata status table, we import that data into the metadata table and
+    create an entry in the device_item table.  This method basically does
+    upgrades 166 through 173 for those items.
 
-    How to handle upgrades after this?  Who knows.  We're just worrying about
-    making version 5.0 work at this point.
+    This function doesn't handle upgrading items in the sqlite database.  This
+    happens through the databaseupgrade code.
     """
     live_storage.cursor.execute("BEGIN TRANSACTION")
     try:
@@ -112,6 +115,12 @@ class _do_import_old_items(object):
         (', '.join(insert_columns),
          ', '.join('?' for i in xrange(len(insert_columns)))))
 
+    # SQL to insert a row into the device_item table
+    device_item_insert_sql = (
+        "INSERT INTO device_item (%s) VALUES (%s)" %
+        (', '.join(name for name, field in schema.DeviceItemSchema.fields),
+         ', '.join('?' for i in xrange(len(schema.DeviceItemSchema.fields)))))
+
     def __init__(self, cursor, json_db, mount):
         self.cover_art_dir = os.path.join(mount, '.miro', 'cover-art')
         self.net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
@@ -143,7 +152,6 @@ class _do_import_old_items(object):
             except StandardError, e:
                 logging.warn("error converting device item for %r ", path,
                              exc_info=True)
-                self.insert_fresh_metadata_status_row(file_type, path)
 
     def init_paths_in_metadata_table(self):
         """Initialize paths_in_metadata_table
@@ -170,6 +178,13 @@ class _do_import_old_items(object):
                     self.device_items.append((file_type, path, data))
 
     def convert_old_item(self, file_type, path, old_item):
+        self.add_metadata_to_db(file_type, path, old_item)
+        self.add_device_item(file_type, path, old_item)
+        self.fix_json_data(old_item)
+
+    def add_metadata_to_db(self, file_type, path, old_item):
+        """Add rows to the metadata and metadata_status tables for old items.
+        """
 
         # title and title_tag were pretty confusing before 5.0.  We would set
         # title_tag based on the ID3 tags, and if that didn't work, then set
@@ -215,14 +230,6 @@ class _do_import_old_items(object):
 
         self.cursor.execute(self.metadata_insert_sql, values)
 
-        if 'cover_art' in old_item:
-            self.upgrade_cover_art(old_item)
-        # Use the RAN state for all old items.  This will prevent old miro
-        # versions from running the movie data program on them.  This seems
-        # the safest option and old versions should still pick up new metadata
-        # when newer versions run MDP.
-        old_item['mdp_state'] = item.MDP_STATE_RAN
-
     def insert_into_metadata_status(self, path, file_type, finished_status,
                                     mutagen_status, moviedata_status,
                                     echonest_status, has_drm,
@@ -239,6 +246,37 @@ class _do_import_old_items(object):
                              echonest_status, self.net_lookup_enabled,
                              has_drm, max_entry_priority))
         return status_id
+
+    def add_device_item(self, file_type, path, old_item):
+        """Insert a device_item row for an old item."""
+        values = []
+        for name, field in schema.DeviceItemSchema.fields:
+            # get value from the old item
+            if name == 'id':
+                value = self.id_counter.next()
+            elif name == 'filename':
+                value = path
+            elif name == 'file_type':
+                value = file_type
+            else:
+                value = old_item.get(name)
+            # convert value
+            if value is not None:
+                if isinstance(field, schema.SchemaDateTime):
+                    value = datetime.datetime.fromtimestamp(value)
+            values.append(value)
+        self.cursor.execute(self.device_item_insert_sql, values)
+
+    def fix_json_data(self, old_item):
+        """Update the data in the JSON db after upgrading an old item."""
+        if 'cover_art' in old_item:
+            self.upgrade_cover_art(old_item)
+        # Use the RAN state for all old items.  This will prevent old miro
+        # versions from running the movie data program on them.  This seems
+        # the safest option and old versions should still pick up new metadata
+        # when newer versions run MDP.
+        old_item['mdp_state'] = item.MDP_STATE_RAN
+
 
     def upgrade_cover_art(self, device_item):
         """Drop the cover_art field and move cover art to a filename based on
@@ -266,12 +304,3 @@ class _do_import_old_items(object):
                              cover_art, dest_path)
                 return
         device_item['cover_art'] = dest_path
-
-    def insert_fresh_metadata_status_row(self, file_type, path):
-        # make a metadata_status row for each item in the database as if they
-        # were just added
-
-        STATUS_NOT_RUN = metadata.MetadataStatus.STATUS_NOT_RUN
-        self.insert_into_metadata_status(path, file_type, 0, STATUS_NOT_RUN,
-                                         STATUS_NOT_RUN, STATUS_NOT_RUN,
-                                         False, 0)

@@ -1836,8 +1836,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         devices.write_database(message.device.database, message.device.mount)
         if message.device.metadata_manager is not None:
             message.device.metadata_manager.close()
-        if message.device.sqlite_database is not None:
-            message.device.sqlite_database.close()
+        if message.device.db_info is not None:
+            message.device.db_info.db.close()
         app.device_tracker.eject(message.device)
 
     def handle_query_sync_information(self, message):
@@ -1875,7 +1875,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                     remaining = message.device.max_sync_size() - size
                     auto_items = dsm.get_auto_items(remaining)
                     if auto_items:
-                        dsm.add_items(auto_items)
+                        dsm.add_items(auto_items, auto_sync=True)
             else:
                 message = messages.CurrentSyncInformation(message.device,
                                                           0, 0)

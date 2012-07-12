@@ -33,16 +33,23 @@ try:
 except ImportError:
     import json
 
+import datetime
 import sqlite3
 
 from miro.gtcache import gettext as _
-from miro.plat.utils import PlatformFilenameType
-from miro.test.framework import MiroTestCase
+from miro.plat.utils import (PlatformFilenameType, unicode_to_filename,
+                             utf8_to_filename)
+from miro.test.framework import MiroTestCase, EventLoopTest
 from miro.test import mock
 
+from miro import app
+from miro import database
 from miro import devices
 from miro import item
+from miro import metadata
+from miro import schema
 from miro import storedatabase
+from miro.plat import resources
 
 class DeviceManagerTest(MiroTestCase):
     def build_config_file(self, filename, data):
@@ -266,6 +273,81 @@ class DeviceHelperTest(MiroTestCase):
             new_data = json.load(f)
         self.assertEqual(data, new_data)
 
+class ScanDeviceForFilesTest(EventLoopTest):
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        self.setup_device()
+        self.add_fake_media_files_to_device()
+        self.setup_fake_device_manager()
+
+    def tearDown(self):
+        del app.device_manager
+        EventLoopTest.tearDown(self)
+
+    def setup_device(self):
+        self.device = mock.Mock()
+        self.device.database = devices.DeviceDatabase()
+        self.device.mount = self.make_temp_dir_path()
+        self.device.id = 123
+        self.device.name = 'Device'
+        self.device.size = 1024000
+        self.device.read_only = False
+        os.makedirs(os.path.join(self.device.mount, '.miro'))
+        sqlite_db = devices.load_sqlite_database(self.device.mount,
+                                                 self.device.database,
+                                                 self.device.size)
+        db_info = database.DBInfo(sqlite_db)
+        metadata_manager = devices.make_metadata_manager(self.device.mount,
+                                                         db_info,
+                                                         self.device.id)
+        self.device.db_info = db_info
+        self.device.metadata_manager = metadata_manager
+
+    def setup_fake_device_manager(self):
+        app.device_manager = mock.Mock()
+        app.device_manager.running = True
+        app.device_manager._is_hidden.return_value = False
+
+    def add_fake_media_files_to_device(self):
+        self.device_item_filenames = [
+            unicode_to_filename(f.decode('utf-8')) for f in
+            ['foo.mp3', 'bar.mp3', 'foo.avi', 'bar.ogg']
+        ]
+        for filename in self.device_item_filenames:
+            path = os.path.join(self.device.mount, filename)
+            with open(path, 'w') as f:
+                f.write("fake-data")
+
+    def check_device_items(self, correct_paths):
+        device_items = item.DeviceItem.make_view(db_info=self.device.db_info)
+        device_item_paths = [di.filename for di in device_items]
+        self.assertSameSet(device_item_paths, correct_paths)
+
+    def run_scan_device_for_files(self):
+        devices.scan_device_for_files(self.device)
+        self.runPendingIdles()
+
+    def test_scan_device_for_files(self):
+        self.run_scan_device_for_files()
+        self.check_device_items(self.device_item_filenames)
+
+    def test_removed_files(self):
+        self.run_scan_device_for_files()
+        self.check_device_items(self.device_item_filenames)
+        # remove a couple files
+        for i in xrange(2):
+            filename = self.device_item_filenames.pop()
+            os.remove(os.path.join(self.device.mount, filename))
+        # run scan_device_for_files again, it should remove the items that are
+        # no longer present
+        self.run_scan_device_for_files()
+        self.check_device_items(self.device_item_filenames)
+
+    def test_skip_read_only(self):
+        self.device.read_only = True
+        self.run_scan_device_for_files()
+        self.check_device_items([])
+
 class GlobSetTest(MiroTestCase):
 
     def test_globset_regular_match(self):
@@ -315,7 +397,6 @@ class DeviceDatabaseTest(MiroTestCase):
         MiroTestCase.setUp(self)
         self.device = mock.Mock()
         self.device.database = devices.DeviceDatabase()
-        self.device.database[u'audio'] = {}
         self.device.mount = self.tempdir
         self.device.id = 123
         self.device.name = 'Device'
@@ -326,33 +407,38 @@ class DeviceDatabaseTest(MiroTestCase):
         sqlite_db = devices.load_sqlite_database(self.device.mount,
                                                  self.device.database,
                                                  self.device.size)
+        db_info = database.DBInfo(sqlite_db)
         metadata_manager = devices.make_metadata_manager(self.device.mount,
-                                                         sqlite_db,
+                                                         db_info,
                                                          self.device.id)
-        self.device.sqlite_database = sqlite_db
+        self.device.db_info = db_info
         self.device.metadata_manager = metadata_manager
 
     def make_device_items(self, *filenames):
         for filename in filenames:
-            filename = unicode(filename)
-            devices.create_item_for_file(self.device, filename, u'audio')
+            # ensure that filename is the correct type for our platform
+            filename = unicode_to_filename(unicode(filename))
+            with open(os.path.join(self.device.mount, filename), 'w') as f:
+                f.write("FAKE DATA")
+                f.close()
+            item.DeviceItem(self.device, filename)
 
     def test_open(self):
         self.open_database()
-        self.assertEquals(self.device.sqlite_database.__class__,
+        self.assertEquals(self.device.db_info.db.__class__,
                           storedatabase.LiveStorage)
-        self.assertEquals(self.device.sqlite_database.error_handler.__class__,
+        self.assertEquals(self.device.db_info.db.error_handler.__class__,
                           storedatabase.DeviceLiveStorageErrorHandler)
 
     def test_reload(self):
         self.open_database()
         self.make_device_items('foo.mp3', 'bar.mp3')
         # close, then reopen the database
-        self.device.sqlite_database.finish_transaction()
+        self.device.db_info.db.finish_transaction()
         self.open_database()
         # test that the database is still intact by checking the
         # metadata_status table
-        cursor = self.device.sqlite_database.cursor
+        cursor = self.device.db_info.db.cursor
         cursor.execute("SELECT path FROM metadata_status")
         paths = [r[0] for r in cursor.fetchall()]
         self.assertSameSet(paths, ['foo.mp3', 'bar.mp3'])
@@ -376,27 +462,99 @@ class DeviceDatabaseTest(MiroTestCase):
         dir_contents = os.listdir(os.path.join(self.device.mount, '.miro'))
         self.assert_('corrupt_database' in dir_contents)
 
-    def test_upgrade_error(self):
-        self.open_database()
-        self.make_device_items('foo.mp3', 'bar.mp3')
-        devices.write_database(self.device.database, self.device.mount)
-        # Force our upgrade code to run and throw an exception.
-        os.remove(os.path.join(self.device.mount, '.miro', 'sqlite'))
-        mock_do_import = mock.Mock()
-        method = ('miro.devicedatabaseupgrade.'
-                  '_do_import_old_items.convert_old_item')
-        patcher = mock.patch(method, mock_do_import)
-        mock_do_import.side_effect = sqlite3.DatabaseError("Error")
-        with patcher:
-            with self.allow_warnings():
-                self.open_database()
-        # check that we created a new sqlite database and added new metadata
-        # status rows for the device items
-        cursor = self.device.sqlite_database.cursor
-        cursor.execute("SELECT path FROM metadata_status")
-        paths = [r[0] for r in cursor.fetchall()]
-        self.assertSameSet(paths, ['foo.mp3', 'bar.mp3'])
-
     def test_save_error(self):
         # FIXME: what should we do if we have an error saving to the device?
         pass
+
+class DeviceUpgradeTest(MiroTestCase):
+    """Test upgrading data from a JSON db from an old version of Miro."""
+
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        # setup a device database
+        json_path = resources.path('testdata/pre-metadata-device-db')
+        self.db = devices.DeviceDatabase(json.load(open(json_path)))
+        # setup a device object
+        self.device = mock.Mock()
+        self.device.database = self.db
+        self.device.mount = self.tempdir + "/"
+        self.device.remaining = 0
+        os.makedirs(os.path.join(self.device.mount, '.miro'))
+        self.device.id = 123
+        self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
+        os.makedirs(self.cover_art_dir)
+
+    def test_upgrade(self):
+        # Test the upgrade from pre-metadata device databases
+        sqlite_db = devices.load_sqlite_database(':memory:', self.db, 1024)
+        db_info = database.DBInfo(sqlite_db)
+        # load_sqlite_database should have converted the old data to metadata
+        # entries
+        metadata_manager = devices.make_metadata_manager(self.tempdir,
+                                                         db_info,
+                                                         self.device.id)
+        for path, item_data in self.db[u'audio'].items():
+            # fill in data that's implicit with the dict
+            item_data['file_type'] = u'audio'
+            item_data['video_path'] = path
+            filename = utf8_to_filename(path.encode('utf-8'))
+            self.check_migrated_status(filename, metadata_manager.db_info)
+            self.check_migrated_entries(filename, item_data,
+                                        metadata_manager.db_info)
+            self.check_migrated_device_item(filename, item_data,
+                                            metadata_manager.db_info)
+            # check that the title tag was deleted
+            self.assert_(not hasattr(item, 'title_tag'))
+
+    def check_migrated_status(self, filename, device_db_info):
+        # check the MetadataStatus.  For all items, we should be in the movie
+        # data stage.
+        status = metadata.MetadataStatus.get_by_path(filename, device_db_info)
+        self.assertEquals(status.current_processor, u'movie-data')
+        self.assertEquals(status.mutagen_status, status.STATUS_SKIP)
+        self.assertEquals(status.moviedata_status, status.STATUS_NOT_RUN)
+        self.assertEquals(status.echonest_status, status.STATUS_SKIP)
+        self.assertEquals(status.net_lookup_enabled, False)
+
+    def check_migrated_entries(self, filename, item_data, device_db_info):
+        status = metadata.MetadataStatus.get_by_path(filename, device_db_info)
+        entries = metadata.MetadataEntry.metadata_for_status(status,
+                                                             device_db_info)
+        entries = list(entries)
+        self.assertEquals(len(entries), 1)
+        entry = entries[0]
+        self.assertEquals(entry.source, 'old-item')
+
+        columns_to_check = entry.metadata_columns.copy()
+        # handle drm specially
+        self.assertEquals(entry.drm, False)
+        columns_to_check.discard('drm')
+
+        for name in columns_to_check:
+            device_value = item_data.get(name)
+            if device_value == '':
+                device_value = None
+            if getattr(entry, name) != device_value:
+                raise AssertionError(
+                    "Error migrating %s (old: %s new: %s)" %
+                    (name, device_value, getattr(entry, name)))
+
+    def check_migrated_device_item(self, filename, item_data, device_db_info):
+        device_item = item.DeviceItem.get_by_path(filename, device_db_info)
+        for name, field in schema.DeviceItemSchema.fields:
+            if name == 'filename':
+                # need to special-case this one, since filename is not stored
+                # in the item_data dict
+                self.assertEquals(device_item.filename, filename)
+                continue
+            elif name == 'id':
+                continue # this column doesn't get migrated
+            old_value = item_data.get(name)
+            if (isinstance(field, schema.SchemaDateTime) and
+                old_value is not None):
+                old_value = datetime.datetime.fromtimestamp(old_value)
+            new_value = getattr(device_item, name)
+            if new_value != old_value:
+                raise AssertionError("Error converting field %s "
+                                     "(old: %r, new: %r)" % (name, old_value,
+                                                             new_value))

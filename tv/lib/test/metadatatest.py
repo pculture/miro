@@ -13,6 +13,7 @@ import json
 from miro.test import mock
 from miro.test.framework import MiroTestCase, EventLoopTest, MatchAny
 from miro import app
+from miro import database
 from miro import devices
 from miro import echonest
 from miro import item
@@ -1355,11 +1356,12 @@ class EchonestNetErrorTest(EventLoopTest):
 class DeviceMetadataTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
+        messages.FrontendMessage.handler = mock.Mock()
         # setup a device database
-        self.db = devices.DeviceDatabase()
-        self.db[u'audio'] = {}
-        self.db[u'video'] = {}
-        self.db[u'other'] = {}
+        device_db = devices.DeviceDatabase()
+        device_db[u'audio'] = {}
+        device_db[u'video'] = {}
+        device_db[u'other'] = {}
         # setup a device object
         device_info = mock.Mock()
         device_info.name = 'DeviceName'
@@ -1368,11 +1370,12 @@ class DeviceMetadataTest(EventLoopTest):
         os.makedirs(os.path.join(mount, '.miro'))
         self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
         os.makedirs(self.cover_art_dir)
-        sqlite_db = devices.load_sqlite_database(':memory:', self.db, 1024)
+        sqlite_db = devices.load_sqlite_database(':memory:', device_db, 1024)
+        db_info = database.DBInfo(sqlite_db)
         metadata_manager = devices.make_metadata_manager(
-            self.tempdir, sqlite_db, device_id)
+            self.tempdir, db_info, device_id)
         self.device = messages.DeviceInfo(device_id, device_info, mount,
-                                          self.db, sqlite_db,
+                                          device_info, db_info,
                                           metadata_manager, 1000, 0, False)
         # copy a file to our device
         src = resources.path('testdata/Wikipedia_Song_by_teddy.ogg')
@@ -1398,9 +1401,9 @@ class DeviceMetadataTest(EventLoopTest):
         EventLoopTest.tearDown(self)
 
     def make_device_item(self):
-        return devices.create_item_for_file(self.device,
-                                            u'test-song.ogg',
-                                            u'audio')
+        return item.DeviceItem(self.device,
+                               unicode_to_filename(u'test-song.ogg'))
+
     def run_processors(self):
         self._run_processors(self.device.metadata_manager,
                              os.path.join(self.tempdir, 'test-song.ogg'))
@@ -1432,8 +1435,6 @@ class DeviceMetadataTest(EventLoopTest):
         self.assertEquals(device_item.net_lookup_enabled, False)
 
     def test_update(self):
-        item_changed_handler = mock.Mock()
-        self.device.database.connect('item-changed', item_changed_handler)
         # Test that we update DeviceItems as we get metadata
         self.make_device_item()
         self.run_processors()
@@ -1447,16 +1448,9 @@ class DeviceMetadataTest(EventLoopTest):
             'has_drm': False,
             'net_lookup_enabled': False,
         })
-        # check data in the json database
-        item_data = self.device.database[u'audio'][u'test-song.ogg']
-        self.assertEquals(item_data[u'title'], u'Title')
-        self.assertEquals(item_data[u'artist'], u'Artist')
-        self.assertEquals(item_data[u'album'], u'Album')
-        # check the item-changed signal.  We should have gotten 2 calls, one
-        # for each time we ran run_updates() in run_processors().  Check the
-        # data from the last emission
-        self.assertEquals(item_changed_handler.call_count, 2)
-        device_item = item_changed_handler.call_args[0][1]
+        # check data in the DeviceItem
+        device_item = item.DeviceItem.get_by_path(
+            unicode_to_filename(u'test-song.ogg'), self.device.db_info)
         self.assertEquals(device_item.title, u'Title')
         self.assertEquals(device_item.artist, u'Artist')
         self.assertEquals(device_item.album, u'Album')
@@ -1487,7 +1481,7 @@ class DeviceMetadataTest(EventLoopTest):
         # Test that we remove metadata entries for removed DeviceItems.
         device_item = self.make_device_item()
         self.run_processors()
-        device_item.remove()
+        device_item.remove(self.device)
         self.assertRaises(KeyError, self.get_metadata_for_item)
 
     def test_restart_incomplete(self):
@@ -1498,7 +1492,7 @@ class DeviceMetadataTest(EventLoopTest):
         patcher = mock.patch('miro.workerprocess.send', mock_send)
         with patcher:
             self.device.metadata_manager = devices.make_metadata_manager(
-                self.tempdir, self.device.sqlite_database, self.device.id)
+                self.tempdir, self.device.db_info, self.device.id)
         self.assertEquals(mock_send.call_count, 1)
         task = mock_send.call_args[0][0]
         self.assertEquals(task.source_path,
@@ -1547,74 +1541,6 @@ class DeviceMetadataTest(EventLoopTest):
         del item_metadata['net_lookup_enabled']
         del device_item_metadata['net_lookup_enabled']
         self.assertDictEquals(device_item_metadata, item_metadata)
-
-class DeviceMetadataUpgradeTest(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        # setup a device database
-        json_path = resources.path('testdata/pre-metadata-device-db')
-        self.db = devices.DeviceDatabase(json.load(open(json_path)))
-        # setup a device object
-        self.device = mock.Mock()
-        self.device.database = self.db
-        self.device.mount = self.tempdir + "/"
-        self.device.remaining = 0
-        os.makedirs(os.path.join(self.device.mount, '.miro'))
-        self.device.id = 123
-        self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
-        os.makedirs(self.cover_art_dir)
-
-    def test_upgrade(self):
-        # Test the upgrade from pre-metadata device databases
-        sqlite_db = devices.load_sqlite_database(':memory:', self.db, 1024)
-        # load_sqlite_database should have converted the old data to metadata
-        # entries
-        metadata_manager = devices.make_metadata_manager(self.tempdir,
-                                                         sqlite_db,
-                                                         self.device.id)
-        for path, item_data in self.db[u'audio'].items():
-            # fill in data that's implicit with the dict
-            item_data['file_type'] = u'audio'
-            item_data['video_path'] = path
-            filename = utf8_to_filename(path.encode('utf-8'))
-            self.check_migrated_status(filename, metadata_manager.db_info)
-            self.check_migrated_entries(filename, item_data,
-                                        metadata_manager.db_info)
-            # check that the title tag was deleted
-            self.assert_(not hasattr(item, 'title_tag'))
-
-    def check_migrated_status(self, filename, device_db_info):
-        # check the MetadataStatus.  For all items, we should be in the movie
-        # data stage.
-        status = metadata.MetadataStatus.get_by_path(filename, device_db_info)
-        self.assertEquals(status.current_processor, u'movie-data')
-        self.assertEquals(status.mutagen_status, status.STATUS_SKIP)
-        self.assertEquals(status.moviedata_status, status.STATUS_NOT_RUN)
-        self.assertEquals(status.echonest_status, status.STATUS_SKIP)
-        self.assertEquals(status.net_lookup_enabled, False)
-
-    def check_migrated_entries(self, filename, item_data, device_db_info):
-        status = metadata.MetadataStatus.get_by_path(filename, device_db_info)
-        entries = metadata.MetadataEntry.metadata_for_status(status,
-                                                             device_db_info)
-        entries = list(entries)
-        self.assertEquals(len(entries), 1)
-        entry = entries[0]
-        self.assertEquals(entry.source, 'old-item')
-
-        columns_to_check = entry.metadata_columns.copy()
-        # handle drm specially
-        self.assertEquals(entry.drm, False)
-        columns_to_check.discard('drm')
-
-        for name in columns_to_check:
-            device_value = item_data.get(name)
-            if device_value == '':
-                device_value = None
-            if getattr(entry, name) != device_value:
-                raise AssertionError(
-                    "Error migrating %s (old: %s new: %s)" %
-                    (name, device_value, getattr(entry, name)))
 
 class TestCodegen(EventLoopTest):
     def setUp(self):

@@ -34,6 +34,7 @@ from time import sleep
 from miro import models
 from miro import workerprocess
 from miro.fileobject import FilenameType
+from miro.data.item import fetch_item_infos
 
 from miro.test import mock
 from miro.test import testhttpserver
@@ -254,7 +255,7 @@ class LogFilter(logging.Filter):
         if record.levelno >= self.exception_level and not self.raised_error:
             self.raised_error = True
             raise UnexpectedLogError("Unexpected logging: %s" %
-                                     record.getMessage())
+                                     logging.Formatter().format(record))
         else:
             self.records.append(record)
             return False
@@ -395,7 +396,7 @@ class MiroTestCase(unittest.TestCase):
                 app.extension_manager.unload_extension(ext)
 
     def make_item_info(self, itemobj):
-        return itemsource.DatabaseItemSource._item_info_for(itemobj)
+        return fetch_item_infos(app.db.connection, [itemobj.id])[0]
 
     def make_feed(self, url):
         url = u'http://feed%d.com/feed.rss' % self.feed_counter.next()

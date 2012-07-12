@@ -413,7 +413,45 @@ class ItemChangeTracker(object):
     def on_item_removed(self, item):
         self.removed.add(item.id)
 
-class Item(DDBObject, iconcache.IconCacheOwnerMixin):
+class ItemBase(DDBObject):
+    """Base class for Item and DeviceItem"""
+
+    def init_metadata_attributes(self):
+        """Initialize all metadata attributes to None."""
+        for attr in metadata.attribute_names:
+            if attr == 'title':
+                attr = 'metadata_title'
+            setattr(self, attr, None)
+
+    def calc_title(self):
+        """Set the title column
+
+        The title column store the official title for the item.  This may come
+        from torrent data, file metadata, feed data, and or our filename.
+        """
+        if self.metadata_title:
+            title = self.metadata_title
+        elif self.torrent_title is not None:
+            title = self.torrent_title
+        elif self.entry_title is not None:
+            title = self.entry_title
+        elif self.filename:
+            title = filename_to_unicode(os.path.basename(self.filename))
+        else:
+            title = _('no title')
+        if not hasattr(self, 'title') or title != self.title:
+            self.title = title
+
+    def update_from_metadata(self, metadata_dict):
+        """Update our attributes from a metadata dictionary."""
+        # change the name of title to be "metadata_title"
+        metadata_dict = metadata_dict.copy()
+        if 'title' in metadata_dict:
+            metadata_dict['metadata_title'] = metadata_dict.pop('title')
+        self._bulk_update_db_values(metadata_dict)
+        self.calc_title()
+
+class Item(ItemBase, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
     """
@@ -425,8 +463,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def setup_new(self, fp_values, link_number=0, feed_id=None, parent_id=None,
             eligible_for_autodownload=True, channel_title=None):
-        for attr in metadata.attribute_names:
-            setattr(self, attr, None)
+        self.init_metadata_attributes()
         self.is_file_item = False
         self.new = True
         self.feed_id = feed_id
@@ -1008,15 +1045,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         app.local_metadata_manager.file_moved(self.filename, new_filename)
         self.set_filename(new_filename)
 
-    def update_from_metadata(self, metadata_dict):
-        """Update our attributes from a metadata dictionary."""
-        # change the name of title to be "metadata_title"
-        metadata_dict = metadata_dict.copy()
-        if 'title' in metadata_dict:
-            metadata_dict['metadata_title'] = metadata_dict.pop('title')
-        self._bulk_update_db_values(metadata_dict)
-        self.calc_title()
-
     def set_user_metadata(self, metadata_dict):
         if not self.filename:
             logging.warn("No file to set metadata for in "
@@ -1580,25 +1608,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Returns the title of the item.
         """
         return self.title
-
-    def calc_title(self):
-        """Set the title column
-
-        The title column store the official title for the item.  This may come
-        from torrent data, file metadata, feed data, and or our filename.
-        """
-        if self.metadata_title:
-            title = self.metadata_title
-        elif self.torrent_title is not None:
-            title = self.torrent_title
-        elif self.entry_title is not None:
-            title = self.entry_title
-        elif self.filename:
-            title = filename_to_unicode(os.path.basename(self.filename))
-        else:
-            title = _('no title')
-        if title != self.title:
-            self.title = title
 
     def set_channel_title(self, title):
         check_u(title)
@@ -2460,191 +2469,163 @@ class DeletedFileChecker(object):
             if self.items_to_check:
                 self._ensure_run_checks_scheduled()
 
-class DeviceItem(object):
+class DeviceItem(ItemBase):
     """
-    An item which lives on a device.  There's a separate, per-device JSON
-    database, so this implements the necessary Item logic for those files.
+    An item which lives on a device.  There's a separate, per-device sqlite
+    database database.
     """
-    def __init__(self, **kwargs):
-        self.__initialized = False
-        for required in ('video_path', 'file_type', 'device'):
-            if required not in kwargs:
-                raise TypeError('DeviceItem must be given a "%s" argument'
-                                % required)
-        self.file_format = self.size = None
-        self.release_date = None
-        self.feed_name = self.feed_id = self.feed_url = None
-        self.keep = True
-        self.is_container_item = False
-        self.url = self.payment_link = None
-        self.comments_link = self.permalink = self.file_url = None
-        self.license = self.downloader = None
-        self.duration = self.screenshot = self.thumbnail_url = None
-        self.resume_time = 0
-        self.subtitle_encoding = self.enclosure_type = None
-        self.auto_sync = False
-        self.file_type = None
-        self.creation_time = None
-        self.is_playing = False
-        for attr in metadata.attribute_names:
-            setattr(self, attr, None)
-        if 'local_path' in kwargs:
-            local_path = kwargs.pop('local_path')
-        else:
+    def __init__(self, *args, **kwargs):
+        # Normally we don't override DDBObject.__init__(), but this time we do
+        # to make creating a new DeviceItem less awkward.  Since the device is
+        # the first argument, we don't require the caller to also pass the
+        # DBInfo object, which is redundant.
+        if len(args) > 0 and 'restored_data' not in kwargs:
+            device = args[0]
+            kwargs['db_info'] = device.db_info
+        ItemBase.__init__(self, *args, **kwargs)
+
+    def setup_new(self, device, filename, sync_info=None, auto_sync=False):
+        """Create a new DeviceItem.
+
+        :param device: DeviceInfo for the device
+        :param filename: path to the file, relative to the device mount
+        :param sync_info: ItemInfo that this was synced from
+        :param auto_sync: Was this item auto-synced?
+        """
+        self.init_metadata_attributes()
+        self.filename = filename
+        self.auto_sync = auto_sync
+        if sync_info is None:
+            self.watched_time = None
+            self.last_watched = None
+            self.creation_time = None
+            self.subtitle_encoding = None
+            self.release_date = None
+            self.parent_title = None
+            self.feed_url = None
+            self.license = None
+            self.rss_id = None
+            self.entry_title = None
+            self.torrent_title = None
+            self.entry_description = None
+            self.permalink = None
+            self.payment_link = None
+            self.comments_link = None
+            self.url = None
+            self.enclosure_size = None
+            self.enclosure_type = None
+            self.enclosure_format = None
+            self.resume_time = 0
+            self.play_count = 0
+            self.skip_count = 0
             local_path = None
-        self._fix_paths_from_database(kwargs)
-        # set values for attributes used in pre-5.0 databases.
-        self.metadata_version = 5 # version used in 4.0.x
-        self.mdp_state = MDP_STATE_RAN
-        self.title_tag = None
-
-        self.__dict__.update(kwargs)
-
-        if isinstance(self.video_path, unicode):
-            # make sure video path is a filename and ID is Unicode
-            self.id = self.video_path
-            self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         else:
-            self.id = filename_to_unicode(self.video_path)
-        if self.file_format is None:
-            self.file_format = filename_to_unicode(
-                os.path.splitext(self.video_path)[1])
-            if self.file_type == 'audio':
-                self.file_format = self.file_format + ' audio'
+            self.watched_time = sync_info.watched_time
+            self.last_watched = sync_info.last_watched
+            self.creation_time = sync_info.date_added
+            self.subtitle_encoding = sync_info.subtitle_encoding
+            self.release_date = sync_info.release_date
+            self.parent_title = sync_info.parent_title
+            self.feed_url = sync_info.feed_url
+            self.license = sync_info.license
+            self.rss_id = sync_info.rss_id
+            self.entry_title = sync_info.entry_title
+            self.torrent_title = sync_info.torrent_title
+            self.entry_description = sync_info.entry_description
+            self.permalink = sync_info.permalink
+            self.payment_link = sync_info.payment_link
+            self.comments_link = sync_info.comments_link
+            self.url = sync_info.url
+            self.enclosure_size = sync_info.enclosure_size
+            self.enclosure_type = sync_info.mime_type
+            self.enclosure_format = sync_info.enclosure_format
+            self.resume_time = sync_info.resume_time
+            self.play_count = sync_info.play_count
+            self.skip_count = sync_info.skip_count
+            local_path = sync_info.filename
 
-        try: # filesystem operations
-            if self.size is None:
-                self.size = os.path.getsize(self.get_filename())
-            if self.release_date is None or self.creation_time is None:
-                ctime = fileutil.getctime(self.get_filename())
-                if self.release_date is None:
-                    self.release_date = ctime
-                if self.creation_time is None:
-                    self.creation_time = ctime
-        except (OSError, IOError):
-            # if there was an error reading the data from the filesystem, don't
-            # bother continuing with other FS operations or starting moviedata
-            logging.debug('error reading %s', self.id, exc_info=True)
-        self.add_to_metadata_manager(local_path)
-        self.__initialized = True
+        initial_metadata = device.metadata_manager.add_file(filename,
+                                                            local_path)
+        self.update_from_metadata(initial_metadata)
+        # At this point, net_lookup_enabled is always False for DeviceItems
+        self.net_lookup_enabled = False
 
-    def _fix_paths_from_database(self, data):
-        """Make screenshot and cover_art the correct type.
+        # fill in missing data from the filesystem
+        fullpath = os.path.join(device.mount, self.filename)
+        self.size = os.path.getsize(fullpath)
+        self.calc_title()
+        if self.release_date is None or self.creation_time is None:
+            ctime = datetime.fromtimestamp(fileutil.getctime(fullpath))
+            if self.release_date is None:
+                self.release_date = ctime
+            if self.creation_time is None:
+                self.creation_time = ctime
+
+    @classmethod
+    def select_paths(cls, db_info):
+        """Select all paths that are present in the database.
+
+        :returns: list of paths, relative to the device mount
         """
-        for key in ('screenshot', 'cover_art'):
-            if key in data and isinstance(data[key], unicode):
-                data[key] = utf8_to_filename(data[key].encode('utf-8'))
+        return cls.select(['filename'], db_info=db_info)
 
-    def add_to_metadata_manager(self, local_path):
-        metadata_manager = self.device.metadata_manager
-        if not metadata_manager.path_in_system(self.video_path):
-            initial_metadata = metadata_manager.add_file(self.video_path,
-                                                         local_path)
-            # update ourself based on the initial metadata
-            self.__dict__.update(initial_metadata)
+    @classmethod
+    def get_by_path(cls, path, db_info):
+        """Get a deviceItem for a given path."""
+        view = cls.make_view('filename=?', (path,), db_info=db_info)
+        return view.get_singleton()
 
-    @staticmethod
-    def id_exists():
-        return True
+    @classmethod
+    def items_for_paths(cls, path_list, db_info):
+        """Get all items for a list of paths.
 
-    def get_release_date(self):
-        try:
-            return datetime.fromtimestamp(self.release_date)
-        except (ValueError, TypeError):
-            logging.warn('DeviceItem: release date %s invalid',
-                          self.release_date)
-            return datetime.now()
-
-    def get_creation_time(self):
-        try:
-            return datetime.fromtimestamp(self.creation_time)
-        except (ValueError, TypeError):
-            logging.warn('DeviceItem: creation time %s invalid',
-                          self.creation_time)
-            return datetime.now()
-
-    @returns_filename
-    def get_filename(self):
-        return os.path.join(self.device.mount, self.video_path)
-
-    def get_url(self):
-        return self.url or u''
-
-    @returns_unicode
-    def get_title(self):
-        """Returns the title of the item.
+        :returns: dict mapping paths to DeviceItems.  There will be one entry
+        for each item in path_list that exists in the database.
         """
-        if self.title:
-            return self.title
-        if self.title_tag:
-            # title_tag was set to the ID3 tag by pre-5.0 versions.  We
-            # convert this to title_tag in
-            # devicedatabaseupgrade.import_old_items(), so this probably won't
-            # be reached.  But we might as well prefer title_tag over the
-            # filename if it somehow exists.
-            return self.title_tag
-        return os.path.basename(self.id)
 
-    @returns_filename
-    def get_thumbnail(self):
-        if self.cover_art:
-            return os.path.join(self.device.mount,
-                                self.cover_art)
-        elif self.screenshot:
-            return os.path.join(self.device.mount,
-                                self.screenshot)
-        elif self.file_type == 'audio':
-            return resources.path("images/thumb-default-audio.png")
-        else:
-            return resources.path("images/thumb-default-video.png")
+        path_map = {}
+        # It's possible for there to be more than 999 items in path_list.
+        # Split up the query to avoid SQLite's host parameters limit
+        for paths in util.split_values_for_sqlite(path_list):
+            placeholders = ', '.join('?' for i in xrange(len(paths)))
+            view = cls.make_view('lower(filename) IN (%s)' % placeholders,
+                                 paths, db_info=db_info)
+            for i in view:
+                path_map[i.filename] = i
+        return path_map
 
-    def remove(self, save=True):
-        for file_type in [u'video', u'audio', u'other']:
-            if self.video_path in self.device.database[file_type]:
-                del self.device.database[file_type][self.id]
-        if save:
-            self.device.database.emit('item-removed', self)
-            self.device.metadata_manager.remove_file(self.video_path)
+    @classmethod
+    def auto_sync_view(cls, db_info):
+        return cls.make_view('auto_sync', db_info=db_info)
 
-    def signal_change(self):
-        if not self.__initialized:
-            return
+    @classmethod
+    def item_exists(cls, item_info, db_info):
+        """Check if a DeviceItem has already been created for an ItemInfo."""
 
-        if not os.path.exists(
-            os.path.join(self.device.mount, self.video_path)):
-            # file was removed from the filesystem
-            self.remove()
-            return
+        # Item URL is a sure way to match
+        if cls.make_view('url=?', item_info.url).count() > 0:
+            return True
+        # If a bunch of qualities are the same, we'll call it close
+        # enough
+        if cls.make_view('title=? AND description=? AND size=? AND '
+                         'duration=?', item_info.title, item_info.description,
+                         item_info.size, item_info.duration_ms).count() > 0:
+            return True
+        return False
 
-        if (not isinstance(self.file_type, unicode) and
-            self.file_type is not None):
-            self.file_type = unicode(self.file_type)
+    def delete_and_remove(self, device):
+        fullpath = os.path.join(device.mount, self.filename)
+        try:
+            fileutil.delete(fullpath)
+        except EnvironmentError:
+            logging.warn("DeviceItem.delete_and_remove: Error removing %s",
+                         fullpath)
+        self.remove(device)
 
-        was_removed = False
-        for type_ in set((u'video', u'audio', u'other')) - set(
-            (self.file_type,)):
-            if self.id in self.device.database[type_]:
-                # clean up old types, if necessary
-                self.remove(save=False)
-                was_removed = True
-                break
-
-        if self.file_type:
-            db = self.device.database
-            db[self.file_type][self.id] =  self.to_dict()
-
-            if self.file_type != u'other' or was_removed:
-                db.emit('item-changed', self)
-
-    def to_dict(self):
-        data = {}
-        for k, v in self.__dict__.items():
-            if v is not None and k not in (u'device', u'file_type', u'id',
-                                           u'video_path', u'_deferred_update'):
-                if ((k == u'screenshot' or k == u'cover_art')):
-                    v = filename_to_unicode(v)
-                data[k] = v
-        return data
+    def remove(self, device):
+        if device.metadata_manager.path_in_system(self.filename):
+            device.metadata_manager.remove_file(self.filename)
+        ItemBase.remove(self)
 
 _deleted_file_checker = None
 

@@ -1646,12 +1646,12 @@ class SharingEject(BackendMessage):
 class DeviceInfo(object):
     """Tracks the state of an attached device.
     """
-    def __init__(self, id_, device_info, mount, database, sqlite_database,
+    def __init__(self, id_, device_info, mount, database, db_info,
                  metadata_manager, size, remaining, read_only):
         self.id = id_
         self.mount = mount
         self.database = database
-        self.sqlite_database = sqlite_database
+        self.db_info = db_info
         self.metadata_manager = metadata_manager
         self.size = size
         self.remaining = remaining
