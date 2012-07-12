@@ -488,7 +488,12 @@ class DeviceManager(object):
                 # resue existing objects
                 sqlite_db = self.connected[id_].sqlite_database
                 metadata_manager = self.connected[id_].metadata_manager
-            elif not read_only:
+                if is_hidden:
+                    # device became hidden, close the existing objects
+                    sqlite_db.close()
+                    metadata_manager.close()
+                    sqlite_db = metadata_manager = None
+            elif not read_only and not is_hidden:
                 sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'),
                                                  is_hidden=is_hidden)
                 metadata_manager = make_metadata_manager(mount, sqlite_db, id_)
