@@ -363,6 +363,7 @@ def launch_download_daemon(oldpid, env):
     return Popen(downloader_path, stdout=subprocess.PIPE,
                  stderr=subprocess.PIPE,
                  stdin=subprocess.PIPE,
+                 close_fds=True,
                  env=environ)
 
 def exit_miro(return_code):
