@@ -360,10 +360,7 @@ def launch_download_daemon(oldpid, env):
 
     downloader_path = (os.path.join(resources.app_root(),
                                    "Miro_Downloader.exe"),) 
-    return Popen(downloader_path, stdout=subprocess.PIPE,
-                 stderr=subprocess.PIPE,
-                 stdin=subprocess.PIPE,
-                 env=environ)
+    return Popen(downloader_path, close_fds=True, env=environ)
 
 def exit_miro(return_code):
     """Python's sys.exit isn't sufficient in a Windows
