@@ -350,20 +350,12 @@ def launch_download_daemon(oldpid, env):
         environ['MIRO_IN_UNIT_TESTS'] = '1'
     environ.update(env)
 
-    # start the downloader.  We use the subprocess module to turn off
-    # the console.  One slightly awkward thing is that the current
-    # process might not have a valid stdin/stdout/stderr, so we create
-    # a pipe to it that we never actually use.
-
     # note that we use "Miro" instead of the app name here, so custom
     # versions will work
 
     downloader_path = (os.path.join(resources.app_root(),
                                    "Miro_Downloader.exe"),) 
-    return Popen(downloader_path, stdout=subprocess.PIPE,
-                 stderr=subprocess.PIPE,
-                 stdin=subprocess.PIPE,
-                 env=environ)
+    return Popen(downloader_path, close_fds=True, env=environ)
 
 def exit_miro(return_code):
     """Python's sys.exit isn't sufficient in a Windows
