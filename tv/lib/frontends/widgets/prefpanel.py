@@ -568,9 +568,9 @@ class GeneralPanel(PanelBuilder):
         provider_links.pack_start(widgetset.Label(_("Via:")))
         provider_links.pack_start(widgetset.Label(" "))
         echonest_link = widgetutil.LinkButton(_('Echonest'))
-        provider_links.pack_start(widgetset.Label(" "))
         seven_digital_link = widgetutil.LinkButton(_('7Digital'))
         provider_links.pack_start(echonest_link)
+        provider_links.pack_start(widgetset.Label(" "))
         provider_links.pack_start(seven_digital_link)
         def on_echonest_click(button):
             app.widgetapp.open_url("http://the.echonest.com/")
