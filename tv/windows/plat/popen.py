@@ -75,10 +75,13 @@ def Popen(args, **kwargs):
         env = None
     finally:
         kwargs['env'] = cleanse_environment(env)
-    try:
+    if (kwargs.get('close_fds', False) and (
+        kwargs.get('stdin') is not None or
+        kwargs.get('stdout') is not None or
+        kwargs.get('stderr') is not None)):
+        logging.warn("Running %r: close_fds isn't supported on windows "
+                "if any of stdin, stdout, stderr are redirected", args)
         del kwargs['close_fds']    # not supported on Windows
-    except KeyError:
-        pass
     # Rules for quoting.
     # http://docs.python.org/library/subprocess.html
     # In section: #converting-argument-sequence 17.1.5.1
