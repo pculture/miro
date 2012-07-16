@@ -483,17 +483,7 @@ class DeviceManager(object):
         if mount:
             is_hidden = self._is_hidden((mount, info, db))
             read_only = self._is_read_only(mount)
-            if (id_ in self.connected and
-                self.connected[id_].sqlite_database is not None):
-                # resue existing objects
-                sqlite_db = self.connected[id_].sqlite_database
-                metadata_manager = self.connected[id_].metadata_manager
-                if is_hidden:
-                    # device became hidden, close the existing objects
-                    sqlite_db.close()
-                    metadata_manager.close()
-                    sqlite_db = metadata_manager = None
-            elif not read_only and not is_hidden:
+            if not read_only:
                 sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'),
                                                  is_hidden=is_hidden)
                 metadata_manager = make_metadata_manager(mount, sqlite_db, id_)
@@ -1543,7 +1533,7 @@ def _device_not_valid(device):
     if not app.device_manager.running: # user quit, so we will too
         logging.debug('stopping scan on %r: user quit', device.mount)
         return True
-    if device.metadata_manager is None or device.metadata_manager.closed: # device was ejected
+    if device.metadata_manager.closed: # device was ejected
         return True
     if not os.path.exists(device.mount): # device disappeared
         logging.debug('stopping scan on %r: disappeared', device.mount)
@@ -1588,28 +1578,29 @@ def scan_device_for_files(device):
             start = time.time()
             filenames = []
 
-    yield # yield after prep work
-    if _device_not_valid(device):
-        return
+    if app.device_manager.running and os.path.exists(device.mount):
+        # we don't re-check if the device is hidden because we still want to
+        # save the items we found in that case
+        yield # yield after prep work
 
-    device.database.setdefault(u'sync', {})
-    logging.debug('scanned %r, found %i files (%i total)',
-                  device.mount, len(item_data),
-                  len(known_files) + len(item_data))
+        device.database.setdefault(u'sync', {})
+        logging.debug('scanned %r, found %i files (%i total)',
+                      device.mount, len(item_data),
+                      len(known_files) + len(item_data))
 
-    device.database.set_bulk_mode(True)
-    start = time.time()
-    for ufilename, item_type in item_data:
-        create_item_for_file(device, ufilename, item_type)
-        if time.time() - start > 0.4:
-            device.database.set_bulk_mode(False) # save the database
-            yield # let other idle functions run
-            if _device_not_valid(device):
-                break
-            device.database.set_bulk_mode(True)
-            start = time.time()
+        device.database.set_bulk_mode(True)
+        start = time.time()
+        for ufilename, item_type in item_data:
+            create_item_for_file(device, ufilename, item_type)
+            if time.time() - start > 0.4:
+                device.database.set_bulk_mode(False) # save the database
+                yield # let other idle functions run
+                if _device_not_valid(device):
+                    break
+                device.database.set_bulk_mode(True)
+                start = time.time()
 
-    device.database.set_bulk_mode(False)
+        device.database.set_bulk_mode(False)
 
 def create_item_for_file(device, video_path, file_type):
     i = item.DeviceItem(video_path=video_path,
