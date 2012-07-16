@@ -193,16 +193,10 @@ class DeviceTracker(object):
     def _eject_callback(self, drive, result, device):
         try:
             result = drive.eject_finish(result)
-        except (gio.Error, GError), e:
-            # double check that the eject really failed.  I (BDK) have seen
-            # the very strange error: Drive is activatable and not running.
-            if any(v.get_mount() is not None for v in drive.get_volumes()):
-                logging.exception('eject failed for %r' % drive)
-                result = False
-            else:
-                logging.warning('eject succeeded, but returned error '
-                                '%s for %r' % (e, drive))
-                result = True
+        except (gio.Error, GError):
+            # XXX notify the user in some way?
+            logging.exception('eject failed for %r' % drive)
+            result = False
         if not result:
             messages.ShowWarning(
                 _('Eject failed'),
