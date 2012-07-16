@@ -302,7 +302,8 @@ def launch_download_daemon(oldpid, env):
 
     # run the Miro_Downloader script
     script = os.path.join(dl_daemon_path, 'MiroDownloader.py')
-    subprocess.Popen([sys.executable, script], close_fds=True, env=environ)
+    os.spawnle(os.P_NOWAIT, sys.executable, sys.executable, script, environ)
+
 
 def exit_miro(return_code):
     """Exits Miro.
@@ -380,7 +381,6 @@ def setup_ffmpeg_presets():
         commandline = [get_ffmpeg_executable_path(), '-version']
         p = subprocess.Popen(commandline,
                              stdout=subprocess.PIPE,
-                             close_fds=True,
                              stderr=file("/dev/null", "wb"))
         stdout, _ = p.communicate()
         lines = stdout.split('\n')
