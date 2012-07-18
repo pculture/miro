@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2012-07-03 14:24+0000\n"
-"X-Generator: Launchpad (build 15531)\n"
+"X-Launchpad-Export-Date: 2012-07-17 20:41+0000\n"
+"X-Generator: Launchpad (build 15627)\n"
 
 #: ../../lib/frontends/widgets/menus.py:201
 msgid "P_layback"
@@ -248,7 +248,7 @@ msgstr "Podcast Oluştur"
 
 #: ../../lib/dialogs.py:119
 msgid "Create Folder"
-msgstr "Klasör Oluştur"
+msgstr "Dizin Oluştur"
 
 #: ../../lib/dialogs.py:120
 msgid "Choose New Folder"
@@ -759,10 +759,10 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
-"Bu öğelerden biri bir klasör. Bir klasörü silmek içindekilerin de "
-"silinmesine neden olur.\r\n"
-"Bu öğelerden bazıları klasör. Bir klasörü silmek içindekilerin de "
-"silinmesine neden olur."
+"Bu öğelerden biri bir dizin. Bir dizini silmek içindekilerin de silinmesine "
+"neden olur.\r\n"
+"Bu öğelerden bazıları dizin. Bir dizini silmek içindekilerin de silinmesine "
+"neden olur."
 
 #: ../../lib/frontends/widgets/application.py:693
 msgid "Save Item As..."
@@ -1391,7 +1391,7 @@ msgstr[0] ""
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] "%(count)d Seçilen Oynatma Listesi"
+msgstr[0] "%(count)d Seçilen Oynatma Listesi Dizinleri"
 
 #: ../../lib/frontends/widgets/displays.py:793
 #, python-format
@@ -1428,7 +1428,7 @@ msgstr "Tümünü Sil"
 
 #: ../../lib/frontends/widgets/displays.py:826
 msgid "Put Into a New Folder"
-msgstr "Yeni Klasöre Yerleştir"
+msgstr "Yeni Dizine Yerleştir"
 
 #: ../../lib/frontends/widgets/donate.py:183
 #: ../../lib/frontends/widgets/menus.py:256
@@ -3109,7 +3109,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/newfolder.py:56
 msgid "Folder name:"
-msgstr "Klasör Adı:"
+msgstr "Dizin adı:"
 
 #: ../../lib/frontends/widgets/newfolder.py:87
 msgid "Create Podcast Folder"
@@ -3117,7 +3117,7 @@ msgstr "Podcast Klasörü Oluştur"
 
 #: ../../lib/frontends/widgets/newfolder.py:88
 msgid "Enter the name of the folder to add"
-msgstr "Eklenecek klasörün adını giriniz"
+msgstr "Eklenecek dizinin adını giriniz"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:60
 msgid "A search podcast contains items that match a search term."
@@ -3142,7 +3142,7 @@ msgstr "Arama Motoru:"
 #: ../../lib/frontends/widgets/newwatchedfolder.py:49
 #: ../../lib/frontends/widgets/prefpanel.py:973
 msgid "Add Watched Folder"
-msgstr "İzlenen Klasör ekle"
+msgstr "İzlenen Dizin Ekle"
 
 #: ../../lib/frontends/widgets/newwatchedfolder.py:50
 #, python-format
@@ -3461,7 +3461,7 @@ msgstr "Mevcut"
 
 #: ../../lib/frontends/widgets/prefpanel.py:992
 msgid "Store downloads in this folder:"
-msgstr "İndirilen içeriği şu klasörde sakla"
+msgstr "İndirilen içeriği şu dizinde sakla:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:998
 msgid ""
@@ -3666,7 +3666,7 @@ msgstr "İndirilenler"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1465
 msgid "Folders"
-msgstr "Klasörler"
+msgstr "Dizinler"
 
 #: ../../lib/frontends/widgets/prefpanel.py:1467
 msgid "Disk space"
@@ -3712,9 +3712,9 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
-"İzlenen klasörler yan panelden kaldırılacak fakat içerikleri kütüphanenizde "
+"İzlenen dizinler yan panelden kaldırılacak fakat içerikleri kütüphanenizde "
 "görünmeye devam edecektir. %(appname)s tercihler panelinden izlenen "
-"klasörleri izlemeyi tamamen durdurabilirsiniz."
+"dizinleri izlemeyi tamamen durdurabilirsiniz."
 
 #: ../../lib/frontends/widgets/removefeeds.py:105
 msgid ""
@@ -4878,16 +4878,6 @@ msgstr "Altyazı Fontu:"
 #~ msgid_plural "%(count)d Sites Selected"
 #~ msgstr[0] "%(count)d Site Seçildi"
 
-#~ msgid ""
-#~ "One of these items is a folder.  Delete/Removeing a folder will "
-#~ "delete/remove it's contents"
-#~ msgid_plural ""
-#~ "Some of these items are folders.  Delete/Removeing a folder will "
-#~ "delete/remove it's contents"
-#~ msgstr[0] ""
-#~ "Bu öğelerden biri bir klasör. Klasörü silerseniz, içeriğini de silmiş "
-#~ "olursunuz."
-
 #, python-format
 #~ msgid "Bad Status Line: %(msg)s"
 #~ msgstr "Hat durumu kötü: %(msg)s"
@@ -4951,9 +4941,6 @@ msgstr "Altyazı Fontu:"
 #~ msgid "Restrict to all my personal files."
 #~ msgstr "Benim bütün kişisel dosyalarıma kısıtlı ulaşım."
 
-#~ msgid "Search custom folders:"
-#~ msgstr "Seçilen Klasörlerde Ara:"
-
 #~ msgid "Searching for media files"
 #~ msgstr "Medya dosyalarını arıyor"
 
@@ -5002,11 +4989,6 @@ msgstr "Altyazı Fontu:"
 
 #~ msgid "Remove from playlist"
 #~ msgstr "Çalma listesinden Sil"
-
-#, python-format
-#~ msgid "%(count)d Feed Folder Selected"
-#~ msgid_plural "%(count)d Feed Folders Selected"
-#~ msgstr[0] "%(count)d Seçilen Besleme Klasörleri"
 
 #, python-format
 #~ msgid "(contains %(count)d feed)"
@@ -5084,13 +5066,6 @@ msgstr "Altyazı Fontu:"
 #~ "\n"
 #~ "Enter the URL of the site to add"
 
-#~ msgid "Rename Feed Folder"
-#~ msgstr "Besleme klasörünün adını değiştir"
-
-#, python-format
-#~ msgid "Enter a new name for the feed folder %(name)s"
-#~ msgstr "Besleme klasörü için yeni bir isim girin %(name)s"
-
 #~ msgid "Rename Feed"
 #~ msgstr "Beslemenin adını değiştir"
 
@@ -5159,18 +5134,9 @@ msgstr "Altyazı Fontu:"
 #~ "\n"
 #~ "%(url)s"
 
-#~ msgid "Folder should go in this section:"
-#~ msgstr "Klasör bu bölümde olmalı:"
-
-#~ msgid "Create Feed Folder"
-#~ msgstr "Besleme Klasörü oluştur"
-
 #~ msgid "Are you sure you want to remove this feed:"
 #~ msgid_plural "Are you sure you want to remove these feeds:"
 #~ msgstr[0] "Bu beslemeleri kaldırmak istediğinizden emin misiniz:"
-
-#~ msgid "Permalink"
-#~ msgstr "Permalink"
 
 #~ msgid "Full Feed"
 #~ msgstr "Tüm beslemeler"
@@ -5205,9 +5171,6 @@ msgstr "Altyazı Fontu:"
 
 #~ msgid "Remove Site"
 #~ msgstr "Siteyi Sil"
-
-#~ msgid "Update Feeds In Folder"
-#~ msgstr "Klasördeki beslemeleri güncelle"
 
 #~ msgid "Update Feed Now"
 #~ msgstr "Beslemeleri şimdi güncelle"
@@ -5397,17 +5360,11 @@ msgstr "Altyazı Fontu:"
 #~ msgid "New Searc_h Feed"
 #~ msgstr "Yeni Besleme _Ara"
 
-#~ msgid "New _Folder"
-#~ msgstr "Yeni _Klasör"
-
 #~ msgid "Re_name"
 #~ msgstr "Ad _değiştir"
 
 #~ msgid "_Remove"
 #~ msgstr "_Sil"
-
-#~ msgid "_Remove Folder"
-#~ msgstr "_Klasörü Sil"
 
 #~ msgid "_Update Feed"
 #~ msgstr "_Beslemeyi Güncelle"
@@ -5616,16 +5573,6 @@ msgstr "Altyazı Fontu:"
 #~ msgid_plural "%(num).0f days"
 #~ msgstr[0] "%(num).gün"
 
-#, python-format
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should %(appname)s "
-#~ "migrate your existing downloads there? (Currently downloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "Filmleri indirmek için yeni bir klasör seçtiniz. %(appname)s halihazırda "
-#~ "indirmiş olduklarınızı buraya taşısın mı? (Şu anda indirilmekte olan filmler "
-#~ "indirme işlemi bitene dek taşınmayacaktır.)"
-
 #~ msgid "Stop after each video or audio item"
 #~ msgstr "Her bir video veya ses öğesinden sonra durdur."
 
@@ -5725,3 +5672,56 @@ msgstr "Altyazı Fontu:"
 
 #~ msgid "Length"
 #~ msgstr "Uzunluk"
+
+#~ msgid "Permalink"
+#~ msgstr "Kalıcı bağlantı"
+
+#, python-format
+#~ msgid "Enter a new name for the feed folder %(name)s"
+#~ msgstr "Besleme dizini için yeni bir isim girin %(name)s"
+
+#, python-format
+#~ msgid "%(count)d Feed Folder Selected"
+#~ msgid_plural "%(count)d Feed Folders Selected"
+#~ msgstr[0] "%(count)d Seçilen Besleme Dizinleri"
+
+#~ msgid ""
+#~ "One of these items is a folder.  Delete/Removeing a folder will "
+#~ "delete/remove it's contents"
+#~ msgid_plural ""
+#~ "Some of these items are folders.  Delete/Removeing a folder will "
+#~ "delete/remove it's contents"
+#~ msgstr[0] ""
+#~ "Bu öğelerden biri bir dizin. Dizini silerseniz, içeriğini de silmiş "
+#~ "olursunuz."
+
+#~ msgid "Search custom folders:"
+#~ msgstr "Seçilen dizinlerde ara:"
+
+#~ msgid "Rename Feed Folder"
+#~ msgstr "Besleme Dizinini Yeniden Adlandır"
+
+#, python-format
+#~ msgid ""
+#~ "You've selected a new folder to download movies to.  Should %(appname)s "
+#~ "migrate your existing downloads there? (Currently downloading movies will "
+#~ "not be moved until they finish.)"
+#~ msgstr ""
+#~ "Filmleri indirmek için yeni bir dizin seçtiniz. %(appname)s halihazırda "
+#~ "indirmiş olduklarınızı buraya taşısın mı? (Şu anda indirilmekte olan filmler "
+#~ "indirme işlemi bitene dek taşınmayacaktır.)"
+
+#~ msgid "Folder should go in this section:"
+#~ msgstr "Dizin bu bölümde olmalı:"
+
+#~ msgid "Create Feed Folder"
+#~ msgstr "Besleme Dizini Oluştur"
+
+#~ msgid "Update Feeds In Folder"
+#~ msgstr "Dizindeki Beslemeleri Güncelle"
+
+#~ msgid "_Remove Folder"
+#~ msgstr "_Dizini Sil"
+
+#~ msgid "New _Folder"
+#~ msgstr "Yeni _Dizin"

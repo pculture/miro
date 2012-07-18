@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-07-02 21:01+0200\n"
-"PO-Revision-Date: 2012-06-09 19:26+0000\n"
+"PO-Revision-Date: 2012-07-14 12:02+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-07-03 14:24+0000\n"
-"X-Generator: Launchpad (build 15531)\n"
+"X-Launchpad-Export-Date: 2012-07-17 20:41+0000\n"
+"X-Generator: Launchpad (build 15627)\n"
 
 #: ../../lib/commandline.py:153
 msgid "Subscription error"
@@ -3306,7 +3306,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:572
 msgid "7Digital"
-msgstr ""
+msgstr "7Digital"
 
 #: ../../lib/frontends/widgets/prefpanel.py:584
 msgid "Run Online Lookup for All Current Music"

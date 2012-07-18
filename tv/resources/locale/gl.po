@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: backintime\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-07-02 21:01+0200\n"
-"PO-Revision-Date: 2012-04-27 05:54+0000\n"
+"PO-Revision-Date: 2012-07-08 01:39+0000\n"
 "Last-Translator: Marcos Lans <Unknown>\n"
 "Language-Team: Galician <marcoslansgarza@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-07-03 14:25+0000\n"
-"X-Generator: Launchpad (build 15531)\n"
+"X-Launchpad-Export-Date: 2012-07-17 20:42+0000\n"
+"X-Generator: Launchpad (build 15627)\n"
 "X-Poedit-Language: Galician\n"
 
 #: ../../lib/commandline.py:153
@@ -2310,7 +2310,7 @@ msgstr "Mostrar o cartafol das conversións"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:500
 msgid "Remove From Playlist"
-msgstr "Eliminar da lista de reprodución"
+msgstr "Eliminar da lista"
 
 #: ../../lib/frontends/widgets/itemedit.py:225
 #: ../../lib/frontends/widgets/itemedit.py:290
@@ -3136,7 +3136,7 @@ msgstr "Test de renderización de imaxe"
 
 #: ../../lib/frontends/widgets/menus.py:293
 msgid "Set echonest retry timeout to 1 week ago"
-msgstr ""
+msgstr "Estabelecer o tempo límite de reintentos en echonest 1 semana"
 
 #: ../../lib/frontends/widgets/menus.py:1317
 msgid "Default (UTF-8)"
@@ -3316,18 +3316,20 @@ msgid ""
 "Online lookup can find matching album art and song info for all your audio "
 "files"
 msgstr ""
+"A busca en liña pode atopar imaxes dos álbuns e información das cancións de "
+"todos os ficheiros de son."
 
 #: ../../lib/frontends/widgets/prefpanel.py:568
 msgid "Via:"
-msgstr ""
+msgstr "Vía:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:570
 msgid "Echonest"
-msgstr ""
+msgstr "Echonest"
 
 #: ../../lib/frontends/widgets/prefpanel.py:572
 msgid "7Digital"
-msgstr ""
+msgstr "7Digital"
 
 #: ../../lib/frontends/widgets/prefpanel.py:584
 msgid "Run Online Lookup for All Current Music"

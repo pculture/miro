@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: getdemocracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-02 21:01+0200\n"
-"PO-Revision-Date: 2011-11-28 13:29+0000\n"
-"Last-Translator: netnyke <Unknown>\n"
+"PO-Revision-Date: 2012-07-05 20:42+0000\n"
+"Last-Translator: Milo Casagrande <milo.casagrande@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-07-03 14:25+0000\n"
-"X-Generator: Launchpad (build 15531)\n"
+"X-Launchpad-Export-Date: 2012-07-17 20:42+0000\n"
+"X-Generator: Launchpad (build 15627)\n"
 
 #: ../../lib/downloader.py:568 ../../lib/httpclient.py:145
 #: ../../lib/httpclient.py:176
@@ -1393,7 +1393,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/displays.py:597
 msgid "Filename:"
-msgstr "Nome file :"
+msgstr "Nome file:"
 
 #: ../../lib/frontends/widgets/displays.py:600
 msgid "File type:"

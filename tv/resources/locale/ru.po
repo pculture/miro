@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-07-02 21:01+0200\n"
-"PO-Revision-Date: 2012-06-07 21:10+0000\n"
+"PO-Revision-Date: 2012-07-12 12:19+0000\n"
 "Last-Translator: Semen Koltsov <skoltsov@live.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2012-07-03 14:24+0000\n"
-"X-Generator: Launchpad (build 15531)\n"
+"X-Launchpad-Export-Date: 2012-07-17 20:41+0000\n"
+"X-Generator: Launchpad (build 15627)\n"
 
 #: ../../lib/commandline.py:153
 msgid "Subscription error"
@@ -616,7 +616,7 @@ msgstr "Новый список воспроизведения:"
 
 #: ../../lib/frontends/widgets/application.py:219
 msgid "Movies folder gone"
-msgstr ""
+msgstr "Папка с фильмами удалена"
 
 #: ../../lib/frontends/widgets/application.py:221
 #, python-format
@@ -1101,14 +1101,15 @@ msgstr "Использовано %(used)s / Всего %(total)s"
 #: ../../lib/frontends/widgets/devicecontroller.py:198
 #, python-format
 msgid "%(percent)i%% full"
-msgstr ""
+msgstr "%(percent)i%% заполнено"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:211
 #, python-format
 msgid "Sync 1 File"
 msgid_plural "Sync %(count)i Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Синхронизировать 1 файл"
+msgstr[1] "Синхронизировать %(count)i файла(-ов)"
+msgstr[2] "Синхронизировать %(count)i файла(-ов)"
 
 #: ../../lib/frontends/widgets/devicecontroller.py:225
 msgid "Now Syncing"
@@ -3124,7 +3125,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:276
 msgid "Test Crash Reporter"
-msgstr ""
+msgstr "Протестировать технологию сообщения о сбоях"
 
 #: ../../lib/frontends/widgets/menus.py:277
 msgid "Test Soft Crash Reporter"
@@ -5003,6 +5004,11 @@ msgid ""
 "When the installation is finished, simply restart %(appname)s for the "
 "changes to take effect."
 msgstr ""
+"Ваш браузер загрузит вебсайт, нв котором вы сможете загрузить и установить "
+"Bonjour.\n"
+"\n"
+"Когда инсталяция завершится, просто перезагрузите %(appname)s  чтоб "
+"изменения вступили в силу."
 
 #: ../../windows/plat/frontends/widgets/flash.py:56
 msgid "Install Adobe Flash?"

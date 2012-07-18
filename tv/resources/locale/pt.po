@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-07-02 21:01+0200\n"
-"PO-Revision-Date: 2012-05-28 12:01+0000\n"
+"PO-Revision-Date: 2012-07-04 09:15+0000\n"
 "Last-Translator: Sérgio Marques <Unknown>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-07-03 14:25+0000\n"
-"X-Generator: Launchpad (build 15531)\n"
+"X-Launchpad-Export-Date: 2012-07-17 20:42+0000\n"
+"X-Generator: Launchpad (build 15627)\n"
 
 #: ../../lib/commandline.py:238
 msgid "Invalid Torrent"
@@ -1967,10 +1967,15 @@ msgid ""
 "Online lookup involves sending anonymized data about your songs to Miro and "
 "indirectly to Echonest and 7Digital."
 msgstr ""
+"Pode adicionar ou remover as informações de limpeza numa música ou em lote. "
+"Pode ajustar as definições nas preferências do Miro.\n"
+"\n"
+"A procura na web implica o envio de dados anónimos do Miro para o Echonest e "
+"o 7Digital."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:644
 msgid "First Time Music Setup"
-msgstr ""
+msgstr "Configuração inicial das músicas"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:646
 msgid "Get Started"
@@ -2318,17 +2323,17 @@ msgstr "Converter para..."
 #: ../../lib/frontends/widgets/itemcontextmenu.py:136
 #: ../../lib/frontends/widgets/itemcontextmenu.py:408
 msgid "Set media kind as..."
-msgstr ""
+msgstr "Definir tipo como..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:412
 msgid "Don't Use Online Lookup Data"
-msgstr ""
+msgstr "Não utilizar a procura de dados na web"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:143
 #: ../../lib/frontends/widgets/itemcontextmenu.py:416
 msgid "Use Online Lookup Data"
-msgstr ""
+msgstr "Utilizar a procura de dados na web"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:157
 #: ../../lib/frontends/widgets/itemcontextmenu.py:159
@@ -2769,7 +2774,7 @@ msgstr "Remover podcast"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1764
 #, python-format
 msgid "Looking up album art and song info: %(number)d of %(total)d"
-msgstr ""
+msgstr "A procurar capa e informações do álbum: %(number)d de %(total)d"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:1767
 #, python-format
@@ -2981,7 +2986,7 @@ msgstr "Edit _itens"
 
 #: ../../lib/frontends/widgets/menus.py:118
 msgid "Use album art and song info from online lookup database (Echonest)"
-msgstr ""
+msgstr "Utilizar capa e informações da base de dados na web (Echonest)"
 
 #: ../../lib/frontends/widgets/menus.py:122
 msgid "Remove Item"
@@ -3252,7 +3257,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:291
 msgid "Image Render Test"
-msgstr ""
+msgstr "Teste de imagem"
 
 #: ../../lib/frontends/widgets/menus.py:293
 msgid "Set echonest retry timeout to 1 week ago"
@@ -3426,44 +3431,47 @@ msgstr "Exibir:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:558
 msgid "Music Album Art and Info Cleanup"
-msgstr ""
+msgstr "Capa de álbum e limpeza de informações"
 
 #: ../../lib/frontends/widgets/prefpanel.py:561
 msgid ""
 "Online lookup can find matching album art and song info for all your audio "
 "files"
 msgstr ""
+"A procura na web pode localizar as informações e a capa de álbum para os "
+"seus ficheiros áudio"
 
 #: ../../lib/frontends/widgets/prefpanel.py:568
 msgid "Via:"
-msgstr ""
+msgstr "Via:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:570
 msgid "Echonest"
-msgstr ""
+msgstr "Echonest"
 
 #: ../../lib/frontends/widgets/prefpanel.py:572
 msgid "7Digital"
-msgstr ""
+msgstr "7Digital"
 
 #: ../../lib/frontends/widgets/prefpanel.py:584
 msgid "Run Online Lookup for All Current Music"
-msgstr ""
+msgstr "Executar a procura para todas as músicas"
 
 #: ../../lib/frontends/widgets/prefpanel.py:588
 msgid "Remove All Lookup data"
-msgstr ""
+msgstr "Remover todos os dados"
 
 #: ../../lib/frontends/widgets/prefpanel.py:598
 msgid ""
 "Automatically run online lookup for any new audio files that I add to Miro."
 msgstr ""
+"Executar procura na web para todos os ficheiros que eu adicionar ao Miro"
 
 #: ../../lib/frontends/widgets/prefpanel.py:621
 #, python-format
 msgid ""
 "Using lookup data for %(net_lookup_count)s out of %(total_count)s items"
-msgstr ""
+msgstr "A utilizar dados para %(net_lookup_count)s de %(total_count)s itens"
 
 #: ../../lib/frontends/widgets/prefpanel.py:651
 msgid "Every day"
@@ -4960,11 +4968,12 @@ msgstr ""
 
 #: ../../resources/devices/ereader.py:16
 msgid "Your Kindle must be mounted to sync files to it.\n"
-msgstr ""
+msgstr "Tem que montar o seu Kindle para sincronizar os ficheiros\n"
 
 #: ../../resources/devices/ereader.py:30
 msgid "Your Kindle must be in USB Storage mode to sync files to it.\n"
 msgstr ""
+"Tem que colocar o seu Kindle no modo USB para sincronizar os ficheiros\n"
 
 #: ../../resources/devices/generic_phone.py:42
 #, python-format
