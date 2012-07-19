@@ -49,7 +49,17 @@ fi
 # =============================================================================
 
 PYTHON_VERSION=2.7
-SDK_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer
+SDK_ROOT1=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer
+SDK_ROOT2=/Developer
+if [[ -e $SDK_ROOT1 ]] ; then
+        SDK_ROOT=$SDK_ROOT1
+elif [[ -e $SDK_ROOT2 ]] ; then
+        SDK_ROOT=$SDK_ROOT2
+else
+    echo "You don't seem to have XCode 4 installed."
+    exit 1
+fi
+
 SDK_DIR="$SDK_ROOT/SDKs/MacOSX$TARGET_OS_VERSION.sdk"
 
 if [[ ! -e $SDK_DIR ]]; then
