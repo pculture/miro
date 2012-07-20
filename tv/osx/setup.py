@@ -328,6 +328,7 @@ class MiroBuild (py2app):
         self.fmwkRoot = os.path.join(self.bundleRoot, 'Frameworks')
         self.cmpntRoot = os.path.join(self.bundleRoot, 'Components')
         self.helpersRoot = os.path.join(self.bundleRoot, 'Helpers')
+        self.librariesRoot = os.path.join(self.bundleRoot, 'Lib')
         self.prsrcRoot = os.path.join(self.rsrcRoot, 'resources')
         self.extRoot = os.path.join(self.rsrcRoot, 'extensions')
 
@@ -361,8 +362,11 @@ class MiroBuild (py2app):
                 [os.path.join(PORTABLE_DIR, 'fasttypes.c')])
 
     def get_namecollation_ext(self):
+        sqlite3_dir = os.path.join(BKIT_DIR, "sqlite3")
         return Extension("miro.data.namecollation",
                 [os.path.join(PORTABLE_DIR, 'data', 'namecollation.cpp')],
+                library_dirs=[sqlite3_dir],
+                include_dirs=[sqlite3_dir],
                 libraries=['sqlite3'],
             )
 
@@ -402,6 +406,7 @@ class MiroBuild (py2app):
         self.copy_quicktime_components()
         self.copy_conversion_helpers()
         self.copy_codegen_helpers()
+        self.copy_libsqlite3()
         self.copy_ffmpeg_presets()
         self.copy_portable_resources()
         self.copy_extensions()
@@ -514,6 +519,10 @@ class MiroBuild (py2app):
             "codegen.Darwin",
             "libtag.1.dylib",
         ])
+
+    def copy_libsqlite3(self):
+        print 'Copying libsqlite3.dylib'
+        copy_binaries('sqlite3/', self.librariesRoot, ['libsqlite3.dylib'])
 
     def copy_ffmpeg_presets(self):
         preset_source_dir = os.path.join(BKIT_DIR, 'ffmpeg', 'presets')

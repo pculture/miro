@@ -71,6 +71,8 @@ ROOT_DIR=$(pushd ../../ >/dev/null; pwd; popd >/dev/null)
 BKIT_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
 SBOX_DIR=$ROOT_DIR/sandbox_$BKIT_VERSION
 WORK_DIR=$SBOX_DIR/pkg
+# Used by our patched setup.py for Python
+export MIRO_SQLITE3_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sqlite3
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:$SBOX_DIR
 MACOSX_DEPLOYMENT_TARGET=$TARGET_OS_VERSION
