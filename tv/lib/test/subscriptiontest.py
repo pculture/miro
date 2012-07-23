@@ -198,7 +198,8 @@ class TestSubscription(MiroTestCase):
 class Testfind_subscribe_links(MiroTestCase):
     def test_garbage(self):
         url = 5
-        self.assertEquals(subscription.find_subscribe_links(url), [])
+        with self.allow_warnings():
+            self.assertEquals(subscription.find_subscribe_links(url), [])
 
     def test_different_host(self):
         url = 'http://youtoob.com'

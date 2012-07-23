@@ -156,7 +156,8 @@ class SubprocessManagerTest(EventLoopTest):
         self.responder.subprocess_events_saw = []
         self.subprocess.process.terminate()
         self.responder.subprocess_ready = False
-        self._wait_for_subprocess_ready()
+        with self.allow_warnings():
+            self._wait_for_subprocess_ready()
         # the subprocess should see a startup
         self.assertEqual(self.responder.subprocess_events_saw, ['startup'])
         # the main process should see a startup and a restart
@@ -177,7 +178,8 @@ class SubprocessManagerTest(EventLoopTest):
         self.subprocess.process.terminate()
         # wait a bit for the subprocess to quit then restart
         self.responder.subprocess_ready = False
-        self._wait_for_subprocess_ready()
+        with self.allow_warnings():
+            self._wait_for_subprocess_ready()
         # test that process #1 has been restarted
         self.assert_(self.subprocess.is_running)
         self.assert_(self.subprocess.process.poll() is None)
@@ -197,7 +199,8 @@ class SubprocessManagerTest(EventLoopTest):
         subprocessmanager._dump_obj(None, self.subprocess.process.stdin)
         # wait a bit for the subprocess to quit then restart
         self.responder.subprocess_ready = False
-        self._wait_for_subprocess_ready()
+        with self.allow_warnings():
+            self._wait_for_subprocess_ready()
         # test that process #1 has been restarted
         self.assert_(self.subprocess.is_running)
         self.assert_(self.subprocess.process.poll() is None)
@@ -300,7 +303,8 @@ class FeedParserTest(WorkerProcessTest):
         original_pid = workerprocess._subprocess_manager.process.pid
         self.send_feedparser_task()
         workerprocess._subprocess_manager.process.terminate()
-        self.runEventLoop(4.0)
+        with self.allow_warnings():
+            self.runEventLoop(4.0)
         # check that we really restarted the subprocess
         self.assertNotEqual(original_pid,
                 workerprocess._subprocess_manager.process.pid)
@@ -364,6 +368,7 @@ class MovieDataTest(WorkerProcessTest):
         self.check_movie_data_call('mp3-1.mp3', 'audio', 1044, False)
         self.check_movie_data_call('mp3-2.mp3', 'audio', 1044, False)
 
+    @only_on_platforms('linux', 'win32')
     def test_movie_data_worker_process_video(self):
         self.check_movie_data_call('theora_with_ogg_extension.ogg', 'video',
                                    1044, True)

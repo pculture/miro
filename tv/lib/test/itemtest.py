@@ -277,7 +277,8 @@ class DeletedItemTest(MiroTestCase):
         # cause a crash.  A soft failure is okay though.
         app.controller.failed_soft_okay = True
         Item._allow_nonexistent_paths = False
-        FileItem("/non/existent/path/", feed.id)
+        with self.allow_warnings():
+            FileItem("/non/existent/path/", feed.id)
 
 class HaveItemForPathTest(MiroTestCase):
     def setUp(self):
@@ -287,11 +288,14 @@ class HaveItemForPathTest(MiroTestCase):
         self.deleted_paths = []
 
     def add_item(self, filename):
-        path = '/videos/' + unicode_to_filename(filename)
+        path = os.path.join(self.tempdir, unicode_to_filename(filename))
+        # create a bogus file so we don't get a warning when we create a
+        # filename.
+        open(path, 'wb').write("data")
         self.added_items[path] = FileItem(path, self.feed.id)
 
     def remove_item(self, filename):
-        path = '/videos/' + unicode_to_filename(filename)
+        path = os.path.join(self.tempdir, unicode_to_filename(filename))
         self.added_items[path].remove()
         del self.added_items[path]
         self.deleted_paths.append(path)

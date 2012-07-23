@@ -1006,8 +1006,9 @@ class TestBackupSupportDir(MiroTestCase):
         # check that we don't max an archive file too much bigger than our max
         # size
         max_size = 1000000 # 1MB
-        backup = util.SupportDirBackup(self.support_dir, self.skip_dirs,
-                                       max_size=max_size)
+        with self.allow_warnings():
+            backup = util.SupportDirBackup(self.support_dir, self.skip_dirs,
+                                           max_size=max_size)
         filesize = os.stat(backup.backupfile).st_size
         self.assertTrue(filesize <= 1100000,
                         "Backup file too big.  filesize: %s max_size: %s" %

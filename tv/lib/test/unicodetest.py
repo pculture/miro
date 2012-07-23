@@ -75,7 +75,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
      <link>http://participatoryculture.org/boguslink</link>
          <description>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\
 \u4e5d</description>
-        <enclosure url="file://crap" length="0" type="video/mpeg"/>
+             <enclosure url="http://example.com/video.mpeg" length="0" type="video/mpeg"/>
          <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
       </item>
    </channel>
@@ -125,7 +125,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
          <title>H\xe4ppy Birthday</title>
          <link>http://participatoryculture.org/boguslink</link>
          <description>H\xe4ppy Birthday</description>
-         <enclosure url="file://crap" length="0" type="video/mpeg"/>
+             <enclosure url="http://example.com/video.mpeg" length="0" type="video/mpeg"/>
          <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>
       </item>
    </channel>
