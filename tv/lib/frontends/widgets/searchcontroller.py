@@ -134,6 +134,19 @@ class SearchController(itemlistcontroller.SimpleItemListController):
     type = u'search'
     id = u'search'
 
+    def __init__(self):
+        itemlistcontroller.SimpleItemListController.__init__(self)
+        self._started_handle = app.search_manager.connect('search-started',
+                self._on_search_started)
+        self._complete_handle = app.search_manager.connect('search-complete',
+                self._on_search_complete)
+
+    def cleanup(self):
+        itemlistcontroller.SimpleItemListController.cleanup(self)
+        app.search_manager.disconnect(self._started_handle)
+        app.search_manager.disconnect(self._complete_handle)
+
+
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)
         scroller = widgetset.Scroller(False, True)
@@ -152,14 +165,6 @@ class SearchController(itemlistcontroller.SimpleItemListController):
         # no results see (#16970)
         return app.search_manager.text == ''
 
-    def on_items_changed(self):
-        # Don't check for an empty list here.  Since items don't get
-        # removed from the search feed, we don't need to do anything.
-        # Also, it results in a false positive just after the search
-        # starts when the items from the last search get removed
-        # (#11255)
-        pass
-
     def make_titlebar(self):
         titlebar = itemlistwidgets.SearchListTitlebar()
         titlebar.connect('save-search', self._on_save_search)
@@ -177,18 +182,6 @@ class SearchController(itemlistcontroller.SimpleItemListController):
         # don't need to perform the search, just set the info for saving
         app.search_manager.set_search_info(engine, search_text)
         app.search_manager.save_search()
-
-    def start_tracking(self):
-        itemlistcontroller.SimpleItemListController.start_tracking(self)
-        self._started_handle = app.search_manager.connect('search-started',
-                self._on_search_started)
-        self._complete_handle = app.search_manager.connect('search-complete',
-                self._on_search_complete)
-
-    def stop_tracking(self):
-        itemlistcontroller.SimpleItemListController.stop_tracking(self)
-        app.search_manager.disconnect(self._started_handle)
-        app.search_manager.disconnect(self._complete_handle)
 
     def _on_search_started(self, search_manager):
         self.titlebar.set_search_text(search_manager.text)

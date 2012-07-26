@@ -45,8 +45,8 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
         itemlistcontroller.ItemListController.__init__(
             self, u'downloading', u'downloading')
-        self.item_list.set_resort_on_update(True)
         self.toolbar = None
+        self.update_buttons()
 
     def build_widget(self):
         self.titlebar = self.make_titlebar()
@@ -96,18 +96,12 @@ class DownloadsController(itemlistcontroller.ItemListController):
     # take more than a second or two which should be accurate for a moderately
     # sized download list.
     def _on_pause_all(self, widget):
-        self.item_list.set_resort_on_update(False)
         messages.PauseAllDownloads().send_to_backend()
 
     def _on_resume_all(self, widget):
-        self.item_list.set_resort_on_update(False)
         messages.ResumeAllDownloads().send_to_backend()
 
     def _on_cancel_all(self, widget):
-        # For this one we do set the resort_on_update = False because
-        # we are getting rid of items so we do want the sort to happen
-        # when stuff updates, but we only want it to happen at the very end.
-        self.item_list.set_resort_on_update(False)
         messages.CancelAllDownloads().send_to_backend()
 
     def _on_settings(self, widget):
@@ -132,7 +126,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         else:
             all_paused = all_downloading = True
             for item in items:
-                if item.state == 'paused':
+                if item.is_paused:
                     all_downloading = False
                 else:
                     all_paused = False

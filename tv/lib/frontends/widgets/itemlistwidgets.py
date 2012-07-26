@@ -871,11 +871,10 @@ class SearchListTitlebar(SearchTitlebar):
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items."""
-    def __init__(self, item_list, custom_headers=False):
-        widgetset.TableView.__init__(self, item_list.model,
+    def __init__(self, model, custom_headers=False):
+        widgetset.TableView.__init__(self, model,
                                      custom_headers=custom_headers)
 
-        self.item_list = item_list
         self.set_fixed_height(True)
         self.allow_multiple_select = True
 
@@ -986,8 +985,8 @@ class StandardView(ItemView):
 
     draws_selection = False
 
-    def __init__(self, item_list, item_renderer):
-        ItemView.__init__(self, item_list)
+    def __init__(self, model, item_renderer):
+        ItemView.__init__(self, model)
         self.renderer = item_renderer
         self.column = widgetset.TableColumn('item', self.renderer)
         self.set_column_spacing(0)
@@ -1000,8 +999,8 @@ class StandardView(ItemView):
 class ListView(ItemView, SorterOwner):
     """TableView that displays a list of items using the list view."""
     COLUMN_PADDING = 12
-    def __init__(self, item_list, renderer_set, sorts, column_widths):
-        ItemView.__init__(self, item_list, custom_headers=True)
+    def __init__(self, model, renderer_set, sorts, column_widths):
+        ItemView.__init__(self, model, custom_headers=True)
         self.column_widths = column_widths
         self._column_by_label = {}
         self.set_show_headers(True)
@@ -1027,23 +1026,21 @@ class ListView(ItemView, SorterOwner):
 
     def get_tooltip(self, iter_, column):
         if self.sorters.get('name', None) == column:
-            info = self.item_list.model[iter_][0]
+            info = self.model.get_item(iter_)
             text, links = self.html_stripper.strip(info.description)
             if text:
                 if len(text) > 1000:
                     text = text[:994] + ' [...]'
                 return text
         elif self.sorters.get('state', None) is column:
-            info = self.item_list.model[iter_][0]
+            info = self.model.get_item(iter_)
             # this logic is replicated in style.StateCircleRenderer
             # with text from style.StatusRenderer
-            if info.state == 'downloading':
+            if info.is_download:
                 return _("Downloading")
-            elif (info.downloaded and info.is_playable
-                  and not info.video_watched):
+            elif not info.video_watched:
                 return _("Unplayed")
-            elif (not info.item_viewed and not info.expiration_date
-                  and not info.is_external):
+            elif info.new:
                 return _("Newly Available")
         return None
 
@@ -1137,8 +1134,8 @@ class ListView(ItemView, SorterOwner):
             sorter.set_width(self.column_widths[name])
 
 class AlbumView(ListView):
-    def __init__(self, item_list, renderer_set, sorts, column_widths):
-        ListView.__init__(self, item_list, renderer_set, sorts, column_widths)
+    def __init__(self, model, renderer_set, sorts, column_widths):
+        ListView.__init__(self, model, renderer_set, sorts, column_widths)
         self.set_group_lines_enabled(True)
         self.set_group_line_style(widgetutil.css_to_color('#dddddd'), 1)
         self.enable_album_view_focus_hack()
@@ -2078,20 +2075,17 @@ class TorrentInfoWidget(widgetset.Background):
             self.connections.set_text(str(info.connections))
             self.seeders.set_text(str(info.seeders))
             self.leechers.set_text(str(info.leechers))
-            self.down_rate.set_text(displaytext.download_rate(info.down_rate))
-            self.up_rate.set_text(displaytext.download_rate(info.up_rate))
-            self.ratio.set_text("%0.2f" % info.up_down_ratio)
-            self.eta.set_text(displaytext.time_string_0_blank(
-                info.download_info.eta))
-        self.down_total.set_text(displaytext.size_string(info.down_total))
-        self.up_total.set_text(displaytext.size_string(info.up_total))
+            self.down_rate.set_text(info.download_rate_text)
+            self.up_rate.set_text(info.upload_rate_text)
+            self.ratio.set_text(info.upload_ratio_text)
+            self.eta.set_text(info.eta_text)
+        self.down_total.set_text(info.current_size_text)
+        self.up_total.set_text(info.upload_size_text)
 
     def _calc_should_show(self, info):
         """Decide if we should show ourselves for an ItemInfo."""
-        if info.download_info is None:
-            return False
-        return (info.download_info.torrent and 
-                info.download_info.state in ('downloading', 'uploading'))
+        return (info.is_torrent and
+                (info.is_download or info.is_seeding))
 
 class ItemDetailsWidget(widgetset.VBox):
     """Widget to display detailed information about an item.
@@ -2242,7 +2236,7 @@ class ItemDetailsWidget(widgetset.VBox):
         self._expanded = expanded
 
     def set_info(self, info):
-        self.title_label.set_text(info.name)
+        self.title_label.set_text(info.title)
         self.torrent_info.set_info(info)
         if self.torrent_info.should_show:
             self.torrent_info_holder.show()

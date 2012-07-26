@@ -240,59 +240,25 @@ class TableModel(TableModelBase):
     def iter_for_row(self, tableview, row):
         return self.row_list.nth_iter(row)
 
-class InfoListModel(infolist.InfoList, signals.SignalEmitter):
-    # Wrap InfoList into to a model that we can use.
+class ItemListModel(signals.SignalEmitter):
+    # Wrap ItemList into to a model that we can use.
     #
     # Note: iterators here are just row indexes (type int)
 
-    def __init__(self, *args, **kwargs):
-        infolist.InfoList.__init__(self, *args, **kwargs)
+    def __init__(self, item_list):
         signals.SignalEmitter.__init__(self, 'structure-will-change', 'row-changed')
+        self.item_list = item_list
+        self.item_list.connect("items-changed", self.on_items_changed)
+        self.item_list.connect("list-changed", self.on_list_changed)
 
-    def first_iter(self):
-        if len(self) > 0:
-            return 0
-        else:
-            raise IndexError(0)
+    def on_items_changed(self, item_list, ids_changed):
+        for id in ids_changed:
+            self.emit("row-changed", self.item_list.get_index(id))
 
-    def add_infos(self, *args, **kwargs):
-        self.emit('structure-will-change')
-        infolist.InfoList.add_infos(self, *args, **kwargs)
+    def on_list_changed(self, item_list):
+        self.emit("structure-will-change")
 
-    def remove_ids(self, *args, **kwargs):
-        self.emit('structure-will-change')
-        infolist.InfoList.remove_ids(self, *args, **kwargs)
-
-    def update_infos(self, *args, **kwargs):
-        self.emit('structure-will-change')
-        # HACK: update_infos might only change rows, so we maybe we only need
-        # to emit 'row-changed' here.  But most of the time we will re-sort
-        # things so it seems simpler just to emit structure-will-change
-        infolist.InfoList.update_infos(self, *args, **kwargs)
-
-    def remove_all(self, *args, **kwargs):
-        self.emit('structure-will-change')
-        infolist.InfoList.remove_all(self, *args, **kwargs)
-
-    def move_before(self, *args, **kwargs):
-        self.emit('structure-will-change')
-        infolist.InfoList.move_before(self, *args, **kwargs)
-
-    def change_sort(self, *args, **kwargs):
-        self.emit('structure-will-change')
-        infolist.InfoList.change_sort(self, *args, **kwargs)
-
-    def set_attr(self, id_, name, value):
-        infolist.InfoList.set_attr(self, id_, name, value)
-        row = self.index_of_id(id_)
-        self.emit('row-changed', row)
-
-    def unset_attr(self, id_, name):
-        infolist.InfoList.unset_attr(self, id_, name)
-        row = self.index_of_id(id_)
-        self.emit('row-changed', row)
-
-    def iter_for_row(self, tableview, row):
+    def _iter_for_row(self, row):
         if row < 0:
             raise IndexError(row)
         elif row >= len(self):
@@ -300,11 +266,33 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
         else:
             return row # iterators are just the row index
 
+    def first_iter(self):
+        return self._iter_for_row(0)
+
+    def iter_for_row(self, tableview, row):
+        return self._iter_for_row(row)
+
+    def nth_iter(self, index):
+        return self._iter_for_row(index)
+
+    def iter_for_id(self, item_id):
+        row = self.item_list.get_index(item_id)
+        return self._iter_for_row(row)
+
     def row_of_iter(self, tableview, iter):
         return iter # iterators are just the row index
 
     def get_column_data(self, row, column):
         return row
+
+    def __getitem__(self, row):
+        info = self.item_list.get_row(row)
+        attrs = self.item_list.get_attrs(info.id)
+        group_info = self.item_list.get_group_info(row)
+        return (info, attrs, group_info)
+
+    def __len__(self):
+        return len(self.item_list)
 
 class TreeNode(NSObject, TableRow):
     """A row in a TreeTableModel"""
@@ -543,7 +531,7 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
         return self.acceptDrop_dragInfo_parentIter_position_(tableview, 
                 drag_info, parent, position)
 
-class MiroInfoListDataSource(MiroTableViewDataSource):
+class MiroItemListDataSource(MiroTableViewDataSource):
     def translateRow_operation_(self, row, operation):
         if operation == NSTableViewDropOn:
             return row, -1
@@ -556,7 +544,7 @@ class MiroInfoListDataSource(MiroTableViewDataSource):
     def tableView_writeRowsWithIndexes_toPasteboard_(self, tableview,
             rowIndexes, pasteboard):
         indexes = list_from_nsindexset(rowIndexes)
-        data = [self.model[i] for i in indexes]
+        data = [self.model.item_list.get_row(i) for i in indexes]
         return self.view_writeColumnData_ToPasteboard_(tableview, data,
                 pasteboard)
 

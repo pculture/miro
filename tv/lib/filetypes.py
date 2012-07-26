@@ -80,6 +80,16 @@ MIMETYPES_EXT_MAP = {
     'application/vnd.emusic-emusic_list': ['.emx']
 }
 
+KNOWN_MIME_TYPES = (u'audio', u'video')
+KNOWN_MIME_SUBTYPES = (
+    u'.mov', u'.wmv', u'.mp4', u'.mp3',
+    u'.mpg', u'.mpeg', u'.avi', u'.x-flv',
+    u'.x-msvideo', u'.m4v', u'.mkv', u'.m2v', u'.ogg'
+    )
+MIME_SUBSITUTIONS = {
+    u'QUICKTIME': u'MOV',
+}
+
 EXT_MIMETYPES_MAP = {}
 for (mimetype, exts) in MIMETYPES_EXT_MAP.iteritems():
     for ext in exts:
@@ -276,3 +286,35 @@ def item_file_type_for_filename(filename):
     if ext in AUDIO_EXTENSIONS:
         return u'audio'
     return u'other'
+
+def calc_file_format(filename, mime_type):
+    """Get a file format string for an item.
+
+    file formats are the user text that describes a file.  Something like
+    "mp3" or "mp4 video".
+
+    :param extension: file extension.  Can be None if it's not known
+    :param mime_type: mime type for the file.  Can be None if this isn't known
+    :returns: file format string, or None if we cant calculate it
+    """
+    if filename is not None:
+        extension = os.path.splitext(filename)[1].lower()
+        # Hack for mp3s, "mpeg audio" isn't clear enough
+        if extension == '.mp3':
+            return u'.mp3'
+    else:
+        extension = None
+    if mime_type is not None and '/' in mime_type:
+        mtype, subtype = mime_type.split('/', 1)
+        mtype = mtype.lower()
+        if mtype in KNOWN_MIME_TYPES:
+            format = subtype.split(';')[0].upper()
+            if mtype == u'audio':
+                format += u' AUDIO'
+            if format.startswith(u'X-'):
+                format = format[2:]
+            return (u'.%s' %
+                    MIME_SUBSITUTIONS.get(format, format).lower())
+    if extension in KNOWN_MIME_SUBTYPES:
+        return unicode(extension)
+    return None

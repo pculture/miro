@@ -49,7 +49,17 @@ fi
 # =============================================================================
 
 PYTHON_VERSION=2.7
-SDK_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer
+SDK_ROOT1=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer
+SDK_ROOT2=/Developer
+if [[ -e $SDK_ROOT1 ]] ; then
+        SDK_ROOT=$SDK_ROOT1
+elif [[ -e $SDK_ROOT2 ]] ; then
+        SDK_ROOT=$SDK_ROOT2
+else
+    echo "You don't seem to have XCode 4 installed."
+    exit 1
+fi
+
 SDK_DIR="$SDK_ROOT/SDKs/MacOSX$TARGET_OS_VERSION.sdk"
 
 if [[ ! -e $SDK_DIR ]]; then
@@ -61,6 +71,8 @@ ROOT_DIR=$(pushd ../../ >/dev/null; pwd; popd >/dev/null)
 BKIT_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
 SBOX_DIR=$ROOT_DIR/sandbox_$BKIT_VERSION
 WORK_DIR=$SBOX_DIR/pkg
+# Used by our patched setup.py for Python
+export MIRO_SQLITE3_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sqlite3
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:$SBOX_DIR
 MACOSX_DEPLOYMENT_TARGET=$TARGET_OS_VERSION

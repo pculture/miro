@@ -1090,7 +1090,6 @@ class CacheTestCase(MiroTestCase):
 
 
 class AlarmTestCase(MiroTestCase):
-
     @staticmethod
     def _long_function():
         time.sleep(1.5)
@@ -1114,3 +1113,10 @@ class AlarmTestCase(MiroTestCase):
     def test_context_manager__False(self):
         with util.alarm(0, set_signal=False) as result:
             self.assertFalse(result)
+
+class NamedTupleTest(MiroTestCase):
+    def test_namedtuple(self):
+        MyClass = util.namedtuple("MyClass", "a b c", "My Docstring")
+        m = MyClass(1,2,3)
+        self.assertEquals(m.__doc__, "My Docstring")
+        self.assertEquals((m.a, m.b, m.c), (1,2,3))

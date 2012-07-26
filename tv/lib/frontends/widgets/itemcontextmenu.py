@@ -103,7 +103,7 @@ class ItemContextMenuHandler(object):
         section = []
 
         def play_externally():
-            app.widgetapp.open_file(item.video_path)
+            app.widgetapp.open_file(item.filename)
             messages.MarkItemWatched(item).send_to_backend()
 
         # drm items seem to go in misc and are always unplayable.
@@ -196,24 +196,22 @@ class ItemContextMenuHandler(object):
                             _('Add to Playlist'),
                             app.widgetapp.add_to_playlist))
 
-        elif ((item.download_info is not None and
-               item.download_info.state != 'failed')):
-            if item.download_info.state != 'finished':
-                if not menu_sections:
-                    # make sure that the default menu option isn't destructive
-                    # (re: #16715)
-                    section.append(None)
+        elif item.is_download:
+            if not menu_sections:
+                # make sure that the default menu option isn't destructive
+                # (re: #16715)
+                section.append(None)
+            section.append((
+                    _('Cancel Download'),
+                    messages.CancelDownload(item.id).send_to_backend))
+            if item.is_paused:
                 section.append((
-                        _('Cancel Download'),
-                        messages.CancelDownload(item.id).send_to_backend))
-                if item.download_info.state != 'paused':
-                    section.append((
-                            _('Pause Download'),
-                            messages.PauseDownload(item.id).send_to_backend))
-                else:
-                    section.append((
-                            _('Resume Download'),
-                            messages.ResumeDownload(item.id).send_to_backend))
+                        _('Pause Download'),
+                        messages.PauseDownload(item.id).send_to_backend))
+            else:
+                section.append((
+                        _('Resume Download'),
+                        messages.ResumeDownload(item.id).send_to_backend))
 
         else:
             if not (item.device or item.remote):
@@ -222,8 +220,7 @@ class ItemContextMenuHandler(object):
                     section.append((
                             _('Download'),
                             messages.StartDownload(item.id).send_to_backend))
-                    if (item.download_info and
-                        item.download_info.state == u'failed'):
+                    if item.is_failed_download:
                         section.append((
                             _('Cancel Download'),
                             messages.CancelDownload(
@@ -236,11 +233,11 @@ class ItemContextMenuHandler(object):
                 # Play
                 section.append((_('Play'), app.widgetapp.play_selection))
 
-        if item.seeding_status == 'seeding':
+        if item.is_seeding:
             section.append((
                     _('Stop Seeding'),
                     messages.StopUpload(item.id).send_to_backend))
-        elif item.seeding_status == 'stopped':
+        elif not item.is_seeding and item.is_torrent:
             section.append((
                     _('Resume Seeding'),
                     messages.StartUpload(item.id).send_to_backend))
@@ -253,7 +250,7 @@ class ItemContextMenuHandler(object):
                 reveal_text = _('File on Disk')
 
             section.append((reveal_text,
-                lambda: app.widgetapp.check_then_reveal_file(item.video_path)))
+                lambda: app.widgetapp.check_then_reveal_file(item.filename)))
             remove = self._remove_context_menu_item([item])
             if remove:
                 section.append(remove)
@@ -369,8 +366,7 @@ class ItemContextMenuHandler(object):
                 paused.append(info)
             elif info.state == 'downloading':
                 downloading.append(info)
-                if (info.download_info.torrent and
-                        info.download_info.state != 'uploading'):
+                if item.is_torrent and not item.is_seeding:
                     uploadable.append(info)
             else:
                 available.append(info)

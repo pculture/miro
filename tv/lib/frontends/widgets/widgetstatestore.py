@@ -50,6 +50,7 @@ class WidgetStateStore(object):
         u'device-video': STANDARD_VIEW,
         u'downloading': STANDARD_VIEW,
         u'feed': CUSTOM_VIEW,
+        u'feed-folder': CUSTOM_VIEW,
         u'folder-contents': STANDARD_VIEW,
         u'music': LIST_VIEW,
         u'others': LIST_VIEW,
@@ -89,6 +90,7 @@ class WidgetStateStore(object):
         u'tab': u'feed-name', # all-feeds
         u'downloading': u'name',
         u'feed': u'-date',
+        u'feed-folder': u'-date',
         u'folder-contents': u'artist',
         u'music': u'artist',
         u'others': u'name',
@@ -117,6 +119,8 @@ class WidgetStateStore(object):
             [u'state', u'name', u'feed-name', u'length',
             u'size', u'date', u'status'],
         u'feed':
+            [u'state', u'name', u'length', u'size', u'date', u'status'],
+        u'feed-folder':
             [u'state', u'name', u'length', u'size', u'date', u'status'],
         u'search':
             [u'state', u'name', u'description', u'status', u'file-type',
@@ -217,7 +221,7 @@ class WidgetStateStore(object):
         else:
             view = WidgetStateStore.DEFAULT_VIEW_TYPE[display_type]
             if view == WidgetStateStore.CUSTOM_VIEW:
-                if display_type == u'feed':
+                if display_type in (u'feed', u'feed-folder'):
                     view = app.config.get(prefs.PODCASTS_DEFAULT_VIEW)
                 else:
                     app.widgetapp.handle_soft_failure("Getting default view",

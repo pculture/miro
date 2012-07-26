@@ -166,7 +166,7 @@ class StoreDatabaseTest(EventLoopTest):
 class EmptyDBTest(StoreDatabaseTest):
     def test_open_empty_db(self):
         self.reload_test_database()
-        app.db.cursor.execute("SELECT name FROM sqlite_master "
+        app.db.cursor.execute("SELECT name FROM main.sqlite_master "
                 "WHERE type='table'")
         for row in app.db.cursor.fetchall():
             table = row[0]
@@ -195,13 +195,13 @@ class DBUpgradeTest(StoreDatabaseTest):
         # database
         self.remove_database()
         self.reload_database()
-        app.db.cursor.execute("SELECT name FROM sqlite_master "
+        app.db.cursor.execute("SELECT name FROM main.sqlite_master "
                               "WHERE type='index'")
         blank_db_indexes = set(app.db.cursor)
         shutil.copy(resources.path("testdata/olddatabase.v79"),
                     self.save_path2)
         self.reload_database(self.save_path2)
-        app.db.cursor.execute("SELECT name FROM sqlite_master "
+        app.db.cursor.execute("SELECT name FROM main.sqlite_master "
                               "WHERE type='index'")
         upgraded_db_indexes = set(app.db.cursor)
         self.assertEquals(upgraded_db_indexes, blank_db_indexes)
@@ -227,7 +227,7 @@ class DBUpgradeTest(StoreDatabaseTest):
                                      (table_name, diff))
 
     def _get_column_types(self):
-        app.db.cursor.execute("SELECT name FROM sqlite_master "
+        app.db.cursor.execute("SELECT name FROM main.sqlite_master "
                               "WHERE type='table'")
         rv = {}
         for table_name in [r[0] for r in app.db.cursor.fetchall()]:

@@ -74,8 +74,11 @@ from miro import fileutil
 from miro import iteminfocache
 from miro import messages
 from miro import schema
+from miro import signals
 from miro import prefs
 from miro import util
+from miro.data import fulltextsearch
+from miro.data import item
 from miro.gtcache import gettext as _
 from miro.plat.utils import PlatformFilenameType, filename_to_unicode
 
@@ -336,7 +339,7 @@ class DeviceLiveStorageErrorHandler(LiveStorageErrorHandler):
                         "saved. ", {'device': self.name})
         dialogs.MessageBoxDialog(title, description).run()
 
-class LiveStorage:
+class LiveStorage(signals.SignalEmitter):
     """Handles the storage of DDBObjects.
 
     This class does basically two things:
@@ -347,6 +350,11 @@ class LiveStorage:
     Attributes:
 
     - cache -- DatabaseObjectCache object
+
+    Signals:
+
+    - transaction-finished(success) -- We committed or rolled back a
+    transaction
     """
     def __init__(self, path=None, error_handler=None, preallocate=None,
                  object_schemas=None, schema_version=None,
@@ -365,6 +373,8 @@ class LiveStorage:
                                    temporary mode (running in memory, but
                                    checking if it can write to the disk)
         """
+        signals.SignalEmitter.__init__(self)
+        self.create_signal("transaction-finished")
         if path is None:
             path = app.config.get(prefs.SQLITE_PATHNAME)
         if error_handler is None:
@@ -396,7 +406,6 @@ class LiveStorage:
         self.cache = DatabaseObjectCache()
         self.raise_load_errors = False # only gets set in unittests
         self.force_directory_creation = True # False for device databases
-        self._dc = None
         self._query_times = {}
         self.path = path
         self._quitting_from_operational_error = False
@@ -578,28 +587,15 @@ class LiveStorage:
                          exc_info=True)
             return False
 
-    def close(self, ignore_vacuum_error=True):
+    def close(self):
         logging.info("closing database")
-        if self._dc:
-            self._dc.cancel()
-            self._dc = None
         self.finish_transaction()
+        self.connection.close()
 
-        # the unittests run in memory and vacuum causes a segfault if
-        # the db is in memory.
-        if (self.path != ":memory:" and
-            self.preallocate is None and
-            self.connection and
-            self.cursor):
-            logging.info("Vacuuming the db before shutting down.")
-            try:
-                self.cursor.execute("VACUUM")
-            except sqlite3.DatabaseError, sdbe:
-                if ignore_vacuum_error:
-                    msg = "... Vacuuming failed with DatabaseError: %s"
-                    logging.info(msg, sdbe)
-                else:
-                    raise
+    def close_before_copying(self):
+        logging.info("closing database before copying it")
+        self.finish_transaction()
+        self.connection.execute("PRAGMA wal_checkpoint(RESTART)")
         self.connection.close()
 
     def get_backup_directory(self):
@@ -672,7 +668,7 @@ class LiveStorage:
         """
         logging.info("database path: %s", self.path)
         # close database
-        self.close(ignore_vacuum_error=False)
+        self.close_before_copying()
 
         # copy the db to a backup file for posterity
         target_path = self.get_backup_directory()
@@ -697,7 +693,7 @@ class LiveStorage:
         database we were using to the normal place, and switches our sqlite
         connection to use that file
         """
-        self.close(ignore_vacuum_error=False)
+        self.close_before_copying()
         shutil.move(self._changed_db_path, self.path)
         self.open_connection()
         del self._changed_db_path
@@ -953,6 +949,9 @@ class LiveStorage:
         """Check if an id exists and is loaded in the database."""
         return (id_, app.db.table_name(klass)) in self._object_map
 
+    def fetch_item_infos(self, item_ids):
+        return item.fetch_item_infos(self.connection, item_ids)
+
     def table_name(self, klass):
         return self._schema_map[klass].table_name
 
@@ -1108,6 +1107,7 @@ class LiveStorage:
             else:
                 self.cursor.execute("ROLLBACK TRANSACTION")
         self._statements_in_transaction = []
+        self.emit("transaction-finished", commit)
 
     def _execute(self, sql, values, is_update=False, many=False):
         if is_update and self._quitting_from_operational_error:
@@ -1259,8 +1259,10 @@ class LiveStorage:
         """Create a new empty database."""
 
         for schema in self._object_schemas:
+            type_specs = [self._create_sql_for_column(name, schema_item)
+                          for (name, schema_item) in schema.fields]
             self.cursor.execute("CREATE TABLE %s (%s)" %
-                    (schema.table_name, self._calc_sqlite_types(schema)))
+                    (schema.table_name, ', '.join(type_specs)))
             for name, columns in schema.indexes:
                 self.cursor.execute("CREATE INDEX %s ON %s (%s)" %
                         (name, schema.table_name, ', '.join(columns)))
@@ -1270,6 +1272,7 @@ class LiveStorage:
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
         self.set_version()
+        fulltextsearch.setup_fulltext_search(self.connection)
 
     def _get_size_info(self):
         """Get info about the database size
@@ -1325,18 +1328,18 @@ class LiveStorage:
             version = self._schema_version
         self.set_variable(VERSION_KEY, version, db_name)
 
-    def _calc_sqlite_types(self, object_schema):
-        """What datatype should we use for the attributes of an object schema?
+    def get_sqlite_type(self, item_schema):
+        """Get sqlite type to use for a schema item_schema
         """
 
-        types = []
-        for name, schema_item in object_schema.fields:
-            typ = _sqlite_type_map[schema_item.__class__]
-            if name != 'id':
-                types.append('%s %s' % (name, typ))
-            else:
-                types.append('%s %s PRIMARY KEY' % (name, typ))
-        return ', '.join(types)
+        return _sqlite_type_map[item_schema.__class__]
+
+    def _create_sql_for_column(self, column_name, item_schema):
+        typ = self.get_sqlite_type(item_schema)
+        if column_name != 'id':
+            return '%s %s' % (column_name, typ)
+        else:
+            return '%s %s PRIMARY KEY' % (column_name, typ)
 
     def reset_database(self, init_schema=True):
         """Saves the current database then starts fresh with an empty

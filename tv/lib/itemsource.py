@@ -172,7 +172,7 @@ class DatabaseItemSource(ItemSource):
         info = {
             'name': item.get_title(),
             'feed_id': item.feed_id,
-            'feed_name': item.get_source(),
+            'feed_name': item.parent_title,
             'parent_sort_key': item.get_parent_sort_key(),
             'feed_url': item.get_feed_url(),
             'state': item.get_state(),

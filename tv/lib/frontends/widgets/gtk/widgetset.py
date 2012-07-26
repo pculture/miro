@@ -54,10 +54,10 @@ from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
 from miro.frontends.widgets.gtk.preferenceswindow import PreferencesWindow
 from miro.frontends.widgets.gtk.donatewindow import DonateWindow
 from miro.frontends.widgets.gtk.tableview import (TableView, TableModel,
-        InfoListModel, TableColumn, TreeTableModel, CUSTOM_HEADER_HEIGHT)
+        ItemListModel, TableColumn, TreeTableModel, CUSTOM_HEADER_HEIGHT)
 from miro.frontends.widgets.gtk.tableviewcells import (CellRenderer,
         ImageCellRenderer, CheckboxCellRenderer, CustomCellRenderer,
-        InfoListRenderer, InfoListRendererText)
+        ItemListRenderer, ItemListRendererText)
 from miro.frontends.widgets.gtk.simple import (Image, ImageDisplay,
         AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground,
         ProgressBar, HLine)

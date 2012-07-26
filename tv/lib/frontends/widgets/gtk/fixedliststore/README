@@ -1,0 +1,21 @@
+This directory contains the miro.frontends.widgets.gtk.fixedliststore module.
+
+The meat of the code is in fixed-list-store.c and fixed-list-store.h, which
+implement the GtkTreeModel in C.
+
+That code gets wrapped by pygtk to create a python module.  A couple of these
+files are auto-built by the pygobject code generation system:
+
+fixed-list-store.defs:
+  - build using generate-defs.sh
+  - build info is stored in build-info-defs
+
+fixed-list-store-wrapper.c:
+  - build using generate-wrapper.sh
+  - controled by the fixed-list-store.override file
+  - build info is store in build-info-wrapper
+
+fixed-list-store-module.c defines the module that stores the wrapper code.
+
+Lastly there's setup-test.py and setup.py which work together to build a quick
+python program to test the code.

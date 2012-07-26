@@ -100,5 +100,5 @@ class Sniffer:
         del self.videosink
 
 def get_item_type(item_info, success_callback, error_callback):
-    s = Sniffer(item_info.video_path)
+    s = Sniffer(item_info.filename)
     s.result(success_callback, error_callback)

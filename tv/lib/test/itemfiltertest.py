@@ -51,31 +51,3 @@ class ItemFilterTest(MiroTestCase):
         # if we select downloaded, then unplayed should unselect
         filter_set.select('downloaded')
         self.check_active_filters(filter_set, 'video', 'downloaded')
-
-    def test_filter_items(self):
-        filter_set = itemfilter.ItemFilterSet()
-        downloaded_audio_item = FakeItemInfo('audio', True)
-        downloaded_video_item = FakeItemInfo('video', True)
-        audio_item = FakeItemInfo('audio', False)
-        video_item = FakeItemInfo('video', False)
-        # initially we should let everything through
-        self.check_active_filters(filter_set, 'all')
-        self.assertEquals(filter_set.filter(video_item), True)
-        self.assertEquals(filter_set.filter(audio_item), True)
-        self.assertEquals(filter_set.filter(downloaded_video_item), True)
-        self.assertEquals(filter_set.filter(downloaded_audio_item), True)
-        # test with 1 filter selected
-        filter_set.select('downloaded')
-        self.check_active_filters(filter_set, 'downloaded')
-        self.assertEquals(filter_set.filter(video_item), False)
-        self.assertEquals(filter_set.filter(audio_item), False)
-        self.assertEquals(filter_set.filter(downloaded_video_item), True)
-        self.assertEquals(filter_set.filter(downloaded_audio_item), True)
-        # test with 2 filter selected.  Both need to return True for the
-        # filter set filter to pass
-        filter_set.select('video')
-        self.check_active_filters(filter_set, 'video', 'downloaded')
-        self.assertEquals(filter_set.filter(video_item), False)
-        self.assertEquals(filter_set.filter(audio_item), False)
-        self.assertEquals(filter_set.filter(downloaded_video_item), True)
-        self.assertEquals(filter_set.filter(downloaded_audio_item), False)

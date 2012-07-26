@@ -124,8 +124,8 @@ class PlaybackInfo(widgetset.CustomButton):
         app.playback_manager.connect('will-stop', self.handle_stop)
 
     def on_info_change(self, obj, item_info):
-        self.item_name = item_info.name
-        self.feed_name = item_info.feed_name
+        self.item_name = item_info.title
+        self.parent_title = item_info.parent_title
         self.is_feed = not item_info.is_external
         self.album = item_info.album
         self.artist = item_info.artist
@@ -144,12 +144,12 @@ class PlaybackInfo(widgetset.CustomButton):
     
     def reset(self):
         self.item_name = ""
-        self.feed_name = self.album = self.artist = None
+        self.parent_title = self.album = self.artist = None
         self.is_audio = self.is_video = self.is_feed = None
 
     def get_details(self):
-        if self.feed_name and self.is_feed:
-            details = self.feed_name
+        if self.parent_title and self.is_feed:
+            details = self.parent_title
         elif self.is_audio:
             # non-feed audio ~= music
             album = self.album or _("Unknown Album")

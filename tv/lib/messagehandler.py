@@ -980,9 +980,9 @@ class BackendMessageHandler(messages.MessageHandler):
             obj.set_title(message.new_name)
 
     def handle_play_all_unwatched(self, message):
-        item_infos = itemsource.DatabaseItemSource(
-            item.Item.newly_downloaded_view()).fetch_all()
-        messages.PlayMovie(item_infos).send_to_frontend()
+        item_ids = [i.id for i in item.Item.newly_downloaded_view()]
+        item_infos = app.db.fetch_item_infos(item_ids)
+        messages.PlayMovies(item_infos).send_to_frontend()
 
     def handle_tab_expanded_change(self, message):
         tab_view = HideableTab.make_view('type=?', (message.type,))

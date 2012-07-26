@@ -31,7 +31,6 @@
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
-from miro.frontends.widgets import itemtrack
 from miro.gtcache import gettext as _
 
 # The spinning progress bar while a user connects is done by the backend
@@ -60,8 +59,9 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def handle_delete(self):
         pass
 
-    def build_item_tracker(self):
-        return itemtrack.ItemListTracker.create(self.type, self.share)
+    def build_item_list(self):
+        # FIXME: Make this work again
+        raise NotImplementedError()
 
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)

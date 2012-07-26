@@ -1,5 +1,7 @@
+import datetime
 import os
 import logging
+import random
 import unittest
 import tempfile
 import threading
@@ -9,6 +11,7 @@ import functools
 from miro import api
 from miro import app
 from miro import config
+from miro import data
 from miro import database
 from miro import eventloop
 from miro import extensionmanager
@@ -28,6 +31,7 @@ from miro import storedatabase
 from time import sleep
 from miro import models
 from miro import workerprocess
+from miro.fileobject import FilenameType
 
 from miro.test import mock
 from miro.test import testhttpserver
@@ -382,6 +386,22 @@ class MiroTestCase(unittest.TestCase):
     def make_item_info(self, itemobj):
         return itemsource.DatabaseItemSource._item_info_for(itemobj)
 
+    def make_feed(self, url):
+        url = u'http://feed%d.com/feed.rss' % self.feed_counter.next()
+        return models.Feed(url)
+
+    def make_item(self, feed, title):
+        """Make a new item."""
+        fp_values = item.FeedParserValues({})
+        fp_values.data['entry_title'] = title
+        fp_values.data['url'] = u'http://example.com/%s.mkv' % title
+        # pick a random recent date for the release date
+        seconds_ago = random.randint(0, 60 * 60 * 24 * 7)
+        release_date = (datetime.datetime.now() -
+                        datetime.timedelta(seconds=seconds_ago))
+        fp_values.data['release_date'] = release_date
+        return models.Item(fp_values, feed_id=feed.id)
+
     def setup_log_filter(self):
         """Make a LogFilter that will turn loggings into exceptions."""
         logger = logging.getLogger()
@@ -476,7 +496,22 @@ class MiroTestCase(unittest.TestCase):
                 # normal case: use _upgrade_database() because we want
                 # exceptions to keep propagating
                 app.db._upgrade_database()
+        item.setup_change_tracker()
         database.initialize()
+
+    def init_data_package(self):
+        """Initialize the data package
+
+        The data package is used by the frontend to get data.
+
+        Note: Since data uses a different connection than the backend system
+        (storedatabase and friends), we need to create an on-disk database.
+        """
+        self.db_path = self.make_temp_path(".sqlite")
+        if os.path.exists(self.db_path):
+            os.unlink(self.db_path)
+        self.reload_database(FilenameType(self.db_path))
+        data.init(self.db_path)
 
     def clear_ddb_object_cache(self):
         app.db._ids_loaded = set()
