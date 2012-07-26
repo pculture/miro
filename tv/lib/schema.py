@@ -407,6 +407,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('feed_id', SchemaInt(noneOk=True)),
         ('downloader_id', SchemaInt(noneOk=True)),
         ('parent_id', SchemaInt(noneOk=True)),
+        ('parent_title', SchemaString(noneOk=True)),
         ('auto_downloaded', SchemaBool()),
         ('pending_manual_download', SchemaBool()),
         ('pending_reason', SchemaString()),
@@ -616,6 +617,13 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('retry_count', SchemaInt(noneOk=True)),
         ('upload_size', SchemaInt(noneOk=True)),
         ('info_hash', SchemaString(noneOk=True)),
+        ('eta', SchemaInt(noneOk=True)),
+        ('rate', SchemaInt(noneOk=True)),
+        ('upload_rate', SchemaInt(noneOk=True)),
+        ('activity', SchemaString(noneOk=True)),
+        ('seeders', SchemaInt(noneOk=True)),
+        ('leechers', SchemaInt(noneOk=True)),
+        ('connections', SchemaInt(noneOk=True)),
     ]
 
     indexes = (
@@ -863,7 +871,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 185
+VERSION = 189
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

@@ -77,8 +77,6 @@ from miro.clock import clock
 # the unittests to speed things up
 _RUN_FEED_PARSER_INLINE = False
 
-WHITESPACE_PATTERN = re.compile(r"^[ \t\r\n]*$")
-
 DEFAULT_FEED_ICON = "images/icon-podcast-small.png"
 
 @returns_unicode
@@ -247,7 +245,7 @@ class FeedImpl(DDBObject):
     """
     def setup_new(self, url, ufeed, title=None):
         check_u(url)
-        if title:
+        if title is not None:
             check_u(title)
         self.url = url
         self.ufeed = ufeed
@@ -303,19 +301,19 @@ class FeedImpl(DDBObject):
         if firstTriggerDelay >= 0:
             self.scheduler = eventloop.add_timeout(
                 firstTriggerDelay, self.update,
-                "Podcast update (%s)" % self.get_title())
+                "Podcast update (%s)" % self.title)
         else:
             if self.updateFreq > 0:
                 logging.debug("scheduling update in %s seconds (%s)",
                              self.updateFreq,
-                             self.get_title())
+                             self.title)
                 self.scheduler = eventloop.add_timeout(
                     self.updateFreq, self.update,
-                    "Podcast update (%s)" % self.get_title())
+                    "Podcast update (%s)" % self.title)
             else:
                 logging.debug("updateFreq is %s: skipping update (%s)",
                              self.updateFreq,
-                             self.get_title())
+                             self.title)
 
     def cancel_update_events(self):
         if hasattr(self, 'scheduler') and self.scheduler is not None:
@@ -330,21 +328,6 @@ class FeedImpl(DDBObject):
     def default_thumbnail_path(self):
         """Get the path to our thumbnail when there isn't a downloaded icon"""
         return default_feed_icon_path()
-
-    @returns_unicode
-    def get_title(self):
-        """Returns the title of the feed
-        """
-        try:
-            title = self.title
-            if title is None or WHITESPACE_PATTERN.match(title):
-                if self.ufeed.baseTitle is not None:
-                    title = self.ufeed.baseTitle
-                else:
-                    title = self.url
-            return title
-        except AttributeError:
-            return u""
 
     @returns_unicode
     def get_url(self):
@@ -392,7 +375,7 @@ class FeedImpl(DDBObject):
         pass
 
     def __str__(self):
-        return "%s - %s" % (self.__class__.__name__, stringify(self.get_title()))
+        return "%s - %s" % (self.__class__.__name__, stringify(self.title))
 
     def clean_old_items(self):
         """
@@ -708,12 +691,20 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.loading or (self.actualFeed and self.actualFeed.updating)
 
     @returns_unicode
-    def get_title(self):
+    def get_title_without_search_terms(self):
         if self.userTitle is not None:
             return self.userTitle
+        elif self.actualFeed.title is not None:
+            return self.actualFeed.title
+        elif self.baseTitle is not None:
+            return self.baseTitle
+        else:
+            return self.actualFeed.url
 
-        title = self.actualFeed.get_title()
-        if self.searchTerm is not None:
+    @returns_unicode
+    def get_title(self):
+        title = self.get_title_without_search_terms()
+        if self.userTitle is None and self.searchTerm is not None:
             title = u"%s for '%s'" % (title, self.searchTerm)
         return title
 
@@ -2341,7 +2332,7 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
     """
     def setup_new(self, ufeed):
         DirectoryScannerImplBase.setup_new(self, url=u"dtv:directoryfeed",
-                ufeed=ufeed, title=None)
+                ufeed=ufeed, title=u"")
         self.set_update_frequency(5)
         self.schedule_update_events(0)
         self._prepare_count = 0
@@ -2389,9 +2380,6 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
     def _scan_dir(self):
         return app.config.get(prefs.MOVIES_DIRECTORY)
 
-    @returns_unicode
-    def get_title(self):
-        return _('Local Files')
 
 class SearchFeedImpl(RSSMultiFeedBase):
     """Search and Search Results feeds
@@ -2503,33 +2491,21 @@ class SearchFeedImpl(RSSMultiFeedBase):
         # the dtv:search feed should never automatically update.
         return
 
-    @returns_unicode
-    def get_title(self):
-        return _('Search')
-
 class SearchDownloadsFeedImpl(FeedImpl):
     def setup_new(self, ufeed):
         FeedImpl.setup_new(self, url=u'dtv:searchDownloads', ufeed=ufeed,
-                title=None)
+                title=_('Search'))
         self.set_update_frequency(-1)
 
-    @returns_unicode
-    def get_title(self):
-        return _('Search')
 
 class ManualFeedImpl(FeedImpl):
     """Downloaded Videos/Torrents that have been added using by the
     user opening them with democracy.
     """
     def setup_new(self, ufeed):
-        FeedImpl.setup_new(self, url=u'dtv:manualFeed', ufeed=ufeed,
-                title=None)
+        FeedImpl.setup_new(self, url=u'dtv:manualFeed', ufeed=ufeed, title=u"")
         self.ufeed.expire = u'never'
         self.set_update_frequency(-1)
-
-    @returns_unicode
-    def get_title(self):
-        return _('Local Files')
 
 LINK_PATTERN = re.compile("<(a|embed)\s[^>]*(href|src)\s*=\s*\"([^\"]*)\"[^>]*>(.*?)</a(.*)", re.S)
 IMG_PATTERN = re.compile(".*<img\s.*?src\s*=\s*\"(.*?)\".*?>", re.S)

@@ -658,13 +658,12 @@ class DeviceSyncManager(object):
                 views.append(item.Item.playlist_view(playlist_.id))
 
         for view in views:
-            source = itemsource.DatabaseItemSource(view)
-            try:
-                infos.update(
-                    [info for info in source.fetch_all()
-                     if not self.device.database.item_exists(info)])
-            finally:
-                source.unlink()
+            # FIXME: need to make sure this works now that ItemInfo has
+            # changed a bit
+            item_ids = [item.id for item in view]
+            item_infos = app.db.fetch_item_infos(item_ids)
+            infos.update(info for info in item_infos
+                         if not self.device.database.item_exists(info))
 
         # check for expired items
         if sync[u'podcasts'].get(u'expire', True):
@@ -738,9 +737,11 @@ class DeviceSyncManager(object):
             remaining = sizes[name]
             if name == u'new_playlists':
                 for playlist_ in view:
+                    # FIXME: need to make sure this works now that ItemInfo
+                    # has changed a bit
                     playlist_view = item.Item.playlist_view(playlist_.id)
-                    infos = itemsource.DatabaseItemSource(
-                        playlist_view).fetch_all()
+                    playlist_ids = [i.id for i in playlist_view]
+                    infos = app.db.fetch_item_infos(playlist_ids)
                     size = self.get_sync_size(infos)[1]
                     if size and size < remaining:
                         for info in infos:
@@ -748,8 +749,9 @@ class DeviceSyncManager(object):
                         syncs.update(infos)
                         remaining -= size
             else:
-                source = itemsource.DatabaseItemSource(view)
-                for info in source.fetch_all():
+                # FIXME: need to make sure this works now that ItemInfo
+                # has changed a bit
+                for info in app.db.fetch_item_infos(i.id for i in view):
                     size = self.get_sync_size([info])[1]
                     if size and size < remaining:
                         info.auto_sync = True

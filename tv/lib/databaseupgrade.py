@@ -3970,3 +3970,146 @@ def upgrade184(cursor):
 def upgrade185(cursor):
     """Use NULL for empty item descriptions."""
     cursor.execute("UPDATE item SET description=NULL WHERE description=''")
+
+def upgrade186(cursor):
+    """Add columns no the remote_downloader table to track stats."""
+
+    cursor.execute("ALTER TABLE remote_downloader ADD COLUMN eta integer")
+    cursor.execute("ALTER TABLE remote_downloader ADD COLUMN rate integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN upload_rate integer")
+    cursor.execute("ALTER TABLE remote_downloader ADD COLUMN activity text")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN seeders integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN leechers integer")
+    cursor.execute("ALTER TABLE remote_downloader "
+                   "ADD COLUMN connections integer")
+
+def upgrade187(cursor):
+    """Add the item_fts table"""
+
+    columns = ['title', 'description', 'artist', 'album', 'genre',
+               'filename', ]
+    column_list = ', '.join(c for c in columns)
+    column_list_for_new = ', '.join("new.%s" % c for c in columns)
+    column_list_with_types = ', '.join('%s text' % c for c in columns)
+    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4(%s)" %
+                   column_list_with_types)
+    cursor.execute("INSERT INTO item_fts(docid, %s)"
+                   "SELECT item.id, %s FROM item" %
+                   (column_list, column_list))
+    # make triggers to keep item_fts up to date
+    cursor.execute("CREATE TRIGGER item_bu "
+                   "BEFORE UPDATE ON item BEGIN "
+                   "DELETE FROM item_fts WHERE docid=old.id; "
+                   "END;")
+
+    cursor.execute("CREATE TRIGGER item_bd "
+                   "BEFORE DELETE ON item BEGIN "
+                   "DELETE FROM item_fts WHERE docid=old.id; "
+                   "END;")
+
+    cursor.execute("CREATE TRIGGER item_au "
+                   "AFTER UPDATE ON item BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (column_list, column_list_for_new))
+
+    cursor.execute("CREATE TRIGGER item_ai "
+                   "AFTER INSERT ON item BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (column_list, column_list_for_new))
+
+def upgrade188(cursor):
+    """Fix the title for FeedImpl tables."""
+    # ensure that if a title is blank, then we set it as NULL
+    feed_impl_table_names = [
+        'feed_impl', 'rss_feed_impl', 'saved_search_feed_impl',
+        'scraper_feed_impl', 'search_feed_impl', 'directory_watch_feed_impl',
+        'directory_feed_impl', 'search_downloads_feed_impl',
+        'manual_feed_impl', 
+    ]
+    for table_name in feed_impl_table_names:
+        cursor.execute("UPDATE %s SET title=NULL "
+                       "WHERE TRIM(title)=''" % table_name)
+    # Before some FeedImpl subclasses overrode the title attribute and just
+    # returned a special case name.  Update title to have those special case
+    # names.  NOTE: some of these special titles are blank -- the way the old
+    # code was weird.
+    special_case_feed_impl_titles = [
+        ('search_feed_impl', _('Search')),
+        ('search_downloads_feed_impl', _('Search Downloads')),
+        ('directory_feed_impl', ''),
+        ('manual_feed_impl', ''),
+    ]
+    for table_name, title in special_case_feed_impl_titles:
+        cursor.execute("UPDATE %s SET title=?" % table_name,
+                       (title,))
+
+def upgrade189(cursor):
+    """Add the parent_title column."""
+    cursor.execute("ALTER TABLE item ADD COLUMN parent_title text")
+
+    # Calculate parent_title for feed items
+    feed_impl_table_names = [
+        'feed_impl', 'rss_feed_impl', 'saved_search_feed_impl',
+        'scraper_feed_impl', 'search_feed_impl', 'directory_watch_feed_impl',
+        'directory_feed_impl', 'search_downloads_feed_impl',
+        'manual_feed_impl', 
+    ]
+    def get_feed_impl_info(feed_impl_id):
+        for table_name in feed_impl_table_names:
+            sql = "SELECT title, url FROM %s WHERE id=?" % table_name
+            cursor.execute(sql, (feed_impl_id,))
+            results = cursor.fetchall()
+            if results:
+                return results[0]
+        logging.warn("Can't find up FeedImpl: %s", feed_impl_id)
+        return _("Unknown Title", "Unknown URL")
+
+    def get_feed_title(user_title, base_title, search_term, feed_impl_id):
+        if user_title is not None:
+            return user_title
+        feed_impl_title, feed_impl_url = get_feed_impl_info(feed_impl_id)
+        if feed_impl_title is not None:
+            title = feed_impl_title
+        elif base_title is not None:
+            title = base_title
+        else:
+            title = feed_impl_url
+        if search_term is not None:
+            title = u"%s for '%s'" % (title, search_term)
+        return title
+
+    cursor.execute("SELECT id, userTitle, baseTitle, searchTerm, "
+                   "feed_impl_id "
+                   "FROM feed")
+    for row in cursor.fetchall():
+        feed_id, user_title, base_title, search_term, feed_impl_id = row
+        feed_title = get_feed_title(user_title, base_title, search_term,
+                                    feed_impl_id)
+        cursor.execute("UPDATE item SET parent_title=? WHERE feed_id=?",
+                       (feed_title, feed_id))
+    # set parent_title for items not in feeds
+    cursor.execute("UPDATE item SET parent_title="
+                   "(SELECT i2.title FROM item i2 WHERE item.parent_id=i2.id) "
+                   "WHERE parent_title IS NULL and parent_id IS NOT NULL")
+
+    # Update the item_fts table.  Unfortunately, we can't alter a virtual
+    # table, so we basically need to re-do upgrade 187
+    cursor.execute("DROP TABLE item_fts")
+
+    columns = ['title', 'description', 'artist', 'album', 'genre',
+               'filename', 'parent_title', ]
+    column_list = ', '.join(c for c in columns)
+    column_list_for_new = ', '.join("new.%s" % c for c in columns)
+    column_list_with_types = ', '.join('%s text' % c for c in columns)
+    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4(%s)" %
+                   column_list_with_types)
+    cursor.execute("INSERT INTO item_fts(docid, %s)"
+                   "SELECT item.id, %s FROM item" %
+                   (column_list, column_list))
+    # The triggers are still present even though we dropped item_fts, no need
+    # to re-make them.

@@ -47,6 +47,7 @@ import urllib
 from miro import app
 from miro import config
 from miro import crashreport
+from miro import data
 from miro import prefs
 from miro import feed
 from miro.infoupdater import InfoUpdater
@@ -69,6 +70,7 @@ from miro.frontends.widgets import searchfilesdialog
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
+from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets import displays
@@ -102,6 +104,7 @@ class Application:
         self.window = None
         self.ui_initialized = False
         messages.FrontendMessage.install_handler(self.message_handler)
+        app.item_list_pool = itemlist.ItemListPool()
         app.info_updater = InfoUpdater()
         app.saved_items = set()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
@@ -136,6 +139,7 @@ class Application:
         """Connects to signals, installs handlers, and calls :meth:`startup`
         from the :mod:`miro.startup` module.
         """
+        data.init()
         self.connect_to_signals()
         startup.install_movies_directory_gone_handler(self.handle_movies_directory_gone)
         startup.install_first_time_handler(self.handle_first_time)
@@ -579,10 +583,9 @@ class Application:
                     app.playback_manager.on_movie_finished()
 
         external_count = len([s for s in selection if s.is_external])
-        failed_count = len([s for s in selection if s.download_info and
-                            s.download_info.state == u'failed'])
+        failed_count = len([s for s in selection if s.is_failed_download])
         folder_count = len([s for s in selection if s.is_container_item])
-        total_count = len(selection)
+        total_count = len([selection])
 
         if total_count == 1 and external_count == folder_count == 0:
             playback_finished_if_playing_selection()
@@ -692,7 +695,7 @@ class Application:
             return
 
         title = _('Save Item As...')
-        filename = selection[0].video_path
+        filename = selection[0].filename
         filename = os.path.basename(filename)
         filename = dialogs.ask_for_save_pathname(title, filename)
 
@@ -1337,14 +1340,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
             messages.SharingEject(share).send_to_backend()
 
     def handle_downloader_sync_command_complete(self, message):
-        # This callback is to ensure that if we are in the downloads
-        # resort_on_update is re-enabled.  Walk the display stack to see
-        # if there is a downloading display and if there is, reset the
-        # resort_on_update boolean.
-        displays = app.display_manager.display_stack
-        for d in displays:
-            if hasattr(d, 'type') and d.type == 'downloading':
-                d.controller.item_list.set_resort_on_update(True)
+        # We used to need this command, but with the new ItemList code it's
+        # obsolute.
         logging.debug('DownloaderSyncCommandComplete')
 
     def handle_jettison_tabs(self, message):
@@ -1577,10 +1574,15 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.info_updater.handle_tabs_changed(message)
 
     def handle_item_list(self, message):
+        # FIXME: should remove this function and the message that goes with it
         app.info_updater.handle_item_list(message)
 
     def handle_items_changed(self, message):
+        # FIXME: should remove this function and the message that goes with it
         app.info_updater.handle_items_changed(message)
+
+    def handle_item_changes(self, message):
+        app.item_list_pool.on_item_changes(message)
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count
@@ -1653,7 +1655,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if isinstance(current_display, displays.DeviceDisplay):
             current_display.handle_device_sync_changed(message)
 
-    def handle_play_movie(self, message):
+    def handle_play_movies(self, message):
         app.playback_manager.start_with_items(message.item_infos)
 
     def handle_stop_playing(self, message):

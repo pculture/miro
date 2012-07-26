@@ -44,7 +44,7 @@ class SniffingPlayer (quicktime.Player):
         quicktime.Player.__init__(self, supported_media_types)
     
     def get_item_type(self, item_info):
-        qtmovie = self.get_movie_from_file(item_info.video_path)
+        qtmovie = self.get_movie_from_file(item_info.filename)
         if qtmovie is None:
             return 'unplayable'
 

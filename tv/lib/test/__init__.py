@@ -73,7 +73,6 @@ from miro.test.databasetest import *
 from miro.test.itemtest import *
 from miro.test.filetypestest import *
 from miro.test.cellpacktest import *
-from miro.test.searchtest import *
 from miro.test.infolisttest import *
 from miro.test.fileobjecttest import *
 from miro.test.fastresumetest import *
@@ -86,6 +85,9 @@ from miro.test.subprocesstest import *
 from miro.test.itemfiltertest import *
 from miro.test.extensiontest import *
 from miro.test.idleiteratetest import *
+from miro.test.itemtracktest import *
+from miro.test.itemlisttest import *
+from miro.test.itemrenderertest import *
 
 # platform specific tests
 

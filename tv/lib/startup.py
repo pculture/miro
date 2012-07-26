@@ -295,6 +295,7 @@ def finish_startup(obj, thread):
     except storedatabase.UpgradeError:
         raise StartupError(None, None)
     database.initialize()
+    downloader.reset_download_stats()
     end = time.time()
     logging.timing("Database upgrade time: %.3f", end - start)
     if app.db.startup_version != app.db.current_version:
@@ -307,6 +308,7 @@ def finish_startup(obj, thread):
         mem_usage_test_event.set()
 
     item.setup_metadata_manager()
+    item.setup_change_tracker()
     app.item_info_cache = iteminfocache.ItemInfoCache()
     app.item_info_cache.load()
     dbupgradeprogress.upgrade_end()

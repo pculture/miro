@@ -39,6 +39,7 @@ import logging
 import re
 import shutil
 import time
+import urlparse
 
 from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
@@ -63,6 +64,7 @@ from miro import prefs
 from miro.plat import resources
 from miro import util
 from miro import filetypes
+from miro import messages
 from miro import searchengines
 from miro import fileutil
 from miro import signals
@@ -71,16 +73,6 @@ from miro import models
 from miro import metadata
 
 _charset = locale.getpreferredencoding()
-
-KNOWN_MIME_TYPES = (u'audio', u'video')
-KNOWN_MIME_SUBTYPES = (
-    u'mov', u'wmv', u'mp4', u'mp3',
-    u'mpg', u'mpeg', u'avi', u'x-flv',
-    u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg'
-    )
-MIME_SUBSITUTIONS = {
-    u'QUICKTIME': u'MOV',
-}
 
 # We don't mdp_state as of version 5.0, but we need to set this for
 # DeviceItems so that older versions can read the device DB
@@ -266,34 +258,17 @@ class FeedParserValues(object):
 
     def _calc_enclosure_format(self):
         enclosure = self.first_video_enclosure
-        if enclosure:
-            try:
-                extension = enclosure['url'].split('.')[-1]
-                extension = extension.lower().encode('ascii', 'replace')
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except KeyError:
-                extension = u''
-            # Hack for mp3s, "mpeg audio" isn't clear enough
-            if extension.lower() == u'mp3':
-                return u'.mp3'
-            if enclosure.get('type'):
-                enc = enclosure['type'].decode('ascii', 'replace')
-                if "/" in enc:
-                    mtype, subtype = enc.split('/', 1)
-                    mtype = mtype.lower()
-                    if mtype in KNOWN_MIME_TYPES:
-                        format = subtype.split(';')[0].upper()
-                        if mtype == u'audio':
-                            format += u' AUDIO'
-                        if format.startswith(u'X-'):
-                            format = format[2:]
-                        return (u'.%s' %
-                                MIME_SUBSITUTIONS.get(format, format).lower())
-
-            if extension in KNOWN_MIME_SUBTYPES:
-                return u'.%s' % extension
-        return None
+        if enclosure is None:
+            return None
+        if 'url' in enclosure:
+            filename = urlparse.urlparse(enclosure['url']).path
+        else:
+            filename = None
+        if enclosure.get('type'):
+            mime_type = enclosure['type'].decode('ascii', 'replace')
+        else:
+            mime_type = None
+        return filetypes.calc_file_format(filename, mime_type)
 
     def _calc_release_date(self):
         # FIXME - this is awful.  need to handle site-specific things
@@ -404,6 +379,40 @@ class _ItemsForPathCountTracker(object):
         except AttributeError:
             return # counts not created yet we can just ignore
 
+class ItemChangeTracker(object):
+    """Tracks changes to items and send the ItemsChanged message."""
+    def __init__(self):
+        self.reset()
+        app.db.connect('transaction-finished', self.on_transaction_finished)
+
+    def reset(self):
+        self.added = set()
+        self.changed = set()
+        self.removed = set()
+        self.changed_columns = set()
+        self.dlstats_changed = False
+
+    def on_transaction_finished(self, live_storage, success):
+        self.send_changes()
+
+    def send_changes(self):
+        if self.added or self.changed or self.removed or self.dlstats_changed:
+            m = messages.ItemChanges(self.added, self.changed, self.removed,
+                                     self.changed_columns,
+                                     self.dlstats_changed)
+            m.send_to_frontend()
+            self.reset()
+
+    def on_item_added(self, item):
+        self.added.add(item.id)
+
+    def on_item_changed(self, item):
+        self.changed.add(item.id)
+        self.changed_columns.update(item.changed_attributes)
+
+    def on_item_removed(self, item):
+        self.removed.add(item.id)
+
 class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
@@ -456,6 +465,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.link_number = link_number
         self.creation_time = datetime.now()
         self._look_for_downloader()
+        self._calc_parent_title()
         self.setup_common()
         self.split_item()
 
@@ -479,10 +489,18 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
+        Item.change_tracker.on_item_added(self)
 
     def signal_change(self, needs_save=True, can_change_views=True):
         app.item_info_cache.item_changed(self)
+        Item.change_tracker.on_item_changed(self)
         DDBObject.signal_change(self, needs_save, can_change_views)
+
+    def download_stats_changed(self):
+        Item.change_tracker.dlstats_changed = True
+        # TODO: I don't think we need the signal_change() call here once we
+        # finish replacing the ViewTracker code.
+        self.signal_change(needs_save=False)
 
     @classmethod
     def auto_pending_view(cls):
@@ -1015,8 +1033,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def matches_search(self, search_string):
         if search_string is None or search_string == '':
             return True
-        my_info = app.item_info_cache.get_info(self.id)
-        return search.item_matches(my_info, search_string)
+        return search.item_matches(self, search_string)
 
     def _remove_from_playlists(self):
         models.PlaylistItemMap.remove_item_from_playlists(self)
@@ -1123,11 +1140,23 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @returns_unicode
     def get_source(self):
         if self.feed_id is not None:
-            feed_ = self.get_feed()
-            if feed_.orig_url != 'dtv:manualFeed':
-                # we do this manually so we don't pick up the name of a search
-                # query (#16044)
-                return feed_.userTitle or feed_.actualFeed.get_title()
+            return self.get_feed().get_title()
+        if self.has_parent():
+            try:
+                return self.get_parent().get_title()
+            except ObjectNotFoundError:
+                return None
+        return None
+
+    @returns_unicode
+    def get_source_for_search(self):
+        """Get the source name to match against for a search.
+
+        This is the same as get_source(), except it doesn't include the feed
+        search terms for saved searches (see #16044)
+        """
+        if self.feed_id is not None:
+            return self.get_feed().get_title_without_search_terms()
         if self.has_parent():
             try:
                 return self.get_parent().get_title()
@@ -1160,6 +1189,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         # _feed is created by get_feed which caches the result
         if hasattr(self, "_feed"):
             del self._feed
+        self._calc_parent_title()
         if self.is_container_item:
             for item in self.get_children():
                 if hasattr(item, "_feed"):
@@ -1748,6 +1778,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             self._state = u'saved'
 
+    def _calc_parent_title(self):
+        if self.feed_id is not None:
+            self.parent_title = self.get_feed().get_title()
+        elif self.has_parent():
+            self.parent_title = self.get_parent().get_title()
+        else:
+            self.parent_title = None
+
     @returns_unicode
     def get_channel_category(self):
         """Get the category to use for the channel template.
@@ -1897,19 +1935,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return self.enclosure_format
 
         if self.downloader:
-            if ((self.downloader.content_type
-                 and "/" in self.downloader.content_type)):
-                mtype, subtype = self.downloader.content_type.split('/', 1)
-                mtype = mtype.lower()
-                if mtype in KNOWN_MIME_TYPES:
-                    format_ = subtype.split(';')[0].upper()
-                    if mtype == u'audio':
-                        format_ += u' AUDIO'
-                    if format_.startswith(u'X-'):
-                        format_ = format_[2:]
-                    return (u'.%s' %
-                            MIME_SUBSITUTIONS.get(format_, format_).lower())
-
+            return filetypes.calc_file_format(self.filename,
+                                              self.downloader.content_type)
         if empty_for_unknown:
             return u""
         return u"unknown"
@@ -2000,6 +2027,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             new_downloader.add_item(self)
         else:
             self.downloader_id = None
+        self.download_stats_changed()
         self.signal_change()
 
     def save(self, always_signal=False):
@@ -2047,6 +2075,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         # need to call this after DDBObject.remove(), so that the item info is
         # there for ItemInfoFetcher to see.
         app.item_info_cache.item_removed(self)
+        Item.change_tracker.on_item_removed(self)
 
     def setup_links(self):
         self.split_item()
@@ -2254,6 +2283,7 @@ class FileItem(Item):
         self.parent_id = None
         self.feed_id = models.Feed.get_manual_feed().id
         self.deleted = True
+        self._calc_parent_title()
         self.signal_change()
 
     def make_undeleted(self):
@@ -2672,6 +2702,9 @@ def setup_metadata_manager(cover_art_dir=None, screenshot_dir=None):
     app.local_metadata_manager = metadata.LibraryMetadataManager(
         cover_art_dir, screenshot_dir)
     app.local_metadata_manager.connect('new-metadata', on_new_metadata)
+
+def setup_change_tracker():
+    Item.change_tracker = ItemChangeTracker()
 
 def on_new_metadata(metadata_manager, new_metadata):
     # Get all items that have changed using one query.  This is much faster

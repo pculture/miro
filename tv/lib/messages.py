@@ -1414,6 +1414,24 @@ class TabsChanged(FrontendMessage):
     '(%d added, %d changed, %d removed)>') % (self.type,
     len(self.added), len(self.changed), len(self.removed))
 
+class ItemChanges(FrontendMessage):
+    """Sent to the frontend when items change
+
+    :attribute added: set ids for added items
+    :attribute changed: set ids for changed items
+    :attribute removed: set ids for removed items
+    :attribute changed_columns: set columns that were changed (the union of
+    changes for all items)
+    :attribute dlstats_changed: Did we get new download stats?
+    """
+    def __init__(self, added, changed, removed, changed_columns,
+                 dlstats_changed):
+        self.added = added
+        self.changed = changed
+        self.removed = removed
+        self.changed_columns = changed_columns
+        self.dlstats_changed = dlstats_changed
+
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed
 
@@ -1709,8 +1727,8 @@ class MessageToUser(FrontendMessage):
         self.title = title
         self.desc = desc
 
-class PlayMovie(FrontendMessage):
-    """Starts playing a specific movie.
+class PlayMovies(FrontendMessage):
+    """Play a list of files
     """
     def __init__(self, item_infos):
         self.item_infos = item_infos

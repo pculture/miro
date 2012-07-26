@@ -54,13 +54,13 @@ class ItemFilter(object):
     """
     key = None
 
-    def filter(self, item_info):
-        """Check if we should include item_info in the list
+    def add_to_query(self, item_tracker_query):
+        """Add this filter to an ItemTrackerQuery
 
         subclasses must override this
-
-        :returns: True if the ItemInfo should be included in the item list.
         """
+        # TODO: This is the new interface for ItemFilter.  We need to
+        # implement this method on all subclasses.
         raise NotImplementedError()
 
     def switch_to_filter(self, previous_filters):
@@ -134,16 +134,10 @@ class ItemFilterSet(object):
         self.active_filters = set(filter_keys)
         self.active_filter_objects = filter_objs
 
-    def filter(self, item_info):
-        """Run all active filters on item_info
-
-        :returns: True if item_info should be included in the item list.
-        """
+    def add_to_query(self, query):
+        """Add conditions to an ItemTrackerQuery object """
         for f in self.active_filter_objects:
-            # if the item fails any filter test, filter it out
-            if not f.filter(item_info):
-                return False
-        return True
+            f.add_to_query(query)
 
 # define the actual filter classes we use
 
@@ -154,8 +148,8 @@ class ItemFilterAll(ItemFilter):
     # needs to be clarified
     user_label = declarify(_('View|All'))
 
-    def filter(self, item_info):
-        return True
+    def add_to_query(self, query):
+        return
 
 class ItemFilterAudioVideoHelper(ItemFilter):
     """Item filters that work in conjunction with the audio/video filters."""
@@ -173,17 +167,17 @@ class ItemFilterUnplayed(ItemFilterAudioVideoHelper):
     key = u'unplayed'
     user_label = _('Unplayed')
 
-    def filter(self, item_info):
-        return (item_info.video_path is not None and not
-                item_info.video_watched)
+    def add_to_query(self, query):
+        query.add_condition('filename', 'IS NOT', None)
+        query.add_condition('watched_time', 'IS', None)
 
 class ItemFilterDownloaded(ItemFilterAudioVideoHelper):
     """Filter for downloaded items."""
     key = u'downloaded'
     user_label = _('Downloaded')
 
-    def filter(self, item_info):
-        return item_info.video_path is not None
+    def add_to_query(self, query):
+        query.add_condition('downloaded_time', 'IS NOT', None)
 
 class ItemFilterAudioVideo(ItemFilter):
     """Filter for audio/video on the all podcast tab."""
@@ -204,40 +198,40 @@ class ItemFilterVideo(ItemFilterAudioVideo):
     key = u'video'
     user_label = _('Video')
 
-    def filter(self, item_info):
-        return item_info.file_type == 'video'
+    def add_to_query(self, query):
+        query.add_condition('file_type', '=', 'video')
 
 class ItemFilterAudio(ItemFilterAudioVideo):
     """Filter for audio items."""
     key = u'audio'
     user_label = _('Audio')
 
-    def filter(self, item_info):
-        return item_info.file_type == 'audio'
+    def add_to_query(self, query):
+        query.add_condition('file_type', '=', 'audio')
 
 class ItemFilterMovies(ItemFilter):
     """Filter for movie items."""
     key = u'movies'
     user_label = _('Movies')
 
-    def filter(self, item_info):
-        return item_info.kind == 'movie'
+    def add_to_query(self, query):
+        query.add_condition('kind', '=', 'movie')
 
 class ItemFilterShows(ItemFilter):
     """Filter for show items."""
     key = u'shows'
     user_label = _('Shows')
 
-    def filter(self, item_info):
-        return item_info.kind == 'show'
+    def add_to_query(self, query):
+        query.add_condition('kind', '=', 'show')
 
 class ItemFilterClips(ItemFilter):
     """Filter for clip items."""
     key = u'clips'
     user_label = _('Clips')
 
-    def filter(self, item_info):
-        return item_info.kind == 'clip'
+    def add_to_query(self, query):
+        query.add_condition('kind', '=', 'clip')
 
 class ItemFilterPodcasts(ItemFilter):
     """Filter for podcast items.
@@ -248,8 +242,8 @@ class ItemFilterPodcasts(ItemFilter):
     key = u'podcasts'
     user_label = _('Podcasts')
 
-    def filter(self, item_info):
-        return item_info.kind == 'podcast'
+    def add_to_query(self, query):
+        query.add_condition('kind', '=', u'podcast')
 
 def get_label(key):
     """Get the label to use for a filter key."""
