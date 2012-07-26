@@ -226,6 +226,10 @@ class ItemInfo(ItemRow):
         return _unicode_to_filename(self.raw_icon_cache_filename)
 
     @property
+    def cover_art_filename(self):
+        return _unicode_to_filename(self.cover_art)
+
+    @property
     def is_playable(self):
         return self.has_filename and self.file_type != u'other'
 
@@ -249,8 +253,8 @@ class ItemInfo(ItemRow):
 
     @property
     def thumbnail(self):
-        if self.cover_art and fileutil.exists(self.cover_art):
-            return self.cover_art
+        if self.cover_art and fileutil.exists(self.cover_art_filename):
+            return self.cover_art_filename
         if (self.raw_icon_cache_filename is not None and
             fileutil.exists(self.icon_cache_filename)):
             return self.icon_cache_filename

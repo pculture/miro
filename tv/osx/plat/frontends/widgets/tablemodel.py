@@ -272,6 +272,9 @@ class ItemListModel(signals.SignalEmitter):
     def iter_for_row(self, tableview, row):
         return self._iter_for_row(row)
 
+    def nth_iter(self, index):
+        return self._iter_for_row(index)
+
     def iter_for_id(self, item_id):
         row = self.item_list.get_index(item_id)
         return self._iter_for_row(row)
