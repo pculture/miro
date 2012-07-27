@@ -197,7 +197,8 @@ class DDBObjectTestCase(MiroTestCase):
 
     def test_remove_in_setup_new(self):
         self.assertEquals(TestDDBObject.make_view().count(), 0)
-        TestDDBObject(self, remove=True)
+        with self.allow_warnings():
+            TestDDBObject(self, remove=True)
         self.assertEquals(TestDDBObject.make_view().count(), 0)
 
     def test_test_attribute_track(self):

@@ -53,7 +53,7 @@ class SchedulerTest(EventLoopTest):
         for i in range(threadCount):
             t = threading.Thread(target=thread)
             t.start()
-        eventloop.add_timeout(1, self.callback, "foo", kwargs={'stop':1})
+        eventloop.add_timeout(1.2, self.callback, "foo", kwargs={'stop':1})
         self.runEventLoop()
         totalCalls = len(timeouts) * threadCount + 1
         self.assertEquals(len(self.got_args), totalCalls)

@@ -626,7 +626,8 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         # insert bogus values into the db
         app.db.cursor.execute("UPDATE item_info_cache SET pickle='BOGUS'")
         # this should fallback to the failsafe values
-        self.setup_new_item_info_cache()
+        with self.allow_warnings():
+            self.setup_new_item_info_cache()
         for item in self.items:
             cache_info = app.item_info_cache.id_to_info[item.id]
             real_info = itemsource.DatabaseItemSource._item_info_for(item)
@@ -666,7 +667,8 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         Item.setup_restored = new_setup_restored
         try:
             # load up item_info_cache
-            self.setup_new_item_info_cache()
+            with self.allow_warnings():
+                self.setup_new_item_info_cache()
         finally:
             Item.setup_restored = old_setup_restored
         cached_info = self.get_info_from_item_info_cache(self.items[0].id)
@@ -701,6 +703,6 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         itemsource.DatabaseItemSource.VERSION += 1
         # We should delete the old cache data because ItemInfoCache.VERSION
         # has changed
-        self.setup_new_item_info_cache()
+        self.setup_new_item_info_cache(set_version=False)
         app.db.cursor.execute("SELECT COUNT(*) FROM item_info_cache")
         self.assertEquals(app.db.cursor.fetchone()[0], 0)

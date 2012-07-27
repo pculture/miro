@@ -89,7 +89,8 @@ class Test_url_encode_dict(MiroTestCase):
 
         # test non string items--these log a warning, but otherwise
         # produce nothing
-        self.assertEquals(urlencodedict({"a": 1}), "")
+        with self.allow_warnings():
+            self.assertEquals(urlencodedict({"a": 1}), "")
 
         # test weird stuff
         self.assertEquals(urlencodedict({"a": "<foo>&blah;\'\""}), 
