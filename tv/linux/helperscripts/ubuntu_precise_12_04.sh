@@ -18,9 +18,8 @@ apt-get install \
     python-pyrex \
     python-gtk2-dev \
     libwebkit-dev \
-    libsoup2.4-dev
-
-apt-get install \
+    libsqlite3-dev \
+    libsoup2.4-dev \
     libavcodec-dev \
     libavformat-dev \
     libavutil-dev \
@@ -33,7 +32,7 @@ apt-get install \
     python-gconf \
     python-pycurl \
     python-mutagen \
-    libboost1.48-dev \
+    libboost-dev \
     libtag1-dev \
     zlib1g-dev \
     gstreamer0.10-ffmpeg \
@@ -44,4 +43,3 @@ apt-get install \
     ffmpeg \
     libfaac0 \
     python-appindicator
-    # libwebkit-1.0-2 \
