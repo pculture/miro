@@ -136,7 +136,8 @@ target1 = DeviceInfo("Target1")
 devices = [target1]
 """)
         dm = devices.DeviceManager()
-        dm.load_devices(os.path.join(self.tempdir, "*.py"))
+        with self.allow_warnings():
+            dm.load_devices(os.path.join(self.tempdir, "*.py"))
         self.assertRaises(KeyError, dm.get_device, "Target1")
         self.assertRaises(KeyError, dm.get_device_by_id, 0, 0)
 
@@ -252,10 +253,10 @@ class DeviceHelperTest(MiroTestCase):
         with open(os.path.join(self.tempdir, '.miro', 'json'), 'w') as f:
             f.write('NOT JSON DATA')
 
-        ddb = devices.load_database(self.tempdir)
+        with self.allow_warnings():
+            ddb = devices.load_database(self.tempdir)
         self.assertEqual(dict(ddb), {})
         self.assertEqual(len(ddb.get_callbacks('changed')), 1)
-
 
     def test_write_database(self):
         data = {u'a': 2,
@@ -388,7 +389,8 @@ class DeviceDatabaseTest(MiroTestCase):
         mock_do_import.side_effect = sqlite3.DatabaseError("Error")
         self.device.database.created_new = False
         with patcher:
-            self.open_database()
+            with self.allow_warnings():
+                self.open_database()
         # check that we created a new sqlite database and added new metadata
         # status rows for the device items
         cursor = self.device.sqlite_database.cursor

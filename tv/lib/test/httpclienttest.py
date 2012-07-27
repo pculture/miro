@@ -611,13 +611,17 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.check_auth_canceled()
 
         self.setup_answer("wronguser", "wrongpass")
-        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        with self.allow_warnings():
+            self.grab_url(
+                self.httpserver.build_url('digest-protected/index.txt'))
         self.check_auth_errback_called()
 
     @uses_httpclient
     def test_digest_auth_correct(self):
         self.setup_answer("user", "password")
-        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        with self.allow_warnings():
+            self.grab_url(
+                self.httpserver.build_url('digest-protected/index.txt'))
         self.assertEquals(self.dialogs_seen, 1)
 
     @uses_httpclient
@@ -634,20 +638,29 @@ class HTTPAuthTest(HTTPClientTestBase):
     @uses_httpclient
     def test_digest_auth_memory(self):
         self.setup_answer("user", "password")
-        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        with self.allow_warnings():
+            self.grab_url(
+                self.httpserver.build_url('digest-protected/index.txt'))
         self.assertEquals(self.dialogs_seen, 1)
         # We shouldn't see another dialog for the same URL
-        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        with self.allow_warnings():
+            self.grab_url(
+                self.httpserver.build_url('digest-protected/index.txt'))
         self.assertEquals(self.dialogs_seen, 1)
         # ditto for ones in the same directory
-        self.grab_url(self.httpserver.build_url('digest-protected/index2.txt'))
+        with self.allow_warnings():
+            self.grab_url(
+                self.httpserver.build_url('digest-protected/index2.txt'))
         self.assertEquals(self.dialogs_seen, 1)
         # Even for ones in a subdirectory
-        self.grab_url(self.httpserver.build_url(
-                'digest-protected/foo/index2.txt'))
+        with self.allow_warnings():
+            self.grab_url(
+                self.httpserver.build_url('digest-protected/foo/index2.txt'))
         self.assertEquals(self.dialogs_seen, 1)
         # Or even for ones outside the directory (only true for digest auth)
-        self.grab_url(self.httpserver.build_url('digest-protected2/index.txt'))
+        with self.allow_warnings():
+            self.grab_url(
+                self.httpserver.build_url('digest-protected2/index.txt'))
         self.assertEquals(self.dialogs_seen, 1)
 
     @uses_httpclient
@@ -719,7 +732,8 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.expecting_errback = True
 
         # test when schemes that aren't "basic" or "digest"
-        self.grab_url(self.httpserver.build_url('invalid-auth/badscheme'))
+        with self.allow_warnings():
+            self.grab_url(self.httpserver.build_url('invalid-auth/badscheme'))
         self.assert_(isinstance(self.grab_url_error,
             httpclient.AuthorizationFailed))
         # when we get invalid auth headers, we shouldn't pop up dialogs for
@@ -727,19 +741,22 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.assertEquals(self.dialogs_seen, 0)
 
         # test auth header without realm
-        self.grab_url(self.httpserver.build_url('invalid-auth/norealm'))
+        with self.allow_warnings():
+            self.grab_url(self.httpserver.build_url('invalid-auth/norealm'))
         self.assert_(isinstance(self.grab_url_error,
             httpclient.AuthorizationFailed))
         self.assertEquals(self.dialogs_seen, 0)
 
         # test completely garbled auth header
-        self.grab_url(self.httpserver.build_url('invalid-auth/garbled'))
+        with self.allow_warnings():
+            self.grab_url(self.httpserver.build_url('invalid-auth/garbled'))
         self.assert_(isinstance(self.grab_url_error,
             httpclient.AuthorizationFailed))
         self.assertEquals(self.dialogs_seen, 0)
 
         # test auth header with no data
-        self.grab_url(self.httpserver.build_url('invalid-auth/'))
+        with self.allow_warnings():
+            self.grab_url(self.httpserver.build_url('invalid-auth/'))
         self.assert_(isinstance(self.grab_url_error,
             httpclient.AuthorizationFailed))
         self.assertEquals(self.dialogs_seen, 0)
@@ -1046,7 +1063,8 @@ class NetworkErrorTest(HTTPClientTestBase):
         options = httpclient.TransferOptions("http://example.com/")
         bogus_transfer = httpclient.CurlTransfer(options,
                 self.grab_url_callback, self.grab_url_errback)
-        bogus_transfer.on_error(123456, BogusLibcurlHandle())
+        with self.allow_warnings():
+            bogus_transfer.on_error(123456, BogusLibcurlHandle())
         self.runPendingIdles()
 
         # Check that we saw a NetworkError and that the description strings

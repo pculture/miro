@@ -1259,16 +1259,14 @@ class MetadataManagerBase(signals.SignalEmitter):
         if local_path is not None:
             local_status = MetadataStatus.get_by_path(local_path)
             status.copy_status(MetadataStatus.get_by_path(local_path))
-            self.run_next_processor(status)
             for entry in MetadataEntry.metadata_for_status(local_status):
                 entry_metadata = entry.get_metadata()
                 initial_metadata.update(entry_metadata)
                 MetadataEntry(status, entry.source, entry_metadata,
                               db_info=self.db_info)
-        else:
-            self._run_mutagen(path)
         if status.current_processor is not None:
             self.count_tracker.file_started(path, initial_metadata)
+            self.run_next_processor(status)
         self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
         self._send_net_lookup_counts_caller.call_when_idle()
         return initial_metadata

@@ -378,7 +378,8 @@ class DiskTest(FakeSchemaTest):
                                     'corrupt_database')
         self.assert_(not os.path.exists(corrupt_path))
         self.allow_db_load_errors(True)
-        self.reload_test_database(**reload_args)
+        with self.allow_warnings():
+            self.reload_test_database(**reload_args)
         self.allow_db_load_errors(False)
         self.assert_(os.path.exists(corrupt_path))
 
@@ -406,7 +407,8 @@ class DiskTest(FakeSchemaTest):
 
     def test_upgrade_error(self):
         self.handle_dialogs(upgrade=True, corruption=False)
-        self.check_reload_error(version=2)
+        with self.allow_warnings():
+            self.check_reload_error(version=2)
 
     def test_corrupt_database(self):
         app.db.close()
@@ -513,7 +515,8 @@ class ValidationTest(FakeSchemaTest):
         obj.signal_change()
 
     def assert_object_invalid(self, obj):
-        self.assertRaises(schema.ValidationError, obj.signal_change)
+        with self.allow_warnings():
+            self.assertRaises(schema.ValidationError, obj.signal_change)
 
     def test_none_values(self):
         self.lee.age = None
@@ -561,7 +564,8 @@ class CorruptReprTest(FakeSchemaTest):
     def test_repr_failure(self):
         app.db.cursor.execute("UPDATE human SET stuff='{baddata' "
                               "WHERE name='lee'")
-        restored_lee = self.reload_object(self.lee)
+        with self.allow_warnings():
+            restored_lee = self.reload_object(self.lee)
         self.assertEqual(restored_lee.stuff, 'testing123')
         app.db.cursor.execute("SELECT stuff from human WHERE name='lee'")
         row = app.db.cursor.fetchone()
@@ -570,7 +574,8 @@ class CorruptReprTest(FakeSchemaTest):
     def test_repr_failure_no_handler(self):
         app.db.cursor.execute("UPDATE pcf_programmer SET stuff='{baddata' "
                               "WHERE name='ben'")
-        self.assertRaises(SyntaxError, self.reload_object, self.ben)
+        with self.allow_warnings():
+            self.assertRaises(SyntaxError, self.reload_object, self.ben)
 
 class ConverterTest(StoreDatabaseTest):
     def test_convert_repr(self):
@@ -607,7 +612,8 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         self.view_state = widgetstate.ViewState((u'testtype', u'testid', 0))
 
     def check_fixed_value(self, obj, column_name, value, disk_value=None):
-        obj = self.reload_object(obj)
+        with self.allow_warnings():
+            obj = self.reload_object(obj)
         self.assertEquals(getattr(obj, column_name), value)
         # make sure the values stored on disk are correct as well
         if disk_value is None:
@@ -636,7 +642,8 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
     def test_corrupt_tab_ids(self):
         app.db.cursor.execute("UPDATE taborder_order "
                 "SET tab_ids='[1, 2; 3 ]' WHERE id=?", (self.tab_order.id,))
-        reloaded = self.reload_object(self.tab_order)
+        with self.allow_warnings():
+            reloaded = self.reload_object(self.tab_order)
         self.check_fixed_value(reloaded, 'tab_ids', [])
         # check that restore_tab_list() re-adds the tab ids
         reloaded.restore_tab_list()
@@ -694,7 +701,8 @@ class BadTabOrderTest(StoreDatabaseTest):
 
     def test_extra_tab_ids(self):
         self.screw_with_tab_order(self.f1.id, self.f2.id, self.folder.id, 123)
-        self.check_order(self.f1.id, self.f2.id, self.folder.id)
+        with self.allow_warnings():
+            self.check_order(self.f1.id, self.f2.id, self.folder.id)
 
     def test_order_wrong(self):
         self.f1.set_folder(self.folder)
@@ -752,9 +760,10 @@ class TemporaryModeTest(MiroTestCase):
         """
 
         self.force_next_connect_to_fail = True
-        self.reload_database(self.save_path,
-                             object_schemas=test_object_schemas,
-                             error_handler=self.error_handler)
+        with self.allow_warnings():
+            self.reload_database(self.save_path,
+                                 object_schemas=test_object_schemas,
+                                 error_handler=self.error_handler)
 
     def test_error_handler_called(self):
         # Test that our error handler was called when storedatabase could'nt
@@ -780,7 +789,8 @@ class TemporaryModeTest(MiroTestCase):
         # Make the timeout run and fail.  Check that we schedule another try
         self.mock_add_timeout.reset_mock()
         self.force_next_connect_to_fail = True
-        app.db._try_save_temp_to_disk()
+        with self.allow_warnings():
+            app.db._try_save_temp_to_disk()
         self.mock_add_timeout.assert_called_once_with(
             delay, app.db._try_save_temp_to_disk, MatchAny())
         # make the timeout succeed.  Check that we don't schedule anymore
@@ -813,7 +823,8 @@ class TemporaryModeTest(MiroTestCase):
         # add a bunch of fake data to the database
         self.add_data(100)
         # make the database save to its real path
-        app.db._try_save_temp_to_disk()
+        with self.allow_warnings():
+            app.db._try_save_temp_to_disk()
         # check that the data got saved to disk
         self.assertEquals(self.last_connect_path, self.save_path)
         self.assert_(os.path.exists(self.save_path))

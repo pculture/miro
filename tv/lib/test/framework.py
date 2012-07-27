@@ -1,4 +1,5 @@
 import datetime
+import contextlib
 import os
 import logging
 import random
@@ -22,6 +23,7 @@ from miro import httpclient
 from miro import item
 from miro import iteminfocache
 from miro import itemsource
+from miro import messages
 from miro import util
 from miro import prefs
 from miro import schema
@@ -231,20 +233,28 @@ def decorate_all_tests(class_dict, bases, decorator):
             if name.startswith("test"):
                 class_dict[name] = decorator(getattr(cls, name))
 
+class UnexpectedLogError(Exception):
+    # Note: this purposely doesn't subclass StandardError, since we don't want
+    # code to catch this one
+    pass
+
 class LogFilter(logging.Filter):
     """Log filter that turns logging messages into exceptions."""
 
     def __init__(self):
-        self.exception_level = logging.CRITICAL
+        self.exception_level = logging.WARN
         self.records = []
+        self.raised_error = False
 
     def set_exception_level(self, level):
         """Set the min logging level where we should throw an exception"""
         self.exception_level = level
 
     def filter(self, record):
-        if record.levelno >= self.exception_level:
-            raise AssertionError("Unexpected logging: %s" % record)
+        if record.levelno >= self.exception_level and not self.raised_error:
+            self.raised_error = True
+            raise UnexpectedLogError("Unexpected logging: %s" %
+                                     record.getMessage())
         else:
             self.records.append(record)
             return False
@@ -288,6 +298,7 @@ class MiroTestCase(unittest.TestCase):
         self.allow_db_upgrade_error_dialog = False
         self.reload_database()
         self.setup_new_item_info_cache()
+        self.setup_dummy_message_handlers()
         item.setup_metadata_manager(self.tempdir)
         searchengines._engines = [
             searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
@@ -411,10 +422,13 @@ class MiroTestCase(unittest.TestCase):
         self.log_filter = LogFilter()
         logger.addFilter(self.log_filter)
 
-    def crash_on_warning(self):
-        """Convenience function to crash when we log a warning."""
-        # FIXME This probably should be the default and tests should have to
-        # opt-out of it
+    @contextlib.contextmanager
+    def allow_warnings(self):
+        """Context manager to allow log warnings go through without triggering
+        a unittest error
+        """
+        self.log_filter.set_exception_level(logging.CRITICAL)
+        yield
         self.log_filter.set_exception_level(logging.WARN)
 
     def reset_log_filter(self):
@@ -473,9 +487,16 @@ class MiroTestCase(unittest.TestCase):
             self.httpserver.stop()
             self.httpserver = None
 
-    def setup_new_item_info_cache(self):
+    def setup_new_item_info_cache(self, set_version=True):
         app.item_info_cache = iteminfocache.ItemInfoCache()
+        if set_version:
+            app.db.set_variable(app.item_info_cache.VERSION_KEY,
+                                app.item_info_cache.version())
         app.item_info_cache.load()
+
+    def setup_dummy_message_handlers(self):
+        messages.FrontendMessage.handler = mock.Mock()
+        messages.BackendMessage.handler = mock.Mock()
 
     def reset_failed_soft_count(self):
         app.controller.failed_soft_count = 0

@@ -413,6 +413,8 @@ class _EchonestQuery(object):
 
     def _choose_best_7digital_result(self, results):
         """Pick the best 7digital result from a list."""
+        if len(results) == 1:
+            return results[0]
         if self.album_name_from_tags is None:
             logging.warn("_EchonestQuery._choose_best_7digital_result: "
                          "album_name_from_tags is None")

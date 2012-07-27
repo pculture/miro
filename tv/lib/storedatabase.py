@@ -484,7 +484,7 @@ class LiveStorage(signals.SignalEmitter):
             self.cursor.execute("PRAGMA journal_mode=wal");
         # check that we actually succesfully switch to wal mode
         actual_mode = self.cursor.fetchall()[0][0]
-        if actual_mode != u'wal':
+        if actual_mode != u'wal' and not hasattr(app, 'in_unit_tests'):
             logging.warn("PRAGMA journal_mode=wal didn't change the "
                          "mode.  journal_mode=%s", actual_mode)
 
@@ -821,8 +821,7 @@ class LiveStorage(signals.SignalEmitter):
             try:
                 schema_item.validate(value)
             except schema.ValidationError:
-                if util.chatter:
-                    logging.warn("error validating %s for %s", name, obj)
+                logging.warn("error validating %s for %s", name, obj)
                 raise
             values.append(self._converter.to_sql(obj_schema, name,
                 schema_item, value))
@@ -871,8 +870,7 @@ class LiveStorage(signals.SignalEmitter):
             try:
                 schema_item.validate(value)
             except schema.ValidationError:
-                if util.chatter:
-                    logging.warn("error validating %s for %s", name, obj)
+                logging.warn("error validating %s for %s", name, obj)
                 raise
             values.append(self._converter.to_sql(obj_schema, name,
                 schema_item, value))

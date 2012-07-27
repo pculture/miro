@@ -146,7 +146,8 @@ class ExtensionHookTest(ExtensionTestBase):
         # setup our mock function to throw an error
         self.mock_hook.side_effect = ValueError("Bad Value")
         # invoke the hook
-        results = api.hook_invoke('test_hook')
+        with self.allow_warnings():
+            results = api.hook_invoke('test_hook')
         # check that the error isn't included in the results and that we
         # logged the exception
         self.log_filter.check_record_count(1)

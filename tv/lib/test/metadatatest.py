@@ -1,5 +1,6 @@
 import collections
 import itertools
+import logging
 import os
 import urllib
 import urlparse
@@ -228,7 +229,8 @@ class MetadataManagerTest(MiroTestCase):
         path = self.make_path(filename)
         correct_metadata = self._calc_correct_metadata(path)
         self.metadata_manager._process_metadata_finished()
-        self.metadata_manager._process_metadata_errors()
+        with self.allow_warnings():
+            self.metadata_manager._process_metadata_errors()
         metadata_for_path = self.metadata_manager.get_metadata(path)
         # don't check has_drm, we have a special test for that
         for dct in (metadata_for_path, correct_metadata):
@@ -262,7 +264,8 @@ class MetadataManagerTest(MiroTestCase):
         self.check_metadata(path)
         # after we add the path, calling add file again should raise a
         # ValueError
-        self.assertRaises(ValueError, self.metadata_manager.add_file, path)
+        with self.allow_warnings():
+            self.assertRaises(ValueError, self.metadata_manager.add_file, path)
 
     def cover_art(self, album_name, echonest=False):
         path_parts = [self.tempdir]
@@ -321,7 +324,8 @@ class MetadataManagerTest(MiroTestCase):
 
     def check_mutagen_error(self, filename):
         path = self.make_path(filename)
-        self.processor.run_mutagen_errback(path, ValueError())
+        with self.allow_warnings():
+            self.processor.run_mutagen_errback(path, ValueError())
         # mutagen failing shouldn't change the metadata
         self.check_metadata(path)
 
@@ -349,7 +353,8 @@ class MetadataManagerTest(MiroTestCase):
 
     def check_movie_data_error(self, filename):
         path = self.make_path(filename)
-        self.processor.run_movie_data_errback(path, ValueError())
+        with self.allow_warnings():
+            self.processor.run_movie_data_errback(path, ValueError())
         # movie data failing shouldn't change the metadata
         self.check_metadata(path)
 
@@ -410,7 +415,8 @@ class MetadataManagerTest(MiroTestCase):
     def check_echonest_codegen_error(self, filename):
         path = self.make_path(filename)
         error = IOError()
-        self.processor.run_echonest_codegen_errback(path, error)
+        with self.allow_warnings():
+            self.processor.run_echonest_codegen_errback(path, error)
         self.check_metadata(path)
 
     def check_run_echonest(self, filename, title, artist=None, album=None):
@@ -447,7 +453,8 @@ class MetadataManagerTest(MiroTestCase):
             error = httpclient.UnknownHostError('fake.echonest.host')
         else:
             error = IOError()
-        self.processor.run_echonest_errback(path, error)
+        with self.allow_warnings():
+            self.processor.run_echonest_errback(path, error)
         self.check_metadata(path)
 
     def check_set_user_info(self, filename, **info):
@@ -913,7 +920,6 @@ class MetadataManagerTest(MiroTestCase):
         self.check_run_mutagen('foo.mp3', 'audio', 200, 'title', 'album')
         self.check_run_echonest('foo.mp3', 'title', 'Artist', None)
         self.allow_additional_echonest_query('foo.mp3')
-        self.crash_on_warning()
         self.metadata_manager.retry_net_lookup()
         self.metadata_manager.retry_net_lookup()
         self.check_run_echonest('foo.mp3', 'title', 'Artist', 'Album')
@@ -1073,8 +1079,9 @@ class MetadataManagerTest(MiroTestCase):
         }
         self.processor.run_movie_data_callback(files_in_moviedata[0],
                                                metadata)
-        self.processor.run_mutagen_errback(
-            files_in_mutagen[0], ValueError())
+        with self.allow_warnings():
+            self.processor.run_mutagen_errback(
+                files_in_mutagen[0], ValueError())
 
     def test_restore(self):
         db_path = os.path.join(self.tempdir, 'testdb');
@@ -1238,7 +1245,8 @@ class MetadataManagerTest(MiroTestCase):
             'duration': 100,
         }
         self.processor.run_movie_data_callback('/videos/foo.avi', metadata)
-        self.processor.run_mutagen_errback('/videos/bar.mp3', ValueError())
+        with self.allow_warnings():
+            self.processor.run_mutagen_errback('/videos/bar.mp3', ValueError())
         # check that callbacks work for new paths
         self.check_run_movie_data('/videos2/foo.avi', 'video', 100, True)
         self.check_run_mutagen('/videos2/bar.mp3', 'audio', 120, 'Bar',
@@ -1312,8 +1320,9 @@ class EchonestNetErrorTest(EventLoopTest):
 
         for i in xrange(error_count):
             http_error = httpclient.UnknownHostError('fake.echonest.host')
-            _echonest_processor._echonest_errback(path_iter.next(),
-                                                  http_error)
+            with self.allow_warnings():
+                _echonest_processor._echonest_errback(path_iter.next(),
+                                                      http_error)
         # after we get enough error, we should stop querying echonest
         self.assertEquals(_echonest_processor._querying_echonest, False)
         # we should also set a timeout to re-run the queue once enough time
@@ -1335,8 +1344,9 @@ class EchonestNetErrorTest(EventLoopTest):
         # test that if we get enough errors, we halt again
         for i in xrange(error_count):
             http_error = httpclient.UnknownHostError('fake.echonest.host')
-            _echonest_processor._echonest_errback(path_iter.next(),
-                                                  http_error)
+            with self.allow_warnings():
+                _echonest_processor._echonest_errback(path_iter.next(),
+                                                      http_error)
         self.assertEquals(_echonest_processor._querying_echonest, False)
         mock_add_timeout.assert_called_once_with(
             timeout, _echonest_processor._restart_after_http_errors,
@@ -1971,7 +1981,8 @@ class TestEchonestQueries(MiroTestCase):
         if reset_mock:
             mock_grab_url.reset_mock()
         error = httpclient.UnexpectedStatusCode(404)
-        errback(error)
+        with self.allow_warnings():
+            errback(error)
 
     def test_query_with_tags(self):
         # test normal operations
@@ -2025,7 +2036,8 @@ class TestEchonestQueries(MiroTestCase):
         # test echonest not finding our song
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
-        self.send_echonest_reply('no-match')
+        with self.allow_warnings():
+            self.send_echonest_reply('no-match')
         self.check_callback()
 
     def test_echonest_http_error(self):
@@ -2041,7 +2053,8 @@ class TestEchonestQueries(MiroTestCase):
         # test no releases for a song
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
-        self.send_echonest_reply('no-releases')
+        with self.allow_warnings():
+            self.send_echonest_reply('no-releases')
         self.check_grab_url_not_called()
         self.check_callback()
 
@@ -2060,7 +2073,8 @@ class TestEchonestQueries(MiroTestCase):
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_calls([self.bossanova_release_id])
-        self.send_7digital_reply('no-matches')
+        with self.allow_warnings():
+            self.send_7digital_reply('no-matches')
         self.check_callback()
 
     def test_7digital_invalid_xml(self):
@@ -2069,7 +2083,8 @@ class TestEchonestQueries(MiroTestCase):
         self.check_echonest_grab_url_call()
         self.send_echonest_reply('rock-music')
         self.check_7digital_grab_url_calls([self.bossanova_release_id])
-        self.send_7digital_reply('invalid-xml')
+        with self.allow_warnings():
+            self.send_7digital_reply('invalid-xml')
         self.check_callback()
 
     def test_multiple_releases(self):
@@ -2082,6 +2097,8 @@ class TestEchonestQueries(MiroTestCase):
                        624250, 312343, 391641, 341656, 284075, 280538, 283379,
                        312343, 669160, 391639,
                       ]
+        replys_with_errors = set([283379, 307167, 312343, 391641, 518377, ])
+
         self.check_7digital_grab_url_calls(release_ids)
 
         # send replies
@@ -2097,8 +2114,13 @@ class TestEchonestQueries(MiroTestCase):
                 best_reply = True
             else:
                 best_reply = False
+            if release_id in replys_with_errors:
+                self.log_filter.set_exception_level(logging.CRITICAL)
             self.send_7digital_reply(release_id, i, reset_mock=False,
                                      best_reply=best_reply)
+            # reset log filter
+            self.log_filter.set_exception_level(logging.WARNING)
+
         self.check_album_art_grab_url_call()
         self.send_album_art_reply()
         self.check_callback()
@@ -2127,7 +2149,8 @@ class TestEchonestQueries(MiroTestCase):
         del  self.query_metadata['album']
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
-        self.send_echonest_reply('billie-jean')
+        with self.allow_warnings():
+            self.send_echonest_reply('billie-jean')
         # since there's no good way to pick from multiple releases, we should
         # skipn the 7digital step
         self.check_callback()
@@ -2181,7 +2204,8 @@ class TestEchonestQueries(MiroTestCase):
         self.setup_query_metadata_for_break_like_the_wind()
         self.start_query_with_tags()
         self.check_echonest_grab_url_call()
-        self.send_echonest_reply('break-like-the-wind')
+        with self.allow_warnings():
+            self.send_echonest_reply('break-like-the-wind')
         # break like the wind contains no tracks, so we don't need to deal
         # with the 7digital stuff.  Just check that we properly parsed the
         # echonest query
@@ -2189,10 +2213,6 @@ class TestEchonestQueries(MiroTestCase):
 
 class ProgressUpdateTest(MiroTestCase):
     # Test the objects used to send the MetadataProgressUpdate messages
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        self.crash_on_warning()
-
     def test_count_tracker(self):
         # test the ProgressCountTracker
         counter = metadata.ProgressCountTracker()

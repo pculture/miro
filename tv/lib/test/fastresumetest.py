@@ -30,7 +30,8 @@ class FastResumeTest(MiroTestCase):
         f = open(filename, 'wb')
         f.close()
         os.chmod(filename, 0)
-        save_fast_resume_data(FAKE_INFO_HASH, FAKE_RESUME_DATA)
+        with self.allow_warnings():
+            save_fast_resume_data(FAKE_INFO_HASH, FAKE_RESUME_DATA)
         # We did not lock down the directory so check save_fast_resume_data
         # nuked the file for us.
         self.assertFalse(os.path.exists(filename))
@@ -45,6 +46,7 @@ class FastResumeTest(MiroTestCase):
         f.close()
         old_mode = os.stat(filename).st_mode
         os.chmod(filename, 0)
-        data = load_fast_resume_data(FAKE_INFO_HASH)
+        with self.allow_warnings():
+            data = load_fast_resume_data(FAKE_INFO_HASH)
         self.assertEquals(data, None)
         os.chmod(filename, old_mode)
