@@ -58,6 +58,7 @@ from string import Template
 from distutils.command.build import build
 from distutils.command.install_data import install_data
 import os
+import platform
 import pwd
 import subprocess
 import time
@@ -479,7 +480,8 @@ class miro_build(build):
         self.distribution.scripts.append(dest_binary)
 
     def build_enmfp_codegen(self):
-        for path in glob(os.path.join(enmfp_path, 'codegen.Linux-*')):
+        filename = 'codegen.Linux-%s' % platform.machine()
+        for path in glob(os.path.join(enmfp_path, filename)):
             self.distribution.scripts.append(path)
 
     def run(self):
