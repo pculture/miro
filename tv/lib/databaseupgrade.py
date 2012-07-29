@@ -4117,3 +4117,27 @@ def upgrade189(cursor):
                    (column_list, column_list))
     # The triggers are still present even though we dropped item_fts, no need
     # to re-make them.
+
+def upgrade190(cursor):
+    """Fix item triggers after update189"""
+    # update189 incorrectly assumed that the item triggers from before were
+    # still correct.  We need to redo a couple of them since the columns in
+    # item_fts changed
+
+    columns = ['title', 'description', 'artist', 'album', 'genre',
+               'filename', 'parent_title', ]
+    column_list = ', '.join(c for c in columns)
+    column_list_for_new = ', '.join("new.%s" % c for c in columns)
+    cursor.execute("DROP TRIGGER item_au")
+    cursor.execute("CREATE TRIGGER item_au "
+                   "AFTER UPDATE ON item BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (column_list, column_list_for_new))
+
+    cursor.execute("DROP TRIGGER item_ai")
+    cursor.execute("CREATE TRIGGER item_ai "
+                   "AFTER INSERT ON item BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (column_list, column_list_for_new))

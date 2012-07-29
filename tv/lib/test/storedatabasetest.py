@@ -207,6 +207,23 @@ class DBUpgradeTest(StoreDatabaseTest):
         self.assertEquals(upgraded_db_indexes, blank_db_indexes)
 
     @skip_for_platforms('win32')
+    def test_triggers_same(self):
+        # this fails on windows because it's using a non-Windows
+        # database
+        self.remove_database()
+        self.reload_database()
+        app.db.cursor.execute("SELECT name, sql FROM main.sqlite_master "
+                              "WHERE type='trigger'")
+        blank_db_indexes = set(app.db.cursor)
+        shutil.copy(resources.path("testdata/olddatabase.v79"),
+                    self.save_path2)
+        self.reload_database(self.save_path2)
+        app.db.cursor.execute("SELECT name, sql FROM main.sqlite_master "
+                              "WHERE type='trigger'")
+        upgraded_db_indexes = set(app.db.cursor)
+        self.assertEquals(upgraded_db_indexes, blank_db_indexes)
+
+    @skip_for_platforms('win32')
     def test_schema_same(self):
         # this fails on windows because it's using a non-Windows
         # database
