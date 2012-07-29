@@ -4100,6 +4100,10 @@ def upgrade189(cursor):
     # Update the item_fts table.  Unfortunately, we can't alter a virtual
     # table, so we basically need to re-do upgrade 187
     cursor.execute("DROP TABLE item_fts")
+    # for some reason we need to start a new transaction, or we get a segfault
+    # on Ubuntu oneiric
+    cursor.execute("COMMIT TRANSACTION")
+    cursor.execute("BEGIN TRANSACTION")
 
     columns = ['title', 'description', 'artist', 'album', 'genre',
                'filename', 'parent_title', ]
