@@ -163,13 +163,13 @@ done
 
 cd $WORK_DIR
 
-BOOST_VERSION=1_46
-BOOST_VERSION_FULL=1_46_1
+BOOST_VERSION=1_50
+BOOST_VERSION_FULL=1_50_0
 
 tar -xzf $BKIT_DIR/boost_$BOOST_VERSION_FULL.tar.gz
 cd boost_$BOOST_VERSION_FULL
 
-cd tools/build/v2/engine/src
+cd tools/build/v2/engine
 ./build.sh
 cd `find . -type d -maxdepth 1 | grep bin.`
 mkdir -p $SBOX_DIR/bin
