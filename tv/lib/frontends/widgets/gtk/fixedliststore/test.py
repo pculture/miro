@@ -16,8 +16,8 @@ for dirname in ("build", "dist"):
     if os.path.exists(dirname):
         shutil.rmtree(dirname)
 subprocess.check_call(["python",  "test-setup.py", "install", "--prefix", "dist"])
-#subprocess.check_call(["touch", "build/lib.linux-x86_64-2.7/miro/__init__.py"])
-sys.path.append("dist/lib/python2.7/site-packages/")
+sys.path.append("dist/lib/python%s.%s/site-packages/" %
+		(sys.version_info[0], sys.version_info[1]))
 
 print 'running...'
 print

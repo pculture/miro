@@ -17,5 +17,5 @@ fixed-list-store-wrapper.c:
 
 fixed-list-store-module.c defines the module that stores the wrapper code.
 
-Lastly there's setup-test.py and setup.py which work together to build a quick
+Lastly there's setup-test.py and test.py which work together to build a quick
 python program to test the code.
