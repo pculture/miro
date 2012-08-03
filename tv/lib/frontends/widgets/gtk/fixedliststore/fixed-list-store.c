@@ -171,9 +171,9 @@ miro_fixed_list_store_class_init (MiroFixedListStoreClass *klass)
 
     gobject_class->set_property = miro_fixed_list_store_set_property;
     gobject_class->get_property = miro_fixed_list_store_get_property;
-    g_object_class_install_properties (gobject_class,
-                                       N_PROPERTIES,
-                                       obj_properties);
+    g_object_class_install_property (gobject_class,
+                                     PROP_ROW_COUNT,
+                                     obj_properties[PROP_ROW_COUNT]);
 }
 
 static void
