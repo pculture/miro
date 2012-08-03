@@ -35,8 +35,9 @@ from miro import models
 from miro.data import itemtrack
 from miro.frontends.widgets import itemrenderer
 from miro.test import mock
-from miro.test.framework import MiroTestCase
+from miro.test.framework import MiroTestCase, skip_for_platforms
 
+@skip_for_platforms('osx')
 class ItemRendererTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
