@@ -396,10 +396,6 @@ class LiveStorage(signals.SignalEmitter):
         except AttributeError:
             logging.info("sqlite3 has no version attribute.")
 
-        if path != ':memory:':
-            self.created_new = not os.path.exists(path)
-        else:
-            self.created_new = True
         self.temp_mode = False
         self.preallocate = preallocate
         self.error_handler = error_handler
@@ -430,6 +426,7 @@ class LiveStorage(signals.SignalEmitter):
 
         self.open_connection(start_in_temp_mode=start_in_temp_mode)
 
+        self.created_new = self._calc_created_new()
         if self.created_new:
             self._init_database()
         if self.preallocate:
@@ -456,7 +453,6 @@ class LiveStorage(signals.SignalEmitter):
                     logging.warn("Error opening database %s.  Opening an "
                                  "in-memory database instead", path)
                     self._switch_to_temp_mode()
-                    self.created_new = True
                 else:
                     logging.warn("Bad return value for handle_open_error: %s",
                                  action)
@@ -479,7 +475,6 @@ class LiveStorage(signals.SignalEmitter):
             msg = "Error running 'PRAGMA journal_mode=wal'"
             self.error_handler.handle_load_error()
             self._handle_load_error(msg, init_schema=False)
-            self.created_new = True
             # rerun the command with our fresh database
             self.cursor.execute("PRAGMA journal_mode=wal");
         # check that we actually succesfully switch to wal mode
@@ -505,7 +500,6 @@ class LiveStorage(signals.SignalEmitter):
                                           isolation_level=None,
                                           detect_types=sqlite3.PARSE_DECLTYPES)
         self.temp_mode = True
-        self.created_new = True
         eventloop.add_timeout(300,
                               self._try_save_temp_to_disk,
                               "write in-memory sqlite database to disk")
@@ -1253,6 +1247,12 @@ class LiveStorage(signals.SignalEmitter):
             logging.timing('query cumulatively slow: %0.2f '
                     '(%0.03f): %s', cumulative, query_time, sql)
 
+    def _calc_created_new(self):
+        """Decide if the database that we just opened is new."""
+        self.cursor.execute("SELECT COUNT(*) FROM sqlite_master "
+                            "WHERE type='table'")
+        return self.cursor.fetchone()[0] == 0
+
     def _init_database(self):
         """Create a new empty database."""
 
@@ -1348,7 +1348,6 @@ class LiveStorage(signals.SignalEmitter):
         self.connection.close()
         self.save_invalid_db()
         self.open_connection()
-        self.created_new = True
         if init_schema:
             self._init_database()
 
