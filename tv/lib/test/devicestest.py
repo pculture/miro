@@ -387,7 +387,6 @@ class DeviceDatabaseTest(MiroTestCase):
                   '_do_import_old_items.convert_old_item')
         patcher = mock.patch(method, mock_do_import)
         mock_do_import.side_effect = sqlite3.DatabaseError("Error")
-        self.device.database.created_new = False
         with patcher:
             with self.allow_warnings():
                 self.open_database()
