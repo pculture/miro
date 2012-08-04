@@ -73,7 +73,6 @@ from miro.test.databasetest import *
 from miro.test.itemtest import *
 from miro.test.filetypestest import *
 from miro.test.cellpacktest import *
-from miro.test.infolisttest import *
 from miro.test.fileobjecttest import *
 from miro.test.fastresumetest import *
 from miro.test.widgetstateconstantstest import *
