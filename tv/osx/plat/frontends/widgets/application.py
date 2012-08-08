@@ -54,8 +54,8 @@ from miro.plat import _growlImage
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated, filename_type_to_os_filename, os_filename_to_filename_type
 from miro.plat.utils import begin_thread_loop, finish_thread_loop
-from miro.plat.frontends.widgets import (widgetupdates, quicktime, osxmenus,
-        sparkleupdater, threads)
+from miro.plat.frontends.widgets import (quicktime, osxmenus, sparkleupdater,
+                                         threads)
 from miro.plat.frontends.widgets.rect import Rect
 from miro.gtcache import gettext as _
 
@@ -115,7 +115,6 @@ class OSXApplication(Application, signals.SignalEmitter):
         # singleton
         miroapp = MiroApplication.sharedApplication()
         miroapp.setDelegate_(self.app_controller)
-        app.size_request_manager = widgetupdates.SizeRequestManager()
         NSApplicationMain(sys.argv)        
 
     def connect_to_signals(self):
