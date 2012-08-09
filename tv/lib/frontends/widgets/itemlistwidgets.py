@@ -542,16 +542,12 @@ class ItemListTitlebar(Titlebar):
         mode.
         """
         self.set_small_width_mode(True)
-        # FIXME: this is a hack for the OS X size request system.  We should
-        # probably just make get_size_request() always work
-        self.clear_size_request_cache()
         self.small_width_needed = self.get_size_request()[0]
         self.set_small_width_mode(False)
         if self.uses_resume_button:
             # force the resume button to be included in the size request, if
             # we will show it
             self.resume_button_holder.show()
-        self.clear_size_request_cache()
         self.normal_width_needed = self.get_size_request()[0]
         if self.uses_resume_button:
             self.resume_button_holder.hide()
