@@ -380,7 +380,7 @@ class ItemInfo(ItemRow):
 
     @property
     def download_rate_text(self):
-        return displaytext.download_rate(self.download_rate)
+        return displaytext.download_rate(self.rate)
 
     @property
     def upload_rate_text(self):
