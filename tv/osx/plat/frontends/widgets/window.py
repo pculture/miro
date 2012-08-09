@@ -289,6 +289,7 @@ class Window(signals.SignalEmitter):
 
     def on_content_widget_size_request_change(self, widget, old_size):
         self.update_size_constraints()
+        self.place_child()
 
     def set_content_widget(self, widget):
         if self.content_widget:
@@ -427,11 +428,7 @@ class Dialog(DialogBase):
 
     def on_content_widget_size_request_change(self, widget, old_size):
         width, height = self.content_widget.get_size_request()
-        # It is possible the window is torn down between the size invalidate
-        # request and the actual size invalidation invocation.  So check
-        # to see if nswindow is there if not then do not do anything.
-        if self.window and (width, height) != old_size:
-            self.change_content_size(width, height)
+        self.change_content_size(width, height)
 
     def change_content_size(self, width, height):
         content_rect = self.window.contentRectForFrameRect_(

@@ -55,8 +55,8 @@ from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
-from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
+from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 
 class Display(signals.SignalEmitter):
@@ -172,8 +172,9 @@ class DisplayManager(object):
                 # catch-all.
                 DummyDisplay,
         ]
-        # Delayed call pointer for change_non_video_displays()
-        self.change_non_video_displays_dc = None
+        # _select_display_for_tabs_args holds the arguments passed to
+        # select_display_for_tabs()
+        self._select_display_for_tabs_args = None
         # displays that we keep alive all the time
         self.permanent_displays = set()
         self.display_stack = []
@@ -192,6 +193,31 @@ class DisplayManager(object):
 
     def select_display_for_tabs(self, selected_tab_list, selected_tabs):
         """Select a display to show in the right-hand side.  """
+        if self._select_display_for_tabs_args is None:
+            # First call to select_display_for_tabs(), we need to schedule
+            # _select_display_for_tabs() to be called.
+            timer.add(0.01, self._select_display_for_tabs)
+        # For all cases, we want to store these arguments in
+        # _select_display_for_tabs_args so that when
+        # _select_display_for_tabs() is called it uses them.
+        self._select_display_for_tabs_args = (selected_tab_list,
+                                              selected_tabs)
+
+    def _select_display_for_tabs(self):
+        """Call that does the work for select_display_for_tabs()
+
+        select_display_for_tabs() defers action in case the user is quickly
+        switching between tabs.  In that case, we only need to select the last
+        tab that was switched to.  This method does the actual work.
+        """
+        if self._select_display_for_tabs_args is None:
+            app.widgetapp.handle_soft_failure(
+                "_select_display_for_tabs():",
+                "_select_display_for_tabs_args is None")
+            return
+        selected_tab_list, selected_tabs = self._select_display_for_tabs_args
+        self._select_display_for_tabs_args = None
+
         if (selected_tab_list is self.selected_tab_list and
                 selected_tabs == self.selected_tabs and
                 len(self.display_stack) > 0 and
@@ -225,21 +251,6 @@ class DisplayManager(object):
         self.push_display(display)
 
     def change_non_video_displays(self, display):
-        # If the dc exists, cancel it.  If the cancel failed because lost
-        # the race to cancel it, then the display will load and some
-        # some redundant code will be scheduled onto the main thread, but
-        # that's okay, since at the next invocation of the delayed call
-        # we shall get the correct display.  We use a miro.timer here
-        # rather than tacking onto the UI loop using call_on_ui_thread()
-        # since we can't cancel it.
-        if self.change_non_video_displays_dc:
-            timer.cancel(self.change_non_video_displays_dc)
-            self.change_non_video_displays_dc = None
-        self.change_non_video_displays_dc = timer.add(0.1,
-          lambda: call_on_ui_thread(
-          lambda: self.do_change_non_video_displays(display)))
-
-    def do_change_non_video_displays(self, display):
         """Like select_display(), but don't replace the VideoDisplay
 
         Mostly this will work like select_display().  However, if there is a

@@ -53,9 +53,12 @@ class Widget(signals.SignalEmitter):
     CREATES_VIEW = True 
 
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'size-request-changed',
-                'size-allocated', 'key-press', 'focus-out')
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('key-press')
+        self.create_signal('focus-out')
         self.create_signal('place-in-scroller')
+        self.create_signal('size-request-changed', okay_to_nest=True)
+        self.create_signal('size-allocated', okay_to_nest=True)
         self.viewport = None
         self.parent_is_scroller = False
         self.manual_size_request = None
@@ -69,10 +72,6 @@ class Widget(signals.SignalEmitter):
     def set_size_request(self, width, height):
         self.manual_size_request = (width, height)
         self.invalidate_size_request()
-
-    def clear_size_request_cache(self):
-        while app.size_request_manager.widgets_to_request:
-            app.size_request_manager._run_requests()
 
     def get_size_request(self):
         if self.manual_size_request:
@@ -92,11 +91,8 @@ class Widget(signals.SignalEmitter):
             return self.cached_size_request
 
     def invalidate_size_request(self):
-        app.size_request_manager.add_widget(self)
-
-    def do_invalidate_size_request(self):
         """Recalculate the size request for this widget."""
-        old_size_request = self.cached_size_request
+        old_size_request = self.get_size_request()
         self.cached_size_request = None
         self.emit('size-request-changed', old_size_request)
 
@@ -254,12 +250,11 @@ class Container(Widget):
 
     def children_changed(self):
         """Invoked when the set of children for this widget changes."""
-        self.do_invalidate_size_request()
+        self.invalidate_size_request()
 
-    def do_invalidate_size_request(self):
-        Widget.do_invalidate_size_request(self)
-        if self.viewport:
-            self.place_children()
+    def place(self, rect, containing_view):
+        Widget.place(self, rect, containing_view)
+        self.place_children()
 
     def viewport_created(self):
         self.place_children()

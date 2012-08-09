@@ -103,6 +103,7 @@ class SignalEmitter(object):
         self.signal_callbacks = {}
         self.id_generator = itertools.count()
         self._currently_emitting = set()
+        self._okay_to_nest = set()
         self._frozen = False
         for name in signal_names:
             self.create_signal(name)
@@ -113,8 +114,12 @@ class SignalEmitter(object):
     def thaw_signals(self):
         self._frozen = False
 
-    def create_signal(self, name):
+    def create_signal(self, name, okay_to_nest=False):
+        if name in self.signal_callbacks:
+            raise KeyError("%s was already created" % name)
         self.signal_callbacks[name] = {}
+        if okay_to_nest:
+            self._okay_to_nest.add(name)
 
     def get_callbacks(self, signal_name):
         try:
@@ -175,10 +180,11 @@ class SignalEmitter(object):
     def emit(self, name, *args):
         if self._frozen:
             return
-        if name in self._currently_emitting:
-            raise NestedSignalError("Can't emit %s while handling %s" %
-                    (name, name))
-        self._currently_emitting.add(name)
+        if name not in self._okay_to_nest:
+            if name in self._currently_emitting:
+                raise NestedSignalError("Can't emit %s while handling %s" %
+                        (name, name))
+            self._currently_emitting.add(name)
         try:
             callback_returned_true = self._run_signal(name, args)
         finally:
