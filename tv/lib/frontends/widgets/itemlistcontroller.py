@@ -800,7 +800,7 @@ class ItemListController(object):
         elif name == 'visit_comments':
             app.widgetapp.open_url(item_info.commentslink)
         elif name == 'visit_filelink':
-            app.widgetapp.open_url(item_info.file_url)
+            app.widgetapp.open_url(item_info.url)
         elif name == 'visit_license':
             app.widgetapp.open_url(item_info.license)
         elif name == 'show_local_file':

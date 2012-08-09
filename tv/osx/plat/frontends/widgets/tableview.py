@@ -746,12 +746,12 @@ class TableViewCommon(object):
             self.drawGroupLine_(row)
 
     def drawGroupLine_(self, row):
-        infolist = wrappermap.wrapper(self).model
-        if (not isinstance(infolist, tablemodel.ItemListModel) or
-                infolist.get_grouping() is None):
+        model = wrappermap.wrapper(self).model
+        if (not isinstance(model, tablemodel.ItemListModel) or
+                model.item_list.get_grouping() is None):
             return
 
-        info, attrs, group_info = infolist[row]
+        info, attrs, group_info = model[row]
         if group_info[0] == group_info[1] - 1:
             rect = self.rectOfRow_(row)
             rect.origin.y = NSMaxY(rect) - self.group_line_width
@@ -870,12 +870,12 @@ class TableViewCommon(object):
 
     def selectAllItemsInGroupForRow_(self, row):
         wrapper = wrappermap.wrapper(self)
-        infolist = wrapper.model
-        if (not isinstance(infolist, tablemodel.ItemListModel) or
-                infolist.get_grouping() is None):
+        model = wrapper.model
+        if (not isinstance(model, tablemodel.ItemListModel) or
+                model.item_list.get_grouping() is None):
             return
 
-        info, attrs, group_info = infolist[row]
+        info, attrs, group_info = model[row]
         select_range = NSMakeRange(row - group_info[0], group_info[1])
         index_set = NSIndexSet.indexSetWithIndexesInRange_(select_range)
         self.selectRowIndexes_byExtendingSelection_(index_set, NO)

@@ -327,8 +327,8 @@ class ItemRenderer(ItemRendererBase):
             self.canvas.add_remove_button(*self.remove_button_info())
 
         if self.info.expiration_date:
-            text = displaytext.expiration_date(self.info.expiration_date)
-            self.canvas.add_keep_button('keep', text)
+            self.canvas.add_keep_button('keep',
+                                        self.info.expiration_date_text)
         elif self.info.id in app.saved_items:
             self.canvas.add_saved_emblem()
 
@@ -355,21 +355,15 @@ class ItemRenderer(ItemRendererBase):
             self.canvas.add_progress_bar(progress, pause_button_mode)
 
     def add_download_info(self):
-        if self.info.is_paused:
-            eta = down_rate = 0
-        else:
-            eta = self.info.eta
-            down_rate = self.info.rate
         download_info = ItemDownloadInfo()
-        download_info.add_line('time-left',
-                displaytext.time_string_0_blank(eta), None)
+        download_info.add_line('time-left', self.info.eta_text, None)
         download_info.add_line('dl-speed',
-                displaytext.download_rate(down_rate),
-                displaytext.size_string(self.info.downloaded_size))
+                               self.info.download_rate_text,
+                               self.info.downloaded_size_text)
         if self.info.is_torrent:
             download_info.add_line('ul-speed',
-                displaytext.download_rate(self.info.up_rate),
-                displaytext.size_string(self.info.up_total))
+                                   self.info.upload_rate_text,
+                                   self.info.upload_size_text)
         self.canvas.add_download_info(download_info)
         if self.info.is_paused:
             pass
@@ -384,7 +378,7 @@ class ItemRenderer(ItemRendererBase):
                 (_('PEERS'), str(self.info.connections)),
                 (_('SEEDS'), str(self.info.seeders)),
                 (_('LEECH'), str(self.info.leechers)),
-                (_('SHARE'), "%.2f" % self.info.up_down_ratio),
+                (_('SHARE'), "%.2f" % self.info.upload_ratio),
         )
         self.canvas.add_torrent_info(lines)
 

@@ -355,7 +355,7 @@ class TorrentDetailsRenderer(ListViewRendererText):
              "up_rate": info.upload_rate_text,
              "up_total": info.upload_size_text,
              "down_rate": info.download_rate_text,
-             "down_total": info.current_size_text,
+             "down_total": info.downloaded_size_text,
              "ratio": info.upload_ratio_text})
         return details
 
