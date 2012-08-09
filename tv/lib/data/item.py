@@ -347,6 +347,10 @@ class ItemInfo(ItemRow):
         return self.watched_time + expire_time
 
     @property
+    def expiration_date_text(self):
+        return displaytext.expiration_date(self.expiration_date)
+
+    @property
     def can_be_saved(self):
         return self.has_filename and not self.keep
 
@@ -399,8 +403,8 @@ class ItemInfo(ItemRow):
         return displaytext.time_string_0_blank(self.eta)
 
     @property
-    def current_size_text(self):
-        return displaytext.size_string(self.current_size)
+    def downloaded_size_text(self):
+        return displaytext.size_string(self.downloaded_size)
 
     @property
     def upload_size_text(self):
