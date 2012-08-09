@@ -161,7 +161,7 @@ class OverlayPalette (NSWindowController):
         if item_info.remote:
             self.deleteButton.setEnabled_(False)
         self.renderer = renderer
-        self.titleLabel.setStringValue_(item_info.name)
+        self.titleLabel.setStringValue_(item_info.title)
         try:
             self.feedLabel.setStringValue_(widgetutil.get_feed_info(item_info.feed_id).name)
         except:
