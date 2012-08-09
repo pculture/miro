@@ -429,7 +429,7 @@ class Application:
             current_display.toggle_column_enabled(unicode(name))
 
     def share_item(self, item):
-        share_items = {"file_url": item.file_url,
+        share_items = {"file_url": item.url,
                        "item_name": item.name}
         if item.feed_url:
             share_items["feed_url"] = item.feed_url
@@ -726,8 +726,8 @@ class Application:
             return
 
         selection = selection[0]
-        if selection.file_url:
-            app.widgetapp.copy_text_to_clipboard(selection.file_url)
+        if selection.url:
+            app.widgetapp.copy_text_to_clipboard(selection.url)
 
     def add_new_feed(self):
         url = newfeed.run_dialog()

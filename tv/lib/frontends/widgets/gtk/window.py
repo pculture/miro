@@ -320,9 +320,10 @@ class MainWindow(Window):
         return True
 
     def on_configure_event(self, widget, event):
-        (x, y) = self._window.get_position()
-        (width, height) = self._window.get_size()
-        self.emit('save-dimensions', x, y, width, height)
+        if self._window is not None:
+            (x, y) = self._window.get_position()
+            (width, height) = self._window.get_size()
+            self.emit('save-dimensions', x, y, width, height)
 
     def on_window_state_event(self, widget, event):
         maximized = bool(

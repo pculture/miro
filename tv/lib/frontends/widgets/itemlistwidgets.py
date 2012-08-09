@@ -2079,7 +2079,7 @@ class TorrentInfoWidget(widgetset.Background):
             self.up_rate.set_text(info.upload_rate_text)
             self.ratio.set_text(info.upload_ratio_text)
             self.eta.set_text(info.eta_text)
-        self.down_total.set_text(info.current_size_text)
+        self.down_total.set_text(info.downloaded_size_text)
         self.up_total.set_text(info.upload_size_text)
 
     def _calc_should_show(self, info):
