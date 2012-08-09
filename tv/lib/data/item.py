@@ -98,7 +98,7 @@ _column_info = [
     SelectColumn('item', 'is_container_item'),
     SelectColumn('item', 'release_date'),
     SelectColumn('item', 'duration', 'duration_ms'),
-    SelectColumn('item', 'screenshot'),
+    SelectColumn('item', 'screenshot', 'screenshot_path_unicode'),
     SelectColumn('item', 'resume_time'),
     SelectColumn('item', 'license'),
     SelectColumn('item', 'rss_id'),
@@ -111,10 +111,10 @@ _column_info = [
     SelectColumn('item', 'comments_link'),
     SelectColumn('item', 'url'),
     SelectColumn('item', 'was_downloaded'),
-    SelectColumn('item', 'filename', 'raw_filename'),
+    SelectColumn('item', 'filename', 'filename_unicode'),
     SelectColumn('item', 'play_count'),
     SelectColumn('item', 'skip_count'),
-    SelectColumn('item', 'cover_art'),
+    SelectColumn('item', 'cover_art', 'cover_art_path_unicode'),
     SelectColumn('item', 'description'),
     SelectColumn('item', 'album'),
     SelectColumn('item', 'album_artist'),
@@ -138,7 +138,7 @@ _column_info = [
     SelectColumn('feed', 'expireTime', 'feed_expire_time'),
     SelectColumn('feed', 'autoDownloadable', 'feed_auto_downloadable'),
     SelectColumn('feed', 'getEverything', 'feed_get_everything'),
-    SelectColumn('icon_cache', 'filename', 'raw_icon_cache_filename'),
+    SelectColumn('icon_cache', 'filename', 'icon_cache_path_unicode'),
     SelectColumn('remote_downloader', 'content_type',
                   'downloader_content_type'),
     SelectColumn('remote_downloader', 'state', 'downloader_state'),
@@ -211,7 +211,7 @@ class ItemInfo(ItemRow):
 
     @property
     def filename(self):
-        return _unicode_to_filename(self.raw_filename)
+        return _unicode_to_filename(self.filename_unicode)
 
     @property
     def downloaded(self):
@@ -219,15 +219,19 @@ class ItemInfo(ItemRow):
 
     @property
     def has_filename(self):
-        return self.raw_filename is not None
+        return self.filename_unicode is not None
 
     @property
-    def icon_cache_filename(self):
-        return _unicode_to_filename(self.raw_icon_cache_filename)
+    def icon_cache_path(self):
+        return _unicode_to_filename(self.icon_cache_path_unicode)
 
     @property
-    def cover_art_filename(self):
-        return _unicode_to_filename(self.cover_art)
+    def cover_art_path(self):
+        return _unicode_to_filename(self.cover_art_path_unicode)
+
+    @property
+    def screenshot_path(self):
+        return _unicode_to_filename(self.screenshot_path_unicode)
 
     @property
     def is_playable(self):
@@ -253,13 +257,15 @@ class ItemInfo(ItemRow):
 
     @property
     def thumbnail(self):
-        if self.cover_art and fileutil.exists(self.cover_art_filename):
-            return self.cover_art_filename
-        if (self.raw_icon_cache_filename is not None and
-            fileutil.exists(self.icon_cache_filename)):
-            return self.icon_cache_filename
-        if self.screenshot and fileutil.exists(self.screenshot):
-            return self.screenshot
+        if (self.cover_art_path_unicode is not None
+            and fileutil.exists(self.cover_art_path)):
+            return self.cover_art_path
+        if (self.icon_cache_path_unicode is not None and
+            fileutil.exists(self.icon_cache_path)):
+            return self.icon_cache_path
+        if (self.screenshot_path_unicode is not None
+            and fileutil.exists(self.screenshot_path)):
+            return self.screenshot_path
         if self.is_container_item:
             return resources.path("images/thumb-default-folder.png")
         else:
