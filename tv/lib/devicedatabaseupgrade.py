@@ -44,31 +44,23 @@ from miro import prefs
 from miro import schema
 from miro import storedatabase
 
-def import_old_items(live_storage, json_db, mount):
-    """Import items in a JSON database from old versions.
+class OldItemImporter(object):
+    """Import items from the database of old versions.
 
-    For each item in the JSON db that doesn't have a corresponding entry in
-    the metadata status table, we import that data into the metadata table and
-    create an entry in the device_item table.  This method basically does
-    upgrades 166 through 173 for those items.
+    This class is made to import items from previous versions of Miro.  There
+    are basically 2 cases:
 
-    This function doesn't handle upgrading items in the sqlite database.  This
-    happens through the databaseupgrade code.
+    Upgrading from Miro 4.x -- In this case we get all data from the JSON db.
+
+    Upgrading from Miro 5.x -- In this case we get the data from both the JSON
+    db and also the metadata tables in the sqlite db.
+
+    Importing data requires some careful ordering of how we do things.  The
+    steps are:
+        - import_metadata() imports data into the metadata tables
+        - the calling code should then create a MetadataManager for the device
+        - the MetadataManager is then passed to import_device_items()
     """
-    live_storage.cursor.execute("BEGIN TRANSACTION")
-    try:
-        _do_import_old_items(live_storage.cursor, json_db, mount)
-        live_storage.cursor.execute("COMMIT TRANSACTION")
-    except StandardError:
-        logging.exception('exception while importing JSON db from %s', mount)
-        action = live_storage.error_handler.handle_upgrade_error()
-        # Our error handle should always return ACTION_START_FRESH
-        if action != storedatabase.LiveStorageErrorHandler.ACTION_START_FRESH:
-            logging.warn("Unexpected return value from the error handler for "
-                         "a device database: %s" % action)
-
-class _do_import_old_items(object):
-    """Function object that handles the work for import_old_items"""
 
     # FIXME: this code is tied to the 5.0 release and may not work for future
     # versions
@@ -121,46 +113,71 @@ class _do_import_old_items(object):
         (', '.join(name for name, field in schema.DeviceItemSchema.fields),
          ', '.join('?' for i in xrange(len(schema.DeviceItemSchema.fields)))))
 
-    def __init__(self, cursor, json_db, mount):
+    def __init__(self, live_storage, mount, json_db):
         self.cover_art_dir = os.path.join(mount, '.miro', 'cover-art')
         self.net_lookup_enabled = app.config.get(prefs.NET_LOOKUP_BY_DEFAULT)
         self.mount = mount
-        self.cursor = cursor
+        self.cursor = live_storage.cursor
         # track the next id that we should create in the database
-        self.id_counter = itertools.count(databaseupgrade.get_next_id(cursor))
+        next_id = databaseupgrade.get_next_id(self.cursor)
+        self.id_counter = itertools.count(next_id)
 
-        self.init_paths_in_metadata_table()
+        self.select_paths_from_db()
         self.init_device_items(json_db)
-        self.process_items()
 
-    def process_items(self):
-        """Run through device_items and create rows in the metadata table for
-        them.
-        """
-        if not self.device_items:
+    def import_metadata(self):
+        """Import data into the metadata tables."""
+        if not self.old_device_items:
             # nothing new to import
             return
 
-        logging.info("Importing %d old device items", len(self.device_items))
-        for file_type, path, item in self.device_items:
-            if path in self.paths_in_metadata_table:
-                # duplicate filename, just skip this data
-                continue
-            self.paths_in_metadata_table.add(path)
-            try:
-                self.convert_old_item(file_type, path, item)
-            except StandardError, e:
-                logging.warn("error converting device item for %r ", path,
-                             exc_info=True)
+        logging.info("Importing metadata for %d old device items",
+                     len(self.old_device_items))
 
-    def init_paths_in_metadata_table(self):
-        """Initialize paths_in_metadata_table
+        self.cursor.execute("BEGIN TRANSACTION")
+        try:
+            for file_type, path, old_item in self.old_device_items:
+                try:
+                    if path not in self.paths_in_metadata_table:
+                        self.add_metadata_to_db(file_type, path, old_item)
+                        self.fix_json_data(old_item)
+                except StandardError, e:
+                    logging.warn("error converting device item for %r ", path,
+                                 exc_info=True)
+        finally:
+            self.cursor.execute("COMMIT TRANSACTION")
 
-        paths_in_metadata_table tracks which paths already have a row in the
-        metadata_status table
+    def import_device_items(self, metadata_manager):
+        if not self.old_device_items:
+            # nothing new to import
+            return
+
+        logging.info("Importing device items for %d old device items",
+                     len(self.old_device_items))
+
+        self.cursor.execute("BEGIN TRANSACTION")
+        try:
+            for file_type, path, old_item in self.old_device_items:
+                try:
+                    self.add_device_item(file_type, path, old_item,
+                                         metadata_manager)
+                except StandardError, e:
+                    logging.warn("error converting device item for %r ", path,
+                                 exc_info=True)
+        finally:
+            self.cursor.execute("COMMIT TRANSACTION")
+
+    def select_paths_from_db(self):
+        """Setup paths_in_metadata_table and paths_in_device_items_table
+
+        These variables track which paths are in our sqlite database for the
+        metadata_status and device_item tables.
         """
         self.cursor.execute("SELECT path FROM metadata_status")
         self.paths_in_metadata_table = set(row[0] for row in self.cursor)
+
+        self.cursor.execute("SELECT filename FROM device_item")
+        self.paths_in_device_items_table = set(row[0] for row in self.cursor)
 
     def init_device_items(self, json_db):
         """Initialize device_items
@@ -169,18 +186,19 @@ class _do_import_old_items(object):
         device item that we should convert
         """
         # get info about each item on the device
-        self.device_items = []
+        paths_added = set()
+        self.old_device_items = []
         for file_type in (u'audio', u'video', u'other'):
             if file_type not in json_db:
                 continue
             for path, data in json_db[file_type].iteritems():
-                if path not in self.paths_in_metadata_table:
-                    self.device_items.append((file_type, path, data))
-
-    def convert_old_item(self, file_type, path, old_item):
-        self.add_metadata_to_db(file_type, path, old_item)
-        self.add_device_item(file_type, path, old_item)
-        self.fix_json_data(old_item)
+                if path in paths_added:
+                    # duplicate filename, just skip this data
+                    continue
+                paths_added.add(path)
+                if (path not in self.paths_in_metadata_table or
+                    path not in self.paths_in_device_items_table):
+                    self.old_device_items.append((file_type, path, data))
 
     def add_metadata_to_db(self, file_type, path, old_item):
         """Add rows to the metadata and metadata_status tables for old items.
@@ -198,7 +216,6 @@ class _do_import_old_items(object):
             if not old_item['title']:
                 old_item['title'] = old_item['title_tag']
             old_item['title_tag'] = None
-
 
         has_drm = old_item.get('has_drm') # other doesn't have DRM
         OLD_ITEM_PRIORITY = 10
@@ -247,9 +264,17 @@ class _do_import_old_items(object):
                              has_drm, max_entry_priority))
         return status_id
 
-    def add_device_item(self, file_type, path, old_item):
+    def add_device_item(self, file_type, path, old_item, metadata_manager):
         """Insert a device_item row for an old item."""
         values = []
+        # copy data from old_item so that we don't modify it
+        old_data = dict(old_item)
+        if path in self.paths_in_metadata_table:
+            # This item comes from a 5.x database, so there's data in the
+            # metadata tables for it.
+            metadata_dict = metadata_manager.get_metadata(path)
+            for key, value in metadata_dict.items():
+                old_data[key] = value
         for name, field in schema.DeviceItemSchema.fields:
             # get value from the old item
             if name == 'id':
@@ -258,8 +283,10 @@ class _do_import_old_items(object):
                 value = path
             elif name == 'file_type':
                 value = file_type
+            elif name == 'net_lookup_enabled':
+                value = False
             else:
-                value = old_item.get(name)
+                value = old_data.get(name)
             # convert value
             if value is not None:
                 if isinstance(field, schema.SchemaDateTime):
@@ -276,7 +303,6 @@ class _do_import_old_items(object):
         # the safest option and old versions should still pick up new metadata
         # when newer versions run MDP.
         old_item['mdp_state'] = item.MDP_STATE_RAN
-
 
     def upgrade_cover_art(self, device_item):
         """Drop the cover_art field and move cover art to a filename based on

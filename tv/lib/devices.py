@@ -77,6 +77,8 @@ from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
 
 # how much slower converting a file is, compared to copying
 CONVERSION_SCALE = 500
+# schema version for device databases
+DB_VERSION = 191
 
 def unicode_to_path(path):
     """
@@ -496,7 +498,12 @@ class DeviceManager(object):
                 sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'),
                                                  is_hidden=is_hidden)
                 db_info = database.DBInfo(sqlite_db)
+                importer = devicedatabaseupgrade.OldItemImporter(sqlite_db,
+                                                                 mount,
+                                                                 db)
+                importer.import_metadata()
                 metadata_manager = make_metadata_manager(mount, db_info, id_)
+                importer.import_device_items(metadata_manager)
                 db.check_old_key_usage = True
             else:
                 db_info = metadata_manager = None
@@ -1312,8 +1319,7 @@ def load_database(mount, countdown=0):
     ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
 
-def load_sqlite_database(mount, json_db, device_size, countdown=0,
-                         is_hidden=False):
+def load_sqlite_database(mount, device_size, countdown=0, is_hidden=False):
     """
     Returns a LiveStorage object for an sqlite database on the device
 
@@ -1341,17 +1347,16 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
             path, error_handler,
             preallocate=preallocate,
             object_schemas=schema.device_object_schemas,
+            schema_version=DB_VERSION,
             start_in_temp_mode=start_in_temp_mode)
     except EnvironmentError:
         if countdown == 5:
             logging.exception('file error with JSON on %s', mount)
-            return load_sqlite_database(':memory:', json_db, 0, countdown)
+            return load_sqlite_database(':memory:', 0, countdown)
         else:
             # wait a little while; total time is ~1.5s
             time.sleep(0.20 * 1.2 ** countdown)
-            return load_sqlite_database(mount, json_db, device_size,
-                                        countdown + 1)
-    DB_VERSION = 177
+            return load_sqlite_database(mount, device_size, countdown + 1)
     if live_storage.created_new:
         # force the version to match the current schema.  This is a hack to
         # make databases from the nightlies match the ones from users starting
@@ -1364,15 +1369,8 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
     else:
         device_db_version = live_storage.get_version()
         if device_db_version < DB_VERSION:
-            # Hack for 5.0.
-            #
-            # We didn't create sqlite databases in 4.0.x, so if there is a
-            # database with an earlier version, we know it was created by a
-            # nightly build.  In that case it's not a huge deal to reset it.
-            #
-            # FIXME: Need to write real upgrade code for post-5.0
-            logging.warn("Reseting device database: %r", mount)
-            live_storage.reset_database()
+            logging.info("upgrading device database: %r", mount)
+            live_storage.upgrade_database(context='device')
         elif device_db_version > DB_VERSION:
             # Newer versions of miro should store their device databases in a
             # way that's compatible with previous ones.  We just have to hope
@@ -1380,7 +1378,6 @@ def load_sqlite_database(mount, json_db, device_size, countdown=0,
             logging.warn("database from newer miro version: %r (version=%s)",
                          mount, device_db_version)
 
-    devicedatabaseupgrade.import_old_items(live_storage, json_db, mount)
     return live_storage
 
 def calc_sqlite_preallocate_size(device_size):

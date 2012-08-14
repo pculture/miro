@@ -314,24 +314,16 @@ files = [f for f in listfiles(resource_dir) \
 data_files.append(('/usr/share/miro/resources/', files))
 
 # handle the sub directories.
-for dir in ('searchengines',
-        'images',
-        'testdata',
-        'conversions',
-        'devices',
-        os.path.join('testdata', 'conversions'),
-        os.path.join('testdata', 'conversions', 'output'),
-        os.path.join('testdata', 'feedparsertests', 'feeds'),
-        os.path.join('testdata', 'feedparsertests', 'output'),
-        os.path.join('testdata', 'echonest-replies'),
-        os.path.join('testdata', '7digital-replies'),
-        os.path.join('testdata', 'stripperdata'),
-        os.path.join('testdata', 'httpserver'),
-        os.path.join('testdata', 'metadata'),
-        os.path.join('testdata', 'locale', 'fr', 'LC_MESSAGES')):
+for dir in ('searchengines', 'images', 'conversions', 'devices'):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
+for path, dirs, files in os.walk(os.path.join(resource_dir, 'testdata')):
+    relpath = os.path.relpath(path, resource_dir)
+    dest_dir = os.path.join('/usr/share/miro/resources/', relpath)
+    files = [os.path.join(resource_dir, relpath, f) for f in files]
+    data_files.append((dest_dir, files))
+
 data_files.append((dest_dir, [os.path.join(resource_dir, 'donate.html')]))
 
 # add core extension files

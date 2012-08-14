@@ -513,11 +513,11 @@ class MiroTestCase(unittest.TestCase):
                 # this means that exceptions in the upgrade will be sent to a
                 # dialog box.  Be careful with this, if you don't handle the
                 # dialog, then the unit tests will hang.
-                app.db.upgrade_database()
+                app.db.upgrade_database(context='main')
             else:
                 # normal case: use _upgrade_database() because we want
                 # exceptions to keep propagating
-                app.db._upgrade_database()
+                app.db._upgrade_database(context='main')
         item.setup_change_tracker()
         database.initialize()
 

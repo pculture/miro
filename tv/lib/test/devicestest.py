@@ -34,6 +34,7 @@ except ImportError:
     import json
 
 import datetime
+import shutil
 import sqlite3
 
 from miro.gtcache import gettext as _
@@ -44,6 +45,7 @@ from miro.test import mock
 
 from miro import app
 from miro import database
+from miro import devicedatabaseupgrade
 from miro import devices
 from miro import item
 from miro import metadata
@@ -294,7 +296,6 @@ class ScanDeviceForFilesTest(EventLoopTest):
         self.device.read_only = False
         os.makedirs(os.path.join(self.device.mount, '.miro'))
         sqlite_db = devices.load_sqlite_database(self.device.mount,
-                                                 self.device.database,
                                                  self.device.size)
         db_info = database.DBInfo(sqlite_db)
         metadata_manager = devices.make_metadata_manager(self.device.mount,
@@ -405,7 +406,6 @@ class DeviceDatabaseTest(MiroTestCase):
 
     def open_database(self):
         sqlite_db = devices.load_sqlite_database(self.device.mount,
-                                                 self.device.database,
                                                  self.device.size)
         db_info = database.DBInfo(sqlite_db)
         metadata_manager = devices.make_metadata_manager(self.device.mount,
@@ -471,38 +471,47 @@ class DeviceUpgradeTest(MiroTestCase):
 
     def setUp(self):
         MiroTestCase.setUp(self)
-        # setup a device database
-        json_path = resources.path('testdata/pre-metadata-device-db')
-        self.db = devices.DeviceDatabase(json.load(open(json_path)))
         # setup a device object
         self.device = mock.Mock()
-        self.device.database = self.db
-        self.device.mount = self.tempdir + "/"
+        self.device.mount = self.make_temp_dir_path()
         self.device.remaining = 0
         os.makedirs(os.path.join(self.device.mount, '.miro'))
         self.device.id = 123
-        self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
+        self.cover_art_dir = os.path.join(self.device.mount, 'cover-art')
         os.makedirs(self.cover_art_dir)
 
-    def test_upgrade(self):
-        # Test the upgrade from pre-metadata device databases
-        sqlite_db = devices.load_sqlite_database(':memory:', self.db, 1024)
+    def setup_json_db(self, path):
+        # setup a device database
+        json_path = resources.path(path)
+        self.device.db = devices.DeviceDatabase(json.load(open(json_path)))
+
+    def test_upgrade_from_4x(self):
+        # Test the upgrade from devices with just a JSON database
+        self.setup_json_db('testdata/device-dbs/4.x-json')
+        self.check_json_import(self.device.db[u'audio'])
+
+    def check_json_import(self, device_data):
+        """Check that we successfully imported the sqlite data."""
+        sqlite_db = devices.load_sqlite_database(self.device.mount, 1024)
+        sqlite_db.cursor.execute("SELECT album from metadata")
         db_info = database.DBInfo(sqlite_db)
-        # load_sqlite_database should have converted the old data to metadata
-        # entries
-        metadata_manager = devices.make_metadata_manager(self.tempdir,
+        importer = devicedatabaseupgrade.OldItemImporter(sqlite_db,
+                                                         self.device.mount,
+                                                         self.device.db)
+        importer.import_metadata()
+        metadata_manager = devices.make_metadata_manager(self.device.mount,
                                                          db_info,
                                                          self.device.id)
-        for path, item_data in self.db[u'audio'].items():
+        importer.import_device_items(metadata_manager)
+
+        for path, item_data in device_data.items():
             # fill in data that's implicit with the dict
             item_data['file_type'] = u'audio'
             item_data['video_path'] = path
             filename = utf8_to_filename(path.encode('utf-8'))
-            self.check_migrated_status(filename, metadata_manager.db_info)
-            self.check_migrated_entries(filename, item_data,
-                                        metadata_manager.db_info)
-            self.check_migrated_device_item(filename, item_data,
-                                            metadata_manager.db_info)
+            self.check_migrated_status(filename, db_info)
+            self.check_migrated_entries(filename, item_data, db_info)
+            self.check_migrated_device_item(filename, item_data, db_info)
             # check that the title tag was deleted
             self.assert_(not hasattr(item, 'title_tag'))
 
@@ -549,6 +558,11 @@ class DeviceUpgradeTest(MiroTestCase):
                 continue
             elif name == 'id':
                 continue # this column doesn't get migrated
+            elif name == 'net_lookup_enabled':
+                # this column should always be False.  It dosen't get migrated
+                # from the old device item
+                self.assertEquals(device_item.net_lookup_enabled, False)
+                continue
             old_value = item_data.get(name)
             if (isinstance(field, schema.SchemaDateTime) and
                 old_value is not None):
@@ -558,3 +572,36 @@ class DeviceUpgradeTest(MiroTestCase):
                 raise AssertionError("Error converting field %s "
                                      "(old: %r, new: %r)" % (name, old_value,
                                                              new_value))
+
+    def test_upgrade_from_5x(self):
+        # Test the upgrade from devices from Miro 5.x.  These have an sqlite
+        # database, but only metadata on it, not the device_item table
+        self.setup_json_db('testdata/device-dbs/5.x-json')
+        device_sqlite = os.path.join(self.device.mount, '.miro', 'sqlite')
+        shutil.copyfile(resources.path('testdata/5.x-device-database.sqlite'),
+                        device_sqlite)
+        self.check_json_import(self.device.db[u'audio'])
+
+    def test_upgrade_from_5x_with_new_data(self):
+        # Test a tricky case, we upgraded a device database for miro 5.x then
+        # added new data to it.  When the data in the sqlite database doesn't
+        # match the data in the JSON database we should prefer the data from
+        # sqlite.
+        self.setup_json_db('testdata/device-dbs/5.x-json')
+        new_album = u'New Album Title'
+        path = os.path.join(self.device.mount, '.miro', 'sqlite')
+        shutil.copyfile(resources.path('testdata/5.x-device-database.sqlite'),
+                        path)
+        # tweak the sqlite database to simulate new data in it
+        connection = sqlite3.connect(path)
+        connection.execute("UPDATE metadata SET album=? ", (new_album,))
+        connection.commit()
+        connection.close()
+        # do the same thing to the data that we are use to check the migrated
+        # items
+        device_data = self.device.db[u'audio'].copy()
+        for dct in device_data.values():
+            dct['album'] = new_album
+        # check that the import code gets the value from the sqlite database,
+        # not the JSON one
+        self.check_json_import(device_data)

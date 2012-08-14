@@ -183,7 +183,30 @@ def get_upgrade_func(version):
     else:
         return globals()['upgrade%d' % version]
 
-def new_style_upgrade(cursor, saved_version, upgrade_to):
+def run_on_devices(func):
+    """decorator to run an upgrade function only for device databases."""
+    func._contexts = set(['device'])
+    return func
+
+def run_on_both(func):
+    """decorator to run an upgrade function for both device databases and the
+    main database
+    """
+    func._contexts = set(['device', 'main'])
+    return func
+
+def contexts_for_upgrade_func(func):
+    """Get the contexts where we should run an upgrade function.
+
+    By default we only run upgrade functions in the main database.  To change
+    this, a function can be decorated with one of the run_on_* wrappers.
+    """
+    try:
+        return func._contexts # function has been decorated
+    except AttributeError:
+        return set(['main']) # default case
+
+def new_style_upgrade(cursor, saved_version, upgrade_to, context):
     """Upgrade a database using new-style upgrade functions.
 
     This method replaces the upgrade() method.  However, we still need
@@ -210,9 +233,11 @@ def new_style_upgrade(cursor, saved_version, upgrade_to):
     for version in xrange(saved_version + 1, upgrade_to + 1):
         if util.chatter:
             logging.info("upgrading database to version %s", version)
-        cursor.execute("BEGIN TRANSACTION")
-        get_upgrade_func(version)(cursor)
-        cursor.execute("COMMIT TRANSACTION")
+        upgrade_func = get_upgrade_func(version)
+        if context in contexts_for_upgrade_func(upgrade_func):
+            cursor.execute("BEGIN TRANSACTION")
+            upgrade_func(cursor)
+            cursor.execute("COMMIT TRANSACTION")
         dbupgradeprogress.new_style_progress(saved_version, version,
                                              upgrade_to)
 
@@ -4141,3 +4166,24 @@ def upgrade190(cursor):
                    "INSERT INTO item_fts(docid, %s) "
                    "VALUES(new.id, %s); "
                    "END;" % (column_list, column_list_for_new))
+
+@run_on_devices
+def upgrade191(cursor):
+    cursor.execute(
+        'CREATE TABLE device_item(id integer PRIMARY KEY, '
+        'title text, creation_time timestamp, watched_time timestamp, '
+        'last_watched timestamp, subtitle_encoding text, '
+        'release_date timestamp, parent_title text, feed_url text, '
+        'license text, rss_id text, entry_title text, '
+        'torrent_title text, entry_description text, permalink text, '
+        'payment_link text, comments_link text, url text, '
+        'size integer, enclosure_size integer, enclosure_type text, '
+        'enclosure_format text, filename text, resume_time integer, '
+        'play_count integer, skip_count integer, auto_sync integer, '
+        'screenshot text, duration integer, cover_art text, '
+        'description text, album text, album_artist text, '
+        'artist text, track integer, album_tracks integer, '
+        'year integer, genre text, rating integer, '
+        'file_type text, has_drm integer, show text, '
+        'episode_id text, episode_number integer, season_number integer, '
+        'kind text, net_lookup_enabled integer, metadata_title text)')

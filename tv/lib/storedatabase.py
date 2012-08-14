@@ -617,10 +617,14 @@ class LiveStorage(signals.SignalEmitter):
             self.get_backup_directory(),
             LiveStorage.backup_filename_prefix + "*"))
 
-    def upgrade_database(self):
-        """Run any database upgrades that haven't been run."""
+    def upgrade_database(self, context='main'):
+        """Run any database upgrades that haven't been run.
+
+        :param context: context for the upgrade, either "main" for the main
+        database or "device" for the device database.
+        """
         try:
-            self._upgrade_database()
+            self._upgrade_database(context)
         except StandardError, e:
             logging.exception('error when upgrading database: %s', e)
             self._handle_upgrade_error()
@@ -692,7 +696,7 @@ class LiveStorage(signals.SignalEmitter):
         self.open_connection()
         del self._changed_db_path
 
-    def _upgrade_database(self):
+    def _upgrade_database(self, context):
         self.startup_version = current_version = self.get_version()
 
         if current_version > self._schema_version:
@@ -711,7 +715,8 @@ class LiveStorage(signals.SignalEmitter):
             self._change_database_file(current_version)
             databaseupgrade.new_style_upgrade(self.cursor,
                                               current_version,
-                                              self._schema_version)
+                                              self._schema_version,
+                                              context)
             self.set_version()
             self._change_database_file_back()
         self.current_version = self._schema_version
