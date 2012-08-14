@@ -191,6 +191,13 @@ do
             patch -p0 < $patch_file
         done
     fi
+
+    # For py2app: make sure we rebuild the patched main.c executables.
+    if [[ -d $WORK_DIR/$pkg/py2app/apptemplate ]]; then
+        pushd $WORK_DIR/$pkg/py2app/apptemplate
+            $PYTHON setup.py
+        popd
+    fi
     
     $PYTHON setup.py install
 done
