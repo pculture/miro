@@ -533,7 +533,8 @@ class Slider (NSView):
 
     def drawCursor(self):
         x = self.getCursorPosition()
-        self.cursor.compositeToPoint_operation_((abs(x)+0.5, 0), NSCompositeSourceOver)
+        self.cursor.drawAtPoint_fromRect_operation_fraction_(
+          (abs(x)+0.5, 0), NSZeroRect, NSCompositeSourceOver, 1.0)
 
     def getCursorPosition(self):
         return (self.bounds().size.width - self.cursor.size().width) * self.value

@@ -652,10 +652,13 @@ def _makeSearchIcon(engine):
     
     searchIcon.lockFocus()
     try:
-        engineIcon.compositeToPoint_operation_((0,0), NSCompositeSourceOver)
+        engineIcon.drawAtPoint_fromRect_operation_fraction_(
+          (0,0), NSZeroRect, NSCompositeSourceOver, 1.0)
         popupRectangleX = engineIconSize.width + 2
         popupRectangleY = (engineIconSize.height - popupRectangleSize.height) / 2
-        popupRectangle.compositeToPoint_operation_((popupRectangleX, popupRectangleY), NSCompositeSourceOver)
+        popupRectangle.drawAtPoint_fromRect_operation_fraction_(
+          (popupRectangleX, popupRectangleY), NSZeroRect,
+          NSCompositeSourceOver, 1.0)
     finally:
         searchIcon.unlockFocus()
 

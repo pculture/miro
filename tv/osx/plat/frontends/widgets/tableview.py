@@ -929,7 +929,8 @@ class TableColumn(signals.SignalEmitter):
     def __init__(self, title, renderer, header=None, **attrs):
         signals.SignalEmitter.__init__(self)
         self.create_signal('clicked')
-        self._column = NSTableColumn.alloc().initWithIdentifier_(attrs)
+        self._column = MiroTableColumn.alloc().initWithIdentifier_(title)
+        self._column.set_attrs(attrs)
         wrappermap.add(self._column, self)
         header_cell = MiroTableHeaderCell.alloc().init()
         self.custom_header = False
@@ -991,6 +992,13 @@ class TableColumn(signals.SignalEmitter):
     def set_index(self, index):
         self.index = index
         self.renderer.set_index(index)
+
+class MiroTableColumn(NSTableColumn):
+    def set_attrs(self, attrs):
+        self._attrs = attrs
+
+    def attrs(self):
+        return self._attrs
 
 class MiroTableView(NSTableView):
     SuperClass = NSTableView
