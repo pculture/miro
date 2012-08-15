@@ -128,7 +128,7 @@ class TableModelBase(signals.SignalEmitter):
         # We might want to do more typechecking here
 
     def get_column_data(self, row, column):
-        attr_map = column.identifier()
+        attr_map = column.attrs()
         return dict((name, row[index]) for name, index in attr_map.items())
 
     def update_value(self, iter, index, value):

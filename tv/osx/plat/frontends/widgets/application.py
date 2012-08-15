@@ -263,7 +263,11 @@ class OSXApplication(Application, signals.SignalEmitter):
             pass
         else:
             try:
-                appIcon.compositeToPoint_operation_((0,0), NSCompositeSourceOver)
+                appIcon.drawAtPoint_fromRect_operation_fraction_(
+                  (0, 0),
+                  NSZeroRect,
+                  NSCompositeSourceOver,
+                  1.0)
                 if self.unwatched_count > 0:
                     digits = len(str(self.unwatched_count))
                     badge = nil
@@ -277,7 +281,11 @@ class OSXApplication(Application, signals.SignalEmitter):
                         appIconSize = appIcon.size()
                         badgeSize = badge.size()
                         badgeLoc = (appIconSize.width - badgeSize.width, appIconSize.height - badgeSize.height)
-                        badge.compositeToPoint_operation_(badgeLoc, NSCompositeSourceOver)
+                        badge.drawAtPoint_fromRect_operation_fraction_(
+                          badgeLoc,
+                          NSZeroRect,
+                          NSCompositeSourceOver,
+                          1.0)
                         badgeLabel = NSString.stringWithString_(u'%d' % self.unwatched_count)
                         badgeLabelFont = NSFont.boldSystemFontOfSize_(24)
                         badgeLabelColor = NSColor.whiteColor()
