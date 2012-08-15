@@ -10,6 +10,7 @@ import sqlite3
 from miro import app
 from miro import database
 from miro import databaseupgrade
+from miro import devices
 from miro import dialogs
 from miro import downloader
 from miro import item
@@ -153,7 +154,6 @@ class StoreDatabaseTest(EventLoopTest):
 
     def tearDown(self):
         # need to close the db before removing it from disk
-        from miro import app
         app.db.close()
         self.remove_database()
         corrupt_path = os.path.join(os.path.dirname(self.save_path),
@@ -189,50 +189,52 @@ class DBUpgradeTest(StoreDatabaseTest):
             pass
         StoreDatabaseTest.tearDown(self)
 
+    def load_fresh_database(self):
+        self.remove_database()
+        self.reload_database()
+        self.db = app.db
+
+    def load_upgraded_database(self):
+        shutil.copy(resources.path("testdata/olddatabase.v79"),
+                    self.save_path2)
+        self.reload_database(self.save_path2)
+        self.db = app.db
+
     @skip_for_platforms('win32')
     def test_indexes_same(self):
         # this fails on windows because it's using a non-Windows
         # database
-        self.remove_database()
-        self.reload_database()
-        app.db.cursor.execute("SELECT name FROM main.sqlite_master "
-                              "WHERE type='index'")
-        blank_db_indexes = set(app.db.cursor)
-        shutil.copy(resources.path("testdata/olddatabase.v79"),
-                    self.save_path2)
-        self.reload_database(self.save_path2)
-        app.db.cursor.execute("SELECT name FROM main.sqlite_master "
-                              "WHERE type='index'")
-        upgraded_db_indexes = set(app.db.cursor)
+        self.load_fresh_database()
+        self.db.cursor.execute("SELECT name FROM main.sqlite_master "
+                               "WHERE type='index'")
+        blank_db_indexes = set(self.db.cursor)
+        self.load_upgraded_database()
+        self.db.cursor.execute("SELECT name FROM main.sqlite_master "
+                               "WHERE type='index'")
+        upgraded_db_indexes = set(self.db.cursor)
         self.assertEquals(upgraded_db_indexes, blank_db_indexes)
 
     @skip_for_platforms('win32')
     def test_triggers_same(self):
         # this fails on windows because it's using a non-Windows
         # database
-        self.remove_database()
-        self.reload_database()
-        app.db.cursor.execute("SELECT name, sql FROM main.sqlite_master "
-                              "WHERE type='trigger'")
-        blank_db_indexes = set(app.db.cursor)
-        shutil.copy(resources.path("testdata/olddatabase.v79"),
-                    self.save_path2)
-        self.reload_database(self.save_path2)
-        app.db.cursor.execute("SELECT name, sql FROM main.sqlite_master "
-                              "WHERE type='trigger'")
-        upgraded_db_indexes = set(app.db.cursor)
+        self.load_fresh_database()
+        self.db.cursor.execute("SELECT name, sql FROM main.sqlite_master "
+                               "WHERE type='trigger'")
+        blank_db_indexes = set(self.db.cursor)
+        self.load_upgraded_database()
+        self.db.cursor.execute("SELECT name, sql FROM main.sqlite_master "
+                               "WHERE type='trigger'")
+        upgraded_db_indexes = set(self.db.cursor)
         self.assertEquals(upgraded_db_indexes, blank_db_indexes)
 
     @skip_for_platforms('win32')
     def test_schema_same(self):
         # this fails on windows because it's using a non-Windows
         # database
-        self.remove_database()
-        self.reload_database()
+        self.load_fresh_database()
         blank_column_types = self._get_column_types()
-        shutil.copy(resources.path("testdata/olddatabase.v79"),
-                    self.save_path2)
-        self.reload_database(self.save_path2)
+        self.load_upgraded_database()
         upgraded_column_types = self._get_column_types()
         self.assertEquals(set(blank_column_types.keys()),
                           set(upgraded_column_types.keys()))
@@ -244,13 +246,37 @@ class DBUpgradeTest(StoreDatabaseTest):
                                      (table_name, diff))
 
     def _get_column_types(self):
-        app.db.cursor.execute("SELECT name FROM main.sqlite_master "
+        self.db.cursor.execute("SELECT name FROM main.sqlite_master "
                               "WHERE type='table'")
         rv = {}
-        for table_name in [r[0] for r in app.db.cursor.fetchall()]:
-            app.db.cursor.execute('pragma table_info(%s)' % table_name)
-            rv[table_name] = set((r[1], r[2].lower()) for r in app.db.cursor)
+        for table_name in [r[0] for r in self.db.cursor.fetchall()]:
+            self.db.cursor.execute('pragma table_info(%s)' % table_name)
+            rv[table_name] = set((r[1], r[2].lower()) for r in self.db.cursor)
         return rv
+
+class DeviceDBUpgradeTest(DBUpgradeTest):
+    def setUp(self):
+        StoreDatabaseTest.setUp(self)
+        self.save_path2 = self.make_temp_path()
+
+    def tearDown(self):
+        try:
+            os.unlink(self.save_path2)
+        except OSError:
+            pass
+        StoreDatabaseTest.tearDown(self)
+
+    def load_fresh_database(self):
+        device_mount = self.make_temp_dir_path()
+        os.makedirs(os.path.join(device_mount, '.miro'))
+        self.db = devices.load_sqlite_database(device_mount, 1024)
+
+    def load_upgraded_database(self):
+        device_mount = self.make_temp_dir_path()
+        os.makedirs(os.path.join(device_mount, '.miro'))
+        shutil.copyfile(resources.path('testdata/5.x-device-database.sqlite'),
+                        os.path.join(device_mount, '.miro', 'sqlite'))
+        self.db = devices.load_sqlite_database(device_mount, 1024)
 
 class FakeSchemaTest(StoreDatabaseTest):
     OBJECT_SCHEMAS = test_object_schemas
