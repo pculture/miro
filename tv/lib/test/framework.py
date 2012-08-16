@@ -34,10 +34,10 @@ from time import sleep
 from miro import models
 from miro import workerprocess
 from miro.fileobject import FilenameType
-from miro.data.item import fetch_item_infos
 
 from miro.test import mock
 from miro.test import testhttpserver
+from miro.test import testobjects
 
 util.setup_logging()
 
@@ -280,6 +280,7 @@ class MiroTestCase(unittest.TestCase):
         models.initialize()
         app.in_unit_tests = True
         models.Item._path_count_tracker.reset()
+        testobjects.test_started(self)
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
         # setup the deleted file checker
@@ -394,25 +395,6 @@ class MiroTestCase(unittest.TestCase):
         for ext in app.extension_manager.extensions:
             if ext.loaded:
                 app.extension_manager.unload_extension(ext)
-
-    def make_item_info(self, itemobj):
-        return fetch_item_infos(app.db.connection, [itemobj.id])[0]
-
-    def make_feed(self, url):
-        url = u'http://feed%d.com/feed.rss' % self.feed_counter.next()
-        return models.Feed(url)
-
-    def make_item(self, feed, title):
-        """Make a new item."""
-        fp_values = item.FeedParserValues({})
-        fp_values.data['entry_title'] = title
-        fp_values.data['url'] = u'http://example.com/%s.mkv' % title
-        # pick a random recent date for the release date
-        seconds_ago = random.randint(0, 60 * 60 * 24 * 7)
-        release_date = (datetime.datetime.now() -
-                        datetime.timedelta(seconds=seconds_ago))
-        fp_values.data['release_date'] = release_date
-        return models.Item(fp_values, feed_id=feed.id)
 
     def setup_log_filter(self):
         """Make a LogFilter that will turn loggings into exceptions."""

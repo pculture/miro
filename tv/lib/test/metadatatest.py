@@ -29,6 +29,7 @@ from miro.plat import resources
 from miro.plat.utils import (PlatformFilenameType,
                              get_enmfp_executable_info,
                              utf8_to_filename, unicode_to_filename)
+from miro.test import testobjects
 
 class MockMetadataProcessor(object):
     """Replaces the mutagen and movie data code with test values."""
@@ -1401,9 +1402,8 @@ class DeviceMetadataTest(EventLoopTest):
         EventLoopTest.tearDown(self)
 
     def make_device_item(self):
-        return item.DeviceItem(self.device,
-                               unicode_to_filename(u'test-song.ogg'))
-
+        return testobjects.make_device_item(self.device,
+                                                   'test-song.ogg')
     def run_processors(self):
         self._run_processors(self.device.metadata_manager,
                              os.path.join(self.tempdir, 'test-song.ogg'))
@@ -1425,7 +1425,8 @@ class DeviceMetadataTest(EventLoopTest):
 
     def test_new_item(self):
         # Test that we create metadata entries for new DeviceItems.
-        device_item = self.make_device_item()
+        device_item = testobjects.make_device_item(self.device,
+                                                   'test-song.ogg')
         self.assertDictEquals(self.get_metadata_for_item(), {
             u'file_type': u'audio',
             u'net_lookup_enabled': False,
@@ -1507,7 +1508,7 @@ class DeviceMetadataTest(EventLoopTest):
         self.run_processors_for_file_item(item)
         item_metadata = app.local_metadata_manager.get_metadata(
             item.get_filename())
-        source_info = self.make_item_info(item)
+        source_info = testobjects.make_item_info(item)
         copy_path = os.path.join(self.tempdir, 'copied-file-dest.ogg')
 
         shutil.copyfile(source_path, copy_path)

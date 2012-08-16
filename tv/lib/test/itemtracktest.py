@@ -41,16 +41,19 @@ from miro import models
 from miro.data import itemtrack
 from miro.test import mock
 from miro.test.framework import MiroTestCase, MatchAny
+from miro.test import testobjects
 
 class ItemTrackTestWALMode(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.init_data_package()
         self.force_wal_mode()
-        self.feed_counter = itertools.count()
-        self.tracked_feed, self.tracked_items = self.make_feed_with_items(10)
-        self.other_feed1, self.other_items1 = self.make_feed_with_items(12)
-        self.other_feed2, self.other_items2 = self.make_feed_with_items(8)
+        self.tracked_feed, self.tracked_items = \
+                testobjects.make_feed_with_items(10)
+        self.other_feed1, self.other_items1 = \
+                testobjects.make_feed_with_items(12)
+        self.other_feed2, self.other_items2 = \
+                testobjects.make_feed_with_items(8)
         app.db.finish_transaction()
         self.mock_idle_scheduler = mock.Mock()
         query = itemtrack.ItemTrackerQuery()
@@ -90,16 +93,6 @@ class ItemTrackTestWALMode(MiroTestCase):
             if loop_check.next() > 1000:
                 raise AssertionError("idle callbacks never stopped")
             self.run_tracker_idle()
-
-    def make_feed_with_items(self, item_count):
-        feed_count = self.feed_counter.next()
-        url = u'http://feed%d.com/feed.rss' % feed_count
-        feed = models.Feed(url)
-        items = []
-        for i in xrange(item_count):
-            name = u"feed%d-item%d" % (feed_count, i)
-            items.append(self.make_item(feed, name))
-        return feed, items
 
     def check_no_signals(self):
         """Check that our ItemTracker hasn't emitted any signals."""
@@ -300,7 +293,7 @@ class ItemTrackTestWALMode(MiroTestCase):
     def test_add_remove(self):
         # adding items to our tracked feed should result in the list-changed
         # signal
-        new_item = self.make_item(self.tracked_feed, u'new-item')
+        new_item = testobjects.make_item(self.tracked_feed, u'new-item')
         self.check_list_change_after_message()
         self.check_tracker_items()
         # removed items to our tracked feed should result in the list-changed
@@ -311,7 +304,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.check_tracker_items()
         # adding/remove items from other feeds shouldn't result in any signals
         self.other_items1[0].remove()
-        self.make_item(self.other_feed2, u'new-item2')
+        testobjects.make_item(self.other_feed2, u'new-item2')
         self.check_no_signals()
         self.check_tracker_items()
 

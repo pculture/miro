@@ -16,7 +16,7 @@ from miro import itemsource
 from miro import messages
 from miro import messagehandler
 
-from miro.test import mock
+from miro.test import mock, testobjects
 from miro.test.framework import MiroTestCase, EventLoopTest, uses_httpclient
 
 class MessageOne(messages.BackendMessage):
@@ -421,10 +421,7 @@ class FeedItemTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def make_item(self, url, title=u'default item title'):
-        additional = {'title': title}
-        entry = _build_entry(url, 'video/x-unknown', additional)
-        item_ = Item(FeedParserValues(entry), feed_id=self.feed.id)
-        self.items.append(item_)
+        self.items.append(testobjects.make_item(self.feed, title))
 
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader
@@ -505,15 +502,14 @@ class PlaylistItemTrackTest(TrackerTest):
         self.items = []
         self.feed = Feed(u'dtv:manualFeed')
         self.playlist = SavedPlaylist(u'test playlist')
-        self.make_item(u'http://example.com/')
-        self.make_item(u'http://example.com/2')
+        self.make_item(u'item-1')
+        self.make_item(u'item-2')
         self.runUrgentCalls()
         messages.TrackItems('playlist', self.playlist.id).send_to_backend()
         self.runUrgentCalls()
 
-    def make_item(self, url):
-        entry = _build_entry(url, 'video/x-unknown')
-        item_ = Item(FeedParserValues(entry), feed_id=self.feed.id)
+    def make_item(self, title):
+        item_ = testobjects.make_item(self.feed, title)
         self.items.append(item_)
         self.playlist.add_item(item_)
 
@@ -559,9 +555,9 @@ class PlaylistItemTrackTest(TrackerTest):
         self.check_changed_message(1, changed=[self.items[0]])
 
     def test_add(self):
-        self.make_item(u'http://example.com/3')
-        self.make_item(u'http://example.com/4')
-        self.make_item(u'http://example.com/5')
+        self.make_item(u'item-3')
+        self.make_item(u'item-4')
+        self.make_item(u'item-5')
         self.runUrgentCalls()
         self.assertEquals(len(self.test_handler.messages), 2)
         self.check_changed_message(1, added=self.items[2:])
@@ -611,13 +607,10 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         MiroTestCase.setUp(self)
         self.items = []
         self.feed = Feed(u'dtv:manualFeed')
-        self.make_item(u'http://example.com/')
-        self.make_item(u'http://example.com/2')
-
-    def make_item(self, url):
-        entry = _build_entry(url, 'video/x-unknown')
-        item_ = Item(FeedParserValues(entry), feed_id=self.feed.id)
-        self.items.append(item_)
+        self.items = [
+            testobjects.make_item(self.feed, u'item-1'),
+            testobjects.make_item(self.feed, u'item-2'),
+        ]
 
     def test_failsafe_load(self):
         # Make sure current data is saved

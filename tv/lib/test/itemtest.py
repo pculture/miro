@@ -9,7 +9,7 @@ from miro.feed import Feed
 from miro.item import Item, FileItem, FeedParserValues, on_new_metadata
 from miro.fileobject import FilenameType
 from miro.downloader import RemoteDownloader
-from miro.test import mock
+from miro.test import mock, testobjects
 from miro.test.framework import MiroTestCase, EventLoopTest
 from miro.singleclick import _build_entry
 from miro.plat.utils import unicode_to_filename
@@ -335,9 +335,6 @@ class ItemMetadataTest(MiroTestCase):
         fp.write("fake data")
         fp.close()
 
-    def make_file_item(self):
-        return FileItem(self.path, self.manual_feed.id)
-
     def make_new_file_item(self):
         path, fp = self.make_temp_path_fileobj(".avi")
         fp.write("fake data")
@@ -354,7 +351,7 @@ class ItemMetadataTest(MiroTestCase):
 
     def test_make_deleted(self):
         # Test calling make_deleted on a FileItem
-        file_item = self.make_file_item()
+        file_item = testobjects.make_file_item(self.manual_feed, self.path)
         self.check_path_in_metadata_manager()
 
         file_item.make_deleted()
@@ -365,7 +362,7 @@ class ItemMetadataTest(MiroTestCase):
 
     def test_remove(self):
         # Test calling remove() a file item
-        file_item = self.make_file_item()
+        file_item = testobjects.make_file_item(self.manual_feed, self.path)
         self.check_path_in_metadata_manager()
 
         file_item.remove()

@@ -52,6 +52,7 @@ from miro import metadata
 from miro import schema
 from miro import storedatabase
 from miro.plat import resources
+from miro.test import testobjects
 
 class DeviceManagerTest(MiroTestCase):
     def build_config_file(self, filename, data):
@@ -414,15 +415,6 @@ class DeviceDatabaseTest(MiroTestCase):
         self.device.db_info = db_info
         self.device.metadata_manager = metadata_manager
 
-    def make_device_items(self, *filenames):
-        for filename in filenames:
-            # ensure that filename is the correct type for our platform
-            filename = unicode_to_filename(unicode(filename))
-            with open(os.path.join(self.device.mount, filename), 'w') as f:
-                f.write("FAKE DATA")
-                f.close()
-            item.DeviceItem(self.device, filename)
-
     def test_open(self):
         self.open_database()
         self.assertEquals(self.device.db_info.db.__class__,
@@ -432,7 +424,7 @@ class DeviceDatabaseTest(MiroTestCase):
 
     def test_reload(self):
         self.open_database()
-        self.make_device_items('foo.mp3', 'bar.mp3')
+        testobjects.make_device_items(self.device, 'foo.mp3', 'bar.mp3')
         # close, then reopen the database
         self.device.db_info.db.finish_transaction()
         self.open_database()
