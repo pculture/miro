@@ -45,7 +45,7 @@ cdef extern from "libsoup/soup.h":
     ctypedef void* SoupCookieJar
     ctypedef void* SoupCookie
 
-    SoupCookieJarText* soup_cookie_jar_text_new(char* filename,
+    SoupCookieJar* soup_cookie_jar_text_new(char* filename,
             gboolean read_only)
     void soup_cookie_jar_add_cookie(SoupCookieJar *jar, SoupCookie *cookie)
     SoupCookie* soup_cookie_new(char* name, char* value, char* domain, char* path, int max_age)
@@ -65,7 +65,7 @@ def setup_cookie_storage(object filename):
     session = webkit_get_default_session()
     if not session:
         raise AssertionError("webkit_get_default_session() returned NULL")
-    cookie_jar = soup_cookie_jar_text_new(filename, 0)
+    cookie_jar = <SoupCookieJarText*> soup_cookie_jar_text_new(filename, 0)
     if not cookie_jar:
         raise AssertionError("soup_cookie_jar_text_new() returned NULL")
     soup_session_add_feature (session, <SoupSessionFeature*> cookie_jar)
