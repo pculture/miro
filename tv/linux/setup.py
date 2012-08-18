@@ -207,8 +207,10 @@ def parse_pkg_config(command, components, options_dict=None):
             'libraries': [],
             'extra_compile_args': []
         }
+    
     commandLine = "%s --cflags --libs %s" % (command, components)
     output = get_command_output(commandLine).strip()
+    
     for comp in output.split():
         prefix, rest = comp[:2], comp[2:]
         if prefix == '-I':
@@ -217,6 +219,10 @@ def parse_pkg_config(command, components, options_dict=None):
             options_dict['library_dirs'].append(rest)
         elif prefix == '-l':
             options_dict['libraries'].append(rest)
+            
+            # Silence warning on `GtkItemFactoryCallback` declaration.
+            if rest.startswith('gtk-'):
+                options_dict['extra_compile_args'].append('-Wno-strict-prototypes')
         else:
             options_dict['extra_compile_args'].append(comp)
 
