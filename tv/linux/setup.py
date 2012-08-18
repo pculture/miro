@@ -294,6 +294,9 @@ infolist_options = parse_pkg_config('pkg-config',
 infolist_options['include_dirs'].append(infolist_dir)
 infolist_options['include_dirs'].append(os.path.join(infolist_dir, 'gtk'))
 
+# Silence uninitialized warning on `__pyx_exc_lineno`.
+infolist_options['extra_compile_args'].append('-Wno-uninitialized')
+
 infolist_ext = \
     Extension("miro.infolist",
         [
