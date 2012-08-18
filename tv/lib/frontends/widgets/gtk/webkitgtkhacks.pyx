@@ -78,7 +78,7 @@ def add_cookie(object name, object value, object domain, object path, object age
     session = webkit_get_default_session()
     if not session:
         raise AssertionError("webkit_get_default_session() returned NULL")
-    cookie_jar = soup_session_get_feature(session, soup_cookie_jar_get_type())
+    cookie_jar = <SoupCookieJar*> soup_session_get_feature(session, soup_cookie_jar_get_type())
     if not cookie_jar:
         raise AssertionError("soup_session_get_feature() returned NULL")
     cookie = soup_cookie_new(name, value, domain, path, age)
