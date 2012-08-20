@@ -1376,6 +1376,7 @@ class DeviceMetadataTest(EventLoopTest):
         metadata_manager = devices.make_metadata_manager(
             self.tempdir, db_info, device_id)
         self.device = messages.DeviceInfo(device_id, device_info, mount,
+                                          devices.sqlite_database_path(mount),
                                           device_info, db_info,
                                           metadata_manager, 1000, 0, False)
         # copy a file to our device

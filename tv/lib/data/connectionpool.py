@@ -53,7 +53,7 @@ class ConnectionPool(object):
         self.max_connections = max_connections
         self.all_connections = set()
         self.free_connections = []
-        self.wal_mode = self._check_wal_mode()
+        self._check_wal_mode()
 
     def _check_wal_mode(self):
         """Try to set journal_mode=wall and return if it was successful
@@ -61,6 +61,7 @@ class ConnectionPool(object):
         connection = self.get_connection()
         cursor = connection.execute("PRAGMA journal_mode=wal");
         self.wal_mode = cursor.fetchone()[0] == u'wal'
+        self.release_connection(connection)
 
     def _make_new_connection(self):
         # TODO: should have error handling here, but what should we do?

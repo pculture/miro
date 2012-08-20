@@ -39,6 +39,7 @@ from miro import item
 from miro import messages
 from miro import models
 from miro.data import itemtrack
+from miro.data.item import fetch_item_infos
 from miro.test import mock
 from miro.test.framework import MiroTestCase, MatchAny
 from miro.test import testobjects
@@ -229,7 +230,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.check_tracker_items()
 
     def process_items_changed_message(self):
-        """Simulate the eventloop finished and sending the ItemChanges
+        """Simulate the eventloop finishing and sending the ItemChanges
         message.
 
         Also, intercept that message and pass it to our item tracker
@@ -481,11 +482,10 @@ class ItemTrackTestWALMode(MiroTestCase):
         query.add_condition('remote_downloader.state', '=', 'downloading')
         query.set_order_by(['remote_downloader.rate'])
         self.tracker.change_query(query)
-        # Need to manually fetch the items that we :bn
+        # Need to manually fetch the items to compare to
         with app.connection_pool.context() as connection:
             id_list = [i.id for i in downloads]
-            fetcher = self.tracker.make_item_fetcher(connection, id_list)
-            correct_items = fetcher.fetch_items(id_list)
+            correct_items = fetch_item_infos(connection, id_list)
         self.check_tracker_items(correct_items)
 
     def test_change_while_loading_data(self):
@@ -515,3 +515,70 @@ class ItemTrackTestNonWALMode(ItemTrackTestWALMode):
     def force_wal_mode(self):
         app.connection_pool.wal_mode = False
 
+class DeviceItemTrackTestWALMode(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.device = testobjects.make_mock_device()
+        self.idle_scheduler = mock.Mock()
+        # simulate the backend sending the TabsChanged method with the device
+        # that we want to track
+        itemtrack.DeviceItemTracker.on_devices_changed(
+            [testobjects.make_device_info(self.device)], [], [])
+        self.force_wal_mode()
+        device_items = testobjects.make_device_items(self.device, 'audio1.mp3',
+                                                     'audio2.mp3', 'video1.avi')
+        self.audio1, self.audio2, self.video1 = device_items
+        self.device.db_info.db.finish_transaction()
+        query = itemtrack.DeviceItemTracker.make_query()
+        query.add_condition('file_type', '=', u'audio')
+        query.set_order_by(['filename'])
+        self.tracker = itemtrack.DeviceItemTracker(self.device,
+                                                   self.idle_scheduler,
+                                                   query)
+        self.mock_message_handler = mock.Mock()
+        messages.FrontendMessage.install_handler(self.mock_message_handler)
+
+    def process_device_items_changed_message(self):
+        """Simulate the eventloop finishing and sending the DeviceItemChanges
+        message.
+
+        Also, intercept that message and pass it to our item tracker
+        """
+        eventloop._eventloop.emit('event-finished', True)
+        mock_handle = self.mock_message_handler.handle
+        self.assertEquals(mock_handle.call_count, 1)
+        message = mock_handle.call_args[0][0]
+        self.assertEquals(type(message), messages.DeviceItemChanges)
+        self.assertEquals(message.device_id, self.device.id)
+        self.tracker.on_item_changes(message)
+        mock_handle.reset_mock()
+
+    def force_wal_mode(self):
+        """Force WAL mode to be a certain value.
+
+        By default we set wal_mode to be True.  DeviceItemTrackTestNoWALMode
+        overrides this and sets it to False.
+        """
+        connection_pools = itemtrack.DeviceItemTracker._connection_pool_map
+        connection_pools.get_pool(self.device.id).wal_mode = True
+
+    def check_list(self, *correct_items):
+        tracker_items = self.tracker.get_items()
+        self.assertEquals([i.id for i in tracker_items],
+                          [i.id for i in correct_items])
+
+    def test_list(self):
+        self.check_list(self.audio1, self.audio2)
+
+    def test_changes(self):
+        self.audio2.update_from_metadata({u'file_type': u'video'})
+        self.audio2.signal_change()
+        self.video1.update_from_metadata({u'file_type': u'audio'})
+        self.video1.signal_change()
+        self.process_device_items_changed_message()
+        self.check_list(self.audio1, self.video1)
+
+class DeviceItemTrackTestNoWALMode(DeviceItemTrackTestWALMode):
+    def force_wal_mode(self):
+        connection_pools = itemtrack.DeviceItemTracker._connection_pool_map
+        connection_pools.get_pool(self.device.id).wal_mode = False

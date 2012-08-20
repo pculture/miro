@@ -70,7 +70,8 @@ class SelectColumn(object):
 
     # _schema_map maps (table, column) tuples to their SchemaItem objects
     _schema_map = {}
-    for object_schema in schema.object_schemas:
+    for object_schema in (schema.object_schemas +
+                          schema.device_object_schemas):
         for column_name, schema_item in object_schema.fields:
             _schema_map[object_schema.table_name, column_name] = schema_item
 
@@ -561,3 +562,69 @@ def fetch_item_infos(connection, item_ids):
     sql = ("SELECT %s FROM item %s WHERE item.id IN (%s)" %
            (columns, select_info.join_sql(), item_ids))
     return [ItemInfo(*row) for row in connection.execute(sql)]
+
+class DeviceItemSelectInfo(ItemSelectInfo):
+    """ItemSelectInfo for DeviceItems."""
+
+    # name of the main item table
+    table_name = 'device_item'
+    # SelectColumn objects for each attribute of ItemInfo
+    select_columns = [
+        SelectColumn('device_item', 'id'),
+        SelectColumn('device_item', 'title'),
+        SelectColumn('device_item', 'creation_time'),
+        SelectColumn('device_item', 'watched_time'),
+        SelectColumn('device_item', 'last_watched'),
+        SelectColumn('device_item', 'subtitle_encoding'),
+        SelectColumn('device_item', 'release_date'),
+        SelectColumn('device_item', 'parent_title'),
+        SelectColumn('device_item', 'feed_url'),
+        SelectColumn('device_item', 'license'),
+        SelectColumn('device_item', 'rss_id'),
+        SelectColumn('device_item', 'entry_title'),
+        SelectColumn('device_item', 'torrent_title'),
+        SelectColumn('device_item', 'entry_description'),
+        SelectColumn('device_item', 'permalink'),
+        SelectColumn('device_item', 'payment_link'),
+        SelectColumn('device_item', 'comments_link'),
+        SelectColumn('device_item', 'url'),
+        SelectColumn('device_item', 'size'),
+        SelectColumn('device_item', 'enclosure_size'),
+        SelectColumn('device_item', 'enclosure_type'),
+        SelectColumn('device_item', 'enclosure_format'),
+        SelectColumn('device_item', 'filename'),
+        SelectColumn('device_item', 'resume_time'),
+        SelectColumn('device_item', 'play_count'),
+        SelectColumn('device_item', 'skip_count'),
+        SelectColumn('device_item', 'auto_sync'),
+        SelectColumn('device_item', 'screenshot'),
+        SelectColumn('device_item', 'duration'),
+        SelectColumn('device_item', 'cover_art'),
+        SelectColumn('device_item', 'description'),
+        SelectColumn('device_item', 'album'),
+        SelectColumn('device_item', 'album_artist'),
+        SelectColumn('device_item', 'artist'),
+        SelectColumn('device_item', 'track'),
+        SelectColumn('device_item', 'album_tracks'),
+        SelectColumn('device_item', 'year'),
+        SelectColumn('device_item', 'genre'),
+        SelectColumn('device_item', 'rating'),
+        SelectColumn('device_item', 'file_type'),
+        SelectColumn('device_item', 'has_drm'),
+        SelectColumn('device_item', 'show'),
+        SelectColumn('device_item', 'episode_id'),
+        SelectColumn('device_item', 'episode_number'),
+        SelectColumn('device_item', 'season_number'),
+        SelectColumn('device_item', 'kind'),
+        SelectColumn('device_item', 'net_lookup_enabled'),
+        SelectColumn('device_item', 'metadata_title'),
+    ]
+    # how to join the main table to other tables
+    join_info = {
+    }
+
+
+class DeviceItemInfo(ItemInfo):
+    """ItemInfo for devices """
+
+    select_info = DeviceItemSelectInfo()

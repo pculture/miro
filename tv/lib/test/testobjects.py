@@ -9,11 +9,15 @@ import random
 import os
 
 from miro import app
+from miro import database
+from miro import devices
 from miro import item
 from miro import models
+from miro import messages
 from miro import util
 from miro.data.item import fetch_item_infos
 from miro.plat.utils import filename_to_unicode, unicode_to_filename
+from miro.test import mock
 
 feed_counter = itertools.count()
 
@@ -51,7 +55,7 @@ def make_item(feed, title):
 
 def make_file_item(feed, path=None):
     if path is None:
-        path = current_test_case.make_temp_path()
+        path = current_test.make_temp_path()
     ensure_file_exists(path)
     return models.FileItem(path, feed.id)
 
@@ -69,6 +73,41 @@ def ensure_file_exists(path):
             f.write("test-data")
             f.close()
 
+def make_mock_device(no_database=False):
+    device = mock.Mock()
+    device.mount = current_test.make_temp_dir_path()
+    device.id = 123
+    device.name = 'Device'
+    device.size = 1024000
+    device.remaining = 512000
+    device.read_only = False
+    os.makedirs(os.path.join(device.mount, '.miro'))
+    os.makedirs(os.path.join(device.mount, 'cover-art'))
+    if not no_database:
+        setup_mock_device_database(device)
+    return device
+
+def make_device_info(device):
+    return messages.DeviceInfo(device.id, device, device.mount,
+                               devices.sqlite_database_path(device.mount),
+                               device.database,
+                               device.db_info,
+                               device.metadata_manager,
+                               device.size, device.remaining,
+                               device.read_only)
+
+def setup_mock_device_database(device):
+    device.database = devices.DeviceDatabase()
+    sqlite_db = devices.load_sqlite_database(device.mount,
+                                             device.size)
+    db_info = database.DBInfo(sqlite_db)
+    metadata_manager = devices.make_metadata_manager(device.mount,
+                                                     db_info,
+                                                     device.id)
+    device.db_info = db_info
+    device.metadata_manager = metadata_manager
+    return device
+
 def make_device_items(device, *filenames):
     return [make_device_item(device, filename) for filename in filenames]
 
@@ -77,4 +116,3 @@ def make_device_item(device, filename):
     filename = unicode_to_filename(unicode(filename))
     ensure_file_exists(os.path.join(device.mount, filename))
     return item.DeviceItem(device, filename)
-

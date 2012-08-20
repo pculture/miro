@@ -1432,6 +1432,23 @@ class ItemChanges(FrontendMessage):
         self.changed_columns = changed_columns
         self.dlstats_changed = dlstats_changed
 
+class DeviceItemChanges(FrontendMessage):
+    """Sent to the frontend when items change on a device
+
+    :attribute device_id: id for the device
+    :attribute added: set ids for added items
+    :attribute changed: set ids for changed items
+    :attribute removed: set ids for removed items
+    :attribute changed_columns: set columns that were changed (the union of
+    changes for all items)
+    """
+    def __init__(self, device_id, added, changed, removed, changed_columns):
+        self.device_id = device_id
+        self.added = added
+        self.changed = changed
+        self.removed = removed
+        self.changed_columns = changed_columns
+
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed
 
@@ -1646,10 +1663,11 @@ class SharingEject(BackendMessage):
 class DeviceInfo(object):
     """Tracks the state of an attached device.
     """
-    def __init__(self, id_, device_info, mount, database, db_info,
+    def __init__(self, id_, device_info, mount, sqlite_path, database, db_info,
                  metadata_manager, size, remaining, read_only):
         self.id = id_
         self.mount = mount
+        self.sqlite_path = sqlite_path
         self.database = database
         self.db_info = db_info
         self.metadata_manager = metadata_manager

@@ -453,6 +453,17 @@ class ItemBase(DDBObject):
         self._bulk_update_db_values(metadata_dict)
         self.calc_title()
 
+    def after_setup_new(self):
+        self.__class__.change_tracker.on_item_added(self)
+
+    def signal_change(self, needs_save=True, can_change_views=True):
+        self.__class__.change_tracker.on_item_changed(self)
+        DDBObject.signal_change(self, needs_save, can_change_views)
+
+    def remove(self):
+        DDBObject.remove(self)
+        self.__class__.change_tracker.on_item_removed(self)
+
 class Item(ItemBase, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
@@ -528,12 +539,11 @@ class Item(ItemBase, iconcache.IconCacheOwnerMixin):
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
-        Item.change_tracker.on_item_added(self)
+        ItemBase.after_setup_new(self)
 
     def signal_change(self, needs_save=True, can_change_views=True):
         app.item_info_cache.item_changed(self)
-        Item.change_tracker.on_item_changed(self)
-        DDBObject.signal_change(self, needs_save, can_change_views)
+        ItemBase.signal_change(self, needs_save, can_change_views)
 
     def download_stats_changed(self):
         Item.change_tracker.dlstats_changed = True
@@ -2082,11 +2092,10 @@ class Item(ItemBase, iconcache.IconCacheOwnerMixin):
             for item in self.get_children():
                 item.remove()
         self._remove_from_playlists()
-        DDBObject.remove(self)
+        ItemBase.remove(self)
         # need to call this after DDBObject.remove(), so that the item info is
         # there for ItemInfoFetcher to see.
         app.item_info_cache.item_removed(self)
-        Item.change_tracker.on_item_removed(self)
 
     def setup_links(self):
         self.split_item()
@@ -2471,6 +2480,49 @@ class DeletedFileChecker(object):
             if self.items_to_check:
                 self._ensure_run_checks_scheduled()
 
+class DeviceItemChangeTracker(object):
+    """Track changes to DeviceItems and send the DeviceItemsChanged message.
+    """
+    def __init__(self):
+        self.reset()
+        eventloop.connect_after('event-finished', self.after_event_finished)
+
+    def reset(self):
+        self.added = collections.defaultdict(set)
+        self.changed = collections.defaultdict(set)
+        self.removed = collections.defaultdict(set)
+        self.changed_columns = collections.defaultdict(set)
+        self.changed_devices = set()
+
+    def after_event_finished(self, event_loop, success):
+        self.send_changes()
+
+    def send_changes(self):
+        for device_id in self.changed_devices:
+            m = messages.DeviceItemChanges(device_id,
+                                           self.added[device_id],
+                                           self.changed[device_id],
+                                           self.removed[device_id],
+                                           self.changed_columns[device_id])
+            m.send_to_frontend()
+        self.reset()
+
+    def on_item_added(self, item):
+        device_id = item.device_id
+        self.added[device_id].add(item.id)
+        self.changed_devices.add(device_id)
+
+    def on_item_changed(self, item):
+        device_id = item.device_id
+        self.changed[device_id].add(item.id)
+        self.changed_columns[device_id].update(item.changed_attributes)
+        self.changed_devices.add(device_id)
+
+    def on_item_removed(self, item):
+        device_id = item.device_id
+        self.removed[device_id].add(item.id)
+        self.changed_devices.add(device_id)
+
 class DeviceItem(ItemBase):
     """
     An item which lives on a device.  There's a separate, per-device sqlite
@@ -2494,6 +2546,7 @@ class DeviceItem(ItemBase):
         :param sync_info: ItemInfo that this was synced from
         :param auto_sync: Was this item auto-synced?
         """
+        self.device_id = device.id
         self.init_metadata_attributes()
         self.filename = filename
         self.auto_sync = auto_sync
@@ -2688,6 +2741,7 @@ def setup_metadata_manager(cover_art_dir=None, screenshot_dir=None):
 
 def setup_change_tracker():
     Item.change_tracker = ItemChangeTracker()
+    DeviceItem.change_tracker = DeviceItemChangeTracker()
 
 def on_new_metadata(metadata_manager, new_metadata):
     # Get all items that have changed using one query.  This is much faster

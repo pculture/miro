@@ -33,6 +33,7 @@ from miro import storedatabase
 from time import sleep
 from miro import models
 from miro import workerprocess
+from miro.data import itemtrack
 from miro.fileobject import FilenameType
 
 from miro.test import mock
@@ -280,6 +281,7 @@ class MiroTestCase(unittest.TestCase):
         models.initialize()
         app.in_unit_tests = True
         models.Item._path_count_tracker.reset()
+        itemtrack.DeviceItemTracker._connection_pool_map.reset()
         testobjects.test_started(self)
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
@@ -353,6 +355,7 @@ class MiroTestCase(unittest.TestCase):
         signals.system.disconnect_all()
         util.chatter = True
         self.stop_http_server()
+        itemtrack.DeviceItemTracker._connection_pool_map.reset()
 
         # unload extensions
         self.unload_extensions()

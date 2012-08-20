@@ -288,22 +288,7 @@ class ScanDeviceForFilesTest(EventLoopTest):
         EventLoopTest.tearDown(self)
 
     def setup_device(self):
-        self.device = mock.Mock()
-        self.device.database = devices.DeviceDatabase()
-        self.device.mount = self.make_temp_dir_path()
-        self.device.id = 123
-        self.device.name = 'Device'
-        self.device.size = 1024000
-        self.device.read_only = False
-        os.makedirs(os.path.join(self.device.mount, '.miro'))
-        sqlite_db = devices.load_sqlite_database(self.device.mount,
-                                                 self.device.size)
-        db_info = database.DBInfo(sqlite_db)
-        metadata_manager = devices.make_metadata_manager(self.device.mount,
-                                                         db_info,
-                                                         self.device.id)
-        self.device.db_info = db_info
-        self.device.metadata_manager = metadata_manager
+        self.device = testobjects.make_mock_device()
 
     def setup_fake_device_manager(self):
         app.device_manager = mock.Mock()
@@ -397,23 +382,11 @@ class DeviceDatabaseTest(MiroTestCase):
     "Test sqlite databases on devices."""
     def setUp(self):
         MiroTestCase.setUp(self)
-        self.device = mock.Mock()
-        self.device.database = devices.DeviceDatabase()
-        self.device.mount = self.tempdir
-        self.device.id = 123
-        self.device.name = 'Device'
-        self.device.size = 1024000
-        os.makedirs(os.path.join(self.device.mount, '.miro'))
+        self.device = testobjects.make_mock_device(no_database=True)
 
     def open_database(self):
-        sqlite_db = devices.load_sqlite_database(self.device.mount,
-                                                 self.device.size)
-        db_info = database.DBInfo(sqlite_db)
-        metadata_manager = devices.make_metadata_manager(self.device.mount,
-                                                         db_info,
-                                                         self.device.id)
-        self.device.db_info = db_info
-        self.device.metadata_manager = metadata_manager
+        testobjects.setup_mock_device_database(self.device)
+        return
 
     def test_open(self):
         self.open_database()
@@ -464,13 +437,7 @@ class DeviceUpgradeTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         # setup a device object
-        self.device = mock.Mock()
-        self.device.mount = self.make_temp_dir_path()
-        self.device.remaining = 0
-        os.makedirs(os.path.join(self.device.mount, '.miro'))
-        self.device.id = 123
-        self.cover_art_dir = os.path.join(self.device.mount, 'cover-art')
-        os.makedirs(self.cover_art_dir)
+        self.device = testobjects.make_mock_device(no_database=True)
 
     def setup_json_db(self, path):
         # setup a device database

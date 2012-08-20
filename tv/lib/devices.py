@@ -513,8 +513,9 @@ class DeviceManager(object):
             read_only = False
 
         info = self.connected[id_] = messages.DeviceInfo(
-            id_, info, mount, db, db_info, metadata_manager,
-            kwargs.get('size'), kwargs.get('remaining'), read_only)
+            id_, info, mount, sqlite_database_path(mount), db, db_info,
+            metadata_manager, kwargs.get('size'), kwargs.get('remaining'),
+            read_only)
 
         return info
 
@@ -1318,6 +1319,9 @@ def load_database(mount, countdown=0):
     ddb = DeviceDatabase(db)
     ddb.connect('changed', DatabaseWriteManager(mount))
     return ddb
+
+def sqlite_database_path(mount):
+    return os.path.join(mount, '.miro', 'sqlite')
 
 def load_sqlite_database(mount, device_size, countdown=0, is_hidden=False):
     """

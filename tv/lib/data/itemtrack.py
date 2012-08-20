@@ -39,6 +39,7 @@ from miro import app
 from miro import schema
 from miro import signals
 from miro import util
+from miro.data import connectionpool
 from miro.data import item
 
 ItemTrackerCondition = util.namedtuple(
@@ -740,3 +741,60 @@ WHERE $table_name.id in ($id_list)""")
                (self.table_name(),
                 ','.join(str(id_) for id_ in self.id_list)))
         return self.connection.execute(sql).fetchone()[0] == 1
+
+class DeviceConnectionPoolMap(object):
+    """Used by DeviceItemTracker to manage a ConnectionPool for each connected
+    device.
+    """
+    def __init__(self):
+        self.pool_map = {}
+
+    def reset(self):
+        self.pool_map = {}
+
+    def get_pool(self, device_id):
+        return self.pool_map[device_id]
+
+    def on_devices_changed(self, added, changed, removed):
+        for device_info in added:
+            if device_info.id in self.pool_map:
+                logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
+                             "%s already in pool_map" % device_info.id)
+                continue
+            self.pool_map[device_info.id] = \
+                    self.make_new_connection_pool(device_info)
+        for device_id in removed:
+            try:
+                del self.pool_map[device_id]
+            except KeyError:
+                logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
+                             "%s already removed from pool_map" % device_id)
+
+    def make_new_connection_pool(self, device_info):
+        # We should only make 1 ConnectionPool per device tab, so limited the
+        # connections at 1 seems fine.
+        return connectionpool.ConnectionPool(device_info.sqlite_path,
+                                             min_connections=0,
+                                             max_connections=1)
+
+class DeviceItemTracker(ItemTracker):
+    """ItemTracker to use with devices."""
+
+    _connection_pool_map = DeviceConnectionPoolMap()
+    item_info_class = item.DeviceItemInfo
+
+    def __init__(self, device, idle_scheduler, query):
+        self.device = device
+        ItemTracker.__init__(self, idle_scheduler, query)
+
+    @classmethod
+    def on_devices_changed(cls, added, changed, removed):
+        """Update the connection pools based on device tabs changing
+
+        Call this when we get the TabsChanged message with the type "connect".
+        This means that device tabs have either been added or removed.
+        """
+        cls._connection_pool_map.on_devices_changed(added, changed, removed)
+
+    def connection_pool(self):
+        return self._connection_pool_map.get_pool(self.device.id)
