@@ -68,10 +68,18 @@ ItemTrackerOrderBy = util.namedtuple(
 
 class ItemTrackerQuery(object):
     """Define the query used to get items for ItemTracker."""
-    def __init__(self):
+
+    def __init__(self, select_info):
         self.conditions = []
         self.match_string = None
+        self.select_info = select_info
         self.order_by = [ItemTrackerOrderBy('item', 'id', None, False)]
+
+    def join_sql(self, table):
+        return self.select_info.join_sql(table, join_type='JOIN')
+
+    def table_name(self):
+        return self.select_info.table_name
 
     def _parse_column(self, column):
         """Parse a column specification.
@@ -80,9 +88,12 @@ class ItemTrackerQuery(object):
         specified, we will use that.  If not, we will default to item.
         """
         if '.' in column:
-            return column.split('.', 1)
+            (table, column) = column.split('.', 1)
+            if not self.select_info.can_join_to(table):
+                raise ValueError("Can't join to %s" % table)
+            return (table, column)
         else:
-            return ('item', column)
+            return (self.table_name(), column)
 
     def add_condition(self, column, operator, value):
         """Add a condition to the WHERE clause
@@ -187,7 +198,8 @@ class ItemTrackerQuery(object):
         """
         sql_parts = []
         arg_list = []
-        sql_parts.append("SELECT item.id FROM item")
+        sql_parts.append("SELECT %s.id FROM %s" %
+                         (self.table_name(), self.table_name()))
         self._add_joins(sql_parts, arg_list)
         self._add_conditions(sql_parts, arg_list)
         self._add_order_by(sql_parts, arg_list)
@@ -204,14 +216,11 @@ class ItemTrackerQuery(object):
         return set(all_tables)
 
     def _add_joins(self, sql_parts, arg_list):
-        tables = self._calc_tables()
-        if 'remote_downloader' in tables:
-            sql_parts.append("JOIN remote_downloader "
-                             "ON remote_downloader.id=item.downloader_id")
-        if 'feed' in tables:
-            sql_parts.append("JOIN feed ON feed.id=item.feed_id")
+        for table in self._calc_tables():
+            if table != self.select_info.table_name:
+                sql_parts.append(self.join_sql(table))
         if self.match_string:
-            sql_parts.append("JOIN item_fts ON item.id=item_fts.docid")
+            sql_parts.append(self.join_sql('item_fts'))
 
     def _add_conditions(self, sql_parts, arg_list):
         if not self.conditions:
@@ -242,7 +251,7 @@ class ItemTrackerQuery(object):
         return " ".join(parts)
 
     def copy(self):
-        retval = ItemTrackerQuery()
+        retval = ItemTrackerQuery(self.select_info)
         retval.conditions = self.conditions[:]
         retval.order_by = self.order_by[:]
         retval.match_string = self.match_string
@@ -272,6 +281,9 @@ class ItemTracker(signals.SignalEmitter):
     # how many rows we fetch at one time in _ensure_row_loaded()
     FETCH_ROW_CHUNK_SIZE = 25
 
+    #: ItemInfo or a subclass to use to create Items
+    item_info_class = item.ItemInfo
+
     def __init__(self, idle_scheduler, query):
         """Create an ItemTracker
 
@@ -299,6 +311,27 @@ class ItemTracker(signals.SignalEmitter):
         self._destroy_item_fetcher()
         self.id_list = self.id_to_index = self.row_data = None
 
+    @classmethod
+    def make_query(cls):
+        return ItemTrackerQuery(cls.item_info_class.select_info)
+
+    def connection_pool(self):
+        return app.connection_pool
+
+    def make_item_fetcher(self, connection, id_list):
+        """Make an ItemFetcher to use.
+
+        :param connection: sqlite Connection to use.  We will return data from
+        this connection without commiting any pending read transaction.
+        :param id_list: list of ids that we will have to fetch.
+        """
+        if self.connection_pool().wal_mode:
+            klass = ItemFetcherWAL
+        else:
+            klass = ItemFetcherNoWAL
+        return klass(connection, self.connection_pool(), id_list,
+                     self.item_info_class)
+
     def _destroy_item_fetcher(self):
         if self.item_fetcher:
             self.item_fetcher.destroy()
@@ -313,11 +346,11 @@ class ItemTracker(signals.SignalEmitter):
     def _fetch_id_list(self):
         """Fetch the ids for this list.  """
         self._destroy_item_fetcher()
-        connection = app.connection_pool.get_connection()
+        connection = self.connection_pool().get_connection()
         self.id_list = self.query.select_ids(connection)
         self.id_to_index = dict((id_, i) for i, id_ in enumerate(self.id_list))
         self.row_data = {}
-        self.item_fetcher = ItemFetcher.create(connection, self.id_list)
+        self.item_fetcher = self.make_item_fetcher(connection, self.id_list)
 
     def _schedule_idle_work(self):
         """Schedule do_idle_work to be called some time in the
@@ -514,24 +547,20 @@ class ItemFetcher(object):
     this without having to load all the ItemInfos in the list.
     """
 
-    @staticmethod
-    def create(connection, id_list):
-        """Factory function to create an ItemFetcher.
+    def __init__(self, connection, connection_pool, id_list, item_info_class):
+        self.connection = connection
+        self.connection_pool = connection_pool
+        self.id_list = id_list
+        self.item_info_class = item_info_class
 
-        This method checks if we are in wal mode and either returns
-        ItemFetcherWAL or ItemFetcherNoWAL
+    def select_columns(self):
+        return self.item_info_class.select_info.select_columns
 
-        :param connection: sqlite Connection to use.  We will return data from
-        this connection without commiting any pending read transaction.
-        :param id_list: list of ids that we will have to fetch.
-        """
-        if app.connection_pool.wal_mode:
-            return ItemFetcherWAL(connection, id_list)
-        else:
-            return ItemFetcherNoWAL(connection, id_list)
+    def join_sql(self):
+        return self.item_info_class.select_info.join_sql()
 
-    def __init__(self, connection, id_list):
-        pass
+    def table_name(self):
+        return self.item_info_class.select_info.table_name
 
     def destroy(self):
         """Called when the ItemFetcher is no longer needed.  Release any
@@ -581,14 +610,14 @@ class ItemFetcher(object):
         raise NotImplementedError()
 
 class ItemFetcherWAL(ItemFetcher):
-    def __init__(self, connection, id_list):
+    def __init__(self, connection, connection_pool, id_list, item_info_class):
+        ItemFetcher.__init__(self, connection, connection_pool, id_list,
+                             item_info_class)
         self._prepare_sql()
-        self.connection = connection
-        self.id_list = id_list
 
     def destroy(self):
         if self.connection is not None:
-            app.connection_pool.release_connection(self.connection)
+            self.connection_pool.release_connection(self.connection)
             self.connection = None
 
     def done_fetching(self):
@@ -601,16 +630,18 @@ class ItemFetcherWAL(ItemFetcher):
         The statement will be ready to go, except the WHERE clause will not be
         present, since we can't know that in advance.
         """
-        columns = ['%s.%s' % (c.table, c.column) for c in item.column_info()]
-        self._sql = ("SELECT %s FROM item %s" %
-                     (', '.join(columns), item.join_sql()))
+        columns = ['%s.%s' % (c.table, c.column)
+                   for c in self.select_columns()]
+        self._sql = ("SELECT %s FROM %s %s" %
+                     (', '.join(columns), self.table_name(), self.join_sql()))
 
     def fetch_items(self, id_list):
         """Create Item objects."""
-        where = "WHERE item.id in (%s)" % ', '.join(str(i) for i in id_list)
+        where = ("WHERE %s.id in (%s)" %
+                 (self.table_name(), ', '.join(str(i) for i in id_list)))
         sql = ' '.join((self._sql, where))
         cursor = self.connection.execute(sql)
-        return [item.ItemInfo(*row) for row in cursor]
+        return [self.item_info_class(*row) for row in cursor]
 
     def refresh_items(self, changed_ids):
         # We ignore changed_ids and just start a new transaction which will
@@ -618,85 +649,94 @@ class ItemFetcherWAL(ItemFetcher):
         self.connection.commit()
 
     def select_playable_ids(self):
-        sql = ("SELECT id FROM item "
+        sql = ("SELECT id FROM %s "
                "WHERE filename IS NOT NULL AND "
                "file_type != 'other' AND "
-               "id in (%s)" % ','.join(str(id_) for id_ in self.id_list))
+               "id in (%s)" % 
+               (self.table_name, ','.join(str(id_) for id_ in self.id_list)))
         return [row[0] for row in self.connection.execute(sql)]
 
     def select_has_playables(self):
-        sql = ("SELECT EXISTS (SELECT 1 FROM item "
+        sql = ("SELECT EXISTS (SELECT 1 FROM %s "
                "WHERE filename IS NOT NULL AND "
                "file_type != 'other' AND "
-               "id in (%s))" % ','.join(str(id_) for id_ in self.id_list))
+               "id in (%s))" %
+               (self.table_name(),
+                ','.join(str(id_) for id_ in self.id_list)))
         return self.connection.execute(sql).fetchone()[0] == 1
 
 class ItemFetcherNoWAL(ItemFetcher):
-    def __init__(self, connection, id_list):
-        self.connection = connection
+    def __init__(self, connection, connection_pool, id_list, item_info_class):
+        ItemFetcher.__init__(self, connection, connection_pool, id_list,
+                             item_info_class)
         self._make_temp_table()
         self._select_into_temp_table(id_list)
-        self.id_list = id_list
 
     def _make_temp_table(self):
         randstr = ''.join(random.choice(string.letters) for i in xrange(10))
-        self.table_name = 'itemtmp_' + randstr
+        self.temp_table_name = 'itemtmp_' + randstr
         col_specs = ["%s %s" % (ci.attr_name, ci.sqlite_type())
-                     for ci in item.column_info()]
+                     for ci in self.select_columns()]
         create_sql = ("CREATE TABLE temp.%s(%s)" %
-               (self.table_name, ', '.join(col_specs)))
+               (self.temp_table_name, ', '.join(col_specs)))
         index_sql = ("CREATE UNIQUE INDEX temp.%s_id ON %s (id)" %
-                     (self.table_name, self.table_name))
+                     (self.temp_table_name, self.temp_table_name))
         self.connection.execute(create_sql)
         self.connection.execute(index_sql)
 
     def _select_into_temp_table(self, id_list):
         template = string.Template("""\
-INSERT OR REPLACE INTO $table_name($dest_columns)
+INSERT OR REPLACE INTO $temp_table_name($dest_columns)
 SELECT $source_columns
-FROM item
+FROM $table_name
 $join_sql
-WHERE item.id in ($id_list)""")
+WHERE $table_name.id in ($id_list)""")
         d = {
-            'table_name': self.table_name,
-            'join_sql': item.join_sql(),
+            'temp_table_name': self.temp_table_name,
+            'table_name': self.table_name(),
+            'join_sql': self.join_sql(),
             'id_list': ', '.join(str(id_) for id_ in id_list),
             'dest_columns': ','.join(ci.attr_name
-                                     for ci in item.column_info()),
+                                     for ci in self.select_columns()),
             'source_columns': ','.join('%s.%s' % (ci.table, ci.column)
-                                       for ci in item.column_info()),
+                                       for ci in self.select_columns()),
         }
         sql = template.substitute(d)
         self.connection.execute(sql)
 
     def destroy(self):
-        self.connection.execute("DROP TABLE %s" % self.table_name)
+        self.connection.execute("DROP TABLE %s" % self.temp_table_name)
         self.connection.commit()
-        app.connection_pool.release_connection(self.connection)
-        self.connection = self.table_name = None
+        self.connection_pool.release_connection(self.connection)
+        self.connection = self.temp_table_name = None
 
     def fetch_items(self, id_list):
         """Create Item objects."""
         # We can use SELECT * here because we know that we defined the columns
-        # in the same order as column_info() returned them.
+        # in the same order as select_columns() returned them.
         id_list_str = ', '.join(str(i) for i in id_list)
-        sql = "SELECT * FROM %s WHERE id IN (%s)" % (self.table_name,
+        sql = "SELECT * FROM %s WHERE id IN (%s)" % (self.temp_table_name,
                                                      id_list_str)
-        return [item.ItemInfo(*row) for row in self.connection.execute(sql)]
+        return [self.item_info_class(*row)
+                for row in self.connection.execute(sql)]
 
     def refresh_items(self, changed_ids):
         self._select_into_temp_table(changed_ids)
 
     def select_playable_ids(self):
-        sql = ("SELECT id FROM item "
+        sql = ("SELECT id FROM %s "
                "WHERE filename IS NOT NULL AND "
                "file_type != 'other' AND "
-               "id in (%s)" % ','.join(str(id_) for id_ in self.id_list))
+               "id in (%s)" %
+               (self.table_name(),
+                ','.join(str(id_) for id_ in self.id_list)))
         return [row[0] for row in self.connection.execute(sql)]
 
     def select_has_playables(self):
-        sql = ("SELECT EXISTS (SELECT 1 FROM item "
+        sql = ("SELECT EXISTS (SELECT 1 FROM %s "
                "WHERE filename IS NOT NULL AND "
                "file_type != 'other' AND "
-               "id in (%s))" % ','.join(str(id_) for id_ in self.id_list))
+               "id in (%s))" %
+               (self.table_name(),
+                ','.join(str(id_) for id_ in self.id_list)))
         return self.connection.execute(sql).fetchone()[0] == 1

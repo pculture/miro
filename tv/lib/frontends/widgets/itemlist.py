@@ -88,7 +88,7 @@ class ItemList(itemtrack.ItemTracker):
         self._reset_group_info()
 
     def _make_base_query(self, tab_type, tab_id):
-        query = itemtrack.ItemTrackerQuery()
+        query = itemtrack.ItemTracker.make_query()
         if tab_type == 'videos':
             query.add_condition('file_type', '=', 'video')
         elif tab_type == 'music':
