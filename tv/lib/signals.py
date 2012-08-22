@@ -98,6 +98,45 @@ class WeakCallback:
     def is_dead(self):
         return self.ref() is None
 
+class CallbackSet(object):
+    """Stores callbacks connected to a signal for SignalEmitter."""
+    def __init__(self):
+        self.callbacks = {}
+        self.callbacks_after = {}
+
+    def add_callback(self, id_, callback):
+        self.callbacks[id_] = callback
+
+    def add_callback_after(self, id_, callback):
+        self.callbacks_after[id_] = callback
+
+    def remove_callback(self, id_):
+        if id_ in self.callbacks:
+            del self.callbacks[id_]
+        elif id_ in self.callbacks_after:
+            del self.callback_after[id_]
+        else:
+            logging.warning(
+                "disconnect called but callback_handle not in the callback")
+
+    def all_callbacks(self):
+        """Get a list of all Callback objects stored.
+
+        The list will contain callbacks added with add_callback() then
+        callbacks added with add_callback_after().
+        """
+        return self.callbacks.values() + self.callbacks_after.values()
+
+    def clear_old_weak_references(self):
+        """Remove any dead WeakCallbacks."""
+        for callback_dict in (self.callbacks, self.callbacks_after):
+            for id_, callback in callback_dict.items():
+                if callback.is_dead():
+                    del callback_dict[id_]
+
+    def __len__(self):
+        return len(self.callbacks) + len(self.callbacks_after)
+
 class SignalEmitter(object):
     def __init__(self, *signal_names):
         self.signal_callbacks = {}
@@ -117,7 +156,7 @@ class SignalEmitter(object):
     def create_signal(self, name, okay_to_nest=False):
         if name in self.signal_callbacks:
             raise KeyError("%s was already created" % name)
-        self.signal_callbacks[name] = {}
+        self.signal_callbacks[name] = CallbackSet()
         if okay_to_nest:
             self._okay_to_nest.add(name)
 
@@ -128,7 +167,7 @@ class SignalEmitter(object):
             raise KeyError("Signal: %s doesn't exist" % signal_name)
 
     def _check_already_connected(self, name, func):
-        for callback in self.get_callbacks(name).values():
+        for callback in self.get_callbacks(name).all_callbacks():
             if callback.compare_function(func):
                 raise ValueError("signal %s already connected to %s" %
                         (name, func))
@@ -143,7 +182,19 @@ class SignalEmitter(object):
         self._check_already_connected(name, func)
         id_ = self.id_generator.next()
         callbacks = self.get_callbacks(name)
-        callbacks[id_] = Callback(func, extra_args)
+        callbacks.add_callback(id_, Callback(func, extra_args))
+        return (name, id_)
+
+    def connect_after(self, name, func, *extra_args):
+        """Like connect(), but run the handler later
+
+        When a signal is fired, we first run the handlers connected with
+        connect() then the ones connected with connect_after()
+        """
+        self._check_already_connected(name, func)
+        id_ = self.id_generator.next()
+        callbacks = self.get_callbacks(name)
+        callbacks.add_callback_after(id_, Callback(func, extra_args))
         return (name, id_)
 
     def connect_weak(self, name, method, *extra_args):
@@ -159,7 +210,7 @@ class SignalEmitter(object):
             raise TypeError("connect_weak must be called with object methods")
         id_ = self.id_generator.next()
         callbacks = self.get_callbacks(name)
-        callbacks[id_] = WeakCallback(method, extra_args)
+        callbacks.add_callback(id_, WeakCallback(method, extra_args))
         return (name, id_)
 
     def disconnect(self, callback_handle):
@@ -167,15 +218,11 @@ class SignalEmitter(object):
         connect() or connect_weak().
         """
         callbacks = self.get_callbacks(callback_handle[0])
-        if callback_handle[1] in callbacks:
-            del callbacks[callback_handle[1]]
-        else:
-            logging.warning(
-                "disconnect called but callback_handle not in the callback")
+        callbacks.remove_callback(callback_handle[1])
 
     def disconnect_all(self):
         for signal in self.signal_callbacks:
-            self.signal_callbacks[signal] = {}
+            self.signal_callbacks[signal] = CallbackSet()
 
     def emit(self, name, *args):
         if self._frozen:
@@ -202,17 +249,15 @@ class SignalEmitter(object):
             if self_callback(*args):
                 callback_returned_true = True
         if not callback_returned_true:
-            for callback in self.get_callbacks(name).values():
+            for callback in self.get_callbacks(name).all_callbacks():
                 if callback.invoke(self, args):
                     callback_returned_true = True
                     break
         return callback_returned_true
 
     def clear_old_weak_references(self):
-        for callback_map in self.signal_callbacks.values():
-            for id_ in callback_map.keys():
-                if callback_map[id_].is_dead():
-                    del callback_map[id_]
+        for callback_set in self.signal_callbacks.values():
+            callback_set.clear_old_weak_references()
 
 class SystemSignals(SignalEmitter):
     """System wide signals for Miro.  These can be accessed from the singleton

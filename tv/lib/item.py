@@ -383,7 +383,9 @@ class ItemChangeTracker(object):
     """Tracks changes to items and send the ItemsChanged message."""
     def __init__(self):
         self.reset()
-        app.db.connect('transaction-finished', self.on_transaction_finished)
+        # databases changes get commited during the event-finished signal.  We
+        # use connect_after() to send our changes directly after that.
+        eventloop.connect_after('event-finished', self.after_event_finished)
 
     def reset(self):
         self.added = set()
@@ -392,7 +394,7 @@ class ItemChangeTracker(object):
         self.changed_columns = set()
         self.dlstats_changed = False
 
-    def on_transaction_finished(self, live_storage, success):
+    def after_event_finished(self, event_loop, success):
         self.send_changes()
 
     def send_changes(self):
