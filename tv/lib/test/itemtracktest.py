@@ -35,11 +35,10 @@ import itertools
 from miro import app
 from miro import downloader
 from miro import eventloop
-from miro import item
 from miro import messages
 from miro import models
+from miro.data import item
 from miro.data import itemtrack
-from miro.data.item import fetch_item_infos
 from miro.test import mock
 from miro.test.framework import MiroTestCase, MatchAny
 from miro.test import testobjects
@@ -68,7 +67,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.mock_message_handler = mock.Mock()
         messages.FrontendMessage.install_handler(self.mock_message_handler)
         # reset item chages that occured from setUp()
-        item.Item.change_tracker.reset()
+        models.Item.change_tracker.reset()
 
     def force_wal_mode(self):
         """Force WAL mode to be a certain value.
@@ -154,7 +153,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
     def calc_items_in_tracker(self):
         item_list = []
-        for i in item.Item.make_view():
+        for i in models.Item.make_view():
             meets_conditions = True
             for condition in self.tracker.query.conditions:
                 if condition.table == 'item':
@@ -485,7 +484,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         # Need to manually fetch the items to compare to
         with app.connection_pool.context() as connection:
             id_list = [i.id for i in downloads]
-            correct_items = fetch_item_infos(connection, id_list)
+            correct_items = item.fetch_item_infos(connection, id_list)
         self.check_tracker_items(correct_items)
 
     def test_change_while_loading_data(self):
@@ -582,3 +581,19 @@ class DeviceItemTrackTestNoWALMode(DeviceItemTrackTestWALMode):
     def force_wal_mode(self):
         connection_pools = itemtrack.DeviceItemTracker._connection_pool_map
         connection_pools.get_pool(self.device.id).wal_mode = False
+
+class ItemSelectInfoTest(MiroTestCase):
+    def get_attributes(self, klass):
+        return ([col.attr_name for col in klass.select_columns] + 
+                klass.constant_values.keys())
+
+    def test_attributes(self):
+        # test that a all attributes defined in ItemInfo are also defined in
+        # DeviceItemInfo.  "attributes" here means either a SelectColumn or an
+        # entry in the constant_values dict
+        item_attrs = set(self.get_attributes(item.ItemSelectInfo))
+        device_attrs = set(self.get_attributes(item.DeviceItemSelectInfo))
+        if not item_attrs.issubset(device_attrs):
+            raise AssertionError("DeviceItemInfo does not define all "
+                                 "attributes of ItemSelectInfo (%s)" %
+                                 item_attrs.difference(device_attrs))

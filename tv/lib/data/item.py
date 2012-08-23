@@ -175,6 +175,13 @@ class ItemSelectInfo(object):
         SelectColumn('remote_downloader', 'leechers'),
         SelectColumn('remote_downloader', 'connections'),
     ]
+
+    # Constant values that aren't included in the select statement
+    # An example of this is all the values that come from remote_downloader
+    # for a DeviceItem.
+    constant_values = {
+    }
+
     # how to join the main table to other tables
     join_info = {
         'feed': 'feed.id=item.feed_id',
@@ -237,6 +244,8 @@ class ItemInfoMeta(type):
         for select_column in dct['select_info'].select_columns:
             attribute = ItemInfoAttributeGetter(count.next())
             dct[select_column.attr_name] = attribute
+        for attr_name, value in dct['select_info'].constant_values.items():
+            dct[attr_name] = value
         return type.__new__(cls, classname, bases, dct)
 
 class ItemInfo(object):
@@ -572,7 +581,7 @@ class DeviceItemSelectInfo(ItemSelectInfo):
     select_columns = [
         SelectColumn('device_item', 'id'),
         SelectColumn('device_item', 'title'),
-        SelectColumn('device_item', 'creation_time'),
+        SelectColumn('device_item', 'creation_time', 'date_added'),
         SelectColumn('device_item', 'watched_time'),
         SelectColumn('device_item', 'last_watched'),
         SelectColumn('device_item', 'subtitle_encoding'),
@@ -590,16 +599,16 @@ class DeviceItemSelectInfo(ItemSelectInfo):
         SelectColumn('device_item', 'url'),
         SelectColumn('device_item', 'size'),
         SelectColumn('device_item', 'enclosure_size'),
-        SelectColumn('device_item', 'enclosure_type'),
+        SelectColumn('device_item', 'enclosure_type', 'mime_type'),
         SelectColumn('device_item', 'enclosure_format'),
-        SelectColumn('device_item', 'filename'),
+        SelectColumn('device_item', 'filename', 'filename_unicode'),
         SelectColumn('device_item', 'resume_time'),
         SelectColumn('device_item', 'play_count'),
         SelectColumn('device_item', 'skip_count'),
         SelectColumn('device_item', 'auto_sync'),
-        SelectColumn('device_item', 'screenshot'),
-        SelectColumn('device_item', 'duration'),
-        SelectColumn('device_item', 'cover_art'),
+        SelectColumn('device_item', 'screenshot', 'screenshot_path_unicode'),
+        SelectColumn('device_item', 'duration', 'duration_ms'),
+        SelectColumn('device_item', 'cover_art', 'cover_art_path_unicode'),
         SelectColumn('device_item', 'description'),
         SelectColumn('device_item', 'album'),
         SelectColumn('device_item', 'album_artist'),
@@ -617,12 +626,50 @@ class DeviceItemSelectInfo(ItemSelectInfo):
         SelectColumn('device_item', 'season_number'),
         SelectColumn('device_item', 'kind'),
         SelectColumn('device_item', 'net_lookup_enabled'),
-        SelectColumn('device_item', 'metadata_title'),
     ]
-    # how to join the main table to other tables
-    join_info = {
+
+    constant_values = {
+        # item stuff that only applies to items in the main DB
+        'parent_id': None,
+        'new': False,
+        'keep': True,
+        'was_downloaded': True,
+        'expired': False,
+        'eligible_for_autodownload': False,
+        'is_file_item': True,
+        'is_container_item': False,
+        'icon_cache_path_unicode': None,
+        # downloader stuff, set all to None
+        'downloader_size': None,
+        'downloader_type': None,
+        'seeders': None,
+        'upload_size': None,
+        'downloader_id': None,
+        'rate': None,
+        'connections': None,
+        'downloaded_time': None,
+        'downloaded_size': None,
+        'pending_reason': None,
+        'retry_time': None,
+        'short_reason_failed': None,
+        'reason_failed': None,
+        'leechers': None,
+        'eta': None,
+        'pending_manual_download': None,
+        'downloader_state': None,
+        'upload_rate': None,
+        'startup_activity': None,
+        'downloader_content_type': None,
+        # feed stuff
+        'feed_id': None,
+        'feed_get_everything': None,
+        'feed_auto_downloadable': False,
+        'feed_expire_time': None,
+        'feed_expire': u'never',
     }
 
+    join_info = {
+    }
 
 class DeviceItemInfo(ItemInfo):
     """ItemInfo for devices """
