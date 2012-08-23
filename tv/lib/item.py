@@ -2654,17 +2654,22 @@ class DeviceItem(ItemBase):
         return cls.make_view('auto_sync', db_info=db_info)
 
     @classmethod
+    def get_by_url(cls, url, db_info):
+        return cls.make_view('url=?', (url,), db_info=db_info).get_singleton()
+
+    @classmethod
     def item_exists(cls, item_info, db_info):
         """Check if a DeviceItem has already been created for an ItemInfo."""
 
         # Item URL is a sure way to match
-        if cls.make_view('url=?', item_info.url).count() > 0:
+        if cls.make_view('url=?', (item_info.url,), db_info=db_info).count() > 0:
             return True
         # If a bunch of qualities are the same, we'll call it close
         # enough
         if cls.make_view('title=? AND description=? AND size=? AND '
-                         'duration=?', item_info.title, item_info.description,
-                         item_info.size, item_info.duration_ms).count() > 0:
+                         'duration=?', (item_info.title, item_info.description,
+                         item_info.size, item_info.duration_ms),
+                         db_info=db_info).count() > 0:
             return True
         return False
 

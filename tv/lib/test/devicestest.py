@@ -48,9 +48,12 @@ from miro import database
 from miro import devicedatabaseupgrade
 from miro import devices
 from miro import item
+from miro import messages
 from miro import metadata
+from miro import models
 from miro import schema
 from miro import storedatabase
+from miro.data.item import fetch_item_infos
 from miro.plat import resources
 from miro.test import testobjects
 
@@ -386,7 +389,6 @@ class DeviceDatabaseTest(MiroTestCase):
 
     def open_database(self):
         testobjects.setup_mock_device_database(self.device)
-        return
 
     def test_open(self):
         self.open_database()
@@ -564,3 +566,224 @@ class DeviceUpgradeTest(MiroTestCase):
         # check that the import code gets the value from the sqlite database,
         # not the JSON one
         self.check_json_import(device_data)
+
+
+class DeviceSyncManagerTest(EventLoopTest):
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        self.setup_feed()
+        self.setup_playlist()
+        self.setup_device()
+
+    def setup_device(self):
+        self.device = testobjects.make_mock_device()
+        self.sync = self.device.database[u'sync'] = devices.DeviceDatabase()
+        self.sync[u'podcasts'] = devices.DeviceDatabase()
+        self.sync[u'playlists'] = devices.DeviceDatabase()
+        self.sync[u'podcasts'][u'all'] = True
+        self.sync[u'podcasts'][u'enabled'] = True
+        self.sync[u'podcasts'][u'expire'] = True
+        self.sync[u'podcasts'][u'items'] = [self.feed.url]
+        self.sync[u'playlists'][u'enabled'] = True
+        self.sync[u'playlists'][u'items'] = [self.playlist.title]
+
+    def setup_feed(self):
+        self.feed, items = testobjects.make_feed_with_items(
+            10, file_items=True, prefix='feed')
+        for i in items[:5]:
+            i.mark_watched()
+            i.signal_change()
+        self.feed_items = items
+        self.feed_unwatched_items = items[5:]
+
+    def setup_playlist(self):
+        self.manual_feed = testobjects.make_manual_feed()
+        items = testobjects.add_items_to_feed(self.manual_feed,
+                                              10,
+                                              file_items=True,
+                                              prefix='playlist-')
+        self.playlist = models.SavedPlaylist(u'playlist',
+                                             [i.id for i in items])
+        self.playlist_items = items
+
+    def check_get_sync_items(self, correct_items, correct_expired=None):
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        items, expired = dsm.get_sync_items()
+        self.assertSameSet([i.id for i in items],
+                           [i.id for i in correct_items])
+        if correct_expired is None:
+            correct_expired = []
+        # correct_expired are Item objects and the get_sync_items() returns
+        # DeviceItems objects.  To compare, we use the URL.
+        self.assertSameSet([i.url for i in expired],
+                           [i.url for i in correct_expired])
+
+    def check_device_items(self, correct_items):
+        # check which DeviceItems we've created
+        view = models.DeviceItem.make_view(db_info=self.device.db_info)
+        self.assertSameSet([i.url for i in view],
+                           [i.url for i in correct_items])
+
+    def test_get_sync_items(self):
+        # Test that get_sync_items() items to sync correctly
+        self.check_get_sync_items(self.feed_items + self.playlist_items)
+
+        self.sync[u'podcasts'][u'all'] = False
+        self.check_get_sync_items(self.feed_unwatched_items +
+                                  self.playlist_items)
+        self.sync[u'podcasts'][u'enabled'] = False
+        self.check_get_sync_items(self.playlist_items)
+        self.sync[u'playlists'][u'enabled'] = False
+        self.check_get_sync_items([])
+
+    def add_sync_items(self):
+        """Call get_sync_items() and feed the results to add_items().
+
+        This will sync all potential items to the device.
+
+        :returns: list of ItemInfos synced
+        """
+
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        infos, expired = dsm.get_sync_items()
+        dsm.start()
+        dsm.add_items(infos)
+        self.runPendingIdles()
+        return infos
+
+    def test_add_items(self):
+        # Test add_items()
+        self.check_device_items([])
+        infos = self.add_sync_items()
+        self.check_device_items(infos)
+
+    def test_get_sync_items_expired(self):
+        # Test that get_sync_items() calculates expired items correctly
+        self.add_sync_items()
+        for i in self.feed_items:
+            os.remove(i.filename)
+            i.expire()
+        self.check_get_sync_items(self.playlist_items, self.feed_items)
+
+    def test_expire_items(self):
+        # Test expiring items
+
+        infos = self.add_sync_items()
+        self.check_device_items(infos)
+        # remove all items in our feed
+        for i in self.feed_items:
+            os.remove(i.filename)
+            i.expire()
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        # get_sync_items() should return the corresponding items in our device
+        # for the expired items
+        infos, expired = dsm.get_sync_items()
+        self.assertSameSet([i.url for i in self.feed_items],
+                           [i.url for i in expired])
+        # test sending the items through expire_items()
+        dsm.expire_items(expired)
+        self.check_device_items(self.playlist_items)
+
+    def set_feed_item_file_sizes(self, size):
+        for i in self.feed_items:
+            with open(i.filename, "w") as f:
+                f.write(" " * size)
+
+    def set_playlist_item_file_size(self, size):
+        for i in self.playlist_items:
+            with open(i.filename, "w") as f:
+                f.write(" " * size)
+
+    def setup_auto_fill_settings(self, feed_space, playlist_space):
+        self.sync[u'auto_fill'] = True
+        self.sync[u'auto_fill_settings'] = {
+            u'recent_music': 0.0,
+            u'random_music': 0.0,
+            u'most_played_music': 0.0,
+            u'new_playlists': playlist_space,
+            u'recent_podcasts': feed_space,
+        }
+
+    def check_get_auto_items(self, dsm, size, correct_feed_count,
+                             correct_playlist_count):
+        feed_item_count = 0
+        playlist_item_count = 0
+        for item_info in dsm.get_auto_items(size):
+            if item_info.feed_id == self.feed.id:
+                feed_item_count += 1
+            elif item_info.feed_id == self.manual_feed.id:
+                playlist_item_count += 1
+        self.assertEquals(feed_item_count, correct_feed_count)
+        self.assertEquals(playlist_item_count, correct_playlist_count)
+
+    def test_get_auto_items_auto_fill_off(self):
+        # With auto_fill off, we shouldn't get any items
+        self.set_feed_item_file_sizes(10)
+        self.set_playlist_item_file_size(10)
+        self.sync[u'auto_fill'] = False
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        self.check_get_auto_items(dsm, 1000000000, 0, 0)
+
+    def test_get_auto_items(self):
+        # Test get_auto_items()
+        self.set_feed_item_file_sizes(20)
+        self.set_playlist_item_file_size(10)
+        # Allocate 100 bytes to both our playlist items and our feed items.
+        # This should be enough for the entire playlist and 1/2 of the feed
+        # items
+        self.setup_auto_fill_settings(feed_space=0.5, playlist_space=0.5)
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        self.check_get_auto_items(dsm, 200, 5, 10)
+
+    def test_get_auto_items_doesnt_half_fill_playlist(self):
+        # Test that get_auto_items() only will return items for a playlist if
+        # it can fill the entire playlist
+        self.set_feed_item_file_sizes(10)
+        self.set_playlist_item_file_size(10)
+        # When we allocate 50 bytes to each', we can only sync the feed items
+        self.setup_auto_fill_settings(feed_space=0.5, playlist_space=0.5)
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        self.check_get_auto_items(dsm, 100, 5, 0)
+        # When we allocate 100, we can sync both
+        self.setup_auto_fill_settings(feed_space=0.5, playlist_space=0.5)
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        self.check_get_auto_items(dsm, 200, 10, 10)
+
+    def test_auto_sync(self):
+        # Test that add_items() sets the auto_sync flag correctly
+
+        # setup some auto-sync settings
+        self.set_feed_item_file_sizes(10)
+        self.set_playlist_item_file_size(10)
+        self.setup_auto_fill_settings(feed_space=1.0, playlist_space=0.0)
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        # get our sync items, they should all be from our feed
+        auto_sync_items = dsm.get_auto_items(10000)
+        for item in auto_sync_items:
+            self.assertEquals(item.feed_id, self.feed.id)
+        # call sync some items
+        playlist_items = fetch_item_infos(app.db.connection,
+                                          [i.id for i in self.playlist_items])
+        dsm.start()
+        dsm.add_items(playlist_items)
+        dsm.add_items(auto_sync_items, auto_sync=True)
+        self.runPendingIdles()
+        # check that the device items got created and that auto_sync is set
+        # correctly
+        db_info=self.device.db_info
+        for item in self.playlist_items:
+            device_item = models.DeviceItem.get_by_url(item.url,
+                                                       db_info=db_info)
+            self.assertEquals(device_item.auto_sync, False)
+        for item in self.feed_items:
+            device_item = models.DeviceItem.get_by_url(item.url,
+                                                       db_info=db_info)
+            self.assertEquals(device_item.auto_sync, True)
+        # check auto_sync_view()
+        auto_sync_items = models.DeviceItem.auto_sync_view(db_info=db_info)
+        self.assertSameSet(set(i.title for i in self.feed_items),
+                           set(i.title for i in auto_sync_items))
+
+    def test_run_conversion(self):
+        # FIXME: Should write this one
+        pass

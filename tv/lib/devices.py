@@ -630,6 +630,7 @@ class DeviceSyncManager(object):
         self.total_size = Counter()
         self.copying = {}
         self.waiting = set()
+        self.auto_syncs = set()
         self.stopping = False
         self._change_timeout = None
         self._copy_iter_running = False
@@ -637,27 +638,35 @@ class DeviceSyncManager(object):
         self.started = False
 
     def get_sync_items(self, max_size=None):
+        """Calculate information for syncing
+
+        :returns: (sync_info, expired_items) where sync_info is ItemInfos that
+        we need to sync and expired_items is DeviceItems for expired items.
         """
-        Returns two lists of ItemInfos; one for items we need to sync, and one
-        for items which have expired.
-        """
+        # sync settings for the database
         sync = self.device.database[u'sync']
+        # list of views with items to sync
         views = []
-        url_to_view = {}
+        # maps feed_urls -> set of URLs for items in that feed
+        item_urls = {}
+        # ItemInfos that we can sync
         infos = set()
+        # DeviceItems whose original item is expired
         expired = set()
-        sync_all_podcasts = sync[u'podcasts'].get(u'all', True)
+
+        # Iterate through synced podcasts
         if sync.setdefault(u'podcasts', {}).get(u'enabled', False):
             for url in sync[u'podcasts'].setdefault(u'items', []):
                 feed_ = feed.lookup_feed(url)
                 if feed_ is not None:
-                    if sync_all_podcasts:
+                    if sync[u'podcasts'].get(u'all', True):
                         view = feed_.downloaded_items
                     else:
                         view = feed_.unwatched_items
                     views.append(view)
-                    url_to_view[url] = view
+                    item_urls[url] = set(i.url for i in view)
 
+        # Iterate through synced playlist
         if sync.setdefault(u'playlists', {}).get(u'enabled', False):
             for name in sync[u'playlists'].setdefault(u'items', []):
                 try:
@@ -666,34 +675,23 @@ class DeviceSyncManager(object):
                     continue
                 views.append(item.Item.playlist_view(playlist_.id))
 
+
+        # For each podcast/playlist view, check if there are new items.
         for view in views:
-            # FIXME: need to make sure this works now that ItemInfo has
-            # changed a bit
-            item_ids = [item.id for item in view]
-            item_infos = app.db.fetch_item_infos(item_ids)
+            item_infos = app.db.fetch_item_infos(view.id_list())
             infos.update(info for info in item_infos
                          if not self._item_exists(info))
 
         # check for expired items
         if sync[u'podcasts'].get(u'expire', True):
-            for file_type in (u'audio', u'video'):
-                for info in itemsource.DeviceItemSource(self.device,
-                                                        file_type).fetch_all():
-                    if (info.feed_url and info.file_url and
-                        info.feed_url in url_to_view):
-                        view = url_to_view[info.feed_url]
-                        new_view = database.View(
-                            view.fetcher,
-                            view.where + (' AND (rd.orig_url=? OR rd.url=? '
-                                          'OR item.url=?)'),
-                            view.values + (info.file_url, info.file_url,
-                                           info.file_url),
-                            view.order_by,
-                            view.joins,
-                            view.limit,
-                            view.db_info)
-                        if not new_view.count():
-                            expired.add(info)
+            for device_item in item.DeviceItem.make_view(
+                db_info=self.device.db_info):
+                if (device_item.feed_url in item_urls and
+                    device_item.url not in item_urls[device_item.feed_url]):
+                    expired.add(device_item)
+
+        # check if our size will overflow max_size.  If so, remove items from
+        # infos until they will fit
         if max_size is not None and infos:
             for info in expired:
                 max_size += sum(i.size for i in expired)
@@ -714,7 +712,7 @@ class DeviceSyncManager(object):
         """
         sync = self.device.database[u'sync']
         if not sync.get(u'auto_fill', False):
-            return []
+            return set()
 
         name_to_view = {
             u'recent_music': item.Item.watchable_audio_view(),
@@ -729,7 +727,7 @@ class DeviceSyncManager(object):
         name_to_view[u'most_played_music'].order_by = 'item.play_count DESC'
         name_to_view[u'new_playlists'].order_by = 'playlist.id DESC'
         name_to_view[u'recent_podcasts'].where = (
-            '%s AND item.filename NOT IN (NULL, "")' % (
+            '%s AND item.filename IS NOT NULL' % (
                 name_to_view[u'recent_podcasts'].where,))
         name_to_view[u'recent_podcasts'].order_by = 'item.id DESC'
 
@@ -752,9 +750,7 @@ class DeviceSyncManager(object):
                     playlist_ids = [i.id for i in playlist_view]
                     infos = app.db.fetch_item_infos(playlist_ids)
                     size = self.get_sync_size(infos)[1]
-                    if size and size < remaining:
-                        for info in infos:
-                            info.auto_sync = True
+                    if size and size <= remaining:
                         syncs.update(infos)
                         remaining -= size
             else:
@@ -762,8 +758,7 @@ class DeviceSyncManager(object):
                 # has changed a bit
                 for info in app.db.fetch_item_infos(i.id for i in view):
                     size = self.get_sync_size([info])[1]
-                    if size and size < remaining:
-                        info.auto_sync = True
+                    if size and size <= remaining:
                         syncs.add(info)
                         remaining -= size
 
@@ -906,7 +901,7 @@ class DeviceSyncManager(object):
         device_item.delete_and_remove(self.device)
         self.device.remaining += device_item.size
 
-    def add_items(self, item_infos):
+    def add_items(self, item_infos, auto_sync=False):
         for info in item_infos:
             if self.stopping:
                 self._check_finished()
@@ -922,11 +917,13 @@ class DeviceSyncManager(object):
                 target_folder = self.video_target_folder
             else:
                 continue
+            if auto_sync:
+                self.auto_syncs.add(info.id)
             self.total += 1
             if conversion == 'copy':
                 final_path = os.path.join(target_folder,
                                           os.path.basename(
-                        info.video_path))
+                        info.filename))
                 if os.path.exists(final_path):
                     logging.debug('%r exists, getting a new one precopy',
                                   final_path)
@@ -957,9 +954,9 @@ class DeviceSyncManager(object):
 
     @cache_conversion
     def conversion_for_info(self, info):
-        if not info.video_path:
+        if not info.filename:
             app.controller.failed_soft("device conversion",
-                                       "got video %r without video_path" % (
+                                       "got video %r without filename" % (
                     info.name,))
             return None
 
@@ -975,10 +972,10 @@ class DeviceSyncManager(object):
             return 'copy'
 
         try:
-            media_info = conversions.get_media_info(info.video_path)
+            media_info = conversions.get_media_info(info.filename)
         except ValueError:
             logging.exception('error getting media info for %r',
-                              info.video_path)
+                              info.filename)
             return 'copy'
         
         requires_conversion = False
@@ -1052,7 +1049,7 @@ class DeviceSyncManager(object):
     def _copy_as_iter(self):
         while self.copying:
             final_path, info = self.copying.popitem()
-            iterable = fileutil.copy_with_progress(info.video_path, final_path,
+            iterable = fileutil.copy_with_progress(info.filename, final_path,
                                                    block_size=128 * 1024)
             try:
                 for count in iterable:
@@ -1142,7 +1139,9 @@ class DeviceSyncManager(object):
                 return # Device has been ejected, give up.
 
             relpath = os.path.relpath(new_path, self.device.mount)
-            device_item = item.DeviceItem(self.device, relpath, item_info)
+            auto_sync = item_info.id in self.auto_syncs
+            device_item = item.DeviceItem(self.device, relpath, item_info,
+                                          auto_sync=auto_sync)
             self.device.remaining -= device_item.size
 
         fileutil.migrate_file(final_path, new_path, callback)

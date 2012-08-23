@@ -522,7 +522,7 @@ class DeviceItemTrackTestWALMode(MiroTestCase):
         # simulate the backend sending the TabsChanged method with the device
         # that we want to track
         itemtrack.DeviceItemTracker.on_devices_changed(
-            [testobjects.make_device_info(self.device)], [], [])
+            [self.device], [], [])
         self.force_wal_mode()
         device_items = testobjects.make_device_items(self.device, 'audio1.mp3',
                                                      'audio2.mp3', 'video1.avi')

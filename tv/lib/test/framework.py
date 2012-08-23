@@ -14,6 +14,7 @@ from miro import app
 from miro import config
 from miro import data
 from miro import database
+from miro import devices
 from miro import eventloop
 from miro import extensionmanager
 from miro import feed
@@ -280,6 +281,7 @@ class MiroTestCase(unittest.TestCase):
         self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True
+        app.device_manager = devices.DeviceManager()
         models.Item._path_count_tracker.reset()
         itemtrack.DeviceItemTracker._connection_pool_map.reset()
         testobjects.test_started(self)

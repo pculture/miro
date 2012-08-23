@@ -562,15 +562,29 @@ class ItemInfo(object):
         else:
             return self.duration_ms // 1000
 
-def fetch_item_infos(connection, item_ids):
-    """Fetch a list of ItemInfos """
-    select_info = ItemSelectInfo()
+    def __repr__(self):
+        return '<ItemInfo: %s>' % self.title
+
+    def __str__(self):
+        return '<ItemInfo: %s>' % self.title
+
+def _fetch_item_infos(connection, item_ids, select_info):
+    """Does the work for fetch_item_infos() and fetch_device_item_infos()."""
     columns = ','.join('%s.%s' % (c.table, c.column)
                        for c in select_info.select_columns)
     item_ids = ','.join(str(item_id) for item_id in item_ids)
-    sql = ("SELECT %s FROM item %s WHERE item.id IN (%s)" %
-           (columns, select_info.join_sql(), item_ids))
+    sql = ("SELECT %s FROM %s %s WHERE %s.id IN (%s)" %
+           (columns, select_info.table_name, select_info.join_sql(),
+            select_info.table_name, item_ids))
     return [ItemInfo(*row) for row in connection.execute(sql)]
+
+def fetch_item_infos(connection, item_ids):
+    """Fetch a list of ItemInfos """
+    return _fetch_item_infos(connection, item_ids, ItemSelectInfo())
+
+def fetch_device_item_infos(connection, item_ids):
+    """Fetch a list of ItemInfos for a device"""
+    return _fetch_item_infos(connection, item_ids, DeviceItemSelectInfo())
 
 class DeviceItemSelectInfo(ItemSelectInfo):
     """ItemSelectInfo for DeviceItems."""

@@ -351,7 +351,7 @@ class ItemMetadataTest(MiroTestCase):
 
     def test_make_deleted(self):
         # Test calling make_deleted on a FileItem
-        file_item = testobjects.make_file_item(self.manual_feed, self.path)
+        file_item = testobjects.make_file_item(self.manual_feed, path=self.path)
         self.check_path_in_metadata_manager()
 
         file_item.make_deleted()
@@ -362,7 +362,7 @@ class ItemMetadataTest(MiroTestCase):
 
     def test_remove(self):
         # Test calling remove() a file item
-        file_item = testobjects.make_file_item(self.manual_feed, self.path)
+        file_item = testobjects.make_file_item(self.manual_feed, path=self.path)
         self.check_path_in_metadata_manager()
 
         file_item.remove()
