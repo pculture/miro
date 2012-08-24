@@ -115,3 +115,37 @@ class ConnectionPool(object):
         # Rollback any changes not committed
         connection.rollback()
         self.release_connection(connection)
+
+class DeviceConnectionPool(ConnectionPool):
+    """ConnectionPool for a device."""
+    def __init__(self, device_info):
+        # We should only make 1 ConnectionPool per device tab, so limited the
+        # connections at 1 seems fine.
+        ConnectionPool.__init__(self, device_info.sqlite_path,
+                                min_connections=0, max_connections=1)
+
+class DeviceConnectionPoolMap(object):
+    """Manage a ConnectionPool for each connected device.
+    """
+    def __init__(self):
+        self.pool_map = {}
+
+    def reset(self):
+        self.pool_map = {}
+
+    def get_pool(self, device_id):
+        return self.pool_map[device_id]
+
+    def on_devices_changed(self, added, changed, removed):
+        for device_info in added:
+            if device_info.id in self.pool_map:
+                logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
+                             "%s already in pool_map" % device_info.id)
+                continue
+            self.pool_map[device_info.id] = DeviceConnectionPool(device_info)
+        for device_id in removed:
+            try:
+                del self.pool_map[device_id]
+            except KeyError:
+                logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
+                             "%s already removed from pool_map" % device_id)

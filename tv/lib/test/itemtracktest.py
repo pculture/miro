@@ -40,6 +40,7 @@ from miro import models
 from miro.data import item
 from miro.data import itemtrack
 from miro.test import mock
+from miro.data.connectionpool import DeviceConnectionPool
 from miro.test.framework import MiroTestCase, MatchAny
 from miro.test import testobjects
 
@@ -56,7 +57,7 @@ class ItemTrackTestWALMode(MiroTestCase):
                 testobjects.make_feed_with_items(8)
         app.db.finish_transaction()
         self.mock_idle_scheduler = mock.Mock()
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_order_by(['release_date'])
         self.tracker = itemtrack.ItemTracker(self.mock_idle_scheduler, query)
@@ -313,7 +314,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         titles = [i.title for i in self.tracked_items]
         titles.sort()
         middle_title = titles[len(titles) // 2]
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.add_condition('title', '<', middle_title)
         query.set_order_by(['release_date'])
@@ -324,7 +325,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
     def test_complex_conditions(self):
         # test adding more conditions
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
 
         sql = "feed_id IN (SELECT id FROM feed WHERE id in (?, ?))"
         values = (self.tracked_feed.id, self.other_feed1.id)
@@ -337,7 +338,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
     def test_like(self):
         # test adding more conditions
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('title', 'LIKE', '%feed1%')
         self.tracker.change_query(query)
         # changing the query should emit list-changed
@@ -357,21 +358,21 @@ class ItemTrackTestWALMode(MiroTestCase):
         item3.signal_change()
         app.db.finish_transaction()
         self.check_items_changed_after_message([item1, item2, item3])
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_search('foo')
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items([item1, item3])
         # test two terms
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_search('foo baz')
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items([item3])
         # test that we do a prefix search for the last term
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_search('fo')
         query.set_order_by(['release_date'])
@@ -379,7 +380,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.check_one_signal('list-changed')
         self.check_tracker_items([item1, item3])
         # But we should'nt do a prefix search for terms other than the last
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_search('fo bar')
         query.set_order_by(['release_date'])
@@ -406,7 +407,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         app.db.finish_transaction()
         self.check_items_changed_after_message([item1])
         # a search for torrent should match both of them
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_search('torrent')
         self.tracker.change_query(query)
@@ -415,7 +416,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
     def test_feed_conditions(self):
         # change the query to something that involves downloader columns
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed.orig_url', '=', self.tracked_feed.orig_url)
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
@@ -423,7 +424,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
     def test_downloader_conditions(self):
         # change the query to something that involves downloader columns
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('remote_downloader.state', '=', 'downloading')
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
@@ -440,7 +441,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
     def test_order(self):
         # test order by a different column
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_order_by(['title'])
         self.tracker.change_query(query)
@@ -477,7 +478,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
         app.db.finish_transaction()
         self.check_items_changed_after_message(downloads)
-        query = itemtrack.ItemTracker.make_query()
+        query = itemtrack.ItemTrackerQuery()
         query.add_condition('remote_downloader.state', '=', 'downloading')
         query.set_order_by(['remote_downloader.rate'])
         self.tracker.change_query(query)
@@ -519,21 +520,17 @@ class DeviceItemTrackTestWALMode(MiroTestCase):
         MiroTestCase.setUp(self)
         self.device = testobjects.make_mock_device()
         self.idle_scheduler = mock.Mock()
-        # simulate the backend sending the TabsChanged method with the device
-        # that we want to track
-        itemtrack.DeviceItemTracker.on_devices_changed(
-            [self.device], [], [])
+        self.connection_pool = DeviceConnectionPool(self.device)
         self.force_wal_mode()
         device_items = testobjects.make_device_items(self.device, 'audio1.mp3',
                                                      'audio2.mp3', 'video1.avi')
         self.audio1, self.audio2, self.video1 = device_items
         self.device.db_info.db.finish_transaction()
-        query = itemtrack.DeviceItemTracker.make_query()
+        query = itemtrack.DeviceItemTrackerQuery()
         query.add_condition('file_type', '=', u'audio')
         query.set_order_by(['filename'])
-        self.tracker = itemtrack.DeviceItemTracker(self.device,
-                                                   self.idle_scheduler,
-                                                   query)
+        self.tracker = itemtrack.ItemTracker(self.idle_scheduler, query,
+                                             self.connection_pool)
         self.mock_message_handler = mock.Mock()
         messages.FrontendMessage.install_handler(self.mock_message_handler)
 
@@ -558,8 +555,7 @@ class DeviceItemTrackTestWALMode(MiroTestCase):
         By default we set wal_mode to be True.  DeviceItemTrackTestNoWALMode
         overrides this and sets it to False.
         """
-        connection_pools = itemtrack.DeviceItemTracker._connection_pool_map
-        connection_pools.get_pool(self.device.id).wal_mode = True
+        self.connection_pool.wal_mode = True
 
     def check_list(self, *correct_items):
         tracker_items = self.tracker.get_items()
@@ -579,8 +575,7 @@ class DeviceItemTrackTestWALMode(MiroTestCase):
 
 class DeviceItemTrackTestNoWALMode(DeviceItemTrackTestWALMode):
     def force_wal_mode(self):
-        connection_pools = itemtrack.DeviceItemTracker._connection_pool_map
-        connection_pools.get_pool(self.device.id).wal_mode = False
+        self.connection_pool.wal_mode = False
 
 class ItemSelectInfoTest(MiroTestCase):
     def get_attributes(self, klass):

@@ -283,7 +283,6 @@ class MiroTestCase(unittest.TestCase):
         app.in_unit_tests = True
         app.device_manager = devices.DeviceManager()
         models.Item._path_count_tracker.reset()
-        itemtrack.DeviceItemTracker._connection_pool_map.reset()
         testobjects.test_started(self)
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
@@ -357,7 +356,6 @@ class MiroTestCase(unittest.TestCase):
         signals.system.disconnect_all()
         util.chatter = True
         self.stop_http_server()
-        itemtrack.DeviceItemTracker._connection_pool_map.reset()
 
         # unload extensions
         self.unload_extensions()

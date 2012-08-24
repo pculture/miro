@@ -70,11 +70,16 @@ ItemTrackerOrderBy = util.namedtuple(
 class ItemTrackerQuery(object):
     """Define the query used to get items for ItemTracker."""
 
-    def __init__(self, select_info):
+    item_info_class = item.ItemInfo
+
+    def __init__(self):
         self.conditions = []
         self.match_string = None
-        self.select_info = select_info
         self.order_by = [ItemTrackerOrderBy('item', 'id', None, False)]
+
+    @property
+    def select_info(self):
+        return self.item_info_class.select_info
 
     def join_sql(self, table):
         return self.select_info.join_sql(table, join_type='JOIN')
@@ -252,11 +257,16 @@ class ItemTrackerQuery(object):
         return " ".join(parts)
 
     def copy(self):
-        retval = ItemTrackerQuery(self.select_info)
+        retval = ItemTrackerQuery()
         retval.conditions = self.conditions[:]
         retval.order_by = self.order_by[:]
         retval.match_string = self.match_string
         return retval
+
+class DeviceItemTrackerQuery(ItemTrackerQuery):
+    """ItemTrackerQuery for DeviceItems."""
+
+    item_info_class = item.DeviceItemInfo
 
 class ItemTracker(signals.SignalEmitter):
     """Track items in the database
@@ -282,15 +292,15 @@ class ItemTracker(signals.SignalEmitter):
     # how many rows we fetch at one time in _ensure_row_loaded()
     FETCH_ROW_CHUNK_SIZE = 25
 
-    #: ItemInfo or a subclass to use to create Items
-    item_info_class = item.ItemInfo
-
-    def __init__(self, idle_scheduler, query):
+    def __init__(self, idle_scheduler, query, connection_pool=None):
         """Create an ItemTracker
 
         :param idle_scheduler: function to schedule idle callback functions.
         It should input a function and schedule for it to be called during
         idletime.
+        :param query: ItemTrackerQuery to use
+        :param connection_pool: ConnectionPool to use.  By default we use
+        app.connection.pool
         """
         signals.SignalEmitter.__init__(self)
         self.create_signal("will-change")
@@ -299,6 +309,10 @@ class ItemTracker(signals.SignalEmitter):
         self.idle_scheduler = idle_scheduler
         self.idle_work_scheduled = False
         self.item_fetcher = None
+        if connection_pool is None:
+            self.connection_pool = app.connection_pool
+        else:
+            self.connection_pool = connection_pool
         self._set_query(query)
         self._fetch_id_list()
         self._schedule_idle_work()
@@ -312,13 +326,6 @@ class ItemTracker(signals.SignalEmitter):
         self._destroy_item_fetcher()
         self.id_list = self.id_to_index = self.row_data = None
 
-    @classmethod
-    def make_query(cls):
-        return ItemTrackerQuery(cls.item_info_class.select_info)
-
-    def connection_pool(self):
-        return app.connection_pool
-
     def make_item_fetcher(self, connection, id_list):
         """Make an ItemFetcher to use.
 
@@ -326,12 +333,12 @@ class ItemTracker(signals.SignalEmitter):
         this connection without commiting any pending read transaction.
         :param id_list: list of ids that we will have to fetch.
         """
-        if self.connection_pool().wal_mode:
+        if self.connection_pool.wal_mode:
             klass = ItemFetcherWAL
         else:
             klass = ItemFetcherNoWAL
-        return klass(connection, self.connection_pool(), id_list,
-                     self.item_info_class)
+        return klass(connection, self.connection_pool, id_list,
+                     self.query.item_info_class)
 
     def _destroy_item_fetcher(self):
         if self.item_fetcher:
@@ -347,7 +354,7 @@ class ItemTracker(signals.SignalEmitter):
     def _fetch_id_list(self):
         """Fetch the ids for this list.  """
         self._destroy_item_fetcher()
-        connection = self.connection_pool().get_connection()
+        connection = self.connection_pool.get_connection()
         self.id_list = self.query.select_ids(connection)
         self.id_to_index = dict((id_, i) for i, id_ in enumerate(self.id_list))
         self.row_data = {}
@@ -741,60 +748,3 @@ WHERE $table_name.id in ($id_list)""")
                (self.table_name(),
                 ','.join(str(id_) for id_ in self.id_list)))
         return self.connection.execute(sql).fetchone()[0] == 1
-
-class DeviceConnectionPoolMap(object):
-    """Used by DeviceItemTracker to manage a ConnectionPool for each connected
-    device.
-    """
-    def __init__(self):
-        self.pool_map = {}
-
-    def reset(self):
-        self.pool_map = {}
-
-    def get_pool(self, device_id):
-        return self.pool_map[device_id]
-
-    def on_devices_changed(self, added, changed, removed):
-        for device_info in added:
-            if device_info.id in self.pool_map:
-                logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
-                             "%s already in pool_map" % device_info.id)
-                continue
-            self.pool_map[device_info.id] = \
-                    self.make_new_connection_pool(device_info)
-        for device_id in removed:
-            try:
-                del self.pool_map[device_id]
-            except KeyError:
-                logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
-                             "%s already removed from pool_map" % device_id)
-
-    def make_new_connection_pool(self, device_info):
-        # We should only make 1 ConnectionPool per device tab, so limited the
-        # connections at 1 seems fine.
-        return connectionpool.ConnectionPool(device_info.sqlite_path,
-                                             min_connections=0,
-                                             max_connections=1)
-
-class DeviceItemTracker(ItemTracker):
-    """ItemTracker to use with devices."""
-
-    _connection_pool_map = DeviceConnectionPoolMap()
-    item_info_class = item.DeviceItemInfo
-
-    def __init__(self, device, idle_scheduler, query):
-        self.device = device
-        ItemTracker.__init__(self, idle_scheduler, query)
-
-    @classmethod
-    def on_devices_changed(cls, added, changed, removed):
-        """Update the connection pools based on device tabs changing
-
-        Call this when we get the TabsChanged message with the type "connect".
-        This means that device tabs have either been added or removed.
-        """
-        cls._connection_pool_map.on_devices_changed(added, changed, removed)
-
-    def connection_pool(self):
-        return self._connection_pool_map.get_pool(self.device.id)
