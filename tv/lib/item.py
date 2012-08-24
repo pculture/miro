@@ -2644,7 +2644,7 @@ class DeviceItem(ItemBase):
         # Split up the query to avoid SQLite's host parameters limit
         for paths in util.split_values_for_sqlite(path_list):
             placeholders = ', '.join('?' for i in xrange(len(paths)))
-            view = cls.make_view('lower(filename) IN (%s)' % placeholders,
+            view = cls.make_view('filename IN (%s)' % placeholders,
                                  paths, db_info=db_info)
             for i in view:
                 path_map[i.filename] = i

@@ -257,7 +257,7 @@ class ItemTrackerQuery(object):
         return " ".join(parts)
 
     def copy(self):
-        retval = ItemTrackerQuery()
+        retval = self.__class__()
         retval.conditions = self.conditions[:]
         retval.order_by = self.order_by[:]
         retval.match_string = self.match_string

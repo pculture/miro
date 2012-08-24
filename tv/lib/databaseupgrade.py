@@ -46,6 +46,8 @@ import shutil
 import time
 import urllib
 
+import sqlite3
+
 from miro.gtcache import gettext as _
 from miro import schema
 from miro import util
@@ -172,7 +174,14 @@ def get_next_id(cursor):
     """
     max_id = 0
     for table in get_object_tables(cursor):
-        cursor.execute("SELECT MAX(id) from %s" % table)
+        # skip tables that don't store DDBObjects
+        if table.startswith('item_fts'):
+            continue 
+        try:
+            cursor.execute("SELECT MAX(id) from %s" % table)
+        except sqlite3.OperationalError:
+            raise sqlite3.OperationalError("error selecting id from %s" %
+                                           table)
         max_id = max(max_id, cursor.fetchone()[0])
     return max_id + 1
 

@@ -393,7 +393,7 @@ class DeviceDatabaseTest(MiroTestCase):
     def test_open(self):
         self.open_database()
         self.assertEquals(self.device.db_info.db.__class__,
-                          storedatabase.LiveStorage)
+                          storedatabase.DeviceLiveStorage)
         self.assertEquals(self.device.db_info.db.error_handler.__class__,
                           storedatabase.DeviceLiveStorageErrorHandler)
 

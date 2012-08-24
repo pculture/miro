@@ -31,6 +31,7 @@
 import contextlib
 import sqlite3
 
+from miro import messages
 from miro.data import dbcollations
 
 class ConnectionLimitError(StandardError):
@@ -119,10 +120,12 @@ class ConnectionPool(object):
 class DeviceConnectionPool(ConnectionPool):
     """ConnectionPool for a device."""
     def __init__(self, device_info):
-        # We should only make 1 ConnectionPool per device tab, so limited the
-        # connections at 1 seems fine.
+        # min_connections is 0 since we should normally not have any
+        # connections to the device database.  The max connections is 2 in
+        # case the user is on the video tab and is playing items from the
+        # audio tab (or vice-versa)
         ConnectionPool.__init__(self, device_info.sqlite_path,
-                                min_connections=0, max_connections=1)
+                                min_connections=0, max_connections=2)
 
 class DeviceConnectionPoolMap(object):
     """Manage a ConnectionPool for each connected device.
@@ -136,16 +139,27 @@ class DeviceConnectionPoolMap(object):
     def get_pool(self, device_id):
         return self.pool_map[device_id]
 
-    def on_devices_changed(self, added, changed, removed):
-        for device_info in added:
+    def _make_pools_for_infos(self, infos):
+        for device_info in infos:
+            if (not isinstance(device_info, messages.DeviceInfo) or
+                device_info.db_info is None):
+                continue
+
             if device_info.id in self.pool_map:
                 logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
                              "%s already in pool_map" % device_info.id)
                 continue
             self.pool_map[device_info.id] = DeviceConnectionPool(device_info)
-        for device_id in removed:
-            try:
+
+    def _remove_pools_for_infos(self, infos):
+        for device_info in infos:
+            if not isinstance(device_info, messages.DeviceInfo):
+                continue
+            if device_info.id in self.pool_map:
                 del self.pool_map[device_id]
-            except KeyError:
-                logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
-                             "%s already removed from pool_map" % device_id)
+
+    def on_tabs_changed(self, message):
+        if message.type != 'connect':
+            return
+        self._make_pools_for_infos(message.added)
+        self._remove_pools_for_infos(message.removed)

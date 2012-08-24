@@ -495,7 +495,7 @@ class DeviceManager(object):
                     metadata_manager.close()
                     db_info = metadata_manager = None
             elif not read_only:
-                sqlite_db = load_sqlite_database(mount, db, kwargs.get('size'),
+                sqlite_db = load_sqlite_database(mount, kwargs.get('size'),
                                                  is_hidden=is_hidden)
                 db_info = database.DBInfo(sqlite_db)
                 importer = devicedatabaseupgrade.OldItemImporter(sqlite_db,
@@ -511,9 +511,13 @@ class DeviceManager(object):
             db_info = None
             metadata_manager = None
             read_only = False
+        if db_info is not None:
+            sqlite_path = sqlite_database_path(mount)
+        else:
+            sqlite_path = None
 
         info = self.connected[id_] = messages.DeviceInfo(
-            id_, info, mount, sqlite_database_path(mount), db, db_info,
+            id_, info, mount, sqlite_path, db, db_info,
             metadata_manager, kwargs.get('size'), kwargs.get('remaining'),
             read_only)
 
@@ -1346,7 +1350,7 @@ def load_sqlite_database(mount, device_size, countdown=0, is_hidden=False):
     logging.info('loading SQLite db on device %r: %r', mount, path)
     error_handler = storedatabase.DeviceLiveStorageErrorHandler(mount)
     try:
-        live_storage = storedatabase.LiveStorage(
+        live_storage = storedatabase.DeviceLiveStorage(
             path, error_handler,
             preallocate=preallocate,
             object_schemas=schema.device_object_schemas,
@@ -1417,10 +1421,13 @@ def on_new_metadata(metadata_manager, new_metadata, device_id):
     try:
         for path, metadata in new_metadata.iteritems():
             try:
-                path_map[path].update_from_metadata(metadata)
+                device_item = path_map[path]
             except KeyError:
                 logging.warn("devices.py - on_new_metadata: Got metadata "
                              "but can't find item for %r", path)
+            else:
+                device_item.update_from_metadata(metadata)
+                device_item.signal_change()
     finally:
         device.db_info.bulk_sql_manager.finish()
 

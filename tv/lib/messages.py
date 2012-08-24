@@ -1448,6 +1448,7 @@ class DeviceItemChanges(FrontendMessage):
         self.changed = changed
         self.removed = removed
         self.changed_columns = changed_columns
+        self.dlstats_changed = False
 
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed

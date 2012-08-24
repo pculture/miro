@@ -1275,6 +1275,9 @@ class LiveStorage(signals.SignalEmitter):
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
         self.set_version()
+        self.setup_fulltext_search()
+
+    def setup_fulltext_search(self):
         fulltextsearch.setup_fulltext_search(self.connection)
 
     def _get_size_info(self):
@@ -1380,6 +1383,12 @@ class LiveStorage(signals.SignalEmitter):
             i += 1
             save_name = "%s.%d" % (org_save_name, i)
         return save_name
+
+class DeviceLiveStorage(LiveStorage):
+    """Version of LiveStorage used for a device."""
+    def setup_fulltext_search(self):
+        # FIXME: need to implement this for devices
+        pass
 
 class SQLiteConverter(object):
     def __init__(self):

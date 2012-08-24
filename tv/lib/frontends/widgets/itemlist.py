@@ -38,6 +38,7 @@ in the interface.
 
 import collections
 
+from miro import app
 from miro.data import itemtrack
 from miro.frontends.widgets import itemfilter
 from miro.frontends.widgets import itemsort
@@ -81,14 +82,28 @@ class ItemList(itemtrack.ItemTracker):
         self.search_text = search_text
         self.group_func = group_func
         itemtrack.ItemTracker.__init__(self, call_on_ui_thread,
-                                       self._make_query())
+                                       self._make_query(),
+                                       self._get_connection_pool(tab_type,
+                                                                 tab_id))
+
+    def is_for_device(self):
+        return self.tab_type.startswith('device-')
+
+    def device_id(self):
+        # tab_id is the device_id + '-video' or '-audio'.  Remove the
+        # suffix
+        return self.tab_id.rsplit('-', 1)[0]
 
     def _fetch_id_list(self):
         itemtrack.ItemTracker._fetch_id_list(self)
         self._reset_group_info()
 
     def _make_base_query(self, tab_type, tab_id):
-        query = itemtrack.ItemTrackerQuery()
+        if self.is_for_device():
+            query = itemtrack.DeviceItemTrackerQuery()
+        else:
+            query = itemtrack.ItemTrackerQuery()
+
         if tab_type == 'videos':
             query.add_condition('file_type', '=', 'video')
         elif tab_type == 'music':
@@ -121,6 +136,10 @@ class ItemList(itemtrack.ItemTracker):
             query.add_complex_condition('feed_id', sql, (tab_id,))
         elif tab_type == 'folder-contents':
             query.add_condition('parent_id', '=', tab_id)
+        elif tab_type == 'device-video':
+            query.add_condition('file_type', '=', u'video')
+        elif tab_type == 'device-audio':
+            query.add_condition('file_type', '=', u'audio')
         elif tab_type == 'manual':
             # for the manual tab, tab_id is a list of ids to play
             id_list = tab_id
@@ -130,6 +149,12 @@ class ItemList(itemtrack.ItemTracker):
         else:
             raise ValueError("Can't handle tab (%r, %r)" % (tab_type, tab_id))
         return query
+
+    def _get_connection_pool(self, tab_type, tab_id):
+        if self.is_for_device():
+            return app.device_connection_pools.get_pool(self.device_id())
+        else:
+            return app.connection_pool
 
     def _make_query(self):
         query = self.base_query.copy()
@@ -309,8 +334,16 @@ class ItemListPool(object):
 
     def on_item_changes(self, message):
         """Call on_item_changes for each ItemList in the pool."""
-        for obj in self.all_item_lists:
-            obj.on_item_changes(message)
+        for item_list in self.all_item_lists:
+            if not item_list.is_for_device():
+                item_list.on_item_changes(message)
+
+    def on_device_item_changes(self, message):
+        """Call on_item_changes for each ItemList in the pool."""
+        for item_list in self.all_item_lists:
+            if (item_list.is_for_device() and
+                item_list.device_id() == message.device_id):
+                item_list.on_item_changes(message)
 
 # grouping functions
 def album_grouping(info):
