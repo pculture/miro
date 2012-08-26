@@ -184,7 +184,22 @@ def get_upgrade_func(version):
         return globals()['upgrade%d' % version]
 
 def run_on_devices(func):
-    """decorator to run an upgrade function only for device databases."""
+    """decorator to run an upgrade function only for device databases.
+
+    Note: when upgrading device databases, we need to account for the fact
+    that older versions of miro will still open the database with the newer
+    schema.  This means we should go by the following rules:
+
+    For new columns we need to either:
+        - Make NULL a valid value and deal with the fact that older versions
+          will always set the column to NULL
+        - Write code in devicedatabaseupgrade that checks for NULL values and
+          sets the default for them.  (Writing a database upgrade won't work,
+          the issue is older versions of miro opening the database *after* the
+          upgrade).
+    - Don't delete columns.
+    - Don't change the data format for columns
+    """
     func._contexts = set(['device'])
     return func
 
