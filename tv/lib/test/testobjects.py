@@ -119,7 +119,7 @@ def setup_mock_device_database(device):
     }
     sqlite_db = devices.load_sqlite_database(device.mount,
                                              device.size)
-    db_info = database.DBInfo(sqlite_db)
+    db_info = database.DeviceDBInfo(sqlite_db, device.id)
     metadata_manager = devices.make_metadata_manager(device.mount,
                                                      db_info,
                                                      device.id)

@@ -39,6 +39,7 @@ in the interface.
 import collections
 
 from miro import app
+from miro.data import item
 from miro.data import itemtrack
 from miro.frontends.widgets import itemfilter
 from miro.frontends.widgets import itemsort
@@ -83,8 +84,7 @@ class ItemList(itemtrack.ItemTracker):
         self.group_func = group_func
         itemtrack.ItemTracker.__init__(self, call_on_ui_thread,
                                        self._make_query(),
-                                       self._get_connection_pool(tab_type,
-                                                                 tab_id))
+                                       self._make_item_source())
 
     def is_for_device(self):
         return self.tab_type.startswith('device-')
@@ -150,11 +150,12 @@ class ItemList(itemtrack.ItemTracker):
             raise ValueError("Can't handle tab (%r, %r)" % (tab_type, tab_id))
         return query
 
-    def _get_connection_pool(self, tab_type, tab_id):
+    def _make_item_source(self):
         if self.is_for_device():
-            return app.device_connection_pools.get_pool(self.device_id())
+            device_info = app.tabs['connect'].get_tab(self.device_id())
+            return item.DeviceItemSource(device_info)
         else:
-            return app.connection_pool
+            return item.ItemSource()
 
     def _make_query(self):
         query = self.base_query.copy()

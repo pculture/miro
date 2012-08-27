@@ -60,7 +60,8 @@ class ItemTrackTestWALMode(MiroTestCase):
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_order_by(['release_date'])
-        self.tracker = itemtrack.ItemTracker(self.mock_idle_scheduler, query)
+        self.tracker = itemtrack.ItemTracker(self.mock_idle_scheduler, query,
+                                             item.ItemSource())
         self.signal_handlers = {}
         for signal in ("items-changed", "list-changed"):
             self.signal_handlers[signal] = mock.Mock()
@@ -522,15 +523,22 @@ class DeviceItemTrackTestWALMode(MiroTestCase):
         self.idle_scheduler = mock.Mock()
         self.connection_pool = DeviceConnectionPool(self.device)
         self.force_wal_mode()
+        self.init_data_package()
         device_items = testobjects.make_device_items(self.device, 'audio1.mp3',
                                                      'audio2.mp3', 'video1.avi')
         self.audio1, self.audio2, self.video1 = device_items
         self.device.db_info.db.finish_transaction()
+        # simulate the device tab being sent to the frontend so that
+        # app.device_connection_pools has a ConnectionPool for the device
+        msg = messages.TabsChanged('connect', [self.device], [], [])
+        app.device_connection_pools.on_tabs_changed(msg)
+
         query = itemtrack.DeviceItemTrackerQuery()
         query.add_condition('file_type', '=', u'audio')
         query.set_order_by(['filename'])
+        item_source = item.DeviceItemSource(self.device)
         self.tracker = itemtrack.ItemTracker(self.idle_scheduler, query,
-                                             self.connection_pool)
+                                             item_source)
         self.mock_message_handler = mock.Mock()
         messages.FrontendMessage.install_handler(self.mock_message_handler)
 

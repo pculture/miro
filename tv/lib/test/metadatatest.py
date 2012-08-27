@@ -1372,7 +1372,7 @@ class DeviceMetadataTest(EventLoopTest):
         self.cover_art_dir = os.path.join(self.tempdir, 'cover-art')
         os.makedirs(self.cover_art_dir)
         sqlite_db = devices.load_sqlite_database(':memory:', 1024)
-        db_info = database.DBInfo(sqlite_db)
+        db_info = database.DeviceDBInfo(sqlite_db, device_id)
         metadata_manager = devices.make_metadata_manager(
             self.tempdir, db_info, device_id)
         self.device = messages.DeviceInfo(device_id, device_info, mount,

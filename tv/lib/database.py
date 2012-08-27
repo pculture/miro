@@ -622,7 +622,8 @@ class DDBObject(signals.SignalEmitter):
             else:
                 raise ObjectNotFoundError(id_)
         except KeyError:
-            return cls.make_view('id=?', (id_,)).get_singleton()
+            view = cls.make_view('id=?', (id_,), db_info=db_info)
+            return view.get_singleton()
 
     @classmethod
     def delete(cls, where, values=None, db_info=None):
@@ -789,6 +790,12 @@ class DBInfo(object):
 
     def make_new_id(self):
         return self.id_counter.next()
+
+class DeviceDBInfo(DBInfo):
+    """DeviceDBInfo -- DBInfo for devices."""
+    def __init__(self, db, device_id):
+        DBInfo.__init__(self, db)
+        self.device_id = device_id
 
 def initialize():
     app.db_info = DBInfo(app.db)

@@ -51,10 +51,9 @@ from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
 from miro.download_utils import (clean_filename, next_free_filename,
         next_free_directory)
 
-from miro.database import (DDBObject, ObjectNotFoundError,
-                           DatabaseConstraintError)
 from miro.databasehelper import make_simple_get_set
 from miro import app
+from miro import database
 from miro import httpclient
 from miro import iconcache
 from miro import databaselog
@@ -416,7 +415,7 @@ class ItemChangeTracker(object):
     def on_item_removed(self, item):
         self.removed.add(item.id)
 
-class ItemBase(DDBObject):
+class ItemBase(database.DDBObject):
     """Base class for Item and DeviceItem"""
 
     def init_metadata_attributes(self):
@@ -459,10 +458,10 @@ class ItemBase(DDBObject):
 
     def signal_change(self, needs_save=True, can_change_views=True):
         self.__class__.change_tracker.on_item_changed(self)
-        DDBObject.signal_change(self, needs_save, can_change_views)
+        database.DDBObject.signal_change(self, needs_save, can_change_views)
 
     def remove(self):
-        DDBObject.remove(self)
+        database.DDBObject.remove(self)
         self.__class__.change_tracker.on_item_removed(self)
 
 class Item(ItemBase, iconcache.IconCacheOwnerMixin):
@@ -1084,33 +1083,33 @@ class Item(ItemBase, iconcache.IconCacheOwnerMixin):
         if self.feed_id is not None:
             try:
                 obj = models.Feed.get_by_id(self.feed_id)
-            except ObjectNotFoundError:
-                raise DatabaseConstraintError(
+            except database.ObjectNotFoundError:
+                raise database.DatabaseConstraintError(
                     "my feed (%s) is not in database" % self.feed_id)
             else:
                 if not isinstance(obj, models.Feed):
                     msg = "feed_id points to a %s instance" % obj.__class__
-                    raise DatabaseConstraintError(msg)
+                    raise database.DatabaseConstraintError(msg)
         if self.has_parent():
             try:
                 obj = Item.get_by_id(self.parent_id)
-            except ObjectNotFoundError:
-                raise DatabaseConstraintError(
+            except database.ObjectNotFoundError:
+                raise database.DatabaseConstraintError(
                     "my parent (%s) is not in database" % self.parent_id)
             else:
                 if not isinstance(obj, Item):
                     msg = "parent_id points to a %s instance" % obj.__class__
-                    raise DatabaseConstraintError(msg)
+                    raise database.DatabaseConstraintError(msg)
                 # If is_container_item is None, we may be in the middle
                 # of building the children list.
                 if (obj.is_container_item is not None and
                     not obj.is_container_item):
                     msg = "parent_id is not a containerItem"
-                    raise DatabaseConstraintError(msg)
+                    raise database.DatabaseConstraintError(msg)
         if self.parent_id is None and self.feed_id is None:
-            raise DatabaseConstraintError("feed_id and parent_id both None")
+            raise database.DatabaseConstraintError("feed_id and parent_id both None")
         if self.parent_id is not None and self.feed_id is not None:
-            raise DatabaseConstraintError(
+            raise database.DatabaseConstraintError(
                 "feed_id and parent_id both not None")
 
     def on_signal_change(self):
@@ -1185,7 +1184,7 @@ class Item(ItemBase, iconcache.IconCacheOwnerMixin):
         if self.has_parent():
             try:
                 return self.get_parent().get_title()
-            except ObjectNotFoundError:
+            except database.ObjectNotFoundError:
                 return None
         return None
 
@@ -1201,7 +1200,7 @@ class Item(ItemBase, iconcache.IconCacheOwnerMixin):
         if self.has_parent():
             try:
                 return self.get_parent().get_title()
-            except ObjectNotFoundError:
+            except database.ObjectNotFoundError:
                 return None
         return None
 
@@ -2268,7 +2267,7 @@ class FileItem(Item):
             # already deleted.
             try:
                 old_parent = self.get_parent()
-            except ObjectNotFoundError:
+            except database.ObjectNotFoundError:
                 old_parent = None
         else:
             old_parent = None
@@ -2531,12 +2530,18 @@ class DeviceItem(ItemBase):
     """
     def __init__(self, *args, **kwargs):
         # Normally we don't override DDBObject.__init__(), but this time we do
-        # to make creating a new DeviceItem less awkward.  Since the device is
-        # the first argument, we don't require the caller to also pass the
-        # DBInfo object, which is redundant.
-        if len(args) > 0 and 'restored_data' not in kwargs:
+        # for a couple reasons:
+        #  - We need to set device_id
+        #  - We want to make creating a new DeviceItem less awkward.  Since
+        #  the device is the first argument, we don't require the caller to
+        #  also pass the DBInfo object, which is redundant.
+        if 'restored_data' not in kwargs:
+            # creating a new DeviceItem.  We can get db_info from the device
+            # passed in
             device = args[0]
             kwargs['db_info'] = device.db_info
+        # set device_id
+        self.device_id = kwargs['db_info'].device_id
         ItemBase.__init__(self, *args, **kwargs)
 
     def setup_new(self, device, filename, sync_info=None, auto_sync=False):
@@ -2547,7 +2552,6 @@ class DeviceItem(ItemBase):
         :param sync_info: ItemInfo that this was synced from
         :param auto_sync: Was this item auto-synced?
         """
-        self.device_id = device.id
         self.init_metadata_attributes()
         self.filename = filename
         self.auto_sync = auto_sync
@@ -2681,6 +2685,7 @@ class DeviceItem(ItemBase):
         except EnvironmentError:
             logging.warn("DeviceItem.delete_and_remove: Error removing %s",
                          fullpath)
+        # FIXME: should also delete cover art and screenshot files
         self.remove(device)
 
     def remove(self, device):

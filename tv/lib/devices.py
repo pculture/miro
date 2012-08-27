@@ -497,7 +497,7 @@ class DeviceManager(object):
             elif not read_only:
                 sqlite_db = load_sqlite_database(mount, kwargs.get('size'),
                                                  is_hidden=is_hidden)
-                db_info = database.DBInfo(sqlite_db)
+                db_info = database.DeviceDBInfo(sqlite_db, id_)
                 importer = devicedatabaseupgrade.OldItemImporter(sqlite_db,
                                                                  mount,
                                                                  db)

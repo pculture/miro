@@ -455,7 +455,7 @@ class DeviceUpgradeTest(MiroTestCase):
         """Check that we successfully imported the sqlite data."""
         sqlite_db = devices.load_sqlite_database(self.device.mount, 1024)
         sqlite_db.cursor.execute("SELECT album from metadata")
-        db_info = database.DBInfo(sqlite_db)
+        db_info = database.DeviceDBInfo(sqlite_db, self.device.id)
         importer = devicedatabaseupgrade.OldItemImporter(sqlite_db,
                                                          self.device.mount,
                                                          self.device.db)

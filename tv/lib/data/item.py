@@ -263,13 +263,12 @@ class ItemInfo(object):
     html_stripper = util.HTMLStripper()
 
     source_type = 'database'
-    remote = False
     device = None
 
-    def __init__(self, *row_data):
+    def __init__(self, row_data):
         """Create an ItemInfo object.
 
-        :param *row_data: data from sqlite.  There should be a value for each
+        :param row_data: data from sqlite.  There should be a value for each
         SelectColumn that column_info() returns.
         """
         self.row_data = row_data
@@ -351,6 +350,10 @@ class ItemInfo(object):
             return self.has_parent
         else:
             return self.feed_url == 'dtv:manualFeed'
+
+    @property
+    def remote(self):
+        return self.source_type == u'sharing'
 
     @property
     def has_shareable_url(self):
@@ -563,28 +566,32 @@ class ItemInfo(object):
             return self.duration_ms // 1000
 
     def __repr__(self):
-        return '<ItemInfo: %s>' % self.title
+        return '<%s: %s>' % (self.__class__.__name__, self.title)
 
     def __str__(self):
-        return '<ItemInfo: %s>' % self.title
+        return '<%s: %s>' % (self.__class__.__name__, self.title)
 
-def _fetch_item_infos(connection, item_ids, select_info):
-    """Does the work for fetch_item_infos() and fetch_device_item_infos()."""
+def _fetch_item_rows(connection, item_ids, select_info):
+    """Fetch rows for fetch_item_infos and fetch_device_item_infos."""
+
     columns = ','.join('%s.%s' % (c.table, c.column)
                        for c in select_info.select_columns)
     item_ids = ','.join(str(item_id) for item_id in item_ids)
     sql = ("SELECT %s FROM %s %s WHERE %s.id IN (%s)" %
            (columns, select_info.table_name, select_info.join_sql(),
             select_info.table_name, item_ids))
-    return [ItemInfo(*row) for row in connection.execute(sql)]
+    return connection.execute(sql)
 
 def fetch_item_infos(connection, item_ids):
     """Fetch a list of ItemInfos """
-    return _fetch_item_infos(connection, item_ids, ItemSelectInfo())
+    result_set = _fetch_item_rows(connection, item_ids, ItemSelectInfo())
+    return [ItemInfo(row) for row in result_set]
 
-def fetch_device_item_infos(connection, item_ids):
+def fetch_device_item_infos(device, item_ids):
     """Fetch a list of ItemInfos for a device"""
-    return _fetch_item_infos(connection, item_ids, DeviceItemSelectInfo())
+    result_set = _fetch_item_rows(device.db_info.db.connection,
+                                  item_ids, DeviceItemSelectInfo())
+    return [DeviceItemInfo(device.id, row) for row in result_set]
 
 class DeviceItemSelectInfo(ItemSelectInfo):
     """ItemSelectInfo for DeviceItems."""
@@ -689,3 +696,74 @@ class DeviceItemInfo(ItemInfo):
     """ItemInfo for devices """
 
     select_info = DeviceItemSelectInfo()
+    source_type = 'device'
+
+    def __init__(self, device_info, row_data):
+        """Create an ItemInfo object.
+
+        :param device_info: DeviceInfo object for the device
+        :param row_data: data from sqlite.  There should be a value for each
+        SelectColumn that column_info() returns.
+        """
+        self.device_info = device_info
+        self.device_id = device_info.id
+        self.mount = device_info.mount
+        self.row_data = row_data
+
+    @property
+    def filename(self):
+        relative_filename = ItemInfo.filename.__get__(self, self.__class__)
+        return os.path.join(self.mount, relative_filename)
+
+class ItemSource(object):
+    """Create ItemInfo objects.
+
+    ItemSource stores info about a database that stores items and contains the
+    logic to build an ItemInfo from a SELECT result.  It tries to abstract
+    away the differences between items on the main database and device
+    databases.
+
+    :attribute select_info: ItemSelectInfo for a database
+    :attribute connection_pool: ConnectionPool for the same database
+    """
+
+    select_info = ItemSelectInfo()
+
+    def __init__(self):
+        self.connection_pool = app.connection_pool
+
+    def get_connection(self):
+        """Get a database connection to use.
+
+        A database connection must be created before using any of the query
+        methods.  Call release_connection() once the connection is finished
+        with.
+        """
+        return self.connection_pool.get_connection()
+
+    def release_connection(self, connection):
+        """Release a connection returned by get_connection().
+
+        Once a connection is released it should not be used anymore.
+        """
+        self.connection_pool.release_connection(connection)
+
+    def wal_mode(self):
+        """Is this database using WAL mode for transactions?"""
+        return self.connection_pool.wal_mode
+
+    def make_item_info(self, row_data):
+        """Create an ItemInfo from a result row."""
+        return ItemInfo(row_data)
+
+class DeviceItemSource(ItemSource):
+
+    select_info = DeviceItemSelectInfo()
+
+    def __init__(self, device_info):
+        self.connection_pool = \
+                app.device_connection_pools.get_pool(device_info.id)
+        self.device_info = device_info
+
+    def make_item_info(self, row_data):
+        return DeviceItemInfo(self.device_info, row_data)

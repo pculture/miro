@@ -39,7 +39,6 @@ from miro import app
 from miro import schema
 from miro import signals
 from miro import util
-from miro.data import connectionpool
 from miro.data import item
 
 ItemTrackerCondition = util.namedtuple(
@@ -68,18 +67,14 @@ ItemTrackerOrderBy = util.namedtuple(
     """)
 
 class ItemTrackerQuery(object):
-    """Define the query used to get items for ItemTracker."""
+    """Query used to select item ids for ItemTracker.  """
 
-    item_info_class = item.ItemInfo
+    select_info = item.ItemSelectInfo()
 
     def __init__(self):
         self.conditions = []
         self.match_string = None
         self.order_by = [ItemTrackerOrderBy('item', 'id', None, False)]
-
-    @property
-    def select_info(self):
-        return self.item_info_class.select_info
 
     def join_sql(self, table):
         return self.select_info.join_sql(table, join_type='JOIN')
@@ -266,7 +261,7 @@ class ItemTrackerQuery(object):
 class DeviceItemTrackerQuery(ItemTrackerQuery):
     """ItemTrackerQuery for DeviceItems."""
 
-    item_info_class = item.DeviceItemInfo
+    select_info = item.DeviceItemSelectInfo()
 
 class ItemTracker(signals.SignalEmitter):
     """Track items in the database
@@ -292,15 +287,14 @@ class ItemTracker(signals.SignalEmitter):
     # how many rows we fetch at one time in _ensure_row_loaded()
     FETCH_ROW_CHUNK_SIZE = 25
 
-    def __init__(self, idle_scheduler, query, connection_pool=None):
+    def __init__(self, idle_scheduler, query, item_source):
         """Create an ItemTracker
 
         :param idle_scheduler: function to schedule idle callback functions.
         It should input a function and schedule for it to be called during
         idletime.
         :param query: ItemTrackerQuery to use
-        :param connection_pool: ConnectionPool to use.  By default we use
-        app.connection.pool
+        :param item_source: ItemSource to use.
         """
         signals.SignalEmitter.__init__(self)
         self.create_signal("will-change")
@@ -309,10 +303,7 @@ class ItemTracker(signals.SignalEmitter):
         self.idle_scheduler = idle_scheduler
         self.idle_work_scheduled = False
         self.item_fetcher = None
-        if connection_pool is None:
-            self.connection_pool = app.connection_pool
-        else:
-            self.connection_pool = connection_pool
+        self.item_source = item_source
         self._set_query(query)
         self._fetch_id_list()
         self._schedule_idle_work()
@@ -333,12 +324,11 @@ class ItemTracker(signals.SignalEmitter):
         this connection without commiting any pending read transaction.
         :param id_list: list of ids that we will have to fetch.
         """
-        if self.connection_pool.wal_mode:
+        if self.item_source.wal_mode():
             klass = ItemFetcherWAL
         else:
             klass = ItemFetcherNoWAL
-        return klass(connection, self.connection_pool, id_list,
-                     self.query.item_info_class)
+        return klass(connection, self.item_source, id_list)
 
     def _destroy_item_fetcher(self):
         if self.item_fetcher:
@@ -354,7 +344,7 @@ class ItemTracker(signals.SignalEmitter):
     def _fetch_id_list(self):
         """Fetch the ids for this list.  """
         self._destroy_item_fetcher()
-        connection = self.connection_pool.get_connection()
+        connection = self.item_source.get_connection()
         self.id_list = self.query.select_ids(connection)
         self.id_to_index = dict((id_, i) for i, id_ in enumerate(self.id_list))
         self.row_data = {}
@@ -555,20 +545,24 @@ class ItemFetcher(object):
     this without having to load all the ItemInfos in the list.
     """
 
-    def __init__(self, connection, connection_pool, id_list, item_info_class):
+    def __init__(self, connection, item_source, id_list):
         self.connection = connection
-        self.connection_pool = connection_pool
+        self.item_source = item_source
         self.id_list = id_list
-        self.item_info_class = item_info_class
 
     def select_columns(self):
-        return self.item_info_class.select_info.select_columns
+        return self.item_source.select_info.select_columns
 
     def join_sql(self):
-        return self.item_info_class.select_info.join_sql()
+        return self.item_source.select_info.join_sql()
 
     def table_name(self):
-        return self.item_info_class.select_info.table_name
+        return self.item_source.select_info.table_name
+
+    def release_connection(self):
+        if self.connection is not None:
+            self.item_source.release_connection(self.connection)
+            self.connection = None
 
     def destroy(self):
         """Called when the ItemFetcher is no longer needed.  Release any
@@ -618,15 +612,12 @@ class ItemFetcher(object):
         raise NotImplementedError()
 
 class ItemFetcherWAL(ItemFetcher):
-    def __init__(self, connection, connection_pool, id_list, item_info_class):
-        ItemFetcher.__init__(self, connection, connection_pool, id_list,
-                             item_info_class)
+    def __init__(self, connection, item_source, id_list):
+        ItemFetcher.__init__(self, connection, item_source, id_list)
         self._prepare_sql()
 
     def destroy(self):
-        if self.connection is not None:
-            self.connection_pool.release_connection(self.connection)
-            self.connection = None
+        self.release_connection()
 
     def done_fetching(self):
         # We can safely finish the read transaction here
@@ -649,7 +640,7 @@ class ItemFetcherWAL(ItemFetcher):
                  (self.table_name(), ', '.join(str(i) for i in id_list)))
         sql = ' '.join((self._sql, where))
         cursor = self.connection.execute(sql)
-        return [self.item_info_class(*row) for row in cursor]
+        return [self.item_source.make_item_info(row) for row in cursor]
 
     def refresh_items(self, changed_ids):
         # We ignore changed_ids and just start a new transaction which will
@@ -674,9 +665,8 @@ class ItemFetcherWAL(ItemFetcher):
         return self.connection.execute(sql).fetchone()[0] == 1
 
 class ItemFetcherNoWAL(ItemFetcher):
-    def __init__(self, connection, connection_pool, id_list, item_info_class):
-        ItemFetcher.__init__(self, connection, connection_pool, id_list,
-                             item_info_class)
+    def __init__(self, connection, item_source, id_list):
+        ItemFetcher.__init__(self, connection, item_source, id_list)
         self._make_temp_table()
         self._select_into_temp_table(id_list)
 
@@ -713,10 +703,11 @@ WHERE $table_name.id in ($id_list)""")
         self.connection.execute(sql)
 
     def destroy(self):
-        self.connection.execute("DROP TABLE %s" % self.temp_table_name)
-        self.connection.commit()
-        self.connection_pool.release_connection(self.connection)
-        self.connection = self.temp_table_name = None
+        if self.connection is not None:
+            self.connection.execute("DROP TABLE %s" % self.temp_table_name)
+            self.connection.commit()
+            self.release_connection()
+            self.temp_table_name = None
 
     def fetch_items(self, id_list):
         """Create Item objects."""
@@ -725,7 +716,7 @@ WHERE $table_name.id in ($id_list)""")
         id_list_str = ', '.join(str(i) for i in id_list)
         sql = "SELECT * FROM %s WHERE id IN (%s)" % (self.temp_table_name,
                                                      id_list_str)
-        return [self.item_info_class(*row)
+        return [self.item_source.make_item_info(row)
                 for row in self.connection.execute(sql)]
 
     def refresh_items(self, changed_ids):
