@@ -209,16 +209,16 @@ class FeedParserValues(object):
                 try:
                     link = link['href']
                 except KeyError:
-                    return u""
+                    return None
             if link is None:
-                return u""
+                return None
             if isinstance(link, unicode):
                 return link
             try:
                 return link.decode('ascii', 'replace')
             except UnicodeDecodeError:
                 return link.decode('ascii', 'ignore')
-        return u""
+        return None
 
     def _calc_payment_link(self):
         try:
@@ -228,10 +228,10 @@ class FeedParserValues(object):
             try:
                 return self.entry.payment_url.decode('ascii','replace')
             except (AttributeError, UnicodeDecodeError):
-                return u""
+                return None
 
     def _calc_comments_link(self):
-        return self.entry.get('comments', u"")
+        return self.entry.get('comments', None)
 
     def _calc_url(self):
         if (self.first_video_enclosure is not None and
@@ -239,7 +239,7 @@ class FeedParserValues(object):
             url = self.first_video_enclosure['url'].replace('+', '%20')
             return quote_unicode_url(url)
         else:
-            return u''
+            return None
 
     def _calc_enclosure_size(self):
         enc = self.first_video_enclosure
@@ -277,7 +277,8 @@ class FeedParserValues(object):
 
         # if this is not a youtube url, then we try to use
         # updated_parsed from either the enclosure or the entry
-        if "youtube.com" not in self._calc_url():
+        url = self._calc_url()
+        if url is not None and "youtube.com" not in url:
             try:
                 release_date = self.first_video_enclosure.updated_parsed
             except AttributeError:
@@ -317,9 +318,9 @@ class FileFeedParserValues(FeedParserValues):
             'entry_title': title,
             'thumbnail_url': None,
             'entry_description': description,
-            'link': u'',
-            'payment_link': u'',
-            'comments_link': u'',
+            'link': None,
+            'payment_link': None,
+            'comments_link': None,
             'url': resources.url(filename),
             'enclosure_size': None,
             'enclosure_type': None,
@@ -1136,7 +1137,7 @@ class Item(ItemBase, iconcache.IconCacheOwnerMixin):
         This returns True when the item has a non-file URL.
         """
         url = self.get_url()
-        return url != u'' and not url.startswith(u"file:")
+        return url is not None and not url.startswith(u"file:")
 
     def get_feed(self):
         """Returns the feed this item came from.

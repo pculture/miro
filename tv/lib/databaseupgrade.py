@@ -4202,3 +4202,11 @@ def upgrade191(cursor):
         'file_type text, has_drm integer, show text, '
         'episode_id text, episode_number integer, season_number integer, '
         'kind text, net_lookup_enabled integer, metadata_title text)')
+
+@run_on_devices
+def upgrade192(cursor):
+    # change URL to be NULL instead of an empty string
+    cursor.execute("UPDATE item SET url=NULL WHERE url=''")
+    cursor.execute("UPDATE item SET link=NULL WHERE link=''")
+    cursor.execute("UPDATE item SET payments_link=NULL WHERE payments_link=''")
+    cursor.execute("UPDATE item SET comments_link=NULL WHERE comments_link=''")

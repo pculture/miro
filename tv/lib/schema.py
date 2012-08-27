@@ -433,10 +433,10 @@ class ItemSchema(MultiClassObjectSchema):
         ('entry_title', SchemaString(noneOk=True)),
         ('torrent_title', SchemaString(noneOk=True)),
         ('entry_description', SchemaString(noneOk=False)),
-        ('link', SchemaURL(noneOk=False)),
-        ('payment_link', SchemaURL(noneOk=False)),
-        ('comments_link', SchemaURL(noneOk=False)),
-        ('url', SchemaURL(noneOk=False)),
+        ('link', SchemaURL(noneOk=True)),
+        ('payment_link', SchemaURL(noneOk=True)),
+        ('comments_link', SchemaURL(noneOk=True)),
+        ('url', SchemaURL(noneOk=True)),
         ('enclosure_size', SchemaInt(noneOk=True)),
         ('enclosure_type', SchemaString(noneOk=True)),
         ('enclosure_format', SchemaString(noneOk=True)),
@@ -928,7 +928,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 190
+VERSION = 192
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

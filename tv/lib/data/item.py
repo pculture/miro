@@ -359,7 +359,7 @@ class ItemInfo(object):
 
         This returns True when the item has a non-file URL.
         """
-        return self.url != u'' and not self.url.startswith(u"file:")
+        return self.url is not None and not self.url.startswith(u"file:")
 
     @property
     def size(self):
