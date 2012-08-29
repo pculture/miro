@@ -522,6 +522,9 @@ def shutdown():
 def connect(signal, callback):
     _eventloop.connect(signal, callback)
 
+def connect_after(signal, callback):
+    _eventloop.connect_after(signal, callback)
+
 def disconnect(signal, callback):
     _eventloop.disconnect(signal, callback)
 

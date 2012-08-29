@@ -43,8 +43,8 @@ def initialize():
     global SavedSearchFeedImpl, ScraperFeedImpl, SearchFeedImpl
     global DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
     global ManualFeedImpl, ChannelFolder, PlaylistFolder
-    global PlaylistFolderItemMap, ChannelGuide, Item, FileItem, IconCache
-    global SavedPlaylist, PlaylistItemMap, TabOrder, ThemeHistory
+    global PlaylistFolderItemMap, ChannelGuide, Item, FileItem, DeviceItem
+    global IconCache, SavedPlaylist, PlaylistItemMap, TabOrder, ThemeHistory
     global messages
 
     from miro.downloader import RemoteDownloader
@@ -54,7 +54,7 @@ def initialize():
     from miro.folder import ChannelFolder, PlaylistFolder, \
             PlaylistFolderItemMap
     from miro.guide import ChannelGuide
-    from miro.item import Item, FileItem
+    from miro.item import Item, FileItem, DeviceItem
     from miro.iconcache import IconCache
     from miro.playlist import SavedPlaylist, PlaylistItemMap
     from miro.tabs import TabOrder

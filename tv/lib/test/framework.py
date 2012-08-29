@@ -14,6 +14,7 @@ from miro import app
 from miro import config
 from miro import data
 from miro import database
+from miro import devices
 from miro import eventloop
 from miro import extensionmanager
 from miro import feed
@@ -33,10 +34,12 @@ from miro import storedatabase
 from time import sleep
 from miro import models
 from miro import workerprocess
+from miro.data import itemtrack
 from miro.fileobject import FilenameType
 
 from miro.test import mock
 from miro.test import testhttpserver
+from miro.test import testobjects
 
 util.setup_logging()
 
@@ -254,7 +257,7 @@ class LogFilter(logging.Filter):
         if record.levelno >= self.exception_level and not self.raised_error:
             self.raised_error = True
             raise UnexpectedLogError("Unexpected logging: %s" %
-                                     record.getMessage())
+                                     logging.Formatter().format(record))
         else:
             self.records.append(record)
             return False
@@ -278,7 +281,9 @@ class MiroTestCase(unittest.TestCase):
         self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True
+        app.device_manager = devices.DeviceManager()
         models.Item._path_count_tracker.reset()
+        testobjects.test_started(self)
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
         # setup the deleted file checker
@@ -394,25 +399,6 @@ class MiroTestCase(unittest.TestCase):
             if ext.loaded:
                 app.extension_manager.unload_extension(ext)
 
-    def make_item_info(self, itemobj):
-        return itemsource.DatabaseItemSource._item_info_for(itemobj)
-
-    def make_feed(self, url):
-        url = u'http://feed%d.com/feed.rss' % self.feed_counter.next()
-        return models.Feed(url)
-
-    def make_item(self, feed, title):
-        """Make a new item."""
-        fp_values = item.FeedParserValues({})
-        fp_values.data['entry_title'] = title
-        fp_values.data['url'] = u'http://example.com/%s.mkv' % title
-        # pick a random recent date for the release date
-        seconds_ago = random.randint(0, 60 * 60 * 24 * 7)
-        release_date = (datetime.datetime.now() -
-                        datetime.timedelta(seconds=seconds_ago))
-        fp_values.data['release_date'] = release_date
-        return models.Item(fp_values, feed_id=feed.id)
-
     def setup_log_filter(self):
         """Make a LogFilter that will turn loggings into exceptions."""
         logger = logging.getLogger()
@@ -512,11 +498,11 @@ class MiroTestCase(unittest.TestCase):
                 # this means that exceptions in the upgrade will be sent to a
                 # dialog box.  Be careful with this, if you don't handle the
                 # dialog, then the unit tests will hang.
-                app.db.upgrade_database()
+                app.db.upgrade_database(context='main')
             else:
                 # normal case: use _upgrade_database() because we want
                 # exceptions to keep propagating
-                app.db._upgrade_database()
+                app.db._upgrade_database(context='main')
         item.setup_change_tracker()
         database.initialize()
 

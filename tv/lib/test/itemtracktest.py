@@ -35,28 +35,33 @@ import itertools
 from miro import app
 from miro import downloader
 from miro import eventloop
-from miro import item
 from miro import messages
 from miro import models
+from miro.data import item
 from miro.data import itemtrack
 from miro.test import mock
+from miro.data.connectionpool import DeviceConnectionPool
 from miro.test.framework import MiroTestCase, MatchAny
+from miro.test import testobjects
 
 class ItemTrackTestWALMode(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.init_data_package()
         self.force_wal_mode()
-        self.feed_counter = itertools.count()
-        self.tracked_feed, self.tracked_items = self.make_feed_with_items(10)
-        self.other_feed1, self.other_items1 = self.make_feed_with_items(12)
-        self.other_feed2, self.other_items2 = self.make_feed_with_items(8)
+        self.tracked_feed, self.tracked_items = \
+                testobjects.make_feed_with_items(10)
+        self.other_feed1, self.other_items1 = \
+                testobjects.make_feed_with_items(12)
+        self.other_feed2, self.other_items2 = \
+                testobjects.make_feed_with_items(8)
         app.db.finish_transaction()
         self.mock_idle_scheduler = mock.Mock()
         query = itemtrack.ItemTrackerQuery()
         query.add_condition('feed_id', '=', self.tracked_feed.id)
         query.set_order_by(['release_date'])
-        self.tracker = itemtrack.ItemTracker(self.mock_idle_scheduler, query)
+        self.tracker = itemtrack.ItemTracker(self.mock_idle_scheduler, query,
+                                             item.ItemSource())
         self.signal_handlers = {}
         for signal in ("items-changed", "list-changed"):
             self.signal_handlers[signal] = mock.Mock()
@@ -64,7 +69,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.mock_message_handler = mock.Mock()
         messages.FrontendMessage.install_handler(self.mock_message_handler)
         # reset item chages that occured from setUp()
-        item.Item.change_tracker.reset()
+        models.Item.change_tracker.reset()
 
     def force_wal_mode(self):
         """Force WAL mode to be a certain value.
@@ -90,16 +95,6 @@ class ItemTrackTestWALMode(MiroTestCase):
             if loop_check.next() > 1000:
                 raise AssertionError("idle callbacks never stopped")
             self.run_tracker_idle()
-
-    def make_feed_with_items(self, item_count):
-        feed_count = self.feed_counter.next()
-        url = u'http://feed%d.com/feed.rss' % feed_count
-        feed = models.Feed(url)
-        items = []
-        for i in xrange(item_count):
-            name = u"feed%d-item%d" % (feed_count, i)
-            items.append(self.make_item(feed, name))
-        return feed, items
 
     def check_no_signals(self):
         """Check that our ItemTracker hasn't emitted any signals."""
@@ -160,7 +155,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
     def calc_items_in_tracker(self):
         item_list = []
-        for i in item.Item.make_view():
+        for i in models.Item.make_view():
             meets_conditions = True
             for condition in self.tracker.query.conditions:
                 if condition.table == 'item':
@@ -236,7 +231,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.check_tracker_items()
 
     def process_items_changed_message(self):
-        """Simulate the eventloop finished and sending the ItemChanges
+        """Simulate the eventloop finishing and sending the ItemChanges
         message.
 
         Also, intercept that message and pass it to our item tracker
@@ -300,7 +295,7 @@ class ItemTrackTestWALMode(MiroTestCase):
     def test_add_remove(self):
         # adding items to our tracked feed should result in the list-changed
         # signal
-        new_item = self.make_item(self.tracked_feed, u'new-item')
+        new_item = testobjects.make_item(self.tracked_feed, u'new-item')
         self.check_list_change_after_message()
         self.check_tracker_items()
         # removed items to our tracked feed should result in the list-changed
@@ -311,7 +306,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         self.check_tracker_items()
         # adding/remove items from other feeds shouldn't result in any signals
         self.other_items1[0].remove()
-        self.make_item(self.other_feed2, u'new-item2')
+        testobjects.make_item(self.other_feed2, u'new-item2')
         self.check_no_signals()
         self.check_tracker_items()
 
@@ -488,11 +483,10 @@ class ItemTrackTestWALMode(MiroTestCase):
         query.add_condition('remote_downloader.state', '=', 'downloading')
         query.set_order_by(['remote_downloader.rate'])
         self.tracker.change_query(query)
-        # Need to manually fetch the items that we :bn
+        # Need to manually fetch the items to compare to
         with app.connection_pool.context() as connection:
             id_list = [i.id for i in downloads]
-            fetcher = itemtrack.ItemFetcher.create(connection, id_list)
-            correct_items = fetcher.fetch_items(id_list)
+            correct_items = item.fetch_item_infos(connection, id_list)
         self.check_tracker_items(correct_items)
 
     def test_change_while_loading_data(self):
@@ -522,3 +516,87 @@ class ItemTrackTestNonWALMode(ItemTrackTestWALMode):
     def force_wal_mode(self):
         app.connection_pool.wal_mode = False
 
+class DeviceItemTrackTestWALMode(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.device = testobjects.make_mock_device()
+        self.idle_scheduler = mock.Mock()
+        self.connection_pool = DeviceConnectionPool(self.device)
+        self.force_wal_mode()
+        self.init_data_package()
+        device_items = testobjects.make_device_items(self.device, 'audio1.mp3',
+                                                     'audio2.mp3', 'video1.avi')
+        self.audio1, self.audio2, self.video1 = device_items
+        self.device.db_info.db.finish_transaction()
+        # simulate the device tab being sent to the frontend so that
+        # app.device_connection_pools has a ConnectionPool for the device
+        msg = messages.TabsChanged('connect', [self.device], [], [])
+        app.device_connection_pools.on_tabs_changed(msg)
+
+        query = itemtrack.DeviceItemTrackerQuery()
+        query.add_condition('file_type', '=', u'audio')
+        query.set_order_by(['filename'])
+        item_source = item.DeviceItemSource(self.device)
+        self.tracker = itemtrack.ItemTracker(self.idle_scheduler, query,
+                                             item_source)
+        self.mock_message_handler = mock.Mock()
+        messages.FrontendMessage.install_handler(self.mock_message_handler)
+
+    def process_device_items_changed_message(self):
+        """Simulate the eventloop finishing and sending the DeviceItemChanges
+        message.
+
+        Also, intercept that message and pass it to our item tracker
+        """
+        eventloop._eventloop.emit('event-finished', True)
+        mock_handle = self.mock_message_handler.handle
+        self.assertEquals(mock_handle.call_count, 1)
+        message = mock_handle.call_args[0][0]
+        self.assertEquals(type(message), messages.DeviceItemChanges)
+        self.assertEquals(message.device_id, self.device.id)
+        self.tracker.on_item_changes(message)
+        mock_handle.reset_mock()
+
+    def force_wal_mode(self):
+        """Force WAL mode to be a certain value.
+
+        By default we set wal_mode to be True.  DeviceItemTrackTestNoWALMode
+        overrides this and sets it to False.
+        """
+        self.connection_pool.wal_mode = True
+
+    def check_list(self, *correct_items):
+        tracker_items = self.tracker.get_items()
+        self.assertEquals([i.id for i in tracker_items],
+                          [i.id for i in correct_items])
+
+    def test_list(self):
+        self.check_list(self.audio1, self.audio2)
+
+    def test_changes(self):
+        self.audio2.update_from_metadata({u'file_type': u'video'})
+        self.audio2.signal_change()
+        self.video1.update_from_metadata({u'file_type': u'audio'})
+        self.video1.signal_change()
+        self.process_device_items_changed_message()
+        self.check_list(self.audio1, self.video1)
+
+class DeviceItemTrackTestNoWALMode(DeviceItemTrackTestWALMode):
+    def force_wal_mode(self):
+        self.connection_pool.wal_mode = False
+
+class ItemSelectInfoTest(MiroTestCase):
+    def get_attributes(self, klass):
+        return ([col.attr_name for col in klass.select_columns] + 
+                klass.constant_values.keys())
+
+    def test_attributes(self):
+        # test that a all attributes defined in ItemInfo are also defined in
+        # DeviceItemInfo.  "attributes" here means either a SelectColumn or an
+        # entry in the constant_values dict
+        item_attrs = set(self.get_attributes(item.ItemSelectInfo))
+        device_attrs = set(self.get_attributes(item.DeviceItemSelectInfo))
+        if not item_attrs.issubset(device_attrs):
+            raise AssertionError("DeviceItemInfo does not define all "
+                                 "attributes of ItemSelectInfo (%s)" %
+                                 item_attrs.difference(device_attrs))

@@ -29,8 +29,11 @@
 
 """miro.data.connectionpool -- SQLite connection pool """
 import contextlib
+import logging
+
 import sqlite3
 
+from miro import messages
 from miro.data import dbcollations
 
 class ConnectionLimitError(StandardError):
@@ -53,7 +56,7 @@ class ConnectionPool(object):
         self.max_connections = max_connections
         self.all_connections = set()
         self.free_connections = []
-        self.wal_mode = self._check_wal_mode()
+        self._check_wal_mode()
 
     def _check_wal_mode(self):
         """Try to set journal_mode=wall and return if it was successful
@@ -61,6 +64,7 @@ class ConnectionPool(object):
         connection = self.get_connection()
         cursor = connection.execute("PRAGMA journal_mode=wal");
         self.wal_mode = cursor.fetchone()[0] == u'wal'
+        self.release_connection(connection)
 
     def _make_new_connection(self):
         # TODO: should have error handling here, but what should we do?
@@ -114,3 +118,45 @@ class ConnectionPool(object):
         # Rollback any changes not committed
         connection.rollback()
         self.release_connection(connection)
+
+class DeviceConnectionPool(ConnectionPool):
+    """ConnectionPool for a device."""
+    def __init__(self, device_info):
+        # min_connections is 0 since we should normally not have any
+        # connections to the device database.  The max connections is 2 in
+        # case the user is on the video tab and is playing items from the
+        # audio tab (or vice-versa)
+        ConnectionPool.__init__(self, device_info.sqlite_path,
+                                min_connections=0, max_connections=2)
+
+class DeviceConnectionPoolMap(object):
+    """Manage a ConnectionPool for each connected device.
+    """
+    def __init__(self):
+        self.pool_map = {}
+
+    def reset(self):
+        self.pool_map = {}
+
+    def get_pool(self, device_id):
+        return self.pool_map[device_id]
+
+    def _ensure_connection_pool(self, device_info):
+        if device_info.id not in self.pool_map:
+            self.pool_map[device_info.id] = DeviceConnectionPool(device_info)
+
+    def _ensure_no_connection_pool(self, device_id):
+        if device_id in self.pool_map:
+            del self.pool_map[device_id]
+
+    def on_tabs_changed(self, message):
+        if message.type != 'connect':
+            return
+        for info in message.added + message.changed:
+            if isinstance(info, messages.DeviceInfo):
+                if info.db_info is not None:
+                    self._ensure_connection_pool(info)
+                else:
+                    self._ensure_no_connection_pool(info.id)
+        for id_ in message.removed:
+            self._ensure_no_connection_pool(id_)

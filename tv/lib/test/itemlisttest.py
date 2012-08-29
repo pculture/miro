@@ -40,7 +40,7 @@ from miro import models
 from miro import util
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemsort
-from miro.test import mock
+from miro.test import mock, testobjects
 from miro.test.framework import MiroTestCase
 
 class ItemListTest(MiroTestCase):
@@ -48,7 +48,7 @@ class ItemListTest(MiroTestCase):
         MiroTestCase.setUp(self)
         self.init_data_package()
         self.feed = models.Feed(u'http://example.com/feed.rss')
-        self.items = [self.make_item(self.feed, u'item-%s' % i)
+        self.items = [testobjects.make_item(self.feed, u'item-%s' % i)
                       for i in xrange(10)]
         app.db.finish_transaction()
         self.item_list = itemlist.ItemList('feed', self.feed.id)
@@ -192,7 +192,7 @@ class TestItemListPool(MiroTestCase):
         MiroTestCase.setUp(self)
         self.init_data_package()
         self.feed = models.Feed(u'http://example.com/feed.rss')
-        self.items = [self.make_item(self.feed, u'item-%s' % i)
+        self.items = [testobjects.make_item(self.feed, u'item-%s' % i)
                       for i in xrange(10)]
         app.db.finish_transaction()
         self.pool = itemlist.ItemListPool()
