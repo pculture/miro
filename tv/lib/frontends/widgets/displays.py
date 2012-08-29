@@ -487,7 +487,6 @@ class DeviceDisplayMixin(object):
 class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        # FIXME: re-implement DeviceItemController with the new ItemList code
         return tab_type == u'device' and len(selected_tabs) == 1 and \
                isinstance(selected_tabs[0], messages.DeviceInfo) and \
                not getattr(selected_tabs[0], 'fake', False)
@@ -504,7 +503,6 @@ class DeviceItemDisplay(DeviceDisplayMixin, ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         # FIXME: re-implement DeviceItemController with the new ItemList code
-        return False
         return tab_type == u'device' and len(selected_tabs) == 1 and \
                isinstance(selected_tabs[0], messages.DeviceInfo) and \
                getattr(selected_tabs[0], 'fake', False)

@@ -1687,10 +1687,12 @@ class MetadataManagerBase(signals.SignalEmitter):
             self._reset_new_metadata()
             try:
                 app.bulk_sql_manager.finish()
-            except StandardError:
-                logging.warn("Error adding new metadata. new_metadata\n%s",
-                             '\n'.join('%s: %s' % (os.path.basename(k), v)
-                                       for k, v in new_metadata_copy.items()))
+            except StandardError, e:
+                new_metadata_debug_string = '\n'.join(
+                    '%s: %s' % (os.path.basename(k), v)
+                    for k, v in new_metadata_copy.items())
+                logging.warn("Error adding new metadata: %s. new_metadata\n%s",
+                             e, new_metadata_debug_string)
                 raise
         self._send_progress_updates()
 

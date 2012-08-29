@@ -42,3 +42,4 @@ def init(db_path=None):
     if db_path is None:
         db_path = app.config.get(prefs.SQLITE_PATHNAME)
     app.connection_pool = connectionpool.ConnectionPool(db_path)
+    app.device_connection_pools = connectionpool.DeviceConnectionPoolMap()

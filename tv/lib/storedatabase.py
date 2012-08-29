@@ -617,10 +617,14 @@ class LiveStorage(signals.SignalEmitter):
             self.get_backup_directory(),
             LiveStorage.backup_filename_prefix + "*"))
 
-    def upgrade_database(self):
-        """Run any database upgrades that haven't been run."""
+    def upgrade_database(self, context='main'):
+        """Run any database upgrades that haven't been run.
+
+        :param context: context for the upgrade, either "main" for the main
+        database or "device" for the device database.
+        """
         try:
-            self._upgrade_database()
+            self._upgrade_database(context)
         except StandardError, e:
             logging.exception('error when upgrading database: %s', e)
             self._handle_upgrade_error()
@@ -692,7 +696,7 @@ class LiveStorage(signals.SignalEmitter):
         self.open_connection()
         del self._changed_db_path
 
-    def _upgrade_database(self):
+    def _upgrade_database(self, context):
         self.startup_version = current_version = self.get_version()
 
         if current_version > self._schema_version:
@@ -711,7 +715,8 @@ class LiveStorage(signals.SignalEmitter):
             self._change_database_file(current_version)
             databaseupgrade.new_style_upgrade(self.cursor,
                                               current_version,
-                                              self._schema_version)
+                                              self._schema_version,
+                                              context)
             self.set_version()
             self._change_database_file_back()
         self.current_version = self._schema_version
@@ -788,12 +793,12 @@ class LiveStorage(signals.SignalEmitter):
                       ('simulate_db_save_error', 1), is_update=True)
 
     def remember_object(self, obj):
-        key = (obj.id, app.db.table_name(obj.__class__))
+        key = (obj.id, obj.db_info.db.table_name(obj.__class__))
         self._object_map[key] = obj
         self._ids_loaded.add(key)
 
     def forget_object(self, obj):
-        key = (obj.id, app.db.table_name(obj.__class__))
+        key = (obj.id, obj.db_info.db.table_name(obj.__class__))
         try:
             del self._object_map[key]
         except KeyError:
@@ -814,8 +819,8 @@ class LiveStorage(signals.SignalEmitter):
             value = getattr(obj, name)
             try:
                 schema_item.validate(value)
-            except schema.ValidationError:
-                logging.warn("error validating %s for %s", name, obj)
+            except schema.ValidationError, e:
+                logging.warn("error validating %s for %s (%s)", name, obj, e)
                 raise
             values.append(self._converter.to_sql(obj_schema, name,
                 schema_item, value))
@@ -935,11 +940,11 @@ class LiveStorage(signals.SignalEmitter):
         This will throw a KeyError if id is not in the database, or if the
         object for id has not been loaded yet.
         """
-        return self._object_map[(id_, app.db.table_name(klass))]
+        return self._object_map[(id_, self.table_name(klass))]
 
     def id_alive(self, id_, klass):
         """Check if an id exists and is loaded in the database."""
-        return (id_, app.db.table_name(klass)) in self._object_map
+        return (id_, self.table_name(klass)) in self._object_map
 
     def fetch_item_infos(self, item_ids):
         return item.fetch_item_infos(self.connection, item_ids)
@@ -972,7 +977,7 @@ class LiveStorage(signals.SignalEmitter):
 
         :returns: True iff we needed to load objects
         """
-        table_name = app.db.table_name(klass)
+        table_name = self.table_name(klass)
         unrestored_ids = []
         for id_ in id_list:
             if (id_, table_name) not in self._ids_loaded:
@@ -1270,6 +1275,9 @@ class LiveStorage(signals.SignalEmitter):
         self._create_variables_table()
         self.cursor.execute(iteminfocache.create_sql())
         self.set_version()
+        self.setup_fulltext_search()
+
+    def setup_fulltext_search(self):
         fulltextsearch.setup_fulltext_search(self.connection)
 
     def _get_size_info(self):
@@ -1375,6 +1383,12 @@ class LiveStorage(signals.SignalEmitter):
             i += 1
             save_name = "%s.%d" % (org_save_name, i)
         return save_name
+
+class DeviceLiveStorage(LiveStorage):
+    """Version of LiveStorage used for a device."""
+    def setup_fulltext_search(self):
+        # FIXME: need to implement this for devices
+        pass
 
 class SQLiteConverter(object):
     def __init__(self):

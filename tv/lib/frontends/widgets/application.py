@@ -1571,6 +1571,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             else:
                 tablist.add(info)
         tablist.model_changed()
+        app.device_connection_pools.on_tabs_changed(message)
         app.info_updater.handle_tabs_changed(message)
 
     def handle_item_list(self, message):
@@ -1583,6 +1584,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_item_changes(self, message):
         app.item_list_pool.on_item_changes(message)
+
+    def handle_device_item_changes(self, message):
+        app.item_list_pool.on_device_item_changes(message)
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count

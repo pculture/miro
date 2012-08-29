@@ -1,3 +1,6 @@
+import itertools
+import random
+
 from miro import signals
 
 from miro.test.framework import MiroTestCase
@@ -23,7 +26,7 @@ class SignalsTest(MiroTestCase):
         self.callbacks = []
         self.signaller = TestSignaller()
         MiroTestCase.setUp(self)
-        
+
     def callback(self, *args):
         self.callbacks.append(args)
 
@@ -51,6 +54,30 @@ class SignalsTest(MiroTestCase):
         self.signaller.connect_weak('signal1', callback_obj.callback)
         self.assertRaises(ValueError, self.signaller.connect_weak,
                 'signal1', callback_obj.callback)
+
+    def test_connect_after(self):
+        # test that handlers connected using connect_after() get called after
+        # ones with connect()
+        counter = itertools.count()
+        counts_for_callback = []
+        counts_for_callback_after = []
+        # make a bunch of callbacks and connect them with either connect() or
+        # connect_after()
+        for x in range(100):
+            if random.choice([True, False]):
+                def callback_after(obj):
+                    counts_for_callback_after.append(counter.next())
+                self.signaller.connect_after('signal1', callback_after)
+            else:
+                def callback(obj):
+                    counts_for_callback.append(counter.next())
+                self.signaller.connect('signal1', callback)
+        # emit our signal and ensure that the callbacks connected with
+        # connect_after run last
+        self.signaller.emit('signal1')
+        if max(counts_for_callback) > min(counts_for_callback_after):
+            raise AssertionError("Callback connected with connect_after() "
+                                 "got called before one with connect()")
 
     def test_nested_call(self):
         def callback(obj):

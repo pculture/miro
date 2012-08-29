@@ -32,9 +32,10 @@
 from miro import app
 from miro import downloader
 from miro import models
-from miro.data import itemtrack
+from miro.data import item
 from miro.frontends.widgets import itemrenderer
 from miro.test import mock
+from miro.test import testobjects
 from miro.test.framework import MiroTestCase, skip_for_platforms
 
 @skip_for_platforms('osx')
@@ -43,7 +44,7 @@ class ItemRendererTest(MiroTestCase):
         MiroTestCase.setUp(self)
         self.renderer = itemrenderer.ItemRenderer()
         self.feed = models.Feed(u'http://example.com/feed.rss')
-        self.item = self.make_item(self.feed, u'item')
+        self.item = testobjects.make_item(self.feed, u'item')
         self.manual_feed = models.Feed(u'dtv:manualFeed',
                                        initiallyAutoDownloadable=False)
         self.file_item = models.FileItem(self.make_temp_path(),
@@ -54,10 +55,8 @@ class ItemRendererTest(MiroTestCase):
 
     def _get_item(self, item_id):
         app.connection_pool = mock.Mock()
-        fetcher = itemtrack.ItemFetcher.create(app.db.connection, [item_id])
-        item_info = fetcher.fetch_items([item_id])[0]
-        fetcher.destroy()
-        return item_info
+        item_list = item.fetch_item_infos(app.db.connection, [item_id])
+        return item_list[0]
 
     def check_render(self, item):
         """Check that ItemRenderer can sucessfully render a row.

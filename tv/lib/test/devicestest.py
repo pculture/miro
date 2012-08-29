@@ -33,16 +33,29 @@ try:
 except ImportError:
     import json
 
+import datetime
+import shutil
 import sqlite3
 
 from miro.gtcache import gettext as _
-from miro.plat.utils import PlatformFilenameType
-from miro.test.framework import MiroTestCase
+from miro.plat.utils import (PlatformFilenameType, unicode_to_filename,
+                             utf8_to_filename)
+from miro.test.framework import MiroTestCase, EventLoopTest
 from miro.test import mock
 
+from miro import app
+from miro import database
+from miro import devicedatabaseupgrade
 from miro import devices
 from miro import item
+from miro import messages
+from miro import metadata
+from miro import models
+from miro import schema
 from miro import storedatabase
+from miro.data.item import fetch_item_infos
+from miro.plat import resources
+from miro.test import testobjects
 
 class DeviceManagerTest(MiroTestCase):
     def build_config_file(self, filename, data):
@@ -266,6 +279,65 @@ class DeviceHelperTest(MiroTestCase):
             new_data = json.load(f)
         self.assertEqual(data, new_data)
 
+class ScanDeviceForFilesTest(EventLoopTest):
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        self.setup_device()
+        self.add_fake_media_files_to_device()
+        self.setup_fake_device_manager()
+
+    def tearDown(self):
+        del app.device_manager
+        EventLoopTest.tearDown(self)
+
+    def setup_device(self):
+        self.device = testobjects.make_mock_device()
+
+    def setup_fake_device_manager(self):
+        app.device_manager = mock.Mock()
+        app.device_manager.running = True
+        app.device_manager._is_hidden.return_value = False
+
+    def add_fake_media_files_to_device(self):
+        self.device_item_filenames = [
+            unicode_to_filename(f.decode('utf-8')) for f in
+            ['foo.mp3', 'bar.mp3', 'foo.avi', 'bar.ogg']
+        ]
+        for filename in self.device_item_filenames:
+            path = os.path.join(self.device.mount, filename)
+            with open(path, 'w') as f:
+                f.write("fake-data")
+
+    def check_device_items(self, correct_paths):
+        device_items = item.DeviceItem.make_view(db_info=self.device.db_info)
+        device_item_paths = [di.filename for di in device_items]
+        self.assertSameSet(device_item_paths, correct_paths)
+
+    def run_scan_device_for_files(self):
+        devices.scan_device_for_files(self.device)
+        self.runPendingIdles()
+
+    def test_scan_device_for_files(self):
+        self.run_scan_device_for_files()
+        self.check_device_items(self.device_item_filenames)
+
+    def test_removed_files(self):
+        self.run_scan_device_for_files()
+        self.check_device_items(self.device_item_filenames)
+        # remove a couple files
+        for i in xrange(2):
+            filename = self.device_item_filenames.pop()
+            os.remove(os.path.join(self.device.mount, filename))
+        # run scan_device_for_files again, it should remove the items that are
+        # no longer present
+        self.run_scan_device_for_files()
+        self.check_device_items(self.device_item_filenames)
+
+    def test_skip_read_only(self):
+        self.device.read_only = True
+        self.run_scan_device_for_files()
+        self.check_device_items([])
+
 class GlobSetTest(MiroTestCase):
 
     def test_globset_regular_match(self):
@@ -313,46 +385,27 @@ class DeviceDatabaseTest(MiroTestCase):
     "Test sqlite databases on devices."""
     def setUp(self):
         MiroTestCase.setUp(self)
-        self.device = mock.Mock()
-        self.device.database = devices.DeviceDatabase()
-        self.device.database[u'audio'] = {}
-        self.device.mount = self.tempdir
-        self.device.id = 123
-        self.device.name = 'Device'
-        self.device.size = 1024000
-        os.makedirs(os.path.join(self.device.mount, '.miro'))
+        self.device = testobjects.make_mock_device(no_database=True)
 
     def open_database(self):
-        sqlite_db = devices.load_sqlite_database(self.device.mount,
-                                                 self.device.database,
-                                                 self.device.size)
-        metadata_manager = devices.make_metadata_manager(self.device.mount,
-                                                         sqlite_db,
-                                                         self.device.id)
-        self.device.sqlite_database = sqlite_db
-        self.device.metadata_manager = metadata_manager
-
-    def make_device_items(self, *filenames):
-        for filename in filenames:
-            filename = unicode(filename)
-            devices.create_item_for_file(self.device, filename, u'audio')
+        testobjects.setup_mock_device_database(self.device)
 
     def test_open(self):
         self.open_database()
-        self.assertEquals(self.device.sqlite_database.__class__,
-                          storedatabase.LiveStorage)
-        self.assertEquals(self.device.sqlite_database.error_handler.__class__,
+        self.assertEquals(self.device.db_info.db.__class__,
+                          storedatabase.DeviceLiveStorage)
+        self.assertEquals(self.device.db_info.db.error_handler.__class__,
                           storedatabase.DeviceLiveStorageErrorHandler)
 
     def test_reload(self):
         self.open_database()
-        self.make_device_items('foo.mp3', 'bar.mp3')
+        testobjects.make_device_items(self.device, 'foo.mp3', 'bar.mp3')
         # close, then reopen the database
-        self.device.sqlite_database.finish_transaction()
+        self.device.db_info.db.finish_transaction()
         self.open_database()
         # test that the database is still intact by checking the
         # metadata_status table
-        cursor = self.device.sqlite_database.cursor
+        cursor = self.device.db_info.db.cursor
         cursor.execute("SELECT path FROM metadata_status")
         paths = [r[0] for r in cursor.fetchall()]
         self.assertSameSet(paths, ['foo.mp3', 'bar.mp3'])
@@ -376,27 +429,361 @@ class DeviceDatabaseTest(MiroTestCase):
         dir_contents = os.listdir(os.path.join(self.device.mount, '.miro'))
         self.assert_('corrupt_database' in dir_contents)
 
-    def test_upgrade_error(self):
-        self.open_database()
-        self.make_device_items('foo.mp3', 'bar.mp3')
-        devices.write_database(self.device.database, self.device.mount)
-        # Force our upgrade code to run and throw an exception.
-        os.remove(os.path.join(self.device.mount, '.miro', 'sqlite'))
-        mock_do_import = mock.Mock()
-        method = ('miro.devicedatabaseupgrade.'
-                  '_do_import_old_items.convert_old_item')
-        patcher = mock.patch(method, mock_do_import)
-        mock_do_import.side_effect = sqlite3.DatabaseError("Error")
-        with patcher:
-            with self.allow_warnings():
-                self.open_database()
-        # check that we created a new sqlite database and added new metadata
-        # status rows for the device items
-        cursor = self.device.sqlite_database.cursor
-        cursor.execute("SELECT path FROM metadata_status")
-        paths = [r[0] for r in cursor.fetchall()]
-        self.assertSameSet(paths, ['foo.mp3', 'bar.mp3'])
-
     def test_save_error(self):
         # FIXME: what should we do if we have an error saving to the device?
+        pass
+
+class DeviceUpgradeTest(MiroTestCase):
+    """Test upgrading data from a JSON db from an old version of Miro."""
+
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        # setup a device object
+        self.device = testobjects.make_mock_device(no_database=True)
+
+    def setup_json_db(self, path):
+        # setup a device database
+        json_path = resources.path(path)
+        self.device.db = devices.DeviceDatabase(json.load(open(json_path)))
+
+    def test_upgrade_from_4x(self):
+        # Test the upgrade from devices with just a JSON database
+        self.setup_json_db('testdata/device-dbs/4.x-json')
+        self.check_json_import(self.device.db[u'audio'])
+
+    def check_json_import(self, device_data):
+        """Check that we successfully imported the sqlite data."""
+        sqlite_db = devices.load_sqlite_database(self.device.mount, 1024)
+        sqlite_db.cursor.execute("SELECT album from metadata")
+        db_info = database.DeviceDBInfo(sqlite_db, self.device.id)
+        importer = devicedatabaseupgrade.OldItemImporter(sqlite_db,
+                                                         self.device.mount,
+                                                         self.device.db)
+        importer.import_metadata()
+        metadata_manager = devices.make_metadata_manager(self.device.mount,
+                                                         db_info,
+                                                         self.device.id)
+        importer.import_device_items(metadata_manager)
+
+        for path, item_data in device_data.items():
+            # fill in data that's implicit with the dict
+            item_data['file_type'] = u'audio'
+            item_data['video_path'] = path
+            filename = utf8_to_filename(path.encode('utf-8'))
+            self.check_migrated_status(filename, db_info)
+            self.check_migrated_entries(filename, item_data, db_info)
+            self.check_migrated_device_item(filename, item_data, db_info)
+            # check that the title tag was deleted
+            self.assert_(not hasattr(item, 'title_tag'))
+
+    def check_migrated_status(self, filename, device_db_info):
+        # check the MetadataStatus.  For all items, we should be in the movie
+        # data stage.
+        status = metadata.MetadataStatus.get_by_path(filename, device_db_info)
+        self.assertEquals(status.current_processor, u'movie-data')
+        self.assertEquals(status.mutagen_status, status.STATUS_SKIP)
+        self.assertEquals(status.moviedata_status, status.STATUS_NOT_RUN)
+        self.assertEquals(status.echonest_status, status.STATUS_SKIP)
+        self.assertEquals(status.net_lookup_enabled, False)
+
+    def check_migrated_entries(self, filename, item_data, device_db_info):
+        status = metadata.MetadataStatus.get_by_path(filename, device_db_info)
+        entries = metadata.MetadataEntry.metadata_for_status(status,
+                                                             device_db_info)
+        entries = list(entries)
+        self.assertEquals(len(entries), 1)
+        entry = entries[0]
+        self.assertEquals(entry.source, 'old-item')
+
+        columns_to_check = entry.metadata_columns.copy()
+        # handle drm specially
+        self.assertEquals(entry.drm, False)
+        columns_to_check.discard('drm')
+
+        for name in columns_to_check:
+            device_value = item_data.get(name)
+            if device_value == '':
+                device_value = None
+            if getattr(entry, name) != device_value:
+                raise AssertionError(
+                    "Error migrating %s (old: %s new: %s)" %
+                    (name, device_value, getattr(entry, name)))
+
+    def check_migrated_device_item(self, filename, item_data, device_db_info):
+        device_item = item.DeviceItem.get_by_path(filename, device_db_info)
+        for name, field in schema.DeviceItemSchema.fields:
+            if name == 'filename':
+                # need to special-case this one, since filename is not stored
+                # in the item_data dict
+                self.assertEquals(device_item.filename, filename)
+                continue
+            elif name == 'id':
+                continue # this column doesn't get migrated
+            elif name == 'net_lookup_enabled':
+                # this column should always be False.  It dosen't get migrated
+                # from the old device item
+                self.assertEquals(device_item.net_lookup_enabled, False)
+                continue
+            old_value = item_data.get(name)
+            if (isinstance(field, schema.SchemaDateTime) and
+                old_value is not None):
+                old_value = datetime.datetime.fromtimestamp(old_value)
+            new_value = getattr(device_item, name)
+            if new_value != old_value:
+                raise AssertionError("Error converting field %s "
+                                     "(old: %r, new: %r)" % (name, old_value,
+                                                             new_value))
+
+    def test_upgrade_from_5x(self):
+        # Test the upgrade from devices from Miro 5.x.  These have an sqlite
+        # database, but only metadata on it, not the device_item table
+        self.setup_json_db('testdata/device-dbs/5.x-json')
+        device_sqlite = os.path.join(self.device.mount, '.miro', 'sqlite')
+        shutil.copyfile(resources.path('testdata/5.x-device-database.sqlite'),
+                        device_sqlite)
+        self.check_json_import(self.device.db[u'audio'])
+
+    def test_upgrade_from_5x_with_new_data(self):
+        # Test a tricky case, we upgraded a device database for miro 5.x then
+        # added new data to it.  When the data in the sqlite database doesn't
+        # match the data in the JSON database we should prefer the data from
+        # sqlite.
+        self.setup_json_db('testdata/device-dbs/5.x-json')
+        new_album = u'New Album Title'
+        path = os.path.join(self.device.mount, '.miro', 'sqlite')
+        shutil.copyfile(resources.path('testdata/5.x-device-database.sqlite'),
+                        path)
+        # tweak the sqlite database to simulate new data in it
+        connection = sqlite3.connect(path)
+        connection.execute("UPDATE metadata SET album=? ", (new_album,))
+        connection.commit()
+        connection.close()
+        # do the same thing to the data that we are use to check the migrated
+        # items
+        device_data = self.device.db[u'audio'].copy()
+        for dct in device_data.values():
+            dct['album'] = new_album
+        # check that the import code gets the value from the sqlite database,
+        # not the JSON one
+        self.check_json_import(device_data)
+
+
+class DeviceSyncManagerTest(EventLoopTest):
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        self.setup_feed()
+        self.setup_playlist()
+        self.setup_device()
+
+    def setup_device(self):
+        self.device = testobjects.make_mock_device()
+        self.sync = self.device.database[u'sync'] = devices.DeviceDatabase()
+        self.sync[u'podcasts'] = devices.DeviceDatabase()
+        self.sync[u'playlists'] = devices.DeviceDatabase()
+        self.sync[u'podcasts'][u'all'] = True
+        self.sync[u'podcasts'][u'enabled'] = True
+        self.sync[u'podcasts'][u'expire'] = True
+        self.sync[u'podcasts'][u'items'] = [self.feed.url]
+        self.sync[u'playlists'][u'enabled'] = True
+        self.sync[u'playlists'][u'items'] = [self.playlist.title]
+
+    def setup_feed(self):
+        self.feed, items = testobjects.make_feed_with_items(
+            10, file_items=True, prefix='feed')
+        for i in items[:5]:
+            i.mark_watched()
+            i.signal_change()
+        self.feed_items = items
+        self.feed_unwatched_items = items[5:]
+
+    def setup_playlist(self):
+        self.manual_feed = testobjects.make_manual_feed()
+        items = testobjects.add_items_to_feed(self.manual_feed,
+                                              10,
+                                              file_items=True,
+                                              prefix='playlist-')
+        self.playlist = models.SavedPlaylist(u'playlist',
+                                             [i.id for i in items])
+        self.playlist_items = items
+
+    def check_get_sync_items(self, correct_items, correct_expired=None):
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        items, expired = dsm.get_sync_items()
+        self.assertSameSet([i.id for i in items],
+                           [i.id for i in correct_items])
+        if correct_expired is None:
+            correct_expired = []
+        # correct_expired are Item objects and the get_sync_items() returns
+        # DeviceItems objects.  To compare, we use the URL.
+        self.assertSameSet([i.url for i in expired],
+                           [i.url for i in correct_expired])
+
+    def check_device_items(self, correct_items):
+        # check which DeviceItems we've created
+        view = models.DeviceItem.make_view(db_info=self.device.db_info)
+        self.assertSameSet([i.url for i in view],
+                           [i.url for i in correct_items])
+
+    def test_get_sync_items(self):
+        # Test that get_sync_items() items to sync correctly
+        self.check_get_sync_items(self.feed_items + self.playlist_items)
+
+        self.sync[u'podcasts'][u'all'] = False
+        self.check_get_sync_items(self.feed_unwatched_items +
+                                  self.playlist_items)
+        self.sync[u'podcasts'][u'enabled'] = False
+        self.check_get_sync_items(self.playlist_items)
+        self.sync[u'playlists'][u'enabled'] = False
+        self.check_get_sync_items([])
+
+    def add_sync_items(self):
+        """Call get_sync_items() and feed the results to add_items().
+
+        This will sync all potential items to the device.
+
+        :returns: list of ItemInfos synced
+        """
+
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        infos, expired = dsm.get_sync_items()
+        dsm.start()
+        dsm.add_items(infos)
+        self.runPendingIdles()
+        return infos
+
+    def test_add_items(self):
+        # Test add_items()
+        self.check_device_items([])
+        infos = self.add_sync_items()
+        self.check_device_items(infos)
+
+    def test_get_sync_items_expired(self):
+        # Test that get_sync_items() calculates expired items correctly
+        self.add_sync_items()
+        for i in self.feed_items:
+            os.remove(i.filename)
+            i.expire()
+        self.check_get_sync_items(self.playlist_items, self.feed_items)
+
+    def test_expire_items(self):
+        # Test expiring items
+
+        infos = self.add_sync_items()
+        self.check_device_items(infos)
+        # remove all items in our feed
+        for i in self.feed_items:
+            os.remove(i.filename)
+            i.expire()
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        # get_sync_items() should return the corresponding items in our device
+        # for the expired items
+        infos, expired = dsm.get_sync_items()
+        self.assertSameSet([i.url for i in self.feed_items],
+                           [i.url for i in expired])
+        # test sending the items through expire_items()
+        dsm.expire_items(expired)
+        self.check_device_items(self.playlist_items)
+
+    def set_feed_item_file_sizes(self, size):
+        for i in self.feed_items:
+            with open(i.filename, "w") as f:
+                f.write(" " * size)
+
+    def set_playlist_item_file_size(self, size):
+        for i in self.playlist_items:
+            with open(i.filename, "w") as f:
+                f.write(" " * size)
+
+    def setup_auto_fill_settings(self, feed_space, playlist_space):
+        self.sync[u'auto_fill'] = True
+        self.sync[u'auto_fill_settings'] = {
+            u'recent_music': 0.0,
+            u'random_music': 0.0,
+            u'most_played_music': 0.0,
+            u'new_playlists': playlist_space,
+            u'recent_podcasts': feed_space,
+        }
+
+    def check_get_auto_items(self, dsm, size, correct_feed_count,
+                             correct_playlist_count):
+        feed_item_count = 0
+        playlist_item_count = 0
+        for item_info in dsm.get_auto_items(size):
+            if item_info.feed_id == self.feed.id:
+                feed_item_count += 1
+            elif item_info.feed_id == self.manual_feed.id:
+                playlist_item_count += 1
+        self.assertEquals(feed_item_count, correct_feed_count)
+        self.assertEquals(playlist_item_count, correct_playlist_count)
+
+    def test_get_auto_items_auto_fill_off(self):
+        # With auto_fill off, we shouldn't get any items
+        self.set_feed_item_file_sizes(10)
+        self.set_playlist_item_file_size(10)
+        self.sync[u'auto_fill'] = False
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        self.check_get_auto_items(dsm, 1000000000, 0, 0)
+
+    def test_get_auto_items(self):
+        # Test get_auto_items()
+        self.set_feed_item_file_sizes(20)
+        self.set_playlist_item_file_size(10)
+        # Allocate 100 bytes to both our playlist items and our feed items.
+        # This should be enough for the entire playlist and 1/2 of the feed
+        # items
+        self.setup_auto_fill_settings(feed_space=0.5, playlist_space=0.5)
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        self.check_get_auto_items(dsm, 200, 5, 10)
+
+    def test_get_auto_items_doesnt_half_fill_playlist(self):
+        # Test that get_auto_items() only will return items for a playlist if
+        # it can fill the entire playlist
+        self.set_feed_item_file_sizes(10)
+        self.set_playlist_item_file_size(10)
+        # When we allocate 50 bytes to each', we can only sync the feed items
+        self.setup_auto_fill_settings(feed_space=0.5, playlist_space=0.5)
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        self.check_get_auto_items(dsm, 100, 5, 0)
+        # When we allocate 100, we can sync both
+        self.setup_auto_fill_settings(feed_space=0.5, playlist_space=0.5)
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        self.check_get_auto_items(dsm, 200, 10, 10)
+
+    def test_auto_sync(self):
+        # Test that add_items() sets the auto_sync flag correctly
+
+        # setup some auto-sync settings
+        self.set_feed_item_file_sizes(10)
+        self.set_playlist_item_file_size(10)
+        self.setup_auto_fill_settings(feed_space=1.0, playlist_space=0.0)
+        dsm = app.device_manager.get_sync_for_device(self.device)
+        # get our sync items, they should all be from our feed
+        auto_sync_items = dsm.get_auto_items(10000)
+        for item in auto_sync_items:
+            self.assertEquals(item.feed_id, self.feed.id)
+        # call sync some items
+        playlist_items = fetch_item_infos(app.db.connection,
+                                          [i.id for i in self.playlist_items])
+        dsm.start()
+        dsm.add_items(playlist_items)
+        dsm.add_items(auto_sync_items, auto_sync=True)
+        self.runPendingIdles()
+        # check that the device items got created and that auto_sync is set
+        # correctly
+        db_info=self.device.db_info
+        for item in self.playlist_items:
+            device_item = models.DeviceItem.get_by_url(item.url,
+                                                       db_info=db_info)
+            self.assertEquals(device_item.auto_sync, False)
+        for item in self.feed_items:
+            device_item = models.DeviceItem.get_by_url(item.url,
+                                                       db_info=db_info)
+            self.assertEquals(device_item.auto_sync, True)
+        # check auto_sync_view()
+        auto_sync_items = models.DeviceItem.auto_sync_view(db_info=db_info)
+        self.assertSameSet(set(i.title for i in self.feed_items),
+                           set(i.title for i in auto_sync_items))
+
+    def test_run_conversion(self):
+        # FIXME: Should write this one
         pass

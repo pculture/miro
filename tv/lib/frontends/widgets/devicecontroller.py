@@ -1143,10 +1143,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         titlebar.connect('filter-clicked', self.on_filter_clicked)
         return titlebar
 
-    def build_item_list(self):
-        # FIXME: Make this work again
-        raise NotImplementedError()
-
     def build_renderer(self):
         return itemrenderer.DeviceItemRenderer(display_channel=False)
 
@@ -1170,7 +1166,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
             return
         self.device = device
 
-
 class DeviceItemDragHandler(object):
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
@@ -1180,4 +1175,4 @@ class DeviceItemDragHandler(object):
 
     def begin_drag(self, tableview, rows):
         videos = [row[0] for row in rows]
-        return { 'device-%s-item' % videos[0].file_type: pickle.dumps(videos) }
+        return { 'device-%s-item' % videos[0].file_type: videos}

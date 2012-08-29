@@ -35,6 +35,7 @@ from miro import database
 from miro import item
 from miro import messages
 from miro import metadata
+from miro import models
 from miro import signals
 
 def _add_metadata(info_dict, item_obj):
@@ -63,7 +64,7 @@ class ItemSource(signals.SignalEmitter):
     # Methods to implement for sources
     def fetch_all(self):
         """
-        Returns a list of ItemInfo objects representing all the A/V items this
+        Returns a list of 
         source knows about.
         """
         raise NotImplementedError
@@ -727,32 +728,15 @@ class DeviceItemSource(ItemSource):
 
 class DeviceItemHandler(ItemHandler):
     def delete(self, info):
-        device = info.device
-        try:
-            if os.path.exists(info.video_path):
-                os.unlink(info.video_path)
-        except (OSError, IOError):
-            # we can still fail to delete an item, log the error
-            logging.warn('failed to delete %r', info.video_path,
-                         exc_info=True)
-        else:
-            del device.database[info.file_type][info.id]
-            for art_file in (info.screenshot, info.cover_art):
-                if not art_file:
-                    # not a real value, don't bother deleting
-                    continue
-                full_path = os.path.join(device.mount, art_file)
-                if full_path.startswith(device.mount): # actually on the device
-                    try:
-                        os.unlink(full_path)
-                    except EnvironmentError:
-                        pass # ignore errors
-            device.remaining += info.size
-            device.database.emit('item-removed', info)
+        device = info.device_info
+        device_item = models.DeviceItem.get_by_id(info.id,
+                                                  db_info=device.db_info)
+        device_item.delete_and_remove(device)
+        device.remaining += device_item.size
 
     def bulk_delete(self, info_list):
         # calculate all the devices involved
-        all_devices = set(info.device for info in info_list)
+        all_devices = set(info.device_info for info in info_list)
         # set bulk mode, delete, then unset bulk mode
         for device in all_devices:
             device.database.set_bulk_mode(True)
@@ -773,10 +757,10 @@ class DeviceItemHandler(ItemHandler):
         if info.is_playing != is_playing:
             # modifying the ItemInfo in-place messes up the Tracker's
             # object-changed logic, so make a copy
-            info_cache = app.device_manager.info_cache[info.device.mount]
+            info_cache = app.device_manager.info_cache[info.device_info.mount]
             info = info_cache[info.id] = messages.ItemInfo(
                 info.id, **info.__dict__)
-            database = info.device.database
+            database = info.device_info.database
             info.is_playing = is_playing
             database[info.file_type][info.id][u'is_playing'] = is_playing
             database.emit('item-changed', info)
