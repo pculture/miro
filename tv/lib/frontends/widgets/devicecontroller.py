@@ -1166,7 +1166,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
             return
         self.device = device
 
-
 class DeviceItemDragHandler(object):
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
@@ -1176,4 +1175,4 @@ class DeviceItemDragHandler(object):
 
     def begin_drag(self, tableview, rows):
         videos = [row[0] for row in rows]
-        return { 'device-%s-item' % videos[0].file_type: pickle.dumps(videos) }
+        return { 'device-%s-item' % videos[0].file_type: videos}
