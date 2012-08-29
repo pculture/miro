@@ -29,6 +29,8 @@
 
 """miro.data.connectionpool -- SQLite connection pool """
 import contextlib
+import logging
+
 import sqlite3
 
 from miro import messages
@@ -139,27 +141,22 @@ class DeviceConnectionPoolMap(object):
     def get_pool(self, device_id):
         return self.pool_map[device_id]
 
-    def _make_pools_for_infos(self, infos):
-        for device_info in infos:
-            if (not isinstance(device_info, messages.DeviceInfo) or
-                device_info.db_info is None):
-                continue
-
-            if device_info.id in self.pool_map:
-                logging.warn("DeviceConnectionPoolMap.on_devices_changed(): "
-                             "%s already in pool_map" % device_info.id)
-                continue
+    def _ensure_connection_pool(self, device_info):
+        if device_info.id not in self.pool_map:
             self.pool_map[device_info.id] = DeviceConnectionPool(device_info)
 
-    def _remove_pools_for_infos(self, infos):
-        for device_info in infos:
-            if not isinstance(device_info, messages.DeviceInfo):
-                continue
-            if device_info.id in self.pool_map:
-                del self.pool_map[device_id]
+    def _ensure_no_connection_pool(self, device_id):
+        if device_id in self.pool_map:
+            del self.pool_map[device_id]
 
     def on_tabs_changed(self, message):
         if message.type != 'connect':
             return
-        self._make_pools_for_infos(message.added)
-        self._remove_pools_for_infos(message.removed)
+        for info in message.added + message.changed:
+            if isinstance(info, messages.DeviceInfo):
+                if info.db_info is not None:
+                    self._ensure_connection_pool(info)
+                else:
+                    self._ensure_no_connection_pool(info.id)
+        for id_ in message.removed:
+            self._ensure_no_connection_pool(id_)
