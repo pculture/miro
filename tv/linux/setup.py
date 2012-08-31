@@ -207,8 +207,10 @@ def parse_pkg_config(command, components, options_dict=None):
             'libraries': [],
             'extra_compile_args': []
         }
+    
     commandLine = "%s --cflags --libs %s" % (command, components)
     output = get_command_output(commandLine).strip()
+    
     for comp in output.split():
         prefix, rest = comp[:2], comp[2:]
         if prefix == '-I':
@@ -217,6 +219,10 @@ def parse_pkg_config(command, components, options_dict=None):
             options_dict['library_dirs'].append(rest)
         elif prefix == '-l':
             options_dict['libraries'].append(rest)
+            
+            # Silence warning on `GtkItemFactoryCallback` declaration.
+            if rest.startswith('gtk-'):
+                options_dict['extra_compile_args'].append('-Wno-strict-prototypes')
         else:
             options_dict['extra_compile_args'].append(comp)
 
@@ -287,6 +293,9 @@ infolist_options = parse_pkg_config('pkg-config',
             'pygobject-2.0 pygtk-2.0 gtk+-2.0 glib-2.0 ')
 infolist_options['include_dirs'].append(infolist_dir)
 infolist_options['include_dirs'].append(os.path.join(infolist_dir, 'gtk'))
+
+# Silence uninitialized warning on `__pyx_exc_lineno`.
+infolist_options['extra_compile_args'].append('-Wno-uninitialized')
 
 infolist_ext = \
     Extension("miro.infolist",

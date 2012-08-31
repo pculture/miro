@@ -167,7 +167,7 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-#if LIBAVFORMAT_VERSION_MAJOR > 52
+#if LIBAVFORMAT_VERSION_INT >= AV_VERSION_INT(52, 45, 0)
     ofmt = av_guess_format("mpegts", NULL, NULL);
 #else
     ofmt = guess_format("mpegts", NULL, NULL);

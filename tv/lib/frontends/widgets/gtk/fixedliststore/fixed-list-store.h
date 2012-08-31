@@ -48,6 +48,8 @@
 
 /* boilerplate GObject defines. */
 
+GType miro_fixed_list_store_get_type(void);
+
 #define MIRO_TYPE_FIXED_LIST_STORE            (miro_fixed_list_store_get_type ())
 #define MIRO_FIXED_LIST_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), MIRO_TYPE_FIXED_LIST_STORE, MiroFixedListStore))
 #define MIRO_FIXED_LIST_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  MIRO_TYPE_FIXED_LIST_STORE, MiroFixedListStore))
