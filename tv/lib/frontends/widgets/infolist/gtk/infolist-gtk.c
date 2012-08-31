@@ -228,8 +228,8 @@ setup_text_cell_data_func(PyObject *self, PyObject *args)
                                                 GTK_CELL_RENDERER(g_renderer),
                                                 (GtkTreeCellDataFunc)
                                                 text_cell_data_func,
-                                                attr_getter,
-                                                release_attr_getter);
+                                                (gpointer) attr_getter,
+                                                (GDestroyNotify) release_attr_getter);
 
         Py_INCREF(Py_None);
         return Py_None;
