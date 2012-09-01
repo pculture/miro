@@ -408,8 +408,8 @@ class ResumeButtonHolder(widgetset.Alignment):
     def show(self):
         if self.button_shown:
             return
-        self.add(self.resume_button)
         self.button_shown = True
+        self.add(self.resume_button)
         # set our width request to the min-width of the button.  This way our
         # parent only reserves that amount of space for us.
         self.set_size_request(self.resume_button.MIN_WIDTH + self.LEFT_PAD +
@@ -555,8 +555,8 @@ class ItemListTitlebar(Titlebar):
     def do_size_allocated(self, width, height):
         should_use_small_width = (width < self.normal_width_needed)
         if should_use_small_width != self.in_small_width_mode:
-            self.set_small_width_mode(should_use_small_width)
             self.in_small_width_mode = should_use_small_width
+            self.set_small_width_mode(should_use_small_width)
 
     def set_small_width_mode(self, enabled):
         """Called when we should change into/out of small width mode
