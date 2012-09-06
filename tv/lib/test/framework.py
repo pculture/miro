@@ -29,6 +29,7 @@ from miro import util
 from miro import prefs
 from miro import schema
 from miro import searchengines
+from miro import sharing
 from miro import signals
 from miro import storedatabase
 from miro import threadcheck
@@ -285,6 +286,7 @@ class MiroTestCase(unittest.TestCase):
         app.device_manager = devices.DeviceManager()
         models.Item._path_count_tracker.reset()
         testobjects.test_started(self)
+        sharing.SharingItemTrackerImpl._used_db_paths.clear()
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
         # setup the deleted file checker
@@ -393,10 +395,24 @@ class MiroTestCase(unittest.TestCase):
         :param function_name: name of the function to patch
         :param new_function: function object to replace it with
         """
-        patcher = mock.patch(function_name,
-                             mock.Mock(side_effect=new_function))
+        self.patch_for_test(function_name, mock.Mock(side_effect=new_function))
+
+    def patch_for_test(self, object_name, mock_object=None):
+        """Use Mock to replace a function/class/object with a mock object.
+
+        We will unpatch the object during teardown
+
+        :param object_name: name of the object to patch
+        :param mock_object: object to patch with, if None we will create a new
+        Mock
+        :returns: object used to patch
+        """
+        if mock_object is None:
+            mock_object = mock.Mock()
+        patcher = mock.patch(object_name, mock_object)
         patcher.start()
         self.mock_patchers.append(patcher)
+        return mock_object
 
     def unload_extensions(self):
         for ext in app.extension_manager.extensions:
@@ -428,6 +444,9 @@ class MiroTestCase(unittest.TestCase):
         # reset the level so we don't get debugging printouts during the
         # tearDown call.
         logger.setLevel(logging.ERROR)
+
+    def log_messages(self):
+        return '\n'.join(m.getMessage() for m in self.log_filter.records)
 
     def _on_rmtree_error(self, func, path, excinfo):
         global FILES_TO_CLEAN_UP

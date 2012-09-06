@@ -339,6 +339,34 @@ class DeviceLiveStorageErrorHandler(LiveStorageErrorHandler):
                         "saved. ", {'device': self.name})
         dialogs.MessageBoxDialog(title, description).run()
 
+class SharingLiveStorageErrorHandler(LiveStorageErrorHandler):
+    """Handle database errors for LiveStorage on for a share.
+
+    We always create a new database for shares, so there shouldn't be any
+    errors.  If there are, we always start fresh
+    """
+    def __init__(self, name):
+        self.name = name
+
+    def handle_open_error(self):
+        return self.ACTION_RERAISE
+
+    def handle_load_error(self):
+        return
+
+    def handle_upgrade_error(self):
+        return self.ACTION_START_FRESH
+
+    def handle_save_error(self, error_text, integrity_check_passed):
+        # FIXME: we should handle this.
+        #
+        # We shouldn't ever get save errors, so I think the best way to deal
+        # with it is simply throw up an error dialog and remove the share tab
+        raise NotImplementedError()
+
+    def handle_save_succeeded(self):
+        pass
+
 class LiveStorage(signals.SignalEmitter):
     """Handles the storage of DDBObjects.
 
@@ -1400,6 +1428,30 @@ class DeviceLiveStorage(LiveStorage):
 
     def show_upgrade_progress(self):
         return False
+
+class SharingLiveStorage(LiveStorage):
+    """Version of LiveStorage used for a device."""
+
+    def __init__(self, path, share_name, object_schemas):
+        error_handler = SharingLiveStorageErrorHandler(share_name)
+        if os.path.exists(path):
+            raise ValueError("SharingLiveStorage should only be created with "
+                             "a non-existent path")
+        LiveStorage.__init__(self, path, error_handler,
+                             object_schemas=object_schemas)
+
+    def open_connection(self, path=None, start_in_temp_mode=False):
+        LiveStorage.open_connection(self, path, start_in_temp_mode)
+        # execute a bunch of PRAGMA statements that make things faster at the
+        # expense of reliability in case of a crash.  Since we open a new DB
+        # every time there's no risk.
+        self.cursor.execute("PRAGMA synchronous=OFF")
+        self.cursor.execute("PRAGMA temp_store=MEMORY")
+        self.cursor.execute("PRAGMA journal_mode=MEMORY")
+
+    def setup_fulltext_search(self):
+        # FIXME: need to implement this for devices
+        pass
 
 class SQLiteConverter(object):
     def __init__(self):

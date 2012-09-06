@@ -361,7 +361,7 @@ from miro.feed import ManualFeedImpl
 from miro.folder import (HideableTab, ChannelFolder, PlaylistFolder,
                          PlaylistFolderItemMap)
 from miro.guide import ChannelGuide
-from miro.item import Item, FileItem, DeviceItem
+from miro.item import Item, FileItem, DeviceItem, SharingItem
 from miro.iconcache import IconCache
 from miro.metadata import MetadataStatus, MetadataEntry
 from miro.playlist import SavedPlaylist, PlaylistItemMap
@@ -534,6 +534,15 @@ class DeviceItemSchema(MultiClassObjectSchema):
         ('kind', SchemaString(noneOk=True)),
         ('net_lookup_enabled', SchemaBool()),
         ('metadata_title', SchemaString(noneOk=True)),
+    ]
+
+class SharingItemSchema(MultiClassObjectSchema):
+    """Schema for items on shares.  This only gets used for sharing databases
+    """
+    klass = SharingItem
+    table_name = 'sharing_item'
+
+    fields = DDBObjectSchema.fields + [
     ]
 
 class FeedSchema(DDBObjectSchema):

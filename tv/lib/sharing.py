@@ -52,6 +52,8 @@ from miro import signals
 from miro import filetypes
 from miro import fileutil
 from miro import util
+from miro import schema
+from miro import storedatabase
 from miro import transcode
 from miro import metadata
 from miro.item import Item
@@ -583,6 +585,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.share.is_updating = True
         message = messages.TabsChanged('connect', [], [self.share], [])
         message.send_to_frontend()
+        self.create_database()
+        self.start_thread()
+
+    def start_thread(self):
         name = self.share.name
         host = self.share.host
         port = self.share.port
@@ -612,19 +618,75 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         eventloop.add_idle(func, name, args=args)
         return succeeded
 
+    def run_client_connect(self):
+        return self.run(self.client_connect, self.client_connect_callback,
+                        self.client_connect_error_callback)
+
+    def run_client_update(self):
+        return self.run(self.client_update, self.client_update_callback,
+                        self.client_update_error_callback)
+
     def runloop(self):
-        success = self.run(self.client_connect, self.client_connect_callback,
-                           self.client_connect_error_callback)
+        success = self.run_client_connect()
         # If server does not support update, then we short circuit since
         # the loop becomes useless.  There is nothing wait for being updated.
         logging.debug('UPDATE SUPPORTED = %s', self.client.supports_update)
         if not success or not self.client.supports_update:
             return
         while True:
-            success = self.run(self.client_update, self.client_update_callback,
-                               self.client_update_error_callback)
+            success = self.run_client_update()
             if not success:
                 break
+        self.destroy_database()
+
+    _used_db_paths = set()
+
+    def find_unused_db(self):
+        """Find a DB path for our share that's not being used.
+
+        This method will ensure that no 2 SharingItemTrackerImpl share the
+        same DB path, but it will try delete and then reuse paths that were
+        created by previous miro instances.
+        """
+        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
+        for i in xrange(300):
+            candidate = os.path.join(support_dir, 'sharing-db-%s' % i)
+            if candidate in self.__class__._used_db_paths:
+                continue
+            if os.path.exists(candidate):
+                try:
+                    os.remove(candidate)
+                except EnvironmentError, e:
+                    logging.warn("SharingItemTrackerImpl.find_unused_db "
+                                 "error removing %s (%s)" % (candidate, e))
+                    continue
+            try:
+                return candidate, self.make_new_database(candidate)
+            except StandardError, e:
+                logging.warn("SharingItemTrackerImpl.find_unused_db "
+                             "error opening %s (%s)" % (candidate, e))
+        raise AssertionError("Couldn't find an unused path "
+                             "for SharingItemTrackerImpl")
+
+    def make_new_database(self, path):
+        object_schemas = [schema.SharingItemSchema]
+        return storedatabase.SharingLiveStorage(path, self.share.name,
+                                                object_schemas)
+
+    def create_database(self):
+        self.db_path, self.db = self.find_unused_db()
+        self.__class__._used_db_paths.add(self.db_path)
+
+    def destroy_database(self):
+        if self.db is not None:
+            self.db.close()
+        try:
+            os.remove(self.db_path)
+        except EnvironmentError, e:
+            logging.warn("Error deleting database file %s: %s" %
+                         (self.db_path, e))
+        self.__class__._used_db_paths.remove(self.db_path)
+        self.db_path = None
 
     def sharing_item(self, rawitem):
         kwargs = dict()

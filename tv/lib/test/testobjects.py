@@ -135,3 +135,13 @@ def make_device_item(device, filename):
     filename = unicode_to_filename(unicode(filename))
     ensure_file_exists(os.path.join(device.mount, filename))
     return item.DeviceItem(device, filename)
+
+def make_mock_daap_client(*args, **kwargs):
+    mock_client = mock.Mock()
+    mock_client.conn.sock.getpeername.return_value = ('127.0.0.1', 8000)
+    base_playlist = {
+        'daap.baseplaylist': 1,
+    }
+    mock_client.playlists.return_value = ({'playlist-id-1': base_playlist}, {})
+    mock_client.items.return_value = ({}, {})
+    return mock_client

@@ -2694,6 +2694,10 @@ class DeviceItem(ItemBase):
             device.metadata_manager.remove_file(self.filename)
         ItemBase.remove(self)
 
+class SharingItem(ItemBase):
+    """Item on a DAAP share."""
+    pass
+
 _deleted_file_checker = None
 
 def setup_deleted_checker():
