@@ -696,6 +696,9 @@ class LiveStorage(signals.SignalEmitter):
         self.open_connection()
         del self._changed_db_path
 
+    def show_upgrade_progress(self):
+        return True
+
     def _upgrade_database(self, context):
         self.startup_version = current_version = self.get_version()
 
@@ -710,13 +713,15 @@ class LiveStorage(signals.SignalEmitter):
             self._upgrade_20_database()
             # need to pull the variable again here because
             # _upgrade_20_database will have done an upgrade
-            dbupgradeprogress.doing_new_style_upgrade()
+            if self.show_upgrade_progress():
+                dbupgradeprogress.doing_new_style_upgrade()
             current_version = self.get_version()
             self._change_database_file(current_version)
             databaseupgrade.new_style_upgrade(self.cursor,
                                               current_version,
                                               self._schema_version,
-                                              context)
+                                              context,
+                                              self.show_upgrade_progress())
             self.set_version()
             self._change_database_file_back()
         self.current_version = self._schema_version
@@ -737,11 +742,13 @@ class LiveStorage(signals.SignalEmitter):
             else:
                 # Need to update an old-style database
                 self._change_database_file("pre80")
-                dbupgradeprogress.doing_20_upgrade()
+                if self.show_upgrade_progress():
+                    dbupgradeprogress.doing_20_upgrade()
 
                 if util.chatter:
                     logging.info("converting pre 2.1 database")
-                convert20database.convert(self.cursor)
+                convert20database.convert(self.cursor,
+                                          self.show_upgrade_progress())
                 self.set_version(80)
                 self._change_database_file_back()
 
@@ -1388,7 +1395,10 @@ class DeviceLiveStorage(LiveStorage):
     """Version of LiveStorage used for a device."""
     def setup_fulltext_search(self):
         # FIXME: need to implement this for devices
-        pass
+        fulltextsearch.setup_fulltext_search(self.connection, 'device_item')
+
+    def show_upgrade_progress(self):
+        return False
 
 class SQLiteConverter(object):
     def __init__(self):

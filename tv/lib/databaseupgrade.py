@@ -230,7 +230,8 @@ def contexts_for_upgrade_func(func):
     except AttributeError:
         return set(['main']) # default case
 
-def new_style_upgrade(cursor, saved_version, upgrade_to, context):
+def new_style_upgrade(cursor, saved_version, upgrade_to, context,
+                      show_progress):
     """Upgrade a database using new-style upgrade functions.
 
     This method replaces the upgrade() method.  However, we still need
@@ -252,8 +253,9 @@ def new_style_upgrade(cursor, saved_version, upgrade_to, context):
                "(db version is %s)" % saved_version)
         raise DatabaseTooNewError(msg)
 
-    dbupgradeprogress.new_style_progress(saved_version, saved_version,
-                                         upgrade_to)
+    if show_progress:
+        dbupgradeprogress.new_style_progress(saved_version, saved_version,
+                                             upgrade_to)
     for version in xrange(saved_version + 1, upgrade_to + 1):
         if util.chatter:
             logging.info("upgrading database to version %s", version)
@@ -262,47 +264,47 @@ def new_style_upgrade(cursor, saved_version, upgrade_to, context):
             cursor.execute("BEGIN TRANSACTION")
             upgrade_func(cursor)
             cursor.execute("COMMIT TRANSACTION")
-        dbupgradeprogress.new_style_progress(saved_version, version,
-                                             upgrade_to)
+        if show_progress:
+            dbupgradeprogress.new_style_progress(saved_version, version,
+                                                 upgrade_to)
 
-def upgrade(savedObjects, saveVersion, upgradeTo=None):
+def upgrade(savedObjects, save_version, upgrade_to, show_progress):
     """Upgrade a list of SavableObjects that were saved using an old
     version of the database schema.
 
     This method will call upgradeX for each number X between
-    saveVersion and upgradeTo.  For example, if saveVersion is 2 and
-    upgradeTo is 4, this method is equivelant to::
+    save_version and upgrade_to.  For example, if save_version is 2 and
+    upgrade_to is 4, this method is equivelant to::
 
         upgrade3(savedObjects)
         upgrade4(savedObjects)
 
-    By default, upgradeTo will be the VERSION variable in schema.
+    By default, upgrade_to will be the VERSION variable in schema.
     """
     changed = set()
 
-    if upgradeTo is None:
-        upgradeTo = schema.VERSION
-
-    if saveVersion > upgradeTo:
+    if save_version > upgrade_to:
         msg = ("Database was created by a newer version of Miro "
-               "(db version is %s)" % saveVersion)
+               "(db version is %s)" % save_version)
         raise DatabaseTooNewError(msg)
 
-    startSaveVersion = saveVersion
-    dbupgradeprogress.old_style_progress(startSaveVersion, startSaveVersion,
-                                         upgradeTo)
-    while saveVersion < upgradeTo:
+    startSaveVersion = save_version
+    if show_progress:
+        dbupgradeprogress.old_style_progress(startSaveVersion,
+                                             startSaveVersion, upgrade_to)
+    while save_version < upgrade_to:
         if util.chatter:
-            print "upgrading database to version %s" % (saveVersion + 1)
-        upgradeFunc = get_upgrade_func(saveVersion + 1)
+            print "upgrading database to version %s" % (save_version + 1)
+        upgradeFunc = get_upgrade_func(save_version + 1)
         thisChanged = upgradeFunc(savedObjects)
         if thisChanged is None or changed is None:
             changed = None
         else:
             changed.update (thisChanged)
-        saveVersion += 1
-        dbupgradeprogress.old_style_progress(startSaveVersion, saveVersion,
-                                             upgradeTo)
+        save_version += 1
+        if show_progress:
+            dbupgradeprogress.old_style_progress(startSaveVersion,
+                                                 save_version, upgrade_to)
     return changed
 
 def upgrade2(objectList):
@@ -4218,3 +4220,41 @@ def upgrade192(cursor):
     cursor.execute("UPDATE item SET link=NULL WHERE link=''")
     cursor.execute("UPDATE item SET payment_link=NULL WHERE payment_link=''")
     cursor.execute("UPDATE item SET comments_link=NULL WHERE comments_link=''")
+
+@run_on_devices
+def upgrade193(cursor):
+    """Add the item_fts table"""
+
+    columns = ['title', 'description', 'artist', 'album', 'genre',
+               'filename', 'parent_title', ]
+    column_list = ', '.join(c for c in columns)
+    column_list_for_new = ', '.join("new.%s" % c for c in columns)
+    column_list_with_types = ', '.join('%s text' % c for c in columns)
+    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4(%s)" %
+                   column_list_with_types)
+    cursor.execute("INSERT INTO item_fts(docid, %s)"
+                   "SELECT device_item.id, %s FROM device_item" %
+                   (column_list, column_list))
+    # make triggers to keep item_fts up to date
+    cursor.execute("CREATE TRIGGER item_bu "
+                   "BEFORE UPDATE ON device_item BEGIN "
+                   "DELETE FROM item_fts WHERE docid=old.id; "
+                   "END;")
+
+    cursor.execute("CREATE TRIGGER item_bd "
+                   "BEFORE DELETE ON device_item BEGIN "
+                   "DELETE FROM item_fts WHERE docid=old.id; "
+                   "END;")
+
+    cursor.execute("CREATE TRIGGER item_au "
+                   "AFTER UPDATE ON device_item BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (column_list, column_list_for_new))
+
+    cursor.execute("CREATE TRIGGER item_ai "
+                   "AFTER INSERT ON device_item BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (column_list, column_list_for_new))
+

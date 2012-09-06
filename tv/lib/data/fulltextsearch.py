@@ -31,9 +31,9 @@
 """
 from miro import app
 
-def setup_fulltext_search(connection):
+def setup_fulltext_search(connection, table='item'):
     """Set up fulltext search on a newly created database."""
-    if hasattr(app, 'in_unit_tests') and _no_item_table(connection):
+    if hasattr(app, 'in_unit_tests') and _no_item_table(connection, table):
         # handle unittests not defining the item table in their schemas
         return
 
@@ -46,32 +46,33 @@ def setup_fulltext_search(connection):
     connection.execute("CREATE VIRTUAL TABLE item_fts USING fts4(%s)" %
                        column_list_with_types)
     connection.execute("INSERT INTO item_fts(docid, %s)"
-                       "SELECT item.id, %s FROM item" %
-                       (column_list, column_list))
+                       "SELECT %s.id, %s FROM %s" %
+                       (column_list, table, column_list, table))
     # make triggers to keep item_fts up to date
     connection.execute("CREATE TRIGGER item_bu "
-                       "BEFORE UPDATE ON item BEGIN "
+                       "BEFORE UPDATE ON %s BEGIN "
                        "DELETE FROM item_fts WHERE docid=old.id; "
-                       "END;")
+                       "END;" % (table,))
 
     connection.execute("CREATE TRIGGER item_bd "
-                       "BEFORE DELETE ON item BEGIN "
+                       "BEFORE DELETE ON %s BEGIN "
                        "DELETE FROM item_fts WHERE docid=old.id; "
-                       "END;")
+                       "END;" % (table,))
 
     connection.execute("CREATE TRIGGER item_au "
-                       "AFTER UPDATE ON item BEGIN "
+                       "AFTER UPDATE ON %s BEGIN "
                        "INSERT INTO item_fts(docid, %s) "
                        "VALUES(new.id, %s); "
-                       "END;" % (column_list, column_list_for_new))
+                       "END;" % (table, column_list, column_list_for_new))
 
     connection.execute("CREATE TRIGGER item_ai "
-                       "AFTER INSERT ON item BEGIN "
+                       "AFTER INSERT ON %s BEGIN "
                        "INSERT INTO item_fts(docid, %s) "
                        "VALUES(new.id, %s); "
-                       "END;" % (column_list, column_list_for_new))
+                       "END;" % (table, column_list, column_list_for_new))
 
-def _no_item_table(connection):
+def _no_item_table(connection, table_name):
     cursor = connection.execute("SELECT COUNT(*) FROM sqlite_master "
-                                "WHERE type='table' and name='item'")
+                                "WHERE type='table' and name=?",
+                                (table_name,))
     return (cursor.fetchone()[0] == 0)
