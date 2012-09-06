@@ -690,6 +690,7 @@ class DeviceItemSelectInfo(ItemSelectInfo):
     }
 
     join_info = {
+        'item_fts': 'item_fts.docid=device_item.id',
     }
 
 class DeviceItemInfo(ItemInfo):

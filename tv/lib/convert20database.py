@@ -75,14 +75,14 @@ def _find_global(module, name):
         klass = getattr(mod, name)
         return klass
 
-def convert(cursor):
+def convert(cursor, show_progress):
     """Convert an old-style database to a new-style one.
 
     cursor is an SQLite cursor.
     """
 
     savable_objects = _get_old_savables(cursor)
-    _upgrate_old_savables(cursor, savable_objects)
+    _upgrate_old_savables(cursor, savable_objects, show_progress)
     _run_databasesanity(savable_objects)
     _create_db_schema(cursor)
     _migrate_old_data(cursor, savable_objects)
@@ -95,12 +95,13 @@ def _get_old_savables(cursor):
     cursor.execute("SELECT serialized_object FROM dtv_objects")
     return [_loads(str(r[0])) for r in cursor]
 
-def _upgrate_old_savables(cursor, savables):
+def _upgrate_old_savables(cursor, savables, show_progress):
     cursor.execute("SELECT serialized_value FROM dtv_variables "
                    "WHERE name=?", ("Democracy Version",))
     row = cursor.fetchone()
     version = cPickle.loads(str(row[0]))
-    databaseupgrade.upgrade(savables, version, schema_mod.VERSION)
+    databaseupgrade.upgrade(savables, version, schema_mod.VERSION,
+                            show_progress)
 
 def _run_databasesanity(objects):
     try:
