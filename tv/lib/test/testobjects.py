@@ -3,6 +3,7 @@
 This module is a collection of functions to make objects to use for testing.
 """
 
+import collections
 import datetime
 import itertools
 import random
@@ -12,6 +13,7 @@ from miro import app
 from miro import database
 from miro import devices
 from miro import item
+from miro import libdaap
 from miro import models
 from miro import messages
 from miro import util
@@ -136,12 +138,201 @@ def make_device_item(device, filename):
     ensure_file_exists(os.path.join(device.mount, filename))
     return item.DeviceItem(device, filename)
 
-def make_mock_daap_client(*args, **kwargs):
-    mock_client = mock.Mock()
-    mock_client.conn.sock.getpeername.return_value = ('127.0.0.1', 8000)
-    base_playlist = {
-        'daap.baseplaylist': 1,
+class MockDAAPClientLibrary(object):
+    """Tracks items in the library for MockDAAPClient
+    """
+
+    def __init__(self):
+        self.base_playlist_id = 123
+        # maps item ids to item data for all items
+        self.all_items = {}
+        # maps playlist id to playlist data
+        self.playlists = {
+            self.base_playlist_id: { 'daap.baseplaylist': 1, },
+        }
+        # maps playlist id to dict mapping item ids to item data for that
+        # playlist
+        self.playlist_items = {
+            self.base_playlist_id: {}
+        }
+
+    def set_items(self, new_items):
+        self.all_items = new_items.copy()
+        self.set_playlist_items(self.base_playlist_id, new_items.keys())
+
+    def add_playlist(self, new_playlist):
+        daap_id = new_playlist['dmap.itemid']
+        if daap_id not in self.playlists:
+            self.playlist_items[daap_id] = {}
+        self.playlists[daap_id] = new_playlist.copy()
+
+    def remove_playlist(self, daap_id):
+        del self.playlists[daap_id]
+        del self.playlist_items[daap_id]
+
+    def set_playlist_items(self, playlist_id, item_ids):
+        self.playlist_items[playlist_id] = dict(
+            (daap_id, self.all_items[daap_id])
+            for daap_id in item_ids)
+
+    def copy(self):
+        """Get a copy of this library."""
+        rv = MockDAAPClientLibrary()
+        rv.set_items(self.all_items)
+        for k, playlist in self.playlists.items():
+            if k != self.base_playlist_id:
+                rv.add_playlist(playlist)
+                rv.set_playlist_items(k, self.playlist_items[k])
+        return rv
+
+class MockDAAPClient(mock.Mock):
+    """Mock up a DAAP client.
+
+    Call set_items(), set_playlists(), and set_playlist_items() to change the
+    data the client returns.  MockDAAPClient is smart enough to understand the
+    upgrade=True flag and only return items that have changed since the last
+    call
+
+
+    """
+    def __init__(self, *args, **kwargs):
+        mock.Mock.__init__(self)
+        self.host = '127.0.0.1'
+        self.port = 8000
+        self.conn.sock.getpeername.return_value = ('127.0.0.1', 8000)
+        self.library = MockDAAPClientLibrary()
+        # maps playlist ids to the last library we used to send items for that
+        # playlist.  We use this to calculate which items we need to send when
+        # update=True
+        self.last_sent_library = {}
+        # last sent library used for the playlists() method
+        self.last_sent_library_for_playlists = None
+
+    def set_items(self, new_items):
+        """Change the current set of items.
+
+        :param new_items: dict mapping DAAP ids to dicts of item data
+        """
+        self.library.set_items(new_items)
+
+    def add_playlist(self, new_playlist):
+        """Add a new playlist to the client."""
+        self.library.add_playlist(new_playlist)
+
+    def remove_playlist(self, playlist_id):
+        """Remove a playlisst from the client."""
+        self.library.remove_playlist(playlist_id)
+
+    def set_playlist_items(self, playlist_id, new_playlist_items):
+        """Change the current set of playlists.
+
+        :param playlist_id: DAAP id of the playlist
+        :param new_items: dict mapping DAAP ids for playlists to lists of DAAP
+        ids for items in that playlist
+        """
+        self.library.set_playlist_items(playlist_id, new_playlist_items)
+
+    def dict_diff(self, new_items, old_items):
+        """Calculate the difference of 2 dicts.
+
+        This method is used in items() and playlists() to when the update=True
+        flag is used.
+
+        :returns: (changed_items, deleted_ids) tuple.  changed_items is a dict
+        mapping daap_ids to item data for new or updated items.  deleted_ids
+        is a list of ids for deleted items.
+        """
+        items = {}
+        deleted_items = []
+        for k, item_data in new_items.items():
+            if k not in old_items or old_items[k] != item_data:
+                items[k] = item_data
+        for k in old_items:
+            if k not in new_items:
+                deleted_items.append(k)
+        return items, deleted_items
+
+    def current_items(self, playlist_id=None):
+        """Get current set of items."""
+        if playlist_id is None:
+            return self.library.all_items.copy()
+        else:
+            return self.library.playlist_items[playlist_id].copy()
+
+    def current_playlists(self):
+        """Get current set of playlists."""
+        return self.library.playlists.copy()
+
+    def items(self, playlist_id=None, meta=None, update=False):
+        last_library = self.last_sent_library.get(playlist_id)
+        if not update or last_library is None:
+            items = self.library.playlist_items[playlist_id].copy()
+            deleted_items = []
+        else:
+            items, deleted_items = self.dict_diff(
+                self.library.playlist_items[playlist_id],
+                last_library.playlist_items[playlist_id])
+        self.last_sent_library[playlist_id] = self.library.copy()
+        return items, deleted_items
+
+    def playlists(self, meta=None, update=False):
+        if not update or self.last_sent_library_for_playlists is None:
+            playlists = self.library.playlists.copy()
+            deleted_playlists = []
+        else:
+            playlists, deleted_playlists = self.dict_diff(
+                self.library.playlists,
+                self.last_sent_library_for_playlists.playlists)
+            # add playlists that have had their items changed
+            for playlist_id, item_set in self.library.playlist_items.items():
+                try:
+                    last_library = self.last_sent_library[playlist_id]
+                except KeyError:
+                    continue
+                last_item_set = last_library.playlist_items[playlist_id]
+                if last_item_set != item_set:
+                    playlist_data = self.library.playlists[playlist_id]
+                    playlists[playlist_id] = playlist_data
+
+        self.last_sent_library_for_playlists = self.library.copy()
+        return playlists, deleted_playlists
+
+    def databases(self, update):
+        return True
+
+    def daap_get_file_request(self, daap_id, file_format):
+        return '/item-%s' % daap_id
+
+    def _get_child_mock(self, parent, name, wraps):
+        return mock.Mock()
+
+    def returnself(self, *args):
+        """Return a references to ourselves.
+
+        This method can be used to patch the miro.libdaap.make_daap_client()
+        """
+        return self
+
+def make_mock_daap_item(item_id, title, file_type='audio'):
+    if file_type == 'audio':
+        daap_file_type = libdaap.DAAP_MEDIAKIND_AUDIO
+    elif file_type == 'video':
+        daap_file_type = libdaap.DAAP_MEDIAKIND_VIDEO
+    else:
+        raise ValueError("Unknown file type %s" % file_type)
+    return {
+        'com.apple.itunes.mediakind': daap_file_type,
+        'daap.songformat': 'mpeg',
+        'dmap.itemid': item_id,
+        'dmap.itemname': title,
+        'daap.songtime': 123,
     }
-    mock_client.playlists.return_value = ({'playlist-id-1': base_playlist}, {})
-    mock_client.items.return_value = ({}, {})
-    return mock_client
+
+def make_mock_daap_playlist(playlist_id, title, is_podcast=False):
+    playlist_data = {
+        'dmap.itemid': playlist_id,
+        'dmap.itemname': title,
+    }
+    if is_podcast:
+        playlist_data['com.apple.itunes.is-podcast-playlist'] = True
+    return playlist_data

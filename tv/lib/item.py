@@ -416,7 +416,21 @@ class ItemChangeTracker(object):
         self.removed.add(item.id)
 
 class ItemBase(database.DDBObject):
-    """Base class for Item and DeviceItem"""
+    """Base class for Item, DeviceItem, and SharingItem"""
+
+    def after_setup_new(self):
+        self.__class__.change_tracker.on_item_added(self)
+
+    def signal_change(self, needs_save=True, can_change_views=True):
+        self.__class__.change_tracker.on_item_changed(self)
+        database.DDBObject.signal_change(self, needs_save, can_change_views)
+
+    def remove(self):
+        database.DDBObject.remove(self)
+        self.__class__.change_tracker.on_item_removed(self)
+
+class MetadataItemBase(ItemBase):
+    """Base class for items that use the MetadataManager system."""
 
     def init_metadata_attributes(self):
         """Initialize all metadata attributes to None."""
@@ -453,18 +467,8 @@ class ItemBase(database.DDBObject):
         self._bulk_update_db_values(metadata_dict)
         self.calc_title()
 
-    def after_setup_new(self):
-        self.__class__.change_tracker.on_item_added(self)
 
-    def signal_change(self, needs_save=True, can_change_views=True):
-        self.__class__.change_tracker.on_item_changed(self)
-        database.DDBObject.signal_change(self, needs_save, can_change_views)
-
-    def remove(self):
-        database.DDBObject.remove(self)
-        self.__class__.change_tracker.on_item_removed(self)
-
-class Item(ItemBase, iconcache.IconCacheOwnerMixin):
+class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
     """
@@ -539,11 +543,11 @@ class Item(ItemBase, iconcache.IconCacheOwnerMixin):
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
-        ItemBase.after_setup_new(self)
+        MetadataItemBase.after_setup_new(self)
 
     def signal_change(self, needs_save=True, can_change_views=True):
         app.item_info_cache.item_changed(self)
-        ItemBase.signal_change(self, needs_save, can_change_views)
+        MetadataItemBase.signal_change(self, needs_save, can_change_views)
 
     def download_stats_changed(self):
         Item.change_tracker.dlstats_changed = True
@@ -2092,7 +2096,7 @@ class Item(ItemBase, iconcache.IconCacheOwnerMixin):
             for item in self.get_children():
                 item.remove()
         self._remove_from_playlists()
-        ItemBase.remove(self)
+        MetadataItemBase.remove(self)
         # need to call this after DDBObject.remove(), so that the item info is
         # there for ItemInfoFetcher to see.
         app.item_info_cache.item_removed(self)
@@ -2523,7 +2527,7 @@ class DeviceItemChangeTracker(object):
         self.removed[device_id].add(item.id)
         self.changed_devices.add(device_id)
 
-class DeviceItem(ItemBase):
+class DeviceItem(MetadataItemBase):
     """
     An item which lives on a device.  There's a separate, per-device sqlite
     database database.
@@ -2542,7 +2546,7 @@ class DeviceItem(ItemBase):
             kwargs['db_info'] = device.db_info
         # set device_id
         self.device_id = kwargs['db_info'].device_id
-        ItemBase.__init__(self, *args, **kwargs)
+        MetadataItemBase.__init__(self, *args, **kwargs)
 
     def setup_new(self, device, filename, sync_info=None, auto_sync=False):
         """Create a new DeviceItem.
@@ -2692,11 +2696,55 @@ class DeviceItem(ItemBase):
     def remove(self, device):
         if device.metadata_manager.path_in_system(self.filename):
             device.metadata_manager.remove_file(self.filename)
-        ItemBase.remove(self)
+        MetadataItemBase.remove(self)
+
+class SharingItemChangeTracker(object):
+    """Track changes to SharingItem and send the SharingItemsChanged message.
+    """
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.added = set()
+        self.changed = set()
+        self.removed = set()
+        self.changed_columns = set()
+        self.dlstats_changed = False
+
+    def send_changes(self):
+        # TODO: implement this
+        raise NotImplementedError()
+
+    def on_item_added(self, item):
+        self.added.add(item.id)
+
+    def on_item_changed(self, item):
+        self.changed.add(item.id)
+        self.changed_columns.update(item.changed_attributes)
+
+    def on_item_removed(self, item):
+        self.removed.add(item.id)
 
 class SharingItem(ItemBase):
     """Item on a DAAP share."""
-    pass
+    def setup_new(self, **kwargs):
+        self.file_format = self.duration = self.size = self.artist = None
+        self.album_artist = self.album = self.year = self.genre = None
+        self.track = self.kind = self.show = self.season_number = None
+        self.episode_id = self.episode_number = None
+        self.__dict__.update(kwargs)
+
+    def setup_restored(self):
+        # we should never call setup_restored() since the databases are always
+        # created fresh
+        app.controller.failed_soft("creating sharing item",
+                                   "setup_restored() called")
+        self.remove()
+
+    @classmethod
+    def get_by_daap_id(cls, daap_id, db_info=None):
+        view = cls.make_view('daap_id=?', (daap_id,), db_info=db_info)
+        return view.get_singleton()
 
 _deleted_file_checker = None
 
@@ -2758,6 +2806,7 @@ def setup_metadata_manager(cover_art_dir=None, screenshot_dir=None):
 def setup_change_tracker():
     Item.change_tracker = ItemChangeTracker()
     DeviceItem.change_tracker = DeviceItemChangeTracker()
+    SharingItem.change_tracker = SharingItemChangeTracker()
 
 def on_new_metadata(metadata_manager, new_metadata):
     # Get all items that have changed using one query.  This is much faster

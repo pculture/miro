@@ -543,7 +543,32 @@ class SharingItemSchema(MultiClassObjectSchema):
     table_name = 'sharing_item'
 
     fields = DDBObjectSchema.fields + [
+        ('daap_id', SchemaInt()),
+        ('video_path', SchemaFilename()),
+        ('title', SchemaString()),
+        ('file_type', SchemaString()),
+        ('file_format', SchemaString(noneOk=True)),
+        ('duration', SchemaInt(noneOk=True)),
+        ('size', SchemaInt(noneOk=True)),
+        ('artist', SchemaString(noneOk=True)),
+        ('album_artist', SchemaString(noneOk=True)),
+        ('album', SchemaString(noneOk=True)),
+        ('year', SchemaInt(noneOk=True)),
+        ('genre', SchemaString(noneOk=True)),
+        ('track', SchemaInt(noneOk=True)),
+        ('kind', SchemaString(noneOk=True)),
+        ('show', SchemaString(noneOk=True)),
+        ('season_number', SchemaInt(noneOk=True)),
+        ('episode_id', SchemaString(noneOk=True)),
+        ('episode_number', SchemaInt(noneOk=True)),
+        ('host', SchemaString()),
+        ('port', SchemaInt()),
+        ('address', SchemaString()),
     ]
+
+    unique_indexes = (
+        ('sharing_item_daap_id', ('daap_id',)),
+    )
 
 class FeedSchema(DDBObjectSchema):
     klass = Feed

@@ -43,7 +43,8 @@ def initialize():
     global SavedSearchFeedImpl, ScraperFeedImpl, SearchFeedImpl
     global DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
     global ManualFeedImpl, ChannelFolder, PlaylistFolder
-    global PlaylistFolderItemMap, ChannelGuide, Item, FileItem, DeviceItem
+    global PlaylistFolderItemMap, ChannelGuide
+    global Item, FileItem, DeviceItem, SharingItem
     global IconCache, SavedPlaylist, PlaylistItemMap, TabOrder, ThemeHistory
     global messages
 
@@ -54,7 +55,7 @@ def initialize():
     from miro.folder import ChannelFolder, PlaylistFolder, \
             PlaylistFolderItemMap
     from miro.guide import ChannelGuide
-    from miro.item import Item, FileItem, DeviceItem
+    from miro.item import Item, FileItem, DeviceItem, SharingItem
     from miro.iconcache import IconCache
     from miro.playlist import SavedPlaylist, PlaylistItemMap
     from miro.tabs import TabOrder

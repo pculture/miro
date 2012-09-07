@@ -43,6 +43,7 @@ from hashlib import md5
 
 from miro.gtcache import gettext as _
 from miro import app
+from miro import database
 from miro import eventloop
 from miro import messages
 from miro import playlist
@@ -56,7 +57,7 @@ from miro import schema
 from miro import storedatabase
 from miro import transcode
 from miro import metadata
-from miro.item import Item
+from miro.item import Item, SharingItem
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
 
@@ -76,6 +77,8 @@ DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' +
              'daap.songyear,daap.songtracknumber,daap.songuserrating,' +
              'org.participatoryculture.miro.itemkind,' +
              'com.apple.itunes.mediakind')
+
+DAAP_PODCAST_KEY = 'com.apple.itunes.is-podcast-playlist'
 
 supported_filetypes = filetypes.VIDEO_EXTENSIONS + filetypes.AUDIO_EXTENSIONS
 
@@ -110,7 +113,7 @@ miro_itemkind_rmapping = {
 daap_mapping = {
     'daap.songformat': 'file_format',
     'com.apple.itunes.mediakind': 'file_type',
-    'dmap.itemid': 'id',
+    'dmap.itemid': 'daap_id',
     'dmap.itemname': 'title',
     'daap.songtime': 'duration',
     'daap.songsize': 'size',
@@ -130,7 +133,7 @@ daap_mapping = {
 daap_rmapping = {
     'file_format': 'daap.songformat',
     'file_type': 'com.apple.itunes.mediakind',
-    'id': 'dmap.itemid',
+    'daap_id': 'dmap.itemid',
     'name': 'dmap.itemname',
     'duration': 'daap.songtime',
     'size': 'daap.songsize',
@@ -159,109 +162,6 @@ def inet_ntop(af, ip):
             return ':'.join('%x' % bit for bit in struct.unpack('!' + 'H' * 8,
                                                                 ip))
         raise ValueError('unknown address family %d' % af)
-
-class SharingItem(object):
-    """
-    An item which lives on a remote share.
-    """
-    def __init__(self, **kwargs):
-        for required in ('video_path', 'id', 'file_type', 'host', 'port'):
-            if required not in kwargs:
-                raise TypeError('SharingItem must be given a "%s" argument'
-                                % required)
-
-        for name in metadata.attribute_names:
-            setattr(self, name, None)
-        self.file_format = self.size = None
-        self.release_date = self.feed_name = self.feed_id = None
-        self.keep = True
-        self.is_container_item = False
-        self.url = self.payment_link = None
-        self.comments_link = self.permalink = self.file_url = None
-        self.license = self.downloader = None
-        self.duration = self.screenshot = self.thumbnail_url = None
-        self.resume_time = 0
-        self.description = u''
-        self.subtitle_encoding = self.enclosure_type = None
-        self.metadata_version = 0
-        self.file_type = None
-        self.creation_time = None
-
-        self.__dict__.update(kwargs)
-
-        self.video_path = FilenameType(self.video_path)
-        if self.title is None:
-            self.title = _("Unknown")
-        # Do we care about file_format?
-        if self.file_format is None:
-            pass
-        if self.size is None:
-            self.size = 0
-        if self.release_date is None or self.creation_time is None:
-            now = time.time()
-            if self.release_date is None:
-                self.release_date = now
-            if self.creation_time is None:
-                self.creation_time = now
-        if self.duration is None: # -1 is unknown
-            self.duration = 0
-
-    @staticmethod
-    def id_exists():
-        return True
-
-    def get_release_date(self):
-        try:
-            return datetime.fromtimestamp(self.release_date)
-        except ValueError:
-            logging.warn('SharingItem: release date time %s invalid' %
-                          self.release_date)
-            return datetime.now()
-
-    def get_creation_time(self):
-        try:
-            return datetime.fromtimestamp(self.creation_time)
-        except ValueError:
-            logging.warn('SharingItem: creation time %s invalid' %
-                          self.creation_time)
-            return datetime.now()
-
-    @returns_filename
-    def get_filename(self):
-        # For daap, sent it to be the same as http as it is basically
-        # http with a different port.
-        def daap_handler(path, host, port):
-            return 'http://%s:%s%s' % (host, port, path)
-        fn = FilenameType(self.video_path)
-        fn.set_urlize_handler(daap_handler, [self.address, self.port])
-        return fn
-
-    def get_url(self):
-        return self.url or u''
-
-    @returns_filename
-    def get_thumbnail(self):
-        # What about cover art?
-        if self.file_type == 'audio':
-            return resources.path("images/thumb-default-audio.png")
-        else:
-            return resources.path("images/thumb-default-video.png")
-
-    def _migrate_thumbnail(self):
-        # This should not ever do anything useful.  We don't have a backing
-        # database to safe this stuff.
-        pass
-
-    def drm_description(self):
-        if self.has_drm:
-            return _("Locked")
-        else:
-            return u""
-
-    def remove(self, save=True):
-        # This should never do anything useful, we don't have a backing
-        # database. Yet.
-        pass
 
 class SharingTracker(object):
     """The sharing tracker is responsible for listening for available music
@@ -543,6 +443,139 @@ class SharingTracker(object):
         # What to do in case of socket error here?
         self.w.send(SharingTracker.CMD_RESUME)
 
+class _ClientUpdateResult(object):
+    """Stores the results of a client update.
+
+    One issue we must deal with is that we only want to access the daap client
+    in the thread maid for it.  However, we want to create SharingItems in the
+    backend thread.
+
+    This class helps that by calling all the daap client methods that we need
+    to inside the daap client thread, then allows us to access the data from
+    the backend thread.
+
+    Attributes:
+        items - dictionary tracking items that have been added/updated.  Maps
+                item ids to dicts of item data
+        deleted_items - list of item ids for deleted items
+        playlists - dictionary tracking the playlists that have been
+                    added/updated.  Maps playlist ids to dicts of playlist
+                    data deleted_playlist - list of playlist ids for deleted
+                    playlist
+        deleted_playlist - list of playlist ids for deleted playlists
+        playlist_items - dictionary tracking items added/updated in playlists.
+                         Maps playlist ids to list of item ids
+        playlist_deleted_items - dictionary tracking items deleted from
+                                 playlists.  Maps playlist ids to a list of
+                                 item ids.
+        base_playlist_id - DAAP id of the base playlist (the playlist that
+                           contains all items)
+    """
+    def __init__(self, client, update=False, base_playlist_id=None):
+        self.update = update
+        self.items = {}
+        self.deleted_items = []
+        self.playlists = {}
+        self.deleted_playlists = []
+        self.playlist_items = {}
+        self.playlist_deleted_items = {}
+        self.base_playlist_id = base_playlist_id
+
+        self.fetch_from_client(client)
+
+    def strip_nuls_from_data(self, data_list):
+        """Strip nul characters from items/playlist data
+
+        :param data_list: list of dicts containing playlist/item data.  For
+        each string value of each dict nuls will be removed
+        """
+        for data in data_list:
+            for key, value in data.items():
+                if isinstance(value, str):
+                    data[key] = value.replace('\x00', '')
+
+    def fetch_from_client(self, client):
+        self.check_database_exists(client)
+        self.fetch_playlists(client)
+        self.fetch_items(client)
+        for daap_id in self.playlists.keys():
+            self.fetch_playlist_items(client, daap_id)
+
+    def check_database_exists(self, client):
+        if not client.databases(update=self.update):
+            raise IOError('Cannot get database')
+
+    def fetch_playlists(self, client):
+        self.playlists, self.deleted_playlists = client.playlists(
+            update=self.update)
+        if self.playlists is None:
+            raise IOError('Cannot get playlist')
+        # Clean the playlist: remove NUL characters.
+        self.strip_nuls_from_data(self.playlists.values())
+        # Only return playlist that are not the base playlist.  We don't
+        # explicitly show base playlist.
+        for daap_id, data in self.playlists.items():
+            if data.get('daap.baseplaylist', False):
+                if self.base_playlist_id is not None:
+                    logging.debug('more than one base playlist found')
+                self.base_playlist_id = daap_id
+                del self.playlists[daap_id]
+        # Maybe we have looped through here without a base playlist.  Then
+        # the server is broken?
+        if not self.base_playlist_id:
+            raise ValueError('Cannot find base playlist')
+
+    def fetch_items(self, client):
+        self.items, self.deleted_items = client.items(
+            playlist_id=self.base_playlist_id, meta=DAAP_META,
+            update=self.update)
+        if self.items is None:
+            raise ValueError('Cannot find items in base playlist')
+
+        self.strip_nuls_from_data(self.items.values())
+
+    def fetch_playlist_items(self, client, playlist_key):
+        items, deleted = client.items(playlist_id=playlist_key,
+                                      meta=DAAP_META, update=self.update)
+        if items is None:
+            raise ValueError('Cannot find items for playlist %d' % k)
+        self.playlist_items[playlist_key] = items.keys()
+        self.playlist_deleted_items[playlist_key] = deleted
+
+class _ClientPlaylistTracker(object):
+    """Tracks playlist data from the DAAP client for SharingItemTrackerImpl
+
+    Attributes:
+        playlist_data - maps DAAP ids to the latest playlist data for them
+        playlist_items - maps DAAP playlist ids to sets of DAAP item ids
+    """
+    def __init__(self):
+        self.playlist_data = {}
+        self.playlist_items = {}
+
+    def update(self, result):
+        """Update data
+        
+        :param result: _ClientUpdateResult
+        """
+        for playlist_id, playlist_data in result.playlists.items():
+            if playlist_id not in self.playlist_data:
+                self.playlist_items[playlist_id] = set()
+            self.playlist_data[playlist_id] = playlist_data
+        for playlist_id in result.deleted_playlists:
+            del self.playlist_data[playlist_id]
+            del self.playlist_items[playlist_id]
+        for playlist_id, item_ids in result.playlist_items.items():
+            self.playlist_items[playlist_id].update(item_ids)
+        for playlist_id, item_ids in result.playlist_deleted_items.items():
+            self.playlist_items[playlist_id].difference_update(item_ids)
+
+    def current_playlists(self):
+        """Get a the playlists that currently have items """
+        return dict((id_, data)
+                    for id_, data in self.playlist_data.items()
+                    if self.playlist_items.get(id_))
+
 # Synchronization issues: this code is a bit sneaky, so here is an explanation
 # of how it works.  When you click on a share tab in the frontend, the 
 # display (the item list controller) starts tracking the items.  It does
@@ -563,25 +596,24 @@ class SharingTracker(object):
 # it finds the appropriate tracker and calls handle_item_list.  Either it is
 # already populated, or if connection is still in process will return empty
 # list until the connection success callback is called.
-class SharingItemTrackerImpl(signals.SignalEmitter):
-    """This is the backend for the SharingItemTracker the messagehandler file.
-    This backend class allows the item tracker to be persistent even as the
-    user switches across different tabs in the sidebar, until the disconnect
-    button is clicked.
-    """
-    type = u'sharing'
-    fake_playlists = ('video', 'audio', 'playlist', 'podcast')
+class SharingItemTrackerImpl(object):
+    """Handle the backend work to track a single share
 
+    SharingItemTrackerImpl creates a thread to connect and monitor the DAAP
+    client.  As we get changes from the DAAP server, we update the database in
+    the backend thread.
+
+    This backend is persistent as the user switches across different tabs in
+    the sidebar, until the disconnect button is clicked.
+    """
     def __init__(self, share):
-        signals.SignalEmitter.__init__(self)
-        for sig in 'added', 'changed', 'removed':
-            self.create_signal(sig)
         self.client = None
         self.share = share
-        self.items = dict()
+        self.current_item_ids = set()
+        self.current_playlist_ids = set()
+        self.playlist_tracker = _ClientPlaylistTracker()
         self.info_cache = dict()
-        self.playlists = dict()
-        self.base_playlist = None    # Temporary
+        self.base_playlist_id = None    # Temporary
         self.share.is_updating = True
         message = messages.TabsChanged('connect', [], [self.share], [])
         message.send_to_frontend()
@@ -675,6 +707,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def create_database(self):
         self.db_path, self.db = self.find_unused_db()
+        self.db_info = database.DBInfo(self.db)
         self.__class__._used_db_paths.add(self.db_path)
 
     def destroy_database(self):
@@ -686,54 +719,64 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             logging.warn("Error deleting database file %s: %s" %
                          (self.db_path, e))
         self.__class__._used_db_paths.remove(self.db_path)
-        self.db_path = None
+        self.db = self.db_info = self.db_path = None
 
-    def sharing_item(self, rawitem):
-        kwargs = dict()
+    def convert_raw_sharing_item(self, rawitem):
+        """Convert raw data from libdaap to the attributes of SharingItem
+        """
+        item_data = dict()
         for k in rawitem.keys():
             try:
                 key = daap_mapping[k]
             except KeyError:
                 # Got something back we don't really care about.
                 continue
-            kwargs[key] = rawitem[k]
+            item_data[key] = rawitem[k]
             if isinstance(rawitem[k], str):
-                kwargs[key] = kwargs[key].decode('utf-8')
+                item_data[key] = item_data[key].decode('utf-8')
 
         try:
-            kwargs['kind'] = miro_itemkind_rmapping[kwargs['kind']]
+            item_data['kind'] = miro_itemkind_rmapping[item_data['kind']]
         except KeyError:
             pass
 
         # Fix this up.
         file_type = u'audio'    # fallback
         try:
-            if kwargs['file_type'] == libdaap.DAAP_MEDIAKIND_AUDIO:
+            if item_data['file_type'] == libdaap.DAAP_MEDIAKIND_AUDIO:
                 file_type = u'audio'
-            if kwargs['file_type'] in [libdaap.DAAP_MEDIAKIND_TV,
-                                       libdaap.DAAP_MEDIAKIND_MOVIE,
-                                       libdaap.DAAP_MEDIAKIND_VIDEO
-                                      ]:
+            if item_data['file_type'] in [libdaap.DAAP_MEDIAKIND_TV,
+                                          libdaap.DAAP_MEDIAKIND_MOVIE,
+                                          libdaap.DAAP_MEDIAKIND_VIDEO
+                                         ]:
                 file_type = u'video'
         except KeyError:
            # Whoups.  Server didn't send one over?  Assume default.
            pass
 
-        kwargs['file_type'] = file_type
-        kwargs['video_path'] = self.client.daap_get_file_request(
-                                   kwargs['id'],
-                                   kwargs['file_format'])
-        kwargs['host'] = self.client.host
+        item_data['file_type'] = file_type
+        item_data['video_path'] = self.client.daap_get_file_request(
+            item_data['daap_id'], item_data['file_format'])
+        item_data['file_type'] = file_type
+        return item_data
+
+    def make_sharing_item(self, rawitem):
+        kwargs = self.convert_raw_sharing_item(rawitem)
+        kwargs['host'] = unicode(self.client.host)
         kwargs['port'] = self.client.port
-        kwargs['address'] = self.address
-        kwargs['file_type'] = file_type
+        kwargs['address'] = unicode(self.address)
+        kwargs['db_info'] = self.db_info
+        return SharingItem(**kwargs)
 
-        # Duration: daap uses millisecond, so we need to scale it.
-        if kwargs['duration'] is not None:
-            kwargs['duration'] /= DURATION_SCALE
+    def get_sharing_item(self, daap_id):
+        return SharingItem.get_by_daap_id(daap_id, db_info=self.db_info)
 
-        sharing_item = SharingItem(**kwargs)
-        return sharing_item
+    def make_playlist_sharing_info(self, daap_id, playlist_data):
+        return messages.SharingPlaylistInfo(
+            self.playlist_tab_id(daap_id),
+            playlist_data['dmap.itemname'],
+            daap_id,
+            playlist_data.get(DAAP_PODCAST_KEY, False))
 
     def client_disconnect(self):
         client = self.client
@@ -744,19 +787,23 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                  'DAAP client connect')
 
     def client_disconnect_error_callback(self, unused):
-        self.client_disconnect_callback_common(unused)
+        self.client_disconnect_callback_common()
 
     def client_disconnect_callback(self, unused):
-        self.client_disconnect_callback_common(unused)
+        self.client_disconnect_callback_common()
 
-    def client_disconnect_callback_common(self, unused):
-        tab_ids = [p.id for p in self.playlists.itervalues()
-                        if self.items[p.playlist_id] or
-                         p.playlist_id in SharingItemTrackerImpl.fake_playlists]
-        message = messages.TabsChanged('connect', [], [], tab_ids)
+    def client_disconnect_callback_common(self):
+        message = messages.TabsChanged('connect', [], [self.share],
+                                       list(self.current_playlist_ids))
         message.send_to_frontend()
 
     def client_connect(self):
+        self.make_client()
+        result = _ClientUpdateResult(self.client)
+        self.base_playlist_id = result.base_playlist_id
+        return result
+
+    def make_client(self):
         name = self.share.name
         host = self.share.host
         port = self.share.port
@@ -772,385 +819,83 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # Lousy Windows and Python API.
         address, port = self.client.conn.sock.getpeername()
         self.address = address
-        return self.setup_items()
 
-    # See use of self.client in client_update().
-    def setup_items(self, update=False):
-        name = self.share.name
-        host = self.share.host
-        port = self.share.port
-        try:
-            client = self.client
-        except AttributeError:
-            # Doesn't matter what exception it is, just raise to call error
-            # callback
-            raise
-
-        # From this point on ... if use of client is invalid (because socket
-        # is closed or something it should raise an error and we can bail
-        # out that way, and call the error callback.
-        if not client.databases(update=update):
-            raise IOError('Cannot get database')
-        deleted_items = dict()
-        playlists, deleted_playlists = client.playlists(update=update)
-        if playlists is None:
-            raise IOError('Cannot get playlist')
-        returned_playlists = dict()
-        video_tab_id = unicode(md5(repr((name,
-                                         host,
-                                         port, u'video'))).hexdigest())
-        audio_tab_id = unicode(md5(repr((name,
-                                         host,
-                                         port, u'audio'))).hexdigest())
-        playlist_tab_id = unicode(md5(repr((name,
-                                            host,
-                                            port, u'playlist'))).hexdigest())
-        podcast_tab_id = unicode(md5(repr((name,
-                                           host,
-                                           port, u'podcast'))).hexdigest())
-        for k in playlists.keys():
-            # Clean the playlist: remove NUL characters.
-            for k_ in playlists[k]:
-                if isinstance(playlists[k][k_], str):
-                    tmp = playlists[k][k_]
-                    playlists[k][k_] = tmp.replace('\x00', '')
-
-            is_base_playlist = None
-            if playlists[k].has_key('daap.baseplaylist'):
-                is_base_playlist = playlists[k]['daap.baseplaylist']
-            if is_base_playlist:
-                if not update and self.base_playlist:
-                    logging.debug('WARNING: more than one base playlist found')
-                if update and self.base_playlist != k:
-                    logging.debug('WARNING: base playlistid changed in update')
-                self.base_playlist = k
-            # This isn't the playlist id of the remote share, this is the
-            # playlist id we use internally.
-            # XXX is there anything better we can do than repr()?
-            if not is_base_playlist:
-                # XXX only add playlist if it not base playlist.  We don't
-                # explicitly show base playlist.
-                tab_id = unicode(md5(repr((name,
-                                           host,
-                                           port, k))).hexdigest())
-                try:
-                    key = 'com.apple.itunes.is-podcast-playlist'
-                    podcast = playlists[k][key]
-                except KeyError:
-                    podcast = False
-                if podcast:
-                    parent_id = podcast_tab_id
-                else:
-                    parent_id = playlist_tab_id
-                info = messages.SharingInfo(tab_id,
-                                            self.share.id,
-                                            playlists[k]['dmap.itemname'],
-                                            host,
-                                            port,
-                                            parent_id=parent_id,
-                                            playlist_id=k,
-                                            podcast=podcast)
-                returned_playlists[k] = info
-        # These are fake: so we only want to insert these once.
-        if not update:
-            video_info = messages.SharingInfo(video_tab_id,
-                                              self.share.id,
-                                              u'video',
-                                              host,
-                                              port,
-                                              parent_id=self.share.id,
-                                              playlist_id=u'video')
-            audio_info = messages.SharingInfo(audio_tab_id,
-                                              self.share.id,
-                                              u'audio',
-                                              host,
-                                              port,
-                                              parent_id=self.share.id,
-                                              playlist_id=u'audio')
-            playlist_folder_info = messages.SharingInfo(playlist_tab_id,
-                                              self.share.id,
-                                              u'playlist',
-                                              host,
-                                              port,
-                                              parent_id=self.share.id,
-                                              playlist_id=u'playlist',
-                                              has_children=True)
-            podcast_folder_info = messages.SharingInfo(podcast_tab_id,
-                                              self.share.id,
-                                              u'podcast',
-                                              host,
-                                              port,
-                                              parent_id=self.share.id,
-                                              playlist_id=u'podcast',
-                                              has_children=True)
-            returned_playlists['video'] = video_info
-            returned_playlists['audio'] = audio_info
-            returned_playlists['playlist'] = playlist_folder_info
-            returned_playlists['podcast'] = podcast_folder_info
-
-        # Maybe we have looped through here without a base playlist.  Then
-        # the server is broken?
-        if not self.base_playlist:
-            raise ValueError('Cannot find base playlist')
-
-        items, deleted = client.items(playlist_id=self.base_playlist,
-                                  meta=DAAP_META, update=update)
-        if items is None:
-            raise ValueError('Cannot find items in base playlist')
-
-        deleted_items[self.base_playlist] = deleted
-        # Make sure that we ditch stuff from the in-house video, music,
-        # playlist and podcast tabs too.
-        #
-        # The callback will filter out irrelevant items, so we can just
-        # add these as we please, it's easier that way to than figure out
-        # the exact set.
-        for p in SharingItemTrackerImpl.fake_playlists:
-            deleted_items[p] = deleted
-
-        itemdict = dict()
-        returned_playlist_items = dict()
-        returned_items = dict()
-        video_items = dict()
-        audio_items = dict()
-        sharing_item_meth = self.sharing_item
-        for itemkey in items.keys():
-            # Clean it of NUL
-            for k in items[itemkey]:
-                if isinstance(items[itemkey][k], str):
-                    tmp = items[itemkey][k]
-                    items[itemkey][k] = tmp.replace('\x00', '')
-            item = sharing_item_meth(items[itemkey])
-            itemdict[itemkey] = item
-            returned_items[itemkey] = item
-            if item.file_type == u'video':
-                video_items[itemkey] = item
-            elif item.file_type == u'audio':
-                audio_items[itemkey] = item
-            else:
-                logging.warn('item file type unrecognized %s', item.file_type)
-        returned_playlist_items[u'video'] = video_items
-        returned_playlist_items[u'audio'] = audio_items
-        returned_playlist_items[self.base_playlist] = returned_items
-
-        # Have to save the items from the base playlist first, because
-        # Rhythmbox will get lazy and only send the ids around (expecting
-        # us to already to have the data, I guess). 
-        playlist_items = dict()
-        podcast_items = dict()
-        for k in playlists.keys():
-            if k == self.base_playlist:
-                continue
-            returned_items = dict()
-            items, deleted = client.items(playlist_id=k, meta=DAAP_META,
-                                               update=update)
-            if items is None:
-                raise ValueError('Cannot find items for playlist %d' % k)
-            deleted_items[k] = deleted
-            for itemkey in items.keys():
-                item = itemdict[itemkey]
-                returned_items[itemkey] = itemdict[itemkey]
-                try:
-                    key = 'com.apple.itunes.is-podcast-playlist'
-                    if playlists[k].has_key(key) and playlists[k][key]:
-                        podcast_items[itemkey] = item
-                    else:
-                        playlist_items[itemkey] = item
-                except KeyError:
-                    pass
-            returned_playlist_items[k] = returned_items
-
-        returned_playlist_items['podcast'] = podcast_items
-        returned_playlist_items['playlist'] = playlist_items
-
-        # We don't append these items directly to the object and let
-        # the success callback to do it to prevent race.
-        return (returned_playlist_items, returned_playlists,
-                deleted_playlists, deleted_items)
-
-    # If we are disconnecting, then, disconnect() sets the self.client
-    # to None before actually running the client.disconnect() routine.
-    # So, usage of self.client should be:
-    #
-    # try:
-    #    client = self.client
-    # except AttributeError:
-    #    # Handle error here.
-    #    pass
-    # else:
-    #     client.blah()
     def client_update(self):
         logging.debug('CLIENT UPDATE')
-        try:
-            client = self.client
-        except AttributeError:
-            # Doesn't matter what exception it is, just raise to call error
-            # callback
-            raise
-        client.update()
-        return self.setup_items(update=True)
+        self.client.update()
+        result = _ClientUpdateResult(self.client, update=True,
+                                     base_playlist_id=self.base_playlist_id)
+        if result.base_playlist_id != self.base_playlist_id:
+            logging.debug('base playlistid changed in update')
+            self.base_playlist_id = result.base_playlist_id
+        return result
 
-    def client_update_callback(self, args):
+    def client_update_callback(self, result):
         logging.debug('CLIENT UPDATE CALLBACK')
-        deleted = []
-        changed = []
-        added = []
-        (returned_items, returned_playlists,
-         deleted_playlists, deleted_items) = args
-
-        # First: delete old junk.  But only delete from sidebar if the
-        # thing was there in the first place, which basically means if there
-        # was a non-empty number of items in the list.
-        for k in deleted_playlists:
-            if k == self.base_playlist:
-                logging.debug('client_update_callback: remote asked us to '
-                              'delete base playlist, ignoring')
-                continue
-            try:
-                playlist_id = self.playlists[k].id
-                del self.playlists[k]
-                if self.items[k]:
-                    deleted.append(playlist_id)
-            except KeyError:
-                pass
-
-        # Added/update changed playlist.  But not necessarily the added/changed
-        # list to send, because we don't know whether this list is empty
-        # at this point.  Defer until we process the items, we will fix up.
-        for k, v in returned_playlists.iteritems():
-            if self.playlists.has_key(k):
-                changed.append(v)
-            else:
-                added.append(v)
-                self.items[k] = dict()
-            self.playlists[k] = v
-
-        # Keep tabs on whether existing playlist is empty or not
-        old_empty_playlists = set([k for k in self.items if not self.items[k]])
-        old_valid_playlists = set([k for k in self.items if self.items[k]])
-
-        # Process deleted items.
-        for k, item_ids in deleted_items.iteritems():
-            try:
-                playlist_items = self.items[k]
-            except KeyError:
-                # Huh what?  Sent us something that we don't have anymore.
-                logging.debug('Playlist %s already deleted', k)
-                continue
-            # Base playlist == None, so munge it up.  Could probably just
-            # use the base playlist id and skip this trouble!
-            playlist_id = None if k == self.base_playlist else k
-            for item_id in item_ids:
-                try:
-                    item = playlist_items[item_id]
-                    del playlist_items[item_id]
-                    self.emit('removed', playlist_id, item)
-                except KeyError:
-                    pass
-
-        # Now, process returned items, that have been added/changed. 
-        for k, updated_playlist in returned_items.iteritems():
-            try:
-                playlist_items = self.items[k]
-            except KeyError:
-                # Huh?  We asked for a playlist that didn't exist?
-                logging.debug('CANNOT ACCESS self.items[%s]', k)
-                continue
-            playlist_id = None if k == self.base_playlist else k
-            for key, value in updated_playlist.iteritems():
-                sig = 'changed' if playlist_items.has_key(key) else 'added'
-                self.emit(sig, playlist_id, value)
-                playlist_items[key] = value
-
-        # Keep tabs on current state of playlists
-        valid_playlists = set([k for k in self.items if self.items[k]])
-
-        # Filter out empty stuff.  Re-add previously empty stuff that now
-        # has stuff (in changed).
-        #
-        # Algorithm: check added.  If empty, filter out.
-        # Check changed.  If empty, and previously not empty, append to
-        # deleted.  If previously empty and now not empty, move from changed
-        # to added.  If previously empty and now also empty, ditch it from the
-        # changed lists.
-        added = [a for a in added if self.items[a.playlist_id]]
-        to_remove = []
-        for c in changed:
-            if (c.playlist_id == self.base_playlist or
-              c.playlist_id in SharingItemTrackerImpl.fake_playlists):
-                continue
-            if not self.items[c.playlist_id]:
-                # We need to remove it.
-                if c.playlist_id in old_valid_playlists:
-                    # Transitioned from valid to empty.  Append to deleted.
-                    logging.debug('%s transitioned to empty', c.name)
-                    deleted.append(c.id)
-                    to_remove.append(c)
-                elif c.playlist_id in old_empty_playlists:
-                    # Was empty, is still empty.  Ditch from changed list.
-                    logging.debug('%s was empty, still empty', c.name)
-                    to_remove.append(c)
-
-        # Ditch stuff in the changed list
-        for r in to_remove:
-            while True:
-                try:
-                    changed.remove(r)
-                except ValueError:
-                    break
-
-        # Was empty and now not empty.  Intersection of previously empty
-        # playlists and playlists are now not empty.  Add to added list,
-        # and if it exists in the changed list, ditch it (because we should
-        # use add as it did not exist before).
-        added_ids = list(old_empty_playlists.intersection(valid_playlists))
-        for added_id in added_ids:
-            if added_id == self.base_playlist:
-                continue
-            if added_id in SharingItemTrackerImpl.fake_playlists:
-                continue
-            added.append(self.playlists[added_id])
-            try:
-                changed.remove(self.playlists[added_id])
-            except ValueError:
-                logging.debug('empty to non-empty transition playlist %s '
-                              'not in changed list', added_id)
-
-        # Finally, update the tabs.  Use set() to filter out the duplicates.
-        message = messages.TabsChanged('connect', set(added), set(changed),
-                                       set(deleted))
-        message.send_to_frontend()
+        self.update_sharing_items(result)
+        self.update_playlists(result)
 
     def client_update_error_callback(self, unused):
         self.client_connect_update_error_callback(unused, update=True)
 
+    def playlist_tab_id(self, daap_id):
+        """Calculate the tab id to use for a SharingPlaylistInfo."""
+        return '%s-%s-%s-%s' % (self.share.name, self.share.host,
+                                self.share.port, daap_id)
+
     # NB: this runs in the eventloop (backend) thread.
-    def client_connect_callback(self, args):
-        # Just ignore any deleted items on first connect - they shouldn't
-        # be there.
-        returned_items, returned_playlists, _, _ = args
-        self.items = returned_items
-        self.playlists = returned_playlists
-        # Send a list of all the items to the main sharing tab.  Only add
-        # those that are part of the base playlist.
-        for item in self.items[self.base_playlist].itervalues():
-            self.emit('added', None, item)
+    def client_connect_callback(self, result):
+        self.update_sharing_items(result)
+        self.update_playlists(result)
         # Once all the items are added then send display mounted and remove
         # the progress indicator.
         self.share.mount = True
         self.share.is_updating = False
-        # Only show non-empty stuff, but make sure that we always display
-        # the top level podcast tabs.  This filtering is a bit of work, but
-        # even if we have hundreds of playlists, it won't be that bad, and
-        # we only need to do this once.
-        playlists = [p for p in self.playlists.itervalues()
-                     if self.items[p.playlist_id] and
-                     p.playlist_id not in SharingItemTrackerImpl.fake_playlists]
-        # Append the ersatz playlists at the front.
-        for i, v in enumerate(SharingItemTrackerImpl.fake_playlists):
-            playlists.insert(i, self.playlists[v])
-        message = messages.TabsChanged('connect', playlists,
-                                       [self.share], [])
+
+    def update_sharing_items(self, result):
+        """Create or update SharingItems on the database.
+
+        :param new_item_data: _ClientUpdateResult
+        """
+        for daap_id, item_data in result.items.items():
+            if daap_id not in self.current_item_ids:
+                self.make_sharing_item(item_data)
+                self.current_item_ids.add(daap_id)
+            else:
+                sharing_item = self.get_sharing_item(daap_id)
+                new_data = self.convert_raw_sharing_item(item_data)
+                for key, value in new_data.items():
+                    setattr(sharing_item, key, value)
+                sharing_item.signal_change()
+        for item_id in result.deleted_items:
+            sharing_item = SharingItem.get_by_daap_id(item_id,
+                                                      db_info=self.db_info)
+            sharing_item.remove()
+
+    def update_playlists(self, result):
+        added = []
+        # We always send the share as changed since we're updating its
+        # contents.
+        changed = [self.share]
+        removed = []
+
+        self.playlist_tracker.update(result)
+        current_playlists = self.playlist_tracker.current_playlists()
+        # check for added/changed playlists
+        for daap_id, playlist_data in current_playlists.items():
+            if daap_id not in self.current_playlist_ids:
+                added.append(
+                    self.make_playlist_sharing_info(daap_id, playlist_data))
+                self.current_playlist_ids.add(daap_id)
+            elif daap_id in result.playlists:
+                changed.append(
+                    self.make_playlist_sharing_info(daap_id, playlist_data))
+        # check for removed playlists
+        removed.extend(self.current_playlist_ids -
+                       set(current_playlists.keys()))
+        self.current_playlist_ids = set(current_playlists.keys())
+
+        message = messages.TabsChanged('connect', added, changed, removed)
         message.send_to_frontend()
 
     def client_connect_error_callback(self, unused):
@@ -1170,19 +915,6 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         if not self.share.stale_callback:
             app.sharing_tracker.eject(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
-
-    def get_items(self, playlist_id=None):
-        # NB: keep this in a try/except construct because this could be
-        # called before the connection actually has succeeded.
-        try:
-            if playlist_id is None:
-                return self.items[self.base_playlist].values()
-            else:
-                return self.items[playlist_id].values()
-        except KeyError:
-            logging.error('Cannot get playlist, was looking for %s',
-                          playlist_id)
-            return []
 
 class SharingManagerBackend(object):
     """SharingManagerBackend is the bridge between pydaap and Miro.  It
@@ -1371,7 +1103,7 @@ class SharingManagerBackend(object):
             itemprop['podcast'] = typ == 'feed'
             # XXX
             if itemprop['podcast']:
-                itemprop['com.apple.itunes.is-podcast-playlist'] = True
+                itemprop[DAAP_PODCAST_KEY] = True
 
             # piece de resistance
             itemprop['revision'] = self.revision

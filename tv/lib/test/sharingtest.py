@@ -32,21 +32,28 @@ import os
 
 import sqlite3
 
+from miro import models
 from miro.test import mock
 from miro.test import testobjects
 from miro.test.framework import MiroTestCase, EventLoopTest
 
-class SharingDatabaseTest(EventLoopTest):
+class SharingTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         self.share = mock.Mock()
+        self.share.name = 'MockShare'
+        self.share.host = '127.0.0.1'
+        self.share.port = 1234
         # sharing uses a separate thread to communicate with the client.
         # Patch it so that we can run the code in our own thread
         self.mock_thread_class = self.patch_for_test('threading.Thread')
         self.mock_add_idle = self.patch_for_test('miro.eventloop.add_idle')
         # also use a Mock object for the daap client
+        self.client = testobjects.MockDAAPClient()
         self.patch_for_test('miro.libdaap.make_daap_client',
-                            testobjects.make_mock_daap_client)
+                            self.client.returnself)
+        self.MockTabsChanged = self.patch_for_test(
+            'miro.messages.TabsChanged')
 
     def run_sharing_item_tracker_impl(self, share, database_filename):
         correct_database_path = os.path.join(self.sandbox_support_directory,
@@ -149,3 +156,199 @@ class SharingDatabaseTest(EventLoopTest):
         self.patch_function('sqlite3.connect', mock_sqlite_connect)
         with self.allow_warnings():
             self.run_sharing_item_tracker_impl(self.share, 'sharing-db-1')
+
+    def check_tracker_items(self, tracker_impl, correct_items):
+        # check the SharingItems in the database.  correct_items should be a
+        # dictionary that maps item ids to item titles.
+        item_view = models.SharingItem.make_view(db_info=tracker_impl.db_info)
+        data_from_db = dict((i.id, i.title) for i in item_view)
+        # check that the IDs are correct
+        self.assertSameSet(data_from_db.keys(), correct_items.keys())
+        # check that the titles are correct
+        self.assertEquals(data_from_db, correct_items)
+
+    def make_daap_items(self, items_dict):
+        """Given a dict mapping item ids to item titles, create a dict mapping
+        those ids to DAAP items.
+        """
+        client_items = {}
+        for item_id, title in items_dict.items():
+            daap_item = testobjects.make_mock_daap_item(item_id, title)
+            client_items[item_id] = daap_item
+        return client_items
+
+    def check_client_connect(self, tracker_impl):
+        """Check the initial pass that creates items for
+        SharingItemTrackerImpl
+
+        :param tracker_impl: SharingItemTrackerImpl to test
+        """
+        # simulate the inital pass
+        client_connect_result = tracker_impl.client_connect()
+        # we shouldn't touch the DB in setup_items()
+        self.check_tracker_items(tracker_impl, {})
+        # check the results of the initial pass
+        tracker_impl.client_connect_callback(client_connect_result)
+        correct_items = dict((key, item['dmap.itemname'])
+                             for key, item in
+                             self.client.current_items().items())
+        self.check_tracker_items(tracker_impl, correct_items)
+
+    def check_client_update(self, tracker_impl):
+        """Check the an update run for SharingItemTrackerImpl
+
+        :param tracker_impl: SharingItemTrackerImpl to test
+        :param current_items: dictionary mapping item_ids to item titles.  We
+        will simulate those items being returned by the daap client
+        :param deleted_ids: dictionary maaping item ids to item titles for
+        deleted items
+        """
+        # calculate the what items are in the DB before the update
+        item_view = models.SharingItem.make_view(db_info=tracker_impl.db_info)
+        items_before_update = dict((i.id, i.title) for i in item_view)
+        # run the update
+        client_update_result = tracker_impl.client_update()
+        # we shouldn't touch the DB in setup_items()
+        self.check_tracker_items(tracker_impl, items_before_update)
+        # check the results of the update
+        tracker_impl.client_update_callback(client_update_result)
+        correct_items = dict((key, item['dmap.itemname'])
+                             for key, item in
+                             self.client.current_items().items())
+        self.check_tracker_items(tracker_impl, correct_items)
+
+    def daap_playlist_tab_id(self, daap_id):
+        return '%s-%s-%s-%s' % (self.share.name, self.share.host,
+                                self.share.port, daap_id)
+
+    def check_tabs_changed(self, correct_added_ids, correct_changed_ids,
+                           correct_removed_ids):
+        self.assertEquals(self.MockTabsChanged.call_count, 1)
+        type_, added, changed, removed = self.MockTabsChanged.call_args[0]
+        self.assertEquals(type_, 'connect')
+        current_playlists = self.client.current_playlists()
+        # check added playlists
+        self.assertEquals([info.id for info in added],
+                          [self.daap_playlist_tab_id(daap_id)
+                           for daap_id in correct_added_ids])
+        for info in added:
+            playlist_data = current_playlists[info.playlist_id]
+            self.assertEquals(info.name, playlist_data['dmap.itemname'])
+            podcast_key = 'com.apple.itunes.is-podcast-playlist'
+            self.assertEquals(info.podcast,
+                              playlist_data.get(podcast_key, False))
+
+        # check changed playlists
+        self.assertEquals(changed[0], self.share)
+
+        # check removed playlists
+        self.assertSameSet(removed, correct_removed_ids)
+        self.MockTabsChanged.reset_mock()
+
+
+    def test_sharing_items(self):
+        # test sharing items created/update/delete
+
+        # test initial item creation
+        tracker_impl = sharing.SharingItemTrackerImpl(self.share)
+        self.client.set_items(self.make_daap_items(
+            {1: 'title-1', 2: 'title-2'}))
+        self.check_client_connect(tracker_impl)
+        # test item update.
+        # item 1 is updated, item 2 is deleted, and item 3 is added
+        self.client.set_items(self.make_daap_items(
+            {1: 'new-title-1', 3: 'new-title-3'}))
+        self.check_client_update(tracker_impl)
+
+    def test_playlists(self):
+        # test sending TabInfo updates for playlists
+
+        # test initial item creation
+        # only playlists with items should be created
+        tracker_impl = sharing.SharingItemTrackerImpl(self.share)
+        self.MockTabsChanged.reset_mock()
+        self.client.set_items(self.make_daap_items(
+            {1: 'title-1', 2: 'title-2'}))
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(101, 'playlist-1')
+        )
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(102, 'playlist-2')
+        )
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(103, 'playlist-3')
+        )
+        self.client.set_playlist_items(101, [1])
+        self.client.set_playlist_items(102, [1, 2])
+        self.check_client_connect(tracker_impl)
+        self.check_tabs_changed([101, 102], [], [])
+
+        # check updating playlists
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(104, 'playlist-4')
+        )
+        self.client.set_playlist_items(104, [1, 2])
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(102, 'new-playlist-2')
+        )
+        self.check_client_update(tracker_impl)
+        self.check_tabs_changed([104], [102], [])
+
+        # check playlist deletion
+        self.client.remove_playlist(101)
+        # 102 gets removed because of no items
+        self.client.set_playlist_items(102, [])
+        # 103 is not removed because it never  contained items
+        self.client.remove_playlist(103)
+        self.check_client_update(tracker_impl)
+        self.check_tabs_changed([], [], [101, 102])
+
+        # check that adding items to an empty playlist results in it being
+        # added
+        self.client.set_playlist_items(102, [1])
+        self.check_client_update(tracker_impl)
+        self.check_tabs_changed([102], [], [])
+
+    def test_disconnect_removes_playlists(self):
+        # test that playlist tabs get after the client disconnects
+        tracker_impl = sharing.SharingItemTrackerImpl(self.share)
+        self.MockTabsChanged.reset_mock()
+        self.client.set_items(self.make_daap_items(
+            {1: 'title-1', 2: 'title-2'}))
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(101, 'playlist-1')
+        )
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(102, 'playlist-2')
+        )
+        self.client.set_playlist_items(101, [1])
+        self.check_client_connect(tracker_impl)
+        self.check_tabs_changed([101], [], [])
+        # run the code that happens after the tracker disconnects
+        # playlist 1 should be removed.  playlist 2 was never added, so it
+        # shouldn't be in the message.
+        tracker_impl.client_disconnect_callback_common()
+        self.check_tabs_changed([], [], [101])
+
+    def test_nul_in_playlist_data(self):
+        # test that we remove NUL chars from playlist data (#17537)
+        tracker_impl = sharing.SharingItemTrackerImpl(self.share)
+        self.MockTabsChanged.reset_mock()
+        self.client.set_items(self.make_daap_items({1: 'title-1'}))
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(101, 'playlist-\0\0one\0')
+        )
+        self.client.set_playlist_items(101, [1])
+        tracker_impl.client_connect_callback(tracker_impl.client_connect())
+        type_, added, changed, removed = self.MockTabsChanged.call_args[0]
+        self.assertEquals(added[0].name, "playlist-one")
+
+    def test_nul_in_item_data(self):
+        # test that we remove NUL chars from item data (#17537)
+        tracker_impl = sharing.SharingItemTrackerImpl(self.share)
+        self.client.set_items(self.make_daap_items(
+            {1: 'title-\0\0one\0'}))
+        tracker_impl.client_connect_callback(tracker_impl.client_connect())
+        db_item = models.SharingItem.get_by_daap_id(
+            1, db_info=tracker_impl.db_info)
+        self.assertEquals(db_item.title, "title-one")
