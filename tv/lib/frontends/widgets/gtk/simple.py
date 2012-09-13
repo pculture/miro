@@ -192,12 +192,8 @@ class Label(Widget):
         self._widget.set_attributes(self.attr_list)
 
     def set_color(self, color):
-        # It seems like 'text' is the color we want to change, but fg is
-        # actually the one that changes it for me.  Change them both just to
-        # be sure.
-        for state in xrange(5):
-            self.modify_style('fg', state, self.make_color(color))
-            self.modify_style('text', state, self.make_color(color))
+        color_as_int = (int(c * 65535) for c in color)
+        self.set_attr(pango.AttrForeground(*color_as_int))
 
     def baseline(self):
         pango_context = self._widget.get_pango_context()
