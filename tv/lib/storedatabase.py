@@ -519,12 +519,8 @@ class LiveStorage(signals.SignalEmitter):
             logging.warn("Sucessfully wrote database to %s.  Changes "
                          "will now be saved as normal.", self.path)
 
-    def _change_path(self, new_path):
-        """Change the path of our database.
-
-        This method copies the entire current database to new_path, then opens
-        a connection to it.
-        """
+    def _copy_data_to_path(self, new_path):
+        """Copy the contents of our database to a new file.  """
         self.finish_transaction()
         # add the database at new_path to our current connection
         self._ensure_database_directory_exists(new_path)
@@ -557,7 +553,15 @@ class LiveStorage(signals.SignalEmitter):
         for table, sql in table_info:
             self.cursor.execute("INSERT INTO newdb.%s SELECT * FROM main.%s" %
                                 (table, table))
+        self.cursor.execute("DETACH newdb")
 
+    def _change_path(self, new_path):
+        """Change the path of our database.
+
+        This method copies the entire current database to new_path, then opens
+        a connection to it.
+        """
+        self._copy_data_to_path(new_path)
         # Looks like everything worked.  Change to using a connection to the
         # new database
         self.path = new_path
@@ -584,12 +588,6 @@ class LiveStorage(signals.SignalEmitter):
     def close(self):
         logging.info("closing database")
         self.finish_transaction()
-        self.connection.close()
-
-    def close_before_copying(self):
-        logging.info("closing database before copying it")
-        self.finish_transaction()
-        self.connection.execute("PRAGMA wal_checkpoint(RESTART)")
         self.connection.close()
 
     def get_backup_directory(self):
@@ -632,10 +630,13 @@ class LiveStorage(signals.SignalEmitter):
     def _backup_failed_upgrade_db(self):
         save_name = self._find_unused_db_name(self.path, "failed_upgrade_database")
         path = os.path.join(os.path.dirname(self.path), save_name)
-        shutil.copyfile(self.path, path)
+        self._copy_data_to_path(path)
         logging.warn("upgrade failed. Backing up database to %s", path)
 
     def _handle_upgrade_error(self):
+        # commit any unsaved changes that the upgrade was in the process of
+        # making
+        self.cursor.execute("COMMIT TRANSACTION")
         self._backup_failed_upgrade_db()
         action = self.error_handler.handle_upgrade_error()
         if action == LiveStorageErrorHandler.ACTION_START_FRESH:
@@ -665,20 +666,18 @@ class LiveStorage(signals.SignalEmitter):
         :param ver: the current version (as string)
         """
         logging.info("database path: %s", self.path)
-        # close database
-        self.close_before_copying()
 
         # copy the db to a backup file for posterity
         target_path = self.get_backup_directory()
         save_name = self._find_unused_db_name(
             target_path, "%s_%s" % (LiveStorage.backup_filename_prefix, ver))
-        shutil.copyfile(self.path, os.path.join(target_path, save_name))
+        self._copy_data_to_path(os.path.join(target_path, save_name))
 
         # copy the db to the file we're going to operate on
         target_path = os.path.dirname(self.path)
         save_name = self._find_unused_db_name(
             target_path, "upgrading_database_%s" % ver)
-        shutil.copyfile(self.path, os.path.join(target_path, save_name))
+        self._copy_data_to_path(os.path.join(target_path, save_name))
 
         self._changed_db_path = os.path.join(target_path, save_name)
         self.open_connection(self._changed_db_path)
@@ -691,7 +690,9 @@ class LiveStorage(signals.SignalEmitter):
         database we were using to the normal place, and switches our sqlite
         connection to use that file
         """
-        self.close_before_copying()
+        # _changed_db_path uses the default journal mode instead of WAL mode,
+        # so we can do a simple move here instead of using
+        # _copy_data_to_path()
         shutil.move(self._changed_db_path, self.path)
         self.open_connection()
         del self._changed_db_path
