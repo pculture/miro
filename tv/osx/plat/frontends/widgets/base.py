@@ -35,6 +35,7 @@ from objc import YES, NO, nil
 
 from miro import app
 from miro import signals
+from miro import threadcheck
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.viewport import Viewport, BorrowedViewport
 
@@ -53,6 +54,7 @@ class Widget(signals.SignalEmitter):
     CREATES_VIEW = True 
 
     def __init__(self):
+        threadcheck.confirm_ui_thread()
         signals.SignalEmitter.__init__(self)
         self.create_signal('key-press')
         self.create_signal('focus-out')
