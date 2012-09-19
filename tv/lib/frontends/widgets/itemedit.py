@@ -325,7 +325,7 @@ class ThumbnailField(DialogOwnerMixin, Field):
     TITLE = _("Choose a thumbnail file")
     DIALOG = widgetset.FileOpenDialog
     def __init__(self, items, label):
-        Field.__init__(self, 'cover_art', items, label)
+        Field.__init__(self, 'cover_art_path', items, label)
         DialogOwnerMixin.__init__(self, self.DIALOG, self.TITLE)
         path = self.common_value
 
