@@ -79,6 +79,7 @@ import miro.plat.resources
 from miro.plat.utils import setup_logging, filename_to_unicode
 from miro import tabs
 from miro import theme
+from miro import threadcheck
 from miro import util
 from miro import searchengines
 from miro import storedatabase
@@ -272,7 +273,7 @@ def load_extensions():
 
 @startup_function
 def finish_startup(obj, thread):
-    database.set_thread(thread)
+    threadcheck.set_eventloop_thread(thread)
     logging.info("Installing deleted file checker...")
     item.setup_deleted_checker()
     logging.info("Restoring database...")

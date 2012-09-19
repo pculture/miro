@@ -47,9 +47,11 @@ frontend.  It should input these arguments:
 
 import string
 import logging
+import threading
 
 from miro import app
 from miro import startup
+from miro import threadcheck
 
 def load_frontend(globals_, locals_, frontend):
     try:
@@ -84,6 +86,7 @@ def run_application(frontend, props_to_set, theme):
             break
     else:
         raise ValueError("Cannot load frontend: %s" % frontend)
+    threadcheck.set_ui_thread(threading.currentThread())
     application.run_application()
 
 def set_properties(props):

@@ -32,6 +32,7 @@
 import gtk
 
 from miro import signals
+from miro import threadcheck
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 from miro.frontends.widgets.gtk import keymap
@@ -54,6 +55,7 @@ class Widget(signals.SignalEmitter):
             allocated.
     """
     def __init__(self, *signal_names):
+        threadcheck.confirm_ui_thread()
         signals.SignalEmitter.__init__(self, *signal_names)
         self.create_signal('size-allocated')
         self.create_signal('key-press')

@@ -34,6 +34,7 @@ import threading
 
 from miro import app
 from miro import signals
+from miro import threadcheck
 
 class DatabaseException(StandardError):
     """Superclass database errors."""
@@ -46,12 +47,6 @@ class DatabaseConstraintError(DatabaseException):
     pass
 
 class DatabaseConsistencyError(DatabaseException):
-    """Raised when the database encounters an internal consistency
-    issue.
-    """
-    pass
-
-class DatabaseThreadError(DatabaseException):
     """Raised when the database encounters an internal consistency
     issue.
     """
@@ -89,26 +84,6 @@ class NoValue(object):
     value.
     """
     pass
-
-# begin* and end* no longer actually lock the database.  Instead
-# confirm_db_thread prints a warning if it's run from any thread that
-# isn't the main thread.  This can be removed from releases for speed
-# purposes.
-
-event_thread = None
-def set_thread(thread):
-    global event_thread
-    if event_thread is None:
-        event_thread = thread
-
-def confirm_db_thread():
-    if event_thread is None or event_thread != threading.currentThread():
-        if event_thread is None:
-            error_string = "Database event thread not set"
-        else:
-            error_string = "Database called from %s" % threading.currentThread()
-        traceback.print_stack()
-        raise DatabaseThreadError, error_string
 
 class ViewObjectFetcher(object):
     """Interface for classes that handle retrieving objects for Views.
@@ -735,7 +710,7 @@ class DDBObject(signals.SignalEmitter):
             view.confirm_db_thread()
             ...
         """
-        confirm_db_thread()
+        threadcheck.confirm_eventloop_thread()
 
     def check_constraints(self):
         """Subclasses can override this method to do constraint
