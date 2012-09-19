@@ -1421,7 +1421,7 @@ def on_new_metadata(metadata_manager, new_metadata, device_id):
     try:
         for path, metadata in new_metadata.iteritems():
             try:
-                device_item = path_map[path]
+                device_item = path_map[path.lower()]
             except KeyError:
                 logging.warn("devices.py - on_new_metadata: Got metadata "
                              "but can't find item for %r", path)

@@ -2639,19 +2639,20 @@ class DeviceItem(ItemBase):
     def items_for_paths(cls, path_list, db_info):
         """Get all items for a list of paths.
 
-        :returns: dict mapping paths to DeviceItems.  There will be one entry
-        for each item in path_list that exists in the database.
+        :returns: dict mapping lower-case paths to DeviceItems.  There will be
+        one entry for each item in path_list that exists in the database.
         """
 
+        path_list = [filename_to_unicode(p).lower() for p in path_list]
         path_map = {}
         # It's possible for there to be more than 999 items in path_list.
         # Split up the query to avoid SQLite's host parameters limit
         for paths in util.split_values_for_sqlite(path_list):
             placeholders = ', '.join('?' for i in xrange(len(paths)))
-            view = cls.make_view('filename IN (%s)' % placeholders,
+            view = cls.make_view('lower(filename) IN (%s)' % placeholders,
                                  paths, db_info=db_info)
             for i in view:
-                path_map[i.filename] = i
+                path_map[i.filename.lower()] = i
         return path_map
 
     @classmethod
