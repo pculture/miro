@@ -402,6 +402,17 @@ class DiskTest(FakeSchemaTest):
         self.reload_test_database(version=1)
         new_lee = Human.get_by_id(self.lee.id)
         self.assertEquals(new_lee.name, 'new name')
+        # check that we created a backup file
+        backup_path = os.path.join(os.path.dirname(self.save_path),
+                                   'dbbackups', 'sqlitedb_backup_0')
+        if not os.path.exists(backup_path):
+            raise AssertionError("database backup doesn't exist")
+        # check that the backup has the old data
+        backup_conn = sqlite3.connect(backup_path)
+        cursor = backup_conn.execute("SELECT name FROM human WHERE id=?",
+                                     (self.lee.id,))
+        backup_lee_name = cursor.fetchone()[0]
+        self.assertEquals(backup_lee_name, 'lee')
 
     def test_restore_with_newer_version(self):
         self.reload_test_database(version=1)
