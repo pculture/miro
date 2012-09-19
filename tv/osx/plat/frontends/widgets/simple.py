@@ -191,10 +191,10 @@ class ImageDisplay(Widget):
 
 class ClickableImageButton(ImageDisplay):
     def __init__(self, image_path, max_width=None, max_height=None):
-        ImageDisplay.__init__(self)
-        self.set_border(True)
         self.max_width = max_width
         self.max_height = max_height
+        ImageDisplay.__init__(self)
+        self.set_border(True)
         self.image = None
         self._width, self._height = None, None
         if image_path:
