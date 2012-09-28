@@ -127,13 +127,11 @@ def _youtube_callback_step2(info, video_id, callback):
         stream_map = params["url_encoded_fmt_stream_map"][0].split(",")
         fmt_url_map = dict()
         # strip url= from url=xxxxxx, strip trailer.  Strip duplicate params.
-        for fmt, u in zip(fmt_list, stream_map):
-            o = urlparse.urlsplit(unquote_plus(u[4:]).split(';')[0])
-            qs = urlencode(list(set(urlparse.parse_qsl(o.query))))
-            # Let's put humpty dumpty back together again
-            fmt_url_map[fmt] = urlparse.urlunsplit(
-              urlparse.SplitResult(o.scheme, o.netloc, o.path, qs, o.fragment))
-            
+        for fmt, stream_map_data in zip(fmt_list, stream_map):
+            stream_map = cgi.parse_qs(stream_map_data)
+            url_base = stream_map['url'][0]
+            sig_part = '&signature=' + stream_map['sig'][0]
+            fmt_url_map[fmt] = url_base + sig_part
 
         title = params.get("title", ["No title"])[0]
         try:
