@@ -40,6 +40,11 @@ from xml.dom import minidom
 from urllib import unquote_plus, urlencode
 from miro.util import check_u
 
+try:
+    import simplejson as json
+except ImportError:
+    import json
+
 def is_maybe_flashscrapable(url):
     """Returns whether or not the given url is possibly handled by one
     of the flash url converters we have.
@@ -286,11 +291,11 @@ VIMEO_RE = re.compile(r'http://([^/]+\.)?vimeo.com/[^\d]*(\d+)')
 def _scrape_vimeo_video_url(url, callback, countdown=10):
     try:
         id_ = VIMEO_RE.match(url).group(2)
-        url = 'http://vimeo.com/%s?action=download' % id_
+        download_url = 'http://vimeo.com/%s?action=download' % id_
         httpclient.grab_url(
-            url,
+            download_url,
             lambda x: _scrape_vimeo_download_callback(x, callback),
-            lambda x: _scrape_vimeo_download_errback(x, callback, url),
+            lambda x: _scrape_vimeo_video_url_try_2(url, callback, id_),
             extra_headers={
                 'Referer': 'http://vimeo.com/%s' % id_,
                 'X-Requested-With': 'XMLHttpRequest',
@@ -330,6 +335,58 @@ def _scrape_vimeo_download_callback(info, callback):
     else:
         _scrape_vimeo_download_errback("no largest url", callback,
                                        info['original-url'])
+
+def _scrape_vimeo_video_url_try_2(url, callback, vimeo_id):
+    """Try scraping vimeo URLs by scraping the javascript code.
+
+    This method seems less reliable than the regular method, but it works for
+    private videos.  See #19305
+    """
+
+    httpclient.grab_url(
+            url,
+            lambda x: _scrape_vimeo_download_try_2_callback(x, callback,
+                                                            vimeo_id),
+            lambda x: _scrape_vimeo_download_errback(x, callback, url))
+
+VIMEO_JS_DATA_SCRAPE_RE = re.compile(r'clip[0-9_]+\s*=\s*([^;]+);')
+VIMEO_SCRAPE_SIG_RE = re.compile(r'"signature":"([0-9a-fA-F]+)"')
+VIMEO_SCRAPE_TIMESTAMP_RE = re.compile(r'"timestamp":([0-9]+)')
+VIMEO_SCRAPE_FILES_RE = re.compile(r'"files":({[^}]+})')
+
+def _scrape_vimeo_download_try_2_callback(info, callback, vimeo_id):
+    # first step is to find the javascript code that we care about in the HTML
+    # page
+    m = VIMEO_JS_DATA_SCRAPE_RE.search(info['body'])
+    if m is None:
+        logging.warn("Unable to scrape %s for JSON", info['original-url'])
+        callback(None)
+        return
+    json_data = m.group(1)
+    try:
+        signature = VIMEO_SCRAPE_SIG_RE.search(json_data).group(1)
+        timestamp = VIMEO_SCRAPE_TIMESTAMP_RE.search(json_data).group(1)
+        files_str = VIMEO_SCRAPE_FILES_RE.search(json_data).group(1)
+    except AttributeError:
+        # one of the RE's retured None
+        logging.warn("Unable to scrape %s", info['original-url'])
+        callback(None)
+        return
+    try:
+        files_data = json.loads(files_str)
+        codec = files_data.keys()[0]
+        quality = files_data[codec][0]
+    except StandardError:
+        logging.warn("Unable to scrape vimeo files variable (%s)",
+                     files_match.group(1))
+        callback(None)
+    url = ('http://player.vimeo.com/play_redirect?'
+           'clip_id=%s&quality=%s&codecs=%s&time=%s'
+           '&sig=%s&type=html5_desktop_local' %
+           (vimeo_id, quality, codec, timestamp, signature))
+    logging.debug("_scrape_vimeo_download_try_2_callback scraped URL: %s",
+                  url)
+    callback(url)
 
 def _scrape_vimeo_download_errback(err, callback, url):
     logging.warning("Unable to scrape %r\nerror: %s", url, err)
