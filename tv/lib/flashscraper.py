@@ -342,14 +342,15 @@ def _scrape_vimeo_video_url_try_2(url, callback, vimeo_id):
     This method seems less reliable than the regular method, but it works for
     private videos.  See #19305
     """
+    video_url = u'http://vimeo.com/%s' % vimeo_id
 
     httpclient.grab_url(
-            url,
+            video_url,
             lambda x: _scrape_vimeo_download_try_2_callback(x, callback,
                                                             vimeo_id),
             lambda x: _scrape_vimeo_download_errback(x, callback, url))
 
-VIMEO_JS_DATA_SCRAPE_RE = re.compile(r'clip[0-9_]+\s*=\s*([^;]+);')
+VIMEO_JS_DATA_SCRAPE_RE = re.compile(r'clip[0-9_]+\s*=\s*(.*}});')
 VIMEO_SCRAPE_SIG_RE = re.compile(r'"signature":"([0-9a-fA-F]+)"')
 VIMEO_SCRAPE_TIMESTAMP_RE = re.compile(r'"timestamp":([0-9]+)')
 VIMEO_SCRAPE_FILES_RE = re.compile(r'"files":({[^}]+})')
