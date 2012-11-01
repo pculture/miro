@@ -65,6 +65,7 @@ from miro import messages
 from miro import schema
 from miro import signals
 from miro import storedatabase
+from miro import threadcheck
 from miro import conversions
 from miro.util import check_u
 
@@ -1332,7 +1333,7 @@ def load_sqlite_database(mount, device_size, countdown=0, is_hidden=False):
 
     The database lives at [MOUNT]/.miro/sqlite
     """
-    database.confirm_db_thread()
+    threadcheck.confirm_eventloop_thread()
     if mount == ':memory:': # special case for the unittests
         path = ':memory:'
         preallocate = None
@@ -1437,7 +1438,7 @@ def write_database(db, mount):
 
     The database lives at [MOUNT]/.miro/json
     """
-    database.confirm_db_thread()
+    threadcheck.confirm_eventloop_thread()
     if not os.path.exists(mount):
         # device disappeared, so we can't write to it
         return

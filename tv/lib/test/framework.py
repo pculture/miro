@@ -31,6 +31,7 @@ from miro import schema
 from miro import searchengines
 from miro import signals
 from miro import storedatabase
+from miro import threadcheck
 from time import sleep
 from miro import models
 from miro import workerprocess
@@ -297,7 +298,10 @@ class MiroTestCase(unittest.TestCase):
         self.setup_config_watcher()
         self.platform = app.config.get(prefs.APP_PLATFORM)
         self.set_temp_support_directory()
-        database.set_thread(threading.currentThread())
+        # for the unittests, both the database code and any UI code should run
+        # in the main thread.
+        threadcheck.set_eventloop_thread(threading.currentThread())
+        threadcheck.set_ui_thread(threading.currentThread())
         self.raise_db_load_errors = True
         app.db = None
         self.allow_db_upgrade_error_dialog = False
