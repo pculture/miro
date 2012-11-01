@@ -178,6 +178,7 @@ class ItemFilterDownloaded(ItemFilterAudioVideoHelper):
 
     def add_to_query(self, query):
         query.add_condition('downloaded_time', 'IS NOT', None)
+        query.add_condition('expired', '=', 0)
 
 class ItemFilterAudioVideo(ItemFilter):
     """Filter for audio/video on the all podcast tab."""
