@@ -413,7 +413,7 @@ class ItemInfo(object):
         if self.feed_expire == u'never':
             return None
         elif self.feed_expire == u"feed":
-            expire_time = feed_expire_time
+            expire_time = self.feed_expire_time
         elif self.feed_expire == u"system":
             days = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
             if days <= 0:
