@@ -842,8 +842,11 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_track_sharing(self, message):
         app.sharing_tracker.start_tracking()
 
-    def handle_stop_tracking_sharing(self, message):
-        pass
+    def handle_track_share(self, message):
+        app.sharing_tracker.track_share(message.share_id)
+
+    def handle_stop_tracking_share(self, message):
+        app.sharing_tracker.stop_track_share(message.share_id)
 
     def handle_sharing_eject(self, message):
         app.sharing_tracker.eject(message.share.id)

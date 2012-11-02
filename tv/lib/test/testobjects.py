@@ -16,6 +16,7 @@ from miro import item
 from miro import libdaap
 from miro import models
 from miro import messages
+from miro import sharing
 from miro import util
 from miro.data.item import fetch_item_infos
 from miro.plat.utils import filename_to_unicode, unicode_to_filename
@@ -336,3 +337,6 @@ def make_mock_daap_playlist(playlist_id, title, is_podcast=False):
     if is_podcast:
         playlist_data['com.apple.itunes.is-podcast-playlist'] = True
     return playlist_data
+
+def make_share(name='TestShare'):
+    return sharing.Share('testshareid', name, '127.0.0.1', 1234)

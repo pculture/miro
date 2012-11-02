@@ -269,7 +269,20 @@ class StopTrackingWatchedFolders(BackendMessage):
 class TrackSharing(BackendMessage):
     """Start tracking media shares.
     """
+    # FIXME: should remove this one
     pass
+
+class TrackShare(BackendMessage):
+    """Start tracking a media share
+    """
+    def __init__(self, share_id):
+        self.share_id = share_id
+
+class StopTrackingShare(BackendMessage):
+    """Stop tracking a media share
+    """
+    def __init__(self, share_id):
+        self.share_id = share_id
 
 class TrackDevices(BackendMessage):
     """Start tracking devices.
@@ -1632,22 +1645,16 @@ class ConversionTaskChanged(FrontendMessage):
 
 class SharingInfo(object):
     """Tracks the state of an extent share."""
-    def __init__(self, share_id, tracker_id, name, host, port,
-                 playlist_id=None, podcast=False):
-        # We need to create a unique identifier for indexing.  Fortunately
-        # this may be non-numeric.  We just combine the name, host, port
-        # as our index.
-        self.id = share_id
-        self.tracker_id = tracker_id
-        self.name = name
-        self.host = host
-        self.port = port
+    def __init__(self, share):
+        self.id = share.id
+        self.sqlite_path = share.db_path
+        self.name = share.name
+        self.host = share.host
+        self.port = share.port
         self.share_available = False
         self.stale_callback = None
         self.mount = False
-        self.podcast = podcast
         self.is_updating = False
-        self.playlist_id = playlist_id
 
 class SharingPlaylistInfo(object):
     """Tracks the state a playlist on a share."""

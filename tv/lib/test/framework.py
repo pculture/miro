@@ -286,7 +286,6 @@ class MiroTestCase(unittest.TestCase):
         app.device_manager = devices.DeviceManager()
         models.Item._path_count_tracker.reset()
         testobjects.test_started(self)
-        sharing.SharingItemTrackerImpl._used_db_paths.clear()
         # Tweak Item to allow us to make up fake paths for FileItems
         models.Item._allow_nonexistent_paths = True
         # setup the deleted file checker

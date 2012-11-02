@@ -163,6 +163,94 @@ def inet_ntop(af, ip):
                                                                 ip))
         raise ValueError('unknown address family %d' % af)
 
+class Share(object):
+    """Backend object that tracks data for an active DAAP share."""
+    _used_db_paths = set()
+
+    def __init__(self, share_id, name, host, port):
+        self.id = share_id
+        self.name = name
+        self.host = host
+        self.port = port
+        self.db_path, self.db = self.find_unused_db()
+        self.db_info = database.DBInfo(self.db)
+        self.__class__._used_db_paths.add(self.db_path)
+        self.tracker = None
+
+    def destroy(self):
+        if self.db is not None:
+            self.db.close()
+        if self.db_path:
+            fileutil.delete(self.db_path)
+        self.db = self.db_info = self.db_path = None
+
+    def find_unused_db(self):
+        """Find a DB path for our share that's not being used.
+
+        This method will ensure that no 2 Share objects share the same DB
+        path, but it will try delete and then reuse paths that were created by
+        previous miro instances.
+        """
+        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
+        for i in xrange(300):
+            candidate = os.path.join(support_dir, 'sharing-db-%s' % i)
+            if candidate in self.__class__._used_db_paths:
+                continue
+            if os.path.exists(candidate):
+                try:
+                    os.remove(candidate)
+                except EnvironmentError, e:
+                    logging.warn("Share.find_unused_db "
+                                 "error removing %s (%s)" % (candidate, e))
+                    continue
+            try:
+                return candidate, self.make_new_database(candidate)
+            except StandardError, e:
+                logging.warn("Share.find_unused_db "
+                             "error opening %s (%s)" % (candidate, e))
+        raise AssertionError("Couldn't find an unused path "
+                             "for Share")
+
+    def make_new_database(self, path):
+        object_schemas = [schema.SharingItemSchema]
+        return storedatabase.SharingLiveStorage(path, self.name,
+                                                object_schemas)
+
+    def start_tracking(self):
+        """Start tracking items on this share.
+
+        This will create a SharingItemTrackerImpl that connects to the share
+        using a separate thread.  Call stop_tracking() to end the tracking.
+        """
+        if self.tracker is None:
+            self.tracker = SharingItemTrackerImpl(self)
+
+    def stop_tracking(self):
+        if self.tracker is not None:
+            self.tracker.client_disconnect()
+            self.tracker = None
+
+    def set_info(self, info):
+        """Set the SharingInfo to use to send updates for."""
+        # FIXME: we probably shouldn't be modifying the SharingInfo directly
+        # here (#19689)
+        self.info = info
+
+    def update_started(self):
+        # FIXME: we probably shouldn't be modifying the SharingInfo directly
+        # here (#19689)
+        self.info.is_updating = True
+        message = messages.TabsChanged('connect', [], [self.info], [])
+        message.send_to_frontend()
+
+    def update_finished(self, success=True):
+        # FIXME: we probably shouldn't be modifying the SharingInfo directly
+        # here (#19689)
+        self.info.mount = success
+        self.info.is_updating = False
+        message = messages.TabsChanged('connect', [], [self.info], [])
+        message.send_to_frontend()
+
 class SharingTracker(object):
     """The sharing tracker is responsible for listening for available music
     shares and the main client connection code.  For each connected share,
@@ -178,6 +266,10 @@ class SharingTracker(object):
     def __init__(self):
         self.name_to_id_map = dict()
         self.trackers = dict()
+        self.shares = dict()
+        # FIXME: we probably can remove this dict as part of #19689.  At the
+        # last, we should give it a name that better distinguishes it from
+        # shares
         self.available_shares = dict()
         self.r, self.w = util.make_dummy_socket_pair()
         self.paused = True
@@ -302,8 +394,12 @@ class SharingTracker(object):
                                                        [info], [])
                         message.send_to_frontend()
                     return
-                info = messages.SharingInfo(share_id, share_id,
-                                            fullname, host, port)
+                share = Share(share_id, fullname, host, port)
+                info = messages.SharingInfo(share)
+                self.shares[share_id] = share
+                # FIXME: We should probably only store the Share object and
+                # create new SharingInfo objects when we want to send updates
+                # to the frontend (see #19689)
                 info.connect_uuid = uuid.uuid4()
                 self.available_shares[share_id] = info
                 self.try_to_add(share_id, fullname, host, port,
@@ -316,6 +412,7 @@ class SharingTracker(object):
             if not share_id in self.trackers.keys():
                 victim = self.available_shares[share_id]
                 del self.available_shares[share_id]
+                self.destroy_share(share_id)
                 # Only tell the frontend if the share's been tested because
                 # otherwise the TabsChanged() message wouldn't have arrived.
                 if victim.connect_uuid is None:
@@ -336,8 +433,13 @@ class SharingTracker(object):
                     share.share.stale_callback.cancel()
                 share.share.stale_callback = dc
 
+    def destroy_share(self, share_id):
+        self.shares[share_id].destroy()
+        del self.shares[share_id]
+
     def remove_timeout_callback(self, share_id, share_info):
         del self.available_shares[share_id]
+        self.destroy_share(share_id)
         messages.SharingDisappeared(share_info).send_to_frontend()
 
     def server_thread(self):
@@ -408,6 +510,20 @@ class SharingTracker(object):
                                        name='mDNS Browser Thread')
         self.thread.start()
 
+    def start_tracking_share(self, share_id):
+        try:
+            self.shares[share_id].start_tracking()
+        except KeyError:
+            logging.warn("SharingTracker.stop_tracking_share: "
+                         "Unknown share_id: %s", share_id)
+
+    def stop_tracking_share(self, share_id):
+        try:
+            self.shares[share_id].stop_tracking()
+        except KeyError:
+            logging.warn("SharingTracker.stop_tracking_share: "
+                         "Unknown share_id: %s", share_id)
+
     def eject(self, share_id):
         try:
             tracker = self.trackers[share_id]
@@ -416,15 +532,6 @@ class SharingTracker(object):
         else:
             del self.trackers[share_id]
             tracker.client_disconnect()
-
-    def get_tracker(self, share_id):
-        try:
-            return self.trackers[share_id]
-        except KeyError:
-            logging.debug('sharing: creating new tracker')
-            share = self.available_shares[share_id]
-            self.trackers[share_id] = SharingItemTrackerImpl(share)
-            return self.trackers[share_id]
 
     def stop_tracking(self):
         # What to do in case of socket error here?
@@ -614,10 +721,7 @@ class SharingItemTrackerImpl(object):
         self.playlist_tracker = _ClientPlaylistTracker()
         self.info_cache = dict()
         self.base_playlist_id = None    # Temporary
-        self.share.is_updating = True
-        message = messages.TabsChanged('connect', [], [self.share], [])
-        message.send_to_frontend()
-        self.create_database()
+        self.share.update_started()
         self.start_thread()
 
     def start_thread(self):
@@ -669,57 +773,6 @@ class SharingItemTrackerImpl(object):
             success = self.run_client_update()
             if not success:
                 break
-        self.destroy_database()
-
-    _used_db_paths = set()
-
-    def find_unused_db(self):
-        """Find a DB path for our share that's not being used.
-
-        This method will ensure that no 2 SharingItemTrackerImpl share the
-        same DB path, but it will try delete and then reuse paths that were
-        created by previous miro instances.
-        """
-        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
-        for i in xrange(300):
-            candidate = os.path.join(support_dir, 'sharing-db-%s' % i)
-            if candidate in self.__class__._used_db_paths:
-                continue
-            if os.path.exists(candidate):
-                try:
-                    os.remove(candidate)
-                except EnvironmentError, e:
-                    logging.warn("SharingItemTrackerImpl.find_unused_db "
-                                 "error removing %s (%s)" % (candidate, e))
-                    continue
-            try:
-                return candidate, self.make_new_database(candidate)
-            except StandardError, e:
-                logging.warn("SharingItemTrackerImpl.find_unused_db "
-                             "error opening %s (%s)" % (candidate, e))
-        raise AssertionError("Couldn't find an unused path "
-                             "for SharingItemTrackerImpl")
-
-    def make_new_database(self, path):
-        object_schemas = [schema.SharingItemSchema]
-        return storedatabase.SharingLiveStorage(path, self.share.name,
-                                                object_schemas)
-
-    def create_database(self):
-        self.db_path, self.db = self.find_unused_db()
-        self.db_info = database.DBInfo(self.db)
-        self.__class__._used_db_paths.add(self.db_path)
-
-    def destroy_database(self):
-        if self.db is not None:
-            self.db.close()
-        try:
-            os.remove(self.db_path)
-        except EnvironmentError, e:
-            logging.warn("Error deleting database file %s: %s" %
-                         (self.db_path, e))
-        self.__class__._used_db_paths.remove(self.db_path)
-        self.db = self.db_info = self.db_path = None
 
     def convert_raw_sharing_item(self, rawitem):
         """Convert raw data from libdaap to the attributes of SharingItem
@@ -765,11 +818,11 @@ class SharingItemTrackerImpl(object):
         kwargs['host'] = unicode(self.client.host)
         kwargs['port'] = self.client.port
         kwargs['address'] = unicode(self.address)
-        kwargs['db_info'] = self.db_info
+        kwargs['db_info'] = self.share.db_info
         return SharingItem(**kwargs)
 
     def get_sharing_item(self, daap_id):
-        return SharingItem.get_by_daap_id(daap_id, db_info=self.db_info)
+        return SharingItem.get_by_daap_id(daap_id, db_info=self.share.db_info)
 
     def make_playlist_sharing_info(self, daap_id, playlist_data):
         return messages.SharingPlaylistInfo(
@@ -793,7 +846,7 @@ class SharingItemTrackerImpl(object):
         self.client_disconnect_callback_common()
 
     def client_disconnect_callback_common(self):
-        message = messages.TabsChanged('connect', [], [self.share],
+        message = messages.TabsChanged('connect', [], [],
                                        list(self.current_playlist_ids))
         message.send_to_frontend()
 
@@ -847,10 +900,7 @@ class SharingItemTrackerImpl(object):
     def client_connect_callback(self, result):
         self.update_sharing_items(result)
         self.update_playlists(result)
-        # Once all the items are added then send display mounted and remove
-        # the progress indicator.
-        self.share.mount = True
-        self.share.is_updating = False
+        self.share.update_finished()
 
     def update_sharing_items(self, result):
         """Create or update SharingItems on the database.
@@ -868,15 +918,15 @@ class SharingItemTrackerImpl(object):
                     setattr(sharing_item, key, value)
                 sharing_item.signal_change()
         for item_id in result.deleted_items:
-            sharing_item = SharingItem.get_by_daap_id(item_id,
-                                                      db_info=self.db_info)
+            sharing_item = SharingItem.get_by_daap_id(
+                item_id, db_info=self.share.db_info)
             sharing_item.remove()
 
     def update_playlists(self, result):
         added = []
         # We always send the share as changed since we're updating its
         # contents.
-        changed = [self.share]
+        changed = []
         removed = []
 
         self.playlist_tracker.update(result)
@@ -909,9 +959,7 @@ class SharingItemTrackerImpl(object):
             # happened while we were in the middle of an update().
             return
         if not update:
-            self.share.is_updating = False
-            message = messages.TabsChanged('connect', [], [self.share], [])
-            message.send_to_frontend()
+            self.share.update_finished(success=False)
         if not self.share.stale_callback:
             app.sharing_tracker.eject(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
