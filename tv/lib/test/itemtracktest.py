@@ -48,6 +48,7 @@ class ItemTrackTestWALMode(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.init_data_package()
+        self.connection_pool = app.connection_pools.get_main_pool()
         self.force_wal_mode()
         self.tracked_feed, self.tracked_items = \
                 testobjects.make_feed_with_items(10)
@@ -77,7 +78,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         By default we set wal_mode to be True.  ItemTrackTestNonWALMode
         overrides this and sets it to False.
         """
-        app.connection_pool.wal_mode = True
+        self.connection_pool.wal_mode = True
 
     def check_no_idles_scheduled(self):
         self.assertEqual(self.mock_idle_scheduler.call_count, 0)
@@ -484,7 +485,7 @@ class ItemTrackTestWALMode(MiroTestCase):
         query.set_order_by(['remote_downloader.rate'])
         self.tracker.change_query(query)
         # Need to manually fetch the items to compare to
-        with app.connection_pool.context() as connection:
+        with self.connection_pool.context() as connection:
             id_list = [i.id for i in downloads]
             correct_items = item.fetch_item_infos(connection, id_list)
         self.check_tracker_items(correct_items)
@@ -514,7 +515,7 @@ class ItemTrackTestWALMode(MiroTestCase):
 
 class ItemTrackTestNonWALMode(ItemTrackTestWALMode):
     def force_wal_mode(self):
-        app.connection_pool.wal_mode = False
+        self.connection_pool.wal_mode = False
 
 class DeviceItemTrackTestWALMode(MiroTestCase):
     def setUp(self):
@@ -529,9 +530,9 @@ class DeviceItemTrackTestWALMode(MiroTestCase):
         self.audio1, self.audio2, self.video1 = device_items
         self.device.db_info.db.finish_transaction()
         # simulate the device tab being sent to the frontend so that
-        # app.device_connection_pools has a ConnectionPool for the device
+        # app.connection_pools has a ConnectionPool for the device
         msg = messages.TabsChanged('connect', [self.device], [], [])
-        app.device_connection_pools.on_tabs_changed(msg)
+        app.connection_pools.on_tabs_changed(msg)
 
         query = itemtrack.DeviceItemTrackerQuery()
         query.add_condition('file_type', '=', u'audio')

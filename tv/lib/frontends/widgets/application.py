@@ -1571,7 +1571,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             else:
                 tablist.add(info)
         tablist.model_changed()
-        app.device_connection_pools.on_tabs_changed(message)
+        app.connection_pools.on_tabs_changed(message)
         app.info_updater.handle_tabs_changed(message)
 
     def handle_item_list(self, message):

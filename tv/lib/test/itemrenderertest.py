@@ -54,7 +54,7 @@ class ItemRendererTest(MiroTestCase):
         app.playback_manager.item_resume_policy.return_value = False
 
     def _get_item(self, item_id):
-        app.connection_pool = mock.Mock()
+        app.connection_pools = mock.Mock()
         item_list = item.fetch_item_infos(app.db.connection, [item_id])
         return item_list[0]
 

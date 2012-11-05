@@ -129,34 +129,79 @@ class DeviceConnectionPool(ConnectionPool):
         ConnectionPool.__init__(self, device_info.sqlite_path,
                                 min_connections=0, max_connections=2)
 
-class DeviceConnectionPoolMap(object):
-    """Manage a ConnectionPool for each connected device.
+class ShareConnectionPool(ConnectionPool):
+    """ConnectionPool for a DAAP share."""
+    def __init__(self, share_info):
+        # min_connections is 0 since we should normally not have any
+        # connections to the device database.  The max connections is 2 in
+        # case the user is on one tab and playing items from another tab.
+        ConnectionPool.__init__(self, share_info.sqlite_path,
+                                min_connections=0, max_connections=2)
+
+class ConnectionPoolTracker(object):
+    """Manage ConnectionPool for the frontend
+
+    This object stores a connection por for:
+        - The main connection
+        - each connected device
+        - each share
     """
-    def __init__(self):
+    def __init__(self, main_db_path):
+        self.main_pool = ConnectionPool(main_db_path)
         self.pool_map = {}
 
     def reset(self):
         self.pool_map = {}
 
-    def get_pool(self, device_id):
-        return self.pool_map[device_id]
+    def get_main_pool(self):
+        return self.main_pool
 
-    def _ensure_connection_pool(self, device_info):
-        if device_info.id not in self.pool_map:
-            self.pool_map[device_info.id] = DeviceConnectionPool(device_info)
+    def get_device_pool(self, device_id):
+        return self.pool_map[('device', device_id)]
+
+    def get_sharing_pool(self, share_id):
+        return self.pool_map[('share', share_id)]
+
+    def _make_connection_pool(self, tab_info):
+        if isinstance(tab_info, messages.DeviceInfo):
+            return DeviceConnectionPool(tab_info)
+        elif isinstance(tab_info, messages.SharingInfo):
+            return ShareConnectionPool(tab_info)
+        else:
+            raise ValueError("Unknown type for tab info: %s", tab_info)
+
+    def _key_for_tab(self, tab_info):
+        if isinstance(tab_info, messages.DeviceInfo):
+            return ('device', tab_info.id)
+        elif isinstance(tab_info, messages.SharingInfo):
+            return ('share', tab_info.id)
+        else:
+            raise ValueError("Unknown type for tab info: %s", tab_info)
+
+    def _ensure_connection_pool(self, tab_info):
+        key = self._key_for_tab(tab_info)
+        if key not in self.pool_map:
+            self.pool_map[key] = self._make_connection_pool(tab_info)
 
     def _ensure_no_connection_pool(self, device_id):
-        if device_id in self.pool_map:
-            del self.pool_map[device_id]
+        key = self._key_for_tab(tab_info)
+        if key in self.pool_map:
+            del self.pool_map[key]
 
     def on_tabs_changed(self, message):
         if message.type != 'connect':
             return
         for info in message.added + message.changed:
             if isinstance(info, messages.DeviceInfo):
+                # for devices, we should make a connection pool if db_info is
+                # actually set
                 if info.db_info is not None:
                     self._ensure_connection_pool(info)
                 else:
-                    self._ensure_no_connection_pool(info.id)
+                    self._ensure_no_connection_pool(info)
+            elif isinstance(info, messages.SharingInfo):
+                self._ensure_connection_pool(info)
         for id_ in message.removed:
-            self._ensure_no_connection_pool(id_)
+            if (isinstance(info, messages.DeviceInfo) or
+                isinstance(info, messages.SharingInfo)):
+                self._ensure_no_connection_pool(info)

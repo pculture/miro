@@ -731,7 +731,7 @@ class ItemSource(object):
     select_info = ItemSelectInfo()
 
     def __init__(self):
-        self.connection_pool = app.connection_pool
+        self.connection_pool = app.connection_pools.get_main_pool()
 
     def get_connection(self):
         """Get a database connection to use.
@@ -763,7 +763,7 @@ class DeviceItemSource(ItemSource):
 
     def __init__(self, device_info):
         self.connection_pool = \
-                app.device_connection_pools.get_pool(device_info.id)
+                app.connection_pools.get_device_pool(device_info.id)
         self.device_info = device_info
 
     def make_item_info(self, row_data):
