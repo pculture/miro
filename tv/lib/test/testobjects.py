@@ -158,8 +158,8 @@ class MockDAAPClientLibrary(object):
         }
 
     def set_items(self, new_items):
-        self.all_items = new_items.copy()
-        self.set_playlist_items(self.base_playlist_id, new_items.keys())
+        self.all_items = dict((i['dmap.itemid'], i) for i in new_items)
+        self.set_playlist_items(self.base_playlist_id, self.all_items.keys())
 
     def add_playlist(self, new_playlist):
         daap_id = new_playlist['dmap.itemid']
@@ -179,7 +179,7 @@ class MockDAAPClientLibrary(object):
     def copy(self):
         """Get a copy of this library."""
         rv = MockDAAPClientLibrary()
-        rv.set_items(self.all_items)
+        rv.set_items(self.all_items.values())
         for k, playlist in self.playlists.items():
             if k != self.base_playlist_id:
                 rv.add_playlist(playlist)

@@ -160,11 +160,8 @@ class SharingTest(EventLoopTest):
         """Given a dict mapping item ids to item titles, create a dict mapping
         those ids to DAAP items.
         """
-        client_items = {}
-        for item_id, title in items_dict.items():
-            daap_item = testobjects.make_mock_daap_item(item_id, title)
-            client_items[item_id] = daap_item
-        return client_items
+        return [testobjects.make_mock_daap_item(item_id, title)
+                for (item_id, title) in items_dict.items()]
 
     def check_client_connect(self):
         """Check the initial pass that creates items for
