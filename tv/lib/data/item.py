@@ -72,7 +72,8 @@ class SelectColumn(object):
     # _schema_map maps (table, column) tuples to their SchemaItem objects
     _schema_map = {}
     for object_schema in (schema.object_schemas +
-                          schema.device_object_schemas):
+                          schema.device_object_schemas +
+                          schema.sharing_object_schemas):
         for column_name, schema_item in object_schema.fields:
             _schema_map[object_schema.table_name, column_name] = schema_item
 

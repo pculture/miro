@@ -1014,3 +1014,8 @@ device_object_schemas = [
     MetadataStatusSchema,
     DeviceItemSchema,
 ]
+
+sharing_object_schemas = [
+    SharingItemSchema,
+    SharingItemPlaylistMapSchema,
+]

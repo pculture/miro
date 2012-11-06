@@ -213,12 +213,8 @@ class Share(object):
                              "for Share")
 
     def make_new_database(self, path):
-        object_schemas = [
-            schema.SharingItemSchema,
-            schema.SharingItemPlaylistMapSchema,
-        ]
-        return storedatabase.SharingLiveStorage(path, self.name,
-                                                object_schemas)
+        return storedatabase.SharingLiveStorage(
+            path, self.name, schema.sharing_object_schemas)
 
     def start_tracking(self):
         """Start tracking items on this share.
