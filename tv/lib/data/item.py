@@ -822,6 +822,8 @@ class SharingItemSelectInfo(ItemSelectInfo):
 
     join_info = {
         'item_fts': 'item_fts.docid=device_item.id',
+        'sharing_item_playlist_map':
+            'sharing_item_playlist_map.item_id=sharing_item.daap_id',
     }
 
 

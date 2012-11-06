@@ -611,7 +611,7 @@ class SharingItemTrackTestWalMode(MiroTestCase):
         self.setup_client()
         self.setup_share()
         self.setup_connection_pool()
-        self.setup_tracker()
+        self.force_wal_mode()
         self.setup_mock_message_handler()
 
     def setup_share(self):
@@ -645,12 +645,12 @@ class SharingItemTrackTestWalMode(MiroTestCase):
         self.client.set_items([self.video1, self.video2,
                                self.audio1, self.audio2])
 
-    def setup_tracker(self):
+    def setup_tracker(self, query=None):
         # Set up our item tracker
-        self.force_wal_mode()
-        query = itemtrack.SharingItemTrackerQuery()
-        query.add_condition('file_type', '=', u'audio')
-        query.set_order_by(['title'])
+        if query is None:
+            query = itemtrack.SharingItemTrackerQuery()
+            query.add_condition('file_type', '=', u'audio')
+            query.set_order_by(['title'])
         item_source = item.SharingItemSource(self.share)
         self.tracker = itemtrack.ItemTracker(self.idle_scheduler, query,
                                              item_source)
@@ -711,12 +711,14 @@ class SharingItemTrackTestWalMode(MiroTestCase):
     def check_list(self, *correct_items):
         tracker_items = self.tracker.get_items()
         correct_ids = [i['dmap.itemid'] for i in correct_items]
-        self.assertSameSet([i.daap_id for i in tracker_items], correct_ids)
+        self.assertEquals([i.daap_id for i in tracker_items], correct_ids)
 
     def test_list(self):
+        self.setup_tracker()
         self.check_list(self.audio1, self.audio2)
 
     def test_changes(self):
+        self.setup_tracker()
         new_video1 = self.video1.copy()
         new_video1 = testobjects.make_mock_daap_item(1001, 'video-item-1',
                                                      u'audio')
@@ -726,7 +728,25 @@ class SharingItemTrackTestWalMode(MiroTestCase):
                                self.audio1, self.audio2, audio3])
         self.run_client_update()
         self.process_sharing_items_changed_message()
-        self.check_list(new_video1, self.audio1, self.audio2, audio3)
+        self.check_list(self.audio1, self.audio2, audio3, new_video1)
+
+    def test_playlist_filter(self):
+        self.client.add_playlist(
+            testobjects.make_mock_daap_playlist(3001, 'playlist')
+        )
+        self.client.set_playlist_items(3001, [1001, 1002])
+        self.run_client_update()
+        query = itemtrack.SharingItemTrackerQuery()
+        query.add_condition('sharing_item_playlist_map.playlist_id', '=',
+                            3001)
+        query.set_order_by(['title'])
+        self.setup_tracker(query)
+        self.check_list(self.video1, self.video2)
+        # test changes
+        self.client.set_playlist_items(3001, [1001, 1002, 2001])
+        self.run_client_update()
+        self.process_sharing_items_changed_message()
+        self.check_list(self.audio1, self.video1, self.video2)
 
 class SharingItemTrackTestNOWalMode(SharingItemTrackTestWalMode):
     def force_wal_mode(self):

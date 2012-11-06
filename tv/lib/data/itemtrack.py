@@ -82,6 +82,17 @@ class ItemTrackerQuery(object):
     def table_name(self):
         return self.select_info.table_name
 
+    def could_list_change(self, message):
+        """Given a ItemChanges message, could the id list change?
+        """
+        if message.added or message.removed:
+            return True
+        if message.dlstats_changed and self.tracking_download_columns():
+            return True
+        if message.changed_columns.intersection(self.get_columns_to_track()):
+            return True
+        return False
+
     def _parse_column(self, column):
         """Parse a column specification.
 
@@ -268,6 +279,18 @@ class SharingItemTrackerQuery(ItemTrackerQuery):
 
     select_info = item.SharingItemSelectInfo()
 
+    def tracking_playlist_map(self):
+        for c in self.conditions:
+            if c.table == 'sharing_item_playlist_map':
+                return True
+        return False
+
+    def could_list_change(self, message):
+        if message.changed_playlists and self.tracking_playlist_map():
+            return True
+        else:
+            return ItemTrackerQuery.could_list_change(self, message)
+
 class ItemTracker(signals.SignalEmitter):
     """Track items in the database
 
@@ -343,8 +366,6 @@ class ItemTracker(signals.SignalEmitter):
     def _set_query(self, query):
         """Change our ItemTrackerQuery object."""
         self.query = query
-        self.tracked_columns = set(self.query.get_columns_to_track())
-        self.track_dl_columns = self.query.tracking_download_columns()
 
     def _fetch_id_list(self):
         """Fetch the ids for this list.  """
@@ -516,9 +537,7 @@ class ItemTracker(signals.SignalEmitter):
 
     def _could_list_change(self, message):
         """Calculate if an ItemsChanged means the list may have changed."""
-        return bool(message.added or message.removed or
-                    (message.dlstats_changed and self.track_dl_columns) or
-                    message.changed_columns.intersection(self.tracked_columns))
+        return self.query.could_list_change(message)
 
 class ItemFetcher(object):
     """Create ItemInfo objects for ItemTracker

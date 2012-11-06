@@ -2710,6 +2710,7 @@ class SharingItemChangeTracker(object):
         self.changed = collections.defaultdict(set)
         self.removed = collections.defaultdict(set)
         self.changed_columns = collections.defaultdict(set)
+        self.changed_playlists = collections.defaultdict(set)
         self.changed_shares = set()
 
     def after_event_finished(self, eventloop, success):
@@ -2718,13 +2719,19 @@ class SharingItemChangeTracker(object):
     def send_changes(self):
         # TODO: implement this
         for share_id in self.changed_shares:
-            msg = messages.SharingItemChanges(share_id,
-                                              self.added[share_id],
-                                              self.changed[share_id],
-                                              self.removed[share_id],
-                                              self.changed_columns[share_id])
+            msg = messages.SharingItemChanges(
+                share_id,
+                self.added[share_id],
+                self.changed[share_id],
+                self.removed[share_id],
+                self.changed_columns[share_id],
+                self.changed_playlists[share_id])
             msg.send_to_frontend()
         self.reset()
+
+    def playlist_changed(self, share_id, playlist_id):
+        self.changed_playlists[share_id].add(playlist_id)
+        self.changed_shares.add(share_id)
 
     def on_item_added(self, item):
         self.added[item.share_id].add(item.id)

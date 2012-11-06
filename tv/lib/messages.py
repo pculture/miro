@@ -1472,13 +1472,17 @@ class SharingItemChanges(FrontendMessage):
     :attribute removed: set ids for removed items
     :attribute changed_columns: set columns that were changed (the union of
     changes for all items)
+    :attribute changed_playlists: set of playlist ids for playlists that have
+    had their contents changed.
     """
-    def __init__(self, share_id, added, changed, removed, changed_columns):
+    def __init__(self, share_id, added, changed, removed, changed_columns,
+                 changed_playlists):
         self.share_id = share_id
         self.added = added
         self.changed = changed
         self.removed = removed
         self.changed_columns = changed_columns
+        self.changed_playlists = changed_playlists
         self.dlstats_changed = False
 
 class ItemList(FrontendMessage):

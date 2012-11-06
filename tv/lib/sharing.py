@@ -934,15 +934,22 @@ class SharingItemTrackerImpl(object):
         changed = []
         removed = []
 
-        old_playlist_ids = self.playlist_tracker.playlist_items.keys()
+        old_playlist_items = {}
+        for daap_id, item_ids in self.playlist_tracker.playlist_items.items():
+            old_playlist_items[daap_id] = item_ids.copy()
+
         self.playlist_tracker.update(result)
         # update the playlist item map
         new_playlist_items = self.playlist_tracker.playlist_items
-        for playlist_id in old_playlist_ids:
+        for playlist_id in old_playlist_items:
             if playlist_id not in new_playlist_items:
                 self.playlist_item_map.remove_playlist(playlist_id)
         for playlist_id, item_ids in new_playlist_items.items():
-            self.playlist_item_map.set_playlist_items(playlist_id, item_ids)
+            if item_ids != old_playlist_items.get(playlist_id):
+                self.playlist_item_map.set_playlist_items(playlist_id,
+                                                          item_ids)
+                SharingItem.change_tracker.playlist_changed(self.share.id,
+                                                            playlist_id)
 
         current_playlists = self.playlist_tracker.current_playlists()
         # check for added/changed playlists
