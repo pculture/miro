@@ -479,7 +479,7 @@ class ItemSchema(MultiClassObjectSchema):
             ('item_filename', ('filename',)),
     )
 
-class DeviceItemSchema(MultiClassObjectSchema):
+class DeviceItemSchema(ObjectSchema):
     """Schema for items on devices.  This only gets used for device databases
     """
     klass = DeviceItem
@@ -536,7 +536,7 @@ class DeviceItemSchema(MultiClassObjectSchema):
         ('metadata_title', SchemaString(noneOk=True)),
     ]
 
-class SharingItemSchema(MultiClassObjectSchema):
+class SharingItemSchema(ObjectSchema):
     """Schema for items on shares.  This only gets used for sharing databases
     """
     klass = SharingItem
