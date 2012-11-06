@@ -2699,31 +2699,45 @@ class DeviceItem(MetadataItemBase):
         MetadataItemBase.remove(self)
 
 class SharingItemChangeTracker(object):
-    """Track changes to SharingItem and send the SharingItemsChanged message.
+    """Track changes to SharingItem and send the SharingItemChanges message.
     """
     def __init__(self):
         self.reset()
+        eventloop.connect_after('event-finished', self.after_event_finished)
 
     def reset(self):
-        self.added = set()
-        self.changed = set()
-        self.removed = set()
-        self.changed_columns = set()
-        self.dlstats_changed = False
+        self.added = collections.defaultdict(set)
+        self.changed = collections.defaultdict(set)
+        self.removed = collections.defaultdict(set)
+        self.changed_columns = collections.defaultdict(set)
+        self.changed_shares = set()
+
+    def after_event_finished(self, eventloop, success):
+        self.send_changes()
 
     def send_changes(self):
         # TODO: implement this
-        raise NotImplementedError()
+        for share_id in self.changed_shares:
+            msg = messages.SharingItemChanges(share_id,
+                                              self.added[share_id],
+                                              self.changed[share_id],
+                                              self.removed[share_id],
+                                              self.changed_columns[share_id])
+            msg.send_to_frontend()
+        self.reset()
 
     def on_item_added(self, item):
-        self.added.add(item.id)
+        self.added[item.share_id].add(item.id)
+        self.changed_shares.add(item.share_id)
 
     def on_item_changed(self, item):
-        self.changed.add(item.id)
-        self.changed_columns.update(item.changed_attributes)
+        self.changed[item.share_id].add(item.id)
+        self.changed_columns[item.share_id].update(item.changed_attributes)
+        self.changed_shares.add(item.share_id)
 
     def on_item_removed(self, item):
-        self.removed.add(item.id)
+        self.removed[item.share_id].add(item.id)
+        self.changed_shares.add(item.share_id)
 
 class SharingItem(ItemBase):
     """Item on a DAAP share."""
@@ -2732,7 +2746,8 @@ class SharingItem(ItemBase):
         kwargs['db_info'] = share.db_info
         ItemBase.__init__(self, *args, **kwargs)
 
-    def setup_new(self, **kwargs):
+    def setup_new(self, daap_id, **kwargs):
+        self.daap_id = daap_id
         self.file_format = self.duration = self.size = self.artist = None
         self.album_artist = self.album = self.year = self.genre = None
         self.track = self.kind = self.show = self.season_number = None

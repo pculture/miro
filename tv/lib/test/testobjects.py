@@ -339,4 +339,19 @@ def make_mock_daap_playlist(playlist_id, title, is_podcast=False):
     return playlist_data
 
 def make_share(name='TestShare'):
-    return sharing.Share('testshareid', name, '127.0.0.1', 1234)
+    return sharing.Share('testshareid', name, u'127.0.0.1', 1234)
+
+def make_sharing_items(share, *titles):
+    return [make_sharing_item(share, i, "/item-%s" % i, title)
+            for i, title in enumerate(titles)]
+
+def make_sharing_item(share, daap_id, path, title, file_type=u'video'):
+    kwargs = {
+        'video_path': path,
+        'host': share.host,
+        'port': share.port,
+        'title': title,
+        'file_type': file_type,
+        'db_info': share.db_info,
+    }
+    return item.SharingItem(daap_id, **kwargs)

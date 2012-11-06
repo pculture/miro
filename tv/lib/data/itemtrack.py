@@ -263,6 +263,11 @@ class DeviceItemTrackerQuery(ItemTrackerQuery):
 
     select_info = item.DeviceItemSelectInfo()
 
+class SharingItemTrackerQuery(ItemTrackerQuery):
+    """ItemTrackerQuery for SharingItems."""
+
+    select_info = item.SharingItemSelectInfo()
+
 class ItemTracker(signals.SignalEmitter):
     """Track items in the database
 

@@ -43,6 +43,7 @@ import os
 
 from miro import app
 from miro import displaytext
+from miro.fileobject import FilenameType
 from miro import filetypes
 from miro import fileutil
 from miro import prefs
@@ -716,6 +717,142 @@ class DeviceItemInfo(ItemInfo):
         relative_filename = ItemInfo.filename.__get__(self, self.__class__)
         return os.path.join(self.mount, relative_filename)
 
+class SharingItemSelectInfo(ItemSelectInfo):
+    """ItemSelectInfo for SharingItems."""
+
+    # name of the main item table
+    table_name = 'sharing_item'
+    # SelectColumn objects for each attribute of ItemInfo
+    select_columns = [
+        SelectColumn('sharing_item', 'id'),
+        SelectColumn('sharing_item', 'daap_id'),
+        SelectColumn('sharing_item', 'video_path'),
+        SelectColumn('sharing_item', 'title'),
+        SelectColumn('sharing_item', 'file_type'),
+        SelectColumn('sharing_item', 'file_format'),
+        SelectColumn('sharing_item', 'duration'),
+        SelectColumn('sharing_item', 'size'),
+        SelectColumn('sharing_item', 'artist'),
+        SelectColumn('sharing_item', 'album_artist'),
+        SelectColumn('sharing_item', 'album'),
+        SelectColumn('sharing_item', 'year'),
+        SelectColumn('sharing_item', 'genre'),
+        SelectColumn('sharing_item', 'track'),
+        SelectColumn('sharing_item', 'kind'),
+        SelectColumn('sharing_item', 'show'),
+        SelectColumn('sharing_item', 'season_number'),
+        SelectColumn('sharing_item', 'episode_id'),
+        SelectColumn('sharing_item', 'episode_number'),
+        SelectColumn('sharing_item', 'host'),
+        SelectColumn('sharing_item', 'port'),
+        SelectColumn('sharing_item', 'address'),
+    ]
+
+    constant_values = {
+        # item attributes that sharing item doesn't store
+        'creation_time': None,
+        'watched_time': None,
+        'last_watched': None,
+        'parent_id': None,
+        'rating': None,
+        'album_tracks': None,
+        'new': False,
+        'keep': True,
+        'was_downloaded': True,
+        'expired': False,
+        'eligible_for_autodownload': False,
+        'is_file_item': True,
+        'is_container_item': False,
+        'icon_cache_path_unicode': None,
+        'subtitle_encoding': None,
+        'release_date': None,
+        'parent_title': None,
+        'feed_url': None,
+        'license': None,
+        'rss_id': None,
+        'entry_title': None,
+        'torrent_title': None,
+        'permalink': None,
+        'payment_link': None,
+        'comments_link': None,
+        'url': None,
+        'size': None,
+        'enclosure_size': None,
+        'enclosure_type': None,
+        'mime_type': None,
+        'enclosure_format': None,
+        'auto_sync': None,
+        'duration_ms': None,
+        'screenshot_path_unicode': None,
+        'cover_art_path_unicode': None,
+        'resume_time': 0,
+        'play_count': 0,
+        'skip_count': 0,
+        'net_lookup_enabled': False,
+        'has_drm': False,
+        'description': u'',
+        # downloader stuff, set all to None
+        'downloader_size': None,
+        'downloader_type': None,
+        'seeders': None,
+        'upload_size': None,
+        'downloader_id': None,
+        'rate': None,
+        'connections': None,
+        'downloaded_time': None,
+        'downloaded_size': None,
+        'pending_reason': None,
+        'retry_time': None,
+        'short_reason_failed': None,
+        'reason_failed': None,
+        'leechers': None,
+        'eta': None,
+        'pending_manual_download': None,
+        'downloader_state': None,
+        'upload_rate': None,
+        'startup_activity': None,
+        'downloader_content_type': None,
+        # feed stuff
+        'feed_id': None,
+        'feed_get_everything': None,
+        'feed_auto_downloadable': False,
+        'feed_expire_time': None,
+        'feed_expire': u'never',
+    }
+
+    join_info = {
+        'item_fts': 'item_fts.docid=device_item.id',
+    }
+
+
+class SharingItemInfo(ItemInfo):
+    """ItemInfo for devices """
+
+    select_info = SharingItemSelectInfo()
+    source_type = 'device'
+
+    def __init__(self, share_info, row_data):
+        """Create an ItemInfo object.
+
+        :param share_info: SharingInfo object for the device
+        :param row_data: data from sqlite.  There should be a value for each
+        SelectColumn that column_info() returns.
+        """
+        self.share = share_info
+        self.row_data = row_data
+
+    @property
+    def filename(self):
+        # FIXME: code from the old ItemInfo.  Needs some serious cleanup
+        # For daap, sent it to be the same as http as it is basically
+        # http with a different port.
+        def daap_handler(path, host, port):
+            return 'http://%s:%s%s' % (host, port, path)
+        fn = FilenameType(self.video_path)
+        fn.set_urlize_handler(daap_handler,
+                              [self.share.host, self.share.port])
+        return fn
+
 class ItemSource(object):
     """Create ItemInfo objects.
 
@@ -768,3 +905,14 @@ class DeviceItemSource(ItemSource):
 
     def make_item_info(self, row_data):
         return DeviceItemInfo(self.device_info, row_data)
+
+class SharingItemSource(ItemSource):
+    select_info = SharingItemSelectInfo()
+
+    def __init__(self, share_info):
+        self.connection_pool = \
+                app.connection_pools.get_sharing_pool(share_info.id)
+        self.share_info = share_info
+
+    def make_item_info(self, row_data):
+        return SharingItemInfo(self.share_info, row_data)

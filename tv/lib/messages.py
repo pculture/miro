@@ -1463,6 +1463,24 @@ class DeviceItemChanges(FrontendMessage):
         self.changed_columns = changed_columns
         self.dlstats_changed = False
 
+class SharingItemChanges(FrontendMessage):
+    """Sent to the frontend when items change on a share
+
+    :attribute share_id: id for the share
+    :attribute added: set ids for added items
+    :attribute changed: set ids for changed items
+    :attribute removed: set ids for removed items
+    :attribute changed_columns: set columns that were changed (the union of
+    changes for all items)
+    """
+    def __init__(self, share_id, added, changed, removed, changed_columns):
+        self.share_id = share_id
+        self.added = added
+        self.changed = changed
+        self.removed = removed
+        self.changed_columns = changed_columns
+        self.dlstats_changed = False
+
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed
 

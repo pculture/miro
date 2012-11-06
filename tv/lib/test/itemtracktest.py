@@ -37,10 +37,11 @@ from miro import downloader
 from miro import eventloop
 from miro import messages
 from miro import models
+from miro import sharing
 from miro.data import item
 from miro.data import itemtrack
 from miro.test import mock
-from miro.data.connectionpool import DeviceConnectionPool
+from miro.data import connectionpool
 from miro.test.framework import MiroTestCase, MatchAny
 from miro.test import testobjects
 
@@ -522,7 +523,8 @@ class DeviceItemTrackTestWALMode(MiroTestCase):
         MiroTestCase.setUp(self)
         self.device = testobjects.make_mock_device()
         self.idle_scheduler = mock.Mock()
-        self.connection_pool = DeviceConnectionPool(self.device)
+        self.connection_pool = connectionpool.DeviceConnectionPool(
+            self.device)
         self.force_wal_mode()
         self.init_data_package()
         device_items = testobjects.make_device_items(self.device, 'audio1.mp3',
@@ -601,3 +603,136 @@ class ItemSelectInfoTest(MiroTestCase):
             raise AssertionError("DeviceItemInfo does not define all "
                                  "attributes of ItemSelectInfo (%s)" %
                                  item_attrs.difference(device_attrs))
+
+class SharingItemTrackTestWalMode(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.idle_scheduler = mock.Mock()
+        self.setup_client()
+        self.setup_share()
+        self.setup_connection_pool()
+        self.setup_tracker()
+        self.setup_mock_message_handler()
+
+    def setup_share(self):
+        # make a share and that uses our mock client
+        self.patch_for_test('miro.libdaap.make_daap_client',
+                            self.client.returnself)
+        self.share = testobjects.make_share()
+        self.share_info = messages.SharingInfo(self.share)
+        self.share.set_info(self.share_info)
+        self.share.start_tracking()
+        self.run_client_connect()
+
+    def setup_connection_pool(self):
+        self.init_data_package()
+        msg = messages.TabsChanged('connect', [self.share_info], [], [])
+        app.connection_pools.on_tabs_changed(msg)
+        self.connection_pool = app.connection_pools.get_sharing_pool(
+            self.share.id)
+        self.setup_tracker()
+
+    def setup_client(self):
+        self.client = testobjects.MockDAAPClient()
+        self.video1 = testobjects.make_mock_daap_item(1001, 'video-item-1',
+                                                      u'video')
+        self.video2 = testobjects.make_mock_daap_item(1002, 'video-item-2',
+                                                      u'video')
+        self.audio1 = testobjects.make_mock_daap_item(2001, 'audio-item-1',
+                                                      u'audio')
+        self.audio2 = testobjects.make_mock_daap_item(2002, 'audio-item-2',
+                                                      u'audio')
+        self.client.set_items([self.video1, self.video2,
+                               self.audio1, self.audio2])
+
+    def setup_tracker(self):
+        # Set up our item tracker
+        self.force_wal_mode()
+        query = itemtrack.SharingItemTrackerQuery()
+        query.add_condition('file_type', '=', u'audio')
+        query.set_order_by(['title'])
+        item_source = item.SharingItemSource(self.share)
+        self.tracker = itemtrack.ItemTracker(self.idle_scheduler, query,
+                                             item_source)
+
+    def setup_mock_message_handler(self):
+        """Install a mock object to handle frontend messages.
+
+        We use this to intercept the SharingItemChanges message
+        """
+        self.mock_message_handler = mock.Mock()
+        messages.FrontendMessage.install_handler(self.mock_message_handler)
+        # move past the the SharingItemChanges method for our initial items.
+        eventloop._eventloop.emit('event-finished', True)
+        self.mock_message_handler.reset_mock()
+
+    def run_client_connect(self):
+        result = self.share.tracker.client_connect()
+        self.share.tracker.client_connect_callback(result)
+        self.share.db_info.db.finish_transaction()
+
+    def run_client_update(self):
+        result = self.share.tracker.client_update()
+        self.share.tracker.client_update_callback(result)
+        self.share.db_info.db.finish_transaction()
+
+    def force_wal_mode(self):
+        """Force WAL mode to be a certain value.
+
+        By default we set wal_mode to be True.  DeviceItemTrackTestNoWALMode
+        overrides this and sets it to False.
+        """
+        self.connection_pool.wal_mode = True
+
+    def process_sharing_items_changed_message(self):
+        """Simulate the eventloop finishing and sending the DeviceItemChanges
+        message.
+
+        Also, intercept that message and pass it to our item tracker
+        """
+        eventloop._eventloop.emit('event-finished', True)
+        mock_handle = self.mock_message_handler.handle
+        # filter through the TabsChanged messages and to find
+        # SharingItemChanges
+        for args, kwargs in mock_handle.call_args_list:
+            msg = args[0]
+            if type(msg) == messages.SharingItemChanges:
+                self.tracker.on_item_changes(msg)
+        mock_handle.reset_mock()
+
+    def force_wal_mode(self):
+        """Force WAL mode to be a certain value.
+
+        By default we set wal_mode to be True.  DeviceItemTrackTestNoWALMode
+        overrides this and sets it to False.
+        """
+        self.connection_pool.wal_mode = True
+
+    def check_list(self, *correct_items):
+        tracker_items = self.tracker.get_items()
+        correct_ids = [i['dmap.itemid'] for i in correct_items]
+        self.assertSameSet([i.daap_id for i in tracker_items], correct_ids)
+
+    def test_list(self):
+        self.check_list(self.audio1, self.audio2)
+
+    def test_changes(self):
+        new_video1 = self.video1.copy()
+        new_video1 = testobjects.make_mock_daap_item(1001, 'video-item-1',
+                                                     u'audio')
+        audio3 = testobjects.make_mock_daap_item(2003, 'audio-item-3',
+                                                 u'audio')
+        self.client.set_items([new_video1, self.video2,
+                               self.audio1, self.audio2, audio3])
+        self.run_client_update()
+        self.process_sharing_items_changed_message()
+        self.check_list(new_video1, self.audio1, self.audio2, audio3)
+
+class SharingItemTrackTestNOWalMode(SharingItemTrackTestWalMode):
+    def force_wal_mode(self):
+        """Force WAL mode to be a certain value.
+
+        By default we set wal_mode to be True.  DeviceItemTrackTestNoWALMode
+        overrides this and sets it to False.
+        """
+        self.connection_pool.wal_mode = False
