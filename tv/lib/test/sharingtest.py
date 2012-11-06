@@ -33,6 +33,7 @@ import os
 import sqlite3
 
 from miro import models
+from miro.data import mappings
 from miro.test import mock
 from miro.test import testobjects
 from miro.test.framework import MiroTestCase, EventLoopTest
@@ -119,6 +120,8 @@ class SharingTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         self.share = testobjects.make_share()
+        self.playlist_item_map = mappings.SharingItemPlaylistMap(
+            self.share.db_info.db.connection)
         # Replace threading.Thread() with a mock object so that
         # SharingItemTrackerImpl objects don't create real theads.
         self.patch_for_test('threading.Thread')
@@ -156,6 +159,15 @@ class SharingTest(EventLoopTest):
         # check that the titles are correct
         self.assertEquals(data_from_db, correct_items)
 
+    def check_playlist_items_map(self, correct_playlist_items):
+        """Check the data in playlist_item_map 
+
+        :param correct_playlist_items: dict mapping playlist ids to the items
+        that should be in them.
+        """
+        self.assertEquals(self.playlist_item_map.get_map(),
+                          correct_playlist_items)
+
     def make_daap_items(self, items_dict):
         """Given a dict mapping item ids to item titles, create a dict mapping
         those ids to DAAP items.
@@ -170,28 +182,41 @@ class SharingTest(EventLoopTest):
         client_connect_result = self.share.tracker.client_connect()
         # we shouldn't touch the DB in setup_items()
         self.check_tracker_items({})
+        self.check_playlist_items_map({})
         # check the results of the initial pass
         self.share.tracker.client_connect_callback(client_connect_result)
         correct_items = dict((key, item['dmap.itemname'])
                              for key, item in
                              self.client.current_items().items())
         self.check_tracker_items(correct_items)
+        correct_playlist_items = dict(
+            (playlist_id, set(item_ids))
+             for (playlist_id, item_ids) in
+             self.client.current_playlist_item_map().items())
+        self.check_playlist_items_map(correct_playlist_items)
 
     def check_client_update(self):
         """Check the an update run for SharingItemTrackerImpl """
         # calculate the what items are in the DB before the update
         item_view = models.SharingItem.make_view(db_info=self.share.db_info)
         items_before_update = dict((i.id, i.title) for i in item_view)
+        playlist_items_before_update = self.playlist_item_map.get_map()
         # run the update
         client_update_result = self.share.tracker.client_update()
         # we shouldn't touch the DB in setup_items()
         self.check_tracker_items(items_before_update)
+        self.check_playlist_items_map(playlist_items_before_update)
         # check the results of the update
         self.share.tracker.client_update_callback(client_update_result)
         correct_items = dict((key, item['dmap.itemname'])
                              for key, item in
                              self.client.current_items().items())
         self.check_tracker_items(correct_items)
+        correct_playlist_items = dict(
+            (playlist_id, set(item_ids))
+             for (playlist_id, item_ids) in
+             self.client.current_playlist_item_map().items())
+        self.check_playlist_items_map(correct_playlist_items)
 
     def daap_playlist_tab_id(self, daap_id):
         return '%s-%s-%s-%s' % (self.share.name, self.share.host,

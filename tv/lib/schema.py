@@ -350,6 +350,21 @@ class MultiClassObjectSchema(ObjectSchema):
     should use to restore that row.
     """
 
+class NoObjectSchema(object):
+    """Schema for a table that's not associated with a DDBObject class
+    """
+
+    @classmethod
+    def ddb_object_classes(cls):
+        return ()
+
+    @classmethod
+    def get_ddb_class(cls, restored_data):
+        raise NotImplementedError("get_ddb_class() shouldn't be called")
+
+    indexes = ()
+    unique_indexes = ()
+
 from miro.database import DDBObject
 from miro.databaselog import DBLogEntry
 from miro.downloader import RemoteDownloader
@@ -568,6 +583,22 @@ class SharingItemSchema(ObjectSchema):
 
     unique_indexes = (
         ('sharing_item_daap_id', ('daap_id',)),
+    )
+
+class SharingItemPlaylistMapSchema(NoObjectSchema):
+    """Schema for the playlist item map on shares.
+
+    This only gets used for sharing databases
+    """
+    table_name = 'sharing_item_playlist_map'
+
+    fields = DDBObjectSchema.fields + [
+        ('playlist_id', SchemaInt()),
+        ('item_id', SchemaInt()),
+    ]
+
+    unique_indexes = (
+        ('sharing_item_playlist_map_unique', ('playlist_id', 'item_id')),
     )
 
 class FeedSchema(DDBObjectSchema):

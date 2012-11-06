@@ -57,6 +57,7 @@ from miro import schema
 from miro import storedatabase
 from miro import transcode
 from miro import metadata
+from miro.data import mappings
 from miro.item import Item, SharingItem
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
@@ -212,7 +213,10 @@ class Share(object):
                              "for Share")
 
     def make_new_database(self, path):
-        object_schemas = [schema.SharingItemSchema]
+        object_schemas = [
+            schema.SharingItemSchema,
+            schema.SharingItemPlaylistMapSchema,
+        ]
         return storedatabase.SharingLiveStorage(path, self.name,
                                                 object_schemas)
 
@@ -716,6 +720,8 @@ class SharingItemTrackerImpl(object):
     def __init__(self, share):
         self.client = None
         self.share = share
+        self.playlist_item_map = mappings.SharingItemPlaylistMap(
+            share.db_info.db.connection)
         self.current_item_ids = set()
         self.current_playlist_ids = set()
         self.playlist_tracker = _ClientPlaylistTracker()
@@ -928,7 +934,16 @@ class SharingItemTrackerImpl(object):
         changed = []
         removed = []
 
+        old_playlist_ids = self.playlist_tracker.playlist_items.keys()
         self.playlist_tracker.update(result)
+        # update the playlist item map
+        new_playlist_items = self.playlist_tracker.playlist_items
+        for playlist_id in old_playlist_ids:
+            if playlist_id not in new_playlist_items:
+                self.playlist_item_map.remove_playlist(playlist_id)
+        for playlist_id, item_ids in new_playlist_items.items():
+            self.playlist_item_map.set_playlist_items(playlist_id, item_ids)
+
         current_playlists = self.playlist_tracker.current_playlists()
         # check for added/changed playlists
         for daap_id, playlist_data in current_playlists.items():

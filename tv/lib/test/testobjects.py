@@ -264,6 +264,18 @@ class MockDAAPClient(mock.Mock):
         """Get current set of playlists."""
         return self.library.playlists.copy()
 
+    def current_playlist_item_map(self):
+        """Get the current playlist item map
+
+        :returns: dict mapping playlist id to item id lists.  This will only
+        contain entries for playlists that actually have items in them.
+        """
+        rv = {}
+        for playlist_id, items in self.library.playlist_items.items():
+            if playlist_id != self.library.base_playlist_id and items:
+                rv[playlist_id] = [i['dmap.itemid'] for i in items.values()]
+        return rv
+
     def items(self, playlist_id=None, meta=None, update=False):
         last_library = self.last_sent_library.get(playlist_id)
         if not update or last_library is None:
