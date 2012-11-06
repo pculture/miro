@@ -2727,6 +2727,11 @@ class SharingItemChangeTracker(object):
 
 class SharingItem(ItemBase):
     """Item on a DAAP share."""
+    def __init__(self, share, *args, **kwargs):
+        self.share_id = share.id
+        kwargs['db_info'] = share.db_info
+        ItemBase.__init__(self, *args, **kwargs)
+
     def setup_new(self, **kwargs):
         self.file_format = self.duration = self.size = self.artist = None
         self.album_artist = self.album = self.year = self.genre = None

@@ -818,8 +818,7 @@ class SharingItemTrackerImpl(object):
         kwargs['host'] = unicode(self.client.host)
         kwargs['port'] = self.client.port
         kwargs['address'] = unicode(self.address)
-        kwargs['db_info'] = self.share.db_info
-        return SharingItem(**kwargs)
+        return SharingItem(self.share, **kwargs)
 
     def get_sharing_item(self, daap_id):
         return SharingItem.get_by_daap_id(daap_id, db_info=self.share.db_info)
