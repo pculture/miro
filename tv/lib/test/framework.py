@@ -350,8 +350,10 @@ class MiroTestCase(unittest.TestCase):
         return self.platform == "windows"
 
     def tearDown(self):
+        testobjects.test_stopped(self)
         for patcher in self.mock_patchers:
             patcher.stop()
+        self.destroy_connection_pools()
         # shutdown workerprocess if we started it for some reason.
         workerprocess.shutdown()
         workerprocess._subprocess_manager = \
@@ -374,6 +376,14 @@ class MiroTestCase(unittest.TestCase):
 
         # Remove tempdir
         shutil.rmtree(self.tempdir, onerror=self._on_rmtree_error)
+
+    def destroy_connection_pools(self):
+        try:
+            connection_pools = app.connection_pools
+        except AttributeError:
+            return
+        for pool in connection_pools.get_all_pools():
+            pool.destroy()
 
     def handle_new_dialog(self, obj, dialog):
         """Handle the new-dialog signal

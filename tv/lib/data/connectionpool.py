@@ -75,6 +75,13 @@ class ConnectionPool(object):
         self.free_connections.append(connection)
         self.all_connections.add(connection)
 
+    def destroy(self):
+        """Forcably destroy all connections."""
+        for connection in self.all_connections:
+            connection.close()
+        self.all_connections = []
+        self.free_connections = []
+
     def get_connection(self):
         """Get a new connection to the database
 
@@ -161,6 +168,9 @@ class ConnectionPoolTracker(object):
 
     def get_sharing_pool(self, share_id):
         return self.pool_map[('share', share_id)]
+
+    def get_all_pools(self):
+        return [self.main_pool] + self.pool_map.values()
 
     def _make_connection_pool(self, tab_info):
         if isinstance(tab_info, messages.DeviceInfo):

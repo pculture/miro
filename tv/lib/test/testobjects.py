@@ -23,12 +23,22 @@ from miro.plat.utils import filename_to_unicode, unicode_to_filename
 from miro.test import mock
 
 feed_counter = itertools.count()
+shares_created = []
+device_databases_created = []
 
 def test_started(current_test_case):
     """Reset the test object data"""
     global feed_counter, current_test
     feed_counter = itertools.count()
     current_test = current_test_case
+
+def test_stopped(current_test_case):
+    for share in shares_created:
+        share.destroy()
+    for device_db in device_databases_created:
+        device_db.close()
+    shares_created[:] = []
+    device_databases_created[:] = []
 
 def make_item_info(itemobj):
     return fetch_item_infos(app.db.connection, [itemobj.id])[0]
@@ -128,6 +138,7 @@ def setup_mock_device_database(device):
                                                      device.id)
     device.db_info = db_info
     device.metadata_manager = metadata_manager
+    device_databases_created.append(sqlite_db)
     return device
 
 def make_device_items(device, *filenames):
@@ -351,7 +362,9 @@ def make_mock_daap_playlist(playlist_id, title, is_podcast=False):
     return playlist_data
 
 def make_share(name='TestShare'):
-    return sharing.Share('testshareid', name, u'127.0.0.1', 1234)
+    rv = sharing.Share('testshareid', name, u'127.0.0.1', 1234)
+    shares_created.append(rv)
+    return rv
 
 def make_sharing_items(share, *titles):
     return [make_sharing_item(share, i, "/item-%s" % i, title)

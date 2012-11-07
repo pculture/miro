@@ -585,8 +585,8 @@ class DeviceItemTrackTestWALMode(ItemTrackTestCase):
         # app.connection_pools has a ConnectionPool for the device
         msg = messages.TabsChanged('connect', [self.device], [], [])
         app.connection_pools.on_tabs_changed(msg)
-        self.connection_pool = connectionpool.DeviceConnectionPool(
-            self.device)
+        self.connection_pool = app.connection_pools.get_device_pool(
+            self.device.id)
 
     def setup_tracker(self):
         query = itemtrack.DeviceItemTrackerQuery()
@@ -625,6 +625,10 @@ class SharingItemTrackTestWalMode(ItemTrackTestCase):
         # make a share and that uses our mock client
         self.patch_for_test('miro.libdaap.make_daap_client',
                             self.client.returnself)
+        # Make sure the SharingItemTrackerImpl doesn't actually create a
+        # thread.  We want to manually call its methods and have them run in
+        # the in the main thread.
+        self.patch_for_test('miro.sharing.SharingItemTrackerImpl.start_thread')
         self.share = testobjects.make_share()
         self.share_info = messages.SharingInfo(self.share)
         self.share.set_info(self.share_info)
@@ -632,7 +636,6 @@ class SharingItemTrackTestWalMode(ItemTrackTestCase):
         self.run_client_connect()
 
     def setup_connection_pool(self):
-        self.init_data_package()
         msg = messages.TabsChanged('connect', [self.share_info], [], [])
         app.connection_pools.on_tabs_changed(msg)
         self.connection_pool = app.connection_pools.get_sharing_pool(
