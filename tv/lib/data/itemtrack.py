@@ -74,7 +74,9 @@ class ItemTrackerQuery(object):
     def __init__(self):
         self.conditions = []
         self.match_string = None
-        self.order_by = [ItemTrackerOrderBy('item', 'id', None, False)]
+        self.order_by = [
+            ItemTrackerOrderBy(self.table_name(), 'id', None, False),
+        ]
 
     def join_sql(self, table):
         return self.select_info.join_sql(table, join_type='JOIN')
@@ -190,8 +192,10 @@ class ItemTrackerQuery(object):
 
     def get_columns_to_track(self):
         """Get the columns that affect the results of the query """
-        columns = [c.column for c in self.conditions if c.table == 'item']
-        columns.extend(ob.column for ob in self.order_by if ob.table == 'item')
+        columns = [c.column for c in self.conditions
+                   if c.table == self.table_name()]
+        columns.extend(ob.column for ob in self.order_by
+                       if ob.table == self.table_name())
         return columns
 
     def tracking_download_columns(self):
