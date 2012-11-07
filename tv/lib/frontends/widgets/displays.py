@@ -508,14 +508,17 @@ class DeviceItemDisplay(DeviceDisplayMixin, ItemListDisplay):
                getattr(selected_tabs[0], 'fake', False)
 
 class SharingDisplay(ItemListDisplay):
+    def __init__(self, tab_type, selected_tabs):
+        # our type is always 'sharing', regardless if the tab type is
+        # 'sharing' or 'sharing-playlist'
+        ItemListDisplay.__init__(self, u'sharing', selected_tabs)
+
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        # FIXME: re-implement SharingController with the new ItemList code
-        return False
-        return tab_type == u'sharing' and len(selected_tabs) == 1
+        return tab_type.startswith(u'sharing') and len(selected_tabs) == 1
 
     def make_controller(self, tab):
-        return sharingcontroller.SharingView(tab)
+        return sharingcontroller.SharingController(tab)
 
 class SearchDisplay(ItemListDisplay):
     @staticmethod

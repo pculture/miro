@@ -846,10 +846,7 @@ class BackendMessageHandler(messages.MessageHandler):
         app.sharing_tracker.track_share(message.share_id)
 
     def handle_stop_tracking_share(self, message):
-        app.sharing_tracker.stop_track_share(message.share_id)
-
-    def handle_sharing_eject(self, message):
-        app.sharing_tracker.eject(message.share.id)
+        app.sharing_tracker.stop_tracking_share(message.share_id)
 
     def handle_track_devices(self, message):
         app.device_tracker.start_tracking()
@@ -1914,18 +1911,17 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         for item_info in message.item_infos:
             # notes:
             # For sharing item the URL is encoded directory into the path.
-            url = item_info.video_path.urlize().decode('utf-8', 'replace')
+            url = item_info.filename.urlize().decode('utf-8', 'replace')
             file_format = '.' + item_info.file_format
             try:
                 # So many to choose from ... let's just pick the first one.
                 content_type = filetypes.EXT_MIMETYPES_MAP[file_format][0]
             except KeyError:
                 content_type = 'audio/unknown'
-            additional = dict()
-            keys = (('name', 'title'), ('description', 'description'))
-            for src_key, dst_key in keys:
-                value = getattr(item_info, src_key)
-                additional[dst_key] = value
+            additional = {
+                'title': item_info.title,
+                'description': item_info.description,
+            }
             entry = _build_entry(url, content_type, additional=additional)
             download_video(entry)
 

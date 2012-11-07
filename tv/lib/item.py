@@ -2710,7 +2710,7 @@ class SharingItemChangeTracker(object):
         self.changed = collections.defaultdict(set)
         self.removed = collections.defaultdict(set)
         self.changed_columns = collections.defaultdict(set)
-        self.changed_playlists = collections.defaultdict(set)
+        self.changed_playlists = set()
         self.changed_shares = set()
 
     def after_event_finished(self, eventloop, success):
@@ -2725,12 +2725,12 @@ class SharingItemChangeTracker(object):
                 self.changed[share_id],
                 self.removed[share_id],
                 self.changed_columns[share_id],
-                self.changed_playlists[share_id])
+                share_id in self.changed_playlists)
             msg.send_to_frontend()
         self.reset()
 
-    def playlist_changed(self, share_id, playlist_id):
-        self.changed_playlists[share_id].add(playlist_id)
+    def playlist_changed(self, share_id):
+        self.changed_playlists.add(share_id)
         self.changed_shares.add(share_id)
 
     def on_item_added(self, item):

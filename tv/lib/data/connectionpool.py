@@ -163,11 +163,11 @@ class ConnectionPoolTracker(object):
     def get_main_pool(self):
         return self.main_pool
 
-    def get_device_pool(self, device_id):
-        return self.pool_map[('device', device_id)]
+    def get_device_pool(self, tab_id):
+        return self.pool_map[tab_id]
 
-    def get_sharing_pool(self, share_id):
-        return self.pool_map[('share', share_id)]
+    def get_sharing_pool(self, tab_id):
+        return self.pool_map[tab_id]
 
     def get_all_pools(self):
         return [self.main_pool] + self.pool_map.values()
@@ -180,23 +180,13 @@ class ConnectionPoolTracker(object):
         else:
             raise ValueError("Unknown type for tab info: %s", tab_info)
 
-    def _key_for_tab(self, tab_info):
-        if isinstance(tab_info, messages.DeviceInfo):
-            return ('device', tab_info.id)
-        elif isinstance(tab_info, messages.SharingInfo):
-            return ('share', tab_info.id)
-        else:
-            raise ValueError("Unknown type for tab info: %s", tab_info)
-
     def _ensure_connection_pool(self, tab_info):
-        key = self._key_for_tab(tab_info)
-        if key not in self.pool_map:
-            self.pool_map[key] = self._make_connection_pool(tab_info)
+        if tab_info.id not in self.pool_map:
+            self.pool_map[tab_info.id] = self._make_connection_pool(tab_info)
 
-    def _ensure_no_connection_pool(self, device_id):
-        key = self._key_for_tab(tab_info)
-        if key in self.pool_map:
-            del self.pool_map[key]
+    def _ensure_no_connection_pool(self, tab_id):
+        if tab_id in self.pool_map:
+            del self.pool_map[tab_id]
 
     def on_tabs_changed(self, message):
         if message.type != 'connect':
@@ -208,10 +198,8 @@ class ConnectionPoolTracker(object):
                 if info.db_info is not None:
                     self._ensure_connection_pool(info)
                 else:
-                    self._ensure_no_connection_pool(info)
+                    self._ensure_no_connection_pool(info.id)
             elif isinstance(info, messages.SharingInfo):
                 self._ensure_connection_pool(info)
         for id_ in message.removed:
-            if (isinstance(info, messages.DeviceInfo) or
-                isinstance(info, messages.SharingInfo)):
-                self._ensure_no_connection_pool(info)
+            self._ensure_no_connection_pool(id_)

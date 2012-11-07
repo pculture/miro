@@ -378,12 +378,11 @@ class MiroTestCase(unittest.TestCase):
         shutil.rmtree(self.tempdir, onerror=self._on_rmtree_error)
 
     def destroy_connection_pools(self):
-        try:
-            connection_pools = app.connection_pools
-        except AttributeError:
-            return
-        for pool in connection_pools.get_all_pools():
-            pool.destroy()
+        connection_pools = app.connection_pools
+        if connection_pools is not None:
+            for pool in connection_pools.get_all_pools():
+                pool.destroy()
+            app.connection_pools = None
 
     def handle_new_dialog(self, obj, dialog):
         """Handle the new-dialog signal

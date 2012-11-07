@@ -219,8 +219,7 @@ class SharingTest(EventLoopTest):
         self.check_playlist_items_map(correct_playlist_items)
 
     def daap_playlist_tab_id(self, daap_id):
-        return '%s-%s-%s-%s' % (self.share.name, self.share.host,
-                                self.share.port, daap_id)
+        return 'sharing-%s-%s' % (self.share.id, daap_id)
 
     def check_tabs_changed(self, correct_added_ids, correct_changed_ids,
                            correct_removed_ids):

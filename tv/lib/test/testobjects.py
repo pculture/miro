@@ -288,14 +288,19 @@ class MockDAAPClient(mock.Mock):
         return rv
 
     def items(self, playlist_id=None, meta=None, update=False):
+        def get_items_from_library(library):
+            if playlist_id is not None:
+                return library.playlist_items[playlist_id]
+            else:
+                return library.all_items
         last_library = self.last_sent_library.get(playlist_id)
         if not update or last_library is None:
-            items = self.library.playlist_items[playlist_id].copy()
+            items = get_items_from_library(self.library).copy()
             deleted_items = []
         else:
             items, deleted_items = self.dict_diff(
-                self.library.playlist_items[playlist_id],
-                last_library.playlist_items[playlist_id])
+                get_items_from_library(self.library),
+                get_items_from_library(last_library))
         self.last_sent_library[playlist_id] = self.library.copy()
         return items, deleted_items
 
@@ -325,7 +330,7 @@ class MockDAAPClient(mock.Mock):
         return True
 
     def daap_get_file_request(self, daap_id, file_format):
-        return '/item-%s' % daap_id
+        return u'/item-%s' % daap_id
 
     def _get_child_mock(self, parent, name, wraps):
         return mock.Mock()
@@ -367,7 +372,7 @@ def make_share(name='TestShare'):
     return rv
 
 def make_sharing_items(share, *titles):
-    return [make_sharing_item(share, i, "/item-%s" % i, title)
+    return [make_sharing_item(share, i, u"/item-%s" % i, title)
             for i, title in enumerate(titles)]
 
 def make_sharing_item(share, daap_id, path, title, file_type=u'video'):

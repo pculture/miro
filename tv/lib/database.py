@@ -601,7 +601,7 @@ class DDBObject(signals.SignalEmitter):
             return view.get_singleton()
 
     @classmethod
-    def delete(cls, where, values=None, db_info=None):
+    def delete(cls, where=None, values=None, db_info=None):
         if db_info is None:
             db = app.db
         else:

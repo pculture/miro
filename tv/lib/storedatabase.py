@@ -171,6 +171,10 @@ class DatabaseObjectCache(object):
             if key[0] == category:
                 del self._objects[key]
 
+    def clear_all(self):
+        """Clear all objects in the cache"""
+        self._objects = {}
+
 class LiveStorageErrorHandler(object):
     """Handle database errors for LiveStorage.
     """
@@ -843,6 +847,10 @@ class LiveStorage(signals.SignalEmitter):
                        (obj.id, obj))
             logging.error(details)
         self._ids_loaded.discard(key)
+
+    def forget_all_objects(self):
+        self._object_map = {}
+        self._ids_loaded = set()
 
     def _insert_sql_for_schema(self, obj_schema):
         return "INSERT INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,

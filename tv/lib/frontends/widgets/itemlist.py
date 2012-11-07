@@ -89,10 +89,20 @@ class ItemList(itemtrack.ItemTracker):
     def is_for_device(self):
         return self.tab_type.startswith('device-')
 
+    def is_for_share(self):
+        return self.tab_type == 'sharing'
+
     def device_id(self):
         # tab_id is the device_id + '-video' or '-audio'.  Remove the
         # suffix
         return self.tab_id.rsplit('-', 1)[0]
+
+    def share_id(self):
+        # - for sharing tabs the tab id "sharing-<share_id>"
+        # - for playlist tabs, the tab id is
+        #   "sharing-<share_id>-<playlist_id>"
+        # This code should work for either
+        return int(self.tab_id.split("-")[1])
 
     def _fetch_id_list(self):
         itemtrack.ItemTracker._fetch_id_list(self)
@@ -101,6 +111,8 @@ class ItemList(itemtrack.ItemTracker):
     def _make_base_query(self, tab_type, tab_id):
         if self.is_for_device():
             query = itemtrack.DeviceItemTrackerQuery()
+        elif self.is_for_share():
+            query = itemtrack.SharingItemTrackerQuery()
         else:
             query = itemtrack.ItemTrackerQuery()
 
@@ -140,6 +152,31 @@ class ItemList(itemtrack.ItemTracker):
             query.add_condition('file_type', '=', u'video')
         elif tab_type == 'device-audio':
             query.add_condition('file_type', '=', u'audio')
+        elif tab_type == 'sharing' and tab_id.startswith("sharing-"):
+            # browsing a playlist on a share
+            id_components = tab_id.split("-")
+            if len(id_components) == 2:
+                # browsing an entire share, no filters needed
+                pass
+            else:
+                # browsing a playlist
+                playlist_id = id_components[-1]
+                if playlist_id == 'audio':
+                    query.add_condition('file_type', '=', u'audio')
+                elif playlist_id == 'video':
+                    query.add_condition('file_type', '=', u'video')
+                elif playlist_id == 'podcast':
+                    raise NotImplementedError()
+                elif playlist_id == 'playlist':
+                    raise NotImplementedError()
+                else:
+                    query.add_condition(
+                        'sharing_item_playlist_map.playlist_id', '=',
+                        int(playlist_id))
+
+        elif tab_type == 'sharing':
+            # browsing an entire share, we don't need any filters on the query
+            pass
         elif tab_type == 'manual':
             # for the manual tab, tab_id is a list of ids to play
             id_list = tab_id
@@ -154,6 +191,10 @@ class ItemList(itemtrack.ItemTracker):
         if self.is_for_device():
             device_info = app.tabs['connect'].get_tab(self.device_id())
             return item.DeviceItemSource(device_info)
+        elif self.is_for_share():
+            share_info = app.tabs['connect'].get_tab('sharing-%s' %
+                                                     self.share_id())
+            return item.SharingItemSource(share_info)
         else:
             return item.ItemSource()
 
@@ -336,7 +377,7 @@ class ItemListPool(object):
     def on_item_changes(self, message):
         """Call on_item_changes for each ItemList in the pool."""
         for item_list in self.all_item_lists:
-            if not item_list.is_for_device():
+            if not (item_list.is_for_device() or item_list.is_for_share()):
                 item_list.on_item_changes(message)
 
     def on_device_item_changes(self, message):
@@ -344,6 +385,13 @@ class ItemListPool(object):
         for item_list in self.all_item_lists:
             if (item_list.is_for_device() and
                 item_list.device_id() == message.device_id):
+                item_list.on_item_changes(message)
+
+    def on_sharing_item_changes(self, message):
+        """Call on_item_changes for each ItemList in the pool."""
+        for item_list in self.all_item_lists:
+            if (item_list.is_for_share() and
+                item_list.share_id() == message.share_id):
                 item_list.on_item_changes(message)
 
 # grouping functions

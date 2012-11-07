@@ -1337,7 +1337,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self.handle_tabs_changed(message)
         # Now, reply to backend, and eject the share.
         if share.mount:
-            messages.SharingEject(share).send_to_backend()
+            messages.StopTrackingShare(share.share_id).send_to_backend()
 
     def handle_downloader_sync_command_complete(self, message):
         # We used to need this command, but with the new ItemList code it's
@@ -1587,6 +1587,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_device_item_changes(self, message):
         app.item_list_pool.on_device_item_changes(message)
+
+    def handle_sharing_item_changes(self, message):
+        app.item_list_pool.on_sharing_item_changes(message)
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count

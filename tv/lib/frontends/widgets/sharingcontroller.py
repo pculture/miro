@@ -28,20 +28,21 @@
 
 """playlist.py -- Handle displaying a playlist."""
 
+from miro import messages
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
 from miro.gtcache import gettext as _
 
-# The spinning progress bar while a user connects is done by the backend
-# with messages sent to the frontend, the idea is the backend should know
-# when it is a connect or not so let it handle that case.
-class SharingView(itemlistcontroller.SimpleItemListController):
-    def __init__(self, share):
+class SharingController(itemlistcontroller.SimpleItemListController):
+    def __init__(self, share_info):
         self.type = u'sharing'
-        self.share = share
-        self.id = share.id
+        self.share_info = share_info
+        self.id = share_info.id
         itemlistcontroller.SimpleItemListController.__init__(self)
+        # tell the backend that it should connect to the share and start
+        # sending updates
+        messages.TrackShare(share_info.share_id).send_to_backend()
 
     def make_drag_handler(self):
         return None
@@ -58,10 +59,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
 
     def handle_delete(self):
         pass
-
-    def build_item_list(self):
-        # FIXME: Make this work again
-        raise NotImplementedError()
 
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)

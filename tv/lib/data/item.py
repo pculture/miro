@@ -177,6 +177,8 @@ class ItemSelectInfo(object):
         SelectColumn('remote_downloader', 'leechers'),
         SelectColumn('remote_downloader', 'connections'),
     ]
+    # name of the column that stores video paths
+    path_column = 'filename'
 
     # Constant values that aren't included in the select statement
     # An example of this is all the values that come from remote_downloader
@@ -243,28 +245,30 @@ class ItemInfoMeta(type):
     """
     def __new__(cls, classname, bases, dct):
         count = itertools.count()
-        for select_column in dct['select_info'].select_columns:
-            attribute = ItemInfoAttributeGetter(count.next())
-            dct[select_column.attr_name] = attribute
-        for attr_name, value in dct['select_info'].constant_values.items():
-            dct[attr_name] = value
+        select_info = dct.get('select_info')
+        if select_info is not None:
+            for select_column in select_info.select_columns:
+                attribute = ItemInfoAttributeGetter(count.next())
+                dct[select_column.attr_name] = attribute
+            for attr_name, value in select_info.constant_values.items():
+                dct[attr_name] = value
         return type.__new__(cls, classname, bases, dct)
 
-class ItemInfo(object):
+class ItemInfoBase(object):
     """ItemInfo represents a row in one of the item lists.
 
     This work similarly to the miro.item.Item class, except it's read-only.
+    Subclases of this handle items from the main database, device database,
+    and sharing database
     """
 
     __metaclass__ = ItemInfoMeta
 
     #: ItemSelectInfo object that describes what to select to create an
     #: ItemInfoMeta
-    select_info = ItemSelectInfo()
-
+    select_info = None
     html_stripper = util.HTMLStripper()
-
-    source_type = 'database'
+    # DeviceInfo for the device this item is on
     device = None
 
     def __init__(self, row_data):
@@ -595,6 +599,10 @@ def fetch_device_item_infos(device, item_ids):
                                   item_ids, DeviceItemSelectInfo())
     return [DeviceItemInfo(device.id, row) for row in result_set]
 
+class ItemInfo(ItemInfoBase):
+    source_type = 'database'
+    select_info = ItemSelectInfo()
+
 class DeviceItemSelectInfo(ItemSelectInfo):
     """ItemSelectInfo for DeviceItems."""
 
@@ -695,7 +703,7 @@ class DeviceItemSelectInfo(ItemSelectInfo):
         'item_fts': 'item_fts.docid=device_item.id',
     }
 
-class DeviceItemInfo(ItemInfo):
+class DeviceItemInfo(ItemInfoBase):
     """ItemInfo for devices """
 
     select_info = DeviceItemSelectInfo()
@@ -731,7 +739,7 @@ class SharingItemSelectInfo(ItemSelectInfo):
         SelectColumn('sharing_item', 'title'),
         SelectColumn('sharing_item', 'file_type'),
         SelectColumn('sharing_item', 'file_format'),
-        SelectColumn('sharing_item', 'duration'),
+        SelectColumn('sharing_item', 'duration', 'duration_ms'),
         SelectColumn('sharing_item', 'size'),
         SelectColumn('sharing_item', 'artist'),
         SelectColumn('sharing_item', 'album_artist'),
@@ -748,6 +756,7 @@ class SharingItemSelectInfo(ItemSelectInfo):
         SelectColumn('sharing_item', 'port'),
         SelectColumn('sharing_item', 'address'),
     ]
+    path_column = 'video_path'
 
     constant_values = {
         # item attributes that sharing item doesn't store
@@ -783,7 +792,6 @@ class SharingItemSelectInfo(ItemSelectInfo):
         'mime_type': None,
         'enclosure_format': None,
         'auto_sync': None,
-        'duration_ms': None,
         'screenshot_path_unicode': None,
         'cover_art_path_unicode': None,
         'resume_time': 0,
@@ -828,11 +836,11 @@ class SharingItemSelectInfo(ItemSelectInfo):
     }
 
 
-class SharingItemInfo(ItemInfo):
+class SharingItemInfo(ItemInfoBase):
     """ItemInfo for devices """
 
     select_info = SharingItemSelectInfo()
-    source_type = 'device'
+    source_type = 'sharing'
 
     def __init__(self, share_info, row_data):
         """Create an ItemInfo object.
@@ -841,7 +849,7 @@ class SharingItemInfo(ItemInfo):
         :param row_data: data from sqlite.  There should be a value for each
         SelectColumn that column_info() returns.
         """
-        self.share = share_info
+        self.share_info = share_info
         self.row_data = row_data
 
     @property
@@ -853,8 +861,13 @@ class SharingItemInfo(ItemInfo):
             return 'http://%s:%s%s' % (host, port, path)
         fn = FilenameType(self.video_path)
         fn.set_urlize_handler(daap_handler,
-                              [self.share.host, self.share.port])
+                              [self.share_info.host, self.share_info.port])
         return fn
+
+    @property
+    def has_filename(self):
+        # all sharing items have files on the share
+        return True
 
 class ItemSource(object):
     """Create ItemInfo objects.

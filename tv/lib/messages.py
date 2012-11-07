@@ -1472,7 +1472,7 @@ class SharingItemChanges(FrontendMessage):
     :attribute removed: set ids for removed items
     :attribute changed_columns: set columns that were changed (the union of
     changes for all items)
-    :attribute changed_playlists: set of playlist ids for playlists that have
+    :attribute changed_playlists: True if the any playlists have been changed
     had their contents changed.
     """
     def __init__(self, share_id, added, changed, removed, changed_columns,
@@ -1668,7 +1668,8 @@ class ConversionTaskChanged(FrontendMessage):
 class SharingInfo(object):
     """Tracks the state of an extent share."""
     def __init__(self, share):
-        self.id = share.id
+        self.id = 'sharing-%s' % (share.id,)
+        self.share_id = share.id
         self.sqlite_path = share.db_path
         self.name = share.name
         self.host = share.host
@@ -1680,8 +1681,9 @@ class SharingInfo(object):
 
 class SharingPlaylistInfo(object):
     """Tracks the state a playlist on a share."""
-    def __init__(self, tab_id, name, playlist_id, podcast):
-        self.id = tab_id
+    def __init__(self, share_id, name, playlist_id, podcast):
+        self.share_id = share_id
+        self.id = u'sharing-%s-%s' % (share_id, playlist_id)
         self.name = name
         self.podcast = podcast
         self.playlist_id = playlist_id

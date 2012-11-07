@@ -100,10 +100,10 @@ miro_itemkind_mapping = {
 }
 
 miro_itemkind_rmapping = {
-    MIRO_ITEMKIND_MOVIE: 'movie',
-    MIRO_ITEMKIND_SHOW: 'show',
-    MIRO_ITEMKIND_CLIP: 'clip',
-    MIRO_ITEMKIND_PODCAST: 'podcast'
+    MIRO_ITEMKIND_MOVIE: u'movie',
+    MIRO_ITEMKIND_SHOW: u'show',
+    MIRO_ITEMKIND_CLIP: u'clip',
+    MIRO_ITEMKIND_PODCAST: u'podcast'
 }
 
 # XXX The daap mapping from the daap to the attribute is different from the
@@ -177,6 +177,9 @@ class Share(object):
         self.db_info = database.DBInfo(self.db)
         self.__class__._used_db_paths.add(self.db_path)
         self.tracker = None
+        # SharingInfo object for this share.  We use this to send updates to
+        # the frontend when things change.
+        self.info = None
 
     def destroy(self):
         if self.db is not None:
@@ -229,6 +232,16 @@ class Share(object):
         if self.tracker is not None:
             self.tracker.client_disconnect()
             self.tracker = None
+            self.reset_database()
+            if self.info:
+                self.info.is_updating = False
+                self.info.mount = False
+                self.send_tabs_changed()
+
+    def reset_database(self):
+        SharingItem.delete(db_info=self.db_info)
+        self.db.forget_all_objects()
+        self.db.cache.clear_all()
 
     def set_info(self, info):
         """Set the SharingInfo to use to send updates for."""
@@ -239,15 +252,19 @@ class Share(object):
     def update_started(self):
         # FIXME: we probably shouldn't be modifying the SharingInfo directly
         # here (#19689)
-        self.info.is_updating = True
-        message = messages.TabsChanged('connect', [], [self.info], [])
-        message.send_to_frontend()
+        if self.info:
+            self.info.is_updating = True
+            self.send_tabs_changed()
 
     def update_finished(self, success=True):
         # FIXME: we probably shouldn't be modifying the SharingInfo directly
         # here (#19689)
-        self.info.mount = success
-        self.info.is_updating = False
+        if self.info:
+            self.info.mount = success
+            self.info.is_updating = False
+            self.send_tabs_changed()
+
+    def send_tabs_changed(self):
         message = messages.TabsChanged('connect', [], [self.info], [])
         message.send_to_frontend()
 
@@ -321,15 +338,19 @@ class SharingTracker(object):
         # identify the resource).
         if fullname == app.sharing_manager.name:
             return
-        # Need to come up with a unique ID for the share.  We want to use the 
-        # name only since that's supposed to be unique, but can't because
-        # the name may change, and the id is used throughout to identify
-        # the item tracker, and we don't want to change the id mid-way.
-        # We can't use the hostname or port directly also because
-        # on removal avahi can't do a name query so we have no hostname,
-        # or port information!  So, we have a name to id map.
+        # Need to come up with a unique ID for the share and that's a bit
+        # tricky.  We need the id to:
+        #   - Be uniquly determined by the host/port which is the one thing
+        #   that stays the same throughout the share.  The fullname can
+        #   change.
+        #   - By accesible by the current name of the share, this is the only
+        #   info we during avahi removal
+        #
+        # We take the hash of the host and the port to get the id, then map
+        # the last-known name it.  We force the hash to be positive, since
+        # other ids are always positive.
         if added:
-            share_id = (host, port)
+            share_id = abs(hash((host, port)))
             self.name_to_id_map[fullname] = share_id
         else:
             try:
@@ -396,6 +417,7 @@ class SharingTracker(object):
                     return
                 share = Share(share_id, fullname, host, port)
                 info = messages.SharingInfo(share)
+                share.set_info(info)
                 self.shares[share_id] = share
                 # FIXME: We should probably only store the Share object and
                 # create new SharingInfo objects when we want to send updates
@@ -422,16 +444,16 @@ class SharingTracker(object):
                 # here?  Let's add a timeout of 2 secs, if no added message
                 # comes in, assume it's gone bye...
                 share_info = self.available_shares[share_id]
-                share = self.trackers[share_id]
-                if share.share != share_info:
+                tracker_share_info = self.trackers[share_id].share.info
+                if tracker_share_info != share_info:
                     logging.error('Share disconn error: share info != share')
                 dc = eventloop.add_timeout(2, self.remove_timeout_callback,
                                       "share tab removal timeout callback",
                                       args=(share_id, share_info))
                 # Cancel pending callback is there is one.
-                if share.share.stale_callback:
-                    share.share.stale_callback.cancel()
-                share.share.stale_callback = dc
+                if tracker_share_info.stale_callback:
+                    tracker_share_info.stale_callback.cancel()
+                tracker_share_info.stale_callback = dc
 
     def destroy_share(self, share_id):
         self.shares[share_id].destroy()
@@ -510,7 +532,7 @@ class SharingTracker(object):
                                        name='mDNS Browser Thread')
         self.thread.start()
 
-    def start_tracking_share(self, share_id):
+    def track_share(self, share_id):
         try:
             self.shares[share_id].start_tracking()
         except KeyError:
@@ -523,16 +545,6 @@ class SharingTracker(object):
         except KeyError:
             logging.warn("SharingTracker.stop_tracking_share: "
                          "Unknown share_id: %s", share_id)
-
-    def eject(self, share_id):
-        try:
-            tracker = self.trackers[share_id]
-        except KeyError:
-            pass
-        else:
-            del self.trackers[share_id]
-            tracker.client_disconnect()
-
     def stop_tracking(self):
         # What to do in case of socket error here?
         self.w.send(SharingTracker.CMD_QUIT)
@@ -564,6 +576,8 @@ class _ClientUpdateResult(object):
     Attributes:
         items - dictionary tracking items that have been added/updated.  Maps
                 item ids to dicts of item data
+        item_paths - dictionary mapping item ids to their paths for
+                added/updated items
         deleted_items - list of item ids for deleted items
         playlists - dictionary tracking the playlists that have been
                     added/updated.  Maps playlist ids to dicts of playlist
@@ -579,6 +593,7 @@ class _ClientUpdateResult(object):
     def __init__(self, client, update=False):
         self.update = update
         self.items = {}
+        self.item_paths = {}
         self.deleted_items = []
         self.playlists = {}
         self.deleted_playlists = []
@@ -630,6 +645,9 @@ class _ClientUpdateResult(object):
             raise ValueError('Cannot find items in base playlist')
 
         self.strip_nuls_from_data(self.items.values())
+        for daap_id, item_data in self.items.items():
+            self.item_paths[daap_id] = client.daap_get_file_request(
+                daap_id, item_data['daap.songformat'])
 
     def fetch_playlist_items(self, client, playlist_key):
         items, deleted = client.items(playlist_id=playlist_key,
@@ -765,7 +783,7 @@ class SharingItemTrackerImpl(object):
             if not success:
                 break
 
-    def convert_raw_sharing_item(self, rawitem):
+    def convert_raw_sharing_item(self, rawitem, result):
         """Convert raw data from libdaap to the attributes of SharingItem
         """
         item_data = dict()
@@ -799,13 +817,16 @@ class SharingItemTrackerImpl(object):
            pass
 
         item_data['file_type'] = file_type
-        item_data['video_path'] = self.client.daap_get_file_request(
-            item_data['daap_id'], item_data['file_format'])
+        item_data['video_path'] = self.get_item_path(result,
+                                                     item_data['daap_id'])
         item_data['file_type'] = file_type
         return item_data
 
-    def make_sharing_item(self, rawitem):
-        kwargs = self.convert_raw_sharing_item(rawitem)
+    def get_item_path(self, result, daap_id):
+        return unicode(result.item_paths[daap_id])
+
+    def make_sharing_item(self, rawitem, result):
+        kwargs = self.convert_raw_sharing_item(rawitem, result)
         kwargs['host'] = unicode(self.client.host)
         kwargs['port'] = self.client.port
         kwargs['address'] = unicode(self.address)
@@ -816,7 +837,7 @@ class SharingItemTrackerImpl(object):
 
     def make_playlist_sharing_info(self, daap_id, playlist_data):
         return messages.SharingPlaylistInfo(
-            self.playlist_tab_id(daap_id),
+            self.share.id,
             playlist_data['dmap.itemname'],
             daap_id,
             playlist_data.get(DAAP_PODCAST_KEY, False))
@@ -876,13 +897,12 @@ class SharingItemTrackerImpl(object):
     def client_update_error_callback(self, unused):
         self.client_connect_update_error_callback(unused, update=True)
 
-    def playlist_tab_id(self, daap_id):
-        """Calculate the tab id to use for a SharingPlaylistInfo."""
-        return '%s-%s-%s-%s' % (self.share.name, self.share.host,
-                                self.share.port, daap_id)
-
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, result):
+        # ignore deleted items for the first run
+        result.deleted_items = []
+        result.deleted_playlists = []
+        result.playlist_deleted_items = {}
         self.update_sharing_items(result)
         self.update_playlists(result)
         self.share.update_finished()
@@ -894,17 +914,21 @@ class SharingItemTrackerImpl(object):
         """
         for daap_id, item_data in result.items.items():
             if daap_id not in self.current_item_ids:
-                self.make_sharing_item(item_data)
+                self.make_sharing_item(item_data, result)
                 self.current_item_ids.add(daap_id)
             else:
                 sharing_item = self.get_sharing_item(daap_id)
-                new_data = self.convert_raw_sharing_item(item_data)
+                new_data = self.convert_raw_sharing_item(item_data, result)
                 for key, value in new_data.items():
                     setattr(sharing_item, key, value)
                 sharing_item.signal_change()
         for item_id in result.deleted_items:
-            sharing_item = SharingItem.get_by_daap_id(
-                item_id, db_info=self.share.db_info)
+            try:
+                sharing_item = SharingItem.get_by_daap_id(
+                    item_id, db_info=self.share.db_info)
+            except database.ObjectNotFound:
+                logging.warn("SharingItemTrackerImpl.update_sharing_items: "
+                             "deleted item not found: %s", item_id)
             sharing_item.remove()
 
     def update_playlists(self, result):
@@ -928,8 +952,7 @@ class SharingItemTrackerImpl(object):
             if item_ids != old_playlist_items.get(playlist_id):
                 self.playlist_item_map.set_playlist_items(playlist_id,
                                                           item_ids)
-                SharingItem.change_tracker.playlist_changed(self.share.id,
-                                                            playlist_id)
+                SharingItem.change_tracker.playlist_changed(self.share.id)
 
         current_playlists = self.playlist_tracker.current_playlists()
         # check for added/changed playlists
@@ -938,13 +961,17 @@ class SharingItemTrackerImpl(object):
                 added.append(
                     self.make_playlist_sharing_info(daap_id, playlist_data))
                 self.current_playlist_ids.add(daap_id)
+                SharingItem.change_tracker.playlist_changed(self.share.id)
             elif daap_id in result.playlists:
                 changed.append(
                     self.make_playlist_sharing_info(daap_id, playlist_data))
+                SharingItem.change_tracker.playlist_changed(self.share.id)
         # check for removed playlists
         removed.extend(self.current_playlist_ids -
                        set(current_playlists.keys()))
         self.current_playlist_ids = set(current_playlists.keys())
+        if removed:
+            SharingItem.change_tracker.playlist_changed(self.share.id)
 
         message = messages.TabsChanged('connect', added, changed, removed)
         message.send_to_frontend()
@@ -961,8 +988,8 @@ class SharingItemTrackerImpl(object):
             return
         if not update:
             self.share.update_finished(success=False)
-        if not self.share.stale_callback:
-            app.sharing_tracker.eject(self.share.id)
+        if not self.share.info.stale_callback:
+            app.sharing_tracker.stop_tracking_share(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
 class SharingManagerBackend(object):

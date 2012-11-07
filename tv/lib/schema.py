@@ -559,7 +559,7 @@ class SharingItemSchema(ObjectSchema):
 
     fields = DDBObjectSchema.fields + [
         ('daap_id', SchemaInt()),
-        ('video_path', SchemaFilename()),
+        ('video_path', SchemaString()),
         ('title', SchemaString()),
         ('file_type', SchemaString()),
         ('file_format', SchemaString(noneOk=True)),

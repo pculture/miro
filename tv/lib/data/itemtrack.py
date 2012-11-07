@@ -587,6 +587,9 @@ class ItemFetcher(object):
     def table_name(self):
         return self.item_source.select_info.table_name
 
+    def path_column(self):
+        return self.item_source.select_info.path_column
+
     def release_connection(self):
         if self.connection is not None:
             self.item_source.release_connection(self.connection)
@@ -677,18 +680,19 @@ class ItemFetcherWAL(ItemFetcher):
 
     def select_playable_ids(self):
         sql = ("SELECT id FROM %s "
-               "WHERE filename IS NOT NULL AND "
+               "WHERE %s IS NOT NULL AND "
                "file_type != 'other' AND "
                "id in (%s)" % 
-               (self.table_name, ','.join(str(id_) for id_ in self.id_list)))
+               (self.table_name(), self.path_column(),
+                ','.join(str(id_) for id_ in self.id_list)))
         return [row[0] for row in self.connection.execute(sql)]
 
     def select_has_playables(self):
         sql = ("SELECT EXISTS (SELECT 1 FROM %s "
-               "WHERE filename IS NOT NULL AND "
+               "WHERE %s IS NOT NULL AND "
                "file_type != 'other' AND "
                "id in (%s))" %
-               (self.table_name(),
+               (self.table_name(), self.path_column(),
                 ','.join(str(id_) for id_ in self.id_list)))
         return self.connection.execute(sql).fetchone()[0] == 1
 
@@ -752,18 +756,18 @@ WHERE $table_name.id in ($id_list)""")
 
     def select_playable_ids(self):
         sql = ("SELECT id FROM %s "
-               "WHERE filename IS NOT NULL AND "
+               "WHERE %s IS NOT NULL AND "
                "file_type != 'other' AND "
                "id in (%s)" %
-               (self.table_name(),
+               (self.table_name(), self.path_column(),
                 ','.join(str(id_) for id_ in self.id_list)))
         return [row[0] for row in self.connection.execute(sql)]
 
     def select_has_playables(self):
         sql = ("SELECT EXISTS (SELECT 1 FROM %s "
-               "WHERE filename IS NOT NULL AND "
+               "WHERE %s IS NOT NULL AND "
                "file_type != 'other' AND "
                "id in (%s))" %
-               (self.table_name(),
+               (self.table_name(), self.path_column(),
                 ','.join(str(id_) for id_ in self.id_list)))
         return self.connection.execute(sql).fetchone()[0] == 1

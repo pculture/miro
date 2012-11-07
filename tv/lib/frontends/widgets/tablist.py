@@ -29,6 +29,7 @@
 
 """Displays the list of tabs on the left-hand side of the app."""
 
+import collections
 import itertools
 from hashlib import md5
 try:
@@ -765,7 +766,7 @@ class DeviceTabListHandler(object):
             except errors.WidgetActionError:
                 pass # if the Connect Tab isn't open, we can't expand the tab
 
-    def add(self, info):
+    def add(self, info, parent_id):
         HideableTabList.add(self.tablist, info)
         if info.mount and not info.info.has_multiple_devices:
             self._add_fake_tabs(info)
@@ -821,15 +822,119 @@ class DeviceTabListHandler(object):
             info = view.model[iter_][0]
             messages.DeviceEject(info).send_to_backend()
 
+class FakeSharingInfo(object):
+    """TabInfo that we use for the "fake" tabs under a share
+
+    This includes the audio, video, podcast, and playlist tabs.
+    """
+    def __init__(self, share_id, tab_name, label):
+        self.id = u"sharing-%s-%s" % (share_id, tab_name)
+        self.share_id = share_id
+        self.name = label
+        self.type = u'sharing-fake-playlist'
+        self.icon = widgetutil.make_surface("icon-%s" % tab_name)
+        self.active_icon = widgetutil.make_surface("icon-%s_active" % tab_name)
+
 class SharingTabListHandler(object):
+    """Handles all of the sharing tabs """
     def __init__(self, tablist):
         self.tablist = tablist
+        # map share ids to the fake tabs for them
+        self.fake_tabs_created = {}
+        # before the fake tabs are created, we can't add any playlist tabs.
+        # pending_playlist_tabs maps share ids to those playlist tabs.
+        self.pending_playlist_tabs = collections.defaultdict(list)
+
+    def _make_fake_tabs(self, info):
+        return [
+            FakeSharingInfo(info.share_id, u'video', _('Video')),
+            FakeSharingInfo(info.share_id, u'audio', _('Audio')),
+            FakeSharingInfo(info.share_id, u'playlist', _('Playlists')),
+            FakeSharingInfo(info.share_id, u'podcast', _('Podcasts')),
+        ]
+
+    def _add_fake_tabs(self, info):
+        """Add the psuedo-tabs below the share tabs.
+
+        This includes the audio, video, playlists, and podcasts tabs.
+        """
+        if info.share_id in self.fake_tabs_created:
+            # fake tabs already added
+            return
+        self.fake_tabs_created[info.share_id] = []
+        with self.tablist.adding():
+            for tab in self._make_fake_tabs(info):
+                self.tablist.add(tab, info.id)
+                self.fake_tabs_created[info.share_id].append(tab)
+        self._add_pending_playlist_tabs(info.share_id)
+        try:
+            self.tablist.expand(info.id)
+        except errors.WidgetActionError:
+            pass # if the Connect Tab isn't open, we can't expand the tab
+
+    def _remove_fake_tabs(self, info):
+        if info.share_id not in self.fake_tabs_created:
+            # fake tabs already removed
+            return
+        fake_tabs = self.fake_tabs_created[info.share_id]
+        self.tablist.remove([fake_tab.id for fake_tab in fake_tabs])
+        del self.fake_tabs_created[info.share_id]
+
+    def _add_pending_playlist_tabs(self, share_id):
+        if share_id not in self.pending_playlist_tabs:
+            return
+
+        pending_tabs = self.pending_playlist_tabs.pop(share_id)
+        with self.tablist.adding():
+            for tab in pending_tabs:
+                self.add_playlist_tab(tab)
+
+    def add(self, info, parent_id):
+        # Need to avoid calling ConnectList.add since that will result in an
+        # infinite loop.
+        if isinstance(info, messages.SharingInfo):
+            self.add_sharing_tab(info)
+        else:
+            self.add_playlist_tab(info)
+
+    def add_sharing_tab(self, info):
+        HideableTabList.add(self.tablist, info)
+        self._handle_sharing_info_change(info)
+
+    def add_playlist_tab(self, info):
+        if info.share_id in self.fake_tabs_created:
+            # fake tabs are created, we can add this info now
+            parent_id = info.share_id
+            if info.podcast:
+                parent_id = "sharing-%s-podcast" % (info.share_id,)
+            else:
+                parent_id = "sharing-%s-playlist" % (info.share_id,)
+            HideableTabList.add(self.tablist, info, parent_id)
+        else:
+            # fake tabs not created yet, wait to add the info
+            self.pending_playlist_tabs[info.share_id].append(info)
+
+    def update(self, info):
+        # Need to avoid calling ConnectList.update since that will result in an
+        # infinite loop.
+        HideableTabList.update(self.tablist, info)
+        if isinstance(info, messages.SharingInfo):
+            self._handle_sharing_info_change(info)
+
+    def _handle_sharing_info_change(self, info):
+        if info.is_updating:
+            self.tablist.start_updating(info.id)
+        else:
+            self.tablist.stop_updating(info.id)
+        if info.mount:
+            self._add_fake_tabs(info)
+        else:
+            self._remove_fake_tabs(info)
 
     def on_hotspot_clicked(self, view, hotspot, iter_):
         if hotspot == 'eject-device':
             # Don't track this tab anymore for music.
             info = view.model[iter_][0]
-            info.mount = False
             # We must stop the playback if we are playing from the same
             # share that we are ejecting from.
             host = info.host
@@ -845,49 +950,42 @@ class SharingTabListHandler(object):
             if typ == u'connect' and (info == selected_tabs[0] or
               getattr(selected_tabs[0], 'parent_id', None) == info.id):
                 app.tabs.select_guide()
-            messages.SharingEject(info).send_to_backend()
-
-    def update(self, info):
-        if info.is_updating:
-            self.tablist.start_updating(info.id)
-        else:
-            self.tablist.stop_updating(info.id)
-        HideableTabList.update(self.tablist, info)
+            messages.StopTrackingShare(info.share_id).send_to_backend()
 
     def init_info(self, info):
-        info.type = u'sharing'
         info.unwatched = info.available = 0
-        active = None
-        if info.is_folder and info.playlist_id is None:
-            thumb_path = resources.path('images/sharing.png')
-        # Checking the name instead of a supposedly unique id is ok for now
-        # because
-        elif info.playlist_id == u'video':
-            thumb_path = resources.path('images/icon-video.png')
-            active = resources.path('images/icon-video_active.png')
-            info.name = _('Video')
-        elif info.playlist_id == u'audio':
-            thumb_path = resources.path('images/icon-audio.png')
-            active = resources.path('images/icon-audio_active.png')
-            info.name = _('Music')
-        elif info.playlist_id == u'playlist':
-            thumb_path = resources.path('images/icon-playlist.png')
-            active = resources.path('images/icon-playlist_active.png')
-            info.name = _('Playlists')
-        elif info.playlist_id == u'podcast':
-            thumb_path = resources.path('images/icon-podcast.png')
-            active = resources.path('images/icon-podcast_active.png')
-            info.name = _('Podcasts')
+        if isinstance(info, messages.SharingInfo):
+            self.init_share_info(info)
         else:
-            if info.podcast:
-                thumb_path = resources.path('images/icon-podcast-small.png')
-                active = resources.path('images/icon-podcast-small_active.png')
-            else:
-                thumb_path = resources.path('images/icon-playlist-small.png')
-                active = resources.path('images/icon-playlist-small_active.png')
+            self.init_playlist_info(info)
+
+    def init_share_info(self, info):
+        info.type = u'sharing'
+        info.icon = imagepool.get_surface(
+            resources.path('images/sharing.png'))
+
+    def init_playlist_info(self, info):
+        info.type = u'sharing-playlist'
+        if info.podcast:
+            thumb_path = resources.path('images/icon-podcast-small.png')
+            active = resources.path('images/icon-podcast-small_active.png')
+        else:
+            thumb_path = resources.path('images/icon-playlist-small.png')
+            active = resources.path('images/icon-playlist-small_active.png')
         info.icon = imagepool.get_surface(thumb_path)
-        if active:
-            info.active_icon = imagepool.get_surface(active)
+        info.active_icon = imagepool.get_surface(active)
+
+class SharingPlaylistTabListHandler(object):
+    def __init__(self, tablist):
+        self.tablist = tablist
+
+    def add(self, info, parent_id):
+        parent_id = info.share_id
+        if info.podcast:
+            parent_id = "sharing-%s-podcast" % (info.share_id,)
+        else:
+            parent_id = "sharing-%s-playlist" % (info.share_id,)
+        HideableTabList.add(self.tablist, info, parent_id)
 
 class ConnectList(TabUpdaterMixin, HideableTabList):
     name = _('Connect')
@@ -902,9 +1000,12 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
         HideableTabList.__init__(self)
         TabUpdaterMixin.__init__(self)
         self._set_up = True # setup_list is never called?
+
+        sharing_tab_list_handler = SharingTabListHandler(self)
         self.info_class_map = {
             messages.DeviceInfo: DeviceTabListHandler(self),
-            messages.SharingInfo: SharingTabListHandler(self),
+            messages.SharingInfo: sharing_tab_list_handler,
+            messages.SharingPlaylistInfo: sharing_tab_list_handler,
             TabInfo: None,
             }
         self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
@@ -926,24 +1027,26 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
 
     def on_hotspot_clicked(self, view, hotspot, iter_):
         info = self.view.model[iter_][0]
-        handler = self.info_class_map[type(info)]
-        return handler.on_hotspot_clicked(view, hotspot, iter_)
+        handler = self.info_class_map.get(type(info))
+        if hasattr(handler, 'on_hotspot_clicked'):
+            return handler.on_hotspot_clicked(view, hotspot, iter_)
 
     def init_info(self, info):
         if info is self.info:
             return
-        handler = self.info_class_map[type(info)]
-        return handler.init_info(info)
+        handler = self.info_class_map.get(type(info))
+        if hasattr(handler, 'init_info'):
+            handler.init_info(info)
 
     def add(self, info, parent_id=None):
-        handler = self.info_class_map[type(info)]
+        handler = self.info_class_map.get(type(info))
         if hasattr(handler, 'add'):
-            handler.add(info) # device doesn't use the parent_id
+            handler.add(info, parent_id) # device doesn't use the parent_id
         else:
             HideableTabList.add(self, info, parent_id)
 
     def update(self, info):
-        handler = self.info_class_map[type(info)]
+        handler = self.info_class_map.get(type(info))
         if hasattr(handler, 'update'):
             handler.update(info)
         else:

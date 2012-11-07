@@ -639,7 +639,7 @@ class SharingItemTrackTestWalMode(ItemTrackTestCase):
         msg = messages.TabsChanged('connect', [self.share_info], [], [])
         app.connection_pools.on_tabs_changed(msg)
         self.connection_pool = app.connection_pools.get_sharing_pool(
-            self.share.id)
+            self.share.info.id)
         self.setup_tracker()
 
     def setup_client(self):
@@ -660,7 +660,7 @@ class SharingItemTrackTestWalMode(ItemTrackTestCase):
         query = itemtrack.SharingItemTrackerQuery()
         query.add_condition('file_type', '=', u'audio')
         query.set_order_by(['title'])
-        item_source = item.SharingItemSource(self.share)
+        item_source = item.SharingItemSource(self.share.info)
         self.tracker = itemtrack.ItemTracker(self.idle_scheduler, query,
                                              item_source)
 
