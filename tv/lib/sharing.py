@@ -575,10 +575,8 @@ class _ClientUpdateResult(object):
         playlist_deleted_items - dictionary tracking items deleted from
                                  playlists.  Maps playlist ids to a list of
                                  item ids.
-        base_playlist_id - DAAP id of the base playlist (the playlist that
-                           contains all items)
     """
-    def __init__(self, client, update=False, base_playlist_id=None):
+    def __init__(self, client, update=False):
         self.update = update
         self.items = {}
         self.deleted_items = []
@@ -586,7 +584,6 @@ class _ClientUpdateResult(object):
         self.deleted_playlists = []
         self.playlist_items = {}
         self.playlist_deleted_items = {}
-        self.base_playlist_id = base_playlist_id
 
         self.fetch_from_client(client)
 
@@ -623,18 +620,11 @@ class _ClientUpdateResult(object):
         # explicitly show base playlist.
         for daap_id, data in self.playlists.items():
             if data.get('daap.baseplaylist', False):
-                if self.base_playlist_id is not None:
-                    logging.debug('more than one base playlist found')
-                self.base_playlist_id = daap_id
                 del self.playlists[daap_id]
-        # Maybe we have looped through here without a base playlist.  Then
-        # the server is broken?
-        if not self.base_playlist_id:
-            raise ValueError('Cannot find base playlist')
 
     def fetch_items(self, client):
         self.items, self.deleted_items = client.items(
-            playlist_id=self.base_playlist_id, meta=DAAP_META,
+            meta=DAAP_META,
             update=self.update)
         if self.items is None:
             raise ValueError('Cannot find items in base playlist')
@@ -722,7 +712,6 @@ class SharingItemTrackerImpl(object):
         self.current_playlist_ids = set()
         self.playlist_tracker = _ClientPlaylistTracker()
         self.info_cache = dict()
-        self.base_playlist_id = None    # Temporary
         self.share.update_started()
         self.start_thread()
 
@@ -854,7 +843,6 @@ class SharingItemTrackerImpl(object):
     def client_connect(self):
         self.make_client()
         result = _ClientUpdateResult(self.client)
-        self.base_playlist_id = result.base_playlist_id
         return result
 
     def make_client(self):
@@ -877,11 +865,7 @@ class SharingItemTrackerImpl(object):
     def client_update(self):
         logging.debug('CLIENT UPDATE')
         self.client.update()
-        result = _ClientUpdateResult(self.client, update=True,
-                                     base_playlist_id=self.base_playlist_id)
-        if result.base_playlist_id != self.base_playlist_id:
-            logging.debug('base playlistid changed in update')
-            self.base_playlist_id = result.base_playlist_id
+        result = _ClientUpdateResult(self.client, update=True)
         return result
 
     def client_update_callback(self, result):
