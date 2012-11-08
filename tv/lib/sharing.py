@@ -682,10 +682,15 @@ class _ClientPlaylistTracker(object):
             self.playlist_items[playlist_id].difference_update(item_ids)
 
     def current_playlists(self):
-        """Get a the playlists that currently have items """
+        """Get a the playlists that should be visible.  """
         return dict((id_, data)
                     for id_, data in self.playlist_data.items()
-                    if self.playlist_items.get(id_))
+                    if self.playlist_items.get(id_) and
+                    self.playlist_data_valid(data))
+
+    def playlist_data_valid(self, playlist_data):
+        return (playlist_data.get('dmap.itemid') and
+                playlist_data.get('dmap.itemname'))
 
     def items_in_podcasts(self):
         """Get the set of item ids in any podcast playlist."""
