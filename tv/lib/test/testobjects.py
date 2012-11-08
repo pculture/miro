@@ -282,9 +282,21 @@ class MockDAAPClient(mock.Mock):
         contain entries for playlists that actually have items in them.
         """
         rv = {}
+        playlist_items = set()
+        podcast_items = set()
         for playlist_id, items in self.library.playlist_items.items():
+            playlist_data = self.library.playlists[playlist_id]
             if playlist_id != self.library.base_playlist_id and items:
-                rv[playlist_id] = [i['dmap.itemid'] for i in items.values()]
+                rv[playlist_id] = set(items.keys())
+                if playlist_data.get('com.apple.itunes.is-podcast-playlist'):
+                    podcast_items.update(items.keys())
+                else:
+                    playlist_items.update(items.keys())
+        if playlist_items:
+            rv[u'playlist'] = playlist_items
+        if podcast_items:
+            rv[u'podcast'] = podcast_items
+
         return rv
 
     def items(self, playlist_id=None, meta=None, update=False):

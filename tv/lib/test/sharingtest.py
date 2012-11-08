@@ -289,7 +289,8 @@ class SharingTest(EventLoopTest):
         )
         self.client.set_playlist_items(104, [1, 2])
         self.client.add_playlist(
-            testobjects.make_mock_daap_playlist(102, 'new-playlist-2')
+            testobjects.make_mock_daap_playlist(102, 'new-playlist-2',
+                                                is_podcast=True)
         )
         self.check_client_update()
         self.check_tabs_changed([104], [102], [])

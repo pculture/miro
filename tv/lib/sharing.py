@@ -691,6 +691,22 @@ class _ClientPlaylistTracker(object):
                     for id_, data in self.playlist_data.items()
                     if self.playlist_items.get(id_))
 
+    def items_in_podcasts(self):
+        """Get the set of item ids in any podcast playlist."""
+        rv = set()
+        for daap_id, playlist_data in self.playlist_data.items():
+            if playlist_data.get(DAAP_PODCAST_KEY):
+                rv.update(self.playlist_items[daap_id])
+        return rv
+
+    def items_in_playlists(self):
+        """Get the set of item ids in any non-podcast playlist."""
+        rv = set()
+        for daap_id, playlist_data in self.playlist_data.items():
+            if not playlist_data.get(DAAP_PODCAST_KEY):
+                rv.update(self.playlist_items[daap_id])
+        return rv
+
 # Synchronization issues: this code is a bit sneaky, so here is an explanation
 # of how it works.  When you click on a share tab in the frontend, the 
 # display (the item list controller) starts tracking the items.  It does
@@ -944,15 +960,17 @@ class SharingItemTrackerImpl(object):
 
         self.playlist_tracker.update(result)
         # update the playlist item map
+        playlist_items_changed = False
         new_playlist_items = self.playlist_tracker.playlist_items
         for playlist_id in old_playlist_items:
             if playlist_id not in new_playlist_items:
                 self.playlist_item_map.remove_playlist(playlist_id)
+                playlist_items_changed = True
         for playlist_id, item_ids in new_playlist_items.items():
             if item_ids != old_playlist_items.get(playlist_id):
                 self.playlist_item_map.set_playlist_items(playlist_id,
                                                           item_ids)
-                SharingItem.change_tracker.playlist_changed(self.share.id)
+                playlist_items_changed = True
 
         current_playlists = self.playlist_tracker.current_playlists()
         # check for added/changed playlists
@@ -961,20 +979,25 @@ class SharingItemTrackerImpl(object):
                 added.append(
                     self.make_playlist_sharing_info(daap_id, playlist_data))
                 self.current_playlist_ids.add(daap_id)
-                SharingItem.change_tracker.playlist_changed(self.share.id)
             elif daap_id in result.playlists:
                 changed.append(
                     self.make_playlist_sharing_info(daap_id, playlist_data))
-                SharingItem.change_tracker.playlist_changed(self.share.id)
         # check for removed playlists
         removed.extend(self.current_playlist_ids -
                        set(current_playlists.keys()))
         self.current_playlist_ids = set(current_playlists.keys())
-        if removed:
+        if playlist_items_changed or added or changed or removed:
             SharingItem.change_tracker.playlist_changed(self.share.id)
+            self.update_fake_playlists()
 
         message = messages.TabsChanged('connect', added, changed, removed)
         message.send_to_frontend()
+
+    def update_fake_playlists(self):
+        self.playlist_item_map.set_playlist_items(
+            u'podcast', self.playlist_tracker.items_in_podcasts())
+        self.playlist_item_map.set_playlist_items(
+            u'playlist', self.playlist_tracker.items_in_playlists())
 
     def client_connect_error_callback(self, unused):
         self.client_connect_update_error_callback(unused)

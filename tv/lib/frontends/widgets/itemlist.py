@@ -166,9 +166,13 @@ class ItemList(itemtrack.ItemTracker):
                 elif playlist_id == 'video':
                     query.add_condition('file_type', '=', u'video')
                 elif playlist_id == 'podcast':
-                    raise NotImplementedError()
+                    query.add_condition(
+                        'sharing_item_playlist_map.playlist_id', '=',
+                        u'podcast')
                 elif playlist_id == 'playlist':
-                    raise NotImplementedError()
+                    query.add_condition(
+                        'sharing_item_playlist_map.playlist_id', '=',
+                        u'playlist')
                 else:
                     query.add_condition(
                         'sharing_item_playlist_map.playlist_id', '=',
