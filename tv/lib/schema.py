@@ -561,6 +561,8 @@ class SharingItemSchema(ObjectSchema):
         ('daap_id', SchemaInt()),
         ('video_path', SchemaString()),
         ('title', SchemaString()),
+        ('description', SchemaString(noneOk=True)),
+        ('parent_title', SchemaString(noneOk=True)),
         ('file_type', SchemaString()),
         ('file_format', SchemaString(noneOk=True)),
         ('duration', SchemaInt(noneOk=True)),

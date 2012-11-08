@@ -239,7 +239,7 @@ class ItemTrackerQuery(object):
             sql_parts.append(self.join_sql('item_fts'))
 
     def _add_conditions(self, sql_parts, arg_list):
-        if not self.conditions:
+        if not (self.conditions or self.match_string):
             return
         where_parts = []
         for c in self.conditions:

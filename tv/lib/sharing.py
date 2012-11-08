@@ -207,11 +207,7 @@ class Share(object):
                     logging.warn("Share.find_unused_db "
                                  "error removing %s (%s)" % (candidate, e))
                     continue
-            try:
-                return candidate, self.make_new_database(candidate)
-            except StandardError, e:
-                logging.warn("Share.find_unused_db "
-                             "error opening %s (%s)" % (candidate, e))
+            return candidate, self.make_new_database(candidate)
         raise AssertionError("Couldn't find an unused path "
                              "for Share")
 

@@ -1431,7 +1431,6 @@ class LiveStorage(signals.SignalEmitter):
 class DeviceLiveStorage(LiveStorage):
     """Version of LiveStorage used for a device."""
     def setup_fulltext_search(self):
-        # FIXME: need to implement this for devices
         fulltextsearch.setup_fulltext_search(self.connection, 'device_item')
 
     def show_upgrade_progress(self):
@@ -1458,8 +1457,8 @@ class SharingLiveStorage(LiveStorage):
         self.cursor.execute("PRAGMA journal_mode=MEMORY")
 
     def setup_fulltext_search(self):
-        # FIXME: need to implement this for devices
-        pass
+        fulltextsearch.setup_fulltext_search(self.connection, 'sharing_item',
+                                             path_column='video_path')
 
 class SQLiteConverter(object):
     def __init__(self):

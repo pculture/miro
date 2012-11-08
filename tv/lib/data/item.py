@@ -737,6 +737,7 @@ class SharingItemSelectInfo(ItemSelectInfo):
         SelectColumn('sharing_item', 'daap_id'),
         SelectColumn('sharing_item', 'video_path'),
         SelectColumn('sharing_item', 'title'),
+        SelectColumn('sharing_item', 'description'),
         SelectColumn('sharing_item', 'file_type'),
         SelectColumn('sharing_item', 'file_format'),
         SelectColumn('sharing_item', 'duration', 'duration_ms'),
@@ -799,7 +800,6 @@ class SharingItemSelectInfo(ItemSelectInfo):
         'skip_count': 0,
         'net_lookup_enabled': False,
         'has_drm': False,
-        'description': u'',
         # downloader stuff, set all to None
         'downloader_size': None,
         'downloader_type': None,
@@ -830,7 +830,7 @@ class SharingItemSelectInfo(ItemSelectInfo):
     }
 
     join_info = {
-        'item_fts': 'item_fts.docid=device_item.id',
+        'item_fts': 'item_fts.docid=sharing_item.id',
         'sharing_item_playlist_map':
             'sharing_item_playlist_map.item_id=sharing_item.daap_id',
     }

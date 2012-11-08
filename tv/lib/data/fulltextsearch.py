@@ -31,7 +31,7 @@
 """
 from miro import app
 
-def setup_fulltext_search(connection, table='item'):
+def setup_fulltext_search(connection, table='item', path_column='filename'):
     """Set up fulltext search on a newly created database."""
     if hasattr(app, 'in_unit_tests') and _no_item_table(connection, table):
         # handle unittests not defining the item table in their schemas
@@ -39,7 +39,7 @@ def setup_fulltext_search(connection, table='item'):
 
     # FIXME: Description should also match entry_description
     columns = ['title', 'description', 'artist', 'album', 'genre',
-               'filename', 'parent_title', ]
+               path_column, 'parent_title', ]
     column_list = ', '.join(c for c in columns)
     column_list_for_new = ', '.join("new.%s" % c for c in columns)
     column_list_with_types = ', '.join('%s text' % c for c in columns)

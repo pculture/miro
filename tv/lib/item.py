@@ -2759,6 +2759,8 @@ class SharingItem(ItemBase):
         self.album_artist = self.album = self.year = self.genre = None
         self.track = self.kind = self.show = self.season_number = None
         self.episode_id = self.episode_number = None
+        self.description = None
+        self.parent_title = None
         self.__dict__.update(kwargs)
 
     def setup_restored(self):
