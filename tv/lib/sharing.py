@@ -610,7 +610,8 @@ class _ClientUpdateResult(object):
                     data[key] = value.replace('\x00', '')
 
     def fetch_from_client(self, client):
-        self.check_database_exists(client)
+        if not self.update:
+            self.check_database_exists(client)
         self.fetch_playlists(client)
         self.fetch_items(client)
         for daap_id in self.playlists.keys():
