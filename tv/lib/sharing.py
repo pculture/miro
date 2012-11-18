@@ -134,7 +134,7 @@ daap_mapping = {
 daap_rmapping = {
     'file_format': 'daap.songformat',
     'file_type': 'com.apple.itunes.mediakind',
-    'daap_id': 'dmap.itemid',
+    'id': 'dmap.itemid',
     'name': 'dmap.itemname',
     'duration': 'daap.songtime',
     'size': 'daap.songsize',
@@ -1018,9 +1018,11 @@ class SharingItemTrackerImpl(object):
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
 class SharingManagerBackend(object):
-    """SharingManagerBackend is the bridge between pydaap and Miro.  It
-    pushes Miro media items to pydaap so pydaap can serve them to the outside
-    world."""
+    """Implement a DAAP server using pydaap
+
+    SharingManagerBackend pushes Miro media items to pydaap so pydaap can
+    serve them to the outside world.
+    """
 
     type = u'sharing-backend'
     id = u'sharing-backend'
@@ -1169,8 +1171,9 @@ class SharingManagerBackend(object):
                # 
                # Blargh!
                if daap_string == 'dmap.itemname':
-                   itemprop[daap_string] = getattr(item, 'title', None)
-                   if itemprop[daap_string] is None:
+                   try:
+                       itemprop[daap_string] = item.get_title()
+                   except AttributeError:
                        itemprop[daap_string] = getattr(item, 'name', None)
                if isinstance(itemprop[daap_string], unicode):
                    itemprop[daap_string] = (
@@ -1407,6 +1410,18 @@ class SharingManagerBackend(object):
                 raise ValueError('watcher: unknown error during select')
 
     def get_revision(self, session, old_revision, request):
+        """Block until the there is a new revision.
+
+        If the request socket is closed while we are waiting for a new
+        revision, then this method should return the old revision.
+
+        :param session_id: session id
+        :param old_revision: old revision id.  Return when we get an
+        item/playlist update with a newer revision than this.
+        :param request: socket handle to the client
+
+        :returns: newest revision number
+        """
         self.revision_cv.acquire()
         while self.revision == old_revision:
             t = threading.Thread(target=self.watcher, args=(session, request))
@@ -1425,6 +1440,12 @@ class SharingManagerBackend(object):
 
     def get_file(self, itemid, generation, ext, session, request_path_func,
                  offset=0, chunk=None):
+        """Get a file to serve
+
+        :returns (fileobj, filename_hint) tuple:
+        """
+        # FIXME: the above docstring could realy use some more details.
+
         file_obj = None
         no_file = (None, None)
         # Get a copy of the item under the lock ... if the underlying item
@@ -1513,6 +1534,20 @@ class SharingManagerBackend(object):
         return file_obj, os.path.basename(path)
 
     def get_playlists(self):
+        """Get the current list of playlists
+
+        This should return a dict mapping DAAP playlist ids to dicts of
+        playlist data.  Each dict should contain:
+            - dmap.itemid -> DAAP id
+            - dmap.persistentid -> DAAP id
+            - dmap.itemname -> title
+            - dmap.itemcount -> number of items in the playlist
+            - dmap.parentcontainerid -> DAAP id of the parent playlist
+            (currently always 0)
+            - podcast -> Is the playlist a podcast?
+            - revision -> revision this item was last updated
+            - valid -> False if the item has been deleted
+        """
         returned = dict()
         with self.item_lock:
             for p in self.daap_playlists:
@@ -1559,6 +1594,19 @@ class SharingManagerBackend(object):
         return item.feed_id and is_feed and not item.is_file_item
 
     def get_items(self, playlist_id=None):
+        """Get the current list of items
+
+        This should return a dict mapping DAAP item ids to dicts of item data.
+        Each dict should contain:
+            - A value for each key in daap_mapping
+            - path -> file path of the item
+            - cover_path -> thumbnail path for the item
+            - revision -> revision this item was last updated
+            - valid -> False if the item has been deleted
+
+        :param playlist_id: playlist to fetch items from, or None to fetch all
+        items.
+        """
         # Easy: just return
         with self.item_lock:
             items = dict()

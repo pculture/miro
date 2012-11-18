@@ -32,7 +32,12 @@ import os
 
 import sqlite3
 
+from miro import app
+from miro import messages
+from miro import messagehandler
 from miro import models
+from miro import prefs
+from miro import startup
 from miro.data import mappings
 from miro.test import mock
 from miro.test import testobjects
@@ -355,3 +360,192 @@ class SharingTest(EventLoopTest):
         db_item = models.SharingItem.get_by_daap_id(
             1, db_info=self.share.db_info)
         self.assertEquals(db_item.title, "title-one")
+
+class SharingServerTest(EventLoopTest):
+    """Test the sharing server."""
+    def setUp(self):
+        EventLoopTest.setUp(self)
+        # need to call setup_tabs for PlaylistTracker() and
+        # ChannelTracker()
+        startup.setup_tabs()
+        self.setup_mock_objects()
+        self.setup_config()
+        self.setup_data()
+        self.setup_sharing_manager_backend()
+
+    def tearDown(self):
+        del app.info_updater
+
+    def setup_mock_objects(self):
+        app.info_updater = mock.Mock()
+
+    def setup_config(self):
+        app.config.set(prefs.SHARE_AUDIO, True)
+        app.config.set(prefs.SHARE_VIDEO, False)
+        app.config.set(prefs.SHARE_FEED, True)
+
+    def setup_data(self):
+        self.feed_with_downloads = testobjects.make_feed()
+        self.feed_without_downloads = testobjects.make_feed()
+        self.audio_items = []
+        self.video_items = []
+        self.undownloaded_items = []
+        for i in xrange(10):
+            self.audio_items.append(testobjects.make_file_item(
+                self.feed_with_downloads, u'audio-item-%s' % i, ext='.mp3'))
+            self.video_items.append(testobjects.make_file_item(
+                self.feed_with_downloads, u'video-item-%s' % i, ext='.avi'))
+            self.undownloaded_items.append(testobjects.make_item(
+                self.feed_without_downloads, u'feed-item-%s' % i))
+
+        self.audio_playlist = models.SavedPlaylist(u'My music',
+                [i.id for i in self.audio_items])
+        self.video_playlist = models.SavedPlaylist(u'My videos',
+                [i.id for i in self.video_items])
+
+    def setup_sharing_manager_backend(self):
+        self.backend = sharing.SharingManagerBackend()
+        self.backend.start_tracking()
+        self.trackers = [messagehandler.make_item_tracker(msg)
+                for msg in self.get_backend_messages()]
+        self.trackers.append(messagehandler.PlaylistTracker())
+        self.trackers.append(messagehandler.ChannelTracker())
+
+    def check_daap_list(self, daap_list, ddb_objects):
+        """Check data in our SharingManagerBackend
+
+        :param daap_list: The return value of get_items() or get_playlists()
+        :param ddb_objects: list of Item or Playlist objects to check against
+        """
+        daap_ids_and_names = []
+        for daap_id, daap_data in daap_list.items():
+            if daap_data['valid']:
+                # do a quick check that the key for the dictionary is the same
+                # as dmap.itemid
+                self.assertEquals(daap_id, daap_data['dmap.itemid'])
+                daap_ids_and_names.append(
+                        (daap_id, daap_data['dmap.itemname']))
+        correct_ids_and_names = [(obj.id, obj.get_title())
+                                 for obj in ddb_objects]
+        self.assertSameSet(daap_ids_and_names, correct_ids_and_names)
+
+    def check_daap_item_deleted(self, item_list, ddb_object):
+        self.assertEquals(item_list[ddb_object.id]['valid'], False)
+
+    def check_get_revision_will_block(self, old_revision):
+        self.assertEquals(self.backend.revision, old_revision)
+
+    def check_get_revision_doesnt_block(self, old_revision):
+        self.backend.get_revision(mock.Mock(), old_revision, mock.Mock())
+
+    def send_initial_list_from_trackers(self):
+        for tracker in self.trackers:
+            tracker.send_initial_list()
+        for msg in self.get_frontend_messages():
+            if isinstance(msg, messages.ItemList):
+                self.backend.handle_item_list(msg)
+
+    def send_changes_from_trackers(self):
+        for tracker in self.trackers:
+            tracker.send_messages()
+        for msg in self.get_frontend_messages():
+            if isinstance(msg, messages.ItemsChanged):
+                self.backend.handle_items_changed(msg)
+            elif isinstance(msg, messages.TabsChanged):
+                if msg.type == 'feed':
+                    self.backend.handle_feed_added(mock.Mock(), msg.added)
+                    self.backend.handle_feed_changed(mock.Mock(), msg.changed)
+                    self.backend.handle_feed_removed(mock.Mock(), msg.removed)
+                    self.runPendingIdles()
+                elif msg.type == 'playlist':
+                    self.backend.handle_playlist_added(mock.Mock(), msg.added)
+                    self.backend.handle_playlist_changed(mock.Mock(),
+                            msg.changed)
+                    self.backend.handle_playlist_removed(mock.Mock(),
+                            msg.removed)
+                    self.runPendingIdles()
+
+    def test_initial_list(self):
+        self.send_initial_list_from_trackers()
+        # test getting all items
+        self.check_daap_list(self.backend.get_items(), self.audio_items)
+        # test getting playlists
+        self.check_daap_list(self.backend.get_playlists(),
+                [self.audio_playlist, self.video_playlist,
+                    self.feed_with_downloads, self.feed_without_downloads])
+        # test getting items for a playlist
+        self.check_daap_list(self.backend.get_items(self.audio_playlist.id),
+                self.audio_items)
+        self.check_daap_list(
+                self.backend.get_items(self.video_playlist.id), [])
+        self.check_daap_list(
+                self.backend.get_items(self.feed_with_downloads.id),
+                self.audio_items)
+        self.check_daap_list(
+                self.backend.get_items(self.feed_without_downloads.id), [])
+
+    def test_item_changes(self):
+        self.send_initial_list_from_trackers()
+        initial_revision = self.backend.revision
+        added = self.video_items[0]
+        added.set_user_metadata({'file_type': u'audio'})
+        added.signal_change()
+        changed = self.audio_items[0]
+        changed.set_user_metadata({'title': u'New title'})
+        changed.signal_change()
+        removed = self.audio_items[-1]
+        removed.remove()
+        self.check_get_revision_will_block(initial_revision)
+        self.send_changes_from_trackers()
+        self.check_get_revision_doesnt_block(initial_revision)
+        # get_items() should reflect the changes
+        new_item_list = [added] + self.audio_items[:-1]
+        self.check_daap_list(self.backend.get_items(), new_item_list)
+        self.check_daap_item_deleted(self.backend.get_items(), removed)
+
+    def test_feed_changes(self):
+        self.send_initial_list_from_trackers()
+        initial_revision = self.backend.revision
+        new_feed = testobjects.make_feed()
+        self.feed_with_downloads.set_title(u'New Title')
+        self.feed_without_downloads.remove()
+        self.send_changes_from_trackers()
+        self.check_get_revision_doesnt_block(initial_revision)
+        self.check_daap_list(self.backend.get_playlists(),
+                [new_feed, self.feed_with_downloads, self.audio_playlist,
+                    self.video_playlist])
+        self.check_daap_item_deleted(self.backend.get_playlists(),
+                self.feed_without_downloads)
+
+    def test_playlist_changes(self):
+        self.send_initial_list_from_trackers()
+        initial_revision = self.backend.revision
+        new_playlist = models.SavedPlaylist(u'My Playlist')
+        self.audio_playlist.set_title(u'My Audio Files')
+        self.video_playlist.remove()
+        self.send_changes_from_trackers()
+        self.check_get_revision_doesnt_block(initial_revision)
+        self.check_daap_list(self.backend.get_playlists(),
+                [self.feed_with_downloads, self.feed_without_downloads,
+                    self.audio_playlist, new_playlist])
+        self.check_daap_item_deleted(self.backend.get_playlists(),
+                self.video_playlist)
+
+    def test_config_change(self):
+        self.send_initial_list_from_trackers()
+        initial_revision = self.backend.revision
+        app.config.set(prefs.SHARE_VIDEO, True)
+        app.config.set(prefs.SHARE_FEED, False)
+        self.check_get_revision_doesnt_block(initial_revision)
+        self.check_daap_list(self.backend.get_items(),
+                self.audio_items + self.video_items)
+        self.check_daap_list(self.backend.get_playlists(),
+                [self.audio_playlist, self.video_playlist])
+
+    # FIXME: implement this
+    # def test_client_disconnects_in_get_revision(self):
+        # pass
+
+    # FIXME: implement this
+    # def test_get_file(self):
+        # pass

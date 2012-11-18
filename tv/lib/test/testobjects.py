@@ -45,7 +45,7 @@ def make_item_info(itemobj):
 
 def make_feed():
     url = u'http://feed%d.com/feed.rss' % feed_counter.next()
-    return models.Feed(url)
+    return models.Feed(url, initiallyAutoDownloadable=False)
 
 def make_manual_feed():
     return models.Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
@@ -67,9 +67,9 @@ def make_item(feed, title):
     fp_values.data['release_date'] = release_date
     return models.Item(fp_values, feed_id=feed.id)
 
-def make_file_item(feed, title=None, path=None):
+def make_file_item(feed, title=None, path=None, ext='.avi'):
     if path is None:
-        path = current_test.make_temp_path('.avi')
+        path = current_test.make_temp_path(ext)
     ensure_file_exists(path)
     return models.FileItem(path, feed.id,
                            fp_values=item.fp_values_for_file(path, title))

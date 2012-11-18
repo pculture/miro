@@ -219,7 +219,7 @@ def uses_httpclient(fun):
         # if there's already a curl_manager, then this is probably
         # being called in a nested context, so this iteration is not
         # in charge of starting and stopping the httpclient
-        if httpclient.curl_manager:
+        if not isinstance(httpclient.curl_manager, mock.Mock):
             return fun(*args, **kwargs)
 
         httpclient.start_thread()
@@ -309,6 +309,7 @@ class MiroTestCase(unittest.TestCase):
         self.reload_database()
         self.setup_new_item_info_cache()
         self.setup_dummy_message_handlers()
+        self.setup_dummy_curl_manager()
         item.setup_metadata_manager(self.tempdir)
         searchengines._engines = [
             searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
@@ -514,6 +515,23 @@ class MiroTestCase(unittest.TestCase):
     def setup_dummy_message_handlers(self):
         messages.FrontendMessage.handler = mock.Mock()
         messages.BackendMessage.handler = mock.Mock()
+
+    def setup_dummy_curl_manager(self):
+        httpclient.curl_manager = mock.Mock()
+
+    def get_backend_messages(self, reset_mock=True):
+        msg_list = [args[0] for args, kwargs in
+                messages.BackendMessage.handler.handle.call_args_list]
+        if reset_mock:
+            messages.BackendMessage.handler.handle.reset_mock()
+        return msg_list
+
+    def get_frontend_messages(self, reset_mock=True):
+        msg_list = [args[0] for args, kwargs in
+                messages.FrontendMessage.handler.handle.call_args_list]
+        if reset_mock:
+            messages.FrontendMessage.handler.handle.reset_mock()
+        return msg_list
 
     def reset_failed_soft_count(self):
         app.controller.failed_soft_count = 0
