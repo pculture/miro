@@ -797,14 +797,14 @@ class LiveStorage(signals.SignalEmitter):
         # we only store one variable and it's easier to deal with if we store
         # it using ASCII-base protocol.
         db_value = buffer(cPickle.dumps(value, 0))
-        self._execute("REPLACE INTO %s.dtv_variables "
+        self.execute("REPLACE INTO %s.dtv_variables "
                       "(name, serialized_value) VALUES (?,?)" % db_name,
                       (name, db_value),
                       is_update=True)
         self.finish_transaction()
 
     def unset_variable(self, name, db_name='main'):
-        self._execute("DELETE FROM %s.dtv_variables "
+        self.execute("DELETE FROM %s.dtv_variables "
                       "WHERE name=?" % db_name,
                       (name,), is_update=True)
         self.finish_transaction()
@@ -828,7 +828,7 @@ class LiveStorage(signals.SignalEmitter):
             raise sqlite3.OperationalError()
         self._time_execute = time_execute_intercept
         # force the db to execute sql
-        self._execute("REPLACE INTO dtv_variables "
+        self.execute("REPLACE INTO dtv_variables "
                       "(name, serialized_value) VALUES (?,?)",
                       ('simulate_db_save_error', 1), is_update=True)
 
@@ -876,7 +876,7 @@ class LiveStorage(signals.SignalEmitter):
         obj_schema = self._schema_map[obj.__class__]
         values = self._values_for_obj(obj_schema, obj)
         sql = self._insert_sql_for_schema(obj_schema)
-        self._execute(sql, values, is_update=True)
+        self.execute(sql, values, is_update=True)
         obj.reset_changed_attributes()
 
     def bulk_insert(self, objects):
@@ -894,7 +894,7 @@ class LiveStorage(signals.SignalEmitter):
                 raise ValueError("Incompatible types for bulk insert")
             value_list.append(self._values_for_obj(obj_schema, obj))
         sql = self._insert_sql_for_schema(obj_schema)
-        self._execute(sql, value_list, is_update=True, many=True)
+        self.execute(sql, value_list, is_update=True, many=True)
         for obj in objects:
             obj.reset_changed_attributes()
 
@@ -921,7 +921,7 @@ class LiveStorage(signals.SignalEmitter):
         if values:
             sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
                     ', '.join(setters), obj.id)
-            self._execute(sql, values, is_update=True)
+            self.execute(sql, values, is_update=True)
             if (self.cursor.rowcount != 1 and not
                     self._quitting_from_operational_error):
                 if self.cursor.rowcount == 0:
@@ -937,7 +937,7 @@ class LiveStorage(signals.SignalEmitter):
 
         schema = self._schema_map[obj.__class__]
         sql = "DELETE FROM %s WHERE id=?" % (schema.table_name)
-        self._execute(sql, (obj.id,), is_update=True)
+        self.execute(sql, (obj.id,), is_update=True)
         self.forget_object(obj)
 
     def bulk_remove(self, objects):
@@ -959,7 +959,7 @@ class LiveStorage(signals.SignalEmitter):
             commas = ','.join('?' for x in xrange(len(objects_chunk)))
             sql = "DELETE FROM %s WHERE id IN (%s)" % (obj_schema.table_name,
                     commas)
-            self._execute(sql, [o.id for o in objects_chunk], is_update=True)
+            self.execute(sql, [o.id for o in objects_chunk], is_update=True)
         for obj in objects:
             self.forget_object(obj)
 
@@ -1092,7 +1092,7 @@ class LiveStorage(signals.SignalEmitter):
             setters = ['%s=?' % c for c in columns_to_update]
             sql = "UPDATE %s SET %s WHERE id=%s" % (schema.table_name,
                     ', '.join(setters), restored_data['id'])
-            self._execute(sql, values_to_update)
+            self.execute(sql, values_to_update)
         klass = schema.get_ddb_class(restored_data)
         return klass(restored_data=restored_data, db_info=db_info)
 
@@ -1105,7 +1105,7 @@ class LiveStorage(signals.SignalEmitter):
         sql.write('SELECT COUNT(*) ')
         sql.write(self._get_query_bottom(table_name, where, joins,
             None, limit))
-        return self._execute(sql.getvalue(), values)[0][0]
+        return self.execute(sql.getvalue(), values)[0][0]
 
     def delete(self, klass, where, values):
         schema = self._schema_map[klass]
@@ -1113,7 +1113,7 @@ class LiveStorage(signals.SignalEmitter):
         sql.write('DELETE FROM %s' % schema.table_name)
         if where is not None:
             sql.write('\nWHERE %s' % where)
-        self._execute(sql.getvalue(), values, is_update=True)
+        self.execute(sql.getvalue(), values, is_update=True)
 
     def select(self, klass, columns, where, values, joins=None, limit=None,
             convert=True):
@@ -1122,7 +1122,7 @@ class LiveStorage(signals.SignalEmitter):
         sql.write('SELECT %s ' % ', '.join(columns))
         sql.write(self._get_query_bottom(schema.table_name, where, joins, None,
             limit))
-        results = self._execute(sql.getvalue(), values)
+        results = self.execute(sql.getvalue(), values)
         if not convert:
             return results
         schema_items = [self._schema_column_map[schema, c] for c in columns]
@@ -1150,7 +1150,17 @@ class LiveStorage(signals.SignalEmitter):
         self._statements_in_transaction = []
         self.emit("transaction-finished", commit)
 
-    def _execute(self, sql, values, is_update=False, many=False):
+    def execute(self, sql, values=None, is_update=False, many=False):
+        """Execute an sql statement and return the results.
+
+        :param sql: sql to execute
+        :param values: positional arguments for the sql statement
+        :param is_update: is this an update rather than a select?
+        :param many: use the execute_many() method instead of execute().
+        values should be a list of argument tuples if this is true.
+        :returns: list of result rows, or None if the statement is an update.
+        """
+
         if is_update and self._quitting_from_operational_error:
             # We want to avoid updating the database at this point.
             return

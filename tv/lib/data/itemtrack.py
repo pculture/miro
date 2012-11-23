@@ -36,6 +36,7 @@ import random
 import weakref
 
 from miro import app
+from miro import models
 from miro import schema
 from miro import signals
 from miro import util
@@ -74,12 +75,10 @@ class ItemTrackerQuery(object):
     def __init__(self):
         self.conditions = []
         self.match_string = None
-        self.order_by = [
-            ItemTrackerOrderBy(self.table_name(), 'id', None, False),
-        ]
+        self.order_by = []
 
-    def join_sql(self, table):
-        return self.select_info.join_sql(table, join_type='JOIN')
+    def join_sql(self, table, join_type='LEFT JOIN'):
+        return self.select_info.join_sql(table, join_type=join_type)
 
     def table_name(self):
         return self.select_info.table_name
@@ -225,18 +224,40 @@ class ItemTrackerQuery(object):
         logging.debug("ItemTracker: done running query")
         return item_ids
 
-    def _calc_tables(self):
-        """Calculate which tables we need to execute the query."""
-        all_tables = ([c.table for c in self.conditions] +
-                      [ob.table for ob in self.order_by])
-        return set(all_tables)
+    def select_item_data(self, connection):
+        """Run the select statement for this query
 
-    def _add_joins(self, sql_parts, arg_list):
-        for table in self._calc_tables():
-            if table != self.select_info.table_name:
-                sql_parts.append(self.join_sql(table))
+        :returns: list of column data for all items in this query.  The
+        columns will match the columns specified in our select_info.
+        """
+        sql_parts = []
+        arg_list = []
+
+        select_columns = ', '.join("%s.%s " % (col.table, col.column)
+                                   for col in
+                                   self.select_info.select_columns)
+        sql_parts.append("SELECT %s" % select_columns)
+        sql_parts.append("FROM %s " % self.table_name())
+        self._add_joins(sql_parts, arg_list, include_select_columns=True)
+        self._add_conditions(sql_parts, arg_list)
+        self._add_order_by(sql_parts, arg_list)
+        sql = ' '.join(sql_parts)
+        logging.debug("ItemTracker: running query %s (%s)", sql, arg_list)
+        item_data = list(connection.execute(sql, arg_list))
+        logging.debug("ItemTracker: done running query")
+        return item_data
+
+    def _add_joins(self, sql_parts, arg_list, include_select_columns=False):
+        join_tables = set(c.table for c in self.conditions)
+        join_tables.update(ob.table for ob in self.order_by)
+        if include_select_columns:
+            join_tables.update(col.table
+                               for col in self.select_info.select_columns)
+        join_tables.discard(self.table_name())
+        for table in join_tables:
+            sql_parts.append(self.join_sql(table))
         if self.match_string:
-            sql_parts.append(self.join_sql('item_fts'))
+            sql_parts.append(self.join_sql('item_fts', join_type='JOIN'))
 
     def _add_conditions(self, sql_parts, arg_list):
         if not (self.conditions or self.match_string):
@@ -251,9 +272,10 @@ class ItemTrackerQuery(object):
         sql_parts.append("WHERE %s" % ' AND '.join(where_parts))
 
     def _add_order_by(self, sql_parts, arg_list):
-        order_by_parts = [self._make_order_by_expression(ob)
-                          for ob in self.order_by]
-        sql_parts.append("ORDER BY %s" % ', '.join(order_by_parts))
+        if self.order_by:
+            order_by_parts = [self._make_order_by_expression(ob)
+                              for ob in self.order_by]
+            sql_parts.append("ORDER BY %s" % ', '.join(order_by_parts))
 
     def _make_order_by_expression(self, ob):
         parts = []
@@ -771,3 +793,89 @@ WHERE $table_name.id in ($id_list)""")
                (self.table_name(), self.path_column(),
                 ','.join(str(id_) for id_ in self.id_list)))
         return self.connection.execute(sql).fetchone()[0] == 1
+
+class BackendItemTracker(signals.SignalEmitter):
+    """Item tracker used by the backend
+
+    BackendItemTracker works similarly to ItemTracker but with a couple
+    changes that make it work better with the rest of the backend components.
+    Specifically it:
+        - Uses the connection in app.db rather than any connection pools
+        - Fetches all ItemInfo objects up-front rather than using idle
+        callbacks
+        - Emits slightly different signals.  The main difference is that
+        BackendItemTracker calculates exactly which items have been
+        added/changed/removed rather than just emitted "list-changed" with on
+        extra info.
+
+    Signals:
+
+    - "items-changed" (added, changed, removed): some items have been
+    added/changed/removed from the list.  added/changed is a list of
+    ItemInfos.  Removed is a list of item ids.
+    """
+    def __init__(self, query):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('items-changed')
+        self.item_changes_callback = None
+        self.query = query
+        self.fetch_items()
+        self.connect_to_item_changes()
+
+    def change_query(self, query):
+        self.query = query
+        self.refetch_items()
+
+    def fetch_items(self):
+        self.item_map = {}
+        for item_data in self.query.select_item_data(app.db.connection):
+            item_info = item.ItemInfo(item_data)
+            self.item_map[item_info.id] = item_info
+        self.item_ids = set(self.item_map.keys())
+
+    def get_items(self):
+        return self.item_map.values()
+
+    def connect_to_item_changes(self):
+        self.item_changes_callback = models.Item.change_tracker.connect(
+            'item-changes', self.on_item_changes)
+
+    def destroy(self):
+        if self.item_changes_callback is not None:
+            models.Item.change_tracker.disconnect(self.item_changes_callback)
+            self.item_changes_callback = None
+
+    def on_item_changes(self, change_tracker, msg):
+        if self.query.could_list_change(msg):
+            # items may have been added/removed from the list.  We need to
+            # re-fetch the items and calculate changes
+            self.refetch_items(msg.changed)
+        else:
+            # items changed, but the list is the same.  Just refetch the
+            # changed items.
+            changed_ids = msg.changed.intersection(self.item_ids)
+            changed_items = item.fetch_item_infos(app.db.connection,
+                                                  changed_ids)
+            for item_info in changed_items:
+                self.item_map[item_info.id] = item_info
+            self.emit('items-changed', [], changed_items, [])
+
+    def refetch_items(self, changed_ids=None):
+        # items may have been added/removed from the list.  We need to
+        # re-fetch the items and calculate changes
+        old_item_ids = self.item_ids
+        self.fetch_items()
+
+        added_ids = self.item_ids - old_item_ids
+        removed_ids = old_item_ids - self.item_ids
+        if changed_ids:
+            # remove ids from changed that aren't on the list
+            changed_ids.intersection_update(self.item_ids)
+            # remove ids from changed that were just added
+            changed_ids.difference_update(added_ids)
+        else:
+            changed_ids = []
+        self.emit('items-changed',
+                  [self.item_map[id_] for id_ in added_ids],
+                  [self.item_map[id_] for id_ in changed_ids],
+                  list(removed_ids))

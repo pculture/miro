@@ -379,9 +379,11 @@ class _ItemsForPathCountTracker(object):
         except AttributeError:
             return # counts not created yet we can just ignore
 
-class ItemChangeTracker(object):
+class ItemChangeTracker(signals.SignalEmitter):
     """Tracks changes to items and send the ItemsChanged message."""
     def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('item-changes')
         self.reset()
         # databases changes get commited during the event-finished signal.  We
         # use connect_after() to send our changes directly after that.
@@ -404,6 +406,7 @@ class ItemChangeTracker(object):
                                      self.dlstats_changed)
             m.send_to_frontend()
             self.reset()
+            self.emit('item-changes', m)
 
     def on_item_added(self, item):
         self.added.add(item.id)

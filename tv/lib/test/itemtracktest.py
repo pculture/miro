@@ -743,3 +743,91 @@ class ItemSelectInfoTest(MiroTestCase):
                                  "attributes of ItemSelectInfo (%s)" %
                                  item_attrs.difference(device_attrs))
 
+class BackendItemTrackerTest(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.setup_data()
+        self.setup_tracker()
+
+    def tearDown(self):
+        self.item_tracker.destroy()
+        MiroTestCase.tearDown(self)
+
+    def setup_data(self):
+        self.feed, self.items = \
+                testobjects.make_feed_with_items(10, file_items=True)
+        self.other_feed, self.other_items = \
+                testobjects.make_feed_with_items(10, file_items=True)
+        self.process_item_changes()
+
+    def setup_tracker(self):
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed_id', '=', self.feed.id)
+        self.item_tracker = itemtrack.BackendItemTracker(query)
+        self.items_changed_callback = mock.Mock()
+        self.item_tracker.connect('items-changed', self.items_changed_callback)
+
+    def fetch_item_infos(self, item_objects):
+        if len(item_objects) == 0:
+            return []
+        return item.fetch_item_infos(app.db.connection,
+                                     [i.id for i in item_objects])
+
+    def test_initial_list(self):
+        self.assertSameSet(self.item_tracker.get_items(),
+                           self.fetch_item_infos(self.items))
+
+    def check_callback(self, added, changed, removed):
+        self.assertEquals(self.items_changed_callback.call_count, 1)
+        call_args, call_kwargs = self.items_changed_callback.call_args
+        self.assertEquals(call_args[0], self.item_tracker)
+        self.assertSameSet(call_args[1], self.fetch_item_infos(added))
+        self.assertSameSet(call_args[2], self.fetch_item_infos(changed))
+        self.assertSameSet(call_args[3], [item.id for item in removed])
+        self.assertEquals(call_kwargs, {})
+        self.items_changed_callback.reset_mock()
+
+    def process_item_changes(self):
+        app.db.finish_transaction()
+        models.Item.change_tracker.send_changes()
+
+    def test_changes(self):
+        self.assertEquals(self.items_changed_callback.call_count, 0)
+        # make changes that don't add/remove items from the list
+        self.items[0].set_user_metadata({'title': u'new title'})
+        self.items[0].signal_change()
+        self.items[1].set_user_metadata({'title': u'new title'})
+        self.items[1].signal_change()
+        self.process_item_changes()
+        self.check_callback(added=[], changed=self.items[:2], removed=[])
+        # make changes that add/remove items from the list.
+        self.items[0].remove()
+        new_items = testobjects.add_items_to_feed(self.feed, 5,
+                                                  file_items=True)
+        self.items[1].set_user_metadata({'title': u'newer title'})
+        self.items[1].signal_change()
+        self.other_items[0].set_feed(self.feed.id)
+        self.process_item_changes()
+        self.check_callback(added=new_items + [self.other_items[0]],
+                            changed=[self.items[1]],
+                            removed=[self.items[0]])
+
+    def test_change_query(self):
+        new_query = itemtrack.ItemTrackerQuery()
+        new_query.add_condition('feed_id', '=', self.other_feed.id)
+        self.item_tracker.change_query(new_query)
+        self.assertSameSet(self.item_tracker.get_items(),
+                           self.fetch_item_infos(self.other_items))
+        # check that changing the query resulted in the items-changed signal
+        self.process_item_changes()
+        self.check_callback(added=self.other_items,
+                            changed=[],
+                            removed=self.items)
+
+    def test_destroy(self):
+        # test that after destroy() is called, we no longer track changes
+        self.item_tracker.destroy()
+        self.items[0].set_user_metadata({'title': u'new title'})
+        self.items[0].signal_change()
+        self.process_item_changes()
+        self.assertEquals(self.items_changed_callback.call_count, 0)

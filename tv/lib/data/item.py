@@ -279,6 +279,12 @@ class ItemInfoBase(object):
         """
         self.row_data = row_data
 
+    def __hash__(self):
+        return hash(self.row_data)
+
+    def __eq__(self, other):
+        return self.row_data == other.row_data
+
     # NOTE: The previous ItemInfo API was all attributes, so we use properties
     # to try to match that.
 
