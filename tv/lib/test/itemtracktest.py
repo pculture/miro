@@ -500,6 +500,31 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
         self.check_list_change_after_message()
         self.check_tracker_items()
 
+    def test_playlist_conditions(self):
+        # change the query to something that involves playlist columns
+        playlist = models.SavedPlaylist(u'My playlist')
+        for item in self.tracked_items:
+            playlist.add_item(item)
+        app.db.finish_transaction()
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('playlist_item_map.playlist_id', '=',
+                            playlist.id)
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        self.check_tracker_items(self.tracked_items)
+        # add items to the playlist
+        new_items = self.other_items1[:4]
+        for item in new_items:
+            playlist.add_item(item)
+        self.check_list_change_after_message()
+        self.check_tracker_items(self.tracked_items + new_items)
+        # remove items from the playlist
+        removed_items = self.tracked_items[:4]
+        for item in removed_items:
+            playlist.remove_item(item)
+        self.check_list_change_after_message()
+        self.check_tracker_items(self.tracked_items[4:] + new_items)
+
     def test_order(self):
         # test order by a different column
         query = itemtrack.ItemTrackerQuery()

@@ -189,6 +189,7 @@ class ItemSelectInfo(object):
     # how to join the main table to other tables
     join_info = {
         'feed': 'feed.id=item.feed_id',
+        'playlist_item_map': 'playlist_item_map.item_id=item.id',
         'remote_downloader': 'remote_downloader.id=item.downloader_id',
         'icon_cache': 'icon_cache.id=item.icon_cache_id',
         'item_fts': 'item_fts.docid=item.id',

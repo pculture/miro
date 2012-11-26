@@ -1436,14 +1436,16 @@ class ItemChanges(FrontendMessage):
     :attribute changed_columns: set columns that were changed (the union of
     changes for all items)
     :attribute dlstats_changed: Did we get new download stats?
+    :attribute playlist_changed: Did items get added/removed from playlists?
     """
     def __init__(self, added, changed, removed, changed_columns,
-                 dlstats_changed):
+                 dlstats_changed, playlists_changed):
         self.added = added
         self.changed = changed
         self.removed = removed
         self.changed_columns = changed_columns
         self.dlstats_changed = dlstats_changed
+        self.playlists_changed = playlists_changed
 
 class DeviceItemChanges(FrontendMessage):
     """Sent to the frontend when items change on a device
@@ -1461,7 +1463,6 @@ class DeviceItemChanges(FrontendMessage):
         self.changed = changed
         self.removed = removed
         self.changed_columns = changed_columns
-        self.dlstats_changed = False
 
 class SharingItemChanges(FrontendMessage):
     """Sent to the frontend when items change on a share
@@ -1483,7 +1484,6 @@ class SharingItemChanges(FrontendMessage):
         self.removed = removed
         self.changed_columns = changed_columns
         self.changed_playlists = changed_playlists
-        self.dlstats_changed = False
 
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed

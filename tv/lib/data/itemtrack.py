@@ -67,7 +67,7 @@ ItemTrackerOrderBy = util.namedtuple(
     :attribute descending: should we add the DESC clause?
     """)
 
-class ItemTrackerQuery(object):
+class ItemTrackerQueryBase(object):
     """Query used to select item ids for ItemTracker.  """
 
     select_info = item.ItemSelectInfo()
@@ -87,8 +87,6 @@ class ItemTrackerQuery(object):
         """Given a ItemChanges message, could the id list change?
         """
         if message.added or message.removed:
-            return True
-        if message.dlstats_changed and self.tracking_download_columns():
             return True
         if message.changed_columns.intersection(self.get_columns_to_track()):
             return True
@@ -200,15 +198,14 @@ class ItemTrackerQuery(object):
                        if ob.table == self.table_name())
         return columns
 
-    def tracking_download_columns(self):
+    def get_other_tables_to_track(self):
+        """Get tables other than item that could affect this query."""
+        other_tables = set()
         for c in self.conditions:
-            for table, column in c.columns:
-                if table == 'remote_downloader':
-                    return True
-        for ob in self.order_by:
-            if ob.table == 'remote_downloader':
-                return True
-        return False
+            other_tables.update(table for table, column in c.columns)
+        other_tables.update(ob.table for ob in self.order_by)
+        other_tables.discard('item')
+        return other_tables
 
     def select_ids(self, connection):
         """Run the select statement for this query
@@ -318,12 +315,25 @@ class ItemTrackerQuery(object):
         retval.match_string = self.match_string
         return retval
 
-class DeviceItemTrackerQuery(ItemTrackerQuery):
+class ItemTrackerQuery(ItemTrackerQueryBase):
+    """ItemTrackerQuery for items in the main db."""
+
+    def could_list_change(self, message):
+        """Given a ItemChanges message, could the id list change?
+        """
+        other_tables = self.get_other_tables_to_track()
+        if message.dlstats_changed and 'remote_downloader' in other_tables:
+            return True
+        if message.playlists_changed and 'playlist_item_map' in other_tables:
+            return True
+        return ItemTrackerQueryBase.could_list_change(self, message)
+
+class DeviceItemTrackerQuery(ItemTrackerQueryBase):
     """ItemTrackerQuery for DeviceItems."""
 
     select_info = item.DeviceItemSelectInfo()
 
-class SharingItemTrackerQuery(ItemTrackerQuery):
+class SharingItemTrackerQuery(ItemTrackerQueryBase):
     """ItemTrackerQuery for SharingItems."""
 
     select_info = item.SharingItemSelectInfo()
@@ -339,7 +349,7 @@ class SharingItemTrackerQuery(ItemTrackerQuery):
         if message.changed_playlists and self.tracking_playlist_map():
             return True
         else:
-            return ItemTrackerQuery.could_list_change(self, message)
+            return ItemTrackerQueryBase.could_list_change(self, message)
 
 class ItemTracker(signals.SignalEmitter):
     """Track items in the database

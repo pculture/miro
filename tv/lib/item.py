@@ -395,6 +395,7 @@ class ItemChangeTracker(signals.SignalEmitter):
         self.removed = set()
         self.changed_columns = set()
         self.dlstats_changed = False
+        self.playlists_changed = False
 
     def after_event_finished(self, event_loop, success):
         self.send_changes()
@@ -403,7 +404,8 @@ class ItemChangeTracker(signals.SignalEmitter):
         if self.added or self.changed or self.removed or self.dlstats_changed:
             m = messages.ItemChanges(self.added, self.changed, self.removed,
                                      self.changed_columns,
-                                     self.dlstats_changed)
+                                     self.dlstats_changed,
+                                     self.playlists_changed)
             m.send_to_frontend()
             self.reset()
             self.emit('item-changes', m)
@@ -551,6 +553,16 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
     def signal_change(self, needs_save=True, can_change_views=True):
         app.item_info_cache.item_changed(self)
         MetadataItemBase.signal_change(self, needs_save, can_change_views)
+
+    def playlists_changed(self, added=False):
+        """Called when the item gets added/removed from playlists."""
+        Item.change_tracker.playlists_changed = True
+        if added:
+            self.keep = True
+            needs_save = True
+        else:
+            needs_save = False
+        self.signal_change(needs_save)
 
     def download_stats_changed(self):
         Item.change_tracker.dlstats_changed = True
