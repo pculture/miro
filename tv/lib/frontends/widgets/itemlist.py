@@ -129,7 +129,7 @@ class ItemList(itemtrack.ItemTracker):
             # feed
             sql = ("remote_downloader.state IN ('downloading', 'uploading', "
                    "'paused', 'uploading-paused', 'offline')")
-            query.add_complex_condition('remote_downloader.state', sql, ())
+            query.add_complex_condition(['remote_downloader.state'], sql, ())
         elif tab_type == 'feed':
             query.add_condition('feed_id', '=', tab_id)
         elif tab_type == 'feed-folder' and tab_id == 'feed-base-tab':
@@ -145,7 +145,7 @@ class ItemList(itemtrack.ItemTracker):
             # can ignore this.
             sql = ("feed_id in "
                    "(SELECT feed.id FROM feed WHERE feed.folder_id=?)")
-            query.add_complex_condition('feed_id', sql, (tab_id,))
+            query.add_complex_condition(['feed_id'], sql, (tab_id,))
         elif tab_type == 'folder-contents':
             query.add_condition('parent_id', '=', tab_id)
         elif tab_type == 'device-video':
@@ -186,7 +186,7 @@ class ItemList(itemtrack.ItemTracker):
             id_list = tab_id
             placeholders = ",".join("?" for i in xrange(len(id_list)))
             sql = "item.id IN (%s)" % placeholders
-            query.add_complex_condition('item.id', sql, id_list)
+            query.add_complex_condition(['item.id'], sql, id_list)
         else:
             raise ValueError("Can't handle tab (%r, %r)" % (tab_type, tab_id))
         return query

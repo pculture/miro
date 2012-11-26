@@ -44,13 +44,13 @@ from miro.data import item
 
 ItemTrackerCondition = util.namedtuple(
     "ItemTrackerCondition",
-    "table column sql values",
+    "columns sql values",
 
     """ItemTrackerCondition defines one term for the WHERE clause of a query.
 
-    :attribute table: table that contains column
-    :attribute column: column that this condition refers to.  If this changes
-    in the DB, then we should re-run the query.
+    :attribute columns: list of (table, column) tuples that that this
+    condition refers to.  If any of these change in the DB, then we should
+    re-run the query.
     :attribute sql: sql string for the clause
     :attribute values: list of values to use to fill in sql
     """)
@@ -117,7 +117,7 @@ class ItemTrackerQuery(object):
         """
         table, column = self._parse_column(column)
         sql = "%s.%s %s ?" % (table, column, operator)
-        cond = ItemTrackerCondition(table, column, sql, (value,))
+        cond = ItemTrackerCondition([(table, column)], sql, (value,))
         self.conditions.append(cond)
 
     def set_search(self, search_string):
@@ -145,7 +145,7 @@ class ItemTrackerQuery(object):
         if self.match_string and search_string[-1] != ' ':
             self.match_string += "*"
 
-    def add_complex_condition(self, column, sql, values):
+    def add_complex_condition(self, columns, sql, values):
         """Add a complex condition to the WHERE clause
 
         This method can be used to add conditions that don't fit into the
@@ -155,12 +155,12 @@ class ItemTrackerQuery(object):
         depend on multiple columns, or None.  But this is good enough for how
         we use it.
 
-        :param column: column that this condition depends on
+        :param columns: list of columns that this condition depends on
         :param sql: sql that defines the condition
         :param values: tuple of values to substitute into sql
         """
-        table, column = self._parse_column(column)
-        cond = ItemTrackerCondition(table, column, sql, values)
+        columns = [self._parse_column(c) for c in columns]
+        cond = ItemTrackerCondition(columns, sql, values)
         self.conditions.append(cond)
 
     def set_order_by(self, columns, collations=None):
@@ -191,16 +191,20 @@ class ItemTrackerQuery(object):
 
     def get_columns_to_track(self):
         """Get the columns that affect the results of the query """
-        columns = [c.column for c in self.conditions
-                   if c.table == self.table_name()]
-        columns.extend(ob.column for ob in self.order_by
+        columns = set()
+        for c in self.conditions:
+            for table, column in c.columns:
+                if table == self.table_name():
+                    columns.add(column)
+        columns.update(ob.column for ob in self.order_by
                        if ob.table == self.table_name())
         return columns
 
     def tracking_download_columns(self):
         for c in self.conditions:
-            if c.table == 'remote_downloader':
-                return True
+            for table, column in c.columns:
+                if table == 'remote_downloader':
+                    return True
         for ob in self.order_by:
             if ob.table == 'remote_downloader':
                 return True
@@ -248,7 +252,9 @@ class ItemTrackerQuery(object):
         return item_data
 
     def _add_joins(self, sql_parts, arg_list, include_select_columns=False):
-        join_tables = set(c.table for c in self.conditions)
+        join_tables = set()
+        for c in self.conditions:
+            join_tables.update(table for table, column in c.columns)
         join_tables.update(ob.table for ob in self.order_by)
         if include_select_columns:
             join_tables.update(col.table
@@ -258,6 +264,23 @@ class ItemTrackerQuery(object):
             sql_parts.append(self.join_sql(table))
         if self.match_string:
             sql_parts.append(self.join_sql('item_fts', join_type='JOIN'))
+
+    def _add_all_joins(self, sql_parts, arg_list):
+        joins_for_data = set(col.table
+                             for col in self.select_info.select_columns
+                             if col.table != self.table_name())
+        joins_for_conditions = set()
+        for c in self.conditions:
+            joins_for_conditions.update(table for table, column in c.columns)
+        joins_for_conditions.update(ob.table for ob in self.order_by)
+        for table in joins_for_data:
+            if table != self.table_name():
+                sql_parts.append(self.join_sql(table, 'LEFT JOIN'))
+        for table in joins_for_data:
+            if table != self.table_name() and table not in joins_for_data:
+                sql_parts.append(self.join_sql(table))
+        if self.match_string:
+            sql_parts.append(self.join_sql('item_fts'))
 
     def _add_conditions(self, sql_parts, arg_list):
         if not (self.conditions or self.match_string):
@@ -307,8 +330,9 @@ class SharingItemTrackerQuery(ItemTrackerQuery):
 
     def tracking_playlist_map(self):
         for c in self.conditions:
-            if c.table == 'sharing_item_playlist_map':
-                return True
+            for table, column in c.columns:
+                if table == 'sharing_item_playlist_map':
+                    return True
         return False
 
     def could_list_change(self, message):

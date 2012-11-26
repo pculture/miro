@@ -228,20 +228,24 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
         for i in models.Item.make_view():
             meets_conditions = True
             for condition in self.tracker.query.conditions:
-                if condition.table == 'item':
-                    item_value = getattr(i, condition.column)
-                elif condition.table == 'remote_downloader':
+                if len(condition.columns) > 1:
+                    raise AssertionError("Don't know how to get value for %s"
+                                         % condition.columns)
+                table, column = condition.columns[0]
+                if table == 'item':
+                    item_value = getattr(i, column)
+                elif table == 'remote_downloader':
                     dler = i.downloader
                     if dler is None:
                         item_value = None
                     else:
-                        item_value = getattr(dler, condition.column)
-                elif condition.table == 'feed':
-                    item_value = getattr(i.get_feed(), condition.column)
+                        item_value = getattr(dler, column)
+                elif table == 'feed':
+                    item_value = getattr(i.get_feed(), column)
                 else:
                     raise AssertionError("Don't know how to get value for %s"
-                                         % condition.table)
-                full_column = "%s.%s" % (condition.table, condition.column)
+                                         % condition.columns)
+                full_column = "%s.%s" % (table, column)
                 if condition.sql == '%s = ?' % full_column:
                     if item_value != condition.values[0]:
                         meets_conditions = False
@@ -386,7 +390,7 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
 
         sql = "feed_id IN (SELECT id FROM feed WHERE id in (?, ?))"
         values = (self.tracked_feed.id, self.other_feed1.id)
-        query.add_complex_condition("feed_id", sql, values)
+        query.add_complex_condition(["feed_id"], sql, values)
         query.set_order_by(['release_date'])
         self.tracker.change_query(query)
         # changing the query should emit list-changed
