@@ -143,7 +143,7 @@ class ItemTrackerQueryBase(object):
         if self.match_string and search_string[-1] != ' ':
             self.match_string += "*"
 
-    def add_complex_condition(self, columns, sql, values):
+    def add_complex_condition(self, columns, sql, values=()):
         """Add a complex condition to the WHERE clause
 
         This method can be used to add conditions that don't fit into the
@@ -194,6 +194,8 @@ class ItemTrackerQueryBase(object):
             for table, column in c.columns:
                 if table == self.table_name():
                     columns.add(column)
+                else:
+                    columns.add(self.select_info.item_join_column(table))
         columns.update(ob.column for ob in self.order_by
                        if ob.table == self.table_name())
         return columns
@@ -273,7 +275,7 @@ class ItemTrackerQueryBase(object):
         for table in joins_for_data:
             if table != self.table_name():
                 sql_parts.append(self.join_sql(table, 'LEFT JOIN'))
-        for table in joins_for_data:
+        for table in joins_for_conditions:
             if table != self.table_name() and table not in joins_for_data:
                 sql_parts.append(self.join_sql(table))
         if self.match_string:
@@ -289,7 +291,8 @@ class ItemTrackerQueryBase(object):
         if self.match_string:
             where_parts.append("item_fts MATCH ?")
             arg_list.append(self.match_string)
-        sql_parts.append("WHERE %s" % ' AND '.join(where_parts))
+        sql_parts.append("WHERE %s" % ' AND '.join(
+            '(%s)' % part for part in where_parts))
 
     def _add_order_by(self, sql_parts, arg_list):
         if self.order_by:

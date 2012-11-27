@@ -186,13 +186,14 @@ class ItemSelectInfo(object):
     constant_values = {
     }
 
-    # how to join the main table to other tables
+    # how to join the main table to other tables.  Maps table names to
+    # (item_column, other_column) tuples
     join_info = {
-        'feed': 'feed.id=item.feed_id',
-        'playlist_item_map': 'playlist_item_map.item_id=item.id',
-        'remote_downloader': 'remote_downloader.id=item.downloader_id',
-        'icon_cache': 'icon_cache.id=item.icon_cache_id',
-        'item_fts': 'item_fts.docid=item.id',
+        'feed': ('feed_id', 'id'),
+        'playlist_item_map': ('id', 'item_id'),
+        'remote_downloader': ('downloader_id', 'id'),
+        'icon_cache': ('icon_cache_id', 'id'),
+        'item_fts': ('id', 'docid'),
     }
 
     def __init__(self):
@@ -210,11 +211,17 @@ class ItemSelectInfo(object):
         tables used in select_columns
         """
         if table is not None:
-            return '%s %s ON %s' % (join_type, table, self.join_info[table])
+            item_column, other_column = self.join_info[table]
+            return '%s %s ON %s.%s=%s.%s' % (join_type, table,
+                                             self.table_name, item_column,
+                                             table, other_column)
         else:
-            return '\n'.join('%s %s ON %s' %
-                             (join_type, table, self.join_info[table])
+            return '\n'.join(self.join_sql(table)
                              for table in self.joined_tables)
+
+    def item_join_column(self, table):
+        """Get the item table column used to join to another table."""
+        return self.join_info[table][0]
 
 # ItemInfo has a couple of tricky things going on for it:
 #  - We need to support both selecting from the main database and the device
@@ -707,7 +714,7 @@ class DeviceItemSelectInfo(ItemSelectInfo):
     }
 
     join_info = {
-        'item_fts': 'item_fts.docid=device_item.id',
+        'item_fts': ('id', 'docid'),
     }
 
 class DeviceItemInfo(ItemInfoBase):
@@ -837,9 +844,8 @@ class SharingItemSelectInfo(ItemSelectInfo):
     }
 
     join_info = {
-        'item_fts': 'item_fts.docid=sharing_item.id',
-        'sharing_item_playlist_map':
-            'sharing_item_playlist_map.item_id=sharing_item.daap_id',
+        'item_fts': ('id', 'docid'),
+        'sharing_item_playlist_map': ('daap_id', 'item_id'),
     }
 
 

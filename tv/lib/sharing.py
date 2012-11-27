@@ -46,8 +46,7 @@ from miro import app
 from miro import database
 from miro import eventloop
 from miro import messages
-from miro import playlist
-from miro import feed
+from miro import models
 from miro import prefs
 from miro import signals
 from miro import filetypes
@@ -58,6 +57,7 @@ from miro import storedatabase
 from miro import transcode
 from miro import metadata
 from miro.data import mappings
+from miro.data import itemtrack
 from miro.item import Item, SharingItem
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
@@ -92,63 +92,11 @@ MIRO_ITEMKIND_PODCAST = (1 << 1)
 MIRO_ITEMKIND_SHOW = (1 << 2)
 MIRO_ITEMKIND_CLIP = (1 << 3)
 
-miro_itemkind_mapping = {
-    'movie': MIRO_ITEMKIND_MOVIE,
-    'show': MIRO_ITEMKIND_SHOW,
-    'clip': MIRO_ITEMKIND_CLIP,
-    'podcast': MIRO_ITEMKIND_PODCAST
-}
-
 miro_itemkind_rmapping = {
     MIRO_ITEMKIND_MOVIE: u'movie',
     MIRO_ITEMKIND_SHOW: u'show',
     MIRO_ITEMKIND_CLIP: u'clip',
     MIRO_ITEMKIND_PODCAST: u'podcast'
-}
-
-# XXX The daap mapping from the daap to the attribute is different from the
-# reverse mapping, because we use daap_mapping to import items from remote
-# side and we use daap_rmapping to create an export list.  But, when
-# we import and create SharingItem, the attribut needs to be 'title'.  But
-# when we export, we receive ItemInfo(), which uses 'name'.
-daap_mapping = {
-    'daap.songformat': 'file_format',
-    'com.apple.itunes.mediakind': 'file_type',
-    'dmap.itemid': 'daap_id',
-    'dmap.itemname': 'title',
-    'daap.songtime': 'duration',
-    'daap.songsize': 'size',
-    'daap.songartist': 'artist',
-    'daap.songalbumartist': 'album_artist',
-    'daap.songalbum': 'album',
-    'daap.songyear': 'year',
-    'daap.songgenre': 'genre',
-    'daap.songtracknumber': 'track',
-    'org.participatoryculture.miro.itemkind': 'kind',
-    'com.apple.itunes.series-name': 'show',
-    'com.apple.itunes.season-num': 'season_number',
-    'com.apple.itunes.episode-num-str': 'episode_id',
-    'com.apple.itunes.episode-sort': 'episode_number'
-}
-
-daap_rmapping = {
-    'file_format': 'daap.songformat',
-    'file_type': 'com.apple.itunes.mediakind',
-    'id': 'dmap.itemid',
-    'name': 'dmap.itemname',
-    'duration': 'daap.songtime',
-    'size': 'daap.songsize',
-    'artist': 'daap.songartist',
-    'album_artist': 'daap.songalbumartist',
-    'album': 'daap.songalbum',
-    'year': 'daap.songyear',
-    'genre': 'daap.songgenre',
-    'track': 'daap.songtracknumber',
-    'kind': 'org.participatoryculture.miro.itemkind',
-    'show': 'com.apple.itunes.series-name',
-    'season_number': 'com.apple.itunes.season-num',
-    'episode_id': 'com.apple.itunes.episode-num-str',
-    'episode_number': 'com.apple.itunes.episode-sort'
 }
 
 # Windows Python does not have inet_ntop().  Sigh.  Fallback to this one,
@@ -739,6 +687,28 @@ class SharingItemTrackerImpl(object):
     This backend is persistent as the user switches across different tabs in
     the sidebar, until the disconnect button is clicked.
     """
+
+    # Maps DAAP keys to DeviceItem attribute names
+    daap_mapping = {
+        'daap.songformat': 'file_format',
+        'com.apple.itunes.mediakind': 'file_type',
+        'dmap.itemid': 'daap_id',
+        'dmap.itemname': 'title',
+        'daap.songtime': 'duration',
+        'daap.songsize': 'size',
+        'daap.songartist': 'artist',
+        'daap.songalbumartist': 'album_artist',
+        'daap.songalbum': 'album',
+        'daap.songyear': 'year',
+        'daap.songgenre': 'genre',
+        'daap.songtracknumber': 'track',
+        'org.participatoryculture.miro.itemkind': 'kind',
+        'com.apple.itunes.series-name': 'show',
+        'com.apple.itunes.season-num': 'season_number',
+        'com.apple.itunes.episode-num-str': 'episode_id',
+        'com.apple.itunes.episode-sort': 'episode_number'
+    }
+
     def __init__(self, share):
         self.client = None
         self.share = share
@@ -807,7 +777,7 @@ class SharingItemTrackerImpl(object):
         item_data = dict()
         for k in rawitem.keys():
             try:
-                key = daap_mapping[k]
+                key = self.daap_mapping[k]
             except KeyError:
                 # Got something back we don't really care about.
                 continue
@@ -1017,6 +987,426 @@ class SharingItemTrackerImpl(object):
             app.sharing_tracker.stop_tracking_share(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
+class _SharedDataSet(object):
+    """Tracks the items/playlist/feeds we're sharing to others.
+
+    This object is used by SharingManagerBackend to track the database objects
+    its sharing.  It needs to be thread-safe since it gets updated in the
+    backend thread and accessed in the server thread for our share.
+    """
+    SHARE_AUDIO = libdaap.DAAP_MEDIAKIND_AUDIO
+    SHARE_VIDEO = libdaap.DAAP_MEDIAKIND_VIDEO
+    SHARE_FEED  = 0x4    # XXX
+
+    # Maps ItemInfo attribute names to DAAP keys.
+    daap_mapping = {
+        'id': 'dmap.itemid',
+        'title': 'dmap.itemname',
+        'duration': 'daap.songtime',
+        'size': 'daap.songsize',
+        'artist': 'daap.songartist',
+        'album_artist': 'daap.songalbumartist',
+        'album': 'daap.songalbum',
+        'year': 'daap.songyear',
+        'genre': 'daap.songgenre',
+        'track': 'daap.songtracknumber',
+        'show': 'com.apple.itunes.series-name',
+        'season_number': 'com.apple.itunes.season-num',
+        'episode_id': 'com.apple.itunes.episode-num-str',
+        'episode_number': 'com.apple.itunes.episode-sort'
+    }
+
+    # Map values for ItemInfo.kind to DAAP values
+    miro_itemkind_mapping = {
+        'movie': MIRO_ITEMKIND_MOVIE,
+        'show': MIRO_ITEMKIND_SHOW,
+        'clip': MIRO_ITEMKIND_CLIP,
+        'podcast': MIRO_ITEMKIND_PODCAST
+    }
+
+    def __init__(self):
+        # our lock must be acquired before acsessing any of our data.  Our
+        # condition gets signaled when changes occur.
+        self.lock = threading.RLock()
+        self.condition = threading.Condition(self.lock)
+        # current revision number
+        self.revision = 0
+        # map DAAP ids to dicts of item data
+        self.daap_items = dict()
+        # map DAAP ids to dicts of playlist data
+        self.daap_playlists = dict()
+        # map DAAP playlist ids to sets of items in that playlist
+        self.playlist_item_map = dict() # Playlist -> item mapping
+        # map DAAP playlist ids to sets of items that have been removed from
+        # that playlist.
+        self.deleted_item_map = dict()  # Playlist -> deleted item mapping
+        # signal handle and trackers that we create in start_tracking()
+        self.config_handle = None
+        self.item_tracker = None
+        self.playlist_tracker = None
+        self.feed_tracker = None
+        self.after_event_finished_handle = None
+        self.item_changes_handle = None
+        # store SavedPlaylist/Feed objects that have been
+        # added/changed/removed.  We save up the changes, then process them
+        # all at once when the eventloop emits "event-finished".
+        self.playlists_changed = set()
+        self.playlists_removed = set()
+
+    def _deleted_item(self, daap_id):
+        """Make a dict for a delete playlist or item."""
+        return {
+            'revision': self.revision,
+            'valid': False,
+            'dmap.itemid': daap_id,
+        }
+
+    def start_tracking(self):
+        with self.lock:
+            # make trackers
+            self.calc_share_types()
+            self.config_handle = app.backend_config_watcher.connect('changed',
+                                 self.on_config_changed)
+            # setup initial data
+            self.start_tracking_items()
+            self.start_tracking_playlists()
+            if _SharedDataSet.SHARE_FEED in self.share_types:
+                self.start_tracking_feeds()
+            self.after_event_finished_handle = eventloop.connect_after(
+                'event-finished', self.after_event_finished)
+            self.item_changes_handle = models.Item.change_tracker.connect(
+                'item-changes', self.on_item_changes)
+
+    def stop_tracking(self):
+        if self.config_handle is not None:
+            backend_config_watcher.disconnect(self.config_handle)
+            self.config_handle = None
+        if self.item_tracker is not None:
+            self.item_tracker.destroy()
+            self.item_tracker = None
+        if self.playlist_tracker is not None:
+            self.playlist_tracker.unlink()
+            self.playlist_tracker = None
+        if self.feed_tracker is not None:
+            self.feed_tracker.unlink()
+            self.feed_tracker = None
+        if self.after_event_finished_handle:
+            eventloop.disconnect(self.after_event_finished_handle)
+            self.after_event_finished_handle = None
+        if self.item_changes_handle:
+            models.Item.changes.disconnect(self.item_changes_handle)
+            self.item_changes_handle = None
+
+    def calc_share_types(self):
+        self.share_types = set()
+        if app.config.get(prefs.SHARE_AUDIO):
+            self.share_types.add(_SharedDataSet.SHARE_AUDIO)
+        if app.config.get(prefs.SHARE_VIDEO):
+            self.share_types.add(_SharedDataSet.SHARE_VIDEO)
+        if app.config.get(prefs.SHARE_FEED):
+            self.share_types.add(_SharedDataSet.SHARE_FEED)
+
+    def start_tracking_items(self):
+        query = self._make_item_tracker_query()
+        self.item_tracker = itemtrack.BackendItemTracker(query)
+        for item_info in self.item_tracker.get_items():
+            self.make_daap_item(item_info)
+        self.item_tracker.connect('items-changed', self.on_items_changed)
+
+    def start_tracking_playlists(self):
+        view = models.SavedPlaylist.make_view()
+        for playlist in view:
+            self.make_daap_playlist(playlist)
+        self.playlist_tracker = view.make_tracker()
+        self.playlist_tracker.connect('added', self.on_playlist_added)
+        self.playlist_tracker.connect('changed', self.on_playlist_changed)
+        self.playlist_tracker.connect('removed', self.on_playlist_removed)
+
+    def start_tracking_feeds(self):
+        if self.feed_tracker is None:
+            view = models.Feed.visible_view()
+            for feed in view:
+                self.make_daap_playlist(feed)
+            self.feed_tracker = view.make_tracker()
+            self.feed_tracker.connect('added', self.on_playlist_added)
+            self.feed_tracker.connect('changed', self.on_playlist_changed)
+            self.feed_tracker.connect('removed', self.on_playlist_removed)
+
+    def stop_tracking_feeds(self):
+        if self.feed_tracker is not None:
+            self.feed_tracker.unlink()
+            self.feed_tracker = None
+            # Remove all feeds from our lists
+            for feed in models.Feed.visible_view():
+                self.daap_playlists[feed.id] = self._deleted_item(feed.id)
+
+    def on_items_changed(self, tracker, added, changed, removed):
+        with self.lock:
+            self.revision += 1
+            for item_info in added + changed:
+                self.make_daap_item(item_info)
+            for item_id in removed:
+                self.daap_items[item_id] = self._deleted_item(item_id)
+            self.condition.notify_all()
+
+    def on_playlist_added(self, tracker, playlist_or_feed):
+        self.playlists_changed.add(playlist_or_feed)
+
+    def on_playlist_changed(self, tracker, playlist_or_feed):
+        self.playlists_changed.add(playlist_or_feed)
+
+    def on_playlist_removed(self, tracker, playlist_or_feed):
+        self.playlists_removed.add(playlist_or_feed)
+
+    def after_event_finished(self, eventloop):
+        if not (self.playlists_changed or self.playlists_removed):
+            return
+        with self.lock:
+            self.revision += 1
+            for obj in self.playlists_changed:
+                self.make_daap_playlist(obj)
+            for obj in self.playlists_removed:
+                self.daap_playlists[obj.id] = self._deleted_item(obj.id)
+            self.playlists_changed = set()
+            self.playlists_removed = set()
+            self.condition.notify_all()
+
+    def on_item_changes(self, tracker, message):
+        if 'feed_id' in message.changed_columns:
+            # items have changed feeds, regenerate the item lists
+            for feed in models.Feed.visible_view():
+                self.make_daap_playlist(feed)
+        if message.playlists_changed:
+            # items have been added/removed from playlists,
+            # regenerate the item lists
+            for playlist in models.SavedPlaylist.make_view():
+                self.make_daap_playlist(playlist)
+
+    def _make_item_tracker_query(self):
+        query = itemtrack.ItemTrackerQuery()
+        # we can do this simply when SHARE_AUDIO and SHARE_VIDEO are selected
+        if (_SharedDataSet.SHARE_AUDIO in self.share_types and
+            _SharedDataSet.SHARE_VIDEO in self.share_types):
+            query.add_complex_condition(
+                ['file_type'], 'item.file_type IN ("audio", "video")')
+            return query
+
+        # No matter what, we only care about audio/video items
+        query.add_complex_condition(['file_type'],
+                                    'item.file_type IN ("audio", "video")')
+
+        # Based on the preferences, we OR together various other conditions
+        extra_sql_parts = []
+        extra_sql_columns = set()
+        if _SharedDataSet.SHARE_AUDIO in self.share_types:
+            extra_sql_parts.append('file_type = "audio"')
+            extra_sql_columns.add('file_type')
+        if _SharedDataSet.SHARE_VIDEO in self.share_types:
+            extra_sql_parts.append('file_type = "video"')
+            extra_sql_columns.add('file_type')
+        if _SharedDataSet.SHARE_FEED in self.share_types:
+            extra_sql_parts.append('feed.visible')
+            extra_sql_columns.add('feed.visible')
+        # items in playlists are always included
+        extra_sql_parts.append('playlist_item_map.playlist_id IS NOT NULL')
+        extra_sql_columns.add('playlist_item_map.playlist_id')
+        # OR together all the parts into a complex condition
+        sql = ' OR '.join('(%s)' % part for part in extra_sql_parts)
+        query.add_complex_condition(extra_sql_columns, sql)
+        return query
+
+    def make_daap_item(self, item_info):
+        daap_item = dict()
+        # Set attributes in daap_mapping
+        for attr_name, key_name in self.daap_mapping.items():
+            value = getattr(item_info, attr_name)
+            # Fixup the year, etc being -1.  XXX should read the daap
+            # type then determine what to do.
+            if value == -1:
+                value = 0
+            # Fixup: these are stored as string?
+            if key_name in ('daap.songtracknumber',
+                               'daap.songyear'):
+                if value is not None:
+                    value = int(value)
+            # Fixup the duration: need to convert to millisecond.
+            elif key_name == 'daap.songtime':
+                if value:
+                    value *= DURATION_SCALE
+                else:
+                    value = 0
+            daap_item[key_name] = value
+        # add attributes that need to be calculated
+        self._calc_item_kind(item_info, daap_item)
+        self._calc_item_format_mediakind(item_info, daap_item)
+        self._calc_item_paths(item_info, daap_item)
+        # add attributes for keys needed by libdaap, but aren't part of DAAP
+        # itself
+        daap_item['dmap.containeritemid'] = item_info.id
+        daap_item['revision'] = self.revision
+        daap_item['valid'] = True
+        # Convert unicode to utf-8
+        for key, value in daap_item.items():
+            if isinstance(value, unicode):
+                daap_item[key] = value.encode('utf-8')
+        # store the data
+        self.daap_items[item_info.id] = daap_item
+
+    # XXX TEMPORARY: should this item be podcast?  We won't need this when
+    # the item type's metadata is completely accurate and won't lie to us.
+    def _item_from_podcast(self, item_info):
+        feed_url = item_info.feed_url
+        ersatz_feeds = ['dtv:manualFeed', 'dtv:searchDownloads', 'dtv:search']
+        is_feed = not any([feed_url.startswith(x) for x in ersatz_feeds])
+        return item_info.feed_id and is_feed and not item_info.is_file_item
+
+    def _calc_item_kind(self, item_info, daap_item):
+        """Calculate the value for org.participatoryculture.miro.itemkind
+
+        :param item_info: ItemInfo to get the value from
+        :param daap_item: dict of DAAP data to set the value for
+        """
+        key = 'org.participatoryculture.miro.itemkind'
+        if self._item_from_podcast(item_info):
+            daap_item[key] = MIRO_ITEMKIND_PODCAST
+        if item_info.kind:
+            try:
+                dap_item[key] = self.miro_itemkind_mapping[item_info.kind]
+            except KeyError:
+                logging.warn("Error looking up item kind: %s", item_info.kind)
+
+    def _calc_item_format_mediakind(self, item_info, daap_item):
+        """Calculate the DAAP values for com.apple.itunes.mediakind and
+        daap.songformat
+
+        :param item_info: ItemInfo to get the values from
+        :param daap_item: dict of DAAP data to set the values for
+        """
+
+        mediakind_key = 'com.apple.itunes.mediakind'
+        songformat_key = 'daap.songformat'
+
+        # Fixup the enclosure format.  This is hardcoded to mp4, 
+        # as iTunes requires this.  Other clients seem to be able to sniff
+        # out the container.  We can change it if that's no longer true.
+        # Fixup the media kind: XXX what about u'other'?
+        enclosure = item_info.file_format
+        if enclosure not in supported_filetypes:
+            nam, ext = os.path.splitext(item_info.video_path)
+            if ext in supported_filetypes:
+                enclosure = ext
+        if enclosure:
+            songformat = enclosure[1:]
+        else:
+            songformat = None
+
+        if item_info.file_type == u'video':
+            daap_item[mediakind_key] = libdaap.DAAP_MEDIAKIND_VIDEO
+            if not songformat:
+                songformat = 'mp4'
+            daap_item[songformat_key] = songformat
+        else:
+            daap_item[mediakind_key] = libdaap.DAAP_MEDIAKIND_AUDIO
+            if not songformat:
+                songformat = 'mp3'
+            daap_item[songformat_key] = enclosure
+
+    def _calc_item_paths(self, item_info, daap_item):
+        """Calculate the DAAP values for path and cover_art
+
+        :param item_info: ItemInfo to get the values from
+        :param daap_item: dict of DAAP data to set the values for
+        """
+        daap_item['path'] = item_info.filename
+        defaults = (resources.path('images/thumb-default-audio.png'),
+                    resources.path('images/thumb-default-video.png'))
+        if item_info.thumbnail not in defaults:
+            daap_item['cover_art'] = item_info.thumbnail
+        else:
+            daap_item['cover_art'] = ''
+
+    def make_daap_playlist(self, playlist_or_feed):
+        if isinstance(playlist_or_feed, models.SavedPlaylist):
+            view = models.PlaylistItemMap.playlist_view(playlist_or_feed.id)
+            item_ids = set(pim.item_id for pim in view)
+        else:
+            item_ids = set(i.id for i in playlist_or_feed.downloaded_items)
+
+        daap_item = {
+            'dmap.itemid': playlist_or_feed.id,
+            'dmap.persistentid': playlist_or_feed.id,
+            'dmap.itemname': playlist_or_feed.get_title(),
+            'dmap.itemcount': len(item_ids),
+            'dmap.parentcontainerid': 0,
+            'revision': self.revision,
+            'valid': True,
+        }
+        self.daap_playlists[playlist_or_feed.id] = daap_item
+        self.playlist_item_map[playlist_or_feed.id] = item_ids
+
+    def on_config_changed(self, obj, key, value):
+        watched_keys = [prefs.SHARE_AUDIO.key, prefs.SHARE_VIDEO.key,
+                prefs.SHARE_FEED.key]
+        if key not in watched_keys:
+            return
+        with self.lock:
+            old_share_types = self.share_types
+            self.calc_share_types()
+            changed = self.share_types.symmetric_difference(old_share_types)
+            if changed:
+                self.revision += 1
+                # If SHARE_FEED changes, we need to start/stop tracking feeds
+                if self.SHARE_FEED in changed:
+                    if self.SHARE_FEED in self.share_types:
+                        self.start_tracking_feeds()
+                    else:
+                        self.stop_tracking_feeds()
+                # If SHARE_AUDIO/SHARE_VIDEO changes we need to recalculate
+                # which items are in the main list
+                if changed.intersection([self.SHARE_AUDIO, self.SHARE_VIDEO]):
+                    query = self._make_item_tracker_query()
+                    self.item_tracker.change_query(query)
+                self.condition.notify_all()
+
+    def get_item(self, item_id):
+        with self.lock:
+            return self.daap_items[item_id]
+
+    def get_items(self, playlist_id):
+        with self.lock:
+            if playlist_id is None:
+                return self.daap_items.copy()
+            else:
+                items_dict = dict()
+                for id_ in self.playlist_item_map[playlist_id]:
+                    try:
+                        items_dict[id_] = self.daap_items[id_]
+                    except KeyError:
+                        logging.warn("Error looking up DAAP item: %s", id_)
+                return items_dict
+
+    def get_playlists(self):
+        with self.lock:
+            return self.daap_playlists.copy()
+
+    def get_revision(self, old_revision, request_socket):
+        with self.lock:
+            while self.revision == old_revision:
+                # releause our lock and wait for some changes.
+                self.condition.wait(1.0)
+                # If we reached the timeout, check if request_socket is
+                # closed.
+                if self.revision == old_revision:
+                    # we aren't expecting any data from the other side, so if
+                    # the socket is available for reading, that means that
+                    # either a) it's been closed, or b) the other side is
+                    # sending us some garbage.  Either way, don't wait on our
+                    # condition for longer
+                    r, w, x = select.select([request_socket], [], [], 0)
+                    if r:
+                        break
+            return self.revision
+
 class SharingManagerBackend(object):
     """Implement a DAAP server using pydaap
 
@@ -1027,387 +1417,21 @@ class SharingManagerBackend(object):
     type = u'sharing-backend'
     id = u'sharing-backend'
 
-    SHARE_AUDIO = libdaap.DAAP_MEDIAKIND_AUDIO
-    SHARE_VIDEO = libdaap.DAAP_MEDIAKIND_VIDEO
-    SHARE_FEED  = 0x4    # XXX
-
     def __init__(self):
-        self.revision = 1
-        self.share_types = []
-        if app.config.get(prefs.SHARE_AUDIO):
-            self.share_types += [SharingManagerBackend.SHARE_AUDIO]
-        if app.config.get(prefs.SHARE_VIDEO):
-            self.share_types += [SharingManagerBackend.SHARE_VIDEO]
-        if app.config.get(prefs.SHARE_FEED):
-            self.share_types += [SharingManagerBackend.SHARE_FEED]
-        
-        self.item_lock = threading.Lock()
-        self.revision_cv = threading.Condition(self.item_lock)
+        self.data_set = _SharedDataSet()
         self.transcode_lock = threading.Lock()
         self.transcode = dict()
-        # XXX daapplaylist should be hidden from view. 
-        self.daapitems = dict()         # DAAP format XXX - index via the items
-        self.daap_playlists = dict()    # Playlist, in daap format
-        self.playlist_item_map = dict() # Playlist -> item mapping
-        self.deleted_item_map = dict()  # Playlist -> deleted item mapping
         self.in_shutdown = False
-        self.config_handle = app.backend_config_watcher.connect('changed',
-                             self.on_config_changed)
 
     # Reserved for future use: you can register new sharing protocols here.
     def register_protos(self, proto):
         pass
 
-    # Note: this can be called more than once, if you change your podcast
-    # configuration to show/hide podcast items!  What we do here is,
-    # ditch the old list re-create new one with the updated information.
-    # This is a complete list send and not a diff like handle_items_changed()
-    # is.  But make sure at the same time that the old deleted stuff is marked
-    # as such.
-    def handle_item_list(self, message):
-        with self.item_lock:
-            self.update_revision()
-            item_ids = [item.id for item in message.items]
-            if message.id is not None:
-                self.daap_playlists[message.id]['revision'] = self.revision
-                self.playlist_item_map[message.id] = item_ids
-                self.deleted_item_map[message.id] = []
-                # Update the revision of these items, so they will match
-                # when the playlist items are fetched.
-                for item_id in item_ids:
-                    try:
-                        self.daapitems[item_id]['revision'] = self.revision
-                    except KeyError:
-                        # This non-downloaded podcast item?  I think what
-                        # we want to do here is set it as a podcast item
-                        # but disable the items that are not yet available.
-                        #
-                        # Requires work to update the watchable view to include
-                        # stuff from the individual feeds.
-                        pass
-            else:
-                deleted = [item_id for item_id in self.daapitems if
-                           item_id not in item_ids]
-                self.make_item_dict(message.items)
-                for d in deleted:
-                    self.daapitems[d] = self.deleted_item()
-
-    def handle_items_changed(self, message):
-        # If items are changed, overwrite with a recreated entry.  This
-        # might not be necessary, as currently this change can be due to an 
-        # item being moved out of, and then into, a playlist.  Also, based on 
-        # message.id, change the playlists accordingly.
-        with self.item_lock:
-            self.update_revision()
-            for itemid in message.removed:
-                try:
-                    if message.id is not None:
-                        revision = self.revision
-                        self.daap_playlists[message.id]['revision'] = revision
-                        self.playlist_item_map[message.id].remove(itemid)
-                        self.deleted_item_map[message.id].append(itemid)
-                except KeyError:
-                    pass
-                try:
-                    if message.id is None:
-                        self.daapitems[itemid] = self.deleted_item()
-                except KeyError:
-                    pass
-            if message.id is not None:
-                item_ids = [item.id for item in message.added]
-                self.daap_playlists[message.id]['revision'] = self.revision
-                # If they have been previously removed, unmark deleted.
-                for i in item_ids:
-                    try:
-                        self.deleted_item_map[message.id].remove(i)
-                    except ValueError:
-                        pass
-                self.playlist_item_map[message.id] += item_ids
-
-            # Only make or modify an item if it is for main library.
-            # Otherwise, we just re-create an item when all that's changed
-            # is the contents of the playlist.
-            if message.id is None:
-                self.make_item_dict(message.added)
-                self.make_item_dict(message.changed)
-            else:
-                # Simply update the item's revision.
-                # XXX Feed sharing: catch KeyError because item may not
-                # be downloaded (and hence not in watchable list).
-                # Catch changed as when feed items get added they
-                # do not get added to the main list.  Catch added, when newly
-                # available podcasts come into view.
-                for x in message.added:
-                    try:
-                        self.daapitems[x.id]['revision'] = self.revision
-                    except KeyError:
-                        pass
-                for x in message.changed:
-                    try:
-                        self.daapitems[x.id]['revision'] = self.revision
-                    except KeyError: 
-                        pass
-
-    def deleted_item(self):
-        return dict(revision=self.revision, valid=False)
-
-    # At this point: item_lock acquired
-    def update_revision(self, directed=None):
-        self.revision += 1
-        self.directed = directed
-        self.revision_cv.notify_all()
-
-    def make_daap_playlists(self, items, typ):
-        for item in items:
-            itemprop = dict()
-            for attr in daap_rmapping.keys():
-               daap_string = daap_rmapping[attr]
-               itemprop[daap_string] = getattr(item, attr, None)
-               # XXX Pants.  We use this for the initial population when
-               # we pass in DB objects and then later on we also use this
-               # when they are in fact tab infos.  In the raw DBObject we
-               # use title, and in the tab infos we use name.  But in the
-               # DBObject 'name' is valid too!
-               # 
-               # Blargh!
-               if daap_string == 'dmap.itemname':
-                   try:
-                       itemprop[daap_string] = item.get_title()
-                   except AttributeError:
-                       itemprop[daap_string] = getattr(item, 'name', None)
-               if isinstance(itemprop[daap_string], unicode):
-                   itemprop[daap_string] = (
-                     itemprop[daap_string].encode('utf-8'))
-            daap_string = 'dmap.itemcount'
-            if daap_string == 'dmap.itemcount':
-                # At this point, the item list has not been fully populated 
-                # yet.  Therefore, it may not be possible to run 
-                # get_items() and getting the count attribute.  Instead we 
-                # use the playlist_item_map.
-                if typ == 'playlist':
-                    tmp = [y for y in 
-                           playlist.PlaylistItemMap.playlist_view(item.id)]
-                elif typ == 'feed':
-                    tmp = [y for y in Item.feed_view(item.id)]
-                else:
-                    # whoups, sorry mate!
-                    raise ValueError('unknown playlist variant type %s' % typ)
-                count = len(tmp)
-                itemprop[daap_string] = count
-            daap_string = 'dmap.parentcontainerid'
-            if daap_string == 'dmap.parentcontainerid':
-                itemprop[daap_string] = 0
-                #attributes.append(('mpco', 0)) # Parent container ID
-                #attributes.append(('mimc', count))    # Item count
-                #self.daap_playlists[x.id] = attributes
-            daap_string = 'dmap.persistentid'
-            if daap_string == 'dmap.persistentid':
-                itemprop[daap_string] = item.id
-
-            itemprop['podcast'] = typ == 'feed'
-            # XXX
-            if itemprop['podcast']:
-                itemprop[DAAP_PODCAST_KEY] = True
-
-            # piece de resistance
-            itemprop['revision'] = self.revision
-            itemprop['valid'] = True
-
-            self.daap_playlists[item.id] = itemprop
-
-    def handle_feed_added(self, obj, added):
-        added = [a for a in added if not a.url or
-                 (a.url and not a.url.startswith('dtv:'))]
-        self.handle_playlist_added(obj, added, typ='feed')
-
-    def handle_feed_changed(self, obj, changed):
-        changed = [c for c in changed if not c.url or
-                 (c.url and not c.url.startswith('dtv:'))]
-        self.handle_playlist_changed(obj, changed, typ='feed')
-
-    def handle_feed_removed(self, obj, removed):
-        # Can't actually filter out removed - it is a list of ids.  But no
-        # matter as we just ignore it if we can't find it in our tracked
-        # playlists.
-        self.handle_playlist_removed(obj, removed, typ='feed')
-
-    def handle_playlist_added(self, obj, added, typ='playlist'):
-        playlists = [x for x in added if not x.is_folder]
-
-        def _handle_playlist_added():
-            with self.item_lock:
-                self.update_revision()
-                self.make_daap_playlists(playlists, typ)
-                for p in playlists:
-                    # no need to update the revision here: already done in
-                    # make_daap_playlists.
-                    self.playlist_item_map[p.id] = []
-                    self.deleted_item_map[p.id] = []
-                    app.info_updater.item_list_callbacks.add(self.type,
-                                                     p.id,
-                                                     self.handle_item_list)
-                    app.info_updater.item_changed_callbacks.add(self.type,
-                                                     p.id,
-                                                     self.handle_items_changed)
-                    id_ = (p.id, typ == 'feed')
-                    messages.TrackItems(self.type, id_).send_to_backend()
-
-        eventloop.add_urgent_call(lambda: _handle_playlist_added(),
-                                  "SharingManagerBackend: playlist added")
-
-    def handle_playlist_changed(self, obj, changed, typ='playlist'):
-        def _handle_playlist_changed():
-            with self.item_lock:
-                self.update_revision()
-                # We could just overwrite everything without actually deleting
-                # the object.  A missing key means it's a folder, and we skip
-                # over it.
-                playlist = []
-                for x in changed:
-                    if self.daap_playlists.has_key(x.id):
-                        #self.daap_playlists[x.id] = self.deleted_item()
-                        del self.daap_playlists[x.id]
-                        playlist.append(x)
-                self.make_daap_playlists(playlist, typ)
-
-        eventloop.add_urgent_call(lambda: _handle_playlist_changed(),
-                                  "SharingManagerBackend: playlist changed")
-
-
-    def handle_playlist_removed(self, obj, removed, typ='playlist'):
-        def _handle_playlist_removed():
-            with self.item_lock:
-                self.update_revision()
-                for x in removed:
-                    # Missing key means it's a folder and we skip over it.
-                    if self.daap_playlists.has_key(x):
-                        self.daap_playlists[x] = self.deleted_item()
-                        #del self.daap_playlists[x]
-                        try:
-                            del self.playlist_item_map[x]
-                        except KeyError:
-                            logging.debug('sharing: cannot delete '
-                                          'playlist_item_map id = %d', x)
-                        try:
-                            del self.deleted_item_map[x]
-                        except KeyError:
-                            logging.debug('sharing: cannot delete '
-                                          'deleted_item_map id = %d', x)
-                        messages.StopTrackingItems(self.type,
-                                                   x).send_to_backend()
-                        app.info_updater.item_list_callbacks.remove(self.type,
-                                                    x,
-                                                    self.handle_item_list)
-                        app.info_updater.item_changed_callbacks.remove(
-                                                    self.type,
-                                                    x,
-                                                    self.handle_items_changed)
-
-        eventloop.add_urgent_call(lambda: _handle_playlist_removed(),
-                                  "SharingManagerBackend: playlist removed")
-
-    # Can't do away with this one.  Info_updater callbacks only notifies us
-    # on the fly when something is added/changed/removed, but not the initial
-    # state that should be in place on startup.
-    def populate_playlists(self):
-        with self.item_lock:
-            self.update_revision()
-            # First, playlists.
-            playlists = playlist.SavedPlaylist.make_view()
-            # Grab feeds.  We like the feeds, but don't grab fake ersatz stuff. 
-            feeds = [f for f in feed.Feed.make_view() if not f.orig_url or
-                     (f.orig_url and not f.orig_url.startswith('dtv:'))]
-            playlist_ids = [p.id for p in playlists]
-            feed_ids = [f.id for f in feeds]
-            self.make_daap_playlists(playlist.SavedPlaylist.make_view(),
-                                     'playlist')
-            # et tu, feed.  But we basically handle it the same way.
-            self.make_daap_playlists(feeds, 'feed')
-            # Now, build the playlists.
-            for playlist_id in self.daap_playlists.keys():
-                # revision for playlist already created in make_daap_playlist
-                if playlist_id in playlist_ids:
-                    self.playlist_item_map[playlist_id] = [x.item_id
-                      for x in playlist.PlaylistItemMap.playlist_view(
-                      playlist_id)]
-                elif playlist_id in feed_ids:
-                    self.playlist_item_map[playlist_id] = [x.id
-                      for x in Item.feed_view(playlist_id)]
-                else:
-                    logging.error('playlist id %s not valid', playlist_id)
-                    continue
-                self.deleted_item_map[playlist_id] = []
-
     def start_tracking(self):
-        self.populate_playlists()
-        # Track items that do not belong in any playlist.  Do this first
-        # so we pick up all items in the media library.
-        app.info_updater.item_list_callbacks.add(self.type, None,
-                                                 self.handle_item_list)
-        app.info_updater.item_changed_callbacks.add(self.type, None,
-                                                 self.handle_items_changed)
-        messages.TrackItems(self.type, None).send_to_backend()
-
-        # Now, for the specific playlists.
-        for playlist_id in self.daap_playlists:
-            app.info_updater.item_list_callbacks.add(self.type, playlist_id,
-                                                 self.handle_item_list)
-            app.info_updater.item_changed_callbacks.add(self.type, playlist_id,
-                                                 self.handle_items_changed)
-            id_ = (playlist_id, self.daap_playlists[playlist_id]['podcast'])
-            messages.TrackItems(self.type, id_).send_to_backend()
-
-        app.info_updater.connect('playlists-added',
-                                 self.handle_playlist_added)
-        app.info_updater.connect('playlists-changed',
-                                 self.handle_playlist_changed)
-        app.info_updater.connect('playlists-removed',
-                                 self.handle_playlist_removed)
-
-        app.info_updater.connect('feeds-added',
-                                 self.handle_feed_added)
-        app.info_updater.connect('feeds-changed',
-                                 self.handle_feed_changed)
-        app.info_updater.connect('feeds-removed',
-                                 self.handle_feed_removed)
+        self.data_set.start_tracking()
 
     def stop_tracking(self):
-        for playlist_id in self.daap_playlists:
-            messages.StopTrackingItems(self.type,
-                                       playlist_id).send_to_backend()
-            app.info_updater.item_list_callbacks.remove(self.type, playlist_id,
-                                                    self.handle_item_list)
-            app.info_updater.item_changed_callbacks.remove(self.type,
-                                                    playlist_id,
-                                                    self.handle_items_changed)
-        messages.StopTrackingItems(self.type, self.id).send_to_backend()
-        app.info_updater.item_list_callbacks.remove(self.type, None,
-                                                    self.handle_item_list)
-        app.info_updater.item_changed_callbacks.remove(self.type, None,
-                                                    self.handle_items_changed)
-
-        app.info_updater.disconnect(self.handle_playlist_added)
-        app.info_updater.disconnect(self.handle_playlist_changed)
-        app.info_updater.disconnect(self.handle_playlist_removed)
-
-        app.info_updater.disconnect(self.handle_feed_added)
-        app.info_updater.disconnect(self.handle_feed_changed)
-        app.info_updater.disconnect(self.handle_feed_removed)
-
-    def watcher(self, session, request):
-        while True:
-            try:
-                r, w, x = select.select([request], [], [])
-                # Unlock the revision by bumping it
-                with self.item_lock:
-                    logging.debug('WAKEUP %s', session)
-                    self.update_revision(directed=session)
-                break
-            except select.error, (err, errstring):
-                if err == errno.EINTR:
-                    continue
-            except StandardError, err:
-                raise ValueError('watcher: unknown error during select')
+        self.data_set.stop_tracking()
 
     def get_revision(self, session, old_revision, request):
         """Block until the there is a new revision.
@@ -1422,21 +1446,7 @@ class SharingManagerBackend(object):
 
         :returns: newest revision number
         """
-        self.revision_cv.acquire()
-        while self.revision == old_revision:
-            t = threading.Thread(target=self.watcher, args=(session, request))
-            t.daemon = True
-            t.start()
-            self.revision_cv.wait()
-            # If we really did a update or if the wakeup was directed at us
-            # (because we are quitting or something) then release the lock
-            # and return the revision
-            if self.directed is None or self.directed == session:
-                break
-            # update revision and then wait again
-            old_revision = self.revision
-        self.revision_cv.release()
-        return self.revision
+        return self.data_set.get_revision(old_revision, request)
 
     def get_file(self, itemid, generation, ext, session, request_path_func,
                  offset=0, chunk=None):
@@ -1448,14 +1458,10 @@ class SharingManagerBackend(object):
 
         file_obj = None
         no_file = (None, None)
-        # Get a copy of the item under the lock ... if the underlying item
-        # is going away then we'll deal with it later on.  only care about
-        # the reference being valid (?)
-        with self.item_lock:
-            try:
-                daapitem = self.daapitems[itemid]
-            except KeyError:
-                return no_file
+        # Get a copy of the item and use that.  If the item gets deleted in a
+        # different thread while we're running the code below, then we'll deal
+        # with it later on.
+        daapitem = self.data_set.get_item(itemid)
         path = daapitem['path']
         if ext in ('ts', 'm3u8'):
             # If we are requesting a playlist, this basically means that
@@ -1544,54 +1550,10 @@ class SharingManagerBackend(object):
             - dmap.itemcount -> number of items in the playlist
             - dmap.parentcontainerid -> DAAP id of the parent playlist
             (currently always 0)
-            - podcast -> Is the playlist a podcast?
             - revision -> revision this item was last updated
             - valid -> False if the item has been deleted
         """
-        returned = dict()
-        with self.item_lock:
-            for p in self.daap_playlists:
-                pl = self.daap_playlists[p]
-                send_podcast = (
-                  SharingManagerBackend.SHARE_FEED in self.share_types)
-                if (not pl['valid'] or not pl['podcast'] or
-                  (pl['podcast'] and send_podcast)):
-                    returned[p] = pl
-                else:
-                    returned[p] = self.deleted_item()
-        return returned
-
-    def on_config_changed(self, obj, key, value):
-        keys = [prefs.SHARE_AUDIO.key, prefs.SHARE_VIDEO.key,
-                prefs.SHARE_FEED.key]
-        if key in keys:
-            with self.item_lock:
-                share_types_orig = self.share_types
-                self.share_types = []
-                if app.config.get(prefs.SHARE_AUDIO):
-                    self.share_types += [SharingManagerBackend.SHARE_AUDIO]
-                if app.config.get(prefs.SHARE_VIDEO):
-                    self.share_types += [SharingManagerBackend.SHARE_VIDEO]
-                if app.config.get(prefs.SHARE_FEED):
-                    self.share_types += [SharingManagerBackend.SHARE_FEED]
-                # Just by enabling and disabing this, the selection of items
-                # available to a user could have changed.  We are a bit lazy
-                # here and just use a hammer to update everything without
-                # working out what needs to be updated.
-                if share_types_orig != self.share_types:
-                    self.update_revision()
-                for p in self.daap_playlists:
-                    self.daap_playlists[p]['revision'] = self.revision
-                for i in self.daapitems:
-                    self.daapitems[i]['revision'] = self.revision
-
-    # XXX TEMPORARY: should this item be podcast?  We won't need this when
-    # the item type's metadata is completely accurate and won't lie to us.
-    def item_from_podcast(self, item):
-        feed_url = item.feed_url
-        ersatz_feeds = ['dtv:manualFeed', 'dtv:searchDownloads', 'dtv:search']
-        is_feed = not any([feed_url.startswith(x) for x in ersatz_feeds])
-        return item.feed_id and is_feed and not item.is_file_item
+        return self.data_set.get_playlists()
 
     def get_items(self, playlist_id=None):
         """Get the current list of items
@@ -1607,135 +1569,7 @@ class SharingManagerBackend(object):
         :param playlist_id: playlist to fetch items from, or None to fetch all
         items.
         """
-        # Easy: just return
-        with self.item_lock:
-            items = dict()
-            if not playlist_id:
-                for k in self.daapitems.keys():
-                    item = self.daapitems[k]
-                    valid = item['valid']
-                    if valid:
-                        mk = item['com.apple.itunes.mediakind']
-                        ik = item['org.participatoryculture.miro.itemkind']
-                        podcast = ik and (ik & MIRO_ITEMKIND_PODCAST)
-                        include_if_podcast = (podcast and
-                          SharingManagerBackend.SHARE_FEED in self.share_types)
-                    if (not valid or
-                      mk in self.share_types and 
-                      (not podcast or include_if_podcast)):
-                        items[k] = item
-                    else:
-                        items[k] = self.deleted_item()
-                return items
-            # XXX Somehow cache this?
-            playlist = dict()
-            if self.playlist_item_map.has_key(playlist_id):
-                for x in self.daapitems.keys():
-                    item = self.daapitems[x]
-                    valid = item['valid']
-                    if valid:
-                        mk = item['com.apple.itunes.mediakind']
-                        ik = item['org.participatoryculture.miro.itemkind']
-                        podcast = ik and (ik & MIRO_ITEMKIND_PODCAST)
-                        include_if_podcast = (podcast and
-                          SharingManagerBackend.SHARE_FEED in self.share_types)
-                    if (x in self.playlist_item_map[playlist_id] and
-                      (not valid or
-                       mk in self.share_types and
-                       (not podcast or include_if_podcast))):
-                        playlist[x] = item
-                    else:
-                        playlist[x] = self.deleted_item()
-            return playlist
-
-    def make_item_dict(self, items):
-        # See the daap_rmapping/daap_mapping for a list of mappings that
-        # we do.
-        for item in items:
-            itemprop = dict()
-            for attr in daap_rmapping.keys():
-                daap_string = daap_rmapping[attr]
-                itemprop[daap_string] = getattr(item, attr, None)
-                if isinstance(itemprop[daap_string], unicode):
-                    itemprop[daap_string] = (
-                      itemprop[daap_string].encode('utf-8'))
-                # Fixup the year, etc being -1.  XXX should read the daap
-                # type then determine what to do.
-                if itemprop[daap_string] == -1:
-                    itemprop[daap_string] = 0
-                # Fixup: these are stored as string?
-                if daap_string in ('daap.songtracknumber',
-                                   'daap.songyear'):
-                    if itemprop[daap_string] is not None:
-                        itemprop[daap_string] = int(itemprop[daap_string])
-                # Fixup the duration: need to convert to millisecond.
-                if daap_string == 'daap.songtime':
-                    if itemprop[daap_string]:
-                        itemprop[daap_string] *= DURATION_SCALE
-                    else:
-                        itemprop[daap_string] = 0
-            # Fixup the enclosure format.  This is hardcoded to mp4, 
-            # as iTunes requires this.  Other clients seem to be able to sniff
-            # out the container.  We can change it if that's no longer true.
-            # Fixup the media kind: XXX what about u'other'?
-            enclosure = item.file_format
-            if enclosure not in supported_filetypes:
-                nam, ext = os.path.splitext(item.video_path)
-                if ext in supported_filetypes:
-                    enclosure = ext
-
-            # If this should be considered an item from a podcast feed then
-            # mark it as such.  But allow for manual overriding by the user,
-            # as per what was set in the metadata.
-            if self.item_from_podcast(item):
-                key = 'org.participatoryculture.miro.itemkind'
-                itemprop[key] = MIRO_ITEMKIND_PODCAST
-            try:
-                key = 'org.participatoryculture.miro.itemkind'
-                kind = itemprop[key]
-                if kind:
-                    itemprop[key] = miro_itemkind_mapping[kind]
-            except KeyError:
-                pass
-            if itemprop['com.apple.itunes.mediakind'] == u'video':
-                itemprop['com.apple.itunes.mediakind'] = (
-                  libdaap.DAAP_MEDIAKIND_VIDEO)
-                if not enclosure:
-                    enclosure = '.mp4'
-                enclosure = enclosure[1:]
-                itemprop['daap.songformat'] = enclosure
-            else:
-                itemprop['com.apple.itunes.mediakind'] = (
-                  libdaap.DAAP_MEDIAKIND_AUDIO)
-                if not enclosure:
-                    enclosure = '.mp3'
-                enclosure = enclosure[1:]
-                itemprop['daap.songformat'] = enclosure
-            # Normally our strings are fixed up above, but then we re-pull
-            # this out of the input data structure, so have to re-convert.
-            if isinstance(itemprop['daap.songformat'], unicode):
-                tmp = itemprop['daap.songformat'].encode('utf-8')
-                itemprop['daap.songformat'] = tmp
-
-            # don't forget to set the path..
-            # ok: it is ignored since this is not valid dmap/daap const.
-            itemprop['path'] = item.video_path
-            defaults = (resources.path('images/thumb-default-audio.png'),
-                        resources.path('images/thumb-default-video.png'))
-            if item.thumbnail not in defaults:
-                itemprop['cover_art'] = item.thumbnail
-            else:
-                itemprop['cover_art'] = ''
-
-            # HACK: the rmapping dict doesn't work because we can't
-            # double up the key.
-            itemprop['dmap.containeritemid'] = itemprop['dmap.itemid']
-
-            # piece de resistance: tack on the revision.
-            itemprop['revision'] = self.revision
-            itemprop['valid'] = True
-
-            self.daapitems[item.id] = itemprop
+        return self.data_set.get_items(playlist_id)
 
     def finished_callback(self, session):
         # Like shutdown but only shuts down one of the sessions.  No need to

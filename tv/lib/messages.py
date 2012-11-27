@@ -1436,7 +1436,7 @@ class ItemChanges(FrontendMessage):
     :attribute changed_columns: set columns that were changed (the union of
     changes for all items)
     :attribute dlstats_changed: Did we get new download stats?
-    :attribute playlist_changed: Did items get added/removed from playlists?
+    :attribute playlists_changed: Did items get added/removed from playlists?
     """
     def __init__(self, added, changed, removed, changed_columns,
                  dlstats_changed, playlists_changed):

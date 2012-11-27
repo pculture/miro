@@ -371,10 +371,10 @@ class SharingServerTest(EventLoopTest):
         self.setup_mock_objects()
         self.setup_config()
         self.setup_data()
-        self.setup_sharing_manager_backend()
 
     def tearDown(self):
         del app.info_updater
+        EventLoopTest.tearDown(self)
 
     def setup_mock_objects(self):
         app.info_updater = mock.Mock()
@@ -385,6 +385,7 @@ class SharingServerTest(EventLoopTest):
         app.config.set(prefs.SHARE_FEED, True)
 
     def setup_data(self):
+        self.manual_feed = testobjects.make_manual_feed()
         self.feed_with_downloads = testobjects.make_feed()
         self.feed_without_downloads = testobjects.make_feed()
         self.audio_items = []
@@ -394,22 +395,23 @@ class SharingServerTest(EventLoopTest):
             self.audio_items.append(testobjects.make_file_item(
                 self.feed_with_downloads, u'audio-item-%s' % i, ext='.mp3'))
             self.video_items.append(testobjects.make_file_item(
-                self.feed_with_downloads, u'video-item-%s' % i, ext='.avi'))
+                self.manual_feed, u'video-item-%s' % i, ext='.avi'))
             self.undownloaded_items.append(testobjects.make_item(
                 self.feed_without_downloads, u'feed-item-%s' % i))
 
         self.audio_playlist = models.SavedPlaylist(u'My music',
                 [i.id for i in self.audio_items])
-        self.video_playlist = models.SavedPlaylist(u'My videos',
-                [i.id for i in self.video_items])
+        # put some videos in the videos playlist.  These will be sent back by
+        # the server, even if SHARE_VIDEO is not set
+        self.video_playlist_items = self.video_items[:5]
+        self.video_playlist = models.SavedPlaylist(u'My best videos',
+                [i.id for i in self.video_playlist_items])
+        app.db.finish_transaction()
+        models.Item.change_tracker.reset()
 
     def setup_sharing_manager_backend(self):
         self.backend = sharing.SharingManagerBackend()
         self.backend.start_tracking()
-        self.trackers = [messagehandler.make_item_tracker(msg)
-                for msg in self.get_backend_messages()]
-        self.trackers.append(messagehandler.PlaylistTracker())
-        self.trackers.append(messagehandler.ChannelTracker())
 
     def check_daap_list(self, daap_list, ddb_objects):
         """Check data in our SharingManagerBackend
@@ -433,60 +435,43 @@ class SharingServerTest(EventLoopTest):
         self.assertEquals(item_list[ddb_object.id]['valid'], False)
 
     def check_get_revision_will_block(self, old_revision):
-        self.assertEquals(self.backend.revision, old_revision)
-
-    def check_get_revision_doesnt_block(self, old_revision):
-        self.backend.get_revision(mock.Mock(), old_revision, mock.Mock())
-
-    def send_initial_list_from_trackers(self):
-        for tracker in self.trackers:
-            tracker.send_initial_list()
-        for msg in self.get_frontend_messages():
-            if isinstance(msg, messages.ItemList):
-                self.backend.handle_item_list(msg)
+        self.assertEquals(self.backend.data_set.revision, old_revision)
 
     def send_changes_from_trackers(self):
-        for tracker in self.trackers:
-            tracker.send_messages()
-        for msg in self.get_frontend_messages():
-            if isinstance(msg, messages.ItemsChanged):
-                self.backend.handle_items_changed(msg)
-            elif isinstance(msg, messages.TabsChanged):
-                if msg.type == 'feed':
-                    self.backend.handle_feed_added(mock.Mock(), msg.added)
-                    self.backend.handle_feed_changed(mock.Mock(), msg.changed)
-                    self.backend.handle_feed_removed(mock.Mock(), msg.removed)
-                    self.runPendingIdles()
-                elif msg.type == 'playlist':
-                    self.backend.handle_playlist_added(mock.Mock(), msg.added)
-                    self.backend.handle_playlist_changed(mock.Mock(),
-                            msg.changed)
-                    self.backend.handle_playlist_removed(mock.Mock(),
-                            msg.removed)
-                    self.runPendingIdles()
+        app.db.finish_transaction()
+        models.Item.change_tracker.send_changes()
+        self.backend.data_set.after_event_finished(mock.Mock())
 
     def test_initial_list(self):
-        self.send_initial_list_from_trackers()
+        self.setup_sharing_manager_backend()
         # test getting all items
-        self.check_daap_list(self.backend.get_items(), self.audio_items)
+        self.check_daap_list(self.backend.get_items(), 
+                             self.audio_items + self.video_playlist_items)
         # test getting playlists
         self.check_daap_list(self.backend.get_playlists(),
                 [self.audio_playlist, self.video_playlist,
-                    self.feed_with_downloads, self.feed_without_downloads])
+                 self.feed_with_downloads, self.feed_without_downloads])
         # test getting items for a playlist
         self.check_daap_list(self.backend.get_items(self.audio_playlist.id),
                 self.audio_items)
         self.check_daap_list(
-                self.backend.get_items(self.video_playlist.id), [])
+            self.backend.get_items(self.video_playlist.id),
+            self.video_playlist_items)
         self.check_daap_list(
-                self.backend.get_items(self.feed_with_downloads.id),
-                self.audio_items)
+            self.backend.get_items(self.feed_with_downloads.id),
+            self.audio_items)
         self.check_daap_list(
-                self.backend.get_items(self.feed_without_downloads.id), [])
+            self.backend.get_items(self.feed_without_downloads.id), [])
+
+    def test_initial_list_no_feeds(self):
+        app.config.set(prefs.SHARE_FEED, False)
+        self.setup_sharing_manager_backend()
+        self.check_daap_list(self.backend.get_playlists(),
+                [self.audio_playlist, self.video_playlist])
 
     def test_item_changes(self):
-        self.send_initial_list_from_trackers()
-        initial_revision = self.backend.revision
+        self.setup_sharing_manager_backend()
+        initial_revision = self.backend.data_set.revision
         added = self.video_items[0]
         added.set_user_metadata({'file_type': u'audio'})
         added.signal_change()
@@ -497,54 +482,141 @@ class SharingServerTest(EventLoopTest):
         removed.remove()
         self.check_get_revision_will_block(initial_revision)
         self.send_changes_from_trackers()
-        self.check_get_revision_doesnt_block(initial_revision)
+        self.assertNotEquals(self.backend.data_set.revision, initial_revision)
         # get_items() should reflect the changes
-        new_item_list = [added] + self.audio_items[:-1]
+        new_item_list = ([added] + self.audio_items[:-1] +
+                         self.video_playlist_items)
         self.check_daap_list(self.backend.get_items(), new_item_list)
         self.check_daap_item_deleted(self.backend.get_items(), removed)
 
     def test_feed_changes(self):
-        self.send_initial_list_from_trackers()
-        initial_revision = self.backend.revision
+        self.setup_sharing_manager_backend()
+        initial_revision = self.backend.data_set.revision
         new_feed = testobjects.make_feed()
         self.feed_with_downloads.set_title(u'New Title')
         self.feed_without_downloads.remove()
         self.send_changes_from_trackers()
-        self.check_get_revision_doesnt_block(initial_revision)
+        self.assertNotEquals(self.backend.data_set.revision, initial_revision)
         self.check_daap_list(self.backend.get_playlists(),
                 [new_feed, self.feed_with_downloads, self.audio_playlist,
                     self.video_playlist])
         self.check_daap_item_deleted(self.backend.get_playlists(),
                 self.feed_without_downloads)
+        # test adding items
+        second_revision = self.backend.data_set.revision
+        for item in self.video_items:
+            item.set_feed(new_feed.id)
+        self.send_changes_from_trackers()
+        self.assertNotEquals(self.backend.data_set.revision, second_revision)
+        self.check_daap_list(self.backend.get_items(new_feed.id),
+                             self.video_items)
+        # test removing items
+        third_revision = self.backend.data_set.revision
+        for item in self.video_items[4:]:
+            item.remove()
+        self.send_changes_from_trackers()
+        self.assertNotEquals(self.backend.data_set.revision, third_revision)
+        self.check_daap_list(self.backend.get_items(new_feed.id),
+                             self.video_items[:4])
 
     def test_playlist_changes(self):
-        self.send_initial_list_from_trackers()
-        initial_revision = self.backend.revision
+        self.setup_sharing_manager_backend()
+        initial_revision = self.backend.data_set.revision
         new_playlist = models.SavedPlaylist(u'My Playlist')
         self.audio_playlist.set_title(u'My Audio Files')
         self.video_playlist.remove()
         self.send_changes_from_trackers()
-        self.check_get_revision_doesnt_block(initial_revision)
+        self.assertNotEquals(self.backend.data_set.revision, initial_revision)
         self.check_daap_list(self.backend.get_playlists(),
                 [self.feed_with_downloads, self.feed_without_downloads,
                     self.audio_playlist, new_playlist])
         self.check_daap_item_deleted(self.backend.get_playlists(),
                 self.video_playlist)
+        # test adding items
+        second_revision = self.backend.data_set.revision
+        for item in self.video_items:
+            new_playlist.add_item(item)
+        self.send_changes_from_trackers()
+        self.assertNotEquals(self.backend.data_set.revision, second_revision)
+        self.check_daap_list(self.backend.get_items(new_playlist.id),
+                             self.video_items)
+        # test removing items
+        third_revision = self.backend.data_set.revision
+        for item in self.video_items[4:]:
+            new_playlist.remove_item(item)
+        self.send_changes_from_trackers()
+        self.assertNotEquals(self.backend.data_set.revision, third_revision)
+        self.check_daap_list(self.backend.get_items(new_playlist.id),
+                             self.video_items[:4])
 
-    def test_config_change(self):
-        self.send_initial_list_from_trackers()
-        initial_revision = self.backend.revision
-        app.config.set(prefs.SHARE_VIDEO, True)
+    def test_change_share_feed(self):
+        self.setup_sharing_manager_backend()
+        initial_revision = self.backend.data_set.revision
         app.config.set(prefs.SHARE_FEED, False)
-        self.check_get_revision_doesnt_block(initial_revision)
+        self.assertNotEquals(self.backend.data_set.revision, initial_revision)
         self.check_daap_list(self.backend.get_items(),
-                self.audio_items + self.video_items)
+                self.audio_items + self.video_playlist_items)
         self.check_daap_list(self.backend.get_playlists(),
                 [self.audio_playlist, self.video_playlist])
+        self.check_daap_item_deleted(self.backend.get_playlists(),
+                self.feed_with_downloads)
+        self.check_daap_item_deleted(self.backend.get_playlists(),
+                self.feed_without_downloads)
 
-    # FIXME: implement this
-    # def test_client_disconnects_in_get_revision(self):
-        # pass
+    def test_change_share_video(self):
+        self.setup_sharing_manager_backend()
+        initial_revision = self.backend.data_set.revision
+        app.config.set(prefs.SHARE_VIDEO, True)
+        self.assertNotEquals(self.backend.data_set.revision, initial_revision)
+
+        self.check_daap_list(self.backend.get_items(),
+                self.audio_items + self.video_items)
+        app.config.set(prefs.SHARE_VIDEO, False)
+        self.check_daap_list(self.backend.get_items(),
+                self.audio_items + self.video_playlist_items)
+        for item in self.video_items:
+            if item not in self.video_playlist_items:
+                self.check_daap_item_deleted(self.backend.get_items(), item)
+
+    def test_client_disconnects_in_get_revision(self):
+        # get_revision() blocks waiting for chainges, but it should return if
+        # the client disconnects.  Test that this happens
+        self.setup_sharing_manager_backend()
+        mock_socket = mock.Mock()
+        # We use a threading.Condition object to wait for changes.
+        self.wait_count = 0
+        def mock_wait(timeout=None):
+            # we must use a timeout since we want to poll the socket
+            self.assertNotEquals(timeout, None)
+            if self.wait_count > 2:
+                raise AssertionError("wait called too many times")
+            self.wait_count += 1
+        self.backend.data_set.condition.wait = mock_wait
+
+        # We use select() to check if the socket is closed.
+        self.select_count = 0
+        def mock_select(rlist, wlist, xlist, timeout=None):
+            self.assertEquals(timeout, 0)
+            self.assertEquals(rlist, [mock_socket])
+            if self.select_count == 0:
+                # first time around, return nothing
+                rv = [], [], []
+            elif self.select_count == 1:
+                # second time around, return the socket as available for
+                # reading.  This happens when the socket gets closed
+                rv = [mock_socket], [], []
+            else:
+                raise AssertionError("select called too much")
+            self.select_count += 1
+            return rv
+        self.patch_for_test('select.select', mock_select)
+        # calling get_revision() should set all the wheels in motion
+        initial_revision = self.backend.data_set.revision
+        new_revision = self.backend.get_revision(mock.Mock(),
+                                                 initial_revision,
+                                                 mock_socket)
+        # get_revision() should have returned before any changes happened.
+        self.assertEquals(initial_revision, new_revision)
 
     # FIXME: implement this
     # def test_get_file(self):
