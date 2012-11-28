@@ -1158,7 +1158,7 @@ class _SharedDataSet(object):
     def on_playlist_removed(self, tracker, playlist_or_feed):
         self.playlists_removed.add(playlist_or_feed)
 
-    def after_event_finished(self, eventloop):
+    def after_event_finished(self, eventloop, success):
         if not (self.playlists_changed or self.playlists_removed):
             return
         with self.lock:

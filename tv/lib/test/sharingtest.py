@@ -440,7 +440,7 @@ class SharingServerTest(EventLoopTest):
     def send_changes_from_trackers(self):
         app.db.finish_transaction()
         models.Item.change_tracker.send_changes()
-        self.backend.data_set.after_event_finished(mock.Mock())
+        self.backend.data_set.after_event_finished(mock.Mock(), True)
 
     def test_initial_list(self):
         self.setup_sharing_manager_backend()
