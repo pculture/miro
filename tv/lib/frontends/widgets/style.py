@@ -515,7 +515,6 @@ class StatusRenderer(ListViewRenderer):
         # add the button, if needed
         if self.should_show_download_button():
             layout = self.layout_text(layout_manager, width, height)
-            
             button = self.make_button(layout_manager)
             button_x = width - button.get_size()[0]
             layout.add_image(button, button_x, 0, hotspot='download')
@@ -523,7 +522,7 @@ class StatusRenderer(ListViewRenderer):
             layout.center_y(top=0, bottom=height)
             return layout
 
-        if self.info.is_download:
+        if self.info.is_download and not self.info.pending_manual_download:
             return self.layout_progress(layout_manager, width, height)
         else:
             return self.layout_text(layout_manager, width, height)
