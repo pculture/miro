@@ -454,7 +454,8 @@ class ItemInfoBase(object):
 
     @property
     def is_download(self):
-        return self.downloader_state in ('downloading', 'paused')
+        return (self.downloader_state in ('downloading', 'paused') or
+                self.pending_manual_download)
 
     @property
     def is_paused(self):

@@ -362,11 +362,11 @@ class ItemContextMenuHandler(object):
                         container.append(info)
                 if not (info.device or info.remote):
                     editable = True
-            elif info.state == 'paused':
+            elif info.is_paused:
                 paused.append(info)
-            elif info.state == 'downloading':
+            elif info.is_download:
                 downloading.append(info)
-                if item.is_torrent and not item.is_seeding:
+                if info.is_torrent and not info.is_seeding:
                     uploadable.append(info)
             else:
                 available.append(info)

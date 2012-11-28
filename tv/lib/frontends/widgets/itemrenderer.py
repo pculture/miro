@@ -261,8 +261,7 @@ class ItemRenderer(ItemRendererBase):
         self.torrent_folder_description = util.HTMLStripper().strip(text)
 
     def layout_all(self, layout_manager, width, height, selected, hotspot):
-        download_mode = (self.info.is_download or
-                         self.info.pending_manual_download)
+        download_mode = self.info.is_download
         self.canvas.start_new_cell(layout_manager, width, height, selected,
                 hotspot, download_mode)
         # add elements that are always present
