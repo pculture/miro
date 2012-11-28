@@ -261,7 +261,8 @@ class ItemRenderer(ItemRendererBase):
         self.torrent_folder_description = util.HTMLStripper().strip(text)
 
     def layout_all(self, layout_manager, width, height, selected, hotspot):
-        download_mode = self.info.is_download
+        download_mode = (self.info.is_download or
+                         self.info.pending_manual_download)
         self.canvas.start_new_cell(layout_manager, width, height, selected,
                 hotspot, download_mode)
         # add elements that are always present
@@ -365,6 +366,8 @@ class ItemRenderer(ItemRendererBase):
                                    self.info.upload_rate_text,
                                    self.info.upload_size_text)
         self.canvas.add_download_info(download_info)
+        print '%s %s %s' % (self.info.title, self.info.is_paused,
+                            self.info.rate)
         if self.info.is_paused:
             pass
         elif self.info.rate is None:

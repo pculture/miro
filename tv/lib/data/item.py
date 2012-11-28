@@ -49,6 +49,7 @@ from miro import fileutil
 from miro import prefs
 from miro import schema
 from miro import util
+from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro.plat.utils import PlatformFilenameType
 
@@ -172,7 +173,7 @@ class ItemSelectInfo(object):
         SelectColumn('remote_downloader', 'current_size', 'downloaded_size'),
         SelectColumn('remote_downloader', 'total_size', 'downloader_size'),
         SelectColumn('remote_downloader', 'upload_size'),
-        SelectColumn('remote_downloader', 'activity', 'startup_activity'),
+        SelectColumn('remote_downloader', 'activity', 'downloader_activity'),
         SelectColumn('remote_downloader', 'seeders'),
         SelectColumn('remote_downloader', 'leechers'),
         SelectColumn('remote_downloader', 'connections'),
@@ -464,6 +465,15 @@ class ItemInfoBase(object):
         return self.downloader_state == 'uploading'
 
     @property
+    def startup_activity(self):
+        if self.pending_manual_download:
+            return self.pending_reason
+        elif self.downloader_activity:
+            return self.downloader_activity
+        else:
+            return _("starting up...")
+
+    @property
     def download_progress(self):
         """Calculate how for a download has progressed.
 
@@ -703,7 +713,7 @@ class DeviceItemSelectInfo(ItemSelectInfo):
         'pending_manual_download': None,
         'downloader_state': None,
         'upload_rate': None,
-        'startup_activity': None,
+        'downloader_activity': None,
         'downloader_content_type': None,
         # feed stuff
         'feed_id': None,
@@ -833,7 +843,7 @@ class SharingItemSelectInfo(ItemSelectInfo):
         'pending_manual_download': None,
         'downloader_state': None,
         'upload_rate': None,
-        'startup_activity': None,
+        'downloader_activity': None,
         'downloader_content_type': None,
         # feed stuff
         'feed_id': None,
