@@ -1292,7 +1292,7 @@ class _SharedDataSet(object):
         # Fixup the media kind: XXX what about u'other'?
         enclosure = item_info.file_format
         if enclosure not in supported_filetypes:
-            nam, ext = os.path.splitext(item_info.video_path)
+            nam, ext = os.path.splitext(item_info.filename)
             if ext in supported_filetypes:
                 enclosure = ext
         if enclosure:
