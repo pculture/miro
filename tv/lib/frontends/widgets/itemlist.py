@@ -313,6 +313,48 @@ class ItemList(itemtrack.ItemTracker):
         for row in xrange(start, end+1):
             self.group_info[row] = (row-start, total, self.get_row(start))
 
+class ItemTrackerUpdater(object):
+    """Keep a list of ItemTrackers and call on_item_changes when needed.
+
+    Note that this class is mostly used for ItemList objects, which works
+    since it derives from ItemTracker.  However, it can also be used for raw
+    ItemTrackers.
+    """
+
+    def __init__(self):
+        self.trackers = set()
+        self.device_trackers = set()
+        self.sharing_trackers = set()
+
+    def _set_for_tracker(self, item_tracker):
+        source_type_map = {
+            item.ItemSource: self.trackers,
+            item.DeviceItemSource: self.device_trackers,
+            item.SharingItemSource: self.sharing_trackers,
+        }
+        return source_type_map[type(item_tracker.item_source)]
+
+    def add_tracker(self, item_tracker):
+        self._set_for_tracker(item_tracker).add(item_tracker)
+
+    def remove_tracker(self, item_tracker):
+        try:
+            self._set_for_tracker(item_tracker).remove(item_tracker)
+        except KeyError:
+            logging.warn("KeyError in ItemTrackerUpdater.remove_tracker")
+
+    def on_item_changes(self, message):
+        for tracker in self.trackers:
+            tracker.on_item_changes(message)
+
+    def on_device_item_changes(self, message):
+        for tracker in self.device_trackers:
+            tracker.on_item_changes(message)
+
+    def on_sharing_item_changes(self, message):
+        for tracker in self.sharing_trackers:
+            tracker.on_item_changes(message)
+
 class ItemListPool(object):
     """Pool of ItemLists that the frontend is using.
 
@@ -349,6 +391,7 @@ class ItemListPool(object):
         new_list = ItemList(tab_type, tab_id, sort, group_func, filters,
                             search_text)
         self.all_item_lists.add(new_list)
+        app.item_tracker_updater.add_tracker(new_list)
         self._refcounts[new_list] = 1
         return new_list
 
@@ -377,26 +420,7 @@ class ItemListPool(object):
             self.all_item_lists.remove(item_list)
             del self._refcounts[item_list]
             item_list.destroy()
-
-    def on_item_changes(self, message):
-        """Call on_item_changes for each ItemList in the pool."""
-        for item_list in self.all_item_lists:
-            if not (item_list.is_for_device() or item_list.is_for_share()):
-                item_list.on_item_changes(message)
-
-    def on_device_item_changes(self, message):
-        """Call on_item_changes for each ItemList in the pool."""
-        for item_list in self.all_item_lists:
-            if (item_list.is_for_device() and
-                item_list.device_id() == message.device_id):
-                item_list.on_item_changes(message)
-
-    def on_sharing_item_changes(self, message):
-        """Call on_item_changes for each ItemList in the pool."""
-        for item_list in self.all_item_lists:
-            if (item_list.is_for_share() and
-                item_list.share_id() == message.share_id):
-                item_list.on_item_changes(message)
+            app.item_tracker_updater.remove_tracker(item_list)
 
 # grouping functions
 def album_grouping(info):

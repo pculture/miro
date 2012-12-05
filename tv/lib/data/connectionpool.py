@@ -44,7 +44,7 @@ class ConnectionPool(object):
 
     :attribute wal_mode: Is the database using WAL mode for its journal?
     """
-    def __init__(self, db_path, min_connections=2, max_connections=4):
+    def __init__(self, db_path, min_connections=2, max_connections=7):
         """Create a new ConnectionPool
 
         :param db_path: path to the database to connect to

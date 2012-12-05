@@ -76,6 +76,7 @@ class ItemTrackerQueryBase(object):
         self.conditions = []
         self.match_string = None
         self.order_by = []
+        self.limit = None
 
     def join_sql(self, table, join_type='LEFT JOIN'):
         return self.select_info.join_sql(table, join_type=join_type)
@@ -187,6 +188,9 @@ class ItemTrackerQueryBase(object):
             ob = ItemTrackerOrderBy(table, column, collation, descending)
             self.order_by.append(ob)
 
+    def set_limit(self, limit):
+        self.limit = limit
+
     def get_columns_to_track(self):
         """Get the columns that affect the results of the query """
         columns = set()
@@ -221,6 +225,7 @@ class ItemTrackerQueryBase(object):
         self._add_joins(sql_parts, arg_list)
         self._add_conditions(sql_parts, arg_list)
         self._add_order_by(sql_parts, arg_list)
+        self._add_limit(sql_parts, arg_list)
         sql = ' '.join(sql_parts)
         logging.debug("ItemTracker: running query %s (%s)", sql, arg_list)
         item_ids = [row[0] for row in connection.execute(sql, arg_list)]
@@ -244,6 +249,7 @@ class ItemTrackerQueryBase(object):
         self._add_joins(sql_parts, arg_list, include_select_columns=True)
         self._add_conditions(sql_parts, arg_list)
         self._add_order_by(sql_parts, arg_list)
+        self._add_limit(sql_parts, arg_list)
         sql = ' '.join(sql_parts)
         logging.debug("ItemTracker: running query %s (%s)", sql, arg_list)
         item_data = list(connection.execute(sql, arg_list))
@@ -299,6 +305,10 @@ class ItemTrackerQueryBase(object):
             order_by_parts = [self._make_order_by_expression(ob)
                               for ob in self.order_by]
             sql_parts.append("ORDER BY %s" % ', '.join(order_by_parts))
+
+    def _add_limit(self, sql_parts, arg_list):
+        if self.limit is not None:
+            sql_parts.append("LIMIT %s" % self.limit)
 
     def _make_order_by_expression(self, ob):
         parts = []

@@ -30,6 +30,7 @@
 """displays.py -- Handle switching the content on the right hand side of the
 app.
 """
+import functools
 import logging
 
 import os
@@ -39,6 +40,8 @@ from miro import messages
 from miro import signals
 from miro import prefs
 from miro import filetypes
+from miro.data import item
+from miro.data import itemtrack
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import browser
@@ -327,6 +330,64 @@ class DisplayManager(object):
     def push_folder_contents_display(self, folder_info, start_playing=False):
         self.push_display(FolderContentsDisplay(folder_info, start_playing))
 
+class RecentlyActiveTracker(object):
+    """Used by GuideDisplay to track recently downloaded/played items."""
+
+    # maximum number of items to track for each of the lists
+    ITEM_LIMIT = 6
+
+    def __init__(self, guide_tab):
+        # map ItemTracker objects to the GuideTab method we should call to set
+        # the list for
+        self.trackers = {
+            self._recently_downloaded_tracker():
+                guide_tab.set_recently_downloaded,
+            self._recently_played_tracker('video'):
+                guide_tab.set_recently_watched,
+            self._recently_played_tracker('audio'):
+                guide_tab.set_recently_listened,
+        }
+
+        for (tracker, set_recent_method) in self.trackers.items():
+            list_callback = functools.partial(self.on_list_changed,
+                                              set_recent_method)
+            change_callback = functools.partial(self.on_items_changed,
+                                                set_recent_method)
+            tracker.connect('list-changed', list_callback)
+            tracker.connect('items-changed', change_callback)
+            app.item_tracker_updater.add_tracker(tracker)
+            set_recent_method(tracker.get_items())
+
+    def destroy(self):
+        for (tracker, set_recent_method) in self.trackers:
+            app.item_tracker_updater.remove_tracker(tracker)
+
+    def _recently_downloaded_tracker(self):
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('downloaded_time', 'IS NOT', None)
+        query.add_condition('expired', '=', False)
+        query.add_condition('parent_id', 'IS', None)
+        query.add_condition('watched_time', 'IS', None)
+        query.set_order_by(['-downloaded_time'])
+        query.set_limit(self.ITEM_LIMIT)
+        return itemtrack.ItemTracker(call_on_ui_thread, query,
+                                     item.ItemSource())
+
+    def _recently_played_tracker(self, file_type):
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('file_type', '=', file_type)
+        query.add_condition('watched_time', 'IS NOT', None)
+        query.set_order_by(['-last_watched'])
+        query.set_limit(self.ITEM_LIMIT)
+        return itemtrack.ItemTracker(call_on_ui_thread, query,
+                                     item.ItemSource())
+
+    def on_list_changed(self, set_recent_method, tracker):
+        set_recent_method(tracker.get_items())
+
+    def on_items_changed(self, set_recent_method, tracker, changed_ids):
+        set_recent_method(tracker.get_items())
+
 class GuideDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
@@ -335,20 +396,12 @@ class GuideDisplay(TabDisplay):
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         self.widget = guidecontroller.GuideTab(selected_tabs[0].browser)
-        app.info_updater.item_list_callbacks.add(u'guide-sidebar', None,
-                                                 self.on_item_list),
-        app.info_updater.item_changed_callbacks.add(u'guide-sidebar', None,
-                                                    self.on_item_changed),
-        messages.TrackItems(u'guide-sidebar', None).send_to_backend()
+        self.recently_active_tracker = RecentlyActiveTracker(self.widget)
         app.display_manager.add_permanent_display(self) # once we're loaded,
                                                         # stay loaded
 
-    def on_item_list(self, message):
-        self.widget.on_item_list(message.items)
-
-    def on_item_changed(self, message):
-        self.widget.on_item_changed(message.added, message.changed,
-                                    message.removed)
+    def cleanup(self):
+        self.recently_active_tracker.destroy()
 
 class SiteDisplay(TabDisplay):
     _open_sites = {} # maps site ids -> BrowserNav objects for them

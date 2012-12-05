@@ -78,7 +78,7 @@ class GuideSidebarCollection(widgetset.VBox):
     WIDTH = 138
     ITEM_LIMIT = 6
 
-    def __init__(self, title, sort_key):
+    def __init__(self, title):
         widgetset.VBox.__init__(self)
         self.current_limit = self.ITEM_LIMIT
         hbox = widgetset.HBox()
@@ -92,19 +92,12 @@ class GuideSidebarCollection(widgetset.VBox):
                                                   # 17/2 is close to 8
         self.pack_start(self.item_box)
 
-        self.items = {}
-        self.currently_packed = []
-        self.sorter = operator.attrgetter(sort_key)
+        self.item_list = []
 
     def set_limit(self, limit):
-        if limit > self.ITEM_LIMIT:
-            limit = self.ITEM_LIMIT
-        if self.current_limit < limit:
+        limit = min(limit, self.ITEM_LIMIT)
+        if limit != self.current_limit:
             self.current_limit = limit
-            self.resort()
-        else:
-            self.current_limit = limit
-            self.currently_packed = self.currently_packed[:limit]
             self.repack()
 
     def get_label_for(self, text):
@@ -122,7 +115,7 @@ class GuideSidebarCollection(widgetset.VBox):
 
     def get_hbox_for(self, info):
         hbox = widgetset.HBox()
-        hbox.pack_start(self.get_label_for(info.name))
+        hbox.pack_start(self.get_label_for(info.title))
         button = imagebutton.ImageButton('guide-sidebar-play')
         button.connect('clicked', self.on_play_clicked, info)
         hbox.pack_end(button)
@@ -131,56 +124,23 @@ class GuideSidebarCollection(widgetset.VBox):
     def repack(self):
         for child in list(self.item_box.children):
             self.item_box.remove(child)
-        for info in self.currently_packed:
+        for info in self.item_list:
             self.item_box.pack_start(self.get_hbox_for(info))
 
-    def resort(self):
-        # XXX how do we get data where self.sorter(item) is None!? #17431 is
-        # for tracking this issue
-        self.currently_packed = list(sorted(
-            (item for item in self.items.values() if self.sorter(item)),
-            key=self.sorter,
-            reverse=True))[:self.current_limit]
-        self.repack()
-
     def set_items(self, items):
-        self.items = {}
-        for info in items:
-            self.items[info.id] = info
-        self.resort()
-
-    def add(self, info):
-        self.items[info.id] = info
-        if len(self.currently_packed) < self.current_limit:
-            self.currently_packed.append(info)
-            self.currently_packed.sort(key=self.sorter, reverse=True)
-            self.repack()
-        else:
-            self.resort()
-
-    def change(self, info):
-        self.items[info.id] = info
-        self.resort()
-
-    def remove(self, id_):
-        info = self.items.pop(id_)
-        if info in self.currently_packed:
-            self.resort()
+        self.item_list = items
+        self.repack()
 
     def on_play_clicked(self, button, info):
         messages.PlayMovie([info]).send_to_frontend()
-
 
 class GuideSidebarDetails(widgetset.SolidBackground):
     def __init__(self):
         widgetset.SolidBackground.__init__(self)
         self.set_background_color(widgetutil.css_to_color('#e7e7e7'))
-        self.video = GuideSidebarCollection(_("Recently Watched"),
-                                            'last_watched')
-        self.audio = GuideSidebarCollection(_("Recently Listened To"),
-                                            'last_watched')
-        self.download = GuideSidebarCollection(_("Recent Downloads"),
-                                               'downloaded_time')
+        self.video = GuideSidebarCollection(_("Recently Watched"))
+        self.audio = GuideSidebarCollection(_("Recently Listened To"))
+        self.download = GuideSidebarCollection(_("Recent Downloads"))
         self.vbox = widgetset.VBox()
         self.vbox.pack_start(self.video)
         self.vbox.pack_start(self.audio)
@@ -212,54 +172,14 @@ class GuideSidebarDetails(widgetset.SolidBackground):
         self.download.set_limit(item_count)
         self.changing_size = False
 
-    def collection_for(self, info):
-        if not info.last_watched:
-            return self.download
-        elif info.file_type == 'audio':
-            return self.audio
-        else:
-            return self.video
+    def set_recently_downloaded(self, item_list):
+        self.download.set_items(item_list)
 
-    def on_item_list(self, items):
-        collections = {}
-        self.id_to_collection = {}
-        for info in items:
-            collection = self.collection_for(info)
-            self.id_to_collection[info.id] = collection
-            collections.setdefault(collection, [])
-            collections[collection].append(info)
+    def set_recently_watched(self, item_list):
+        self.video.set_items(item_list)
 
-        for collection, items in collections.items():
-            collection.set_items(items)
-
-    def on_item_changed(self, added, changed, removed):
-        for info in added:
-            collection = self.collection_for(info)
-            self.id_to_collection[info.id] = collection
-            collection.add(info)
-
-        for id_ in removed:
-            collection = self.id_to_collection.pop(id_)
-            collection.remove(id_)
-
-        for info in changed:
-            # if the collection that the info was is changed, send an
-            # add/remove pair, otherwise update the info
-            collection = self.collection_for(info)
-            if collection != self.id_to_collection.get(info.id):
-                # bz:17684 self.id_to_collection.get() could return None while
-                # collection_for() always return valid value, so we will hit
-                # this path.  If there's nothing in the id_to_collection
-                # mapping just add.
-                try:
-                    self.id_to_collection[info.id].remove(info.id)
-                except KeyError:
-                    logging.error('ItemInfo %s not in id_to_collection map',
-                                  repr(info))
-                collection.add(info)
-                self.id_to_collection[info.id] = collection
-            else:
-                collection.change(info)
+    def set_recently_listened(self, item_list):
+        self.audio.set_items(item_list)
 
 class GuideSidebar(widgetset.HBox):
 
@@ -293,8 +213,11 @@ class GuideTab(widgetset.HBox):
         self.pack_start(browser, expand=True)
         self.pack_start(self.sidebar)
 
-    def on_item_list(self, items):
-        self.sidebar.details.on_item_list(items)
+    def set_recently_downloaded(self, item_list):
+        self.sidebar.details.set_recently_downloaded(item_list)
 
-    def on_item_changed(self, added, changed, removed):
-        self.sidebar.details.on_item_changed(added, changed, removed)
+    def set_recently_watched(self, item_list):
+        self.sidebar.details.set_recently_watched(item_list)
+
+    def set_recently_listened(self, item_list):
+        self.sidebar.details.set_recently_listened(item_list)

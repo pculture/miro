@@ -105,6 +105,7 @@ class Application:
         self.ui_initialized = False
         messages.FrontendMessage.install_handler(self.message_handler)
         app.item_list_pool = itemlist.ItemListPool()
+        app.item_tracker_updater = itemlist.ItemTrackerUpdater()
         app.info_updater = InfoUpdater()
         app.saved_items = set()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
@@ -1583,13 +1584,13 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.info_updater.handle_items_changed(message)
 
     def handle_item_changes(self, message):
-        app.item_list_pool.on_item_changes(message)
+        app.item_tracker_updater.on_item_changes(message)
 
     def handle_device_item_changes(self, message):
-        app.item_list_pool.on_device_item_changes(message)
+        app.item_tracker_updater.on_device_item_changes(message)
 
     def handle_sharing_item_changes(self, message):
-        app.item_list_pool.on_sharing_item_changes(message)
+        app.item_tracker_updater.on_sharing_item_changes(message)
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count

@@ -544,6 +544,24 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
         self.check_one_signal('list-changed')
         self.check_tracker_items()
 
+    def test_limit(self):
+        # test order by a different column
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed_id', '=', self.tracked_feed.id)
+        query.set_order_by(['title'])
+        query.set_limit(3)
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        sorted_items = sorted(self.tracked_items,
+                              key=lambda item: item.title)
+        self.check_tracker_items(sorted_items[:3])
+        # test changes
+        last_item = sorted_items[-1]
+        last_item.title = u'aaaaaa'
+        last_item.signal_change()
+        self.check_list_change_after_message()
+        self.check_tracker_items([last_item] + sorted_items[:2])
+
     def test_downloader_order(self):
         downloads = self.tracked_items[:4]
         for i, item_ in enumerate(downloads):
