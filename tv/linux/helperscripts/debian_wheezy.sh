@@ -13,7 +13,6 @@
 
 apt-get install \
     build-essential \
-    git-core \
     pkg-config \
     python-pyrex \
     python-gtk2-dev \
