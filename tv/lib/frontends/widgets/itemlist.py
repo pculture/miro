@@ -48,7 +48,11 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 class ItemList(itemtrack.ItemTracker):
     """ItemList -- Track a list of items for TableView
 
-    ItemList extends ItemTracker to provide:
+    ItemList extends ItemTracker to provide things we need to make implement
+    the data model for our TableViews that contain lists of items.  The
+    platform code takes uses ItemList to implement ItemListModel.
+
+    Extra capabilities include:
         - set/get arbitrary attributes on items
         - grouping information
         - simpler interface to construct queries:
@@ -360,7 +364,7 @@ class ItemListPool(object):
 
     This class keeps track of all active ItemList objects so that we can avoid
     creating 2 ItemLists for the same tab.  This helps with performance
-    because we don't have to process the ItemsChanged message twice.  Also, we
+    because we don't have to process the ItemChanges message twice.  Also, we
     want changes to the item list to be shared.  For example, if a user is
     playing items from a given tab and they change the filters on that tab, we
     want the PlaybackPlaylist to reflect those changes.
@@ -413,7 +417,7 @@ class ItemListPool(object):
         Call this when you're done using an ItemList.  Once this has been
         called for each time the list has been returned from get(), then that
         list will be removed from the pool and no longer get callbacks for the
-        ItemsChanged message.
+        ItemChanges message.
         """
         self._refcounts[item_list] -= 1
         if self._refcounts[item_list] <= 0:
