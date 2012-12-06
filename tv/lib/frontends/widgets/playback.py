@@ -943,11 +943,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
         return None
 
     def _on_items_changed(self, item_list, changed_ids):
-        if (self.currently_playing is not None and
-            self.currently_playing.id in changed_ids):
-            # we only have to call handle_changes() if the item that's playing
-            # was actually changed.
-            self.handle_changes()
+        self.handle_changes()
 
     def _on_list_changed(self, item_list):
         self.handle_changes()
@@ -955,10 +951,11 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def handle_changes(self):
         # FIXME: we should check if the current item is still playable.  If
         # not, we should stop playback.
-
-        # we don't know if our info has changed, but emit
-        # playing-info-changed just in case
-        self.emit("playing-info-changed")
+        if self.currently_playing is not None:
+            new_item = self.item_list.get_item(self.currently_playing.id)
+            if new_item != self.currently_playing:
+                self.currently_playing = new_item
+                self.emit("playing-info-changed")
 
     def _change_currently_playing(self, new_info):
         self.currently_playing = new_info

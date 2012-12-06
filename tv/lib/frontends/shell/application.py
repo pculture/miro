@@ -38,10 +38,8 @@ import code
 from miro import app
 from miro import startup
 from miro import messages
-from miro.infoupdater import InfoUpdater
 
 def run_application():
-    app.info_updater = InfoUpdater()
     messages.FrontendMessage.install_handler(MessageHandler())
     startup.startup()
     print 'startup exit'

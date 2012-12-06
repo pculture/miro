@@ -29,65 +29,13 @@
 
 """``miro.infoupdater`` -- The infoupdater module holds:
 
-* :class:`InfoUpdater` -- tracks channel/item updates from the backend
-  and sends the information to the frontend
-* :class:`InfoUpdaterCallbackList` -- tracks the list of callbacks for
-  info updater
+* :class:`InfoUpdater` -- Track channel/feed/playlist updates from the
+backend.
 """
 from miro import signals
 
-class InfoUpdaterCallbackList(object):
-    """Tracks the list of callbacks for InfoUpdater.
-    """
-
-    def __init__(self):
-        self._callbacks = {}
-
-    def add(self, type_, id_, callback):
-        """Adds the callback to the list for ``type_`` ``id_``.
-
-        :param type_: the type of the thing (feed, site, ...)
-        :param id_: the id for the thing
-        :param callback: the callback function to add
-        """
-        key = (type_, id_)
-        self._callbacks.setdefault(key, set()).add(callback)
-
-    def remove(self, type_, id_, callback):
-        """Removes the callback from the list for ``type_`` ``id_``.
-
-        :param type_: the type of the thing (feed, site, ...)
-        :param id_: the id for the thing
-        :param callback: the callback function to remove
-        """
-        key = (type_, id_)
-        callback_set = self._callbacks[key]
-        callback_set.remove(callback)
-        if len(callback_set) == 0:
-            del self._callbacks[key]
-
-    def get(self, type_, id_):
-        """Get the list of callbacks for ``type_``, ``id_``.
-
-        :param type_: the type of the thing (feed, site, ...)
-        :param id_: the id for the thing
-        """
-        key = (type_, id_)
-        if key not in self._callbacks:
-            return []
-        else:
-            # return a new list of callbacks, so that if we iterate over the
-            # return value, we don't have to worry about callbacks being
-            # removed midway.
-            return list(self._callbacks[key])
-
 class InfoUpdater(signals.SignalEmitter):
-    """Track channel/item updates from the backend.
-
-    To track item updates, use the item_list_callbacks and
-    item_changed_callbacks attributes, both are instances of
-    InfoUpdaterCallbackList.  To track tab updates, connect to one of the
-    signals below.
+    """Track channel/feed/playlist updates from the backend.
 
     Signals:
 
@@ -107,19 +55,6 @@ class InfoUpdater(signals.SignalEmitter):
             self.create_signal('%s-added' % prefix)
             self.create_signal('%s-changed' % prefix)
             self.create_signal('%s-removed' % prefix)
-
-        self.item_list_callbacks = InfoUpdaterCallbackList()
-        self.item_changed_callbacks = InfoUpdaterCallbackList()
-
-    def handle_items_changed(self, message):
-        callback_list = self.item_changed_callbacks
-        for callback in callback_list.get(message.type, message.id):
-            callback(message)
-
-    def handle_item_list(self, message):
-        callback_list = self.item_list_callbacks
-        for callback in callback_list.get(message.type, message.id):
-            callback(message)
 
     def handle_tabs_changed(self, message):
         if message.type == 'feed':

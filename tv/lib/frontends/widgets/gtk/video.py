@@ -497,10 +497,6 @@ class VideoPlayer(player.GTKPlayer, VBox):
         self.pack_start(self._video_details)
 
         self.hide_controls_timeout = None
-        # piggyback on the TrackItemsManually message that playback.py sends.
-        app.info_updater.item_changed_callbacks.add('manual', 'playback-list',
-                self._on_items_changed)
-        self._item_id = None
 
         self._video_widget.connect('double-click', self.on_double_click)
         self._video_widget.connect('mouse-motion', self.on_mouse_motion)
@@ -513,16 +509,8 @@ class VideoPlayer(player.GTKPlayer, VBox):
         self._video_widget.destroy()
         # remove callbacks
         self._video_widget.disconnect_all()
-        app.info_updater.item_changed_callbacks.remove('manual',
-                'playback-list', self._on_items_changed)
         # dereference VideoWidget
         self._video_widget = None
-
-    def _on_items_changed(self, message):
-        for item_info in message.changed:
-            if item_info.id == self._item_id:
-                self._video_details.update_info(item_info)
-                break
 
     def update_for_presentation_mode(self, mode):
         pass
@@ -530,7 +518,6 @@ class VideoPlayer(player.GTKPlayer, VBox):
     def set_item(self, item_info, success_callback, error_callback):
         self._video_details.set_video_details(item_info)
         self.renderer.select_file(item_info, success_callback, error_callback)
-        self._item_id = item_info.id
 
     def get_elapsed_playback_time(self):
         return self.renderer.get_current_time()

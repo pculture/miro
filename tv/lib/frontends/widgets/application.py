@@ -50,7 +50,6 @@ from miro import crashreport
 from miro import data
 from miro import prefs
 from miro import feed
-from miro.infoupdater import InfoUpdater
 from miro import startup
 from miro import signals
 from miro import messages
@@ -60,6 +59,7 @@ from miro import filetypes
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
+from miro.frontends.widgets import infoupdater
 from miro.frontends.widgets import newsearchfeed
 from miro.frontends.widgets import newfeed
 from miro.frontends.widgets import newfolder
@@ -106,7 +106,7 @@ class Application:
         messages.FrontendMessage.install_handler(self.message_handler)
         app.item_list_pool = itemlist.ItemListPool()
         app.item_tracker_updater = itemlist.ItemTrackerUpdater()
-        app.info_updater = InfoUpdater()
+        app.info_updater = infoupdater.InfoUpdater()
         app.saved_items = set()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
         app.store_manager = stores.StoreManager()
@@ -1574,14 +1574,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
         tablist.model_changed()
         app.connection_pools.on_tabs_changed(message)
         app.info_updater.handle_tabs_changed(message)
-
-    def handle_item_list(self, message):
-        # FIXME: should remove this function and the message that goes with it
-        app.info_updater.handle_item_list(message)
-
-    def handle_items_changed(self, message):
-        # FIXME: should remove this function and the message that goes with it
-        app.info_updater.handle_items_changed(message)
 
     def handle_item_changes(self, message):
         app.item_tracker_updater.on_item_changes(message)

@@ -34,7 +34,6 @@ from miro import app
 from miro import prefs
 from miro import startup
 from miro import controller
-from miro.infoupdater import InfoUpdater
 from miro import messages
 from miro.frontends.cli.util import print_text, print_box
 from miro.frontends.cli.events import EventHandler
@@ -63,7 +62,6 @@ def run_application():
     print "Build Time: %s" % app.config.get(prefs.BUILD_TIME)
 
     print
-    app.info_updater = InfoUpdater()
     app.cli_events = EventHandler()
     app.cli_events.connect_to_signals()
     startup.install_first_time_handler(app.cli_events.handle_first_time)

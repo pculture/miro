@@ -368,16 +368,8 @@ class SharingServerTest(EventLoopTest):
         # need to call setup_tabs for PlaylistTracker() and
         # ChannelTracker()
         startup.setup_tabs()
-        self.setup_mock_objects()
         self.setup_config()
         self.setup_data()
-
-    def tearDown(self):
-        del app.info_updater
-        EventLoopTest.tearDown(self)
-
-    def setup_mock_objects(self):
-        app.info_updater = mock.Mock()
 
     def setup_config(self):
         app.config.set(prefs.SHARE_AUDIO, True)
