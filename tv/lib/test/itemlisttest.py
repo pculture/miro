@@ -196,8 +196,13 @@ class TestItemListPool(MiroTestCase):
                       for i in xrange(10)]
         app.db.finish_transaction()
         self.pool = itemlist.ItemListPool()
+        app.item_tracker_updater = itemlist.ItemTrackerUpdater()
         self.item_list = self.pool.get('feed', self.feed.id)
         self.item_list2 = self.pool.get('feed', self.feed.id + 1)
+
+    def tearDown(self):
+        del app.item_tracker_updater
+        MiroTestCase.tearDown(self)
 
     def test_reuse(self):
         # test that we re-use ItemList objects rather than creating multiples.
@@ -215,7 +220,7 @@ class TestItemListPool(MiroTestCase):
         self.item_list.on_item_changes = mock.Mock()
         self.item_list2.on_item_changes = mock.Mock()
         fake_message = mock.Mock()
-        self.pool.on_item_changes(fake_message)
+        app.item_tracker_updater.on_item_changes(fake_message)
         self.item_list.on_item_changes.assert_called_once_with(fake_message)
         self.item_list2.on_item_changes.assert_called_once_with(fake_message)
 

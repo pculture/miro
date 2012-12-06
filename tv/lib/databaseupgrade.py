@@ -4258,7 +4258,7 @@ def upgrade193(cursor):
                    "VALUES(new.id, %s); "
                    "END;" % (column_list, column_list_for_new))
 
-
+@run_on_both
 def upgrade194(cursor):
     """Remove the item_info_cache table."""
     cursor.execute("DROP TABLE item_info_cache")

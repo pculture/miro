@@ -546,14 +546,6 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
         self.playing = False
         Item._path_count_tracker.add_item(self)
 
-    def after_setup_new(self):
-        app.item_info_cache.item_created(self)
-        MetadataItemBase.after_setup_new(self)
-
-    def signal_change(self, needs_save=True, can_change_views=True):
-        app.item_info_cache.item_changed(self)
-        MetadataItemBase.signal_change(self, needs_save, can_change_views)
-
     def playlists_changed(self, added=False):
         """Called when the item gets added/removed from playlists."""
         Item.change_tracker.playlists_changed = True
@@ -2112,9 +2104,6 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
                 item.remove()
         self._remove_from_playlists()
         MetadataItemBase.remove(self)
-        # need to call this after DDBObject.remove(), so that the item info is
-        # there for ItemInfoFetcher to see.
-        app.item_info_cache.item_removed(self)
 
     def setup_links(self):
         self.split_item()

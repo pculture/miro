@@ -143,11 +143,7 @@ class Share(object):
         path, but it will try delete and then reuse paths that were created by
         previous miro instances.
         """
-        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
-        for i in xrange(300):
-            candidate = os.path.join(support_dir, 'sharing-db-%s' % i)
-            if candidate in self.__class__._used_db_paths:
-                continue
+        for candidate in self.generate_db_paths():
             if os.path.exists(candidate):
                 try:
                     os.remove(candidate)
@@ -158,6 +154,28 @@ class Share(object):
             return candidate, self.make_new_database(candidate)
         raise AssertionError("Couldn't find an unused path "
                              "for Share")
+
+    @classmethod
+    def generate_db_paths(cls):
+        """Iterate through potential paths for a sharing db.
+        """
+        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
+        for i in xrange(300):
+            candidate = os.path.join(support_dir, 'sharing-db-%s' % i)
+            if candidate in cls._used_db_paths:
+                continue
+            yield candidate
+
+    @classmethod
+    def cleanup_old_databases(cls):
+        """Remove any databases left by old miro processes."""
+        for path in cls.generate_db_paths():
+            if os.path.exists(path):
+                try:
+                    os.remove(path)
+                except EnvironmentError:
+                    logging.warn("Share.cleanup_old_databases(): error "
+                                 "removing %s" % path)
 
     def make_new_database(self, path):
         return storedatabase.SharingLiveStorage(
@@ -237,6 +255,7 @@ class SharingTracker(object):
         self.event = threading.Event()
         libdaap.register_meta('org.participatoryculture.miro.itemkind', 'miKD',
                               libdaap.DMAP_TYPE_UBYTE)
+        Share.cleanup_old_databases()
 
     def mdns_callback(self, added, fullname, host, port):
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
