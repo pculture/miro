@@ -333,6 +333,8 @@ class MiroTestCase(unittest.TestCase):
         # for the individual test unless necessary.  In this case we override
         # the class to run the downloader).
         app.download_state_manager = downloader.DownloadStateManager()
+        self.mock_dldaemon = mock.Mock()
+        downloader.RemoteDownloader.dldaemon = self.mock_dldaemon
         self.mock_patchers = []
 
     def setup_config_watcher(self):
@@ -401,23 +403,22 @@ class MiroTestCase(unittest.TestCase):
 
         :param function_name: name of the function to patch
         :param new_function: function object to replace it with
+        :returns: Mock object used to patch
         """
-        self.patch_for_test(function_name, mock.Mock(side_effect=new_function))
+        mock_object = self.patch_for_test(function_name)
+        mock_object.side_effect = new_function
+        return mock_object
 
-    def patch_for_test(self, object_name, mock_object=None):
+    def patch_for_test(self, object_name):
         """Use Mock to replace a function/class/object with a mock object.
 
         We will unpatch the object during teardown
 
         :param object_name: name of the object to patch
-        :param mock_object: object to patch with, if None we will create a new
-        Mock
-        :returns: object used to patch
+        :returns: Mock object used to patch
         """
-        if mock_object is None:
-            mock_object = mock.Mock()
-        patcher = mock.patch(object_name, mock_object)
-        patcher.start()
+        patcher = mock.patch(object_name, autospec=True)
+        mock_object = patcher.start()
         self.mock_patchers.append(patcher)
         return mock_object
 

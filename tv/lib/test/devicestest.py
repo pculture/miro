@@ -413,7 +413,7 @@ class DeviceDatabaseTest(MiroTestCase):
     @mock.patch('miro.dialogs.MessageBoxDialog.run_blocking')
     def test_load_error(self, mock_dialog_run):
         # Test an error loading the device database
-        def mock_get_last_id():
+        def mock_get_last_id(livestorage_self):
             if not self.faked_get_last_id_error:
                 self.faked_get_last_id_error = True
                 raise sqlite3.DatabaseError("Error")

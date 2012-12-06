@@ -670,8 +670,8 @@ class SharingItemTrackTestWalMode(ItemTrackTestCase):
 
     def setup_share(self):
         # make a share and that uses our mock client
-        self.patch_for_test('miro.libdaap.make_daap_client',
-                            self.client.returnself)
+        self.patch_function('miro.libdaap.make_daap_client',
+                            lambda *args, **kwargs: self.client)
         # Make sure the SharingItemTrackerImpl doesn't actually create a
         # thread.  We want to manually call its methods and have them run in
         # the in the main thread.

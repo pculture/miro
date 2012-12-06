@@ -136,8 +136,8 @@ class SharingTest(EventLoopTest):
         self.patch_for_test('miro.sharing.Share.update_finished')
         # also use a Mock object for the daap client
         self.client = testobjects.MockDAAPClient()
-        self.patch_for_test('miro.libdaap.make_daap_client',
-                            self.client.returnself)
+        self.patch_function('miro.libdaap.make_daap_client',
+                            lambda *args, **kwargs: self.client)
         self.MockTabsChanged = self.patch_for_test(
             'miro.messages.TabsChanged')
 
@@ -600,7 +600,7 @@ class SharingServerTest(EventLoopTest):
                 raise AssertionError("select called too much")
             self.select_count += 1
             return rv
-        self.patch_for_test('select.select', mock_select)
+        self.patch_function('select.select', mock_select)
         # calling get_revision() should set all the wheels in motion
         initial_revision = self.backend.data_set.revision
         new_revision = self.backend.get_revision(mock.Mock(),

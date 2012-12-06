@@ -55,11 +55,12 @@ def make_feed_for_file(path):
     url = u'file://%s' % path
     return models.Feed(url)
 
-def make_item(feed, title):
+def make_item(feed, title, **kwargs):
     """Make a new item."""
     fp_values = item.FeedParserValues({})
     fp_values.data['entry_title'] = title
     fp_values.data['url'] = u'http://example.com/%s.mkv' % title
+    fp_values.data.update(kwargs)
     # pick a random recent date for the release date
     seconds_ago = random.randint(0, 60 * 60 * 24 * 7)
     release_date = (datetime.datetime.now() -
@@ -344,8 +345,8 @@ class MockDAAPClient(mock.Mock):
     def daap_get_file_request(self, daap_id, file_format):
         return u'/item-%s' % daap_id
 
-    def _get_child_mock(self, parent, name, wraps):
-        return mock.Mock()
+    def _get_child_mock(self, **kwargs):
+        return mock.Mock(**kwargs)
 
     def returnself(self, *args):
         """Return a references to ourselves.
