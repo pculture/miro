@@ -51,9 +51,6 @@ bulk_sql_manager = None
 # DBInfo object for the main miro database
 db_info = None
 
-# stores ItemInfo objects so we can quickly fetch them
-item_info_cache = None
-
 # command line arguments for thumbnailer (linux)
 movie_data_program_info = None
 

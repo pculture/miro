@@ -22,7 +22,6 @@ from miro import downloader
 from miro import httpauth
 from miro import httpclient
 from miro import item
-from miro import iteminfocache
 from miro import itemsource
 from miro import messages
 from miro import util
@@ -307,7 +306,6 @@ class MiroTestCase(unittest.TestCase):
         app.db = None
         self.allow_db_upgrade_error_dialog = False
         self.reload_database()
-        self.setup_new_item_info_cache()
         self.setup_dummy_message_handlers()
         self.setup_dummy_curl_manager()
         item.setup_metadata_manager(self.tempdir)
@@ -504,13 +502,6 @@ class MiroTestCase(unittest.TestCase):
         if self.httpserver:
             self.httpserver.stop()
             self.httpserver = None
-
-    def setup_new_item_info_cache(self, set_version=True):
-        app.item_info_cache = iteminfocache.ItemInfoCache()
-        if set_version:
-            app.db.set_variable(app.item_info_cache.VERSION_KEY,
-                                app.item_info_cache.version())
-        app.item_info_cache.load()
 
     def setup_dummy_message_handlers(self):
         messages.FrontendMessage.handler = mock.Mock()

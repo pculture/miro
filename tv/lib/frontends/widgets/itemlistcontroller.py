@@ -205,8 +205,7 @@ class ItemListController(object):
     def __init__(self, typ, id_):
         """Construct a ItemListController.
 
-        type and id are the same as in the constructor to
-        messages.TrackItems
+        type and id are the same as in the constructor to itemlist.ItemList()
         """
         self.type = typ
         self.id = id_

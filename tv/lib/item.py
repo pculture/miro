@@ -380,7 +380,7 @@ class _ItemsForPathCountTracker(object):
             return # counts not created yet we can just ignore
 
 class ItemChangeTracker(signals.SignalEmitter):
-    """Tracks changes to items and send the ItemsChanged message."""
+    """Tracks changes to items and send the ItemChanges message."""
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('item-changes')
@@ -2500,7 +2500,7 @@ class DeletedFileChecker(object):
                 self._ensure_run_checks_scheduled()
 
 class DeviceItemChangeTracker(object):
-    """Track changes to DeviceItems and send the DeviceItemsChanged message.
+    """Track changes to DeviceItems and send the DeviceItemChanges message.
     """
     def __init__(self):
         self.reset()

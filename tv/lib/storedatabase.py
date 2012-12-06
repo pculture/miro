@@ -71,7 +71,6 @@ from miro import dbupgradeprogress
 from miro import dialogs
 from miro import eventloop
 from miro import fileutil
-from miro import iteminfocache
 from miro import messages
 from miro import schema
 from miro import signals
@@ -1344,7 +1343,6 @@ class LiveStorage(signals.SignalEmitter):
                 self.cursor.execute("CREATE UNIQUE INDEX %s ON %s (%s)" %
                         (name, schema.table_name, ', '.join(columns)))
         self._create_variables_table()
-        self.cursor.execute(iteminfocache.create_sql())
         self.set_version()
         self.setup_fulltext_search()
 

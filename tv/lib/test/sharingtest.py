@@ -151,8 +151,7 @@ class SharingTest(EventLoopTest):
         table_names = [r[0] for r in cursor]
         conn.close()
         self.assertSameSet(table_names,
-                           ['sharing_item', 'item_info_cache',
-                            'dtv_variables'])
+                           ['sharing_item', 'dtv_variables'])
 
     def check_tracker_items(self, correct_items):
         # check the SharingItems in the database.  correct_items should be a

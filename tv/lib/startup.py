@@ -67,7 +67,6 @@ from miro import httpclient
 from miro import iconcache
 from miro import item
 from miro import itemsource
-from miro import iteminfocache
 from miro import feed
 from miro import folder
 from miro import messages
@@ -310,8 +309,6 @@ def finish_startup(obj, thread):
 
     item.setup_metadata_manager()
     item.setup_change_tracker()
-    app.item_info_cache = iteminfocache.ItemInfoCache()
-    app.item_info_cache.load()
     dbupgradeprogress.upgrade_end()
 
     logging.info("Loading video converters...")

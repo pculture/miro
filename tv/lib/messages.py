@@ -129,52 +129,6 @@ class StopTrackingGuides(BackendMessage):
     """
     pass
 
-class TrackItems(BackendMessage):
-    """Begin tracking items for a feed
-
-    After this message is sent, the backend will send back a ItemList message,
-    then it will send ItemsChanged messages for items in the feed.
-
-    type is the type of object that we are tracking items for.  It can be one
-    of the following:
-
-    * feed -- Items in a feed
-    * playlist -- Items in a playlist
-    * new -- Items that haven't been watched
-    * downloading -- Items being downloaded
-    * library -- All items
-
-    id should be the id of a feed/playlist. For new, downloading and library
-    it is ignored.
-    """
-    def __init__(self, typ, id_):
-        self.type = typ
-        self.id = id_
-
-class TrackItemsManually(BackendMessage):
-    """Track a manually specified list of items.
-
-    TrackItemsManually can only be used to track database items.
-
-    No ItemList message will be sent, since the sender is providing the inital
-    list of items.  Instead, if the infos_to_track is out of date of date,
-    then an ItemsChanged message will be sent with the changes.
-
-    ItemsChanged messages will have "manual" as the type and will use the id
-    specified in the constructed.
-    """
-    def __init__(self, id_, infos_to_track):
-        self.id = id_
-        self.infos_to_track = infos_to_track
-        self.type = 'manual'
-
-class StopTrackingItems(BackendMessage):
-    """Stop tracking items for a feed.
-    """
-    def __init__(self, typ, id_):
-        self.type = typ
-        self.id = id_
-
 class TrackDownloadCount(BackendMessage):
     """Start tracking the number of downloading items.  After this message is
     received the backend will send a corresponding DownloadCountChanged
@@ -1484,40 +1438,6 @@ class SharingItemChanges(FrontendMessage):
         self.removed = removed
         self.changed_columns = changed_columns
         self.changed_playlists = changed_playlists
-
-class ItemList(FrontendMessage):
-    """Sends the frontend the initial list of items for a feed
-
-    :param type: type of object being tracked (same as in TrackItems)
-    :param id: id of the object being tracked (same as in TrackItems)
-    :param items: list of ItemInfo objects
-    """
-    def __init__(self, typ, id_, item_infos):
-        self.type = typ
-        self.id = id_
-        self.items = item_infos
-
-class ItemsChanged(FrontendMessage):
-    """Informs the frontend that the items in a feed have changed.
-
-    :param type: type of object being tracked (same as in TrackItems)
-    :param id: id of the object being tracked (same as in TrackItems)
-    :param added: list containing an ItemInfo object for each added item.
-                  The order will be the order they were added.
-    :param changed: set containing an ItemInfo for each changed item.
-    :param removed: set containing ids for each item that was removed
-    """
-    def __init__(self, typ, id_, added, changed, removed):
-        self.type = typ
-        self.id = id_
-        self.added = added
-        self.changed = changed
-        self.removed = removed
-
-    def __str__(self):
-        return ('<miro.messages.ItemsChanged %s:%s '
-    '(%d added, %d changed, %d removed)>') % (self.type, self.id,
-    len(self.added), len(self.changed), len(self.removed))
 
 class WatchedFolderList(FrontendMessage):
     """Sends the frontend the initial list of watched folders.

@@ -596,7 +596,7 @@ class ItemTracker(signals.SignalEmitter):
         If the changes modify this list, either the items-changed or
         list-changed signal will be emitted.
 
-        :param message: an ItemsChanged message
+        :param message: an ItemChanges message
         """
         changed_ids = [item_id for item_id in message.changed
                        if self.item_in_list(item_id)]
@@ -609,7 +609,7 @@ class ItemTracker(signals.SignalEmitter):
             self.emit('items-changed', changed_ids)
 
     def _could_list_change(self, message):
-        """Calculate if an ItemsChanged means the list may have changed."""
+        """Calculate if an ItemChanges means the list may have changed."""
         return self.query.could_list_change(message)
 
 class ItemFetcher(object):

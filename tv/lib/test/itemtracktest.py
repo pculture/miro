@@ -608,7 +608,7 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
         # For the same reason as above, item2 should still be in the tracker
         # and the next line should not throw an exception
         self.tracker.get_item(item2.id)
-        # After ItemTracker gets the ItemsChanged message, it should load the
+        # After ItemTracker gets the ItemChanges message, it should load the
         # new data
         self.process_items_changed_messages()
         self.assertEquals(self.tracker.get_item(item1.id).title,
