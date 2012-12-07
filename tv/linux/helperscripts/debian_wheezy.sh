@@ -13,31 +13,30 @@
 
 apt-get install \
     build-essential \
-    pkg-config \
-    python-pyrex \
-    python-gtk2-dev \
-    libwebkit-dev \
-    libsoup2.4-dev
-
-apt-get install \
+    dbus-x11 \
+    ffmpeg
+    gstreamer0.10-ffmpeg \
+    gstreamer0.10-plugins-bad \
+    gstreamer0.10-plugins-base \
+    gstreamer0.10-plugins-good \
+    gstreamer0.10-plugins-ugly \
+    libavahi-compat-libdnssd1 \
     libavcodec-dev \
     libavformat-dev \
     libavutil-dev \
-    libavahi-compat-libdnssd1 \
-    libtorrent-rasterbar6 \
-    python-libtorrent \
-    libwebkitgtk-3.0-0 \
-    python-webkit \
-    python-gst0.10 \
-    python-gconf \
-    python-pycurl \
-    python-mutagen \
     libboost1.46-dev \
+    libsoup2.4-dev \
     libtag1-dev \
+    libtorrent-rasterbar6 \
+    libwebkit-dev \
+    libwebkitgtk-3.0-0 \
+    pkg-config \
+    python-gconf \
+    python-gst0.10 \
+    python-gtk2-dev \
+    python-libtorrent \
+    python-mutagen \
+    python-pycurl \
+    python-pyrex \
+    python-webkit \
     zlib1g-dev \
-    gstreamer0.10-ffmpeg \
-    gstreamer0.10-plugins-base \
-    gstreamer0.10-plugins-good \
-    gstreamer0.10-plugins-bad \
-    gstreamer0.10-plugins-ugly \
-    ffmpeg
