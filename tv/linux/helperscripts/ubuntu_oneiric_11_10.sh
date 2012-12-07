@@ -34,7 +34,7 @@ apt-get install \
     libwebkit-dev \
     libwebkitgtk-3.0-0 \
     pkg-config \
-    python-appindicator
+    python-appindicator \
     python-gconf \
     python-gst0.10 \
     python-gtk2-dev \

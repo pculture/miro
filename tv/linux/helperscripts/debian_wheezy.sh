@@ -14,7 +14,7 @@
 apt-get install \
     build-essential \
     dbus-x11 \
-    ffmpeg
+    ffmpeg \
     gstreamer0.10-ffmpeg \
     gstreamer0.10-plugins-bad \
     gstreamer0.10-plugins-base \
