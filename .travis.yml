@@ -3,7 +3,7 @@ python:
   - 2.6
   - 2.7
 install:
-  - virtualenv /home/vagrant/virtualenv/python$TRAVIS_PYTHON_VERSION --system-site-packages
+  - sudo sh apt-get update
   - sudo sh ./tv/linux/helperscripts/ubuntu_precise_12_04.sh
 script:
   - cd tv/linux && ./test.sh -v
