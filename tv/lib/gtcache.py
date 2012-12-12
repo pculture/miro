@@ -35,7 +35,6 @@ import gettext as _gt
 import locale
 from miro import app
 from miro import prefs
-import miro.plat.utils
 
 _gtcache = None
 _translation = None
@@ -83,7 +82,11 @@ def init(languages=None, localedir=None):
     global _translation
     global codeset
 
-    if not miro.plat.utils.locale_initialized():
+    # need to import here rather than at the module level to avoid a circular
+    # import -- plat.utls might import gtcache.
+    from miro.plat.utils import locale_initialized
+
+    if not locale_initialized():
         raise Exception, "locale not initialized"
 
     if languages is None:
