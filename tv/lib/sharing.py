@@ -1348,8 +1348,10 @@ class _SharedDataSet(object):
         if isinstance(playlist_or_feed, models.SavedPlaylist):
             view = models.PlaylistItemMap.playlist_view(playlist_or_feed.id)
             item_ids = set(pim.item_id for pim in view)
+            is_podcast = False
         else:
             item_ids = set(i.id for i in playlist_or_feed.downloaded_items)
+            is_podcast = True
 
         daap_item = {
             'dmap.itemid': playlist_or_feed.id,
@@ -1360,6 +1362,8 @@ class _SharedDataSet(object):
             'revision': self.revision,
             'valid': True,
         }
+        if is_podcast:
+            daap_item[DAAP_PODCAST_KEY] = 1
         self.daap_playlists[playlist_or_feed.id] = daap_item
         self.playlist_item_map[playlist_or_feed.id] = item_ids
 
