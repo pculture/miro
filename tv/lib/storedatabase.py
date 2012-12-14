@@ -264,8 +264,7 @@ class LiveStorageErrorHandler(object):
             {"appname": app.config.get(prefs.SHORT_APP_NAME),
              "error_text": error_text}
             )
-        d = dialogs.ChoiceDialog(title, description,
-                dialogs.BUTTON_RETRY, dialogs.BUTTON_QUIT)
+        d = dialogs.DatabaseErrorDialog(title, description)
         if d.run_blocking() == dialogs.BUTTON_RETRY:
             return self.ACTION_RETRY
         else:
@@ -475,7 +474,7 @@ class LiveStorage(signals.SignalEmitter):
                 self.connection = sqlite3.connect(path,
                         isolation_level=None,
                         detect_types=sqlite3.PARSE_DECLTYPES)
-            except sqlite3.Error, e:
+            except sqlite3.DatabaseError, e:
                 logging.warn("Error opening sqlite database: %s", e)
                 action = self.error_handler.handle_open_error()
                 if action == LiveStorageErrorHandler.ACTION_RERAISE:
@@ -628,7 +627,7 @@ class LiveStorage(signals.SignalEmitter):
             return self.cursor.fetchall() == [
                 ('ok',),
             ]
-        except sqlite3.Error:
+        except sqlite3.DatabaseError:
             logging.warn("error running PRAGMA integrity_check: %s",
                          exc_info=True)
             return False
@@ -843,7 +842,7 @@ class LiveStorage(signals.SignalEmitter):
         old_time_execute = self._time_execute
         def time_execute_intercept(*args, **kwargs):
             self._time_execute = old_time_execute
-            raise sqlite3.OperationalError()
+            raise sqlite3.DatabaseError()
         self._time_execute = time_execute_intercept
         # force the db to execute sql
         self.execute("REPLACE INTO dtv_variables "
@@ -1193,7 +1192,7 @@ class LiveStorage(signals.SignalEmitter):
             self._statements_in_transaction.append((sql, values, many))
         try:
             self._time_execute(sql, values, many)
-        except sqlite3.OperationalError, e:
+        except sqlite3.DatabaseError, e:
             self._log_error(sql, values, many, e)
             if is_update:
                 self._current_select_statement = None
@@ -1240,7 +1239,7 @@ class LiveStorage(signals.SignalEmitter):
         for (sql, values, many) in to_run:
             try:
                 self._time_execute(sql, values, many)
-            except sqlite3.OperationalError:
+            except sqlite3.DatabaseError, e:
                 self._log_error(sql, values, many, e)
                 return False
         return True
@@ -1254,7 +1253,7 @@ class LiveStorage(signals.SignalEmitter):
             # automatically
             try:
                 self.cursor.execute("ROLLBACK TRANSACTION")
-            except sqlite3.OperationalError:
+            except sqlite3.DatabaseError:
                 pass
             retry = self._handle_query_error(str(e))
             if not retry:

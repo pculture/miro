@@ -140,6 +140,7 @@ class Application:
         """Connects to signals, installs handlers, and calls :meth:`startup`
         from the :mod:`miro.startup` module.
         """
+        app.frontend = WidgetsFrontend()
         data.init()
         self.connect_to_signals()
         startup.install_movies_directory_gone_handler(self.handle_movies_directory_gone)
@@ -1726,3 +1727,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_net_lookup_counts(self, message):
         prefpanel.update_net_lookup_counts(message.net_lookup_count,
                                            message.total_count)
+
+class WidgetsFrontend(app.Frontend):
+    def run_choice_dialog(self, title, description, buttons):
+        return dialogs.show_choice_dialog(title, description, buttons)

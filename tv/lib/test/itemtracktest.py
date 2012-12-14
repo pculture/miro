@@ -819,7 +819,7 @@ class ItemInfoAttributeTest(MiroTestCase):
         # test that DBErrorItemInfo defines 
         required_attrs = self._calc_required_attrs()
         missing_attributes = set()
-        db_error_item_info = item.DBErrorItemInfo()
+        db_error_item_info = item.DBErrorItemInfo(0)
         for attr_name in required_attrs:
             if not hasattr(db_error_item_info, attr_name):
                 missing_attributes.add(attr_name)

@@ -37,8 +37,10 @@ someday.
 from miro import app
 from miro import prefs
 from miro.data import connectionpool
+from miro.data import dberrors
 
 def init(db_path=None):
     if db_path is None:
         db_path = app.config.get(prefs.SQLITE_PATHNAME)
     app.connection_pools = connectionpool.ConnectionPoolTracker(db_path)
+    app.db_error_handler = dberrors.DBErrorHandler()

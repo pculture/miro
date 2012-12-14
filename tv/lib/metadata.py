@@ -40,8 +40,6 @@ import logging
 import os.path
 import time
 
-import sqlite3
-
 from miro import app
 from miro import clock
 from miro import database
@@ -1246,11 +1244,11 @@ class MetadataManagerBase(signals.SignalEmitter):
         """
         if self.closed:
             raise ValueError("%r added to closed MetadataManager" % path)
-        try:
-            status = MetadataStatus(path, self.net_lookup_enabled_default(),
-                                    db_info=self.db_info)
-        except sqlite3.IntegrityError:
+        if self.path_in_system(path):
             raise ValueError("%r already added" % path)
+
+        status = MetadataStatus(path, self.net_lookup_enabled_default(),
+                                db_info=self.db_info)
         if status.net_lookup_enabled:
             self.net_lookup_count += 1
         self.total_count += 1

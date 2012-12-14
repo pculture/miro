@@ -94,6 +94,22 @@ movie_data_updater = None
 # mode
 debugmode = None
 
+#
+# Frontend API class.  All the frontend should define a subclass of this and
+# implement the methods.
+#
+class Frontend(object):
+    def run_choice_dialog(self, title, description, buttons):
+        """Show the database error dialog and wait for a choice.
+
+        This method should block until the choice is picked.  Depending on the
+        frontend other events may still be processed or not.
+
+        :returns: button that was choosen or None if the dialog was closed.
+        """
+        raise NotImplementedError()
+frontend = Frontend()
+
 # widget frontend adds these
 # --------------------------
 
