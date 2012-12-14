@@ -36,6 +36,7 @@ from miro import signals
 from miro import displaytext
 from miro import prefs
 from miro import util
+from miro.data import item
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
@@ -278,6 +279,8 @@ class ItemRenderer(ItemRendererBase):
 
     def add_normal_mode_elements(self):
         """Add elements when we aren't in download mode."""
+        if isinstance(self.info, item.DBErrorItemInfo):
+            return
         self.add_main_button()
         self.add_emblem()
         self.add_secondary_button()

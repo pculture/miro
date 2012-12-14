@@ -315,6 +315,20 @@ class ItemInfoBase(object):
     skip_count = 0
     net_lookup_enabled = False
     has_drm = False
+    album = None
+    kind = None
+    duration_ms = None
+    description = None
+    show = None
+    file_type = None
+    artist = None
+    episode_id = None
+    track = None
+    year = None
+    genre = None
+    episode_number = None
+    season_number = None
+    album_artist = None
     # default values for columns in the remote_downloader table
     downloader_size = None
     downloader_type = None
@@ -690,6 +704,17 @@ def fetch_device_item_infos(device, item_ids):
 class ItemInfo(ItemInfoBase):
     source_type = 'database'
     select_info = ItemSelectInfo()
+
+class DBErrorItemInfo(ItemInfoBase):
+    """DBErrorItemInfo is used as a placeholder when we get DatabaseErrors
+    """
+
+    def __init__(self, id):
+        ItemInfoBase.__init__(self, row_data=())
+        self.id = id
+        self.title = _('Database Error')
+        self.filename_unicode = None
+        self.source_type = 'dberror'
 
 class DeviceItemSelectInfo(ItemSelectInfo):
     """ItemSelectInfo for DeviceItems."""

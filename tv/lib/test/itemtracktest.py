@@ -785,11 +785,7 @@ class ItemInfoAttributeTest(MiroTestCase):
         self._check_class_against_item_info(item.SharingItemInfo)
 
     def _check_class_against_item_info(self, klass):
-        # calculate the select columns in ItemSelectInfo
-        item_attrs = self._select_column_attrs(item.ItemInfo)
-        # remove default values defined in ItemInfoBase
-        required_attrs = item_attrs.difference(
-            item.ItemInfoBase.__dict__.keys())
+        required_attrs = self._calc_required_attrs()
         # make sure the other class either has a SelectColumn or a class
         # property for each of the required SelectColumns
         klass_attrs = self._select_column_attrs(klass)
@@ -811,6 +807,26 @@ class ItemInfoAttributeTest(MiroTestCase):
     def _class_properties(self, klass):
         return set(name for name, obj in klass.__dict__.items()
                    if isinstance(obj, property))
+
+    def _calc_required_attrs(self):
+        item_attrs = self._select_column_attrs(item.ItemInfo)
+        # remove default values defined in ItemInfoBase
+        required_attrs = item_attrs.difference(
+            item.ItemInfoBase.__dict__.keys())
+        return required_attrs
+
+    def test_db_error_item_attributes(self):
+        # test that DBErrorItemInfo defines 
+        required_attrs = self._calc_required_attrs()
+        missing_attributes = set()
+        db_error_item_info = item.DBErrorItemInfo()
+        for attr_name in required_attrs:
+            if not hasattr(db_error_item_info, attr_name):
+                missing_attributes.add(attr_name)
+        if missing_attributes:
+            msg = ("DBErrorItemInfo does not define required "
+                   "attributes: (%s)" % missing_attributes)
+            raise AssertionError(msg)
 
 class BackendItemTrackerTest(MiroTestCase):
     def setUp(self):

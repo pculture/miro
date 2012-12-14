@@ -41,6 +41,7 @@ from miro import messages
 from miro import prefs
 from miro import signals
 from miro import conversions
+from miro.data.item import DBErrorItemInfo
 from miro.frontends.widgets.keyboard import (Shortcut, CTRL, ALT, SHIFT, CMD,
      MOD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE,
      BKSPACE, ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12)
@@ -292,6 +293,8 @@ def get_app_menu():
                          "ImageRenderTest"),
                 MenuItem(_("Set echonest retry timeout to 1 week ago"),
                          "SetEchonestRetryTimeout"),
+                MenuItem(_("Test database error item rendering"),
+                         "TestDatabaseErrorItemRendering"),
                 ])
         )
     return all_menus
@@ -679,10 +682,27 @@ def on_image_render_test():
     w.show()
 
 @action_handler("SetEchonestRetryTimeout")
-def on_image_render_test():
+def set_echonest_retry_timout():
     # set LAST_RETRY_NET_LOOKUP to 1 week ago minus 1 minute
     new_value = int(time.time()) - (60 * 60 * 24 * 7) + 60
     app.config.set(prefs.LAST_RETRY_NET_LOOKUP, new_value)
+
+@action_handler("TestDatabaseErrorItemRendering")
+def test_database_error_item_rendering():
+    displayed = app.item_list_controller_manager.displayed
+    if displayed is None:
+        logging.warn("test_database_error_item_rendering: "
+                     "no item list displayed")
+        return
+    # replace all currently loaded item infos with DBError items
+    item_list = displayed.item_list
+    changed_ids = []
+    for item_id, item_info in item_list.row_data.items():
+        if item_info is not None:
+            item_list.row_data[item_id] = DBErrorItemInfo(item_id)
+            changed_ids.append(item_id)
+    item_list.emit('will-change')
+    item_list.emit('items-changed', changed_ids)
 
 @action_handler("ForceMainDBSaveError")
 def on_force_device_db_save_error():

@@ -32,6 +32,7 @@
 import collections
 import logging
 import string
+import sqlite3
 import random
 import weakref
 
@@ -538,10 +539,14 @@ class ItemTracker(signals.SignalEmitter):
         :param rows_to_load: indexes of the rows to load.
         """
         ids_to_load = [self.id_list[i] for i in rows_to_load]
-        items = self.item_fetcher.fetch_items(ids_to_load)
-        for item in items:
-            pos = self.id_to_index[item.id]
-            self.row_data[item.id] = item
+        try:
+            items = self.item_fetcher.fetch_items(ids_to_load)
+        except sqlite3.DatabaseError:
+            logging.warn("DatabaseError while fetching items", exc_info=True)
+            items = [item.DBErrorItemInfo(item_id) for item_id in ids_to_load]
+        for item_info in items:
+            pos = self.id_to_index[item_info.id]
+            self.row_data[item_info.id] = item_info
 
     def item_in_list(self, item_id):
         """Test if an item is in the list.
