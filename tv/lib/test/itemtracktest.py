@@ -774,21 +774,43 @@ class SharingItemTrackTestNOWalMode(SharingItemTrackTestWalMode):
     def force_wal_mode(self):
         self.connection_pool.wal_mode = False
 
-class ItemSelectInfoTest(MiroTestCase):
-    def get_attributes(self, klass):
-        return ([col.attr_name for col in klass.select_columns] + 
-                klass.constant_values.keys())
+class ItemInfoAttributeTest(MiroTestCase):
+    # Test that DeviceItemInfo and SharingItemInfo to make sure that they
+    # define the same attributes that ItemInfo does
 
-    def test_attributes(self):
-        # test that a all attributes defined in ItemInfo are also defined in
-        # DeviceItemInfo.  "attributes" here means either a SelectColumn or an
-        # entry in the constant_values dict
-        item_attrs = set(self.get_attributes(item.ItemSelectInfo))
-        device_attrs = set(self.get_attributes(item.DeviceItemSelectInfo))
-        if not item_attrs.issubset(device_attrs):
-            raise AssertionError("DeviceItemInfo does not define all "
-                                 "attributes of ItemSelectInfo (%s)" %
-                                 item_attrs.difference(device_attrs))
+    def test_device_item_info(self):
+        self._check_class_against_item_info(item.DeviceItemInfo)
+
+    def test_sharing_item_info(self):
+        self._check_class_against_item_info(item.SharingItemInfo)
+
+    def _check_class_against_item_info(self, klass):
+        # calculate the select columns in ItemSelectInfo
+        item_attrs = self._select_column_attrs(item.ItemInfo)
+        # remove default values defined in ItemInfoBase
+        required_attrs = item_attrs.difference(
+            item.ItemInfoBase.__dict__.keys())
+        # make sure the other class either has a SelectColumn or a class
+        # property for each of the required SelectColumns
+        klass_attrs = self._select_column_attrs(klass)
+        klass_attrs.update(self._class_properties(klass))
+        # special case, if ItemInfo only uses filename_unicode, to implement
+        # the filename_property().  So if the class defines filename(), then
+        # it doesn't need to define filename_unicode
+        if 'filename' in klass_attrs:
+            required_attrs.remove('filename_unicode')
+
+        if not required_attrs.issubset(klass_attrs):
+            msg = ("%s does not define required attributes: (%s)" %
+                   (klass, required_attrs.difference(klass_attrs)))
+            raise AssertionError(msg)
+
+    def _select_column_attrs(self, klass):
+        return set([col.attr_name for col in klass.select_info.select_columns])
+
+    def _class_properties(self, klass):
+        return set(name for name, obj in klass.__dict__.items()
+                   if isinstance(obj, property))
 
 class BackendItemTrackerTest(MiroTestCase):
     def setUp(self):
