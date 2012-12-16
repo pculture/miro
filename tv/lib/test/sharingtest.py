@@ -421,6 +421,15 @@ class SharingServerTest(EventLoopTest):
         correct_ids_and_names = [(obj.id, obj.get_title())
                                  for obj in ddb_objects]
         self.assertSameSet(daap_ids_and_names, correct_ids_and_names)
+        # check that the podcast key gets set for podcasts
+        for obj in ddb_objects:
+            if isinstance(obj, models.Feed):
+                daap_data = daap_list[obj.id]
+                if not daap_data.get(sharing.DAAP_PODCAST_KEY):
+                    msg = ("DAAP item %s does't have %s set" %
+                           (daap_data['dmap.itemname'],
+                            sharing.DAAP_PODCAST_KEY))
+                    raise AssertionError(msg)
 
     def check_daap_item_deleted(self, item_list, ddb_object):
         self.assertEquals(item_list[ddb_object.id]['valid'], False)
@@ -436,7 +445,7 @@ class SharingServerTest(EventLoopTest):
     def test_initial_list(self):
         self.setup_sharing_manager_backend()
         # test getting all items
-        self.check_daap_list(self.backend.get_items(), 
+        self.check_daap_list(self.backend.get_items(),
                              self.audio_items + self.video_playlist_items)
         # test getting playlists
         self.check_daap_list(self.backend.get_playlists(),

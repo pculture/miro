@@ -74,6 +74,9 @@ BLACKLISTED_FILE_EXTENSIONS = ('.ade', '.adp', '.asx', '.bas', '.bat', '.chm',
                                '.sct', '.shb', '.shs', '.url', '.vb', '.vbe',
                                '.vbs', '.wsc', '.wsf', '.wsh')
 
+def run_application():
+    WindowsApplication().run()
+
 class WindowsApplication(Application):
     def __init__(self):
         Application.__init__(self)

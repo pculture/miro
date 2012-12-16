@@ -728,6 +728,7 @@ class LiveStorage(signals.SignalEmitter):
         self._copy_data_to_path(os.path.join(target_path, save_name))
 
         self._changed_db_path = os.path.join(target_path, save_name)
+        self.connection.close()
         self.open_connection(self._changed_db_path)
 
     def _change_database_file_back(self):
@@ -741,6 +742,7 @@ class LiveStorage(signals.SignalEmitter):
         # _changed_db_path uses the default journal mode instead of WAL mode,
         # so we can do a simple move here instead of using
         # _copy_data_to_path()
+        self.connection.close()
         shutil.move(self._changed_db_path, self.path)
         self.open_connection()
         del self._changed_db_path
