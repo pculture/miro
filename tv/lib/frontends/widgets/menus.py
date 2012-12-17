@@ -33,6 +33,7 @@ import collections
 import itertools
 import logging
 import subprocess
+import sqlite3
 import time
 
 from miro import app
@@ -41,6 +42,7 @@ from miro import messages
 from miro import prefs
 from miro import signals
 from miro import conversions
+from miro.data import connectionpool
 from miro.data.item import DBErrorItemInfo
 from miro.frontends.widgets.keyboard import (Shortcut, CTRL, ALT, SHIFT, CMD,
      MOD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE,
@@ -487,6 +489,16 @@ class DevMenu(Menu):
                                  "force a device database error")
             return
         messages.ForceDeviceDBSaveError(selected_tabs[0]).send_to_backend()
+
+    @menu_item(_("Force Frontend DB Errors"))
+    def force_frontend_backend_db_errors(menu_item):
+        old_execute = connectionpool.Connection.execute
+        def new_execute(*args, **kwargs):
+            raise sqlite3.DatabaseError("Fake Error")
+        connectionpool.Connection.execute = new_execute
+        def undo():
+            connectionpool.Connection.execute = old_execute
+        app.db_error_handler.retry_callbacks.insert(0, undo)
 
 action_handlers = {}
 group_action_handlers = {}

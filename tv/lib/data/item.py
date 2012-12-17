@@ -710,7 +710,7 @@ class DBErrorItemInfo(ItemInfoBase):
     """
 
     def __init__(self, id):
-        ItemInfoBase.__init__(self, row_data=())
+        ItemInfoBase.__init__(self, row_data=(id,))
         self.id = id
         self.title = _('Database Error')
         self.filename_unicode = None

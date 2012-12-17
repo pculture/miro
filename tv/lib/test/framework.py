@@ -560,6 +560,8 @@ class MiroTestCase(unittest.TestCase):
             os.unlink(self.db_path)
         self.reload_database(FilenameType(self.db_path))
         data.init(self.db_path)
+        # use a mock objects for the database error handler
+        app.db_error_handler = mock.Mock()
 
     def clear_ddb_object_cache(self):
         app.db._ids_loaded = set()

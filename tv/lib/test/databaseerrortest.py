@@ -1,7 +1,12 @@
+import sqlite3
+
 from miro import app
 from miro import dialogs
 from miro.data import dberrors
+from miro.data import item
+from miro.data import itemtrack
 from miro.test import mock
+from miro.test import testobjects
 from miro.test.framework import MiroTestCase
 
 class DBErrorTest(MiroTestCase):
@@ -177,3 +182,77 @@ class DBErrorTest(MiroTestCase):
             ((dialogs.BUTTON_QUIT,), {}),
             ((dialogs.BUTTON_QUIT,), {})
         ])
+
+class TestItemTrackErrors(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.init_data_package()
+        self.idle_scheduler = mock.Mock()
+        self.feed, self.items = testobjects.make_feed_with_items(10)
+        app.db.finish_transaction()
+
+    def make_tracker(self):
+        query = itemtrack.ItemTrackerQuery()
+        query.add_condition('feed_id', '=', self.feed.id)
+        query.set_order_by(['release_date'])
+        item_tracker = itemtrack.ItemTracker(self.idle_scheduler, query,
+                                     item.ItemSource())
+        self.list_changed_callback = mock.Mock()
+        self.items_changed_callback = mock.Mock()
+        item_tracker.connect('list-changed', self.list_changed_callback)
+        item_tracker.connect('items-changed', self.items_changed_callback)
+        return item_tracker
+
+    def force_db_error(self):
+        def execute_that_fails(*args, **kwargs):
+            raise sqlite3.DatabaseError("Test Error")
+        mock_execute = mock.Mock(side_effect=execute_that_fails)
+        return mock.patch('miro.data.connectionpool.Connection.execute',
+                          mock_execute)
+
+    def fetch_item_infos(self):
+        return item.fetch_item_infos(app.db, [i.id for i in self.items])
+
+    def test_error_fetching_list(self):
+        with self.allow_warnings():
+            with self.force_db_error():
+                tracker = self.make_tracker()
+        self.assertEquals(app.db_error_handler.run_dialog.call_count, 1)
+        # since there was an error while fetching the initial item list,
+        # get_items() should return None
+        self.assertEquals(tracker.get_items(), [])
+        # when the retry callback is called, we should send the list-changed
+        # callback with the correct data
+        retry_callback = app.db_error_handler.run_dialog.call_args[0][2]
+        self.assertNotEquals(retry_callback, None)
+        self.assertEquals(self.list_changed_callback.call_count, 0)
+        retry_callback()
+        self.assertEquals(self.list_changed_callback.call_count, 1)
+        # get_items() should return the correct items now
+        self.assertSameSet(tracker.get_items(), self.fetch_item_infos())
+
+    def test_error_fetching_rows(self):
+        tracker = self.make_tracker()
+        with self.allow_warnings():
+            with self.force_db_error():
+                # call get_row a bunch of items.  On GTK I think we can get
+                # nested errors while waiting for the dialog response.
+                rv1 = tracker.get_row(0)
+                rv2 = tracker.get_row(1)
+                rv3 = tracker.get_row(2)
+                self.assertEquals(rv1.__class__, item.DBErrorItemInfo)
+                self.assertEquals(rv2.__class__, item.DBErrorItemInfo)
+                self.assertEquals(rv3.__class__, item.DBErrorItemInfo)
+                self.assertSameSet(tracker.get_items(),
+                                   [item.DBErrorItemInfo(item_obj.id)
+                                    for item_obj in self.items])
+        self.assertEquals(app.db_error_handler.run_dialog.call_count, 1)
+        # when the retry callback is called, we should send the list-changed
+        # callback with the correct data
+        retry_callback = app.db_error_handler.run_dialog.call_args[0][2]
+        self.assertNotEquals(retry_callback, None)
+        self.assertEquals(self.list_changed_callback.call_count, 0)
+        retry_callback()
+        self.assertEquals(self.list_changed_callback.call_count, 1)
+        # get_items() should return the correct items now
+        self.assertSameSet(tracker.get_items(), self.fetch_item_infos())
