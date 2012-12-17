@@ -70,11 +70,14 @@ class DBErrorHandler(object):
     def run_dialog(self, title, description, retry_callback=None):
         if retry_callback is not None:
             self.retry_callbacks.append(retry_callback)
-        self._run_dialog(title, description, 'ui thread')
+        self.frontend.call_on_ui_thread(self._run_dialog,
+                                        title, description, 'ui thread')
 
     def run_backend_dialog(self, dialog):
         self.backend_dialogs.append(dialog)
-        self._run_dialog(dialog.title, dialog.description, 'eventloop thread')
+        self.frontend.call_on_ui_thread(self._run_dialog,
+                                        dialog.title, dialog.description,
+                                        'eventloop thread')
 
     def _run_dialog(self, title, description, thread):
         if self.running_dialog:

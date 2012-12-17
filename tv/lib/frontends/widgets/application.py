@@ -1729,5 +1729,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
                                            message.total_count)
 
 class WidgetsFrontend(app.Frontend):
+    def call_on_ui_thread(self, func, *args, **kwargs):
+        call_on_ui_thread(func, *args, **kwargs)
+
     def run_choice_dialog(self, title, description, buttons):
         return dialogs.show_choice_dialog(title, description, buttons)

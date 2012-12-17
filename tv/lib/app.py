@@ -99,6 +99,10 @@ debugmode = None
 # implement the methods.
 #
 class Frontend(object):
+    def call_on_ui_thread(self, func, *args, **kwargs):
+        """Call a function at a later time on the UI thread."""
+        raise NotImplementedError()
+
     def run_choice_dialog(self, title, description, buttons):
         """Show the database error dialog and wait for a choice.
 
