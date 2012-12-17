@@ -51,8 +51,8 @@ from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 # import menu widgets into our namespace for easy access
-from miro.plat.frontends.widgets.widgetset import (Separator, Menu,
-                                                   RadioMenuItem, CheckMenuItem)
+from miro.plat.frontends.widgets.widgetset import (Separator, RadioMenuItem,
+                                                   CheckMenuItem)
 from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro.plat import utils
@@ -74,6 +74,51 @@ class MenuItem(widgetset.MenuItem):
             if len(groups) > 1:
                 raise ValueError("only support one group")
             MenuItem.group_map[groups[0]].add(self)
+
+_menu_item_counter = itertools.count()
+def menu_item(label, shortcut=None, groups=None, **state_labels):
+    def decorator(func):
+        func.menu_item_info = {
+            'label': label,
+            'name': func.__name__,
+            'shortcut': shortcut,
+            'groups': groups,
+            'state_labels': state_labels,
+            'order': _menu_item_counter.next()
+        }
+        return func
+    return decorator
+
+class Menu(widgetset.Menu):
+    """Portable menu class.
+
+    This class adds some code to make writing menu items simpler.  Menu items
+    can be added by defining an action handler method, and using the
+    @menu_item decorator
+    """
+    # FIXME: the @menu_item functionality is totally optional, so most menus
+    # are implemented without it.  The @menu_item approach is nicer through,
+    # so we should switch the other classes to use it.
+
+    def __init__(self, label, name, child_items=()):
+        widgetset.Menu.__init__(self, label, name,
+                                list(child_items) + self.make_items())
+
+    def make_items(self):
+        # list of (order, label, name, callback) tuples
+        menu_item_methods = []
+        for obj in self.__class__.__dict__.values():
+            if callable(obj) and hasattr(obj, 'menu_item_info'):
+                menu_item_methods.append(obj)
+        menu_item_methods.sort(key=lambda obj: obj.menu_item_info['order'])
+        menu_items = []
+        for meth in menu_item_methods:
+            constructor_args = meth.menu_item_info.copy()
+            del constructor_args['order']
+            menu_item = MenuItem(**constructor_args)
+            menu_item.connect("activate", meth)
+            menu_items.append(menu_item)
+        return menu_items
 
 class MenuItemFetcher(object):
     """Get MenuItems by their name quickly.  """
@@ -271,32 +316,7 @@ def get_app_menu():
             sorts_menu, convert_menu, help_menu ]
 
     if app.debugmode:
-        all_menus.append(Menu(_("Dev"), "DevMenu", [
-                MenuItem(_("Profile Message"), "ProfileMessage"),
-                MenuItem(_("Profile Redraw"), "ProfileRedraw"),
-                MenuItem(_("Test Crash Reporter"), "TestCrashReporter"),
-                MenuItem(_("Test Soft Crash Reporter"),
-                    "TestSoftCrashReporter"),
-                MenuItem(_("Memory Stats"), "MemoryStats"),
-                MenuItem(_("Force Feedparser Processing"),
-                    "ForceFeedparserProcessing"),
-                MenuItem(_("Clog Backend"), "ClogBackend"),
-                MenuItem(_("Run Echoprint"), "RunEchoprint"),
-                MenuItem(_("Run ENMFP"), "RunENMFP"),
-                MenuItem(_("Force Main DB Save Error"),
-                         "ForceMainDBSaveError"),
-                MenuItem(_("Force Device DB Save Error"),
-                         "ForceDeviceDBSaveError"),
-                MenuItem(_("Run Donate Manager PowerToys"),
-                         "RunDonateManagerPowerToys"),
-                MenuItem(_("Image Render Test"),
-                         "ImageRenderTest"),
-                MenuItem(_("Set echonest retry timeout to 1 week ago"),
-                         "SetEchonestRetryTimeout"),
-                MenuItem(_("Test database error item rendering"),
-                         "TestDatabaseErrorItemRendering"),
-                ])
-        )
+        all_menus.append(DevMenu())
     return all_menus
 
 def _get_convert_menu():
@@ -313,6 +333,160 @@ def _get_convert_menu():
     menu.append(Separator())
     menu.append(MenuItem(_("Show Conversion Folder"), "RevealConversionFolder"))
     return menu
+
+class DevMenu(Menu):
+    def __init__(self):
+        Menu.__init__(self, _("Dev"), "DevMenu")
+
+    @menu_item(_("Profile Message"))
+    def on_profile_message(menu_item):
+        app.widgetapp.setup_profile_message()
+
+    @menu_item(_("Profile Redraw"))
+    def on_profile_redraw(menu_item):
+        app.widgetapp.profile_redraw()
+
+    class TestIntentionalCrash(StandardError):
+        pass
+
+    @menu_item(_("Test Crash Reporter"))
+    def on_test_crash_reporter(menu_item):
+        raise TestIntentionalCrash("intentional error here")
+
+    @menu_item(_("Test Soft Crash Reporter"))
+    def on_test_soft_crash_reporter(menu_item):
+        app.widgetapp.handle_soft_failure("testing soft crash reporter",
+                'intentional error', with_exception=False)
+
+    @menu_item(_("Memory Stats"))
+    def on_memory_stats(menu_item):
+        app.widgetapp.memory_stats()
+
+    @menu_item(_("Force Feedparser Processing"))
+    def on_force_feedparser_processing(menu_item):
+        app.widgetapp.force_feedparser_processing()
+
+    @menu_item(_("Clog Backend"))
+    def on_clog_backend(menu_item):
+        app.widgetapp.clog_backend()
+
+    @menu_item(_("Run Echoprint"))
+    def on_run_echoprint(menu_item):
+        print 'Running echoprint'
+        print '-' * 50
+        subprocess.call([utils.get_echoprint_executable_path()])
+        print '-' * 50
+
+    @menu_item(_("Run ENMFP"))
+    def on_run_enmfp(menu_item):
+        enmfp_info = utils.get_enmfp_executable_info()
+        print 'Running enmfp-codegen'
+        if 'env' in enmfp_info:
+            print 'env: %s' % enmfp_info['env']
+        print '-' * 50
+        subprocess.call([enmfp_info['path']], env=enmfp_info.get('env'))
+        print '-' * 50
+
+    @menu_item(_("Run Donate Manager Power Toys"))
+    def on_run_donate_manager_powertoys(menu_item):
+        app.donate_manager.run_powertoys()
+
+    @menu_item(_("Image Render Test"))
+    def on_image_render_test(menu_item):
+        t = widgetset.Table(4, 4)
+        t.pack(widgetset.Label("ImageDisplay"), 1, 0)
+        t.pack(widgetset.Label("ImageSurface.draw"), 2, 0)
+        t.pack(widgetset.Label("ImageSurface.draw_rect"), 3, 0)
+        t.pack(widgetset.Label("Normal"), 0, 1)
+        t.pack(widgetset.Label("resize() called"), 0, 2)
+        t.pack(widgetset.Label("crop_and_scale() called"), 0, 3)
+        t.set_column_spacing(20)
+        t.set_row_spacing(20)
+        w = widgetset.Window("Image render test",
+                             widgetset.Rect(100, 300, 800, 600))
+        w.set_content_widget(t)
+
+        path = resources.path("images/album-view-default-audio.png")
+        image = widgetset.Image(path)
+        resize = image.resize(image.width / 2, image.height / 2)
+        crop_and_scale = image.crop_and_scale(20, 0,
+                                              image.width-40, image.height,
+                                              image.width, image.height)
+        def add_to_table(widget, col, row):
+            t.pack(widgetutil.align(widget, xalign=0, yalign=0), col, row)
+        add_to_table(widgetset.ImageDisplay(image), 1, 1)
+        add_to_table(widgetset.ImageDisplay(resize), 1, 2)
+        add_to_table(widgetset.ImageDisplay(crop_and_scale), 1, 3)
+
+        class ImageSurfaceDrawer(widgetset.DrawingArea):
+            def __init__(self, image, use_draw_rect):
+                self.image = widgetset.ImageSurface(image)
+                self.use_draw_rect = use_draw_rect
+                widgetset.DrawingArea.__init__(self)
+
+            def size_request(self, layout):
+                return self.image.width, self.image.height
+
+            def draw(self, context, layout):
+                if not self.use_draw_rect:
+                    self.image.draw(context, 0, 0, image.width, image.height)
+                else:
+                    x_stride = int(image.width // 10)
+                    y_stride = int(image.height // 10)
+                    for x in range(0, int(image.width), x_stride):
+                        for y in range(0, int(image.height), y_stride):
+                            width = min(x_stride, image.width-x)
+                            height = min(y_stride, image.height-y)
+                            print x, y, width, height
+                            self.image.draw_rect(context, x, y, x, y, width,
+                                                 height)
+        add_to_table(ImageSurfaceDrawer(image, False), 2, 1)
+        add_to_table(ImageSurfaceDrawer(resize, False), 2, 2)
+        add_to_table(ImageSurfaceDrawer(crop_and_scale, False), 2, 3)
+        add_to_table(ImageSurfaceDrawer(image, True), 3, 1)
+        add_to_table(ImageSurfaceDrawer(resize, True), 3, 2)
+        add_to_table(ImageSurfaceDrawer(crop_and_scale, True), 3, 3)
+
+        w.show()
+
+    @menu_item(_("Set Echonest Retry Timeout"))
+    def set_echonest_retry_timout(menu_item):
+        # set LAST_RETRY_NET_LOOKUP to 1 week ago minus 1 minute
+        new_value = int(time.time()) - (60 * 60 * 24 * 7) + 60
+        app.config.set(prefs.LAST_RETRY_NET_LOOKUP, new_value)
+
+    @menu_item(_("Test Database Error Item Rendering"))
+    def test_database_error_item_rendering(menu_item):
+        displayed = app.item_list_controller_manager.displayed
+        if displayed is None:
+            logging.warn("test_database_error_item_rendering: "
+                         "no item list displayed")
+            return
+        # replace all currently loaded item infos with DBError items
+        item_list = displayed.item_list
+        changed_ids = []
+        for item_id, item_info in item_list.row_data.items():
+            if item_info is not None:
+                item_list.row_data[item_id] = DBErrorItemInfo(item_id)
+                changed_ids.append(item_id)
+        item_list.emit('will-change')
+        item_list.emit('items-changed', changed_ids)
+
+    @menu_item(_("Force Main DB Save Error"))
+    def on_force_device_db_save_error(menu_item):
+        messages.ForceDBSaveError().send_to_backend()
+
+    @menu_item(_("Force Device DB Save Error"))
+    def on_force_device_db_save_error(menu_item):
+        selection_type, selected_tabs = app.tabs.selection
+        if (selection_type != 'connect' or
+            len(selected_tabs) != 1 or
+            not isinstance(selected_tabs[0], messages.DeviceInfo)):
+            dialogs.show_message("Usage",
+                                 "You must have a device tab selected to "
+                                 "force a device database error")
+            return
+        messages.ForceDeviceDBSaveError(selected_tabs[0]).send_to_backend()
 
 action_handlers = {}
 group_action_handlers = {}
@@ -569,156 +743,6 @@ def on_translate():
 @action_handler("Planet")
 def on_planet():
     app.widgetapp.open_url(app.config.get(prefs.PLANET_URL))
-
-@action_handler("ProfileMessage")
-def on_profile_message():
-    app.widgetapp.setup_profile_message()
-
-@action_handler("ProfileRedraw")
-def on_profile_redraw():
-    app.widgetapp.profile_redraw()
-
-class TestIntentionalCrash(StandardError):
-    pass
-
-@action_handler("TestCrashReporter")
-def on_test_crash_reporter():
-    raise TestIntentionalCrash("intentional error here")
-
-@action_handler("TestSoftCrashReporter")
-def on_test_soft_crash_reporter():
-    app.widgetapp.handle_soft_failure("testing soft crash reporter",
-            'intentional error', with_exception=False)
-
-@action_handler("MemoryStats")
-def on_memory_stats():
-    app.widgetapp.memory_stats()
-
-@action_handler("ForceFeedparserProcessing")
-def on_force_feedparser_processing():
-    app.widgetapp.force_feedparser_processing()
-
-@action_handler("ClogBackend")
-def on_clog_backend():
-    app.widgetapp.clog_backend()
-
-@action_handler("RunEchoprint")
-def on_run_echoprint():
-    print 'Running echoprint'
-    print '-' * 50
-    subprocess.call([utils.get_echoprint_executable_path()])
-    print '-' * 50
-
-@action_handler("RunENMFP")
-def on_run_enmfp():
-    enmfp_info = utils.get_enmfp_executable_info()
-    print 'Running enmfp-codegen'
-    if 'env' in enmfp_info:
-        print 'env: %s' % enmfp_info['env']
-    print '-' * 50
-    subprocess.call([enmfp_info['path']], env=enmfp_info.get('env'))
-    print '-' * 50
-
-@action_handler("RunDonateManagerPowerToys")
-def on_run_donate_manager_powertoys():
-    app.donate_manager.run_powertoys()
-
-@action_handler("ImageRenderTest")
-def on_image_render_test():
-    t = widgetset.Table(4, 4)
-    t.pack(widgetset.Label("ImageDisplay"), 1, 0)
-    t.pack(widgetset.Label("ImageSurface.draw"), 2, 0)
-    t.pack(widgetset.Label("ImageSurface.draw_rect"), 3, 0)
-    t.pack(widgetset.Label("Normal"), 0, 1)
-    t.pack(widgetset.Label("resize() called"), 0, 2)
-    t.pack(widgetset.Label("crop_and_scale() called"), 0, 3)
-    t.set_column_spacing(20)
-    t.set_row_spacing(20)
-    w = widgetset.Window("Image render test",
-                         widgetset.Rect(100, 300, 800, 600))
-    w.set_content_widget(t)
-
-    path = resources.path("images/album-view-default-audio.png")
-    image = widgetset.Image(path)
-    resize = image.resize(image.width / 2, image.height / 2)
-    crop_and_scale = image.crop_and_scale(20, 0,
-                                          image.width-40, image.height,
-                                          image.width, image.height)
-    def add_to_table(widget, col, row):
-        t.pack(widgetutil.align(widget, xalign=0, yalign=0), col, row)
-    add_to_table(widgetset.ImageDisplay(image), 1, 1)
-    add_to_table(widgetset.ImageDisplay(resize), 1, 2)
-    add_to_table(widgetset.ImageDisplay(crop_and_scale), 1, 3)
-
-    class ImageSurfaceDrawer(widgetset.DrawingArea):
-        def __init__(self, image, use_draw_rect):
-            self.image = widgetset.ImageSurface(image)
-            self.use_draw_rect = use_draw_rect
-            widgetset.DrawingArea.__init__(self)
-
-        def size_request(self, layout):
-            return self.image.width, self.image.height
-
-        def draw(self, context, layout):
-            if not self.use_draw_rect:
-                self.image.draw(context, 0, 0, image.width, image.height)
-            else:
-                x_stride = int(image.width // 10)
-                y_stride = int(image.height // 10)
-                for x in range(0, int(image.width), x_stride):
-                    for y in range(0, int(image.height), y_stride):
-                        width = min(x_stride, image.width-x)
-                        height = min(y_stride, image.height-y)
-                        print x, y, width, height
-                        self.image.draw_rect(context, x, y, x, y, width,
-                                             height)
-    add_to_table(ImageSurfaceDrawer(image, False), 2, 1)
-    add_to_table(ImageSurfaceDrawer(resize, False), 2, 2)
-    add_to_table(ImageSurfaceDrawer(crop_and_scale, False), 2, 3)
-    add_to_table(ImageSurfaceDrawer(image, True), 3, 1)
-    add_to_table(ImageSurfaceDrawer(resize, True), 3, 2)
-    add_to_table(ImageSurfaceDrawer(crop_and_scale, True), 3, 3)
-
-    w.show()
-
-@action_handler("SetEchonestRetryTimeout")
-def set_echonest_retry_timout():
-    # set LAST_RETRY_NET_LOOKUP to 1 week ago minus 1 minute
-    new_value = int(time.time()) - (60 * 60 * 24 * 7) + 60
-    app.config.set(prefs.LAST_RETRY_NET_LOOKUP, new_value)
-
-@action_handler("TestDatabaseErrorItemRendering")
-def test_database_error_item_rendering():
-    displayed = app.item_list_controller_manager.displayed
-    if displayed is None:
-        logging.warn("test_database_error_item_rendering: "
-                     "no item list displayed")
-        return
-    # replace all currently loaded item infos with DBError items
-    item_list = displayed.item_list
-    changed_ids = []
-    for item_id, item_info in item_list.row_data.items():
-        if item_info is not None:
-            item_list.row_data[item_id] = DBErrorItemInfo(item_id)
-            changed_ids.append(item_id)
-    item_list.emit('will-change')
-    item_list.emit('items-changed', changed_ids)
-
-@action_handler("ForceMainDBSaveError")
-def on_force_device_db_save_error():
-    messages.ForceDBSaveError().send_to_backend()
-
-@action_handler("ForceDeviceDBSaveError")
-def on_force_device_db_save_error():
-    selection_type, selected_tabs = app.tabs.selection
-    if (selection_type != 'connect' or
-        len(selected_tabs) != 1 or
-        not isinstance(selected_tabs[0], messages.DeviceInfo)):
-        dialogs.show_message("Usage",
-                             "You must have a device tab selected to "
-                             "force a device database error")
-        return
-    messages.ForceDeviceDBSaveError(selected_tabs[0]).send_to_backend()
 
 class LegacyMenuUpdater(object):
     """This class contains the logic to update the menus based on enabled
