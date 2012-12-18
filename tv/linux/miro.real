@@ -227,6 +227,36 @@ def get_keyval(keyval):
 
     return p, val
 
+def check_existing_instance_running(args):
+    """Check if there is an existing instance of Miro running.
+
+    If so, args will be passed to that instance to open and we will return
+    True.  The caller should then quit
+    """
+    try:
+        import dbus
+    except ImportError:
+        return False
+
+    from miro.plat import onetime
+    try:
+        onetime.OneTime()
+    except dbus.NameExistsException:
+        bus = dbus.SessionBus()
+        proxy_obj = bus.get_object(
+            'org.participatoryculture.dtv.onetime',
+            '/org/participatoryculture/dtv/OneTime')
+        iface = dbus.Interface(
+            proxy_obj, 'org.participatoryculture.dtv.OneTimeIFace')
+        for i, arg in enumerate(args):
+            args[i] = arg.decode('latin1')
+        dbusargs = dbus.Array(args, signature="s")
+        return True
+    except dbus.DBusException:
+        # Should we log an error here?  Probably yes, but the logging code
+        # hasn't been set up, let's skip it for now.
+        pass
+    return False
 
 def startapp():
     # set debugmode
@@ -307,29 +337,9 @@ elif parsed_options.profile:
     profile.run('main()', parsed_options.profile)
 
 else:
-    try:
-        import dbus
-        from miro.plat import onetime
-        try:
-            if not parsed_options.ignore_onetime:
-                onetime.OneTime()
-            startapp()
-        except dbus.NameExistsException:
-            bus = dbus.SessionBus()
-            proxy_obj = bus.get_object(
-                'org.participatoryculture.dtv.onetime',
-                '/org/participatoryculture/dtv/OneTime')
-            iface = dbus.Interface(
-                proxy_obj, 'org.participatoryculture.dtv.OneTimeIFace')
-            for i, arg in enumerate(args):
-                args[i] = arg.decode('latin1')
-            dbusargs = dbus.Array(args, signature="s")
-
-            try:
-                iface.handle_args(dbusargs)
-            except dbus.DBusException:
-                startapp()
-        except dbus.DBusException:
-            startapp()
-    except ImportError:
+    should_start = True
+    if not parsed_options.ignore_onetime:
+        if check_existing_instance_running(args):
+            should_start = False
+    if should_start:
         startapp()
