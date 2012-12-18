@@ -45,10 +45,6 @@ def setup_logging():
     logger = logging.getLogger('')
     logger.setLevel(logging.WARN)
 
-def setup_movie_data_program_info():
-    from miro.plat.renderers.gstreamerrenderer import movie_data_program_info
-    app.movie_data_program_info = movie_data_program_info
-
 def run_application():
     setup_logging()
     app.controller = controller.Controller()
@@ -74,7 +70,6 @@ def run_application():
         app.controller.shutdown()
         return
 
-    setup_movie_data_program_info()
     messages.FrontendStarted().send_to_backend()
 
     print "Startup complete.  Type \"help\" for list of commands."

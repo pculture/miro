@@ -87,6 +87,7 @@ def run_application(frontend, props_to_set, theme):
     else:
         raise ValueError("Cannot load frontend: %s" % frontend)
     threadcheck.set_ui_thread(threading.currentThread())
+    app.frontend_name = frontend
     application.run_application()
 
 def set_properties(props):

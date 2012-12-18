@@ -1923,7 +1923,7 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
         else:
             size = self.get_size()
             dled = self.downloader.get_current_size()
-            if size == 0:
+            if size == 0 or size is None or dled is None:
                 return 0
             else:
                 return (100.0*dled) / size
