@@ -32,15 +32,18 @@
 import collections
 import logging
 import string
+import sqlite3
 import random
 import weakref
 
 from miro import app
 from miro import models
+from miro import prefs
 from miro import schema
 from miro import signals
 from miro import util
 from miro.data import item
+from miro.gtcache import gettext as _
 
 ItemTrackerCondition = util.namedtuple(
     "ItemTrackerCondition",
@@ -405,6 +408,7 @@ class ItemTracker(signals.SignalEmitter):
         self.idle_work_scheduled = False
         self.item_fetcher = None
         self.item_source = item_source
+        self._db_retry_callback_pending = False
         self._set_query(query)
         self._fetch_id_list()
         self._schedule_idle_work()
@@ -436,6 +440,22 @@ class ItemTracker(signals.SignalEmitter):
             self.item_fetcher.destroy()
             self.item_fetcher = None
 
+    def _run_db_error_dialog(self):
+        if self._db_retry_callback_pending:
+            return
+        gettext_values = {
+            "appname": app.config.get(prefs.SHORT_APP_NAME)
+        }
+        title = _("%(appname)s database query failed", gettext_values)
+        description = _("%(appname)s was unable to read from its database.",
+                        gettext_values)
+        app.db_error_handler.run_dialog(title, description,
+                                        self._retry_after_db_error)
+
+    def _retry_after_db_error(self):
+        self._db_retry_callback_pending = False
+        self._refetch_id_list()
+
     def _set_query(self, query):
         """Change our ItemTrackerQuery object."""
         self.query = query
@@ -443,8 +463,13 @@ class ItemTracker(signals.SignalEmitter):
     def _fetch_id_list(self):
         """Fetch the ids for this list.  """
         self._destroy_item_fetcher()
-        connection = self.item_source.get_connection()
-        self.id_list = self.query.select_ids(connection)
+        try:
+            connection = self.item_source.get_connection()
+            self.id_list = self.query.select_ids(connection)
+        except sqlite3.DatabaseError, e:
+            logging.warn("%s while fetching items", e, exc_info=True)
+            self.id_list = []
+            self._run_db_error_dialog()
         self.id_to_index = dict((id_, i) for i, id_ in enumerate(self.id_list))
         self.row_data = {}
         self.item_fetcher = self.make_item_fetcher(connection, self.id_list)
@@ -538,10 +563,15 @@ class ItemTracker(signals.SignalEmitter):
         :param rows_to_load: indexes of the rows to load.
         """
         ids_to_load = [self.id_list[i] for i in rows_to_load]
-        items = self.item_fetcher.fetch_items(ids_to_load)
-        for item in items:
-            pos = self.id_to_index[item.id]
-            self.row_data[item.id] = item
+        try:
+            items = self.item_fetcher.fetch_items(ids_to_load)
+        except sqlite3.DatabaseError, e:
+            logging.warn("%s while fetching items", e, exc_info=True)
+            items = [item.DBErrorItemInfo(item_id) for item_id in ids_to_load]
+            self._run_db_error_dialog()
+        for item_info in items:
+            pos = self.id_to_index[item_info.id]
+            self.row_data[item_info.id] = item_info
 
     def item_in_list(self, item_id):
         """Test if an item is in the list.

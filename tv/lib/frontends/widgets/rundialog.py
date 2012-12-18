@@ -29,6 +29,7 @@
 
 """Run dialogs from the backend thread."""
 
+from miro import app
 from miro import dialogs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import widgetutil
@@ -39,6 +40,8 @@ def run(dialog):
     if dialog.__class__ in (dialogs.MessageBoxDialog, dialogs.ChoiceDialog,
                             dialogs.ThreeChoiceDialog):
         runner = DialogRunner(dialog)
+    elif isinstance(dialog, dialogs.DatabaseErrorDialog):
+        runner = DatabaseErrorDialogRunner(dialog)
     elif isinstance(dialog, dialogs.HTTPAuthDialog):
         runner = HTTPAuthDialogRunner(dialog)
     elif isinstance(dialog, dialogs.TextEntryDialog):
@@ -139,3 +142,10 @@ class CheckboxTextboxDialogRunner(DialogRunner):
         checked = self.checkbox.get_checked()
         text = self.entry.get_text()
         self.dialog.run_callback(self.dialog.buttons[response], checked, text)
+
+class DatabaseErrorDialogRunner(DialogRunner):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    def run(self):
+        app.db_error_handler.run_backend_dialog(self.dialog)

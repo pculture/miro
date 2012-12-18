@@ -197,6 +197,15 @@ class ChoiceDialog(Dialog):
     def __init__(self, title, description, default_button, other_button):
         super(ChoiceDialog, self).__init__(title, description,
                                            [default_button, other_button])
+class DatabaseErrorDialog(ChoiceDialog):
+    """ChoiceDialog for that we show when we see a database error.
+
+    Frontends should call app.db_error_handler.run_backend_dialog() instead
+    of running the normal code.
+    """
+    def __init__(self, title, description):
+        super(DatabaseErrorDialog, self).__init__(title, description,
+                                                  BUTTON_RETRY, BUTTON_QUIT)
 
 class ThreeChoiceDialog(Dialog):
     """Give the user a choice of 3 options (e.g. Remove entry/

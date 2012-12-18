@@ -39,6 +39,27 @@ from miro.data import dbcollations
 class ConnectionLimitError(StandardError):
     """We've hit our connection limits."""
 
+class Connection(object):
+    """Wraps the sqlite3.Connection object."""
+    def __init__(self, path):
+        self._connection = sqlite3.connect(
+            path, isolation_level=None, detect_types=sqlite3.PARSE_DECLTYPES)
+
+    def execute(self, sql, values=()):
+        return self._connection.execute(sql, values)
+
+    def execute_many(self, sql, values):
+        self._connection.execute_many(sql, values)
+
+    def commit(self):
+        self._connection.commit()
+
+    def rollback(self):
+        self._connection.rollback()
+
+    def close(self):
+        self._connection.close()
+
 class ConnectionPool(object):
     """Pool of SQLite database connections
 
@@ -68,9 +89,7 @@ class ConnectionPool(object):
 
     def _make_new_connection(self):
         # TODO: should have error handling here, but what should we do?
-        connection = sqlite3.connect(self.db_path,
-                                     isolation_level=None,
-                                     detect_types=sqlite3.PARSE_DECLTYPES)
+        connection = Connection(self.db_path)
         dbcollations.setup_collations(connection)
         self.free_connections.append(connection)
         self.all_connections.add(connection)

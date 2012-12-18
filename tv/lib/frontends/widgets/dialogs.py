@@ -52,7 +52,7 @@ from miro.dialogs import (
     BUTTON_CREATE_FEED, BUTTON_CONTINUE, BUTTON_QUIT, BUTTON_DELETE,
     BUTTON_CLOSE_TO_TRAY, BUTTON_MIGRATE, BUTTON_DONT_MIGRATE,
     BUTTON_NOT_NOW, BUTTON_ADD, BUTTON_CREATE_FOLDER,
-    BUTTON_CHOOSE_NEW_FOLDER, BUTTON_START_FRESH)
+    BUTTON_CHOOSE_NEW_FOLDER, BUTTON_START_FRESH, BUTTON_RETRY)
 WARNING_MESSAGE = 0
 INFO_MESSAGE = 1
 CRITICAL_MESSAGE = 2
@@ -147,6 +147,8 @@ def show_choice_dialog(title, description, choices, transient_for=None):
         for mem in choices:
             window.add_button(mem.text)
         response = window.run()
+        if response == -1:
+            return None
         return choices[response]
     finally:
         window.destroy()

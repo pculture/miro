@@ -37,4 +37,4 @@ from miro.data import namecollation
 
 def setup_collations(connection):
     """Setup collections on a connection."""
-    namecollation.setup_collation(connection)
+    namecollation.setup_collation(connection._connection)

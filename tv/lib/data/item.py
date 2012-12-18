@@ -181,12 +181,6 @@ class ItemSelectInfo(object):
     # name of the column that stores video paths
     path_column = 'filename'
 
-    # Constant values that aren't included in the select statement
-    # An example of this is all the values that come from remote_downloader
-    # for a DeviceItem.
-    constant_values = {
-    }
-
     # how to join the main table to other tables.  Maps table names to
     # (item_column, other_column) tuples
     join_info = {
@@ -259,8 +253,6 @@ class ItemInfoMeta(type):
             for select_column in select_info.select_columns:
                 attribute = ItemInfoAttributeGetter(count.next())
                 dct[select_column.attr_name] = attribute
-            for attr_name, value in select_info.constant_values.items():
-                dct[attr_name] = value
         return type.__new__(cls, classname, bases, dct)
 
 class ItemInfoBase(object):
@@ -279,6 +271,91 @@ class ItemInfoBase(object):
     html_stripper = util.HTMLStripper()
     # DeviceInfo for the device this item is on
     device = None
+
+    # default values for columns from the item table.  For DeviceItemInfo and
+    # SharingItemInfo, we will use these for columns that don't exist in their
+    # item table.
+    date_added = None
+    watched_time = None
+    last_watched = None
+    parent_id = None
+    rating = None
+    album_tracks = None
+    new = False
+    keep = True
+    was_downloaded = False
+    expired = False
+    eligible_for_autodownload = False
+    is_file_item = True
+    is_container_item = False
+    icon_cache_path_unicode = None
+    subtitle_encoding = None
+    release_date = None
+    parent_title = None
+    feed_url = None
+    license = None
+    rss_id = None
+    entry_title = None
+    entry_description = None
+    torrent_title = None
+    permalink = None
+    payment_link = None
+    comments_link = None
+    url = None
+    size = None
+    enclosure_size = None
+    enclosure_type = None
+    mime_type = None
+    enclosure_format = None
+    auto_sync = None
+    screenshot_path_unicode = None
+    cover_art_path_unicode = None
+    resume_time = 0
+    play_count = 0
+    skip_count = 0
+    net_lookup_enabled = False
+    has_drm = False
+    album = None
+    kind = None
+    duration_ms = None
+    description = None
+    show = None
+    file_type = None
+    artist = None
+    episode_id = None
+    track = None
+    year = None
+    genre = None
+    episode_number = None
+    season_number = None
+    album_artist = None
+    # default values for columns in the remote_downloader table
+    downloader_size = None
+    downloader_type = None
+    seeders = None
+    upload_size = None
+    downloader_id = None
+    rate = None
+    connections = None
+    downloaded_time = None
+    downloaded_size = None
+    pending_reason = None
+    retry_time = None
+    short_reason_failed = None
+    reason_failed = None
+    leechers = None
+    eta = None
+    pending_manual_download = None
+    downloader_state = None
+    upload_rate = None
+    downloader_activity = None
+    downloader_content_type = None
+    # default values for columns in the feed table
+    feed_id = None
+    feed_get_everything = None
+    feed_auto_downloadable = False
+    feed_expire_time = None
+    feed_expire = u'never'
 
     def __init__(self, row_data):
         """Create an ItemInfo object.
@@ -628,6 +705,17 @@ class ItemInfo(ItemInfoBase):
     source_type = 'database'
     select_info = ItemSelectInfo()
 
+class DBErrorItemInfo(ItemInfoBase):
+    """DBErrorItemInfo is used as a placeholder when we get DatabaseErrors
+    """
+
+    def __init__(self, id):
+        ItemInfoBase.__init__(self, row_data=(id,))
+        self.id = id
+        self.title = _('Database Error')
+        self.filename_unicode = None
+        self.source_type = 'dberror'
+
 class DeviceItemSelectInfo(ItemSelectInfo):
     """ItemSelectInfo for DeviceItems."""
 
@@ -683,46 +771,6 @@ class DeviceItemSelectInfo(ItemSelectInfo):
         SelectColumn('device_item', 'kind'),
         SelectColumn('device_item', 'net_lookup_enabled'),
     ]
-
-    constant_values = {
-        # item stuff that only applies to items in the main DB
-        'parent_id': None,
-        'new': False,
-        'keep': True,
-        'was_downloaded': True,
-        'expired': False,
-        'eligible_for_autodownload': False,
-        'is_file_item': True,
-        'is_container_item': False,
-        'icon_cache_path_unicode': None,
-        # downloader stuff, set all to None
-        'downloader_size': None,
-        'downloader_type': None,
-        'seeders': None,
-        'upload_size': None,
-        'downloader_id': None,
-        'rate': None,
-        'connections': None,
-        'downloaded_time': None,
-        'downloaded_size': None,
-        'pending_reason': None,
-        'retry_time': None,
-        'short_reason_failed': None,
-        'reason_failed': None,
-        'leechers': None,
-        'eta': None,
-        'pending_manual_download': None,
-        'downloader_state': None,
-        'upload_rate': None,
-        'downloader_activity': None,
-        'downloader_content_type': None,
-        # feed stuff
-        'feed_id': None,
-        'feed_get_everything': None,
-        'feed_auto_downloadable': False,
-        'feed_expire_time': None,
-        'feed_expire': u'never',
-    }
 
     join_info = {
         'item_fts': ('id', 'docid'),
@@ -783,76 +831,6 @@ class SharingItemSelectInfo(ItemSelectInfo):
         SelectColumn('sharing_item', 'address'),
     ]
     path_column = 'video_path'
-
-    constant_values = {
-        # item attributes that sharing item doesn't store
-        'creation_time': None,
-        'watched_time': None,
-        'last_watched': None,
-        'parent_id': None,
-        'rating': None,
-        'album_tracks': None,
-        'new': False,
-        'keep': True,
-        'was_downloaded': True,
-        'expired': False,
-        'eligible_for_autodownload': False,
-        'is_file_item': True,
-        'is_container_item': False,
-        'icon_cache_path_unicode': None,
-        'subtitle_encoding': None,
-        'release_date': None,
-        'parent_title': None,
-        'feed_url': None,
-        'license': None,
-        'rss_id': None,
-        'entry_title': None,
-        'torrent_title': None,
-        'permalink': None,
-        'payment_link': None,
-        'comments_link': None,
-        'url': None,
-        'size': None,
-        'enclosure_size': None,
-        'enclosure_type': None,
-        'mime_type': None,
-        'enclosure_format': None,
-        'auto_sync': None,
-        'screenshot_path_unicode': None,
-        'cover_art_path_unicode': None,
-        'resume_time': 0,
-        'play_count': 0,
-        'skip_count': 0,
-        'net_lookup_enabled': False,
-        'has_drm': False,
-        # downloader stuff, set all to None
-        'downloader_size': None,
-        'downloader_type': None,
-        'seeders': None,
-        'upload_size': None,
-        'downloader_id': None,
-        'rate': None,
-        'connections': None,
-        'downloaded_time': None,
-        'downloaded_size': None,
-        'pending_reason': None,
-        'retry_time': None,
-        'short_reason_failed': None,
-        'reason_failed': None,
-        'leechers': None,
-        'eta': None,
-        'pending_manual_download': None,
-        'downloader_state': None,
-        'upload_rate': None,
-        'downloader_activity': None,
-        'downloader_content_type': None,
-        # feed stuff
-        'feed_id': None,
-        'feed_get_everything': None,
-        'feed_auto_downloadable': False,
-        'feed_expire_time': None,
-        'feed_expire': u'never',
-    }
 
     join_info = {
         'item_fts': ('id', 'docid'),
