@@ -208,13 +208,18 @@ def _load_image(image_name):
     path = os.path.join('images', filename)
     return imagepool.get_surface(resources.path(path))
 
-class ItemRendererBase(widgetset.ItemListRenderer):
+class ItemRenderer(widgetset.ItemListRenderer):
     MIN_WIDTH = 600
     HEIGHT = 147
 
-    def __init__(self, wide_image=False):
+    def __init__(self, display_channel=True, is_podcast=False,
+                 wide_image=False):
         widgetset.ItemListRenderer.__init__(self)
         self.canvas = ItemRendererCanvas(wide_image)
+        self.signals = ItemRendererSignals()
+        self.display_channel = display_channel
+        self.is_podcast = is_podcast
+        self.setup_torrent_folder_description()
 
     def get_size(self, style, layout_manager):
         return self.MIN_WIDTH, self.HEIGHT
@@ -242,19 +247,6 @@ class ItemRendererBase(widgetset.ItemListRenderer):
         layout = self.layout_all(layout_manager, context.width,
                 context.height, selected, hotspot)
         layout.draw(context)
-
-    def layout_all(self, layout_manager, width, height, selected, hotspot):
-        """Create a ItemRendererLayout object for our cell."""
-        raise NotImplementedError()
-
-class ItemRenderer(ItemRendererBase):
-    def __init__(self, display_channel=True, is_podcast=False,
-            wide_image=False):
-        ItemRendererBase.__init__(self, wide_image)
-        self.signals = ItemRendererSignals()
-        self.display_channel = display_channel
-        self.is_podcast = is_podcast
-        self.setup_torrent_folder_description()
 
     def setup_torrent_folder_description(self):
         text = (u'<a href="#show-torrent-contents">%s</a>' %
