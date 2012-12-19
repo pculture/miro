@@ -41,25 +41,15 @@ from miro.plat.frontends.widgets import widgetset
 
 from miro.conversions import conversion_manager
 
-# FIXME: The old itemlist module is no longer around.  We need to reimplement
-# this
-if 0:
-    class ConvertingSort(itemlist.ItemSort):
-        KEY = None
-
-        def __init__(self):
-            itemlist.ItemSort.__init__(self, True)
-            self.positions = []
-
-        def sort_key(self, item):
-            id_ = item.id
-            if not id_ in self.positions:
-                self.positions.append(id_)
-            return self.positions.index(id_)
-
-# XXX: why doesn't this guy derive from something sensible and use 
-# ItemListController instead?
 class ConvertingController(object):
+    """Controller object for the conversions list.
+
+    This class doesn't derive from ItemListController because ConversionInfos
+    don't reside on the database, so it can't used the itemlist/itemtracker
+    code.  Instead it simply creates a TableModel and appends items as it they
+    come in.
+    """
+
     def __init__(self):
         self.widget = widgetset.VBox()
         self.build_widget()
@@ -71,8 +61,7 @@ class ConvertingController(object):
         self.titlebar.connect('reveal', self.on_reveal_conversions_folder)
         self.titlebar.connect('clear-finished', self.on_clear_finished)
 
-        sorter = ConvertingSort()
-        self.model = widgetset.InfoListModel(sorter.sort_key)
+        self.model = widgetset.TableModel('object')
         self.table = ConvertingTableView(self.model)
         self.table.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         scroller = widgetset.Scroller(False, True)
@@ -108,47 +97,54 @@ class ConvertingController(object):
             app.widgetapp.reveal_file(task.output_path)
 
     def handle_task_list(self, running_tasks, pending_tasks, finished_tasks):
-        self.model.add_infos(running_tasks)
-        self.model.add_infos(pending_tasks)
-        self.model.add_infos(finished_tasks)
+        for task in running_tasks + pending_tasks + finished_tasks:
+            self.model.append(task)
         self.table.model_changed()
         self._update_buttons_state()
 
+    def find_iter(self, task_id):
+        """Find a model iter for a task id."""
+        it = self.model.first_iter()
+        while it:
+            if self.model[it][0].id == task_id:
+                return it
+            it = self.model.next_iter(it)
+        return None
+
     def handle_task_added(self, task):
-        try:
-            self.model.add_infos([task])
-        except ValueError:
-            pass # task already added
-        else:
-            self.table.model_changed()
-            self._update_buttons_state()
+        if self.find_iter(task.id):
+            # task already added
+            return
+        self.model.append(task)
+        self.table.model_changed()
+        self._update_buttons_state()
     
     def handle_all_tasks_removed(self):
-        self.model.remove_all()
+        while len(self.model) > 0:
+            self.model.remove(self.model.first_iter())
         self.table.model_changed()
         self._update_buttons_state()
     
     def handle_task_removed(self, task):
-        try:
-            self.model.remove_ids([task.id])
-        except KeyError:
-            pass # task already removed
-        else:
-            self.table.model_changed()
-            self._update_buttons_state()
+        it = self.find_iter(task.id)
+        if it is None:
+            return # task already removed
+        self.model.remove(it)
+        self.table.model_changed()
+        self._update_buttons_state()
     
     def handle_task_changed(self, task):
-        try:
-            self.model.update_infos([task], resort=False)
-        except KeyError:
-            pass # task already removed
-        else:
-            self.table.model_changed()
-            self._update_buttons_state()
+        it = self.find_iter(task.id)
+        if it is None:
+            return # task already removed
+        self.model.update(it, task)
+        self.table.model_changed()
+        self._update_buttons_state()
     
     def _update_buttons_state(self):
         finished_count = not_finished_count = 0
-        for info in self.model.info_list():
+        for row in self.model:
+            info = row[0]
             if info.state == 'finished':
                 finished_count += 1
             else:
@@ -168,7 +164,8 @@ class ConvertingTableView(widgetset.TableView):
         self.set_show_headers(False)
 
         self.renderer = itemrenderer.ConversionItemRenderer()
-        self.column = widgetset.TableColumn('conversion', self.renderer)
+        self.column = widgetset.TableColumn('conversion', self.renderer,
+                                            info=0)
         self.column.set_min_width(600)
         self.add_column(self.column)
 

@@ -1288,16 +1288,29 @@ class DeviceItemRenderer(ItemRenderer):
     def calc_extra_button(self):
         return DOWNLOAD_TO_MY_MIRO_TEXT, 'download-device-item'
 
-class ConversionItemRenderer(ItemRendererBase):
+class ConversionItemRenderer(widgetset.CustomCellRenderer):
     """Class to draw conversion items
 
     This one is substantially different from ItemRenderer because it deals
     with ConversionTaskInfo objects.
     """
     def __init__(self):
-        ItemRendererBase.__init__(self, wide_image=True)
+        widgetset.CustomCellRenderer.__init__(self)
+        self.canvas = ItemRendererCanvas(wide_image=True)
         self.canvas.set_progress_bar_images('conversion-progress-left',
                 'conversion-progress-middle', 'conversion-progress-right')
+
+    def get_size(self, style, layout_manager):
+        return ItemRenderer.MIN_WIDTH, ItemRenderer.HEIGHT
+
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
+        layout = self.layout_all(layout_manager, width, height, False, None)
+        return layout.find_hotspot_name(x, y)
+
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        layout = self.layout_all(layout_manager, context.width,
+                context.height, selected, hotspot)
+        layout.draw(context)
 
     def layout_all(self, layout_manager, width, height, selected, hotspot):
         download_mode = (self.info.state == 'running')
