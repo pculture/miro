@@ -742,7 +742,7 @@ class DNDHandlerMixin(object):
             gtk_path, gtk_position = self._widget.get_dest_row_at_pos(x, y)
         except TypeError:
             # Below the last row
-            yield (None, len(model), None, None)
+            yield (None, model.iter_n_children(None), None, None)
             return
 
         iter_ = model.get_iter(gtk_path)
@@ -1714,6 +1714,9 @@ class ItemListModel(TableModelBase):
         # there's no way to check this for FixedListStore.  Let's just assume
         # that iters are valid, since the model never changes.
         return True
+
+    def __len__(self):
+        return self._model.get_property("row_count")
 
 class ModelHandler(object):
     """Used by TableModel to handle its TableModel

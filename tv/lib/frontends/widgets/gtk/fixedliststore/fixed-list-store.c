@@ -365,3 +365,15 @@ miro_fixed_list_store_row_of_iter(MiroFixedListStore* miro_fls,
     return (gint)iter->user_data;
 }
 
+gboolean
+miro_fixed_list_store_iter_is_valid(MiroFixedListStore* miro_fls,
+                                    GtkTreeIter* iter)
+{
+   gint pos;
+
+   pos = (gint)iter->user_data;
+   return (iter->stamp == miro_fls->stamp &&
+           pos >= 0 &&
+           pos < miro_fls->row_count);
+}
+
