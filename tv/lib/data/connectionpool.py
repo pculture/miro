@@ -159,10 +159,13 @@ class ShareConnectionPool(ConnectionPool):
     """ConnectionPool for a DAAP share."""
     def __init__(self, share_info):
         # min_connections is 0 since we should normally not have any
-        # connections to the device database.  The max connections is 2 in
-        # case the user is on one tab and playing items from another tab.
+        # connections to the device database.  The max connections is 3 which
+        # handles the following case:
+        #   - playing items from tab #1
+        #   - switching away from tab #2
+        #   - switching to tab #3
         ConnectionPool.__init__(self, share_info.sqlite_path,
-                                min_connections=0, max_connections=2)
+                                min_connections=0, max_connections=3)
 
 class ConnectionPoolTracker(object):
     """Manage ConnectionPool for the frontend
