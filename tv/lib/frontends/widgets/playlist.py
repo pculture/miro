@@ -29,26 +29,88 @@
 
 """playlist.py -- Handle displaying a playlist."""
 
+import logging
+
 from miro import app
 from miro import messages
 from miro import signals
+from miro.data import mappings
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import itemrenderer
+from miro.frontends.widgets import itemsort
 from miro.frontends.widgets import style
 from miro.frontends.widgets.widgetstatestore import WidgetStateStore
 
+class PlaylistOrder(object):
+    """Tracks the order of items in a playlist."""
+    def __init__(self, playlist_id):
+        self.playlist_id = playlist_id
+        self.update_positions()
+        self.ascending = True
+
+    def update_positions(self):
+        connection_pool = app.connection_pools.main_pool
+        connection = connection_pool.get_connection()
+        try:
+            self.playlist_items = mappings.get_playlist_items(connection,
+                                                              self.playlist_id)
+        finally:
+            connection_pool.release_connection(connection)
+
+    def item_position(self, item_info):
+        """Get the position of an item inside the list.
+
+        :returns: position as an int, with the count starting at 1
+        """
+        try:
+            return self.playlist_items.index(item_info.id) + 1
+        except ValueError:
+            logging.warn("PlaylistOrder.item_position(): item not found (%s)",
+                         item_info.title)
+            return -1
+
+    def set_sort_ascending(self, ascending):
+        """Set if the sort is ascending or not.
+
+        This changes how we calculate the new list order after a DnD
+        operation.
+        """
+        self.ascending = ascending
+
+    def get_new_list_order(self, insert_id, dragged):
+        """Get the list order after some items gets re-ordered.
+
+        :param insert_id: item to insert before, or None to insert the items
+        at the end of the list
+        :param dragged: list of ids that got dragged
+        """
+        dragged = set(dragged)
+        new_order = []
+        if self.ascending:
+            source_list = self.playlist_items
+        else:
+            source_list = list(self.playlist_items)
+            source_list.reverse()
+        for item_id in source_list:
+            if item_id == insert_id:
+                new_order.extend(dragged)
+            if item_id not in dragged:
+                new_order.append(item_id)
+        if insert_id is None:
+            new_order.extend(dragged)
+        if not self.ascending:
+            new_order.reverse()
+        return new_order
+
 class DropHandler(signals.SignalEmitter):
-    def __init__(self, playlist_id, item_list, item_views, sorter):
+    def __init__(self, playlist_order):
         signals.SignalEmitter.__init__(self)
         self.create_signal('new-order')
-        self.playlist_id = playlist_id
-        self.item_list = item_list
-        self.item_views = item_views
-        self.sorter = sorter
+        self.playlist_order = playlist_order
 
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_MOVE
@@ -65,23 +127,10 @@ class DropHandler(signals.SignalEmitter):
     def accept_drop(self,
             table_view, model, typ, source_actions, parent, position, dragged):
         if 0 <= position < len(model):
-            insert_id =  model.nth_row(position)[0].id
-            # If we try to insert before an ID that iself is being
-            # dragged we get an error
-            while insert_id in dragged:
-                position += 1
-                # If we iterate to the end of the playlist
-                # we cancel the iteration
-                if position >= len(model):
-                    insert_id = None
-                    break
-                insert_id = model.nth_row(position)[0].id
+            insert_id =  model.item_list.get_row(position).id
         else:
             insert_id = None
-        new_order = self.sorter.move_ids_before(insert_id, dragged)
-        self.item_list.resort()
-        for item_view in self.item_views:
-            item_view.model_changed()
+        new_order = self.playlist_order.get_new_list_order(insert_id, dragged)
         self.emit('new-order', new_order)
         return True
 
@@ -91,12 +140,12 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
         self.id = playlist_info.id
         self.is_folder = playlist_info.is_folder
         self.populated_sorter = False
+        self.playlist_order = PlaylistOrder(playlist_info.id)
         itemlistcontroller.SimpleItemListController.__init__(self)
 
     def build_column_renderers(self):
         column_renderers = itemlistwidgets.ListViewColumnRendererSet()
-        playlist_renderer = style.PlaylistOrderRenderer(
-                self.item_tracker.playlist_sort)
+        playlist_renderer = style.PlaylistOrderRenderer(self.playlist_order)
         column_renderers.add_renderer('playlist', playlist_renderer)
         return column_renderers
 
@@ -109,30 +158,31 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
         self.make_drop_handler()
 
     def make_sorter(self, column, ascending):
+        # slight bit of a hack here.  We enable/disable reordering based
+        # on the sort we return here.  The assumption is that we are going
+        # to use the sort we return, which seems reasonable.
         if column == 'playlist':
-            # take the playlist sorter from our item tracker
-            playlist_sort = self.item_tracker.playlist_sort
-            if playlist_sort.should_reverse_order(ascending):
-                new_order = playlist_sort.reverse_order()
-                m = messages.PlaylistReordered(self.id, new_order)
-                m.send_to_backend()
-            # slight bit of a hack here.  We enable/disable reordering based
-            # on the sort we return here.  The assumption is that we are going
-            # to use the sort we return, which seems reasonable.
+            self.playlist_order.set_sort_ascending(ascending)
             self.enable_reorder()
-            return playlist_sort
         else:
             self.disable_reorder()
-            return itemlistcontroller.SimpleItemListController.make_sorter(
-                    self, column, ascending)
+        return itemlistcontroller.SimpleItemListController.make_sorter(
+                self, column, ascending)
+
+    def _init_item_views(self):
+        itemlistcontroller.SimpleItemListController._init_item_views(self)
+        if isinstance(self.item_list.sorter, itemsort.PlaylistSort):
+            self.enable_reorder()
 
     def build_renderer(self):
-        return itemrenderer.PlaylistItemRenderer(
-                self.item_tracker.playlist_sort)
+        return itemrenderer.PlaylistItemRenderer(self.playlist_order)
+
+    def handle_item_list_changes(self):
+        itemlistcontroller.SimpleItemListController.handle_item_list_changes(self)
+        self.playlist_order.update_positions()
 
     def make_drop_handler(self):
-        self.drop_handler = DropHandler(self.id, self.item_list,
-                self.views.values(), self.item_tracker.playlist_sort)
+        self.drop_handler = DropHandler(self.playlist_order)
         self.drop_handler.connect('new-order', self._on_new_order)
 
     def enable_reorder(self):
@@ -166,4 +216,6 @@ class PlaylistItemController(itemlistcontroller.SimpleItemListController):
                 itemlistwidgets.EmptyListDescription(text))
 
     def _on_new_order(self, drop_handler, order):
+        sort_key = app.widget_state.get_sort_state(self.type, self.id)
+        column, ascending = self.parse_sort_key(sort_key)
         messages.PlaylistReordered(self.id, order).send_to_backend()

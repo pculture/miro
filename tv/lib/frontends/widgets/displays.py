@@ -511,8 +511,6 @@ class AllFeedsDisplay(FeedDisplay):
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        # FIXME: re-implement PlaylistItemController with the new ItemList code
-        return False
         return tab_type == 'playlist' and len(selected_tabs) == 1 and \
                selected_tabs[0].type != u'tab'
 

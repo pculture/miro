@@ -401,7 +401,7 @@ class ItemChangeTracker(signals.SignalEmitter):
         self.send_changes()
 
     def send_changes(self):
-        if self.added or self.changed or self.removed or self.dlstats_changed:
+        if self.has_changes():
             m = messages.ItemChanges(self.added, self.changed, self.removed,
                                      self.changed_columns,
                                      self.dlstats_changed,
@@ -409,6 +409,10 @@ class ItemChangeTracker(signals.SignalEmitter):
             m.send_to_frontend()
             self.reset()
             self.emit('item-changes', m)
+
+    def has_changes(self):
+        return (self.added or self.changed or self.removed or
+                self.dlstats_changed or self.playlists_changed)
 
     def on_item_added(self, item):
         self.added.add(item.id)
@@ -555,6 +559,11 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
         else:
             needs_save = False
         self.signal_change(needs_save)
+
+    @staticmethod
+    def playlist_reordered():
+        """Called when a playlist gets reordered."""
+        Item.change_tracker.playlists_changed = True
 
     def download_stats_changed(self):
         Item.change_tracker.dlstats_changed = True

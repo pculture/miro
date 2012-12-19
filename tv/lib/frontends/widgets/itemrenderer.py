@@ -1256,15 +1256,15 @@ class EmblemDrawer(object):
                 cap_image.height)
 
 class PlaylistItemRenderer(ItemRenderer):
-    def __init__(self, playlist_sorter):
+    def __init__(self, playlist_order):
         ItemRenderer.__init__(self, display_channel=False)
-        self.playlist_sorter = playlist_sorter
+        self.playlist_order = playlist_order
 
     def remove_button_info(self):
         return ('remove-playlist', 'remove')
 
     def calc_description_preface(self):
-        order_number = self.playlist_sorter.sort_key(self.info) + 1
+        order_number = self.playlist_order.item_position(self.info)
         if self.info.description_stripped[0]:
             text = "%s - " % order_number
         else:

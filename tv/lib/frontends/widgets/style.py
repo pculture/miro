@@ -422,12 +422,12 @@ class KindRenderer(ListViewRendererText):
 class PlaylistOrderRenderer(ListViewRendererText):
     """Displays the order an item is in a particular playlist.
     """
-    def __init__(self, playlist_sorter):
+    def __init__(self, playlist_order):
         ListViewRendererText.__init__(self)
-        self.playlist_sorter = playlist_sorter
+        self.playlist_order = playlist_order
 
     def get_value(self, info):
-        return str(self.playlist_sorter.sort_key(info) + 1)
+        return str(self.playlist_order.item_position(info))
 
 class ListViewRenderer(widgetset.ItemListRenderer):
     """Renderer for more complex list view columns.

@@ -30,6 +30,18 @@
 """miro.data.maps -- Handle map tables for the database.
 """
 
+def get_playlist_items(connection, playlist_id):
+    """Get the order of items in a playlist.
+
+    :returns: list of item ids
+    """
+    cursor = connection.execute("SELECT item_id "
+                                "FROM playlist_item_map "
+                                "WHERE playlist_id=? "
+                                "ORDER BY position",
+                                (playlist_id,))
+    return [row[0] for row in cursor.fetchall()]
+
 class SharingItemPlaylistMap(object):
     """Map playlist ids to the items in them.  """
     def __init__(self, connection):
