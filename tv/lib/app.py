@@ -109,6 +109,11 @@ class Frontend(object):
         :returns: button that was choosen or None if the dialog was closed.
         """
         raise NotImplementedError()
+
+    def quit(self):
+        """Quit Miro."""
+        raise NotImplementedError()
+
 frontend = Frontend()
 
 # name of the running frontend

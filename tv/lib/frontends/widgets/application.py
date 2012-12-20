@@ -1734,3 +1734,6 @@ class WidgetsFrontend(app.Frontend):
 
     def run_choice_dialog(self, title, description, buttons):
         return dialogs.show_choice_dialog(title, description, buttons)
+
+    def quit(self):
+        app.widgetapp.do_quit()

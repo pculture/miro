@@ -1282,7 +1282,6 @@ class LiveStorage(signals.SignalEmitter):
                                                       integrity_check_passed)
         if action == LiveStorageErrorHandler.ACTION_QUIT:
             self._quitting_from_operational_error = True
-            messages.FrontendQuit().send_to_frontend()
             return False
         elif action == LiveStorageErrorHandler.ACTION_RETRY:
             logging.warn("Re-running SQL statement")
