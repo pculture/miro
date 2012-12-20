@@ -60,14 +60,12 @@ ItemTrackerCondition = util.namedtuple(
 
 ItemTrackerOrderBy = util.namedtuple(
     "ItemTrackerOrderBy",
-    "table column collation descending",
+    "columns sql",
 
     """ItemTrackerOrderBy defines one term for the ORDER BY clause of a query.
 
-    :attribute table: table that contains column
-    :attribute column: column to sort on
-    :attribute collation: collation to use
-    :attribute descending: should we add the DESC clause?
+    :attribute columns: list of (table, column) tuples used in the query
+    :attribute sql: sql expression
     """)
 
 class ItemTrackerQueryBase(object):
@@ -78,7 +76,7 @@ class ItemTrackerQueryBase(object):
     def __init__(self):
         self.conditions = []
         self.match_string = None
-        self.order_by = []
+        self.order_by = None
         self.limit = None
 
     def join_sql(self, table, join_type='LEFT JOIN'):
@@ -175,12 +173,13 @@ class ItemTrackerQueryBase(object):
         each column and it should specify the collation to use for that
         column.
         """
-        self.order_by = []
         if collations is None:
             collations = (None,) * len(columns)
         elif len(collations) != len(columns):
             raise ValueError("sequence length mismatch")
 
+        sql_parts = []
+        order_by_columns = []
         for column, collation in zip(columns, collations):
             if column[0] == '-':
                 descending = True
@@ -188,8 +187,31 @@ class ItemTrackerQueryBase(object):
             else:
                 descending = False
             table, column = self._parse_column(column)
-            ob = ItemTrackerOrderBy(table, column, collation, descending)
-            self.order_by.append(ob)
+            order_by_columns.append((table, column))
+            sql_parts.append(self._order_by_expression(table, column,
+                                                       descending, collation))
+        self.order_by = ItemTrackerOrderBy(order_by_columns,
+                                           ', '.join(sql_parts))
+
+    def set_complex_order_by(self, columns, sql):
+        """Change the ORDER BY clause to a complex SQL expression
+
+        :param columns: list of column names refered to in sql
+        :param sql: SQL to execute
+        """
+        order_by_columns = [self._parse_column(c) for c in columns]
+        self.order_by = ItemTrackerOrderBy(order_by_columns, sql)
+
+    def _order_by_expression(self, table, column, descending, collation):
+        parts = []
+        parts.append("%s.%s" % (table, column))
+        if collation is not None:
+            parts.append("collate %s" % collation)
+        if descending:
+            parts.append("DESC")
+        else:
+            parts.append("ASC")
+        return " ".join(parts)
 
     def set_limit(self, limit):
         self.limit = limit
@@ -203,8 +225,10 @@ class ItemTrackerQueryBase(object):
                     columns.add(column)
                 else:
                     columns.add(self.select_info.item_join_column(table))
-        columns.update(ob.column for ob in self.order_by
-                       if ob.table == self.table_name())
+        if self.order_by:
+            columns.update(column for (table, column)
+                           in self.order_by.columns
+                           if table == self.table_name())
         return columns
 
     def get_other_tables_to_track(self):
@@ -212,7 +236,9 @@ class ItemTrackerQueryBase(object):
         other_tables = set()
         for c in self.conditions:
             other_tables.update(table for table, column in c.columns)
-        other_tables.update(ob.table for ob in self.order_by)
+        if self.order_by:
+            other_tables.update(table for (table, column)
+                                in self.order_by.columns)
         other_tables.discard('item')
         return other_tables
 
@@ -263,7 +289,9 @@ class ItemTrackerQueryBase(object):
         join_tables = set()
         for c in self.conditions:
             join_tables.update(table for table, column in c.columns)
-        join_tables.update(ob.table for ob in self.order_by)
+        if self.order_by:
+            join_tables.update(table for (table, column)
+                               in self.order_by.columns)
         if include_select_columns:
             join_tables.update(col.table
                                for col in self.select_info.select_columns)
@@ -280,7 +308,9 @@ class ItemTrackerQueryBase(object):
         joins_for_conditions = set()
         for c in self.conditions:
             joins_for_conditions.update(table for table, column in c.columns)
-        joins_for_conditions.update(ob.table for ob in self.order_by)
+        if self.order_by:
+            joins_for_conditions.update(table for (table, column)
+                                        in self.order_by.columns)
         for table in joins_for_data:
             if table != self.table_name():
                 sql_parts.append(self.join_sql(table, 'LEFT JOIN'))
@@ -305,29 +335,16 @@ class ItemTrackerQueryBase(object):
 
     def _add_order_by(self, sql_parts, arg_list):
         if self.order_by:
-            order_by_parts = [self._make_order_by_expression(ob)
-                              for ob in self.order_by]
-            sql_parts.append("ORDER BY %s" % ', '.join(order_by_parts))
+            sql_parts.append("ORDER BY %s" % self.order_by.sql)
 
     def _add_limit(self, sql_parts, arg_list):
         if self.limit is not None:
             sql_parts.append("LIMIT %s" % self.limit)
 
-    def _make_order_by_expression(self, ob):
-        parts = []
-        parts.append("%s.%s" % (ob.table, ob.column))
-        if ob.collation is not None:
-            parts.append("collate %s" % ob.collation)
-        if ob.descending:
-            parts.append("DESC")
-        else:
-            parts.append("ASC")
-        return " ".join(parts)
-
     def copy(self):
         retval = self.__class__()
         retval.conditions = self.conditions[:]
-        retval.order_by = self.order_by[:]
+        retval.order_by = self.order_by
         retval.match_string = self.match_string
         return retval
 
