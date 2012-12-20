@@ -94,19 +94,69 @@ class AlbumSort(ItemSort):
     collations = ['name', None]
 
 class FeedNameSort(ItemSort):
-    # FIXME: need to implement this
     key = 'feed-name'
-    columns = ['id']
+    columns = ['parent_title', 'feed_id', 'parent_id']
 
 class StateCircleSort(ItemSort):
-    # FIXME: need to implement this
+    # Weird sort, this one is for when the user clicks on the header above the
+    # status bumps.  It's almost the same as StatusSort, but there isn't a
+    # bump for expiring.
     key = 'state'
-    columns = ['id']
+    def add_to_query(self, query):
+        sql = ("CASE "
+               # downloading
+               "WHEN remote_downloader.state IN ('downloading', 'paused') OR "
+               "pending_manual_download THEN 1 "
+               # unwatched
+               "WHEN item.filename IS NOT NULL AND was_downloaded AND "
+               "watched_time IS NULL THEN 2 "
+               # new
+               "WHEN new THEN 3 "
+               # other
+               "ELSE 4 "
+               "END")
+        if not self.ascending:
+            sql += ' DESC'
+        columns = ['remote_downloader.state', 'pending_manual_download',
+                   'filename', 'was_downloaded', 'watched_time', 'new']
+        query.set_complex_order_by(columns, sql)
 
 class StatusSort(ItemSort):
-    # FIXME: need to implement this
     key = 'status'
-    columns = ['id']
+    def add_to_query(self, query):
+        sort1 = ("CASE "
+                 # new
+                 "WHEN new THEN 0 "
+                 # downloading
+                 "WHEN remote_downloader.state IN ('downloading', 'paused') OR "
+                 "pending_manual_download THEN 2 "
+                 # unwatched
+                 "WHEN item.filename IS NOT NULL AND was_downloaded AND "
+                 "watched_time IS NULL THEN 3 "
+                 # expiring
+                 "WHEN item.filename IS NOT NULL AND was_downloaded AND "
+                 "NOT keep AND watched_time IS NOT NULL THEN 4 "
+                 # other
+                 "ELSE 1 "
+                 "END")
+        sort2 = ("CASE "
+                 # for expiring items, our secondary sort is the watched time,
+                 # this makes items that expire sooner appear on top.
+                 "WHEN item.filename IS NOT NULL AND was_downloaded AND "
+                 "NOT keep AND watched_time IS NOT NULL THEN watched_time "
+                 # for other items we don't care.  Just use id.
+                 "ELSE item.id "
+                 "END")
+
+        if self.ascending:
+            sql = "%s, %s" % (sort1, sort2)
+        else:
+            sql = "%s DESC, %s DESC" % (sort1, sort2)
+        columns = ['remote_downloader.state', 'pending_manual_download',
+                   'filename', 'was_downloaded', 'watched_time', 'new',
+                   'keep',
+                  ]
+        query.set_complex_order_by(columns, sql)
 
 class LengthSort(ItemSort):
     key = 'length'
@@ -122,11 +172,19 @@ class SizeSort(ItemSort):
     columns = ['id']
 
 class DescriptionSort(ItemSort):
-    # FIXME: This should either take into account entry_description, or we
-    # should copy entry_description to the description column, like we do for
-    # entry_title/torrent_title
     key = 'description'
-    columns = ['description']
+
+    def add_to_query(self, query):
+        sql = ("CASE "
+               # downloading
+               "WHEN description IS NOT NULL "
+               "THEN description "
+               "ELSE entry_description "
+               "END collate name")
+        if not self.ascending:
+            sql += ' DESC'
+        columns = ['description', 'entry_description' ]
+        query.set_complex_order_by(columns, sql)
 
 class FileTypeSort(ItemSort):
     key = 'file-type'
@@ -170,14 +228,12 @@ class DRMSort(ItemSort):
     columns = ['-has_drm']
 
 class RateSort(ItemSort):
-    # FIXME: need to implement this
     key  = 'rate'
-    columns = ['id']
+    columns = ['remote_downloader.rate']
 
 class ETASort(ItemSort):
-    # FIXME: need to implement this
     key  = 'eta'
-    columns = ['id']
+    columns = ['remote_downloader.eta']
 
 class TorrentDetailsSort(ItemSort):
     # FIXME: need to implement this

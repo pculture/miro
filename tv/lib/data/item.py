@@ -136,7 +136,7 @@ class ItemSelectInfo(object):
         SelectColumn('item', 'play_count'),
         SelectColumn('item', 'skip_count'),
         SelectColumn('item', 'cover_art', 'cover_art_path_unicode'),
-        SelectColumn('item', 'description'),
+        SelectColumn('item', 'description', 'metadata_description'),
         SelectColumn('item', 'album'),
         SelectColumn('item', 'album_artist'),
         SelectColumn('item', 'artist'),
@@ -318,7 +318,7 @@ class ItemInfoBase(object):
     album = None
     kind = None
     duration_ms = None
-    description = None
+    metadata_description = None
     show = None
     file_type = None
     artist = None
@@ -412,6 +412,15 @@ class ItemInfoBase(object):
 
     def looks_like_torrent(self):
         return self.is_torrent or filetypes.is_torrent_filename(self.url)
+
+    @property
+    def description(self):
+        if self.metadata_description:
+            return self.metadata_description
+        elif self.entry_description:
+            return self.entry_description
+        else:
+            return None
 
     @property
     def description_stripped(self):
@@ -753,7 +762,7 @@ class DeviceItemSelectInfo(ItemSelectInfo):
         SelectColumn('device_item', 'screenshot', 'screenshot_path_unicode'),
         SelectColumn('device_item', 'duration', 'duration_ms'),
         SelectColumn('device_item', 'cover_art', 'cover_art_path_unicode'),
-        SelectColumn('device_item', 'description'),
+        SelectColumn('device_item', 'description', 'metadata_description'),
         SelectColumn('device_item', 'album'),
         SelectColumn('device_item', 'album_artist'),
         SelectColumn('device_item', 'artist'),
@@ -810,7 +819,7 @@ class SharingItemSelectInfo(ItemSelectInfo):
         SelectColumn('sharing_item', 'daap_id'),
         SelectColumn('sharing_item', 'video_path'),
         SelectColumn('sharing_item', 'title'),
-        SelectColumn('sharing_item', 'description'),
+        SelectColumn('sharing_item', 'description', 'metadata_description'),
         SelectColumn('sharing_item', 'file_type'),
         SelectColumn('sharing_item', 'file_format'),
         SelectColumn('sharing_item', 'duration', 'duration_ms'),
