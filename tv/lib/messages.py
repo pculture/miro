@@ -1537,7 +1537,7 @@ class ConversionTaskInfo(object):
         self.log_path = task.log_path
         self.progress = task.progress
         self.error = task.error
-        self.item_name = task.item_info.name
+        self.item_name = task.item_info.title
         self.item_thumbnail = task.item_info.thumbnail
         self.eta = task.get_eta()
         self.target = task.get_display_name()

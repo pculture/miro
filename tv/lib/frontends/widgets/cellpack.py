@@ -860,6 +860,14 @@ class Layout(object):
                 return hotspot, x - rect.x, y - rect.y
         return None
 
+    def find_hotspot_name(self, x, y):
+        """Like find_hotspot(), but only returns the hotspot name """
+        hotspot_info = self.find_hotspot(x, y)
+        if hotspot_info is not None:
+            return hotspot_info[0]
+        else:
+            return None
+
     def draw(self, context):
         """Render each layout rect onto context
 

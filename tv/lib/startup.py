@@ -335,7 +335,11 @@ def finish_startup(obj, thread):
     app.sharing_manager = sharing.SharingManager()
     app.transcode_manager = transcode.TranscodeManager()
 
-    app.donate_manager = donate.DonateManager()
+    if app.frontend_name == 'widgets':
+        app.donate_manager = donate.DonateManager()
+    else:
+        logging.warn("frontend is %s, not starting DonateManager()",
+                     app.frontend_name)
 
     eventloop.add_urgent_call(check_firsttime, "check first time")
 

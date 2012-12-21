@@ -152,6 +152,8 @@ class ItemList(itemtrack.ItemTracker):
             query.add_complex_condition(['feed_id'], sql, (tab_id,))
         elif tab_type == 'folder-contents':
             query.add_condition('parent_id', '=', tab_id)
+        elif tab_type == 'playlist':
+            query.add_condition('playlist_item_map.playlist_id', '=', tab_id)
         elif tab_type == 'device-video':
             query.add_condition('file_type', '=', u'video')
         elif tab_type == 'device-audio':

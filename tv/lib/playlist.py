@@ -125,6 +125,7 @@ class PlaylistMixin:
                     (self.id, item_id)).get_singleton()
             map_.position = i
             map_.signal_change()
+            models.Item.playlist_reordered()
 
 class SavedPlaylist(database.DDBObject, PlaylistMixin):
     """An ordered list of videos that the user has saved.

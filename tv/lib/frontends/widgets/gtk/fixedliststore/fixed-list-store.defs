@@ -12,12 +12,17 @@
 
 ;; From fixed-list-store.h
 
+(define-function miro_fixed_list_store_get_type
+  (c-name "miro_fixed_list_store_get_type")
+  (return-type "GType")
+)
+
 (define-function miro_fixed_list_store_new
   (c-name "miro_fixed_list_store_new")
   (is-constructor-of "MiroFixedListStore")
   (return-type "MiroFixedListStore*")
-  (properties
-    '("row_count")
+  (parameters
+    '("int" "row_count")
   )
 )
 
@@ -25,6 +30,15 @@
   (of-object "MiroFixedListStore")
   (c-name "miro_fixed_list_store_row_of_iter")
   (return-type "gint")
+  (parameters
+    '("GtkTreeIter*" "iter")
+  )
+)
+
+(define-method iter_is_valid
+  (of-object "MiroFixedListStore")
+  (c-name "miro_fixed_list_store_iter_is_valid")
+  (return-type "gboolean")
   (parameters
     '("GtkTreeIter*" "iter")
   )

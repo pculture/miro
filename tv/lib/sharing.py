@@ -1290,7 +1290,7 @@ class _SharedDataSet(object):
             daap_item[key] = MIRO_ITEMKIND_PODCAST
         if item_info.kind:
             try:
-                dap_item[key] = self.miro_itemkind_mapping[item_info.kind]
+                daap_item[key] = self.miro_itemkind_mapping[item_info.kind]
             except KeyError:
                 logging.warn("Error looking up item kind: %s", item_info.kind)
 

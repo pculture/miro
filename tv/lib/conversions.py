@@ -673,10 +673,10 @@ def build_output_paths(item_info, target_folder, converter_info):
         target_folder = get_conversions_folder()
     else:
         use_temp_dir = False
-    input_path = item_info.video_path
+    input_path = item_info.filename
     basename = os.path.basename(input_path)
 
-    title = utils.unicode_to_filename(item_info.name, target_folder).strip()
+    title = utils.unicode_to_filename(item_info.title, target_folder).strip()
     if not title:
         title = basename
 
@@ -791,7 +791,7 @@ class ConversionTask(object):
                  create_item):
         self.item_info = item_info
         self.converter_info = converter_info
-        self.input_path = item_info.video_path
+        self.input_path = item_info.filename
         self.final_output_path, self.temp_output_path = build_output_paths(
             item_info, target_folder, converter_info)
         self.create_item = create_item
@@ -929,7 +929,7 @@ class ConversionTask(object):
                 item_id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
         self._log_progress("STARTING CONVERSION")
-        self._log_progress("-> Item: %s" % util.stringify(self.item_info.name))
+        self._log_progress("-> Item: %s" % util.stringify(self.item_info.title))
         self._log_progress("-> Converter used: %s" % self.converter_info.name)
         self._log_progress("-> Executable: %s" % executable)
         self._log_progress("-> Parameters: %s" % ' '.join(params))
@@ -1093,7 +1093,7 @@ def _create_item_for_conversion(filename, source_info, conversion_name):
     # should only get called in the event loop.
 
     name = _('%(original_name)s (Converted to %(format)s)',
-            {'original_name': source_info.name, 'format': conversion_name})
+            {'original_name': source_info.title, 'format': conversion_name})
 
     fp_values = item.fp_values_for_file(filename, name,
             source_info.description)

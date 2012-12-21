@@ -51,9 +51,6 @@ bulk_sql_manager = None
 # DBInfo object for the main miro database
 db_info = None
 
-# command line arguments for thumbnailer (linux)
-movie_data_program_info = None
-
 # configuration data
 config = None
 
@@ -113,6 +110,9 @@ class Frontend(object):
         """
         raise NotImplementedError()
 frontend = Frontend()
+
+# name of the running frontend
+frontend_name = None
 
 # widget frontend adds these
 # --------------------------

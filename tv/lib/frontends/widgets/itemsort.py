@@ -185,8 +185,7 @@ class TorrentDetailsSort(ItemSort):
     columns = ['id']
 
 class PlaylistSort(ItemSort):
-    # FIXME: need to implement this
     key  = 'playlist'
-    columns = ['id']
+    columns = ['playlist_item_map.position']
 
 SORT_KEY_MAP = dict((sort.key, sort) for sort in util.all_subclasses(ItemSort))

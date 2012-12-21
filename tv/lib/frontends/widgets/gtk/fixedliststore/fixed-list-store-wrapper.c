@@ -30,30 +30,18 @@ PyTypeObject G_GNUC_INTERNAL PyMiroFixedListStore_Type;
 static int
 _wrap_miro_fixed_list_store_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 {
-    GType obj_type = pyg_type_from_object((PyObject *) self);
-    GParameter params[1];
-    PyObject *parsed_args[1] = {NULL, };
-    char *arg_names[] = {"row_count", NULL };
-    char *prop_names[] = {"row_count", NULL };
-    guint nparams, i;
+    static char *kwlist[] = { "row_count", NULL };
+    int row_count;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O:miro.fixedliststore.FixedListStore.__init__" , arg_names , &parsed_args[0]))
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,"i:Miro.FixedListStore.__init__", kwlist, &row_count))
         return -1;
+    self->obj = (GObject *)miro_fixed_list_store_new(row_count);
 
-    memset(params, 0, sizeof(GParameter)*1);
-    if (!pyg_parse_constructor_args(obj_type, arg_names,
-                                    prop_names, params, 
-                                    &nparams, parsed_args))
-        return -1;
-    pygobject_constructv(self, nparams, params);
-    for (i = 0; i < nparams; ++i)
-        g_value_unset(&params[i].value);
     if (!self->obj) {
-        PyErr_SetString(
-            PyExc_RuntimeError, 
-            "could not create miro.fixedliststore.FixedListStore object");
+        PyErr_SetString(PyExc_RuntimeError, "could not create MiroFixedListStore object");
         return -1;
     }
+    pygobject_register_wrapper((PyObject *)self);
     return 0;
 }
 
@@ -79,8 +67,33 @@ _wrap_miro_fixed_list_store_row_of_iter(PyGObject *self, PyObject *args, PyObjec
     return PyInt_FromLong(ret);
 }
 
+static PyObject *
+_wrap_miro_fixed_list_store_iter_is_valid(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "iter", NULL };
+    PyObject *py_iter;
+    GtkTreeIter *iter = NULL;
+    int ret;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,"O:Miro.FixedListStore.iter_is_valid", kwlist, &py_iter))
+        return NULL;
+    if (pyg_boxed_check(py_iter, GTK_TYPE_TREE_ITER))
+        iter = pyg_boxed_get(py_iter, GtkTreeIter);
+    else {
+        PyErr_SetString(PyExc_TypeError, "iter should be a GtkTreeIter");
+        return NULL;
+    }
+    
+    ret = miro_fixed_list_store_iter_is_valid(MIRO_FIXED_LIST_STORE(self->obj), iter);
+    
+    return PyBool_FromLong(ret);
+
+}
+
 static const PyMethodDef _PyMiroFixedListStore_methods[] = {
     { "row_of_iter", (PyCFunction)_wrap_miro_fixed_list_store_row_of_iter, METH_VARARGS|METH_KEYWORDS,
+      NULL },
+    { "iter_is_valid", (PyCFunction)_wrap_miro_fixed_list_store_iter_is_valid, METH_VARARGS|METH_KEYWORDS,
       NULL },
     { NULL, NULL, 0, NULL }
 };
@@ -170,7 +183,6 @@ miro_fixed_list_store_register_classes(PyObject *d)
     }
 
 
-#line 174 "fixed-list-store.c"
+#line 187 "fixed-list-store.c"
     pygobject_register_class(d, "MiroFixedListStore", MIRO_TYPE_FIXED_LIST_STORE, &PyMiroFixedListStore_Type, Py_BuildValue("(O)", &PyGObject_Type));
-    pyg_set_object_has_new_constructor(MIRO_TYPE_FIXED_LIST_STORE);
 }

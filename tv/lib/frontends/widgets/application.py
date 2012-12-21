@@ -587,7 +587,7 @@ class Application:
         external_count = len([s for s in selection if s.is_external])
         failed_count = len([s for s in selection if s.is_failed_download])
         folder_count = len([s for s in selection if s.is_container_item])
-        total_count = len([selection])
+        total_count = len(selection)
 
         if total_count == 1 and external_count == folder_count == 0:
             playback_finished_if_playing_selection()

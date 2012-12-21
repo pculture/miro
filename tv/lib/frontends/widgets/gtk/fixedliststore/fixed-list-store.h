@@ -89,3 +89,11 @@ MiroFixedListStore* miro_fixed_list_store_new(int row_count);
 gint
 miro_fixed_list_store_row_of_iter(MiroFixedListStore* miro_fls,
                                   GtkTreeIter* iter);
+
+/*
+ * Check if an iter is valid
+ */
+
+gboolean
+miro_fixed_list_store_iter_is_valid(MiroFixedListStore* miro_fls,
+                                    GtkTreeIter* iter);

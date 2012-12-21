@@ -208,13 +208,18 @@ def _load_image(image_name):
     path = os.path.join('images', filename)
     return imagepool.get_surface(resources.path(path))
 
-class ItemRendererBase(widgetset.ItemListRenderer):
+class ItemRenderer(widgetset.ItemListRenderer):
     MIN_WIDTH = 600
     HEIGHT = 147
 
-    def __init__(self, wide_image=False):
+    def __init__(self, display_channel=True, is_podcast=False,
+                 wide_image=False):
         widgetset.ItemListRenderer.__init__(self)
         self.canvas = ItemRendererCanvas(wide_image)
+        self.signals = ItemRendererSignals()
+        self.display_channel = display_channel
+        self.is_podcast = is_podcast
+        self.setup_torrent_folder_description()
 
     def get_size(self, style, layout_manager):
         return self.MIN_WIDTH, self.HEIGHT
@@ -242,19 +247,6 @@ class ItemRendererBase(widgetset.ItemListRenderer):
         layout = self.layout_all(layout_manager, context.width,
                 context.height, selected, hotspot)
         layout.draw(context)
-
-    def layout_all(self, layout_manager, width, height, selected, hotspot):
-        """Create a ItemRendererLayout object for our cell."""
-        raise NotImplementedError()
-
-class ItemRenderer(ItemRendererBase):
-    def __init__(self, display_channel=True, is_podcast=False,
-            wide_image=False):
-        ItemRendererBase.__init__(self, wide_image)
-        self.signals = ItemRendererSignals()
-        self.display_channel = display_channel
-        self.is_podcast = is_podcast
-        self.setup_torrent_folder_description()
 
     def setup_torrent_folder_description(self):
         text = (u'<a href="#show-torrent-contents">%s</a>' %
@@ -1264,15 +1256,15 @@ class EmblemDrawer(object):
                 cap_image.height)
 
 class PlaylistItemRenderer(ItemRenderer):
-    def __init__(self, playlist_sorter):
+    def __init__(self, playlist_order):
         ItemRenderer.__init__(self, display_channel=False)
-        self.playlist_sorter = playlist_sorter
+        self.playlist_order = playlist_order
 
     def remove_button_info(self):
         return ('remove-playlist', 'remove')
 
     def calc_description_preface(self):
-        order_number = self.playlist_sorter.sort_key(self.info) + 1
+        order_number = self.playlist_order.item_position(self.info)
         if self.info.description_stripped[0]:
             text = "%s - " % order_number
         else:
@@ -1288,16 +1280,29 @@ class DeviceItemRenderer(ItemRenderer):
     def calc_extra_button(self):
         return DOWNLOAD_TO_MY_MIRO_TEXT, 'download-device-item'
 
-class ConversionItemRenderer(ItemRendererBase):
+class ConversionItemRenderer(widgetset.CustomCellRenderer):
     """Class to draw conversion items
 
     This one is substantially different from ItemRenderer because it deals
     with ConversionTaskInfo objects.
     """
     def __init__(self):
-        ItemRendererBase.__init__(self, wide_image=True)
+        widgetset.CustomCellRenderer.__init__(self)
+        self.canvas = ItemRendererCanvas(wide_image=True)
         self.canvas.set_progress_bar_images('conversion-progress-left',
                 'conversion-progress-middle', 'conversion-progress-right')
+
+    def get_size(self, style, layout_manager):
+        return ItemRenderer.MIN_WIDTH, ItemRenderer.HEIGHT
+
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
+        layout = self.layout_all(layout_manager, width, height, False, None)
+        return layout.find_hotspot_name(x, y)
+
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        layout = self.layout_all(layout_manager, context.width,
+                context.height, selected, hotspot)
+        layout.draw(context)
 
     def layout_all(self, layout_manager, width, height, selected, hotspot):
         download_mode = (self.info.state == 'running')
