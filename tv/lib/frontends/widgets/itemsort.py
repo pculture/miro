@@ -167,9 +167,8 @@ class DateAddedSort(ItemSort):
     columns = ['creation_time']
 
 class SizeSort(ItemSort):
-    # FIXME: need to implement this.
     key = 'size'
-    columns = ['id']
+    columns = ['size']
 
 class DescriptionSort(ItemSort):
     key = 'description'

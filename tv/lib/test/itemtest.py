@@ -420,3 +420,124 @@ class ItemMetadataTest(MiroTestCase):
                 self.assertEquals(item.album, None)
                 self.assertEquals(item.metadata_title, None)
                 self.assertEquals(item.duration, None)
+
+class ItemSizeTest(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.feed = testobjects.make_feed()
+
+    def update_status(self, download_progress, elapsed_time):
+        # define some arbitrary constants
+        total_size = 100000
+        start_time = 1000
+        # calculate values based on download_progress/elapsed_time
+        current_size = int(total_size * download_progress)
+        rate = current_size / elapsed_time
+        eta = int((total_size - current_size) / rate)
+        if download_progress < 1.0:
+            state = u'downloading'
+            end_time = None
+            filename = self.downloading_path
+        else:
+            end_time = start_time + elapsed_time
+            state = u'finished'
+            filename = self.final_path
+
+        downloader.RemoteDownloader.update_status({
+            'dlid': self.dlid,
+            'url': self.url,
+            'state': state,
+            'total_size': total_size,
+            'current_size': current_size,
+            'eta': eta,
+            'rate': rate,
+            'upload_size': 0,
+            'filename': filename,
+            'start_time': start_time,
+            'end_time': end_time,
+            'short_filename': 'download.mp4',
+            'reason_failed': None,
+            'short_reason_failed': None,
+            'type': None,
+            'retry_time': None,
+            'retry_count': None,
+        }, cmd_done=True)
+
+    def make_file(self, size):
+        path, fp = self.make_temp_path_fileobj(".avi")
+        fp.write(" " * size)
+        fp.close()
+        return path
+
+    def check_size(self, item, size):
+        self.assertEquals(item.get_size(), size)
+        self.assertEquals(item.size, size)
+
+    def update_downloader_status(self, item, path, current_size, total_size):
+        status = {
+            'dlid': item.downloader.dlid,
+            'url': item.url,
+            'current_size': current_size,
+            'total_size': total_size,
+            'upload_size': 0,
+            'start_time': 1000,
+            'short_filename': os.path.basename(path),
+            'reason_failed': None,
+            'short_reason_failed': None,
+            'type': None,
+            'retry_time': None,
+            'retry_count': None,
+        }
+        if current_size < total_size:
+            status.update({
+                'state': u'downloading',
+                'end_time': None,
+                'eta': 10,
+                'rate': 1,
+                'filename': os.path.join(self.tempdir,
+                                         'Incomplete downloads',
+                                         os.path.basename(path)),
+            })
+        else:
+            status.update({
+                'state': u'finished',
+                'end_time': status['start_time'] + 50,
+                'eta': None,
+                'rate': None,
+                'filename': path,
+            })
+        RemoteDownloader.update_status(status, cmd_done=True)
+
+    def test_download(self):
+        item = testobjects.make_item(self.feed, u'my item')
+        item.download()
+        path = self.make_file(size=1000)
+        # while downloading, size should be the total size of the download
+        self.update_downloader_status(item, path, 500, 1000)
+        self.assertEquals(item.get_state(), 'downloading')
+        self.check_size(item, 1000)
+        # after downloading, size should be the same
+        self.update_downloader_status(item, path, 1000, 1000)
+        self.assertEquals(item.get_state(), 'newly-downloaded')
+        self.check_size(item, 1000)
+
+    def test_rss_entry(self):
+        # initially we should use the RSS enclosure for size
+        item = testobjects.make_item(self.feed, u'my item',
+                                     enclosure_size=2000)
+        self.check_size(item, 2000)
+
+    def test_file_item(self):
+        # file items should have size = their file size
+        item = testobjects.make_file_item(self.feed, u'my item',
+                                               path=self.make_file(3000))
+        self.check_size(item, 3000)
+
+    def test_file_removed(self):
+        # test what happens if set_filename() is called with a non-existant
+        # file
+        item = testobjects.make_item(self.feed, u'my item',
+                                     enclosure_size=2000)
+        with self.allow_warnings():
+            item.set_filename('non-existant-path')
+        self.check_size(item, None)

@@ -4262,3 +4262,39 @@ def upgrade193(cursor):
 def upgrade194(cursor):
     """Remove the item_info_cache table."""
     cursor.execute("DROP TABLE item_info_cache")
+
+def upgrade195(cursor):
+    """Add the size column."""
+    # importing from miro is bad, but there's no other way to check for the
+    # platform filename type.
+    from miro.plat.utils import PlatformFilenameType
+    def _unicode_to_filename(value):
+        # reverses filename_to_unicode().  We can't use the platform
+        # unicode_to_filename() because that also cleans out the filename.
+        # This code is not very good and should be replaces as part of #13182
+        if value is not None and PlatformFilenameType != unicode:
+            return value.encode('utf-8')
+        else:
+            return value
+
+    cursor.execute("ALTER TABLE item ADD size INTEGER")
+    cursor.execute("SELECT item.id, item.filename, item.enclosure_size, "
+                   "rd.total_size "
+                   "FROM item "
+                   "LEFT JOIN remote_downloader rd "
+                   "ON rd.id=item.downloader_id ")
+    for row in cursor.fetchall():
+        (item_id, filename, enclosure_size, dl_total_size) = row
+
+        if filename is not None:
+            try:
+                size = os.path.getsize(_unicode_to_filename(filename))
+            except EnvironmentError:
+                size = None
+        elif dl_total_size is not None:
+            size = dl_total_size
+        elif enclosure_size is not None:
+            size = enclosure_size
+        else:
+            size = None
+        cursor.execute("UPDATE item SET size=? WHERE id=?", (size, item_id))

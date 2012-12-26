@@ -148,6 +148,7 @@ class ItemSelectInfo(object):
         SelectColumn('item', 'file_type'),
         SelectColumn('item', 'has_drm'),
         SelectColumn('item', 'show'),
+        SelectColumn('item', 'size'),
         SelectColumn('item', 'episode_id'),
         SelectColumn('item', 'episode_number'),
         SelectColumn('item', 'season_number'),
@@ -470,26 +471,6 @@ class ItemInfoBase(object):
         This returns True when the item has a non-file URL.
         """
         return self.url is not None and not self.url.startswith(u"file:")
-
-    @property
-    def size(self):
-        """Get the size for an item.
-
-        We try these methods in order to get the size:
-
-        1. Physical size of a downloaded file
-        2. HTTP content-length
-        3. RSS enclosure tag value
-        """
-        if self.has_filename:
-            try:
-                return os.path.getsize(self.filename)
-            except OSError:
-                return None
-        elif self.is_download:
-            return self.downloader_size
-        else:
-            return self.enclosure_size
 
     @property
     def file_format(self):
