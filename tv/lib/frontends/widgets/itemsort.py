@@ -215,12 +215,72 @@ class VideoKindSort(ItemSort):
     columns = ['kind']
 
 class MultiRowAlbum(ItemSort):
-    # FIXME need to implement this
     key = 'multi-row-album'
-    columns = ['id']
 
-    def switch_mode(self, mode):
-        pass
+    def __init__(self, ascending):
+        ItemSort.__init__(self, ascending)
+        self.switch_mode('standard')
+
+    def switch_mode(self, new_mode):
+        """Switch which mode we use to sort.
+
+        MultiRowAlbumRenderer displays different data depending on what mode
+        it's in.  Therefore, this sorter needs to sort differently depending
+        on that mode.
+
+        The modes available are the same as MultiRowAlbumRenderer's modes
+        (standard, feed, and video).  The mode should be set the same on each
+        """
+        if new_mode not in ('standard', 'feed', 'video'):
+            raise ValueError("unknown mode: %s" % new_mode)
+        add_to_query_method = getattr(self, 'add_to_query_%s' % new_mode)
+        self.add_to_query = add_to_query_method
+
+    def add_to_query_standard(self, query):
+        columns = ['album_artist', 'album', 'track']
+        collations = ['name', 'name', None]
+        if not self.ascending:
+            columns = ['-' + c for c in columns]
+        query.set_order_by(columns, collations)
+
+    def _watched_folder_case(self):
+        """Get an SQL case expression will sort watched folders to the bottom.
+
+        See #18410 and #18278.
+        """
+        return ("CASE "
+                "WHEN feed.orig_url LIKE 'dtv:directoryfeed:%' THEN 1 "
+                "ELSE 0 "
+                "END")
+
+    def add_to_query_feed(self, query):
+        if self.ascending:
+            sql_template = "%s, %s, %s"
+        else:
+            # NOTE: we don't add DESC to the watch folder case expression.  We
+            # want watched folders to always be at the bottom, even if we
+            # reverse the search.
+            sql_template = "%s, %s DESC, %s DESC"
+        sql = sql_template % (self._watched_folder_case(),
+                              'item.parent_title',
+                              'item.release_date')
+        columns = ['feed.orig_url', 'parent_title', 'release_date']
+        query.set_complex_order_by(columns, sql)
+
+    def add_to_query_video(self, query):
+        if self.ascending:
+            sql_template = "%s, %s, %s, %s"
+        else:
+            # NOTE: we don't add DESC to the watch folder case expression.  We
+            # want watched folders to always be at the bottom, even if we
+            # reverse the search.
+            sql_template = "%s, %s DESC, %s DESC, %s DESC"
+        sql = sql_template % (self._watched_folder_case(),
+                              'item.show collate name',
+                              'item.parent_title',
+                              'item.release_date')
+        columns = ['feed.orig_url' 'show', 'parent_title', 'release_date']
+        query.set_complex_order_by(columns, sql)
 
 class DRMSort(ItemSort):
     key  = 'drm'
