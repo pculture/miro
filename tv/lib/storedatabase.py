@@ -559,9 +559,11 @@ class LiveStorage(signals.SignalEmitter):
             os.remove(new_path)
         self.cursor.execute("ATTACH ? as newdb",
                             (filename_to_unicode(new_path),))
+        self.cursor.execute("BEGIN TRANSACTION")
         try:
             self._copy_data_to_newdb()
         finally:
+            self.cursor.execute("COMMIT TRANSACTION")
             self.cursor.execute("DETACH newdb")
 
     def _copy_data_to_newdb(self):
