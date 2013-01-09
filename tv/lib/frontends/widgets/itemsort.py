@@ -269,15 +269,17 @@ class MultiRowAlbum(ItemSort):
 
     def add_to_query_video(self, query):
         if self.ascending:
-            sql_template = "%s, %s, %s, %s"
+            sql_template = "%s, %s, %s"
         else:
             # NOTE: we don't add DESC to the watch folder case expression.  We
             # want watched folders to always be at the bottom, even if we
             # reverse the search.
-            sql_template = "%s, %s DESC, %s DESC, %s DESC"
+            sql_template = "%s, %s DESC, %s DESC"
         sql = sql_template % (self._watched_folder_case(),
-                              'item.show collate name',
-                              'item.parent_title',
+                              'CASE '
+                              'WHEN item.show IS NOT NULL THEN item.show '
+                              'ELSE item.parent_title '
+                              'END collate name',
                               'item.release_date')
         columns = ['feed.orig_url' 'show', 'parent_title', 'release_date']
         query.set_complex_order_by(columns, sql)
