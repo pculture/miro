@@ -531,22 +531,31 @@ class RemoteDownloader(DDBObject):
 
             self.signal_change()
 
-            if finished:
-                for item in self.item_list:
-                    item.on_download_finished()
-            elif file_migrated:
-                self._file_migrated(old_filename)
-            elif name_changed and old_filename and self.metainfo is not None:
-                # update the torren title; happens with magnet URLs since we
-                # don't have a real one when the download starts.  The
-                # old_filename check is to prevent things with existing titles
-                # from being renamed (#18656).
-                new_title = util.get_name_from_torrent_metadata(self.metainfo)
-                for item in self.item_list:
-                    if item.torrent_title is None:
-                        item.torrent_title = new_title
-                        item.signal_change()
+            self.update_item_list(finished, file_migrated)
         return True
+
+    def update_item_list(self, finished, file_migrated):
+        if finished:
+            for item in self.item_list:
+                item.on_download_finished()
+        elif file_migrated:
+            self._file_migrated(old_filename)
+        else:
+            # update the torrent title; important for magnet URLs since we
+            # don't have a real one when the download starts.  The
+            # old_filename check is to prevent things with existing titles
+            # from being renamed (#18656).
+            if self.metainfo is not None:
+                torrent_title = util.get_name_from_torrent_metadata(
+                    self.metainfo)
+            else:
+                torrent_title = None
+            size = self.total_size
+            for item in self.item_list:
+                if size != item.size or torrent_title != item.torrent_title:
+                    item.torrent_title = torrent_title
+                    item.size = size
+                    item.signal_change()
 
     def run_downloader(self):
         """This is the actual download thread.

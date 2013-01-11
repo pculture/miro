@@ -18,17 +18,26 @@ class DBErrorTest(MiroTestCase):
         self.run_choice_dialog = self.frontend.run_choice_dialog
         self.db_error_handler = dberrors.DBErrorHandler(self.frontend)
 
-    def run_dialog(self, title, description, retry_callback=None):
-        self.db_error_handler.run_dialog(title, description, retry_callback)
-        # run_dialog should schedule the dialog to be run later using
-        # call_on_ui_thread()
+    def check_run_dialog_scheduled(self, title, description, thread,
+                                   reset_mock=True):
         call_on_ui_thread = self.frontend.call_on_ui_thread
         self.assertEquals(call_on_ui_thread.call_count, 1)
         func = call_on_ui_thread.call_args[0][0]
         args = call_on_ui_thread.call_args[0][1:]
-        call_on_ui_thread.reset_mock()
         self.assertEquals(func, self.db_error_handler._run_dialog)
-        self.assertEquals(args, (title, description, 'ui thread'))
+        self.assertEquals(args, (title, description, thread))
+        if reset_mock:
+            call_on_ui_thread.reset_mock()
+        return args
+
+    def check_run_dialog_not_scheduled(self):
+        self.assertEquals(self.frontend.call_on_ui_thread.call_count, 0)
+
+    def run_dialog(self, title, description, retry_callback=None):
+        self.db_error_handler.run_dialog(title, description, retry_callback)
+        # run_dialog should schedule the dialog to be run later using
+        # call_on_ui_thread()
+        args = self.check_run_dialog_scheduled(title, description, 'ui thread')
         # call _run_dialog to simulate showing the dialog
         self.db_error_handler._run_dialog(*args)
 
@@ -182,6 +191,43 @@ class DBErrorTest(MiroTestCase):
             ((dialogs.BUTTON_QUIT,), {}),
             ((dialogs.BUTTON_QUIT,), {})
         ])
+
+    def test_quit(self):
+        # Check that we call Frontend.quit()
+        self.run_choice_dialog.return_value = dialogs.BUTTON_QUIT
+        dialog = mock.Mock(title='test 1', description='test 2')
+        self.run_backend_dialog(dialog)
+        self.assertEquals(self.frontend.quit.call_count, 1)
+        # another error shouldn't result in 2 quit calls
+        self.run_choice_dialog.return_value = dialogs.BUTTON_QUIT
+        dialog = mock.Mock(title='test 1', description='test 2')
+        self.run_backend_dialog(dialog)
+        self.assertEquals(self.frontend.quit.call_count, 1)
+
+    def test_error_in_retry_callback(self):
+        self.run_choice_dialog.return_value = dialogs.BUTTON_RETRY
+        # the frontend calls run_dialog() when it sees an error
+        mock_retry_callback = mock.Mock()
+        def retry_callback():
+            # the first time this one is called, we similate another error
+            # happening
+            if mock_retry_callback.call_count == 1:
+                self.db_error_handler.run_dialog('test 1', 'test 2',
+                                                 mock_retry_callback)
+        mock_retry_callback.side_effect = retry_callback
+        self.run_dialog('test 1', 'test 2', mock_retry_callback)
+        # the first run through retry_callback resulted in an error.  We
+        # should have a new dialog scheduled to pop up.  We shouldn't call
+        # retry_callback() again yet, nor have actually popped up the dialog.
+        self.assertEquals(self.run_choice_dialog.call_count, 1)
+        args = self.check_run_dialog_scheduled('test 1', 'test 2', 'ui thread')
+        self.assertEquals(mock_retry_callback.call_count, 1)
+        # Run the dialog again.  The second time through our retry callback
+        # won't have an error
+        self.db_error_handler._run_dialog(*args)
+        self.assertEquals(self.run_choice_dialog.call_count, 2)
+        self.assertEquals(mock_retry_callback.call_count, 2)
+        self.check_run_dialog_not_scheduled()
 
 class TestItemTrackErrors(MiroTestCase):
     def setUp(self):

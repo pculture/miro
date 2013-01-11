@@ -462,6 +462,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('offset_path', SchemaFilename(noneOk=True)),
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
+        ('size', SchemaInt(noneOk=True)),
         # metadata:
         ('cover_art', SchemaFilename(noneOk=True)),
         ('description', SchemaString(noneOk=True)),
@@ -995,7 +996,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 194
+VERSION = 195
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

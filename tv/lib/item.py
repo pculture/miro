@@ -519,6 +519,7 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
         self.play_count = 0
         self.skip_count = 0
         self.net_lookup_enabled = False
+        self.size = self.enclosure_size
         # Initalize FileItem attributes to None
         self.deleted = self.short_filename = self.offset_path = None
 
@@ -1066,6 +1067,11 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
     def set_filename(self, filename):
         Item._path_count_tracker.remove_item(self)
         self.filename = filename
+        try:
+            self.size = os.path.getsize(filename)
+        except EnvironmentError, e:
+            logging.warn("Item.set_filename(): error getting size: %s", e)
+            self.size = None
         if not app.local_metadata_manager.path_in_system(filename):
             metadata = app.local_metadata_manager.add_file(filename)
         else:
@@ -1891,36 +1897,7 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
         return util.format_size_for_user(self.get_size())
 
     def get_size(self):
-        if not hasattr(self, "_size"):
-            self._size = self._get_size()
-        return self._size
-
-    def _get_size(self):
-        """Returns the size of the item. We use the following methods
-        to get the size:
-
-        1. Physical size of a downloaded file
-        2. HTTP content-length
-        3. RSS enclosure tag value
-        """
-        if self.is_downloaded():
-            if self.get_filename() is None:
-                return 0
-            try:
-                fname = self.get_filename()
-                return os.path.getsize(fname)
-            except OSError:
-                return 0
-        elif self.has_downloader():
-            size = self.downloader.get_total_size()
-            if size == -1:
-                logging.debug("downloader could not get total size for item")
-                return 0
-            return size
-        else:
-            if self.enclosure_size is not None:
-                return self.enclosure_size
-        return 0
+        return self.size
 
     def download_progress(self):
         """Returns the download progress in absolute percentage [0.0 -

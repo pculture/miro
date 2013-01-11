@@ -62,6 +62,7 @@ class DBErrorHandler(object):
         self.retry_callbacks = []
         self.backend_dialogs = []
         self.logged_warning = False
+        self.sent_quit = False
         # The last button clicked on the dialog
         self.last_response = None
         # Which threads we sent last_response to.
@@ -122,15 +123,25 @@ class DBErrorHandler(object):
         return False
 
     def _handle_response(self, response):
+        # copy the callback/dialog lists and reset them before doing anything.
+        # This handles the case where one of the retry callbacks still sees an
+        # error and calls run_dialog() again.
+        backend_dialogs = self.backend_dialogs[:]
+        retry_callbacks = self.retry_callbacks[:]
+        self.retry_callbacks = []
+        self.backend_dialogs = []
+
         if response == dialogs.BUTTON_RETRY:
-            for callback in self.retry_callbacks:
+            for callback in retry_callbacks:
                 try:
                     callback()
                 except StandardError:
                     logging.warn("DBErrorHandler: error calling response "
                                  "callback: %s", callback, exc_info=True)
-        for dialog in self.backend_dialogs:
+        for dialog in backend_dialogs:
             dialog.run_callback(response)
 
-        self.retry_callbacks = []
-        self.backend_dialogs = []
+        if response == dialogs.BUTTON_QUIT and not self.sent_quit:
+            self.frontend.quit()
+            self.sent_quit = True
+

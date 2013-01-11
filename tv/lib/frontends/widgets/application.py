@@ -141,7 +141,6 @@ class Application:
         from the :mod:`miro.startup` module.
         """
         app.frontend = WidgetsFrontend()
-        data.init()
         self.connect_to_signals()
         startup.install_movies_directory_gone_handler(self.handle_movies_directory_gone)
         startup.install_first_time_handler(self.handle_first_time)
@@ -152,6 +151,7 @@ class Application:
         requesting data from the backend.  Also sets up managers,
         initializes the ui, and displays the :class:`MiroWindow`.
         """
+        data.init()
         # Send a couple messages to the backend, when we get responses,
         # WidgetsMessageHandler() will call build_window()
         messages.TrackGuides().send_to_backend()
@@ -1734,3 +1734,6 @@ class WidgetsFrontend(app.Frontend):
 
     def run_choice_dialog(self, title, description, buttons):
         return dialogs.show_choice_dialog(title, description, buttons)
+
+    def quit(self):
+        app.widgetapp.do_quit()

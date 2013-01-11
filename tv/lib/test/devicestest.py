@@ -686,13 +686,13 @@ class DeviceSyncManagerTest(EventLoopTest):
 
     def set_feed_item_file_sizes(self, size):
         for i in self.feed_items:
-            with open(i.filename, "w") as f:
-                f.write(" " * size)
+            i.size = size
+            i.signal_change()
 
     def set_playlist_item_file_size(self, size):
         for i in self.playlist_items:
-            with open(i.filename, "w") as f:
-                f.write(" " * size)
+            i.size = size
+            i.signal_change()
 
     def setup_auto_fill_settings(self, feed_space, playlist_space):
         self.sync[u'auto_fill'] = True

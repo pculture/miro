@@ -200,7 +200,7 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
             self.assertEquals(len(args), 1)
         return args
 
-    def check_tracker_items(self, correct_items=None):
+    def check_tracker_items(self, correct_items=None, sort_items=True):
         """Calculate which items should be in our ItemTracker and check if
         it's data agrees with this.
 
@@ -211,7 +211,8 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
             item_list = correct_items
         else:
             item_list = self.calc_items_in_tracker()
-        self.sort_item_list(item_list)
+        if sort_items and self.tracker.query.order_by:
+            self.sort_item_list(item_list)
         self.assertEquals(len(item_list), len(self.tracker))
         # test the get_items() method
         tracker_items = self.tracker.get_items()
@@ -276,11 +277,12 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
 
     def sort_item_list(self, item_list):
         def cmp_func(item1, item2):
-            for ob in self.tracker.query.order_by:
-                value1 = getattr(item1, ob.column)
-                value2 = getattr(item2, ob.column)
+            for table, column in self.tracker.query.order_by.columns:
+                value1 = getattr(item1, column)
+                value2 = getattr(item2, column)
                 cmp_val = cmp(value1, value2)
-                if ob.descending:
+                desc_expr = '%s.%s DESC' % (table, column)
+                if desc_expr in self.tracker.query.order_by.sql:
                     cmp_val *= -1
                 if cmp_val != 0:
                     return cmp_val
@@ -543,6 +545,17 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
         self.tracker.change_query(query)
         self.check_one_signal('list-changed')
         self.check_tracker_items()
+        # test order by something more complex.  Move item0 to the bottom of
+        # the list, then sort alphabetically
+        sql = ("CASE "
+               "WHEN title LIKE '%item0' THEN 'zzzzzz' "
+               "ELSE title "
+               "END")
+        query.set_complex_order_by(['title'], sql)
+        self.tracker.change_query(query)
+        self.check_one_signal('list-changed')
+        correct_order = self.tracked_items[1:] + self.tracked_items[:1]
+        self.check_tracker_items(correct_order, sort_items=False)
 
     def test_limit(self):
         # test order by a different column

@@ -559,9 +559,11 @@ class LiveStorage(signals.SignalEmitter):
             os.remove(new_path)
         self.cursor.execute("ATTACH ? as newdb",
                             (filename_to_unicode(new_path),))
+        self.cursor.execute("BEGIN TRANSACTION")
         try:
             self._copy_data_to_newdb()
         finally:
+            self.cursor.execute("COMMIT TRANSACTION")
             self.cursor.execute("DETACH newdb")
 
     def _copy_data_to_newdb(self):
@@ -1282,7 +1284,6 @@ class LiveStorage(signals.SignalEmitter):
                                                       integrity_check_passed)
         if action == LiveStorageErrorHandler.ACTION_QUIT:
             self._quitting_from_operational_error = True
-            messages.FrontendQuit().send_to_frontend()
             return False
         elif action == LiveStorageErrorHandler.ACTION_RETRY:
             logging.warn("Re-running SQL statement")

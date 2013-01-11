@@ -136,7 +136,7 @@ class ItemSelectInfo(object):
         SelectColumn('item', 'play_count'),
         SelectColumn('item', 'skip_count'),
         SelectColumn('item', 'cover_art', 'cover_art_path_unicode'),
-        SelectColumn('item', 'description'),
+        SelectColumn('item', 'description', 'metadata_description'),
         SelectColumn('item', 'album'),
         SelectColumn('item', 'album_artist'),
         SelectColumn('item', 'artist'),
@@ -148,6 +148,7 @@ class ItemSelectInfo(object):
         SelectColumn('item', 'file_type'),
         SelectColumn('item', 'has_drm'),
         SelectColumn('item', 'show'),
+        SelectColumn('item', 'size'),
         SelectColumn('item', 'episode_id'),
         SelectColumn('item', 'episode_number'),
         SelectColumn('item', 'season_number'),
@@ -318,7 +319,7 @@ class ItemInfoBase(object):
     album = None
     kind = None
     duration_ms = None
-    description = None
+    metadata_description = None
     show = None
     file_type = None
     artist = None
@@ -414,6 +415,15 @@ class ItemInfoBase(object):
         return self.is_torrent or filetypes.is_torrent_filename(self.url)
 
     @property
+    def description(self):
+        if self.metadata_description:
+            return self.metadata_description
+        elif self.entry_description:
+            return self.entry_description
+        else:
+            return None
+
+    @property
     def description_stripped(self):
         if not hasattr(self, '_description_stripped'):
             self._description_stripped = ItemInfo.html_stripper.strip(
@@ -461,26 +471,6 @@ class ItemInfoBase(object):
         This returns True when the item has a non-file URL.
         """
         return self.url is not None and not self.url.startswith(u"file:")
-
-    @property
-    def size(self):
-        """Get the size for an item.
-
-        We try these methods in order to get the size:
-
-        1. Physical size of a downloaded file
-        2. HTTP content-length
-        3. RSS enclosure tag value
-        """
-        if self.has_filename:
-            try:
-                return os.path.getsize(self.filename)
-            except OSError:
-                return None
-        elif self.is_download:
-            return self.downloader_size
-        else:
-            return self.enclosure_size
 
     @property
     def file_format(self):
@@ -753,7 +743,7 @@ class DeviceItemSelectInfo(ItemSelectInfo):
         SelectColumn('device_item', 'screenshot', 'screenshot_path_unicode'),
         SelectColumn('device_item', 'duration', 'duration_ms'),
         SelectColumn('device_item', 'cover_art', 'cover_art_path_unicode'),
-        SelectColumn('device_item', 'description'),
+        SelectColumn('device_item', 'description', 'metadata_description'),
         SelectColumn('device_item', 'album'),
         SelectColumn('device_item', 'album_artist'),
         SelectColumn('device_item', 'artist'),
@@ -810,7 +800,7 @@ class SharingItemSelectInfo(ItemSelectInfo):
         SelectColumn('sharing_item', 'daap_id'),
         SelectColumn('sharing_item', 'video_path'),
         SelectColumn('sharing_item', 'title'),
-        SelectColumn('sharing_item', 'description'),
+        SelectColumn('sharing_item', 'description', 'metadata_description'),
         SelectColumn('sharing_item', 'file_type'),
         SelectColumn('sharing_item', 'file_format'),
         SelectColumn('sharing_item', 'duration', 'duration_ms'),
