@@ -148,6 +148,7 @@ class LinuxApplication(Application):
         associate_protocols(self._get_command())
         gtkdirectorywatch.GTKDirectoryWatcher.install()
         self.menubar = gtkmenus.MainWindowMenuBar()
+        renderers.init_renderer()
         self.startup()
 
         logging.info("Linux version:     %s %s %s",
@@ -173,7 +174,6 @@ class LinuxApplication(Application):
             logging.info("pycurl:            %s", pycurl.version)
         except ImportError:
             logging.exception("pycurl won't load")
-        renderers.init_renderer()
         try:
             gtk.main()
         except (KeyboardInterrupt, SystemExit):
