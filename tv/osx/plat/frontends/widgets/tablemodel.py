@@ -544,7 +544,7 @@ class MiroItemListDataSource(MiroTableViewDataSource):
     def tableView_writeRowsWithIndexes_toPasteboard_(self, tableview,
             rowIndexes, pasteboard):
         indexes = list_from_nsindexset(rowIndexes)
-        data = [self.model.item_list.get_row(i) for i in indexes]
+        data = [(self.model.item_list.get_row(i),) for i in indexes]
         return self.view_writeColumnData_ToPasteboard_(tableview, data,
                 pasteboard)
 
