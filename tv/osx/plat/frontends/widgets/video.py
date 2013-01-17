@@ -131,7 +131,6 @@ class VideoPlayer (Widget, quicktime.Player):
         self.view.window().addChildWindow_ordered_(self.video_window, NSWindowAbove)
         self.video_window.orderFront_(nil)
         self.window_moved_handler = wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
-        app.info_updater.item_changed_callbacks.add('manual', 'playback-list', self.on_items_changed)
 
     def place(self, rect, containing_view):
         Widget.place(self, rect, containing_view)
@@ -140,12 +139,7 @@ class VideoPlayer (Widget, quicktime.Player):
     def on_window_moved(self, window):
         self.adjust_video_frame()
 
-    def on_items_changed(self, message):
-        if self.video_window is not None:
-            self.video_window.on_items_changed(message.changed)
-        
     def remove_viewport(self):
-        app.info_updater.item_changed_callbacks.remove('manual', 'playback-list', self.on_items_changed)
         self.item_changed_handler = None
         self.prevent_system_sleep(False)
         self.detach_from_parent_window()
@@ -260,10 +254,6 @@ class VideoWindow (NSWindow):
         self.palette.window().orderOut_(nil)
         self.palette = None
         super(VideoWindow, self).close()
-
-    def on_items_changed(self, changed):
-        if self.palette is not None:
-            self.palette.on_items_changed(changed)
 
     def canBecomeMainWindow(self):
         return NO

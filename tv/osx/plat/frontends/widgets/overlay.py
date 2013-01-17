@@ -174,12 +174,11 @@ class OverlayPalette (NSWindowController):
             self.suspendAutoHiding()
             self.reveal(video_window)
 
-    def on_items_changed(self, changed):
-        for item_info in changed:
-            if item_info.id == self.item_info.id:
-                self.keepButton.setEnabled_(item_info.can_be_saved)
-                self.shareButton.setEnabled_(item_info.has_shareable_url)
-                self.update_(nil)
+    def on_playing_info_changed(self, new_info):
+        print 'PLAYING INFO CHANGED: ', new_info.title
+        self.keepButton.setEnabled_(new_info.can_be_saved)
+        self.shareButton.setEnabled_(new_info.has_shareable_url)
+        self.update_(nil)
                 
     def enter_fullscreen(self, videoWindow):
         self.in_fullscreen = True
@@ -429,7 +428,7 @@ class OverlayPalette (NSWindowController):
 
     def on_info_changed(self, obj, item_info):
         self.item_info = item_info
-        self.on_items_changed([item_info])
+        self.on_playing_info_changed(item_info)
 
     def remove(self):
         threads.warn_if_not_on_main_thread('OverlayPalette.remove')
