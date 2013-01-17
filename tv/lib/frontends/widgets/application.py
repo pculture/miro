@@ -432,7 +432,7 @@ class Application:
 
     def share_item(self, item):
         share_items = {"file_url": item.url,
-                       "item_name": item.name}
+                       "item_name": item.title}
         if item.feed_url:
             share_items["feed_url"] = item.feed_url
         query_string = "&".join([
