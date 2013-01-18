@@ -537,14 +537,24 @@ class ItemTracker(signals.SignalEmitter):
         if not self.idle_work_scheduled:
             return [i.id for i in self.get_items() if i.is_playable]
         else:
-            return self.item_fetcher.select_playable_ids()
+            try:
+                return self.item_fetcher.select_playable_ids()
+            except sqlite3.DatabaseError, e:
+                logging.warn("%s in select_playable_ids()", e, exc_info=True)
+                self._run_db_error_dialog()
+                return []
 
     def has_playables(self):
         """Can we play any items from this item list?"""
         if not self.idle_work_scheduled:
             return any(i for i in self.get_items() if i.is_playable)
         else:
-            return self.item_fetcher.select_has_playables()
+            try:
+                return self.item_fetcher.select_has_playables()
+            except sqlite3.DatabaseError, e:
+                logging.warn("%s in select_has_playables()", e, exc_info=True)
+                self._run_db_error_dialog()
+                return False
 
     def __len__(self):
         return len(self.id_list)

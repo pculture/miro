@@ -302,3 +302,27 @@ class TestItemTrackErrors(MiroTestCase):
         self.assertEquals(self.list_changed_callback.call_count, 1)
         # get_items() should return the correct items now
         self.assertSameSet(tracker.get_items(), self.fetch_item_infos())
+
+    def test_error_has_playables(self):
+        tracker = self.make_tracker()
+        with self.allow_warnings():
+            with self.force_db_error():
+                retval = tracker.has_playables()
+        self.assertEquals(app.db_error_handler.run_dialog.call_count, 1)
+        # on db errors, has_playables() should return False
+        self.assertEquals(retval, False)
+        # We don't need a retry callback for this.
+        retry_callback = app.db_error_handler.run_dialog.call_args[0][2]
+        self.assertNotEquals(retry_callback, None)
+
+    def test_error_get_playable_ids(self):
+        tracker = self.make_tracker()
+        with self.allow_warnings():
+            with self.force_db_error():
+                retval = tracker.get_playable_ids()
+        self.assertEquals(app.db_error_handler.run_dialog.call_count, 1)
+        # on db errors, get_playable_ids() should return an empty list
+        self.assertEquals(retval, [])
+        # We don't need a retry callback for this.
+        retry_callback = app.db_error_handler.run_dialog.call_args[0][2]
+        self.assertNotEquals(retry_callback, None)
