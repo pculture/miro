@@ -249,13 +249,13 @@ class ItemListModel(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, 'structure-will-change', 'row-changed')
         self.item_list = item_list
         self.item_list.connect("items-changed", self.on_items_changed)
-        self.item_list.connect("list-changed", self.on_list_changed)
+        self.item_list.connect("will-change", self.on_will_change)
 
     def on_items_changed(self, item_list, ids_changed):
         for id in ids_changed:
             self.emit("row-changed", self.item_list.get_index(id))
 
-    def on_list_changed(self, item_list):
+    def on_will_change(self, item_list):
         self.emit("structure-will-change")
 
     def _iter_for_row(self, row):
