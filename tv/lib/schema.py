@@ -973,6 +973,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('album_tracks', SchemaInt(noneOk=True)),
         ('artist', SchemaString(noneOk=True)),
         ('screenshot', SchemaFilename(noneOk=True)),
+        ('cover_art', SchemaFilename(noneOk=True)),
         ('drm', SchemaBool(noneOk=True)),
         ('genre', SchemaString(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
@@ -996,7 +997,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 195
+VERSION = 196
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

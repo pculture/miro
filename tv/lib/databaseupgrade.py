@@ -4298,3 +4298,13 @@ def upgrade195(cursor):
         else:
             size = None
         cursor.execute("UPDATE item SET size=? WHERE id=?", (size, item_id))
+
+@run_on_both
+def upgrade196(cursor):
+    """Add cover_art to the metadata table.
+
+    cover_art will store the path to cover art that is specific to a
+    file, not an album.  We use it when the user manually assigns cover art to
+    an item (#19766)
+    """
+    cursor.execute("ALTER TABLE metadata ADD COLUMN cover_art TEXT")

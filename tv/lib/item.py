@@ -1088,6 +1088,10 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
             logging.warn("No file to set metadata for in "
                          "set_metadata_from_iteminfo")
             return
+        if 'cover_art_path' in metadata_dict:
+            # ItemInfo calls the attribute "cover_art_path", but the metadata
+            # system just calls it cover art.  Rename the key.
+            metadata_dict['cover_art'] = metadata_dict.pop('cover_art_path')
         app.local_metadata_manager.set_user_data(self.filename, metadata_dict)
         self.update_from_metadata(metadata_dict)
         self.signal_change()

@@ -359,9 +359,6 @@ class MetadataEntry(database.DDBObject):
     # net_lookup_enabled is proveded by the metadata_status table, not the
     # actual metadata tables
     metadata_columns.discard('net_lookup_enabled')
-    # cover_art is handled implicitly by saving the cover art using the
-    # album name
-    metadata_columns.discard('cover_art')
 
     def setup_new(self, status, source, data):
         self.status_id = status.id
@@ -372,6 +369,10 @@ class MetadataEntry(database.DDBObject):
         for name in self.metadata_columns:
             setattr(self, name, None)
         self.__dict__.update(data)
+        if source != 'user-data':
+            # we only save cover_art for user-data.  Other sources save the
+            # cover art using a per-album filename.
+            self.cover_art = None
 
     def update_metadata(self, new_data):
         """Update the values for this object."""
@@ -1418,7 +1419,10 @@ class MetadataManagerBase(signals.SignalEmitter):
 
     def _add_cover_art(self, metadata):
         """Add the cover art path to a metadata dict """
-        if 'album' in metadata:
+
+        # if the user hasn't explicitly set the cover art for an item, get it
+        # using the album.
+        if 'album' in metadata and 'cover_art' not in metadata:
             filename = filetags.calc_cover_art_filename(metadata['album'])
             mutagen_path = os.path.join(self.cover_art_dir, filename)
             echonest_path = os.path.join(self.cover_art_dir, 'echonest',
