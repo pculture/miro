@@ -36,6 +36,7 @@ import string
 import weakref
 
 from miro import app
+from miro import messages
 from miro import models
 from miro import util
 from miro.frontends.widgets import itemlist
@@ -186,6 +187,37 @@ class ItemListTest(MiroTestCase):
         # test grouping is correct after changing the sort
         self.item_list.set_sort(itemsort.TitleSort())
         self.check_group_info(last_letter_grouping)
+
+    def test_grouping_change_first_item(self):
+        # test item changes with a grouping set
+
+        # Split the items into 2 groups
+        list_items = self.item_list.get_items()
+        first_group_count = len(list_items) // 2
+        first_group = [i.id for i in list_items[0:first_group_count]]
+        def group_func(item):
+            return item.id in first_group
+        self.item_list.set_grouping(group_func)
+        for i in range(first_group_count):
+            group_info = self.item_list.get_group_info(i)
+            self.assertEquals(group_info[0], i)
+            self.assertEquals(group_info[1], first_group_count)
+            self.assertEquals(group_info[2], list_items[0])
+        # try changing the first item in the list, make sure that the
+        # group_info changes based on that.
+        for item in self.items:
+            if item.id == list_items[0].id:
+                item.title = u'new-title'
+                item.signal_change()
+                break
+        app.db.finish_transaction()
+        msg = messages.ItemChanges(set(), set([list_items[0].id]), set(),
+                                   set(['title']), False, False)
+        self.item_list.on_item_changes(msg)
+        self.assertEquals(self.item_list.get_row(0).title, u'new-title')
+        for i in range(first_group_count):
+            group_info = self.item_list.get_group_info(i)
+            self.assertEquals(group_info[2].title, u'new-title')
 
 class TestItemListPool(MiroTestCase):
     def setUp(self):

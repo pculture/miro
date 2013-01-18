@@ -112,6 +112,11 @@ class ItemList(itemtrack.ItemTracker):
         itemtrack.ItemTracker._fetch_id_list(self)
         self._reset_group_info()
 
+    def _uncache_row_data(self, id_list):
+        itemtrack.ItemTracker._uncache_row_data(self, id_list)
+        # items have changed, so we need to reset all group info
+        self._reset_group_info()
+
     def _make_base_query(self, tab_type, tab_id):
         if self.is_for_device():
             query = itemtrack.DeviceItemTrackerQuery()
