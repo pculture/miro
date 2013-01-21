@@ -160,6 +160,7 @@ class ItemSelectInfo(object):
         SelectColumn('feed', 'expireTime', 'feed_expire_time'),
         SelectColumn('feed', 'autoDownloadable', 'feed_auto_downloadable'),
         SelectColumn('feed', 'getEverything', 'feed_get_everything'),
+        SelectColumn('feed', 'thumbnail_path', 'feed_thumbnail_path'),
         SelectColumn('icon_cache', 'filename', 'icon_cache_path_unicode'),
         SelectColumn('remote_downloader', 'content_type',
                       'downloader_content_type'),
@@ -294,6 +295,7 @@ class ItemInfoBase(object):
     release_date = None
     parent_title = None
     feed_url = None
+    feed_thumbnail_path = None
     license = None
     rss_id = None
     entry_title = None
@@ -443,12 +445,13 @@ class ItemInfoBase(object):
             return self.screenshot_path
         if self.is_container_item:
             return resources.path("images/thumb-default-folder.png")
+        if self.feed_thumbnail_path is not None:
+            return self.feed_thumbnail_path
+        # default
+        if self.file_type == u'audio':
+            return resources.path("images/thumb-default-audio.png")
         else:
-            # TODO: check for feed thumbnail here
-            if self.file_type == u'audio':
-                return resources.path("images/thumb-default-audio.png")
-            else:
-                return resources.path("images/thumb-default-video.png")
+            return resources.path("images/thumb-default-video.png")
 
     @property
     def is_external(self):

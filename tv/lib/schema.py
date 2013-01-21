@@ -615,6 +615,7 @@ class FeedSchema(DDBObjectSchema):
         ('feed_impl_id', SchemaInt()),
         ('icon_cache_id', SchemaInt(noneOk=True)),
         ('folder_id', SchemaInt(noneOk=True)),
+        ('thumbnail_path', SchemaFilename(noneOk=True)),
         ('searchTerm', SchemaString(noneOk=True)),
         ('userTitle', SchemaString(noneOk=True)),
         ('autoDownloadable', SchemaBool()),
@@ -997,7 +998,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 196
+VERSION = 197
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

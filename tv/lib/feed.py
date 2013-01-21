@@ -429,6 +429,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self._actualFeed = None
         self._set_feed_impl(FeedImpl(url, self, title))
         self.setup_new_icon_cache()
+        self.thumbnail_path = None
         self.informOnError = True
         self.folder_id = None
         self.searchTerm = search_term
@@ -672,7 +673,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         """See item.get_thumbnail to figure out which items to send
         signals for.
         """
-        self.signal_change(needs_save=False)
+        self.calc_thumbnail_path()
+        self.signal_change()
         for item in self.items:
             if not item.icon_cache or not (item.icon_cache.is_valid() or
                     item.screenshot or
@@ -1159,15 +1161,22 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.get_folder().signal_change()
 
     def thumbnail_valid(self):
-        return self.icon_cache and self.icon_cache.is_valid()
+        return self.thumbnail_path is not None
 
     @returns_filename
     def get_thumbnail_path(self):
-        self.confirm_db_thread()
         if self.thumbnail_valid():
-            return fileutil.expand_filename(self.icon_cache.get_filename())
+            return self.thumbnail_path
         else:
             return self.actualFeed.default_thumbnail_path()
+
+    def calc_thumbnail_path(self):
+        self.confirm_db_thread()
+        if self.icon_cache and self.icon_cache.is_valid():
+            self.thumbnail_path = fileutil.expand_filename(
+                self.icon_cache.get_filename())
+        else:
+            self.thumbnail_path = None
 
     def has_downloaded_items(self):
         return self.num_downloaded() > 0

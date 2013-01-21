@@ -4308,3 +4308,16 @@ def upgrade196(cursor):
     an item (#19766)
     """
     cursor.execute("ALTER TABLE metadata ADD COLUMN cover_art TEXT")
+
+def upgrade197(cursor):
+    """Add the thumbnail_path to the feed table """
+    cursor.execute("ALTER TABLE feed ADD COLUMN thumbnail_path TEXT")
+    cursor.execute("SELECT feed.id, icon_cache.filename "
+                   "FROM feed "
+                   "JOIN icon_cache ON icon_cache.id = feed.icon_cache_id "
+                   "WHERE filename IS NOT NULL")
+    values = []
+    for (feed_id, filename) in cursor.fetchall():
+        if os.path.exists(filename):
+            values.append((filename, feed_id))
+    cursor.executemany("UPDATE feed SET thumbnail_path=? WHERE id=?", values)
