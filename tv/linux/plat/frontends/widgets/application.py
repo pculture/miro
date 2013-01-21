@@ -140,6 +140,7 @@ def run_application():
 
 class LinuxApplication(Application):
     def run(self):
+        self.log_initial_info()
         gobject.set_application_name(app.config.get(prefs.SHORT_APP_NAME))
         os.environ["PULSE_PROP_media.role"] = "video"
 
@@ -150,15 +151,6 @@ class LinuxApplication(Application):
         self.menubar = gtkmenus.MainWindowMenuBar()
         renderers.init_renderer()
         self.startup()
-
-        logging.info("Linux version:     %s %s %s",
-                     platform.system(),
-                     platform.release(),
-                     platform.machine())
-        logging.info("Python version:    %s", sys.version)
-        logging.info("Gtk+ version:      %s", gtk.gtk_version)
-        logging.info("PyGObject version: %s", gtk.ver)
-        logging.info("PyGtk version:     %s", gtk.pygtk_version)
         langs = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
         langs = [(l, os.environ.get(l)) for l in langs if os.environ.get(l)]
         logging.info("Language:          %s", langs)
@@ -179,6 +171,12 @@ class LinuxApplication(Application):
         except (KeyboardInterrupt, SystemExit):
             self.do_quit()
         app.controller.on_shutdown()
+
+    def log_initial_info(self):
+        logging.info("Python version:    %s", sys.version)
+        logging.info("Gtk+ version:      %s", gtk.gtk_version)
+        logging.info("PyGObject version: %s", gtk.ver)
+        logging.info("PyGtk version:     %s", gtk.pygtk_version)
 
     def _setup_webkit(self):
         cookie_path = get_cookie_path()
