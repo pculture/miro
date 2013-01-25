@@ -1514,7 +1514,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self._profile_info = None
 
     def handle_current_search_info(self, message):
-        app.search_manager.set_search_info(message.engine, message.text)
+        app.search_manager.set_initial_search_info(message.engine, message.text)
         self._saw_pre_startup_message('search-info')
 
     def handle_tab_list(self, message):

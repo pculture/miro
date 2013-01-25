@@ -283,7 +283,6 @@ def startup_for_frontend(obj, thread):
 
     app.startup_timer.log_time("after db upgrade")
 
-    searchengines.create_engines()
     setup_global_feeds()
     # call fix_database_inconsistencies() ASAP after the manual feed is set up
     fix_database_inconsistencies()

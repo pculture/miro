@@ -81,11 +81,7 @@ class SearchEngineInfo:
     def __repr__(self):
         return "<SearchEngineInfo %s %s>" % (self.name, self.title)
 
-_engines = []
-
-def _delete_engines():
-    global _engines
-    _engines = []
+_engines = None
 
 def _search_for_search_engines(dir_):
     """Returns a dict of search engine -> search engine xml file for
@@ -157,6 +153,7 @@ def _load_search_engine(filename):
         # FIXME - lock this down more
         warn(filename, "Exception parsing file")
 
+from miro.util import DebuggingTimer
 def create_engines():
     """Creates all the search engines specified in the
     ``resources/searchengines/`` directory and the theme searchengines
@@ -164,7 +161,7 @@ def create_engines():
     engine.
     """
     global _engines
-    _delete_engines()
+    _engines = []
     engines = _search_for_search_engines(resources.path("searchengines"))
     engines_dir = os.path.join(
         app.config.get(prefs.SUPPORT_DIRECTORY), "searchengines")
@@ -230,6 +227,8 @@ def get_request_urls(engine_name, query, filter_adult_contents=True, limit=50):
 def get_search_engines():
     """Returns the list of :class:`SearchEngineInfo` instances.
     """
+    if _engines is None:
+        create_engines()
     return list(_engines)
 
 def get_engine_for_name(name):

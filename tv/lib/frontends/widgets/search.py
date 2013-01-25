@@ -49,9 +49,13 @@ class SearchManager(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('search-started')
         self.create_signal('search-complete')
-        self.engine = searchengines.get_last_engine().name
+        self.engine = u'all'
         self.text = ''
         self.searching = False
+
+    def set_initial_search_info(self, engine, text):
+        self.engine = engine
+        self.text = text
 
     def set_search_info(self, engine, text):
         if not searchengines.get_engine_for_name(engine):
