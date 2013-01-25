@@ -162,38 +162,6 @@ def startup_function(func):
                 m.send_to_frontend()
     return wrapped
 
-def _movies_directory_gone_handler(message, movies_dir, allow_continue=False):
-    """Default _movies_directory_gone_handler.  The frontend should
-    override this using the ``install_movies_directory_gone_handler``
-    function.
-
-    _movies_directory_gone_handler should display the message to the user, and
-    present them with the following options:
-        - quit
-        - change movies directory
-        - continue with current directory (if allow_continue is True)
-
-    After the user picks, the frontend should call either
-    app.controller.shutdown() or startup.fix_movies_gone()
-    """
-    logging.error("Movies directory is gone -- no handler installed!")
-    eventloop.add_urgent_call(callback, "continuing startup")
-
-def install_movies_directory_gone_handler(callback):
-    global _movies_directory_gone_handler
-    _movies_directory_gone_handler = callback
-
-def _first_time_handler(callback):
-    """Default _first_time_handler.  The frontend should override this
-    using the ``install_first_time_handler`` function.
-    """
-    logging.error("First time -- no handler installed.")
-    eventloop.add_urgent_call(callback, "continuing startup")
-
-def install_first_time_handler(callback):
-    global _first_time_handler
-    _first_time_handler = callback
-
 def setup_global_feed(url, *args, **kwargs):
     view = feed.Feed.make_view('orig_url=?', (url,))
     view_count = view.count()
@@ -340,8 +308,7 @@ def finish_startup(obj, thread):
     else:
         logging.warn("frontend is %s, not starting DonateManager()",
                      app.frontend_name)
-
-    eventloop.add_urgent_call(check_firsttime, "check first time")
+    _startup_checker.run_checks()
 
 def fix_database_inconsistencies():
     item.fix_non_container_parents()
@@ -349,79 +316,159 @@ def fix_database_inconsistencies():
     playlist.fix_missing_item_ids()
     folder.fix_playlist_missing_item_ids()
 
-@startup_function
-def check_firsttime():
-    """Run the first time wizard if need be.
+class StartupChecker(object):
+    """Handles various checks at startup.
+
+    This class handles the first-time startup check and the movies directory
+    gone check.
+
+    This code is a bit weird because of the interplay between the frontend and
+    the backend.  The checks run in the backend, but if they fail then the
+    frontend needs to prompt the user to ask them what to do.  Also, neither
+    side is totally started up at this point.
     """
-    callback = lambda: eventloop.add_urgent_call(check_movies_gone,
-                                                 "check movies gone")
-    if is_first_time():
-        logging.info("First time run -- calling handler.")
-        _first_time_handler(callback)
-        return
+    def run_checks(self):
+        self.check_firsttime()
 
-    eventloop.add_urgent_call(check_movies_gone, "check movies gone")
-
-@startup_function
-def check_movies_gone(check_unmounted=True):
-    """Checks to see if the movies directory is gone.
-    """
-
-    movies_dir = fileutil.expand_filename(app.config.get(
-        prefs.MOVIES_DIRECTORY))
-    movies_dir = filename_to_unicode(movies_dir)
-
-    # if the directory doesn't exist, create it.
-    if (not os.path.exists(movies_dir) and
-            should_create_movies_directory(movies_dir)):
-        try:
-            fileutil.makedirs(movies_dir)
-        except OSError:
-            logging.info("Movies directory can't be created -- calling handler")
-            # FIXME - this isn't technically correct, but it's probably
-            # close enough that a user can fix the issue and Miro can
-            # run happily.
-            msg = _("Permissions error: %(appname)s couldn't "
-                    "create the folder.",
-                    {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-            _movies_directory_gone_handler(msg, movies_dir)
+    @startup_function
+    def check_firsttime(self):
+        """Run the first time wizard if need be.
+        """
+        callback = lambda: eventloop.add_urgent_call(self.check_movies_gone,
+                                                     "check movies gone")
+        if is_first_time():
+            logging.info("First time run -- calling handler.")
+            self.first_time_handler(callback)
             return
 
-    # make sure the directory is writeable
-    if not os.access(movies_dir, os.W_OK):
-        logging.info("Can't write to movies directory -- calling handler")
-        msg = _("Permissions error: %(appname)s can't "
-                "write to the folder.",
-                {"appname": app.config.get(prefs.SHORT_APP_NAME)})
-        _movies_directory_gone_handler(msg, movies_dir)
-        return
+        self.check_movies_gone()
 
-    # make sure that the directory is populated if we've downloaded stuff to
-    # it
-    if check_unmounted and check_movies_directory_unmounted():
-        logging.info("Movies directory is gone -- calling handler.")
-        msg = _("The folder contains no files: "
-                "is it on a drive that's disconnected?")
-        _movies_directory_gone_handler(msg, movies_dir, allow_continue=True)
-        return
+    def first_time_handler(callback):
+        """Default handler for first-time startup
 
-    eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
+        install_first_time_handler() replaces this method with the
+        frontend-specific one.
+        """
+        logging.error("First time -- no handler installed.")
+        eventloop.add_urgent_call(callback, "continuing startup")
 
-@eventloop.as_urgent
-@startup_function
+    @startup_function
+    def check_movies_gone(self, check_unmounted=True):
+        """Checks to see if the movies directory is gone.
+        """
+
+        movies_dir = fileutil.expand_filename(app.config.get(
+            prefs.MOVIES_DIRECTORY))
+        movies_dir = filename_to_unicode(movies_dir)
+
+        # if the directory doesn't exist, create it.
+        if (not os.path.exists(movies_dir) and
+                should_create_movies_directory(movies_dir)):
+            try:
+                fileutil.makedirs(movies_dir)
+            except OSError:
+                logging.info("Movies directory can't be created -- calling handler")
+                # FIXME - this isn't technically correct, but it's probably
+                # close enough that a user can fix the issue and Miro can
+                # run happily.
+                msg = _("Permissions error: %(appname)s couldn't "
+                        "create the folder.",
+                        {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+                self.movies_directory_gone_handler(msg, movies_dir)
+                return
+
+        # make sure the directory is writeable
+        if not os.access(movies_dir, os.W_OK):
+            logging.info("Can't write to movies directory -- calling handler")
+            msg = _("Permissions error: %(appname)s can't "
+                    "write to the folder.",
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME)})
+            self.movies_directory_gone_handler(msg, movies_dir)
+            return
+
+        # make sure that the directory is populated if we've downloaded stuff to
+        # it
+        if check_unmounted and check_movies_directory_unmounted():
+            logging.info("Movies directory is gone -- calling handler.")
+            msg = _("The folder contains no files: "
+                    "is it on a drive that's disconnected?")
+            self.movies_directory_gone_handler(msg, movies_dir,
+                                               allow_continue=True)
+            return
+
+        self.all_checks_done()
+
+    def movies_directory_gone_handler(self, message, movies_dir,
+                                      allow_continue=False):
+        """Default movies_directory_gone_handler.
+
+        This method simply quits when the movies directory is gone.
+        install_movies_directory_gone_handler() replaces this method with the
+        frontend-specific one.
+
+        present them with the following options:
+            - quit
+            - change movies directory
+            - continue with current directory (if allow_continue is True)
+
+        After the user picks, the frontend should call either
+        app.controller.shutdown() or startup.fix_movies_gone()
+        """
+        logging.error("Movies directory is gone -- no handler installed!")
+        app.controller.shutdown()
+
+    @startup_function
+    def fix_movies_gone(self, new_movies_directory):
+        """Called by the movies directory gone handler to fix the issue.
+
+        :param new_movies_directory: new path for the movies directory, or
+        None if we should continue with the current directory.
+        """
+        if new_movies_directory is not None:
+            app.config.set(prefs.MOVIES_DIRECTORY, new_movies_directory)
+        # do another check to make sure the selected directory works.  Here we
+        # skip the unmounted check, since it's not exact and the user is
+        # giving us a directory.
+        self.check_movies_gone(check_unmounted=False)
+
+    def all_checks_done(self):
+        finish_backend_startup()
+
+_startup_checker = StartupChecker()
+
+def install_movies_directory_gone_handler(callback):
+    """Install a function to handle the movies directory being gone
+
+    The frontend should call this method and pass it a callback to handle this
+    situation.  The signature is (message, movies_dir, allow_continue=False).
+    The callback should present the user with the following options:
+        - quit
+        - change movies directory
+        - continue with current directory (if allow_continue is True)
+
+    After the user picks, the callback should call either
+    app.controller.shutdown() or startup.fix_movies_gone()
+    """
+    _startup_checker.movies_directory_gone_handler = callback
+
+def install_first_time_handler(callback):
+    """Install a function to handle first-time startup
+
+    If the frontend wants, it can pass a callback that shows a dialog to the
+    user on first-time startup.  The function will be passed a single argument
+    which is a callback function to call once the dialog completes.
+    """
+    _startup_checker.first_time_handler = callback
+
 def fix_movies_gone(new_movies_directory):
     """Called by the movies directory gone handler to fix the issue.
 
     :param new_movies_directory: new path for the movies directory, or None if
     we should continue with the current directory.
     """
-    if new_movies_directory is not None:
-        app.config.set(prefs.MOVIES_DIRECTORY, new_movies_directory)
-    # do another check to make sure the selected directory works.  Here we
-    # skip the unmounted check, since it's not exact and the user is giving us
-    # a directory.
-    eventloop.add_urgent_call(check_movies_gone, "check movies gone",
-                              kwargs={'check_unmounted': False})
+    eventloop.add_urgent_call(_startup_checker.fix_movies_gone,
+                              "fix movies gone",
+                              args=(new_movies_directory,))
 
 @startup_function
 def finish_backend_startup():
