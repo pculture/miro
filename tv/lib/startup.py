@@ -301,6 +301,7 @@ def startup_for_frontend(obj, thread):
     item.setup_change_tracker()
     app.sharing_tracker = sharing.SharingTracker()
     app.sharing_manager = sharing.SharingManager()
+    app.icon_cache_updater = iconcache.IconCacheUpdater()
 
     _startup_checker.run_checks()
 
@@ -493,6 +494,7 @@ def on_frontend_started():
 
     logging.info("Starting auto downloader...")
     autodler.start_downloader()
+    app.icon_cache_updater.start_updates()
     yield None
     feed.expire_items()
     yield None

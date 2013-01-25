@@ -43,7 +43,6 @@ from miro import eventloop
 from miro.gtcache import gettext as _
 from miro import httpauth
 from miro import httpclient
-from miro import iconcache
 from miro import messages
 from miro import prefs
 from miro import signals
@@ -127,7 +126,7 @@ class Controller:
     def on_shutdown(self):
         try:
             logging.info("Shutting down icon cache updates")
-            iconcache.icon_cache_updater.shutdown()
+            app.icon_cache_updater.shutdown()
             logging.info("Shutting down movie data updates")
             if app.movie_data_updater is not None:
                 app.movie_data_updater.shutdown()

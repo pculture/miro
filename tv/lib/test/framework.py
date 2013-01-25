@@ -21,6 +21,7 @@ from miro import feed
 from miro import downloader
 from miro import httpauth
 from miro import httpclient
+from miro import iconcache
 from miro import item
 from miro import itemsource
 from miro import messages
@@ -298,6 +299,8 @@ class MiroTestCase(unittest.TestCase):
         self.setup_config_watcher()
         self.platform = app.config.get(prefs.APP_PLATFORM)
         self.set_temp_support_directory()
+        # setup icon_cache_updater
+        app.icon_cache_updater = iconcache.IconCacheUpdater()
         # for the unittests, both the database code and any UI code should run
         # in the main thread.
         threadcheck.set_eventloop_thread(threading.currentThread())

@@ -49,6 +49,11 @@ class IconCacheUpdater:
         self.vital = collections.deque()
         self.running_count = 0
         self.in_shutdown = False
+        self.started = False
+
+    def start_updates(self):
+        self.started = True
+        self.run_next_update()
 
     def request_update(self, item, is_vital=False):
         if is_vital:
@@ -56,7 +61,7 @@ class IconCacheUpdater:
             if (item.filename and fileutil.access(item.filename, os.R_OK)
                    and item.url == item.dbItem.get_thumbnail_url()):
                 is_vital = False
-        if self.running_count < RUNNING_MAX:
+        if self.started and self.running_count < RUNNING_MAX:
             eventloop.add_idle(item.request_icon, "Icon Request")
             self.running_count += 1
         else:
@@ -70,6 +75,9 @@ class IconCacheUpdater:
             self.running_count -= 1
             return
 
+        self.run_next_update()
+
+    def run_next_update(self):
         if len(self.vital) > 0:
             item = self.vital.popleft()
         elif len(self.idle) > 0:
@@ -87,10 +95,6 @@ class IconCacheUpdater:
     @eventloop.as_idle
     def shutdown(self):
         self.in_shutdown = True
-
-# FIXME - should create an IconCacheUpdater at startup, NOT at
-# module import time.
-icon_cache_updater = IconCacheUpdater()
 
 class IconCache(DDBObject):
     def setup_new(self, dbItem):
@@ -152,7 +156,7 @@ class IconCache(DDBObject):
         self.dbItem.confirm_db_thread()
 
         if self.removed:
-            icon_cache_updater.update_finished()
+            app.icon_cache_updater.update_finished()
             return
 
         # Don't clear the cache on an error.
@@ -165,13 +169,13 @@ class IconCache(DDBObject):
         if self.needsUpdate:
             self.needsUpdate = False
             self.request_update(True)
-        icon_cache_updater.update_finished()
+        app.icon_cache_updater.update_finished()
 
     def update_icon_cache(self, url, info):
         self.dbItem.confirm_db_thread()
 
         if self.removed:
-            icon_cache_updater.update_finished()
+            app.icon_cache_updater.update_finished()
             return
 
         needs_save = False
@@ -263,17 +267,17 @@ class IconCache(DDBObject):
             if self.needsUpdate:
                 self.needsUpdate = False
                 self.request_update(True)
-            icon_cache_updater.update_finished()
+            app.icon_cache_updater.update_finished()
 
     def request_icon(self):
         if self.removed:
-            icon_cache_updater.update_finished()
+            app.icon_cache_updater.update_finished()
             return
 
         self.dbItem.confirm_db_thread()
         if self.updating:
             self.needsUpdate = True
-            icon_cache_updater.update_finished()
+            app.icon_cache_updater.update_finished()
             return
 
         if hasattr(self.dbItem, "get_thumbnail_url"):
@@ -284,7 +288,7 @@ class IconCache(DDBObject):
         # Only verify each icon once per run unless the url changes
         if (url == self.url and self.filename
                 and fileutil.access(self.filename, os.R_OK)):
-            icon_cache_updater.update_finished()
+            app.icon_cache_updater.update_finished()
             return
 
         self.updating = True
@@ -303,7 +307,7 @@ class IconCache(DDBObject):
             if self.removed:
                 return
 
-            icon_cache_updater.request_update(self, is_vital=is_vital)
+            app.icon_cache_updater.request_update(self, is_vital=is_vital)
 
     def setup_restored(self):
         self.removed = False
@@ -332,7 +336,8 @@ def make_icon_cache(obj):
                          obj, obj.icon_cache_id)
         else:
             icon_cache.dbItem = obj
-            icon_cache.request_update()
+            if not icon_cache.is_valid():
+                icon_cache.request_update()
             return icon_cache
     return IconCache(obj)
 
