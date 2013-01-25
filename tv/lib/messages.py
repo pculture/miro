@@ -238,11 +238,6 @@ class StopTrackingShare(BackendMessage):
     def __init__(self, share_id):
         self.share_id = share_id
 
-class TrackDevices(BackendMessage):
-    """Start tracking devices.
-    """
-    pass
-
 class SetFeedExpire(BackendMessage):
     """Sets the expiration for a feed.
     """

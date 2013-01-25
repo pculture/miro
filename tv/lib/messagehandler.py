@@ -549,9 +549,6 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_stop_tracking_share(self, message):
         app.sharing_tracker.stop_tracking_share(message.share_id)
 
-    def handle_track_devices(self, message):
-        app.device_tracker.start_tracking()
-
     def handle_mark_feed_seen(self, message):
         try:
             try:
