@@ -1675,7 +1675,7 @@ class SharingManager(object):
         self.sharing = False
         self.discoverable = False
         self.name = ''
-        self.mdns_present = libdaap.mdns_init()
+        self.mdns_init_result = None
         self.reload_done_event = threading.Event()
         self.mdns_callback = None
         self.sharing_frontend_volatile = False
@@ -1683,7 +1683,17 @@ class SharingManager(object):
         self.callback_handle = app.backend_config_watcher.connect('changed',
                                self.on_config_changed)
 
+    def init_mdns(self):
+        if self.mdns_init_result is None:
+            self.mdns_init_result = libdaap.mdns_init()
+
+    @property
+    def mdns_present(self):
+        self.init_mdns()
+        return self.mdns_init_result
+
     def startup(self):
+        self.init_mdns()
         # Create the sharing server backend that keeps track of all the list
         # of items available.  Don't know whether we can just query it on the
         # fly, maybe that's a better idea.
