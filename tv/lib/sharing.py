@@ -1682,6 +1682,8 @@ class SharingManager(object):
         self.sharing_frontend_callbacks = dict()
         self.callback_handle = app.backend_config_watcher.connect('changed',
                                self.on_config_changed)
+
+    def startup(self):
         # Create the sharing server backend that keeps track of all the list
         # of items available.  Don't know whether we can just query it on the
         # fly, maybe that's a better idea.

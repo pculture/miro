@@ -540,9 +540,6 @@ class BackendMessageHandler(messages.MessageHandler):
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
 
-    def handle_track_sharing(self, message):
-        app.sharing_tracker.start_tracking()
-
     def handle_track_share(self, message):
         app.sharing_tracker.track_share(message.share_id)
 

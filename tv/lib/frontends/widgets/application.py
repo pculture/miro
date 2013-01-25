@@ -305,7 +305,6 @@ class Application:
         messages.TrackNewVideoCount().send_to_backend()
         messages.TrackNewAudioCount().send_to_backend()
         messages.TrackUnwatchedCount().send_to_backend()
-        messages.TrackSharing().send_to_backend()
 
     def get_main_window_dimensions(self):
         """Override this to provide platform-specific Main Window dimensions.

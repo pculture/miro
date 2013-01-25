@@ -293,11 +293,8 @@ def startup_for_frontend(obj, thread):
     setup_theme()
     install_message_handler()
 
-    # Call this late, after the message handlers have been installed.
-    item.setup_change_tracker()
-    app.sharing_tracker = sharing.SharingTracker()
-    app.sharing_manager = sharing.SharingManager()
     app.icon_cache_updater = iconcache.IconCacheUpdater()
+    app.sharing_manager = sharing.SharingManager()
 
     _startup_checker.run_checks()
 
@@ -474,6 +471,11 @@ def on_frontend_started():
     """
     conversions.conversion_manager.startup()
     item.setup_metadata_manager()
+
+    item.setup_change_tracker()
+    app.sharing_tracker = sharing.SharingTracker()
+    app.sharing_manager.startup()
+    app.sharing_tracker.start_tracking()
 
     app.device_manager = devices.DeviceManager()
     app.device_tracker = devicetracker.DeviceTracker()

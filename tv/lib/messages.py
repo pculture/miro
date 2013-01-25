@@ -220,12 +220,6 @@ class StopTrackingWatchedFolders(BackendMessage):
     """
     pass
 
-class TrackSharing(BackendMessage):
-    """Start tracking media shares.
-    """
-    # FIXME: should remove this one
-    pass
-
 class TrackShare(BackendMessage):
     """Start tracking a media share
     """
