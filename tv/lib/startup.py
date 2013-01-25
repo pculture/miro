@@ -85,7 +85,6 @@ from miro import storedatabase
 from miro import conversions
 from miro import devices
 from miro import sharing
-from miro import transcode
 from miro import workerprocess
 from miro.plat import devicetracker
 
@@ -217,7 +216,7 @@ def startup():
     logging.info("Builder:    %s", app.config.get(prefs.BUILD_MACHINE))
     logging.info("Build Time: %s", app.config.get(prefs.BUILD_TIME))
     logging.info("Debugmode:  %s", app.debugmode)
-    eventloop.connect('thread-started', finish_startup)
+    eventloop.connect('thread-started', startup_for_frontend)
     logging.info("Reading HTTP Password list")
     httpauth.init()
     httpauth.restore_from_file()
@@ -239,7 +238,12 @@ def load_extensions():
     app.extension_manager.load_extensions()
 
 @startup_function
-def finish_startup(obj, thread):
+def startup_for_frontend(obj, thread):
+    """Run the startup code needed to get the frontend started
+
+    This function should be kept as small as possible to ensure good startup
+    times.
+    """
     threadcheck.set_eventloop_thread(thread)
     logging.info("Installing deleted file checker...")
     item.setup_deleted_checker()
@@ -275,14 +279,11 @@ def finish_startup(obj, thread):
         util.db_mem_usage_test()
         mem_usage_test_event.set()
 
-    item.setup_metadata_manager()
-    item.setup_change_tracker()
     dbupgradeprogress.upgrade_end()
 
     app.startup_timer.log_time("after db upgrade")
 
     logging.info("Loading video converters...")
-    conversions.conversion_manager.startup()
     app.device_manager = devices.DeviceManager()
     app.device_tracker = devicetracker.DeviceTracker()
 
@@ -295,21 +296,12 @@ def finish_startup(obj, thread):
     logging.info("setup theme...")
     setup_theme()
     install_message_handler()
-    itemsource.setup_handlers()
-
-    app.download_state_manager = downloader.DownloadStateManager()
-    app.download_state_manager.init_controller()
 
     # Call this late, after the message handlers have been installed.
+    item.setup_change_tracker()
     app.sharing_tracker = sharing.SharingTracker()
     app.sharing_manager = sharing.SharingManager()
-    app.transcode_manager = transcode.TranscodeManager()
 
-    if app.frontend_name == 'widgets':
-        app.donate_manager = donate.DonateManager()
-    else:
-        logging.warn("frontend is %s, not starting DonateManager()",
-                     app.frontend_name)
     _startup_checker.run_checks()
 
 def fix_database_inconsistencies():
@@ -434,7 +426,10 @@ class StartupChecker(object):
         self.check_movies_gone(check_unmounted=False)
 
     def all_checks_done(self):
-        finish_backend_startup()
+        # Uncomment the next line to test startup error handling
+        # raise StartupError("Test Error", "Startup Failed")
+        app.startup_timer.log_time("sending StartupSuccess()")
+        messages.StartupSuccess().send_to_frontend()
 
 _startup_checker = StartupChecker()
 
@@ -472,22 +467,30 @@ def fix_movies_gone(new_movies_directory):
                               "fix movies gone",
                               args=(new_movies_directory,))
 
-@startup_function
-def finish_backend_startup():
-    """Last bit of startup required before we load the frontend.  """
-    # Uncomment the next line to test startup error handling
-    # raise StartupError("Test Error", "Startup Failed")
-    reconnect_downloaders()
-    guide.download_guides()
-    feed.remove_orphaned_feed_impls()
-    app.startup_timer.log_time("sending StartupSuccess")
-    messages.StartupSuccess().send_to_frontend()
-
 @eventloop.idle_iterator
 def on_frontend_started():
     """Perform startup actions that should happen after the frontend is
     already up and running.
+
+    This function happens using an idle iterator.  Before/after code that
+    could take a while to run, we yield to other eventloop callbacks.
     """
+    conversions.conversion_manager.startup()
+    item.setup_metadata_manager()
+
+    reconnect_downloaders()
+    guide.download_guides()
+    feed.remove_orphaned_feed_impls()
+
+    app.download_state_manager = downloader.DownloadStateManager()
+    app.download_state_manager.init_controller()
+    itemsource.setup_handlers()
+    if app.frontend_name == 'widgets':
+        app.donate_manager = donate.DonateManager()
+    else:
+        logging.warn("frontend is %s, not starting DonateManager()",
+                     app.frontend_name)
+
     logging.info("Starting auto downloader...")
     autodler.start_downloader()
     yield None
