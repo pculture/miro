@@ -1555,7 +1555,7 @@ class RSSMultiFeedBase(RSSFeedImplBase):
         self.modified = {}
         self.download_dc = {}
         self.updating = 0
-        self.urls = self.calc_urls()
+        self._urls = None
 
     def setup_restored(self):
         """Called by pickle during deserialization
@@ -1563,7 +1563,13 @@ class RSSMultiFeedBase(RSSFeedImplBase):
         RSSFeedImplBase.setup_restored(self)
         self.download_dc = {}
         self.updating = 0
-        self.urls = self.calc_urls()
+        self._urls = None
+
+    @property
+    def urls(self):
+        if self._urls is None:
+            self._urls = self.calc_urls()
+        return self._urls
 
     def calc_urls(self):
         """Calculate the list of URLs to parse.
@@ -1717,6 +1723,7 @@ class SavedSearchFeedImpl(RSSMultiFeedBase):
         self.query = m.group(2)
 
     def calc_urls(self):
+        logging.stacktrace("calc_urls")
         return searchengines.get_request_urls(self.engine, self.query)
 
 class ScraperFeedImpl(ThrottledUpdateFeedImpl):
@@ -2410,6 +2417,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         RSSMultiFeedBase.setup_restored(self)
 
     def calc_urls(self):
+        logging.stacktrace("calc_urls")
         if self.engine and self.query:
             return searchengines.get_request_urls(self.engine, self.query)
         else:
@@ -2426,7 +2434,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
                 item.remove()
         finally:
             app.bulk_sql_manager.finish()
-        self.urls = []
+        self._urls = []
         self.searching = False
         if set_engine is not None:
             self.engine = set_engine
@@ -2456,7 +2464,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.searching = True
         self.engine = engine
         self.query = query
-        self.urls = self.calc_urls()
+        self._urls = None
         self.update()
         self.ufeed.signal_change()
 

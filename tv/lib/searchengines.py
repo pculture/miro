@@ -218,6 +218,8 @@ def get_request_urls(engine_name, query, filter_adult_contents=True, limit=50):
         return [engine.get_request_url(query, filter_adult_contents, limit) \
                 for engine in _engines if engine.name != u'all']
 
+    if _engines is None:
+        create_engines()
     for engine in _engines:
         if engine.name == engine_name:
             url = engine.get_request_url(query, filter_adult_contents, limit)
