@@ -206,6 +206,8 @@ class Application:
         This is useful for e.g. restoring a saved selection, which is overridden
         by the default first-row selection if done too early.
         """
+        app.startup_timer.log_time("window shown")
+        app.startup_timer.log_total_time()
         logging.debug('on_shown')
         app.tabs.on_shown()
 
@@ -275,6 +277,7 @@ class Application:
         firsttimedialog.FirstTimeDialog(continue_callback).run()
 
     def build_window(self):
+        app.startup_timer.log_time("in build_window")
         app.display_manager = displays.DisplayManager()
         app.tabs['site'].extend(self.message_handler.initial_guides)
         app.tabs['store'].extend(self.message_handler.initial_stores)

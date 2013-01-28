@@ -52,6 +52,7 @@ import threading
 from miro import app
 from miro import startup
 from miro import threadcheck
+from miro import util
 
 def load_frontend(globals_, locals_, frontend):
     try:
@@ -65,6 +66,7 @@ def load_frontend(globals_, locals_, frontend):
         return None
 
 def run_application(frontend, props_to_set, theme):
+    app.startup_timer = util.DebuggingTimer()
     startup.initialize(theme)
     set_properties(props_to_set)
 

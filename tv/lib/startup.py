@@ -279,6 +279,8 @@ def finish_startup(obj, thread):
     item.setup_change_tracker()
     dbupgradeprogress.upgrade_end()
 
+    app.startup_timer.log_time("after db upgrade")
+
     logging.info("Loading video converters...")
     conversions.conversion_manager.startup()
     app.device_manager = devices.DeviceManager()
@@ -478,6 +480,7 @@ def finish_backend_startup():
     reconnect_downloaders()
     guide.download_guides()
     feed.remove_orphaned_feed_impls()
+    app.startup_timer.log_time("sending StartupSuccess")
     messages.StartupSuccess().send_to_frontend()
 
 @eventloop.idle_iterator
