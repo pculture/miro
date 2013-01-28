@@ -413,9 +413,7 @@ class ProgressTimeline(widgetset.Background):
         self.remaining_time = ProgressTimeRemaining()
         self.remaining_time.connect('clicked', self.on_remaining_clicked)
 
-        self.active = widgetutil.ThreeImageSurface('progress_timeline')
-        self.inactive = widgetutil.ThreeImageSurface(
-            'progress_timeline_inactive')
+        self.surface = widgetutil.ThreeImageSurface('progress_timeline')
 
         vbox = widgetset.VBox()
         vbox.pack_start(widgetutil.align_middle(self.info, top_pad=6))
@@ -442,16 +440,7 @@ class ProgressTimeline(widgetset.Background):
         return -1, 46
 
     def draw(self, context, layout):
-        if self.get_window().is_active():
-            surface = self.active
-        else:
-            surface = self.inactive
-        # XXX bz:17136 override the color: Windows things we are inactive
-        # embedded web browser is displayed.
-        surface = self.active
-
-        surface.draw(context, 0, 0, context.width, 46)
-
+        self.surface.draw(context, 0, 0, context.width, 46)
 
 class VolumeSlider(widgetset.CustomSlider):
     def __init__(self):
