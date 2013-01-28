@@ -59,6 +59,10 @@ class ItemList(itemtrack.ItemTracker):
             - set_filters/select_filter changes the filters
             - set_sort changes the sort
     """
+
+    # sentinel used to represent a group_info that hasn't been calculated
+    NOT_CALCULATED = object()
+
     def __init__(self, tab_type, tab_id, sort=None, group_func=None,
                  filters=None, search_text=None):
         """Create a new ItemList
@@ -270,7 +274,7 @@ class ItemList(itemtrack.ItemTracker):
         """
         if self.group_func is None:
             raise ValueError("no grouping set")
-        if self.group_info[row] is None:
+        if self.group_info[row] is ItemList.NOT_CALCULATED:
             self._calc_group_info(row)
         return self.group_info[row]
 
@@ -301,7 +305,7 @@ class ItemList(itemtrack.ItemTracker):
         self._reset_group_info()
 
     def _reset_group_info(self):
-        self.group_info = [None] * len(self)
+        self.group_info = [ItemList.NOT_CALCULATED] * len(self)
 
     def _calc_group_info(self, row):
         # FIXME: for normal item lists, this is fairly fast, but it is slow in
@@ -313,6 +317,11 @@ class ItemList(itemtrack.ItemTracker):
         # run mutagen on them yet.  In that case, when you first switch to the
         # music tab, basically all items will be in the same group.
         key = self.group_func(self.get_row(row))
+        if key is None:
+            # if group_func returns None, then put this item in a group by
+            # itself.
+            self.group_info[row] = (0, 1, self.get_row(row))
+            return
         start = end = row
         while (start > 0 and
                self.group_func(self.get_row(start-1)) == key):
@@ -436,7 +445,11 @@ class ItemListPool(object):
 # grouping functions
 def album_grouping(info):
     """Grouping function that groups infos by albums."""
-    return (info.album_artist_sort_key, info.album_sort_key)
+    if (info.album_artist_sort_key != (u'',) or
+        info.album_sort_key != (u'',)):
+        return (info.album_artist_sort_key, info.album_sort_key)
+    else:
+        return None
 
 def feed_grouping(info):
     """Grouping function that groups infos by their feed."""

@@ -219,6 +219,31 @@ class ItemListTest(MiroTestCase):
             group_info = self.item_list.get_group_info(i)
             self.assertEquals(group_info[2].title, u'new-title')
 
+    def test_grouping_returns_none(self):
+        # If the grouping function returns None, then the item should never be
+        # part of a group
+
+        # Split the items into 2 groups
+        list_items = self.item_list.get_items()
+        group_count = len(list_items) // 2
+        grouped_items = [i.id for i in list_items[0:group_count]]
+        def group_func(item):
+            if item.id in grouped_items:
+                return 123
+            else:
+                return None
+        self.item_list.set_grouping(group_func)
+        for i in range(group_count):
+            group_info = self.item_list.get_group_info(i)
+            self.assertEquals(group_info[0], i)
+            self.assertEquals(group_info[1], group_count)
+            self.assertEquals(group_info[2], list_items[0])
+        for i in range(group_count, len(list_items)):
+            group_info = self.item_list.get_group_info(i)
+            self.assertEquals(group_info[0], 0)
+            self.assertEquals(group_info[1], 1)
+            self.assertEquals(group_info[2], list_items[i])
+
 class TestItemListPool(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
