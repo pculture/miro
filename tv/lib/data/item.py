@@ -459,10 +459,9 @@ class ItemInfoBase(object):
 
     @property
     def is_external(self):
-        """Was this item downloaded by Miro, but not part of a feed?
-        """
+        """Is this item not part of a feed?  """
         if self.is_file_item:
-            return self.has_parent
+            return not self.has_parent
         else:
             return self.feed_url == 'dtv:manualFeed'
 
