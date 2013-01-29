@@ -160,7 +160,7 @@ class ItemSelectInfo(object):
         SelectColumn('feed', 'expireTime', 'feed_expire_time'),
         SelectColumn('feed', 'autoDownloadable', 'feed_auto_downloadable'),
         SelectColumn('feed', 'getEverything', 'feed_get_everything'),
-        SelectColumn('feed', 'thumbnail_path', 'feed_thumbnail_path'),
+        SelectColumn('feed', 'thumbnail_path', 'feed_thumbnail_path_unicode'),
         SelectColumn('icon_cache', 'filename', 'icon_cache_path_unicode'),
         SelectColumn('remote_downloader', 'content_type',
                       'downloader_content_type'),
@@ -295,7 +295,7 @@ class ItemInfoBase(object):
     release_date = None
     parent_title = None
     feed_url = None
-    feed_thumbnail_path = None
+    feed_thumbnail_path_unicode = None
     license = None
     rss_id = None
     entry_title = None
@@ -400,6 +400,10 @@ class ItemInfoBase(object):
     @property
     def screenshot_path(self):
         return _unicode_to_filename(self.screenshot_path_unicode)
+
+    @property
+    def feed_thumbnail_path(self):
+        return _unicode_to_filename(self.feed_thumbnail_path_unicode)
 
     @property
     def is_playable(self):
