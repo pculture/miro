@@ -501,7 +501,8 @@ class ItemInfoBase(object):
 
         :returns: a datetime.datetime object or None if it doesn't expire.
         """
-        if self.watched_time is None or not self.has_filename or self.keep:
+        if (self.watched_time is None or self.keep or
+            not self.has_filename or self.is_file_item):
             return None
 
         if self.feed_expire == u'never':
