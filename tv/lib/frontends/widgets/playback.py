@@ -952,7 +952,10 @@ class PlaybackPlaylist(signals.SignalEmitter):
         # FIXME: we should check if the current item is still playable.  If
         # not, we should stop playback.
         if self.currently_playing is not None:
-            new_item = self.item_list.get_item(self.currently_playing.id)
+            if self.item_list.item_in_list(self.currently_playing.id):
+                new_item = self.item_list.get_item(self.currently_playing.id)
+            else:
+                new_item = None
             if new_item != self.currently_playing:
                 self.currently_playing = new_item
                 self.emit("playing-info-changed")
