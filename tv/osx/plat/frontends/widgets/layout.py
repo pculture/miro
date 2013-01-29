@@ -782,7 +782,6 @@ class Scroller(Bin):
             self.document_view.setFrame_(frame)
             self.document_view.setNeedsDisplay_(YES)
         self.view.setNeedsDisplay_(YES)
-        self.child.emit('place-in-scroller')
 
 class ExpanderView(FlippedView):
     def init(self):

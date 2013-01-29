@@ -58,7 +58,6 @@ class Widget(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('key-press')
         self.create_signal('focus-out')
-        self.create_signal('place-in-scroller')
         self.create_signal('size-request-changed', okay_to_nest=True)
         self.create_signal('size-allocated', okay_to_nest=True)
         self.viewport = None
