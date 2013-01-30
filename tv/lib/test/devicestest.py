@@ -810,7 +810,8 @@ class DeviceItemTest(MiroTestCase):
         # Check that DeviceItem converts paths to unicode when sending values
         # to sqlite and does case-insensitive comparisons
         path = PlatformFilenameType('Foo.mp3')
-        item.DeviceItem.make_view = mock_make_view = mock.Mock()
+        mock_make_view = self.patch_for_test(
+            'miro.item.DeviceItem.make_view', autospec=False)
 
         # test get_by_path
         item.DeviceItem.get_by_path(path, self.device.db_info)

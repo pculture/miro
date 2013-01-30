@@ -412,15 +412,17 @@ class MiroTestCase(unittest.TestCase):
         mock_object.side_effect = new_function
         return mock_object
 
-    def patch_for_test(self, object_name):
+    def patch_for_test(self, object_name, autospec=True):
         """Use Mock to replace a function/class/object with a mock object.
 
         We will unpatch the object during teardown
 
         :param object_name: name of the object to patch
+        :param autospec: autospec parameter to pass to mock.patch.  Generally
+        this should be True, except for class methods.
         :returns: Mock object used to patch
         """
-        patcher = mock.patch(object_name, autospec=True)
+        patcher = mock.patch(object_name, autospec=autospec)
         mock_object = patcher.start()
         self.mock_patchers.append(patcher)
         return mock_object
