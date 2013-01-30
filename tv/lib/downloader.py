@@ -570,9 +570,11 @@ class RemoteDownloader(DDBObject):
             self.content_type = content_type
         if url is not None:
             if title is not None:
+                # abuse the torrent_title attribute for this.  Since the file
+                # comes from a flash site, we can be pretty sure that it's not
+                # going to need it.
                 for mem in self.item_list:
-                    if not mem.title:
-                        mem.title = title
+                    mem.set_torrent_title(title)
 
             self.url = url
             logging.debug("downloading url %s", self.url)

@@ -1744,10 +1744,13 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
         except ValueError:
             logging.exception("Error setting torrent name")
         else:
-            self.torrent_title = title
-            self.calc_title()
-            self.signal_change()
+            self.set_torrent_title(title)
         self._update_title_from_torrent_client = None
+
+    def set_torrent_title(self, title):
+        self.torrent_title = title
+        self.calc_title()
+        self.signal_change()
 
     def _update_title_from_torrent_errback(self, error):
         logging.warn("Error downloading torrent metainfo in "
