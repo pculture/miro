@@ -283,6 +283,7 @@ def startup_for_frontend(obj, thread):
 
     app.startup_timer.log_time("after db upgrade")
 
+    app.icon_cache_updater = iconcache.IconCacheUpdater()
     setup_global_feeds()
     # call fix_database_inconsistencies() ASAP after the manual feed is set up
     fix_database_inconsistencies()
@@ -292,7 +293,6 @@ def startup_for_frontend(obj, thread):
     setup_theme()
     install_message_handler()
 
-    app.icon_cache_updater = iconcache.IconCacheUpdater()
     app.sharing_manager = sharing.SharingManager()
 
     _startup_checker.run_checks()
