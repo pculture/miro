@@ -1275,6 +1275,10 @@ class _SharedDataSet(object):
     # the item type's metadata is completely accurate and won't lie to us.
     def _item_from_podcast(self, item_info):
         feed_url = item_info.feed_url
+        if feed_url is None:
+            logging.warn("_item_from_podcast: feed_url is None for %s",
+                         item_info.title)
+            return False
         ersatz_feeds = ['dtv:manualFeed', 'dtv:searchDownloads', 'dtv:search']
         is_feed = not any([feed_url.startswith(x) for x in ersatz_feeds])
         return item_info.feed_id and is_feed and not item_info.is_file_item
