@@ -604,6 +604,12 @@ class LiveStorage(signals.SignalEmitter):
             self.cursor.execute("INSERT INTO newdb.%s SELECT * FROM main.%s" %
                                 (table, table))
 
+        # create triggers
+        self.cursor.execute("SELECT name, sql FROM sqlite_master "
+                            "WHERE type='trigger'")
+        for (name, sql,) in self.cursor.fetchall():
+            self.cursor.execute(sql.replace(name, "newdb." + name))
+
     def _change_path(self, new_path):
         """Change the path of our database.
 
