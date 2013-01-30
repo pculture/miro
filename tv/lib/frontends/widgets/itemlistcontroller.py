@@ -417,6 +417,7 @@ class ItemListController(object):
             self.on_sort_changed, list_view)
         self.album_item_view.connect_weak('sort-changed',
             self.on_sort_changed, album_view)
+        self.titlebar.set_filters(self.item_list.get_filters())
         self.titlebar.connect_weak('list-view-clicked',
             self.set_view, list_view)
         self.titlebar.connect_weak('normal-view-clicked',
