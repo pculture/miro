@@ -517,11 +517,14 @@ class PlaybackManager (signals.SignalEmitter):
             pass
 
     def on_movie_finished(self):
-        m = messages.MarkItemCompleted(self.playlist.currently_playing)
-        m.send_to_backend()
-        self.update_current_resume_time(0)
         self._skipped_by_user = False
-        self.play_next_item()
+        if self.playlist.currently_playing is not None:
+            m = messages.MarkItemCompleted(self.playlist.currently_playing)
+            m.send_to_backend()
+            self.update_current_resume_time(0)
+            self.play_next_item()
+        else:
+            self.stop()
 
     def schedule_mark_as_watched(self, info):
         # Note: mark_as_watched time should match the minimum resume
