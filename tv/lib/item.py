@@ -2630,7 +2630,9 @@ class DeviceItem(MetadataItemBase):
     @classmethod
     def get_by_path(cls, path, db_info):
         """Get a deviceItem for a given path."""
-        view = cls.make_view('filename=?', (path,), db_info=db_info)
+        view = cls.make_view('lower(filename)=?',
+                             (filename_to_unicode(path).lower(),),
+                             db_info=db_info)
         return view.get_singleton()
 
     @classmethod

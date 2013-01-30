@@ -787,3 +787,49 @@ class DeviceSyncManagerTest(EventLoopTest):
     def test_run_conversion(self):
         # FIXME: Should write this one
         pass
+
+class DeviceItemTest(MiroTestCase):
+    """Tests for the DeviceItem class."""
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.device = testobjects.make_mock_device()
+        self.item_paths = [ 'foo.mp3', 'bar.mp3' ]
+        self.device_items = testobjects.make_device_items(self.device,
+                                                          *self.item_paths)
+
+    def test_select_paths(self):
+        # Test that select_paths returns the correct results and the correct
+        # types
+        result = item.DeviceItem.select_paths(self.device.db_info)
+        paths = [row[0] for row in result]
+        for path in paths:
+            self.assertEqual(type(path), PlatformFilenameType)
+        self.assertSameSet(paths, self.item_paths)
+
+    def test_path_sql_arguments(self):
+        # Check that DeviceItem converts paths to unicode when sending values
+        # to sqlite and does case-insensitive comparisons
+        path = PlatformFilenameType('Foo.mp3')
+        item.DeviceItem.make_view = mock_make_view = mock.Mock()
+
+        # test get_by_path
+        item.DeviceItem.get_by_path(path, self.device.db_info)
+        self.assertEquals(mock_make_view.call_count, 1)
+        sql, params = mock_make_view.call_args[0]
+        self.assertEquals(type(params[0]), unicode)
+        if 'lower' not in sql:
+            raise AssertionError("this doesn't look like lower case "
+                                 "comparison: %s " % sql)
+        self.assertEquals(params[0], 'foo.mp3')
+        self.assertEquals(type(mock_make_view.call_args[0][1][0]), unicode)
+        mock_make_view.reset_mock() 
+
+        # test_items_for_paths
+        mock_make_view.return_value = [mock.Mock(filename='foo.mp3')]
+        item.DeviceItem.items_for_paths([path], self.device.db_info)
+        sql, params = mock_make_view.call_args[0]
+        self.assertEquals(type(params[0]), unicode)
+        if 'lower' not in sql:
+            raise AssertionError("this doesn't look like lower case "
+                                 "comparison: %s " % sql)
+        self.assertEquals(params[0], 'foo.mp3')
