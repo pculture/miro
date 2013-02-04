@@ -367,6 +367,7 @@ class DownloadRateRenderer(ListViewRendererText):
 
 class SizeRenderer(ListViewRendererText):
     right_aligned = True
+    min_width = 60
     def get_value(self, info):
         return displaytext.size_string(info.size)
 
@@ -388,7 +389,7 @@ class GenreRenderer(ListViewRendererText):
     attr_name = 'genre'
 
 class DateAddedRenderer(ListViewRendererText):
-    min_width = 70
+    min_width = 90
     def get_value(self, info):
         return displaytext.date_slashes(info.date_added)
 
