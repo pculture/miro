@@ -957,11 +957,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
         if self.currently_playing is not None:
             if self.item_list.item_in_list(self.currently_playing.id):
                 new_item = self.item_list.get_item(self.currently_playing.id)
-            else:
-                new_item = None
-            if new_item != self.currently_playing:
-                self.currently_playing = new_item
-                self.emit("playing-info-changed")
+                if new_item != self.currently_playing:
+                    self.currently_playing = new_item
+                    self.emit("playing-info-changed")
 
     def _change_currently_playing(self, new_info):
         self.currently_playing = new_info
