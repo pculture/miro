@@ -322,7 +322,7 @@ class FeedNameRenderer(ListViewRendererText):
     attr_name = 'parent_title'
 
 class DateRenderer(ListViewRendererText):
-    min_width = 70
+    min_width = 80
 
     def get_value(self, info):
         return displaytext.date_slashes(info.release_date)
