@@ -574,7 +574,10 @@ class ItemInfoBase(object):
 
     @property
     def upload_ratio(self):
-        return float(self.upload_size) / self.downloaded_size
+        if self.downloaded_size:
+            return float(self.upload_size) / self.downloaded_size
+        else:
+            return 0.0
 
     @property
     def upload_ratio_text(self):
