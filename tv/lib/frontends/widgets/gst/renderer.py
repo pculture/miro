@@ -418,7 +418,7 @@ class VideoRenderer(Renderer):
         """Returns the language for the file at the specified
         filename.
         """
-        if not self.supports_subtitles:
+        if not self.supports_subtitles or not self.playbin:
             return None
         basename, ext = os.path.splitext(filename)
         movie_file, code = os.path.splitext(basename)
@@ -473,7 +473,7 @@ class VideoRenderer(Renderer):
         """Returns a list of 2-tuple of (index, language) for
         available tracks.
         """
-        if not self.supports_subtitles:
+        if not self.supports_subtitles or not self.playbin:
             return []
         tracks = [(index, filename)
                   for index, (filename, language)
@@ -481,16 +481,14 @@ class VideoRenderer(Renderer):
         return tracks
 
     def get_enabled_subtitle_track(self):
-        if not self.playbin:
-            return None
-        if not self.supports_subtitles:
+        if not self.supports_subtitles or not self.playbin:
             return None
         if self.enabled_track is not None:
             return self.enabled_track
         return self.playbin.get_property("current-text")
 
     def set_subtitle_track(self, track_index):
-        if not self.supports_subtitles:
+        if not self.supports_subtitles or not self.playbin:
             return
         tracks = self.get_subtitles()
         if tracks.get(track_index) is None:
@@ -525,7 +523,7 @@ class VideoRenderer(Renderer):
         self.select_subtitle_file(self.iteminfo, filename, select_success)
 
     def disable_subtitles(self):
-        if not self.supports_subtitles:
+        if not self.supports_subtitles or not self.playbin:
             return
         if self.playbin.get_property("suburi") is None:
             # playing embedded subtitles, we can just switch off the
@@ -540,7 +538,7 @@ class VideoRenderer(Renderer):
 
     def select_subtitle_file(self, iteminfo, sub_path,
                              handle_successful_select):
-        if not self.supports_subtitles:
+        if not self.supports_subtitles or not self.playbin:
             return
         subtitle_encoding = self.playbin.get_property("subtitle-encoding")
 
