@@ -642,7 +642,8 @@ class ItemListController(object):
             start_id = selection[0].id
         else:
             selected_ids = [i.id for i in selection]
-            selected_ids.sort(key=self.item_list.get_index(id))
+            selected_ids.sort(
+                key=lambda item_id: self.item_list.get_index(item_id))
             start_id = selected_ids[0]
         self._play_item_list(start_id, presentation_mode,
                 force_resume=force_resume)
