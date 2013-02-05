@@ -430,6 +430,13 @@ class ItemTracker(signals.SignalEmitter):
         self._fetch_id_list()
         self._schedule_idle_work()
 
+    def is_valid(self):
+        """Is this item list valid?
+
+        This will return True until destroy() is called.
+        """
+        return self.id_list is not None
+
     def destroy(self):
         """Call this when you're done with the ItemTracker
 

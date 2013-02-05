@@ -116,12 +116,14 @@ class AnimationManager(object):
                     item_info.id, self.repeat_delay(item_info))
 
     def _do_iteration(self, item_id, repeat_delay):
-        try:
-            item_info = self.item_list.get_item(item_id)
-        except KeyError:
+        if not (self.item_list.is_valid() and
+                self.item_list.item_in_list(item_id)):
+            # item deleted or list destroyed.
             # item was deleted from model
             self.currently_animating.remove(item_id)
             return
+
+        item_info = self.item_list.get_item(item_id)
         rv = self.continue_animation(item_info)
         if rv != False:
             timer.add(repeat_delay, self._do_iteration, item_id, repeat_delay)
