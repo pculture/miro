@@ -95,8 +95,13 @@ class DeviceTracker(object):
                 statinfo = os.statvfs(mount)
                 size = statinfo.f_frsize * statinfo.f_blocks
                 remaining = statinfo.f_frsize * statinfo.f_bavail
+        # bz19369: we have to handle get_drive() returnning None
+        if volume.get_drive():
+            name = volume.get_drive().get_name()
+        else:
+            name = None
         return id_, {
-            'name': volume.get_drive().get_name(),
+            'name': name,
             'visible_name': volume.get_name(),
             'mount': mount,
             'size': size,
