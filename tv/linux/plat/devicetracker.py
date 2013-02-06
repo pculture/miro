@@ -99,6 +99,8 @@ class DeviceTracker(object):
         if volume.get_drive():
             name = volume.get_drive().get_name()
         else:
+            logging.warn("get_drive() returned %s for %s",
+                         volume.get_drive(), mount)
             name = None
         return id_, {
             'name': name,
