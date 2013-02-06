@@ -417,6 +417,24 @@ class DeviceManager(object):
         self.show_unknown = show
         app.config.set(prefs.SHOW_UNKNOWN_DEVICES, show)
 
+    def change_setting(self, device, setting, value):
+        """Change the value 
+        """
+        device.database.setdefault(u'settings', {})
+        device.database[u'settings'][setting] = value
+        if setting == 'name':
+            device.name = value
+            # need to send a changed message
+            message = messages.TabsChanged('connect', [], [device], [])
+            message.send_to_frontend()
+            message = messages.DeviceChanged(device)
+            message.send_to_frontend()
+        elif setting == 'always_show' and not self.show_unknown:
+            if value:
+                self._send_connect(device)
+            else:
+                self._send_disconnect(device)
+
     @staticmethod
     def _is_unknown(info_or_tuple):
         if isinstance(info_or_tuple, messages.DeviceInfo):

@@ -1477,16 +1477,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         this_sync[settings[0]] = message.value
 
     def handle_change_device_setting(self, message):
-        device = message.device
-        device.database.setdefault(u'settings', {})
-        device.database[u'settings'][message.setting] = message.value
-        if message.setting == 'name':
-            device.name = message.value
-            # need to send a changed message
-            message = messages.TabsChanged('connect', [], [device], [])
-            message.send_to_frontend()
-            message = messages.DeviceChanged(device)
-            message.send_to_frontend()
+        app.device_manager.change_setting(message.device, message.setting,
+                                          message.value)
 
     def handle_device_eject(self, message):
         currently_playing = app.playback_manager.get_playing_item()
