@@ -491,8 +491,6 @@ class LiveStorage(signals.SignalEmitter):
         self.cursor = self.connection.cursor()
         if path != ':memory:' and not self.temp_mode:
             self._switch_to_wal_mode()
-        # as a sanity check, make sure we can read the version from the DB
-        self.get_version()
 
     def _switch_to_wal_mode(self):
         """Switch to write-ahead logging mode for our connection
