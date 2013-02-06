@@ -68,7 +68,7 @@ def get_conversions_folder():
     root = app.config.get(prefs.MOVIES_DIRECTORY)
     target_folder = os.path.join(root, "Converted")
     if not os.path.exists(target_folder):
-        os.mkdir(target_folder)
+        os.makedirs(target_folder)
     return target_folder
 
 
