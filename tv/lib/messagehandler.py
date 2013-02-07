@@ -1481,21 +1481,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                           message.value)
 
     def handle_device_eject(self, message):
-        currently_playing = app.playback_manager.get_playing_item()
-        if currently_playing and getattr(currently_playing, 'device', None):
-            if currently_playing.device.mount == message.device.mount:
-                messages.StopPlaying().send_to_frontend()
-                # give the stop a chance to close the files
-                eventloop.add_timeout(0.1, self.handle_device_eject,
-                                      'ejecting device',
-                                      args=(message,))
-                return
-        devices.write_database(message.device.database, message.device.mount)
-        if message.device.metadata_manager is not None:
-            message.device.metadata_manager.close()
-        if message.device.db_info is not None:
-            message.device.db_info.db.close()
-        app.device_tracker.eject(message.device)
+        app.device_manager.eject_device(message.device)
 
     def handle_query_sync_information(self, message):
         dsm = app.device_manager.get_sync_for_device(message.device)

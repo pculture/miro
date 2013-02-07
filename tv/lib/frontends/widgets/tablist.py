@@ -731,6 +731,8 @@ class HideableTabList(TabList):
 class DeviceTabListHandler(object):
     def __init__(self, tablist):
         self.tablist = tablist
+        # map device ids to the fake tabs that we created for them.
+        self.fake_tabs_created = {}
 
     def _fake_info(self, info, typ, name):
         new_data = {
@@ -756,15 +758,27 @@ class DeviceTabListHandler(object):
                 self._fake_info(info, 'audio', _('Music'))]
 
     def _add_fake_tabs(self, info):
+        if info.id in self.fake_tabs_created:
+            # fake tabs already added
+            return
+
+        fake_tabs = self._get_fake_infos(info)
+        self.fake_tabs_created[info.id] = fake_tabs
         with self.tablist.adding():
-            for fake in self._get_fake_infos(info):
-                HideableTabList.add(self.tablist,
-                                    fake,
-                                    info.id)
+            for fake in fake_tabs:
+                HideableTabList.add(self.tablist, fake, info.id)
             try:
                 self.tablist.expand(info.id)
             except errors.WidgetActionError:
                 pass # if the Connect Tab isn't open, we can't expand the tab
+
+    def _remove_fake_tabs(self, info):
+        if info.id not in self.fake_tabs_created:
+            # fake tabs already removed
+            return
+        fake_tabs = self.fake_tabs_created[info.id]
+        self.tablist.remove([fake_tab.id for fake_tab in fake_tabs])
+        del self.fake_tabs_created[info.id]
 
     def add(self, info, parent_id):
         HideableTabList.add(self.tablist, info)
@@ -819,8 +833,16 @@ class DeviceTabListHandler(object):
 
     def on_hotspot_clicked(self, view, hotspot, iter_):
         if hotspot == 'eject-device':
-            info = view.model[iter_][0]
-            messages.DeviceEject(info).send_to_backend()
+            self.eject_device(view.model[iter_][0])
+
+    def eject_device(self, device_info):
+        # stop playback from the device
+        currently_playing = app.playback_manager.get_playing_item()
+        if currently_playing and currently_playing.device == device_info:
+            app.playback_manager.stop()
+        # navigate away from the audio/video tabs and remove them
+        self._remove_fake_tabs(device_info)
+        messages.DeviceEject(device_info).send_to_backend()
 
 class FakeSharingInfo(object):
     """TabInfo that we use for the "fake" tabs under a share

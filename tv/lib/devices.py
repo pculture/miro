@@ -435,6 +435,24 @@ class DeviceManager(object):
             else:
                 self._send_disconnect(device)
 
+    def eject_device(self, device):
+        worker_task_count = device.metadata_manager.worker_task_count()
+        device.metadata_manager.close()
+        if worker_task_count > 0:
+            self._call_eject_later(device, 5)
+            return
+
+        write_database(device.database, device.mount)
+        if device.db_info is not None:
+            device.db_info.db.close()
+        app.device_tracker.eject(device)
+
+    def _call_eject_later(self, device, timeout):
+        """Call eject_device after a short delay.  """
+        eventloop.add_timeout(timeout, self.eject_device,
+                              'ejecting device',
+                              args=(device,))
+
     @staticmethod
     def _is_unknown(info_or_tuple):
         if isinstance(info_or_tuple, messages.DeviceInfo):

@@ -476,6 +476,9 @@ class _TaskProcessor(_MetadataProcessor):
         self._active_tasks = {}
         self._pending_tasks = {}
 
+    def task_count(self):
+        return len(self._active_tasks) + len(self._pending_tasks)
+
     def add_task(self, task):
         if len(self._active_tasks) < self.limit:
             self._send_task(task)
@@ -789,6 +792,11 @@ class _EchonestProcessor(_MetadataProcessor):
     def _restart_after_http_errors(self):
         self._waiting_from_http_errors = False
         self._process_queue()
+
+    def task_count(self):
+        return (len(self._metadata_fetch_queue) +
+                len(self._codegen_queue) +
+                len(self._echonest_queue))
 
     def remove_tasks_for_paths(self, paths):
         path_set = set(paths)
@@ -1278,6 +1286,11 @@ class MetadataManagerBase(signals.SignalEmitter):
         """Test if a path is in the metadata system."""
         return self.db_info.db.cache.key_exists('metadata', path)
 
+    def worker_task_count(self):
+        return (self.mutagen_processor.task_count() +
+                self.moviedata_processor.task_count() +
+                self.echonest_processor.task_count())
+
     def _cancel_processing_paths(self, paths):
         paths = [self._translate_path(p) for p in paths]
         workerprocess.cancel_tasks_for_files(paths)
@@ -1676,6 +1689,8 @@ class MetadataManagerBase(signals.SignalEmitter):
         update at a time.  Normally this is scheduled using a timeout, we also
         need to call it at shutdown to flush the pending updates.
         """
+        if self.closed:
+            return
         # Should this be inside an idle iterator?  It definitely runs slowly
         # when we're running mutagen on a music library, but I think that's to
         # be expected.  It seems fast enough in other cases to me - BDK
