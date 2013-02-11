@@ -933,7 +933,7 @@ class SharingItemTrackerImpl(object):
             try:
                 sharing_item = SharingItem.get_by_daap_id(
                     item_id, db_info=self.share.db_info)
-            except database.ObjectNotFound:
+            except database.ObjectNotFoundError:
                 logging.warn("SharingItemTrackerImpl.update_sharing_items: "
                              "deleted item not found: %s", item_id)
             sharing_item.remove()
