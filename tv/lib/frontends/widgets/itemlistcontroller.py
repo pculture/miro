@@ -801,7 +801,7 @@ class ItemListController(object):
         elif name == 'visit_webpage':
             app.widgetapp.open_url(item_info.permalink)
         elif name == 'visit_comments':
-            app.widgetapp.open_url(item_info.commentslink)
+            app.widgetapp.open_url(item_info.comments_link)
         elif name == 'visit_filelink':
             app.widgetapp.open_url(item_info.url)
         elif name == 'visit_license':

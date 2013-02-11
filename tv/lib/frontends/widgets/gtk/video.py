@@ -432,7 +432,7 @@ class VideoDetailsWidget(Background):
         app.playback_manager.open_subtitle_file()
 
     def handle_commentslink(self, widget, event):
-        app.widgetapp.open_url(self.item_info.commentslink)
+        app.widgetapp.open_url(self.item_info.comments_link)
 
     def handle_share(self, widget, event):
         app.widgetapp.share_item(self.item_info)
