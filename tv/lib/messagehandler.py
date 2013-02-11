@@ -1574,22 +1574,22 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
         for item_info in message.item_infos:
             final_path = os.path.join(video_directory,
-                                      os.path.basename(item_info.video_path))
+                                      os.path.basename(item_info.filename))
             view = item.Item.make_view('is_file_item AND filename=?',
                                        (filename_to_unicode(final_path),))
             if view.count(): # file already exists
                 continue
-            shutil.copyfile(item_info.video_path, final_path)
+            shutil.copyfile(item_info.filename, final_path)
             fp_values = item.fp_values_for_file(final_path,
-                                                item_info.name,
+                                                item_info.title,
                                                 item_info.description)
             fi = item.FileItem(final_path, feed_id=manual_feed.id,
                                fp_values=fp_values)
             fi.release_date = item_info.release_date
             fi.duration = item_info.duration
             fi.permalink = item_info.permalink
-            if item_info.commentslink:
-                fi.comments_link = item_info.commentslink
+            if item_info.comments_link:
+                fi.comments_link = item_info.comments_link
             if item_info.payment_link:
                 fi.payment_link = item_info.payment_link
             #fi.screenshot = item_info.thumbnail
@@ -1597,8 +1597,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 fi.thumbnail_url = item_info.thumbnail_url
             fi.file_format = item_info.file_format
             fi.license = item_info.license
-            if item_info.file_url:
-                fi.url = item_info.file_url
             fi.mime_type = item_info.mime_type
             fi.creation_time = item_info.date_added
             fi.artist = item_info.artist

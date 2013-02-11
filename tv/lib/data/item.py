@@ -155,6 +155,7 @@ class ItemSelectInfo(object):
         SelectColumn('item', 'kind'),
         SelectColumn('item', 'net_lookup_enabled'),
         SelectColumn('item', 'eligible_for_autodownload'),
+        SelectColumn('item', 'thumbnail_url'),
         SelectColumn('feed', 'orig_url', 'feed_url'),
         SelectColumn('feed', 'expire', 'feed_expire'),
         SelectColumn('feed', 'expireTime', 'feed_expire_time'),
@@ -302,6 +303,7 @@ class ItemInfoBase(object):
     permalink = None
     payment_link = None
     comments_link = None
+    thumbnail_url = None
     url = None
     size = None
     enclosure_size = None
