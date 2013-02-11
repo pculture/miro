@@ -230,6 +230,14 @@ def contexts_for_upgrade_func(func):
     except AttributeError:
         return set(['main']) # default case
 
+def is_device_db(cursor):
+    """Test if a cursor is for a device database."""
+    cursor.execute("SELECT COUNT(*) FROM sqlite_master "
+                   "WHERE type='table' AND name='device_item'")
+    return cursor.fetchall()[0][0] > 0
+
+
+
 def new_style_upgrade(cursor, saved_version, upgrade_to, context,
                       show_progress):
     """Upgrade a database using new-style upgrade functions.
@@ -4321,3 +4329,43 @@ def upgrade197(cursor):
         if os.path.exists(filename):
             values.append((filename, feed_id))
     cursor.executemany("UPDATE feed SET thumbnail_path=? WHERE id=?", values)
+
+@run_on_both
+def upgrade198(cursor):
+    """Add entry_description to the item_fts table."""
+    if is_device_db(cursor):
+        item_table = 'device_item'
+    else:
+        item_table = 'item'
+    # Update the item_fts table.  Unfortunately, we can't alter a virtual
+    # table, so we basically need to re-do upgrade 187
+    cursor.execute("DROP TABLE item_fts")
+    # for some reason we need to start a new transaction, or we get a segfault
+    # on Ubuntu oneiric
+    cursor.execute("COMMIT TRANSACTION")
+    cursor.execute("BEGIN TRANSACTION")
+
+    columns = ['title', 'description', 'artist', 'album', 'genre', 'filename',
+               'parent_title', 'entry_description', ]
+    column_list = ', '.join(c for c in columns)
+    column_list_for_new = ', '.join("new.%s" % c for c in columns)
+    column_list_with_types = ', '.join('%s text' % c for c in columns)
+    cursor.execute("CREATE VIRTUAL TABLE item_fts USING fts4(%s)" %
+                   column_list_with_types)
+    cursor.execute("INSERT INTO item_fts(docid, %s)"
+                   "SELECT %s.id, %s FROM %s" %
+                   (column_list, item_table, column_list, item_table))
+    # remake triggers that need it
+    cursor.execute("DROP TRIGGER item_au")
+    cursor.execute("CREATE TRIGGER item_au "
+                   "AFTER UPDATE ON %s BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (item_table, column_list, column_list_for_new))
+
+    cursor.execute("DROP TRIGGER item_ai")
+    cursor.execute("CREATE TRIGGER item_ai "
+                   "AFTER INSERT ON %s BEGIN "
+                   "INSERT INTO item_fts(docid, %s) "
+                   "VALUES(new.id, %s); "
+                   "END;" % (item_table, column_list, column_list_for_new))

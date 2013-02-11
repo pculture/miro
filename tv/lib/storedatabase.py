@@ -1491,7 +1491,8 @@ class SharingLiveStorage(LiveStorage):
 
     def setup_fulltext_search(self):
         fulltextsearch.setup_fulltext_search(self.connection, 'sharing_item',
-                                             path_column='video_path')
+                                             path_column='video_path',
+                                             has_entry_description=False)
 
 class SQLiteConverter(object):
     def __init__(self):

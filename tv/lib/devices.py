@@ -79,7 +79,7 @@ from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
 # how much slower converting a file is, compared to copying
 CONVERSION_SCALE = 500
 # schema version for device databases
-DB_VERSION = 196
+DB_VERSION = 198
 
 def unicode_to_path(path):
     """
