@@ -539,8 +539,9 @@ class StatusRenderer(ListViewRenderer):
         return button
 
     def should_show_download_button(self):
-        nonlocal = self.info.device or self.info.remote
-        return (not self.info.downloaded and not self.info.is_download)
+        can_sync = self.info.device or self.info.remote
+        can_download = not self.info.downloaded and not self.info.is_download
+        return can_sync or can_download
 
     def layout_progress(self, layout_manager, width, height):
         """Handle layout when we should display a progress bar """

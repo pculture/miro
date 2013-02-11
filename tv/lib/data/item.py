@@ -271,8 +271,6 @@ class ItemInfoBase(object):
     #: ItemInfoMeta
     select_info = None
     html_stripper = util.HTMLStripper()
-    # DeviceInfo for the device this item is on
-    device = None
 
     # default values for columns from the item table.  For DeviceItemInfo and
     # SharingItemInfo, we will use these for columns that don't exist in their
@@ -468,6 +466,10 @@ class ItemInfoBase(object):
     @property
     def remote(self):
         return self.source_type == u'sharing'
+
+    @property
+    def device(self):
+        return self.source_type == u'device'
 
     @property
     def has_shareable_url(self):
