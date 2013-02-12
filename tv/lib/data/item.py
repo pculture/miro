@@ -170,9 +170,9 @@ class ItemSelectInfo(object):
         SelectColumn('remote_downloader', 'short_reason_failed'),
         SelectColumn('remote_downloader', 'type', 'downloader_type'),
         SelectColumn('remote_downloader', 'retry_time'),
-        SelectColumn('remote_downloader', 'eta'),
-        SelectColumn('remote_downloader', 'rate'),
-        SelectColumn('remote_downloader', 'upload_rate'),
+        SelectColumn('remote_downloader', 'eta', '_eta'),
+        SelectColumn('remote_downloader', 'rate', '_rate'),
+        SelectColumn('remote_downloader', 'upload_rate', '_upload_rate'),
         SelectColumn('remote_downloader', 'current_size', 'downloaded_size'),
         SelectColumn('remote_downloader', 'total_size', 'downloader_size'),
         SelectColumn('remote_downloader', 'upload_size'),
@@ -567,6 +567,27 @@ class ItemInfoBase(object):
             # unknown total size, return None
             return None
         return float(self.downloaded_size) / self.downloader_size
+
+    @property
+    def eta(self):
+        if self.is_paused:
+            return None
+        else:
+            return self._eta
+
+    @property
+    def rate(self):
+        if self.is_paused:
+            return None
+        else:
+            return self._rate
+
+    @property
+    def upload_rate(self):
+        if self.is_paused:
+            return None
+        else:
+            return self._upload_rate
 
     @property
     def download_rate_text(self):
