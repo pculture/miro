@@ -141,6 +141,12 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             code = 302
             location_header = self.build_url("linux-screen.jpg")
             path = self.translate_path('redirect.html')
+        elif self.path == '/custom-redirect':
+            if self.server.custom_redirect_url is None:
+                raise AssertionError("custom_redirect_url not set")
+            code = 302
+            location_header = self.server.custom_redirect_url
+            path = self.translate_path('redirect.html')
         elif (self.path.startswith("/protected/") or
                 self.path.startswith("/protected2/") or
                 self.path.startswith("/protected3/")):
@@ -314,6 +320,7 @@ class HTTPServer(threading.Thread):
         self.httpserver.close_connection = False
         self.httpserver.allow_resume = True
         self.httpserver.pause_after = -1
+        self.httpserver.custom_redirect_url = None
         self.event.set()
         try:
             self.httpserver.serve_forever()
@@ -365,3 +372,6 @@ class HTTPServer(threading.Thread):
 
     def pause_after(self, bytes):
         self.httpserver.pause_after = bytes
+
+    def custom_redirect_url(self, url):
+        self.httpserver.custom_redirect_url = url

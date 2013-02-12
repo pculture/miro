@@ -164,6 +164,11 @@ class MalformedURL(NetworkError):
         NetworkError.__init__(self, _('Invalid URL'),
                 _('"%(url)s" is not a valid URL', {"url": url}))
 
+class InvalidRedirect(NetworkError):
+    def __init__(self, url):
+        NetworkError.__init__(self, _('Invalid Redirect'),
+                _('"%(url)s" is not a valid redirect URL', {"url": url}))
+
 class UnknownHostError(NetworkError):
     """A file: URL doesn't exist"""
     def __init__(self, host):
@@ -596,6 +601,12 @@ class CurlTransfer(object):
                 self.status_code = None
             elif 'location' in self.headers:
                 # doing a redirect, clear out the headers
+                redirect_url = self.headers['location']
+                scheme, _, _, _ = download_utils.parse_url(redirect_url)
+                if scheme not in ('http', 'https'):
+                    self.cancel(remove_file=True)
+                    self.call_errback(InvalidRedirect(redirect_url))
+                    return
                 self.headers = {}
             elif not self.headers_finished:
                 curl_manager.call_after_perform(self.on_headers_finished)

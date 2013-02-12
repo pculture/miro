@@ -1074,3 +1074,21 @@ class NetworkErrorTest(HTTPClientTestBase):
             httpclient.NetworkError))
         self.assert_(isinstance(self.grab_url_error.longDescription, unicode))
         self.assert_(isinstance(self.grab_url_error.friendlyDescription, unicode))
+
+class LimitProtocolTest(HTTPClientTestBase):
+    #test that we limit the protocols to HTTP and HTTPS
+    @uses_httpclient
+    def test_url_scheme(self):
+        self.expecting_errback = True
+        self.grab_url('ftp://ben@example.com/')
+        self.check_errback_called()
+        self.assert_(isinstance(self.grab_url_error, httpclient.MalformedURL))
+
+    @uses_httpclient
+    def test_redirect(self):
+        self.expecting_errback = True
+        self.httpserver.custom_redirect_url('ftp://ben@example.com/')
+        self.grab_url(self.httpserver.build_url('custom-redirect'))
+        self.check_errback_called()
+        self.assert_(isinstance(self.grab_url_error,
+                                httpclient.InvalidRedirect))
