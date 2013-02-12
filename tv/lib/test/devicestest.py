@@ -254,12 +254,12 @@ class DeviceHelperTest(MiroTestCase):
 
         ddb = devices.load_database(self.tempdir)
         self.assertEqual(dict(ddb), data)
-        self.assertEqual(len(ddb.get_callbacks('changed')), 1)
+        self.assertNotEqual(ddb.write_manager, None)
 
     def test_load_database_missing(self):
         ddb = devices.load_database(self.tempdir)
         self.assertEqual(dict(ddb), {})
-        self.assertEqual(len(ddb.get_callbacks('changed')), 1)
+        self.assertNotEqual(ddb.write_manager, None)
 
     def test_load_database_error(self):
         os.makedirs(os.path.join(self.tempdir, '.miro'))
@@ -269,7 +269,7 @@ class DeviceHelperTest(MiroTestCase):
         with self.allow_warnings():
             ddb = devices.load_database(self.tempdir)
         self.assertEqual(dict(ddb), {})
-        self.assertEqual(len(ddb.get_callbacks('changed')), 1)
+        self.assertNotEqual(ddb.write_manager, None)
 
     def test_write_database(self):
         data = {u'a': 2,
