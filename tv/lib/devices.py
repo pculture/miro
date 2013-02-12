@@ -337,10 +337,9 @@ class DeviceManager(object):
     def shutdown(self):
         self.running = False
         for device in self.connected.values():
-            if (device.mount and not self._is_hidden(device) and
-                not device.read_only):
+            if (device.mount and not device.read_only):
                 device.metadata_manager.run_updates()
-                write_database(device.database, device.mount)
+                device.database.shutdown()
 
     def load_devices(self, path):
         devices = glob(path)
@@ -1263,6 +1262,7 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         self.bulk_mode = False
         self.did_change = False
         self.check_old_key_usage = False
+        self.write_manager = None
 
     def __getitem__(self, key):
         check_u(key)
@@ -1290,6 +1290,8 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             self.changing = True
             try:
                 self.emit('changed')
+                if self.write_manager:
+                    self.write_manager.schedule_write(self)
             finally:
                 self.changing = False
                 self.did_change = False
@@ -1310,6 +1312,10 @@ class DeviceDatabase(dict, signals.SignalEmitter):
                 return (self[file_type][path], file_type)
         raise KeyError(path)
 
+    def shutdown(self):
+        if self.write_manager and self.write_manager.is_dirty():
+            self.write_manager.write()
+
 class DatabaseWriteManager(object):
     """
     Keeps track of writing a database periodically.
@@ -1321,16 +1327,21 @@ class DatabaseWriteManager(object):
         self.scheduled_write = None
         self.database = None
 
-    def __call__(self, database):
+    def schedule_write(self, database):
         self.database = database
-        if self.scheduled_write:
+        if self.is_dirty():
             return
         self.scheduled_write = eventloop.add_timeout(self.SAVE_INTERVAL,
                                                      self.write,
                                                      'writing device database')
+
+    def is_dirty(self):
+        return self.scheduled_write is not None
+
     def write(self):
-        write_database(self.database, self.mount)
-        self.database = self.scheduled_write = None
+        if self.is_dirty():
+            write_database(self.database, self.mount)
+            self.database = self.scheduled_write = None
 
 def load_database(mount, countdown=0):
     """
@@ -1357,7 +1368,7 @@ def load_database(mount, countdown=0):
                 time.sleep(0.20 * 1.2 ** countdown)
                 return load_database(mount, countdown + 1)
     ddb = DeviceDatabase(db)
-    ddb.connect('changed', DatabaseWriteManager(mount))
+    ddb.write_manager = DatabaseWriteManager(mount)
     return ddb
 
 def sqlite_database_path(mount):
