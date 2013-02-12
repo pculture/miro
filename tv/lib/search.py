@@ -151,7 +151,7 @@ def item_matches(item, search_text):
     """
     parsed_search = _get_boolean_search(search_text)
 
-    match_against = [item.title, item.description]
+    match_against = [item.title, item.description, item.entry_description]
     match_against.append(item.artist)
     match_against.append(item.album)
     match_against.append(item.genre)
