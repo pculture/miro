@@ -338,7 +338,7 @@ class ItemInfoBase(object):
     seeders = None
     upload_size = None
     downloader_id = None
-    rate = None
+    _rate = None
     connections = None
     downloaded_time = None
     downloaded_size = None
@@ -347,10 +347,10 @@ class ItemInfoBase(object):
     short_reason_failed = None
     reason_failed = None
     leechers = None
-    eta = None
+    _eta = None
     pending_manual_download = None
     downloader_state = None
-    upload_rate = None
+    _upload_rate = None
     downloader_activity = None
     downloader_content_type = None
     # default values for columns in the feed table
