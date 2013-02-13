@@ -175,8 +175,8 @@ def fix_xml_header(data, charset):
     return '<?xml %s encoding="%s"?>%s' % (xml_decl, charset, the_rest)
 
 
-HTML_HEADER_RE = re.compile(
-    u"^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)", re.I | re.S)
+HTML_HEADER_OPEN_RE = re.compile(r'<\s*head\s*(.*?)\s*>')
+HTML_HEADER_CLOSE_RE = re.compile(r'</\s*head\s*(.*?)\s*>')
 
 def fix_html_header(data, charset):
     """Adds a <meta http-equiv="Content-Type" content="text/html;
@@ -185,19 +185,30 @@ def fix_html_header(data, charset):
     Since we're only feeding this to our own HTML Parser anyway, we
     don't care that it might bung up XHTML.
     """
-    header = HTML_HEADER_RE.match(data)
-    if header is None:
+    header_open = HTML_HEADER_OPEN_RE.search(data)
+    header_close = HTML_HEADER_CLOSE_RE.search(data)
+    if (header_open is None or header_close is None or
+        header_close.start() <= header_open.start()):
         # something is very wrong with this HTML
         return data
+    before_head = data[:header_open.start()]
+    head_open_tag = header_open.group(0)
+    head_contents = data[header_open.end()+1:header_close.start()-1]
+    head_close_tag = header_close.group(0)
+    after_head = data[header_close.end():]
 
-    head_tags = header.expand('\\3')
     # this isn't exactly robust, but neither is scraping HTML
-    if head_tags.lower().find('content-type') != -1:
+    if head_contents.lower().find('content-type') != -1:
         return data
 
-    return (header.expand('\\1<head\\2><meta http-equiv="Content-Type" '
-                          'content="text/html; charset=') + charset +
-            header.expand('">\\3</head>\\4'))
+    content_type_meta = ('<meta http-equiv="Content-Type" '
+                          'content="text/html; charset=%s">\n' % charset)
+    return ''.join((before_head,
+                   head_open_tag,
+                   content_type_meta,
+                   head_contents,
+                   head_close_tag,
+                   after_head))
 
 def url_encode_dict(orig):
     """Converts a Python dictionary to data suitable for a POST or GET
