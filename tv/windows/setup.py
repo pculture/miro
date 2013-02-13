@@ -164,7 +164,6 @@ platform_package_dir = os.path.join(platform_dir, 'plat')
 widgets_dir = os.path.join(platform_package_dir, 'frontends', 'widgets')
 portable_dir = os.path.join(root_dir, 'lib')
 portable_widgets_dir = os.path.join(portable_dir, 'frontends', 'widgets')
-infolist_dir = os.path.join(portable_widgets_dir, 'infolist')
 portable_xpcom_dir = os.path.join(portable_widgets_dir, 'gtk', 'xpcom')
 test_dir = os.path.join(root_dir, 'resources')
 resources_dir = os.path.join(root_dir, 'resources')
@@ -277,28 +276,6 @@ xulrunnerbrowser_ext = Extension(
         ]
     )
 
-infolist_ext = \
-    Extension("miro.infolist",
-        [
-            os.path.join(infolist_dir, 'infolist-nodelist.c'),
-            os.path.join(infolist_dir, 'infolist.pyx'),
-            os.path.join(infolist_dir, 'gtk', 'infolist-gtk.c'),
-        ],
-        include_dirs=GTK_INCLUDE_DIRS + [
-            PYGOBJECT_INCLUDE_DIR,
-            PYGTK_INCLUDE_DIR,
-            infolist_dir,
-            os.path.join(infolist_dir, 'gtk'),
-        ],
-        library_dirs=[GTK_LIB_PATH],
-        libraries=[
-            'gobject-2.0',
-            'glib-2.0',
-            'gtk-win32-2.0',
-            'pango-1.0',
-            ],
-    )
-
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
         OPENSSL_LIB_PATH,
@@ -316,7 +293,6 @@ ext_modules = [
     fixedliststore_ext,
     embeddingwindow_ext,
     xulrunnerbrowser_ext,
-    infolist_ext,
 ]
 
 def fill_template(templatepath, outpath, **vars):

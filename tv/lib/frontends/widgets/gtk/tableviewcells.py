@@ -34,7 +34,6 @@ import gtk
 import pango
 
 from miro import signals
-from miro import infolist
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap

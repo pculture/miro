@@ -37,7 +37,6 @@ from Foundation import NSObject, NSNotFound, NSMutableIndexSet
 from objc import YES, NO, nil
 
 from miro import fasttypes
-from miro import infolist
 from miro import signals
 from miro.errors import WidgetActionError
 from miro.plat.frontends.widgets import wrappermap

@@ -94,7 +94,6 @@ portable_dir = os.path.join(root_dir, 'lib')
 portable_frontend_dir = os.path.join(portable_dir, 'frontends')
 portable_xpcom_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
                                   'xpcom')
-infolist_dir = os.path.join(portable_frontend_dir, 'widgets', 'infolist')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 resource_dir = os.path.join(root_dir, 'resources')
@@ -288,25 +287,6 @@ webkitgtkhacks_ext = \
         **parse_pkg_config('pkg-config',
             'gtk+-2.0 webkit-1.0')
     )
-
-infolist_options = parse_pkg_config('pkg-config',
-            'pygobject-2.0 pygtk-2.0 gtk+-2.0 glib-2.0 ')
-infolist_options['include_dirs'].append(infolist_dir)
-infolist_options['include_dirs'].append(os.path.join(infolist_dir, 'gtk'))
-
-# Silence uninitialized warning on `__pyx_exc_lineno`.
-infolist_options['extra_compile_args'].append('-Wno-uninitialized')
-
-infolist_ext = \
-    Extension("miro.infolist",
-        [
-            os.path.join(infolist_dir, 'infolist-nodelist.c'),
-            os.path.join(infolist_dir, 'infolist.pyx'),
-            os.path.join(infolist_dir, 'gtk', 'infolist-gtk.c'),
-        ],
-        **infolist_options
-    )
-
 
 #### Build the data_files list ####
 def listfiles(path):
@@ -589,7 +569,6 @@ ext_modules.append(pygtkhacks_ext)
 ext_modules.append(namecollation_ext)
 ext_modules.append(fixedliststore_ext)
 ext_modules.append(webkitgtkhacks_ext)
-ext_modules.append(infolist_ext)
 
 script_files += [os.path.join(platform_dir, 'miro'),
                  os.path.join(platform_dir, 'miro.real')

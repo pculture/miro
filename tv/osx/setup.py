@@ -63,8 +63,6 @@ PORTABLE_DIR = os.path.join(ROOT_DIR, 'lib')
 PLATFORM_DIR = os.path.join(ROOT_DIR, 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
 
-INFOLIST_DIR = os.path.join(PORTABLE_DIR, 'frontends', 'widgets', 'infolist')
-
 PYTHON_VERSION = sys.version[0:3]
 
 SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
@@ -282,7 +280,6 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
         self.distribution.ext_modules.append(self.get_namecollation_ext())
         self.distribution.ext_modules.append(self.get_ngrams_ext())
-        self.distribution.ext_modules.append(self.get_infolist_ext())
 
         self.distribution.packages = [
             'miro',
@@ -373,18 +370,6 @@ class MiroBuild (py2app):
     def get_ngrams_ext(self):
         return Extension("miro.ngrams",
                 [os.path.join(PORTABLE_DIR, 'ngrams.c')])
-
-    def get_infolist_ext(self):
-        return Extension("miro.infolist",
-                [
-                    os.path.join(INFOLIST_DIR, 'infolist-nodelist.c'),
-                    os.path.join(INFOLIST_DIR, 'infolist.pyx'),
-                    os.path.join(INFOLIST_DIR, 'cocoa', 'infolist-cocoa.m'),
-                    ],
-                include_dirs = [
-                    INFOLIST_DIR,
-                    ],
-                )
 
     
     def fillTemplate(self, templatepath, outpath, **vars):
