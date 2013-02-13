@@ -598,7 +598,9 @@ class RemoteDownloader(DDBObject):
             app.download_state_manager.queue(self.dlid,
                                              app.download_state_manager.PAUSE,
                                              args)
+        self.before_changing_rates()
         self.state = u'paused'
+        self.after_changing_rates()
         self.signal_change()
 
     def stop(self, delete):
@@ -617,7 +619,9 @@ class RemoteDownloader(DDBObject):
 
         if delete:
             self.delete()
+        self.before_changing_rates()
         self.state = u'stopped'
+        self.after_changing_rates()
         self.signal_change()
 
     def delete(self):
@@ -747,14 +751,11 @@ class RemoteDownloader(DDBObject):
     def remove(self):
         """Removes downloader from the database and deletes the file.
         """
-        rates = self._get_rates()
-        if rates[0] is not None:
-            app.download_state_manager.total_down_rate -= rates[0]
-        if rates[1] is not None:
-            app.download_state_manager.total_up_rate -= rates[1]
+        self.before_changing_rates()
         if self.is_finished():
             app.local_metadata_manager.remove_file(self.get_filename())
         self.stop(self.delete_files)
+        self.after_changing_rates()
         DDBObject.remove(self)
 
     def get_type(self):
