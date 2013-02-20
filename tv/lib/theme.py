@@ -182,6 +182,7 @@ class ThemeHistory(DDBObject):
 
         default_guides = [
             (u"http://www.youtube.com", u"YouTube", False),
+            (u"http://www.archive.org", u"Internet Archive", False),
             (u"http://www.hulu.com/", u"Hulu", False),
             (u"http://video.pbs.org/", u"PBS", False),
             (u"http://www.youtorrent.com/", u"YouTorrent", False),
