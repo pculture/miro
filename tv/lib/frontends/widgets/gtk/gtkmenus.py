@@ -91,16 +91,6 @@ class MenuItemBase(base.Widget):
         """Hide and disable this menu item."""
         self._widget.hide()
 
-    def remove_from_parent(self):
-        """Remove this menu item from it's parent Menu."""
-        parent_menu = self._widget.get_parent()
-        if parent_menu is None:
-            return
-        parent_menu_item = parent_menu.get_attach_widget()
-        if parent_menu_item is None:
-            return
-        parent_menu_item.remove(self._widget)
-
     def _set_accel_group(self, accel_group):
         # menu items don't care about the accel group, their parent Menu
         # handles it for them
@@ -400,5 +390,5 @@ class MainWindowMenuBar(MenuBar):
         # we update with the package system.
         this_platform = app.config.get(prefs.APP_PLATFORM)
         if this_platform == 'linux':
-            self.find("CheckVersion").remove_from_parent()
+            self.find("FileMenu").remove(self.find("CheckVersion"))
         app.video_renderer.setup_subtitle_encoding_menu()
