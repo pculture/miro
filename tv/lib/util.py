@@ -487,9 +487,12 @@ def setup_logging():
     """Adds TIMING and JSALERT logging levels.
     """
     logging.addLevelName(15, "STACK TRACE")
-    logging.stacktrace = lambda msg, *args, **kargs: logging.log(
-        15, "%s\n%s" % ("".join(traceback.format_stack()), msg),
-        *args, **kargs)
+    def stacktrace(msg, *args, **kwargs):
+        msg = "%s\n" + msg
+        stack = "".join(traceback.format_stack())
+        args = (stack,) + args
+        logging.log( 15, msg, *args, **kwargs)
+    logging.stacktrace = stacktrace
 
     logging.addLevelName(25, "TIMING")
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg,
