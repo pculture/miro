@@ -204,7 +204,7 @@ class ItemList(itemtrack.ItemTracker):
             id_list = tab_id
             placeholders = ",".join("?" for i in xrange(len(id_list)))
             sql = "item.id IN (%s)" % placeholders
-            query.add_complex_condition(['item.id'], sql, id_list)
+            query.add_complex_condition(['id'], sql, id_list)
         else:
             raise ValueError("Can't handle tab (%r, %r)" % (tab_type, tab_id))
         return query
