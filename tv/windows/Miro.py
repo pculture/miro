@@ -35,8 +35,6 @@ import sys
 import logging
 import tempfile
 
-from miro import startfrontend
-
 def startup(argv):
     # Rewrite the stdout and stderr to catch cases debug being printed via
     # a print or via a write to stderr.  Normally we would use shortAppName
@@ -114,6 +112,7 @@ def startup(argv):
     commandline.set_command_line_args(args)
 
     # Kick off the application
+    from miro import startfrontend
     startfrontend.run_application('widgets', {}, None)
     pipe_server.quit()
 
