@@ -102,9 +102,6 @@ def startup(argv):
         from miro import app
         app.debugmode = True
 
-    from miro import startup
-    startup.initialize(theme)
-
     from miro.plat import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
 
