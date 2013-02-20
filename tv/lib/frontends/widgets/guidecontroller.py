@@ -132,7 +132,7 @@ class GuideSidebarCollection(widgetset.VBox):
         self.repack()
 
     def on_play_clicked(self, button, info):
-        messages.PlayMovie([info]).send_to_frontend()
+        messages.PlayMovies([info]).send_to_frontend()
 
 class GuideSidebarDetails(widgetset.SolidBackground):
     def __init__(self):
