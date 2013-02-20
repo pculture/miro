@@ -671,7 +671,9 @@ class RemoteDownloader(DDBObject):
                     self.dlid,
                     app.download_state_manager.RESUME,
                     args)
+            self.before_changing_rates()
             self.state = u'downloading'
+            self.after_changing_rates()
             self.restart()
             self.signal_change()
 
