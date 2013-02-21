@@ -596,16 +596,24 @@ class ItemTracker(signals.SignalEmitter):
 
         :param rows_to_load: indexes of the rows to load.
         """
-        ids_to_load = [self.id_list[i] for i in rows_to_load]
+        ids_to_load = set(self.id_list[i] for i in rows_to_load)
         try:
             items = self.item_fetcher.fetch_items(ids_to_load)
         except sqlite3.DatabaseError, e:
             logging.warn("%s while fetching items", e, exc_info=True)
             items = [item.DBErrorItemInfo(item_id) for item_id in ids_to_load]
             self._run_db_error_dialog()
+        returned_ids = set()
         for item_info in items:
             pos = self.id_to_index[item_info.id]
             self.row_data[item_info.id] = item_info
+            returned_ids.add(item_info.id)
+        if returned_ids != ids_to_load:
+            extra = tuple(returned_ids - ids_to_load)
+            missing = tuple(ids_to_load - returned_ids)
+            msg = ("ItemFetcher didn't return the correct rows "
+                   "(extra: %s, missing: %s)" % (extra, missing))
+            raise AssertionError(msg)
 
     def item_in_list(self, item_id):
         """Test if an item is in the list.
@@ -668,9 +676,12 @@ class ItemTracker(signals.SignalEmitter):
         if self._could_list_change(message):
             self._refetch_id_list()
         else:
-            self.item_fetcher.refresh_items(changed_ids)
-            self.emit('will-change')
-            self.emit('items-changed', changed_ids)
+            need_refetch = self.item_fetcher.refresh_items(changed_ids)
+            if not need_refetch:
+                self.emit('will-change')
+                self.emit('items-changed', changed_ids)
+            else:
+                self._refetch_id_list()
 
     def _could_list_change(self, message):
         """Calculate if an ItemChanges means the list may have changed."""
@@ -758,6 +769,9 @@ class ItemFetcher(object):
         Normally ItemFetcher uses data from the read transaction that the
         connection it was created with was in.  Use this method to force
         ItemFetcher to use new data for a list of items.
+
+        :returns True: if we can't refresh the items and we should refetch the
+        entire list instead.  This is a hack to work around #19823
         """
         raise NotImplementedError()
 
@@ -810,6 +824,18 @@ class ItemFetcherWAL(ItemFetcher):
         # We ignore changed_ids and just start a new transaction which will
         # refresh all the data.
         self.connection.commit()
+        # check if one of the items has been removed from the DB now that we
+        # have a new transaction.  This can happen if the backend changes some
+        # items sends an ItemsChanged message, then deletes them before we
+        # process the message (see #19823)
+        sql = ("SELECT COUNT(1) FROM %s WHERE id in (%s)" % 
+               (self.table_name(), ', '.join(str(i) for i in changed_ids)))
+        cursor = self.connection.execute(sql)
+        if cursor.fetchone()[0] != len(changed_ids):
+            return True
+        else:
+            return False
+
 
     def select_playable_ids(self):
         sql = ("SELECT id FROM %s "
@@ -886,6 +912,7 @@ WHERE $table_name.id in ($id_list)""")
 
     def refresh_items(self, changed_ids):
         self._select_into_temp_table(changed_ids)
+        return False
 
     def select_playable_ids(self):
         sql = ("SELECT id FROM %s "

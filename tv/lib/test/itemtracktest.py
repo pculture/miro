@@ -108,6 +108,30 @@ class ItemTrackTestCase(MiroTestCase):
                 self.tracker.on_item_changes(msg)
         mock_handle.reset_mock()
 
+    def get_items_changed_message(self):
+        """Simulate the eventloop finishing and return the ItemChanges that
+        would be sent to the frontend.
+        """
+        eventloop._eventloop.emit('event-finished', True)
+        mock_handle = self.mock_message_handler.handle
+        # filter through the TabsChanged messages and to find
+        # ItemChanges messages.
+        items_changed_messages = []
+        for args, kwargs in mock_handle.call_args_list:
+            msg = args[0]
+            if type(msg) in (messages.ItemChanges,
+                             messages.DeviceItemChanges,
+                             messages.SharingItemChanges):
+                items_changed_messages.append(msg)
+        mock_handle.reset_mock()
+        if len(items_changed_messages) == 0:
+            return None
+        elif len(items_changed_messages) > 1:
+            raise AssertionError("Multiple messages: %s" %
+                                 items_changed_messages)
+        else:
+            return items_changed_messages[0]
+
     def run_tracker_idle(self):
         self.assertEqual(self.idle_scheduler.call_count, 1)
         args, kwargs = self.idle_scheduler.call_args
@@ -627,6 +651,27 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
         self.assertEquals(self.tracker.get_item(item1.id).title,
                           u'new title')
         self.assertRaises(KeyError, self.tracker.get_item, item2.id)
+
+    def test_19823(self):
+        # Test the tricky case from bz19823.
+        item = self.tracked_items[0]
+        # make a change where the ItemTracker just needs to refresh the data
+        item.title = u'new title'
+        item.signal_change()
+        msg1 = self.get_items_changed_message()
+        # make another change that removes an item before the first one is
+        # processed.  This provokes the race condition in 19823.
+        item.remove()
+        msg2 = self.get_items_changed_message()
+        # process the first message, the issue for 19823 was this caused us to
+        # commit the transaction which makes sqlite see both changes.  The
+        # ItemTracker still has item in it's list, but when it tries to read
+        # it from its database connection, it's not there
+        self.tracker.on_item_changes(msg1)
+        self.tracker.get_items() # this will fail if the bug is present
+        # process the second change for good measure
+        self.tracker.on_item_changes(msg2)
+        self.tracker.get_items()
 
 class ItemTrackTestNonWALMode(ItemTrackTestWALMode):
     def force_wal_mode(self):
