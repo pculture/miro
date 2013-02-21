@@ -930,15 +930,11 @@ class LegacyMenuUpdater(object):
         """
         selection_info = app.item_list_controller_manager.get_selection_info()
 
-        if selection_info.count > 0 and not selection_info.has_remote:
-            if selection_info.count == 1:
-                self.enabled_groups.add('LocalItemSelected')
-            else:
-                self.states['plural'].append('EditItems')
-            self.enabled_groups.add('LocalItemsSelected')
-
         if selection_info.has_download:
             if not selection_info.has_remote:
+                if selection_info.count > 1:
+                    self.states['plural'].append('EditItems')
+                self.enabled_groups.add('LocalItemsSelected')
                 self.enabled_groups.add('LocalPlayablesSelected')
                 self.enabled_groups.add('LocalPlayablesSelected_PlayPause')
             self.enabled_groups.add('PlayablesSelected')
