@@ -131,10 +131,13 @@ class ItemList(itemtrack.ItemTracker):
 
         if tab_type == 'videos':
             query.add_condition('file_type', '=', 'video')
+            query.add_condition('deleted', '=', False)
         elif tab_type == 'music':
             query.add_condition('file_type', '=', 'audio')
+            query.add_condition('deleted', '=', False)
         elif tab_type == 'others':
             query.add_condition('file_type', '=', 'other')
+            query.add_condition('deleted', '=', False)
         elif tab_type == 'search':
             query.add_condition('feed.orig_url', '=', 'dtv:search')
         elif tab_type == 'downloading':
