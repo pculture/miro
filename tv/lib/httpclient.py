@@ -804,13 +804,13 @@ class CurlTransfer(object):
 
     def call_callback(self, info):
         self._cleanup_filehandle()
-        eventloop.add_idle(self.callback, 'curl transfer callback',
-                args=(info,))
+        msg = 'curl transfer callback: %s' % (self.callback,)
+        eventloop.add_idle(self.callback, msg, args=(info,))
 
     def call_errback(self, error):
         self._cleanup_filehandle()
-        eventloop.add_idle(self.errback, 'curl transfer errback',
-                           args=(error,))
+        msg = 'curl transfer errback: %s' % (self.errback,)
+        eventloop.add_idle(self.errback, msg, args=(error,))
 
     def _cleanup_filehandle(self):
         if self._filehandle is not None:
@@ -977,12 +977,12 @@ class LibCURLManager(eventloop.SimpleEventLoop):
             try:
                 self.pop_transfer(handle).on_finished()
             except StandardError:
-                logging.stacktrace("Error calling on_finished()")
+                logging.warning("Error calling on_finished()", exc_info=True)
         for handle, code, message in errors:
             try:
                 self.pop_transfer(handle).on_error(code, handle)
             except StandardError:
-                logging.stacktrace("Error calling on_error()")
+                logging.warning("Error calling on_error()", exc_info=True)
 
     def pop_transfer(self, handle):
         transfer = self.transfer_map.pop(handle)
