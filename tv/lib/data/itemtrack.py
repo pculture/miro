@@ -793,6 +793,8 @@ class ItemFetcherWAL(ItemFetcher):
     def __init__(self, connection, item_source, id_list):
         ItemFetcher.__init__(self, connection, item_source, id_list)
         self._prepare_sql()
+        self.item_count = self.calc_item_count()
+        self.max_item_id = self.calc_max_item_id()
 
     def destroy(self):
         self.release_connection()
@@ -800,6 +802,14 @@ class ItemFetcherWAL(ItemFetcher):
     def done_fetching(self):
         # We can safely finish the read transaction here
         self.connection.commit()
+
+    def calc_item_count(self):
+        sql = "SELECT COUNT(1) FROM %s" % self.table_name()
+        return self.connection.execute(sql).fetchone()[0]
+
+    def calc_max_item_id(self):
+        sql = "SELECT MAX(id) FROM %s" % self.table_name()
+        return self.connection.execute(sql).fetchone()[0]
 
     def _prepare_sql(self):
         """Get an SQL statement ready to fire when fetch() is called.
@@ -824,18 +834,26 @@ class ItemFetcherWAL(ItemFetcher):
         # We ignore changed_ids and just start a new transaction which will
         # refresh all the data.
         self.connection.commit()
-        # check if one of the items has been removed from the DB now that we
-        # have a new transaction.  This can happen if the backend changes some
+        # check if an item has been added/removed from the DB now that we have
+        # a new transaction.  This can happen if the backend changes some
         # items sends an ItemsChanged message, then deletes them before we
         # process the message (see #19823)
-        sql = ("SELECT COUNT(1) FROM %s WHERE id in (%s)" % 
-               (self.table_name(), ', '.join(str(i) for i in changed_ids)))
-        cursor = self.connection.execute(sql)
-        if cursor.fetchone()[0] != len(changed_ids):
-            return True
-        else:
-            return False
 
+        # checks for items have been added
+        new_max_id = self.calc_max_item_id()
+        if new_max_id != self.max_item_id:
+            self.max_item_id = new_max_id
+            # update item_count since that could have changed too
+            self.item_count = self.calc_item_count()
+            return True
+        # given that items haven't been added, we can use the total number of
+        # items to check if any have been deleted
+        new_item_count = self.calc_item_count()
+        if new_item_count != self.item_count:
+            self.item_count = new_item_count
+            return True
+        # nothing has changed, we can return false
+        return False
 
     def select_playable_ids(self):
         sql = ("SELECT id FROM %s "

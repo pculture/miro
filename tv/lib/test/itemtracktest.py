@@ -655,20 +655,22 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
     def test_19823(self):
         # Test the tricky case from bz19823.
         item = self.tracked_items[0]
+        item2 = self.tracked_items[1]
         # make a change where the ItemTracker just needs to refresh the data
         item.title = u'new title'
         item.signal_change()
         msg1 = self.get_items_changed_message()
         # make another change that removes an item before the first one is
         # processed.  This provokes the race condition in 19823.
-        item.remove()
+        item2.remove()
         msg2 = self.get_items_changed_message()
         # process the first message, the issue for 19823 was this caused us to
         # commit the transaction which makes sqlite see both changes.  The
         # ItemTracker still has item in it's list, but when it tries to read
         # it from its database connection, it's not there
         self.tracker.on_item_changes(msg1)
-        self.tracker.get_items() # this will fail if the bug is present
+        # check that get_items() doesn't raise an exception
+        self.tracker.get_items()
         # process the second change for good measure
         self.tracker.on_item_changes(msg2)
         self.tracker.get_items()
