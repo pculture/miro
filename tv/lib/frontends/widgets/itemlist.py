@@ -146,8 +146,10 @@ class ItemList(itemtrack.ItemTracker):
             sql = ("(remote_downloader.state IN ('downloading', 'uploading', "
                    "'paused', 'uploading-paused', 'offline')) OR "
                    "(remote_downloader.state = 'failed' AND "
-                   "feed.orig_url = 'dtv:manualFeed')")
-            columns = ['remote_downloader.state', 'feed.orig_url']
+                   "feed.orig_url = 'dtv:manualFeed') OR "
+                   "pending_manual_download")
+            columns = ['remote_downloader.state', 'feed.orig_url',
+                       'pending_manual_download']
             query.add_complex_condition(columns, sql, ())
         elif tab_type == 'feed':
             query.add_condition('feed_id', '=', tab_id)
