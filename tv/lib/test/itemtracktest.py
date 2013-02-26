@@ -675,6 +675,29 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
         self.tracker.on_item_changes(msg2)
         self.tracker.get_items()
 
+    def test_19866(self):
+        # variation on 19823 where the crash happens while handling the
+        # will-change signal.
+        item = self.tracked_items[0]
+        item2 = self.tracked_items[1]
+        # make a change where the ItemTracker just needs to refresh the data
+        item.title = u'new title'
+        item.signal_change()
+        msg1 = self.get_items_changed_message()
+        # make another change that removes an item before the first one is
+        # processed.  This provokes the race condition in 19823.
+        item2.remove()
+        msg2 = self.get_items_changed_message()
+        # process the first message and check that get_items() doesn't crash
+        # when it's called inside signal handlers
+        self.tracker.connect('will-change',
+                             lambda tracker: tracker.get_items())
+        self.tracker.connect('list-changed', 
+                             lambda tracker: tracker.get_items())
+        self.tracker.on_item_changes(msg1)
+        # process the second message
+        self.tracker.on_item_changes(msg2)
+
 class ItemTrackTestNonWALMode(ItemTrackTestWALMode):
     def force_wal_mode(self):
         self.connection_pool.wal_mode = False

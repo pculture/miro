@@ -85,6 +85,7 @@ class ConnectionPool(object):
         connection = self.get_connection()
         cursor = connection.execute("PRAGMA journal_mode=wal");
         self.wal_mode = cursor.fetchone()[0] == u'wal'
+        connection.commit()
         self.release_connection(connection)
 
     def _make_new_connection(self):
@@ -124,6 +125,7 @@ class ConnectionPool(object):
 
         if connection not in self.all_connections:
             raise ValueError("%s not from this pool" % connection)
+        connection.rollback()
         if len(self.all_connections) > self.min_connections:
             connection.close()
             self.all_connections.remove(connection)

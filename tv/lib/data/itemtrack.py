@@ -489,6 +489,7 @@ class ItemTracker(signals.SignalEmitter):
         self._destroy_item_fetcher()
         try:
             connection = self.item_source.get_connection()
+            connection.execute("BEGIN TRANSACTION")
             self.id_list = self.query.select_ids(connection)
         except sqlite3.DatabaseError, e:
             logging.warn("%s while fetching items", e, exc_info=True)
@@ -527,12 +528,14 @@ class ItemTracker(signals.SignalEmitter):
             if id_ in self.row_data:
                 del self.row_data[id_]
 
-    def _refetch_id_list(self):
+    def _refetch_id_list(self, send_signals=True):
         """Refetch a new id list after we already have one."""
 
-        self.emit('will-change')
+        if send_signals:
+            self.emit('will-change')
         self._fetch_id_list()
-        self.emit("list-changed")
+        if send_signals:
+            self.emit("list-changed")
 
     def get_items(self):
         """Get a list of all items in sorted order."""
@@ -676,12 +679,13 @@ class ItemTracker(signals.SignalEmitter):
         if self._could_list_change(message):
             self._refetch_id_list()
         else:
+            self.emit('will-change')
             need_refetch = self.item_fetcher.refresh_items(changed_ids)
             if not need_refetch:
-                self.emit('will-change')
                 self.emit('items-changed', changed_ids)
             else:
-                self._refetch_id_list()
+                self._refetch_id_list(send_signals=False)
+                self.emit("list-changed")
 
     def _could_list_change(self, message):
         """Calculate if an ItemChanges means the list may have changed."""
@@ -839,16 +843,16 @@ class ItemFetcherWAL(ItemFetcher):
         # items sends an ItemsChanged message, then deletes them before we
         # process the message (see #19823)
 
-        # checks for items have been added
         new_max_id = self.calc_max_item_id()
+        new_item_count = self.calc_item_count()
+        # checks for items have been added
         if new_max_id != self.max_item_id:
             self.max_item_id = new_max_id
             # update item_count since that could have changed too
-            self.item_count = self.calc_item_count()
+            self.item_count = new_item_count
             return True
         # given that items haven't been added, we can use the total number of
         # items to check if any have been deleted
-        new_item_count = self.calc_item_count()
         if new_item_count != self.item_count:
             self.item_count = new_item_count
             return True
@@ -878,6 +882,7 @@ class ItemFetcherNoWAL(ItemFetcher):
         ItemFetcher.__init__(self, connection, item_source, id_list)
         self._make_temp_table()
         self._select_into_temp_table(id_list)
+        self.connection.commit()
 
     def _make_temp_table(self):
         randstr = ''.join(random.choice(string.letters) for i in xrange(10))
