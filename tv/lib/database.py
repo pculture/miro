@@ -563,7 +563,11 @@ class DDBObject(signals.SignalEmitter):
 
     def _insert_into_db(self):
         if not self.db_info.bulk_sql_manager.active:
-            self.db_info.db.insert_obj(self)
+            try:
+                self.db_info.db.insert_obj(self)
+            except StandardError:
+                self.insert_into_db_failed()
+                raise
             self.inserted_into_db()
             self.db_info.view_tracker_manager.update_view_trackers(self)
         else:
@@ -572,6 +576,9 @@ class DDBObject(signals.SignalEmitter):
     def inserted_into_db(self):
         self.check_constraints()
         self.on_db_insert()
+
+    def insert_into_db_failed(self):
+        pass
 
     @classmethod
     def make_view(cls, where=None, values=None, order_by=None, joins=None,

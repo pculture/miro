@@ -7,6 +7,7 @@ import urlparse
 import random
 import shutil
 import string
+import sqlite3
 import time
 import json
 
@@ -1024,6 +1025,21 @@ class MetadataManagerTest(MiroTestCase):
         self.check_path_in_system('baz.mp3', True)
         self.check_path_in_system('qux.avi', True)
         self.check_path_in_system('other-file.avi', False)
+
+    def test_path_in_system_failed_insert(self):
+        # check that if the DB insert fails for some reason, then path in 
+        # system returns False (#19508)
+        path = self.make_path('foo.avi')
+        mock_insert = mock.Mock()
+        mock_insert.side_effect = sqlite3.OperationalError
+        patcher = mock.patch('miro.storedatabase.LiveStorage.insert_obj',
+                             new=mock_insert)
+        with patcher:
+            try:
+                self.metadata_manager.add_file(path)
+            except sqlite3.OperationalError:
+                pass
+        self.check_path_in_system('foo.avi', False)
 
     def test_delete(self):
         # add many files at different points in the metadata process

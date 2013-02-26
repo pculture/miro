@@ -191,6 +191,9 @@ class MetadataStatus(database.DDBObject):
             return
         self.db_info.db.cache.set('metadata', self.path, self)
 
+    def insert_into_db_failed(self):
+        self.db_info.db.cache.remove('metadata', self.path)
+
     def remove(self):
         self.db_info.db.cache.remove('metadata', self.path)
         database.DDBObject.remove(self)
