@@ -293,7 +293,6 @@ class RemoteDownloader(DDBObject):
         self.delete_files = True
         self.channel_name = channel_name
         self.manualUpload = False
-        self._update_retry_time_dc = None
         self.status_updates_frozen = False
         self.last_update = time.time()
         self.reset_status_attributes()
@@ -310,7 +309,6 @@ class RemoteDownloader(DDBObject):
     def setup_restored(self):
         self.status_updates_frozen = False
         self.last_update = time.time()
-        self._update_retry_time_dc = None
         self.delete_files = True
         self.item_list = []
         if self.dlid == 'noid':
@@ -798,40 +796,6 @@ class RemoteDownloader(DDBObject):
         return self.eta
 
     @returns_unicode
-    def get_startup_activity(self):
-        self.confirm_db_thread()
-        activity = self.activity
-        if (activity is None and self.retry_count is not None and
-             self.retry_time is not None):
-            activity = self._calc_retry_time()
-            if self._update_retry_time_dc is None:
-                self._update_retry_time_dc = eventloop.add_timeout(1,
-                        self._update_retry_time, 'Updating retry time')
-        if activity is None:
-            return _("starting up")
-        return activity
-
-    def _calc_retry_time(self):
-        if self.retry_time > datetime.datetime.now():
-            retry_delta = self.retry_time - datetime.datetime.now()
-            time_str = displaytext.time_string(retry_delta.seconds)
-            return _('no connection - retrying in %(time)s', {"time": time_str})
-        else:
-            return _('no connection - retrying soon')
-
-    def _update_retry_time(self):
-        if self.id_exists():
-            # calling signal_change() will cause the us to call
-            # get_startup_activity() again which will have a new time now.
-            self.signal_change(needs_save=False)
-            self._update_retry_time_dc = None
-
-    def _cancel_retry_time_update(self):
-        if self._update_retry_time_dc:
-            self._update_retry_time_dc.cancel()
-            self._update_retry_time_dc = None
-
-    @returns_unicode
     def get_reason_failed(self):
         """Returns the reason for the failure of this download.  This
         should only be called when the download is in the failed
@@ -1085,7 +1049,6 @@ class DownloadDaemonStarter(object):
                     callback=self._on_shutdown)
 
     def _on_shutdown(self):
-        shutdown_downloader_objects()
         self.shutdown_callback()
         del self.shutdown_callback
 
@@ -1131,16 +1094,6 @@ def get_downloader_for_item(item):
         return RemoteDownloader(url, item, u'application/x-magnet')
     else:
         return RemoteDownloader(url, item, channel_name=channel_name)
-
-def shutdown_downloader_objects():
-    """Perform shutdown code for RemoteDownloaders.
-
-    This means a couple things:
-      - Make sure any RemoteDownloaders with pending changes get saved.
-      - Cancel the update retry time callbacks
-    """
-    for downloader in RemoteDownloader.make_view():
-        downloader._cancel_retry_time_update()
 
 def reset_download_stats():
     """Set columns in the remote_downloader table to None if they track

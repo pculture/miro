@@ -1921,15 +1921,6 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
             else:
                 return (100.0*dled) / size
 
-    @returns_unicode
-    def get_startup_activity(self):
-        if self.pending_manual_download:
-            return self.pending_reason
-        elif self.downloader:
-            return self.downloader.get_startup_activity()
-        else:
-            return _("starting up...")
-
     def get_pub_date_parsed(self):
         """Returns the published date of the item as a datetime object.
         """

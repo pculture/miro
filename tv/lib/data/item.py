@@ -170,6 +170,7 @@ class ItemSelectInfo(object):
         SelectColumn('remote_downloader', 'short_reason_failed'),
         SelectColumn('remote_downloader', 'type', 'downloader_type'),
         SelectColumn('remote_downloader', 'retry_time'),
+        SelectColumn('remote_downloader', 'retry_count'),
         SelectColumn('remote_downloader', 'eta', '_eta'),
         SelectColumn('remote_downloader', 'rate', '_rate'),
         SelectColumn('remote_downloader', 'upload_rate', '_upload_rate'),
@@ -532,7 +533,7 @@ class ItemInfoBase(object):
 
     @property
     def is_download(self):
-        return (self.downloader_state in ('downloading', 'paused') or
+        return (self.downloader_state in ('downloading', 'paused', 'offline') or
                 self.pending_manual_download)
 
     @property
@@ -549,8 +550,23 @@ class ItemInfoBase(object):
             return self.pending_reason
         elif self.downloader_activity:
             return self.downloader_activity
+        elif self.is_retrying:
+            return self._startup_activity_retry
         else:
             return _("starting up...")
+
+    @property
+    def is_retrying(self):
+        return self.retry_count is not None and self.retry_time is not None
+
+    @property
+    def _startup_activity_retry(self):
+        if self.retry_time > datetime.datetime.now():
+            retry_delta = self.retry_time - datetime.datetime.now()
+            time_str = displaytext.time_string(retry_delta.seconds)
+            return _('no connection - retrying in %(time)s', {"time": time_str})
+        else:
+            return _('no connection - retrying soon')
 
     @property
     def download_progress(self):

@@ -181,9 +181,14 @@ class ItemRendererSignals(signals.SignalEmitter):
 
     signals:
         throbber-drawn (obj, item_info) -- a progress throbber was drawn
+        item-retrying (obj, item_info) -- a download will be retried, and we
+        need to update the time
     """
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'throbber-drawn')
+        signals.SignalEmitter.__init__(self,
+                                       'throbber-drawn',
+                                       'item-retrying',
+                                      )
 
 _cached_images = {} # caches ImageSurface for get_image()
 def get_image(image_name):
@@ -365,6 +370,8 @@ class ItemRenderer(widgetset.ItemListRenderer):
         elif self.info.rate is None:
             self.canvas.add_startup_info(
                 self.info.startup_activity)
+            if self.info.is_retrying:
+                self.signals.emit('item-retrying', self.info)
         elif self.info.is_torrent:
             self.add_torrent_info()
 

@@ -154,7 +154,6 @@ class AnimationManager(object):
         """Finish the animation"""
         pass
 
-
 class ThrobberAnimationManager(AnimationManager):
     def initial_delay(self, item_info):
         return 0.2
@@ -170,6 +169,22 @@ class ThrobberAnimationManager(AnimationManager):
         else:
             self.item_list.unset_attr(item_info.id, 'throbber-value')
             return False
+
+class RetryAnimationManager(AnimationManager):
+    """AnimationManager to update the "retrying in..." text.
+
+    This isn't really an animation, but we can use the same system to update
+    it.
+    """
+
+    def initial_delay(self, item_info):
+        return 1.0
+
+    def repeat_delay(self, item_info):
+        return 1.0
+
+    def continue_animation(self, item_info):
+        return item_info.is_retrying
 
 class ItemSelectionInfo(object):
     """Stores information about what's selected in an item list.
@@ -230,6 +245,8 @@ class ItemListController(object):
         self._item_list_callbacks = []
         self._playback_callbacks = []
         self.throbber_manager = ThrobberAnimationManager(self.item_list,
+                self.all_item_views())
+        self.retry_time_manager = RetryAnimationManager(self.item_list,
                 self.all_item_views())
         self.connect_to_signals()
 
@@ -429,6 +446,8 @@ class ItemListController(object):
         self.titlebar.connect_weak('resume-playing', self.on_resume_playing)
         self.standard_item_view.renderer.signals.connect_weak(
                 'throbber-drawn', self.on_throbber_drawn)
+        self.standard_item_view.renderer.signals.connect_weak(
+                'item-retrying', self.on_item_retrying)
 
     def set_view(self, _widget, view):
         if view == self.selected_view:
@@ -734,6 +753,9 @@ class ItemListController(object):
 
     def on_throbber_drawn(self, signaler, item_info):
         self.throbber_manager.start(item_info)
+
+    def on_item_retrying(self, signaler, item_info):
+        self.retry_time_manager.start(item_info)
 
     def on_key_press(self, view, key, mods):
         if key == keyboard.DELETE or key == keyboard.BKSPACE:
