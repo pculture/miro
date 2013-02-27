@@ -1723,7 +1723,6 @@ class SavedSearchFeedImpl(RSSMultiFeedBase):
         self.query = m.group(2)
 
     def calc_urls(self):
-        logging.stacktrace("calc_urls")
         return searchengines.get_request_urls(self.engine, self.query)
 
 class ScraperFeedImpl(ThrottledUpdateFeedImpl):
@@ -2417,7 +2416,6 @@ class SearchFeedImpl(RSSMultiFeedBase):
         RSSMultiFeedBase.setup_restored(self)
 
     def calc_urls(self):
-        logging.stacktrace("calc_urls")
         if self.engine and self.query:
             return searchengines.get_request_urls(self.engine, self.query)
         else:
