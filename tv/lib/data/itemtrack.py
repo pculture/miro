@@ -1007,6 +1007,9 @@ class BackendItemTracker(signals.SignalEmitter):
             self.item_changes_callback = None
 
     def on_item_changes(self, change_tracker, msg):
+        if app.db.is_closed():
+            return
+
         if self.query.could_list_change(msg):
             # items may have been added/removed from the list.  We need to
             # re-fetch the items and calculate changes

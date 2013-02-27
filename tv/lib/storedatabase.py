@@ -644,6 +644,10 @@ class LiveStorage(signals.SignalEmitter):
         logging.info("closing database")
         self.finish_transaction()
         self.connection.close()
+        self.connection = None
+
+    def is_closed(self):
+        return self.connection is None
 
     def get_backup_directory(self):
         """This returns the backup directory path.
