@@ -682,7 +682,6 @@ class BGDownloader(object):
     def handle_network_error(self, error):
         if isinstance(error, httpclient.NetworkError):
             if (isinstance(error, (httpclient.MalformedURL,
-                                   httpclient.UnknownHostError,
                                    httpclient.AuthorizationFailed,
                                    httpclient.ProxyAuthorizationFailed,
                                    httpclient.UnexpectedStatusCode))):
