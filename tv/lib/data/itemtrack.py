@@ -840,6 +840,7 @@ class ItemFetcherWAL(ItemFetcher):
         # We ignore changed_ids and just start a new transaction which will
         # refresh all the data.
         self.connection.commit()
+        self.connection.execute("BEGIN TRANSACTION")
         # check if an item has been added/removed from the DB now that we have
         # a new transaction.  This can happen if the backend changes some
         # items sends an ItemsChanged message, then deletes them before we
