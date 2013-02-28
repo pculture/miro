@@ -345,6 +345,7 @@ class ItemInfoBase(object):
     downloaded_size = None
     pending_reason = None
     retry_time = None
+    retry_count = None
     short_reason_failed = None
     reason_failed = None
     leechers = None

@@ -428,7 +428,8 @@ class ItemTracker(signals.SignalEmitter):
         self._db_retry_callback_pending = False
         self._set_query(query)
         self._fetch_id_list()
-        self._schedule_idle_work()
+        if self.item_fetcher is not None:
+            self._schedule_idle_work()
 
     def is_valid(self):
         """Is this item list valid?
@@ -491,13 +492,14 @@ class ItemTracker(signals.SignalEmitter):
             connection = self.item_source.get_connection()
             connection.execute("BEGIN TRANSACTION")
             self.id_list = self.query.select_ids(connection)
+            self.item_fetcher = self.make_item_fetcher(connection, self.id_list)
         except sqlite3.DatabaseError, e:
             logging.warn("%s while fetching items", e, exc_info=True)
             self.id_list = []
             self._run_db_error_dialog()
+            self.item_fetcher = None
         self.id_to_index = dict((id_, i) for i, id_ in enumerate(self.id_list))
         self.row_data = {}
-        self.item_fetcher = self.make_item_fetcher(connection, self.id_list)
 
     def _schedule_idle_work(self):
         """Schedule do_idle_work to be called some time in the

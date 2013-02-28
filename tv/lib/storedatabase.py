@@ -641,10 +641,11 @@ class LiveStorage(signals.SignalEmitter):
             return False
 
     def close(self):
-        logging.info("closing database")
-        self.finish_transaction()
-        self.connection.close()
-        self.connection = None
+        if self.connection is not None:
+            logging.info("closing database")
+            self.finish_transaction()
+            self.connection.close()
+            self.connection = None
 
     def is_closed(self):
         return self.connection is None
