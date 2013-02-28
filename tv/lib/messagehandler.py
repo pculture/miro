@@ -1485,7 +1485,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_query_sync_information(self, message):
         dsm = app.device_manager.get_sync_for_device(message.device)
-        infos, expired = dsm.get_sync_items(message.device.max_sync_size())
+        infos, expired = dsm.get_sync_items(dsm.max_sync_size())
         count, size = dsm.get_sync_size(infos, expired)
         dsm.last_sync_info = (infos, expired, count, size)
         message = messages.CurrentSyncInformation(message.device,
@@ -1499,23 +1499,23 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             infos, expired, count, size = dsm.last_sync_info
             del dsm.last_sync_info
         else:
-            infos, expired = dsm.get_sync_items(message.device.max_sync_size())
+            infos, expired = dsm.get_sync_items(dsm.max_sync_size())
             count, size = dsm.get_sync_size(infos, expired)
 
-        if size > message.device.max_sync_size():
+        if size > dsm.max_sync_size():
             return
 
         if infos or expired:
             if expired:
                 dsm.expire_items(expired)
-            without_auto = message.device.max_sync_size(include_auto=False)
+            without_auto = dsm.max_sync_size(include_auto=False)
             if size > without_auto:
                 dsm.expire_auto_items(size - without_auto)
             if infos:
                 dsm.start()
                 dsm.add_items(infos)
                 if size < without_auto:
-                    remaining = message.device.max_sync_size() - size
+                    remaining = dsm.max_sync_size() - size
                     auto_items = dsm.get_auto_items(remaining)
                     if auto_items:
                         dsm.add_items(auto_items, auto_sync=True)
@@ -1535,8 +1535,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
         dsm = app.device_manager.get_sync_for_device(message.device)
         count, size = dsm.get_sync_size(item_infos)
-        
-        if size > message.device.max_sync_size():
+
+        if size > dsm.max_sync_size():
             return
 
         dsm.start()

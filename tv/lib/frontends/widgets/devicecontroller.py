@@ -928,10 +928,6 @@ class DeviceMountedView(widgetset.VBox):
         message.send_to_backend()
 
     def current_sync_information(self, count, size):
-        if size > self.device.max_sync_size():
-            self.device_size.set_sync_state(0)
-            return
-
         self.device_size.set_sync_state(count)
 
     def set_sync_status(self, progress, eta):

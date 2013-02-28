@@ -838,6 +838,40 @@ class DeviceSyncManager(object):
             size -= sum(i.size for i in expired)
         return count, size
 
+    def max_sync_size(self, include_auto=True):
+        """
+        Returns the largest sync (in bytes) that we can perform on this device.
+        """
+        if not self.device.mount:
+            return 0
+        sync = self.device.database.get(u'sync', {})
+        if include_auto:
+            auto_fill_size = self._calc_auto_fill_size()
+        else:
+            auto_fill_size = 0
+        if not sync.get(u'max_fill', False):
+            return self.device.remaining + auto_fill_size
+        else:
+            try:
+                percent = int(sync.get(u'max_fill_percent', 90)) * 0.01
+            except ValueError:
+                return self.device.remaining + auto_fill_size
+            else:
+                min_remaining = self.device.size * (1 - percent)
+                return self.device.remaining - min_remaining + auto_fill_size
+
+    def _calc_auto_fill_size(self):
+        """
+        Returns the total size of auto-filled files.
+        """
+        sync = self.device.database.get(u'sync')
+        if not sync:
+            return 0
+        if not sync.get(u'auto_fill', False):
+            return 0
+        return sum(i.size for i in 
+                   item.DeviceItem.auto_sync_view(self.device.db_info))
+
     def start(self):
         if self.started:
             return
