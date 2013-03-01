@@ -496,11 +496,14 @@ class ItemTracker(signals.SignalEmitter):
             self.item_fetcher = self.make_item_fetcher(connection, self.id_list)
         except sqlite3.DatabaseError, e:
             logging.warn("%s while fetching items", e, exc_info=True)
-            self.id_list = []
-            self._run_db_error_dialog()
-            self.item_fetcher = None
+            self._make_empty_list_after_db_error()
         self.id_to_index = dict((id_, i) for i, id_ in enumerate(self.id_list))
         self.row_data = {}
+
+    def _make_empty_list_after_db_error(self):
+        self.id_list = []
+        self._run_db_error_dialog()
+        self.item_fetcher = None
 
     def _schedule_idle_work(self):
         """Schedule do_idle_work to be called some time in the
@@ -682,8 +685,19 @@ class ItemTracker(signals.SignalEmitter):
         if self._could_list_change(message):
             self._refetch_id_list()
         else:
+            if len(self.id_list) == 0:
+                # special case when the list is empty.  This avoids accessing
+                # item_fetcher after _make_empty_list_after_db_error() is
+                # called.
+                return
             self.emit('will-change')
-            need_refetch = self.item_fetcher.refresh_items(changed_ids)
+            try:
+                need_refetch = self.item_fetcher.refresh_items(changed_ids)
+            except sqlite3.DatabaseError, e:
+                logging.warn("%s while refreshing items", e, exc_info=True)
+                self._make_empty_list_after_db_error()
+                self.emit("list-changed")
+                return
             if not need_refetch:
                 self.emit('items-changed', changed_ids)
             else:
