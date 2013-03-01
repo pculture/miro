@@ -457,7 +457,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('enclosure_format', SchemaString(noneOk=True)),
         ('was_downloaded', SchemaBool()),
         ('filename', SchemaFilename(noneOk=True)),
-        ('deleted', SchemaBool(noneOk=True)),
+        ('deleted', SchemaBool()),
         ('short_filename', SchemaFilename(noneOk=True)),
         ('offset_path', SchemaFilename(noneOk=True)),
         ('play_count', SchemaInt()),
@@ -998,7 +998,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 198
+VERSION = 199
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

@@ -4369,3 +4369,7 @@ def upgrade198(cursor):
                    "INSERT INTO item_fts(docid, %s) "
                    "VALUES(new.id, %s); "
                    "END;" % (item_table, column_list, column_list_for_new))
+
+def upgrade199(cursor):
+    """Don't use NULL for item.deleted."""
+    cursor.execute("UPDATE item SET deleted=0 WHERE deleted IS NULL")

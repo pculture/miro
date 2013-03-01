@@ -519,9 +519,10 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
         self.play_count = 0
         self.skip_count = 0
         self.net_lookup_enabled = False
+        self.deleted = False
         self.size = self.enclosure_size
         # Initalize FileItem attributes to None
-        self.deleted = self.short_filename = self.offset_path = None
+        self.short_filename = self.offset_path = None
 
         # link_number is a hack to make sure that scraped items at the
         # top of a page show up before scraped items at the bottom of
