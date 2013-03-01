@@ -143,12 +143,15 @@ class ItemList(itemtrack.ItemTracker):
         elif tab_type == 'downloading':
             # FIXME: this should also include failed downloads from the manual
             # feed
-            sql = ("(remote_downloader.state IN ('downloading', 'uploading', "
+            sql = ("((remote_downloader.state IN ('downloading', 'uploading', "
                    "'paused', 'uploading-paused', 'offline')) OR "
                    "(remote_downloader.state = 'failed' AND "
                    "feed.orig_url = 'dtv:manualFeed') OR "
-                   "pending_manual_download")
-            columns = ['remote_downloader.state', 'feed.orig_url',
+                   "pending_manual_download) AND "
+                   "remote_downloader.main_item_id=item.id")
+            columns = ['remote_downloader.state',
+                       'remote_downloader.main_item_id',
+                       'feed.orig_url',
                        'pending_manual_download']
             query.add_complex_condition(columns, sql, ())
         elif tab_type == 'feed':
