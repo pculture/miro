@@ -34,6 +34,7 @@ import logging
 import string
 import sqlite3
 import random
+import re
 import weakref
 
 from miro import app
@@ -129,10 +130,10 @@ class ItemTrackerQueryBase(object):
         # We do the following:
         #  - lowercase the terms to ensure that they don't contain any sqlite3
         #  fts operators
-        #  - remove the "*" charactor from search_string
+        #  - remove the any non-word characters from search_string
         #  - add a prefix search to the last term, since the user can still be
         #  typing it out.
-        terms = search_string.lower().replace("*", "").split()
+        terms = re.findall("\w+", search_string.lower())
         if 'torrent' in terms:
             # as a special case, the search string "torrent" matches torrent
             # items
