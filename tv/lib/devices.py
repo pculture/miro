@@ -1031,11 +1031,11 @@ class DeviceSyncManager(object):
         if not info.filename:
             app.controller.failed_soft("device conversion",
                                        "got video %r without filename" % (
-                    info.name,))
+                    info.title,))
             return None
 
         if info.file_type not in ('audio', 'video'):
-            logging.debug("got item %r that's not audio or video", info.name)
+            logging.debug("got item %r that's not audio or video", info.title)
             return None
 
         # shortcut, if we're just going to copy the file
