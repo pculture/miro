@@ -461,11 +461,8 @@ class ItemInfoBase(object):
 
     @property
     def is_external(self):
-        """Is this item not part of a feed?  """
-        if self.is_file_item:
-            return not self.has_parent
-        else:
-            return self.feed_url == 'dtv:manualFeed'
+        """Is this an externally downloaded item."""
+        return False
 
     @property
     def remote(self):
@@ -746,6 +743,12 @@ def fetch_device_item_infos(device, item_ids):
 class ItemInfo(ItemInfoBase):
     source_type = 'database'
     select_info = ItemSelectInfo()
+
+    def is_external(self):
+        if self.is_file_item:
+            return not self.has_parent
+        else:
+            return self.feed_url == 'dtv:manualFeed'
 
 class DBErrorItemInfo(ItemInfoBase):
     """DBErrorItemInfo is used as a placeholder when we get DatabaseErrors
