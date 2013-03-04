@@ -204,7 +204,7 @@ class ItemContextMenuHandler(object):
             section.append((
                     _('Cancel Download'),
                     messages.CancelDownload(item.id).send_to_backend))
-            if item.is_paused:
+            if not item.is_paused:
                 section.append((
                         _('Pause Download'),
                         messages.PauseDownload(item.id).send_to_backend))
