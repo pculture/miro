@@ -1049,7 +1049,7 @@ class _SharedDataSet(object):
         self.lock = threading.RLock()
         self.condition = threading.Condition(self.lock)
         # current revision number
-        self.revision = 0
+        self.revision = 1
         # map DAAP ids to dicts of item data
         self.daap_items = dict()
         # map DAAP ids to dicts of playlist data
