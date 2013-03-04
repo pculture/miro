@@ -103,6 +103,7 @@ class CallbackSet(object):
     def __init__(self):
         self.callbacks = {}
         self.callbacks_after = {}
+        self.callbacks_before = {}
 
     def add_callback(self, id_, callback):
         self.callbacks[id_] = callback
@@ -110,11 +111,16 @@ class CallbackSet(object):
     def add_callback_after(self, id_, callback):
         self.callbacks_after[id_] = callback
 
+    def add_callback_before(self, id_, callback):
+        self.callbacks_before[id_] = callback
+
     def remove_callback(self, id_):
         if id_ in self.callbacks:
             del self.callbacks[id_]
         elif id_ in self.callbacks_after:
-            del self.callback_after[id_]
+            del self.callbacks_after[id_]
+        elif id_ in self.callbacks_before:
+            del self.callbacks_before[id_]
         else:
             logging.warning(
                 "disconnect called but callback_handle not in the callback")
@@ -125,17 +131,23 @@ class CallbackSet(object):
         The list will contain callbacks added with add_callback() then
         callbacks added with add_callback_after().
         """
-        return self.callbacks.values() + self.callbacks_after.values()
+        return (self.callbacks_before.values() +
+                self.callbacks.values() +
+                self.callbacks_after.values())
 
     def clear_old_weak_references(self):
         """Remove any dead WeakCallbacks."""
-        for callback_dict in (self.callbacks, self.callbacks_after):
+        all_dicts = (self.callbacks,
+                     self.callbacks_after,
+                     self.callbacks_before)
+        for callback_dict in all_dicts:
             for id_, callback in callback_dict.items():
                 if callback.is_dead():
                     del callback_dict[id_]
 
     def __len__(self):
-        return len(self.callbacks) + len(self.callbacks_after)
+        return (len(self.callbacks) + len(self.callbacks_after) +
+                len(self.callbacks_before))
 
 class SignalEmitter(object):
     def __init__(self, *signal_names):
@@ -189,12 +201,24 @@ class SignalEmitter(object):
         """Like connect(), but run the handler later
 
         When a signal is fired, we first run the handlers connected with
-        connect() then the ones connected with connect_after()
+        connect_before(), then connect(), then connect_after()
         """
         self._check_already_connected(name, func)
         id_ = self.id_generator.next()
         callbacks = self.get_callbacks(name)
         callbacks.add_callback_after(id_, Callback(func, extra_args))
+        return (name, id_)
+
+    def connect_before(self, name, func, *extra_args):
+        """Like connect(), but run the handler before others
+
+        When a signal is fired, we first run the handlers connected with
+        connect_before(), then connect(), then connect_after()
+        """
+        self._check_already_connected(name, func)
+        id_ = self.id_generator.next()
+        callbacks = self.get_callbacks(name)
+        callbacks.add_callback_before(id_, Callback(func, extra_args))
         return (name, id_)
 
     def connect_weak(self, name, method, *extra_args):

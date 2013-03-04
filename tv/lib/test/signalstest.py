@@ -55,29 +55,47 @@ class SignalsTest(MiroTestCase):
         self.assertRaises(ValueError, self.signaller.connect_weak,
                 'signal1', callback_obj.callback)
 
-    def test_connect_after(self):
-        # test that handlers connected using connect_after() get called after
-        # ones with connect()
-        counter = itertools.count()
+    def test_connect_before_after(self):
+        # test handlers connected using connect_after() and connect_before()
+        self.callback_before_called = False
+        self.callback_normal_called = False
+        self.callback_after_called = False
         counts_for_callback = []
         counts_for_callback_after = []
+        counts_for_callback_before = []
         # make a bunch of callbacks and connect them with either connect() or
         # connect_after()
         for x in range(100):
-            if random.choice([True, False]):
-                def callback_after(obj):
-                    counts_for_callback_after.append(counter.next())
-                self.signaller.connect_after('signal1', callback_after)
+            def callback_before(obj):
+                self.callback_before_called = True
+                if self.callback_after_called:
+                    raise AssertionError(
+                        "callback connected with connect_after() called "
+                        "before callback connected with connect_before()")
+                if self.callback_normal_called:
+                    raise AssertionError(
+                        "callback connected with connect() called before "
+                        "callback connected with connect_before()")
+            def callback_normal(obj):
+                self.callback_normal_called = True
+                if self.callback_after_called:
+                    raise AssertionError(
+                        "callback connected with connect_after() called "
+                        "before callback connected with connect()")
+            def callback_after(obj):
+                self.callback_after_called = True
+            choice = random.choice([callback_before,
+                                      callback_normal,
+                                      callback_after])
+            if choice == callback_before:
+                self.signaller.connect_before('signal1', callback_before)
+            elif choice == callback_normal:
+                self.signaller.connect('signal1', callback_normal)
             else:
-                def callback(obj):
-                    counts_for_callback.append(counter.next())
-                self.signaller.connect('signal1', callback)
-        # emit our signal and ensure that the callbacks connected with
-        # connect_after run last
+                self.signaller.connect_after('signal1', callback_after)
+        # emit our signal and the signal handlers will ensure that the
+        # callbacks execute in the right order
         self.signaller.emit('signal1')
-        if max(counts_for_callback) > min(counts_for_callback_after):
-            raise AssertionError("Callback connected with connect_after() "
-                                 "got called before one with connect()")
 
     def test_nested_call(self):
         def callback(obj):

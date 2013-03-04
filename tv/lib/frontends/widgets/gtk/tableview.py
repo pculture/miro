@@ -1667,8 +1667,8 @@ class ItemListModel(TableModelBase):
 
     def __init__(self, item_list):
         self.item_list = item_list
-        self.list_changed_handle = self.item_list.connect("list-changed",
-                                                          self.on_list_changed)
+        self.list_changed_handle = self.item_list.connect_before(
+            "list-changed", self.on_list_changed)
         self._model = fixedliststore.FixedListStore(len(item_list))
 
     def cleanup(self):
