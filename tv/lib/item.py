@@ -476,7 +476,6 @@ class MetadataItemBase(ItemBase):
         self._bulk_update_db_values(metadata_dict)
         self.calc_title()
 
-
 class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
@@ -551,6 +550,12 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
         self.showMoreInfo = False
         self.playing = False
         Item._path_count_tracker.add_item(self)
+
+    def signal_change(self, needs_save=True, can_change_views=True):
+        if ('torrent_title' in self.changed_attributes or
+            'metadata_title' in self.changed_attributes):
+            self.calc_title()
+        ItemBase.signal_change(self, needs_save, can_change_views)
 
     def playlists_changed(self, added=False):
         """Called when the item gets added/removed from playlists."""
@@ -1750,7 +1755,6 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
 
     def set_torrent_title(self, title):
         self.torrent_title = title
-        self.calc_title()
         self.signal_change()
 
     def _update_title_from_torrent_errback(self, error):

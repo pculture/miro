@@ -551,8 +551,11 @@ class RemoteDownloader(DDBObject):
             size = self.total_size
             for item in self.item_list:
                 if size != item.size or torrent_title != item.torrent_title:
-                    item.torrent_title = torrent_title
-                    item.size = size
+                    if size != item.size:
+                        item.size = size
+                    if (torrent_title != item.torrent_title and
+                        torrent_title is not None):
+                        item.torrent_title = torrent_title
                     item.signal_change()
 
     def run_downloader(self):
