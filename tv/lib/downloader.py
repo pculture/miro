@@ -529,10 +529,10 @@ class RemoteDownloader(DDBObject):
 
             self.signal_change()
 
-            self.update_item_list(finished, file_migrated)
+            self.update_item_list(finished, file_migrated, old_filename)
         return True
 
-    def update_item_list(self, finished, file_migrated):
+    def update_item_list(self, finished, file_migrated, old_filename):
         if finished:
             for item in self.item_list:
                 item.on_download_finished()
