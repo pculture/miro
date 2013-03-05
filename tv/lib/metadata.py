@@ -1350,12 +1350,17 @@ class MetadataManagerBase(signals.SignalEmitter):
             self.total_count -= 1
             for entry in MetadataEntry.metadata_for_status(status,
                                                            self.db_info):
+                if entry.screenshot is not None:
+                    self.remove_screenshot(entry.screenshot)
                 entry.remove()
             status.remove()
             if status.current_processor is not None:
                 self.count_tracker.file_finished(path)
         self._run_update_caller.call_after_timeout(self.UPDATE_INTERVAL)
         self._send_net_lookup_counts_caller.call_when_idle()
+
+    def remove_screenshot(self, screenshot):
+        fileutil.delete(screenshot)
 
     def will_move_files(self, paths):
         """Prepare for files to be moved
