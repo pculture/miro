@@ -866,6 +866,10 @@ class PlaybackPlaylist(signals.SignalEmitter):
         ]
         self.shuffle = shuffle
         self.repeat = repeat
+        if len(self.item_list) == 0:
+            # special case for empty item lists (#19890)
+            self.currently_playing = None
+            return
         # If we get be passed a torrent folder item, we can't play it
         # directly.  We use _find_playable to find its first playable child in
         # that case.
@@ -937,7 +941,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
             return None
         if item_info.is_playable:
             return item_info.id
-        current_row = self.item_list.get_index(current_item)
+        current_row = self.item_list.get_index(item_info.id)
         for i in xrange(current_row + 1, len(self.item_list)):
             item_info = self.item_list.get_row(i)
             if item_info.is_playable:
