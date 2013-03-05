@@ -39,6 +39,7 @@ to join the tables together in order to create an ItemInfo.
 import datetime
 import itertools
 import functools
+import logging
 import os
 
 from miro import app
@@ -511,7 +512,11 @@ class ItemInfoBase(object):
         if self.feed_expire == u'never':
             return None
         elif self.feed_expire == u"feed":
-            expire_time = self.feed_expire_time
+            if self.feed_expire_time is None:
+                logging.warn("feed_expire is 'feed', but "
+                             "feed_expire_time is None")
+                return None
+            expire_time = self.feed_expire_time_parsed
         elif self.feed_expire == u"system":
             days = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
             if days <= 0:
@@ -520,6 +525,14 @@ class ItemInfoBase(object):
         else:
             raise AssertionError("Unknown expire value: %s" % self.feed_expire)
         return self.watched_time + expire_time
+
+    @property
+    def feed_expire_time_parsed(self):
+        try:
+            return eval(self.feed_expire_time, {'datetime': datetime}, {})
+        except StanderdError:
+            logging.warn("Error parsing feed_expire_time", exc_info=True)
+            return None
 
     @property
     def expiration_date_text(self):
