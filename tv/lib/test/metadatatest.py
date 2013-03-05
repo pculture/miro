@@ -1065,18 +1065,21 @@ class MetadataManagerTest(MiroTestCase):
             self.check_run_mutagen(filename, 'audio', 100, None)
 
         files_finished = []
+        screenshot_paths = []
         for x in range(10):
             filename = 'finished-%i.avi' % x
             files_finished.append(self.make_path(filename))
             self.check_add_file(filename)
             self.check_run_mutagen(filename, 'video', 100, 'Foo')
             self.check_run_movie_data(filename, 'video', 100, True)
+            screenshot_paths.append(self.get_screenshot_path(filename))
 
         # remove the files using both api calls
         all_paths = (files_in_mutagen + files_in_moviedata +
                      files_in_echonest + files_finished)
 
         self.metadata_manager.remove_file(all_paths[0])
+        mock_delete = self.patch_for_test('miro.fileutil.delete')
         self.metadata_manager.remove_files(all_paths[1:])
         # check that the metadata manager sent a CancelFileOperations message
         self.assertEquals(self.processor.canceled_files, set(all_paths))
@@ -1088,6 +1091,10 @@ class MetadataManagerTest(MiroTestCase):
         for path in all_paths:
             self.assertRaises(KeyError, self.metadata_manager.get_metadata,
                               path)
+        # check that the screenshots were deleted
+        deleted_files = [args[0] for args, kwargs in
+                         mock_delete.call_args_list]
+        self.assertSameSet(deleted_files, screenshot_paths)
         # check that callbacks/errbacks for those files don't result in
         # errors.  The metadata system may have already been processing the
         # file when it got the CancelFileOperations message.
