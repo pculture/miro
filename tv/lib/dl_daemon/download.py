@@ -1535,8 +1535,24 @@ class BTDownloader(BGDownloader):
             raise RuntimeError
         save_path = self.calc_save_path()
         self.torrent.move_storage(save_path)
+        self.metainfo = self.calc_metainfo()
+        self.metainfo_updated = True
         self.update_client()
 
+
+    def calc_metainfo(self):
+        torrent_info = self.torrent.get_torrent_info()
+        metainfo = {
+            'info': lt.bdecode(torrent_info.metadata())
+        }
+        trackers = list(torrent_info.trackers())
+        if trackers:
+            # which tracker URL should we use?  For now, we just use the first
+            # one in the list.
+            metainfo['announce'] = trackers[0].url
+        else:
+            logging.warn("calc_metainfo(): no announce URL")
+        return lt.bencode(metainfo)
 
     def handle_corrupt_torrent(self):
         self.handle_error(

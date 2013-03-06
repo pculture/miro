@@ -273,7 +273,8 @@ def get_name_from_torrent_metadata(metadata):
     try:
         return metadata_dict['info']['name'].decode('utf-8')
     except KeyError, e:
-        raise ValueError("key missing when reading metadata: %s", e)
+        raise ValueError("key missing when reading metadata: %s (%s)", e,
+                         metadata_dict)
     except UnicodeError:
         raise ValueError("torrent name is not valid utf-8")
 
