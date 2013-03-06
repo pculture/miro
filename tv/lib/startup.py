@@ -294,6 +294,8 @@ def startup_for_frontend(obj, thread):
     install_message_handler()
 
     app.sharing_manager = sharing.SharingManager()
+    app.download_state_manager = downloader.DownloadStateManager()
+    item.setup_change_tracker()
 
     _startup_checker.run_checks()
 
@@ -471,7 +473,6 @@ def on_frontend_started():
     conversions.conversion_manager.startup()
     item.setup_metadata_manager()
 
-    item.setup_change_tracker()
     app.sharing_tracker = sharing.SharingTracker()
     app.sharing_manager.startup()
     app.sharing_tracker.start_tracking()
@@ -484,7 +485,6 @@ def on_frontend_started():
     guide.download_guides()
     feed.remove_orphaned_feed_impls()
 
-    app.download_state_manager = downloader.DownloadStateManager()
     app.download_state_manager.init_controller()
     itemsource.setup_handlers()
     if app.frontend_name == 'widgets':
