@@ -39,7 +39,8 @@ from miro.dl_daemon import daemon, command
 from miro.download_utils import (next_free_filename, get_file_url_path,
         next_free_directory, filter_directory_name)
 from miro.util import (get_torrent_info_hash, returns_unicode, check_u,
-                       returns_filename, unicodify, check_f, to_uni, is_magnet_uri)
+                       returns_filename, unicodify, check_f, to_uni,
+                       is_magnet_uri, title_from_magnet)
 from miro import app
 from miro import dialogs
 from miro import displaytext
@@ -543,11 +544,7 @@ class RemoteDownloader(DDBObject):
             # don't have a real one when the download starts.  The
             # old_filename check is to prevent things with existing titles
             # from being renamed (#18656).
-            if self.metainfo is not None:
-                torrent_title = util.get_name_from_torrent_metadata(
-                    self.metainfo)
-            else:
-                torrent_title = None
+            torrent_title = self.calc_torrent_title()
             size = self.total_size
             for item in self.item_list:
                 if size != item.size or torrent_title != item.torrent_title:
@@ -557,6 +554,16 @@ class RemoteDownloader(DDBObject):
                         torrent_title is not None):
                         item.torrent_title = torrent_title
                     item.signal_change()
+
+    def calc_torrent_title(self):
+        if self.metainfo is not None:
+            # if we have metainfo, then we should use that
+            return util.get_name_from_torrent_metadata( self.metainfo)
+        elif is_magnet_uri(self.url):
+            # as a fallback, we can try the title from the magnet URI
+            return title_from_magnet(self.url)
+        else:
+            return None
 
     def run_downloader(self):
         """This is the actual download thread.
@@ -778,6 +785,9 @@ class RemoteDownloader(DDBObject):
         """
         if item not in self.item_list:
             self.item_list.append(item)
+            torrent_title = self.calc_torrent_title()
+            if torrent_title is not None:
+                item.torrent_title = torrent_title
             if self.main_item_id is None:
                 self.main_item_id = item.id
                 self.signal_change()

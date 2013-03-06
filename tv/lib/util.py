@@ -35,6 +35,7 @@ any other Miro modules.
 
 from hashlib import sha1 as sha
 from StringIO import StringIO
+import cgi
 import collections
 import contextlib
 import itertools
@@ -1025,7 +1026,7 @@ def is_magnet_uri(uri):
     """ Returns true if this is a magnet link
         which can be handled by Miro.
     """
-    return MAGNET_MATCH_RE.match(uri) and info_hash_from_magnet(uri)
+    return bool(MAGNET_MATCH_RE.match(uri) and info_hash_from_magnet(uri))
 
 MAGNET_INFO_HASH_MATCH = re.compile(r'(?<=btih:)[a-zA-Z0-9]+')
 
@@ -1037,6 +1038,19 @@ def info_hash_from_magnet(uri):
         return m.group(0)
     else:
        return None
+
+def title_from_magnet(uri):
+    """Get the title from a magnet URI, or None if there is not one
+    """
+    try:
+        query = uri[uri.find('?')+1:]
+        query_parsed = cgi.parse_qs(query)
+        if 'dn' in query_parsed:
+            return query_parsed['dn'][0]
+        else:
+            return None
+    except StandardError:
+        logging.warn("Error parsing title from magnet URI", exc_info=True)
 
 def _strip_accents(text):
     nfkd_form = unicodedata.normalize('NFKD', unicode(text))
