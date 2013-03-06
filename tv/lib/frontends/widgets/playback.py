@@ -66,6 +66,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.playlist = None
         self.mark_as_watched_timeout = None
         self.update_timeout = None
+        self.manual_item_list = None
         self.selected_tab_list = self.selected_tabs = None
         self.presentation_mode = 'fit-to-bounds'
         self.create_signal('will-start')
@@ -122,6 +123,7 @@ class PlaybackManager (signals.SignalEmitter):
         """Start playback, playing a static list of ItemInfos."""
         id_list = [i.id for i in item_infos]
         item_list = app.item_list_pool.get(u'manual', id_list)
+        self.manual_item_list = item_list
         self.start(None, item_list)
 
     def goto_currently_playing(self):
@@ -328,6 +330,9 @@ class PlaybackManager (signals.SignalEmitter):
             return
         if self.get_playing_item() is not None:
             self.update_current_resume_time()
+        if self.manual_item_list is not None:
+            app.item_list_pool.release(self.manual_item_list)
+            self.manual_item_list = None
         self.playlist.finished()
         self.playlist = None
         self.cancel_update_timer()
