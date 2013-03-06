@@ -679,18 +679,20 @@ class ItemTracker(signals.SignalEmitter):
 
         :param message: an ItemChanges message
         """
+        self.emit('will-change')
         changed_ids = [item_id for item_id in message.changed
                        if self.item_in_list(item_id)]
         self._uncache_row_data(changed_ids)
         if self._could_list_change(message):
-            self._refetch_id_list()
+            self._refetch_id_list(send_signals=False)
+            self.emit("list-changed")
         else:
             if len(self.id_list) == 0:
                 # special case when the list is empty.  This avoids accessing
                 # item_fetcher after _make_empty_list_after_db_error() is
                 # called.
+                self.emit("list-changed")
                 return
-            self.emit('will-change')
             try:
                 need_refetch = self.item_fetcher.refresh_items(changed_ids)
             except sqlite3.DatabaseError, e:

@@ -727,6 +727,28 @@ class ItemTrackTestWALMode(ItemTrackTestCase):
         # process the second message
         self.tracker.on_item_changes(msg2)
 
+    def test_19913(self):
+        # Yet another tricky cae
+
+        # call get_items() to ensure all items are in loaded
+        self.tracker.get_items()
+        self.tracker.do_idle_work()
+        # change, then remove an item from the list
+        first_item = self.tracked_items[0]
+        first_item.title = u'new-title'
+        first_item.signal_change()
+        first_item.remove()
+        # during the will-change signal, call get_items() again.
+        # The bug in #19913 is that since the item is on the changed list, we
+        # will removed the cached data for it and close our transaction.  This
+        # makes the item not in cache and not able to be loaded again.
+        # Check that get_items() still returns the original
+        # ten items at this point
+        def on_will_change(tracker):
+            self.assertEquals(len(tracker.get_items()), 10)
+        self.tracker.connect('will-change', on_will_change)
+        self.tracker.on_item_changes(self.get_items_changed_message())
+
 class ItemTrackTestNonWALMode(ItemTrackTestWALMode):
     def force_wal_mode(self):
         self.connection_pool.wal_mode = False
