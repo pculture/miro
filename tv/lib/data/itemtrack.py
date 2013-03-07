@@ -1030,11 +1030,17 @@ class BackendItemTracker(signals.SignalEmitter):
         if app.db.is_closed():
             return
 
+        logging.debug("BackendItemTracker.on_item_changes")
+
         if self.query.could_list_change(msg):
+            logging.debug("could change")
             # items may have been added/removed from the list.  We need to
             # re-fetch the items and calculate changes
             self.refetch_items(msg.changed)
         else:
+            logging.debug("could change was False")
+            logging.debug("changed_ids: %s", msg.changed)
+            logging.debug("my ids: %s", self.item_ids)
             # items changed, but the list is the same.  Just refetch the
             # changed items.
             changed_ids = msg.changed.intersection(self.item_ids)
@@ -1059,6 +1065,9 @@ class BackendItemTracker(signals.SignalEmitter):
             changed_ids.difference_update(added_ids)
         else:
             changed_ids = []
+        logging.debug("refetch added: %s", added_ids)
+        logging.debug("refetch changed: %s", changed_ids)
+        logging.debug("refetch remove: %s", removed_ids)
         self.emit('items-changed',
                   [self.item_map[id_] for id_ in added_ids],
                   [self.item_map[id_] for id_ in changed_ids],

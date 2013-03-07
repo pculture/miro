@@ -234,6 +234,11 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def do_send_reply(self, rcode, reply, content_type=DEFAULT_CONTENT_TYPE,
                       content_encoding=None, extra_headers=[]):
+        self.log_message("sending reply: %s", rcode)
+        self.log_message("content_type: %s", content_type)
+        self.log_message("content_encoding: %s", content_encoding)
+        self.log_message("extra_headers: %s", extra_headers)
+        self.log_message("reply: %s", reply)
         blob = encode_response(reply, content_encoding=content_encoding)
         try:
             self.send_response(rcode)

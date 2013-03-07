@@ -1129,6 +1129,8 @@ class _SharedDataSet(object):
         query = self._make_item_tracker_query()
         self.item_tracker = itemtrack.BackendItemTracker(query)
         for item_info in self.item_tracker.get_items():
+            logging.debug("Initial item: %s (%s)", item_info.title,
+                          item_info.id)
             self.make_daap_item(item_info)
         self.item_tracker.connect('items-changed', self.on_items_changed)
 
@@ -1162,6 +1164,15 @@ class _SharedDataSet(object):
     def on_items_changed(self, tracker, added, changed, removed):
         with self.lock:
             self.revision += 1
+            for item_info in added:
+                logging.debug("added item: %s (%s)", item_info.title,
+                              item_info.id)
+            for item_info in changed:
+                logging.debug("changed item: %s (%s)", item_info.title,
+                              item_info.id)
+            for item_info in removed:
+                logging.debug("removed item: %s (%s)", item_info.title,
+                              item_info.id)
             for item_info in added + changed:
                 self.make_daap_item(item_info)
             for item_id in removed:
