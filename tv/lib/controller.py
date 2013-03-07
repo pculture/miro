@@ -125,8 +125,9 @@ class Controller:
 
     def on_shutdown(self):
         try:
-            logging.info("Shutting down icon cache updates")
-            app.icon_cache_updater.shutdown()
+            if app.icon_cache_updater is not None:
+                logging.info("Shutting down icon cache updates")
+                app.icon_cache_updater.shutdown()
             logging.info("Shutting down movie data updates")
             if app.movie_data_updater is not None:
                 app.movie_data_updater.shutdown()

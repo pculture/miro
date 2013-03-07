@@ -80,10 +80,9 @@ backend_config_watcher = None
 frontend_config_watcher = None
 downloader_config_watcher = None
 
-# download state manager
+# global state managers
 download_state_manager = None
-
-# movie data updater
+icon_cache_updater = None
 movie_data_updater = None
 
 # debugmode adds a bunch of computation that's useful for development
