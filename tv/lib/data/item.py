@@ -159,7 +159,7 @@ class ItemSelectInfo(object):
         SelectColumn('item', 'thumbnail_url'),
         SelectColumn('feed', 'orig_url', 'feed_url'),
         SelectColumn('feed', 'expire', 'feed_expire'),
-        SelectColumn('feed', 'expireTime', 'feed_expire_time'),
+        SelectColumn('feed', 'expire_timedelta', 'feed_expire_timedelta'),
         SelectColumn('feed', 'autoDownloadable', 'feed_auto_downloadable'),
         SelectColumn('feed', 'getEverything', 'feed_get_everything'),
         SelectColumn('feed', 'thumbnail_path', 'feed_thumbnail_path_unicode'),
@@ -360,7 +360,7 @@ class ItemInfoBase(object):
     feed_id = None
     feed_get_everything = None
     feed_auto_downloadable = False
-    feed_expire_time = None
+    feed_expire_timedelta = None
     feed_expire = u'never'
 
     def __init__(self, row_data):
@@ -512,9 +512,9 @@ class ItemInfoBase(object):
         if self.feed_expire == u'never':
             return None
         elif self.feed_expire == u"feed":
-            if self.feed_expire_time is None:
+            if self.feed_expire_timedelta is None:
                 logging.warn("feed_expire is 'feed', but "
-                             "feed_expire_time is None")
+                             "feed_expire_timedelta is None")
                 return None
             expire_time = self.feed_expire_time_parsed
         elif self.feed_expire == u"system":
@@ -528,10 +528,13 @@ class ItemInfoBase(object):
 
     @property
     def feed_expire_time_parsed(self):
+        if self.feed_expire_timedelta is None:
+            return None
         try:
-            return eval(self.feed_expire_time, {'datetime': datetime}, {})
+            expire_time_split = self.feed_expire_timedelta.split(":")
+            return datetime.timedelta(int(c) for c in expire_time_split)
         except StanderdError:
-            logging.warn("Error parsing feed_expire_time", exc_info=True)
+            logging.warn("Error parsing feed_expire_timedelta", exc_info=True)
             return None
 
     @property

@@ -624,7 +624,7 @@ class FeedSchema(DDBObjectSchema):
         ('maxOldItems', SchemaInt(noneOk=True)),
         ('fallBehind', SchemaInt()),
         ('expire', SchemaString()),
-        ('expireTime', SchemaTimeDelta(noneOk=True)),
+        ('expire_timedelta', SchemaTimeDelta(noneOk=True)),
         ('section', SchemaString()), # not used anymore
         ('visible', SchemaBool()),
     ]
@@ -998,7 +998,7 @@ class MetadataEntrySchema(DDBObjectSchema):
         ('metadata_entry_status_and_source', ('status_id', 'source')),
     )
 
-VERSION = 199
+VERSION = 200
 
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,

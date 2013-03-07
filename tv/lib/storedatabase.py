@@ -99,7 +99,7 @@ _sqlite_type_map = {
         schema.SchemaURL: 'text',
         schema.SchemaInt: 'integer',
         schema.SchemaDateTime: 'timestamp',
-        schema.SchemaTimeDelta: 'pythonrepr',
+        schema.SchemaTimeDelta: 'text',
         schema.SchemaReprContainer: 'pythonrepr',
         schema.SchemaTuple: 'pythonrepr',
         schema.SchemaDict: 'pythonrepr',
@@ -1505,6 +1505,7 @@ class SQLiteConverter(object):
                 schema.SchemaBinary: self._binary_to_sql,
                 schema.SchemaFilename: self._filename_to_sql,
                 schema.SchemaStringSet: self._string_set_to_sql,
+                schema.SchemaTimeDelta: self._timedelta_to_sql,
         }
 
         self._from_sql_converters = {
@@ -1512,10 +1513,10 @@ class SQLiteConverter(object):
                 schema.SchemaBinary: self._binary_from_sql,
                 schema.SchemaFilename: self._filename_from_sql,
                 schema.SchemaStringSet: self._string_set_from_sql,
+                schema.SchemaTimeDelta: self._timedelta_from_sql,
         }
 
-        repr_types = (schema.SchemaTimeDelta,
-                schema.SchemaReprContainer,
+        repr_types = ( schema.SchemaReprContainer,
                 schema.SchemaTuple,
                 schema.SchemaDict,
                 schema.SchemaList,
@@ -1589,6 +1590,13 @@ class SQLiteConverter(object):
 
     def _string_set_from_sql(self, value, schema_item):
         return set(value.split(schema_item.delimiter))
+
+    def _timedelta_to_sql(self, value, schema_item):
+        return ':'.join((str(value.days), str(value.seconds),
+                         str(value.microseconds)))
+
+    def _timedelta_from_sql(self, value, schema_item):
+        return datetime.timedelta(*(int(c) for c in value.split(":")))
 
 class TimeModuleShadow:
     """In Python 2.6, time.struct_time is a named tuple and evals poorly,

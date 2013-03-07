@@ -419,7 +419,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.maxNew = 3
         self.maxOldItems = None
         self.expire = u"system"
-        self.expireTime = None
+        self.expire_timedelta = None
         self.fallBehind = -1
 
         self.baseTitle = None
@@ -656,7 +656,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                 return []
             delta = timedelta(days=expire_after_x_days)
         else:
-            delta = self.expireTime
+            delta = self.expire_timedelta
         return models.Item.feed_expiring_view(self.id, datetime.now() - delta)
 
     def expire_items(self):
@@ -761,7 +761,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         self.confirm_db_thread()
         self.expire = type_
-        self.expireTime = timedelta(hours=time_)
+        self.expire_timedelta = timedelta(hours=time_)
 
         if self.expire == u"never":
             for item in self.items:
@@ -1114,12 +1114,12 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         self.confirm_db_thread()
         expireAfterSetting = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
-        if ((self.expireTime is None or self.expire == 'never'
+        if ((self.expire_timedelta is None or self.expire == 'never'
              or (self.expire == 'system' and expireAfterSetting <= 0))):
             return 0
         else:
-            return (self.expireTime.days * 24 +
-                    self.expireTime.seconds / 3600)
+            return (self.expire_timedelta.days * 24 +
+                    self.expire_timedelta.seconds / 3600)
 
     def is_autodownloadable(self):
         """Returns true iff item is autodownloadable

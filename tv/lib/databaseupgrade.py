@@ -4373,3 +4373,29 @@ def upgrade198(cursor):
 def upgrade199(cursor):
     """Don't use NULL for item.deleted."""
     cursor.execute("UPDATE item SET deleted=0 WHERE deleted IS NULL")
+
+def upgrade200(cursor):
+    """Change format and name of expireTime."""
+    rename_column(cursor, 'feed', 'expireTime', 'expire_timedelta', 'TEXT')
+    cursor.execute("SELECT id, expire_timedelta FROM feed "
+                   "WHERE expire_timedelta IS NOT NULL")
+    update_values = []
+    timedelta_re = re.compile(r'datetime\.timedelta\(\d+( *, *\d+){0,2}\)')
+    for (feed_id, expire_timedelta) in cursor.fetchall():
+        # do a check that expire_timedelta is in the right format.  This
+        # hopefully should data in the database from executing mallicous code.
+        if timedelta_re.match(expire_timedelta) is None:
+            logging.warn("upgrade200: expireTime doesn't match our RE: %s",
+                         expire_timedelta)
+            continue
+        try:
+            value = eval(expire_timedelta, {'datetime': datetime}, {})
+        except StandardError:
+            logging.warn("upgrade200: error calling eval(): %s",
+                         expire_timedelta)
+            continue
+        new_value = ':'.join((str(value.days), str(value.seconds),
+                              str(value.microseconds)))
+        update_values.append((new_value, feed_id))
+    cursor.executemany("UPDATE feed SET expire_timedelta=? WHERE id=?",
+                       update_values)
