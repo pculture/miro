@@ -1089,15 +1089,6 @@ class DeviceController(object):
         else:
             self.widget.set_sync_status(message.progress, message.eta)
 
-    def start_tracking(self):
-        view = self.widget.get_view()
-        if isinstance(view, DeviceMountedView):
-            message = messages.QuerySyncInformation(self.device)
-            message.send_to_backend()
-
-    def stop_tracking(self):
-        pass
-
 class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     unwatched_label = u'' # everything is marked as played
 

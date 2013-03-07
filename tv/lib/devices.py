@@ -916,7 +916,8 @@ class DeviceSyncManager(object):
         self._check_finished()
 
     def _item_exists(self, item_info):
-        item.DeviceItem.item_exists(item_info, db_info=self.device.db_info)
+        return item.DeviceItem.item_exists(item_info,
+                                           db_info=self.device.db_info)
 
     @staticmethod
     def yield_items_to_get_to(size, sizes_and_items):

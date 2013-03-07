@@ -550,6 +550,10 @@ class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
         if not getattr(self.controller.device, 'fake', False):
             self.controller.handle_device_sync_changed(message)
 
+    def on_activate(self, is_push):
+        message = messages.QuerySyncInformation(self.controller.device)
+        message.send_to_backend()
+
 class DeviceItemDisplay(DeviceDisplayMixin, ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
