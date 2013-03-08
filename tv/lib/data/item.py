@@ -760,6 +760,7 @@ class ItemInfo(ItemInfoBase):
     source_type = 'database'
     select_info = ItemSelectInfo()
 
+    @property
     def is_external(self):
         if self.is_file_item:
             return not self.has_parent
