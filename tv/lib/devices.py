@@ -684,7 +684,7 @@ class DeviceSyncManager(object):
         we need to sync and expired_items is DeviceItems for expired items.
         """
         # sync settings for the database
-        sync = self.device.database[u'sync']
+        sync = self.device.database.get(u'sync', {})
         # list of views with items to sync
         views = []
         # maps feed_urls -> set of URLs for items in that feed
@@ -750,7 +750,7 @@ class DeviceSyncManager(object):
         Returns a list of ItemInfos to be automatically synced to the device.
         The items should be roughly 'size' bytes.
         """
-        sync = self.device.database[u'sync']
+        sync = self.device.database.get(u'sync', {})
         if not sync.get(u'auto_fill', False):
             return set()
 
