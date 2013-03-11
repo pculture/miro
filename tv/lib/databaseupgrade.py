@@ -4399,3 +4399,21 @@ def upgrade200(cursor):
         update_values.append((new_value, feed_id))
     cursor.executemany("UPDATE feed SET expire_timedelta=? WHERE id=?",
                        update_values)
+
+def upgrade201(cursor):
+    """Set invalid expire_timedelta values to NULL."""
+
+    # we should have done this in the last upgrade, but since the beta was
+    # released with that code, let's fix the problem with a new upgrade
+    # function.
+    cursor.execute("SELECT id, expire_timedelta FROM feed "
+                   "WHERE expire_timedelta IS NOT NULL")
+    where_values = []
+    valid_timedelta_re = re.compile(r'\d+:\d+:\d+')
+    for (feed_id, expire_timedelta) in cursor.fetchall():
+        # do a check that expire_timedelta is in the right format.  This
+        # hopefully should data in the database from executing mallicous code.
+        if valid_timedelta_re.match(expire_timedelta) is None:
+            where_values.append((feed_id,))
+    cursor.executemany("UPDATE feed SET expire_timedelta=NULL "
+                       "WHERE id=?", where_values)
