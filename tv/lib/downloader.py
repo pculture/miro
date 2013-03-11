@@ -763,7 +763,11 @@ class RemoteDownloader(DDBObject):
         """
         self.before_changing_rates()
         if self.is_finished():
-            app.local_metadata_manager.remove_file(self.get_filename())
+            if self.filename is not None:
+                app.local_metadata_manager.remove_file(self.get_filename())
+            else:
+                logging.warn("RemoteDownloader.remove: filename is None, "
+                             "but state is %s", self.get_state())
         self.stop(self.delete_files)
         self.after_changing_rates()
         DDBObject.remove(self)
