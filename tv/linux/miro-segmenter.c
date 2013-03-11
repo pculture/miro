@@ -40,7 +40,7 @@ static AVStream *add_output_stream(AVFormatContext *output_format_context, AVStr
     AVCodecContext *output_codec_context;
     AVStream *output_stream;
 
-    output_stream = av_new_stream(output_format_context, 0);
+    output_stream = avformat_new_stream(output_format_context, 0);
     if (!output_stream) {
         fprintf(stderr, "Could not allocate stream\n");
         exit(1);
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-    if (av_find_stream_info(ic) < 0) {
+    if (avformat_find_stream_info(ic,NULL) < 0) {
         fprintf(stderr, "Could not read stream information\n");
         exit(1);
     }
@@ -223,7 +223,7 @@ int main(int argc, char **argv)
             fprintf(stderr, "Could not find video decoder, key frames will not be honored\n");
         }
     
-        if (avcodec_open(video_st->codec, codec) < 0) {
+        if (avcodec_open2(video_st->codec, codec, NULL) < 0) {
             fprintf(stderr, "Could not open video decoder, key frames will not be honored\n");
         }
     }
