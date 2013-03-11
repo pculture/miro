@@ -663,7 +663,7 @@ class DeviceSyncManagerTest(EventLoopTest):
         for i in self.feed_items:
             os.remove(i.filename)
             i.expire()
-        self.check_get_sync_items(self.playlist_items, self.feed_items)
+        self.check_get_sync_items([], self.feed_items)
 
     def test_expire_items(self):
         # Test expiring items
