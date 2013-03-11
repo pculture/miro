@@ -533,7 +533,7 @@ class ItemInfoBase(object):
         try:
             expire_time_split = self.feed_expire_timedelta.split(":")
             return datetime.timedelta(int(c) for c in expire_time_split)
-        except StanderdError:
+        except StandardError:
             logging.warn("Error parsing feed_expire_timedelta", exc_info=True)
             return None
 
