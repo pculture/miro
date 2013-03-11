@@ -24,8 +24,9 @@ apt-get install \
     libavcodec-dev \
     libavformat-dev \
     libavutil-dev \
-    libboost1.46-dev \
+    libboost1.49-dev \
     libsoup2.4-dev \
+    libsqlite3-dev \
     libtag1-dev \
     libtorrent-rasterbar6 \
     libwebkit-dev \
@@ -39,4 +40,4 @@ apt-get install \
     python-pycurl \
     python-pyrex \
     python-webkit \
-    zlib1g-dev \
+    zlib1g-dev
