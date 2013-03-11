@@ -345,10 +345,11 @@ class _ItemsForPathCountTracker(object):
         # Use a raw DB query for this one, since we want to be as fast as
         # possible
         counts = collections.defaultdict(int)
-        app.db.cursor.execute("SELECT lower(filename), COUNT(*) "
+        app.db.cursor.execute("SELECT filename, COUNT(*) "
                               "FROM item "
-                              "GROUP BY filename")
-        counts.update(app.db.cursor)
+                              "GROUP BY LOWER(filename)")
+        counts.update((filename.lower(), count)
+                      for filename, count in app.db.cursor)
         self.count_for_paths = counts
         return counts
 
@@ -929,8 +930,8 @@ class Item(MetadataItemBase, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def items_with_path_view(cls, path):
-        return cls.make_view('lower(filename)=?',
-                             (filename_to_unicode(path).lower(),))
+        return cls.make_view('LOWER(filename)=LOWER(?)',
+                             (filename_to_unicode(path),))
 
     @classmethod
     def downloader_view(cls, dler_id):
@@ -2629,8 +2630,8 @@ class DeviceItem(MetadataItemBase):
     @classmethod
     def get_by_path(cls, path, db_info):
         """Get a deviceItem for a given path."""
-        view = cls.make_view('lower(filename)=?',
-                             (filename_to_unicode(path).lower(),),
+        view = cls.make_view('LOWER(filename)=LOWER(?)',
+                             (filename_to_unicode(path),),
                              db_info=db_info)
         return view.get_singleton()
 
@@ -2642,13 +2643,13 @@ class DeviceItem(MetadataItemBase):
         one entry for each item in path_list that exists in the database.
         """
 
-        path_list = [filename_to_unicode(p).lower() for p in path_list]
+        path_list = [filename_to_unicode(p) for p in path_list]
         path_map = {}
         # It's possible for there to be more than 999 items in path_list.
         # Split up the query to avoid SQLite's host parameters limit
         for paths in util.split_values_for_sqlite(path_list):
-            placeholders = ', '.join('?' for i in xrange(len(paths)))
-            view = cls.make_view('lower(filename) IN (%s)' % placeholders,
+            placeholders = ', '.join('LOWER(?)' for i in xrange(len(paths)))
+            view = cls.make_view('LOWER(filename) IN (%s)' % placeholders,
                                  paths, db_info=db_info)
             for i in view:
                 path_map[i.filename.lower()] = i
@@ -2836,12 +2837,12 @@ def on_new_metadata(metadata_manager, new_metadata):
     # Get all items that have changed using one query.  This is much faster
     # than calling items_with_path_view() for each path.
     path_map = collections.defaultdict(list)
-    all_paths = [filename_to_unicode(p).lower() for p in new_metadata.keys()]
+    all_paths = [filename_to_unicode(p) for p in new_metadata.keys()]
     # It's possible for there to be more than 999 items in all_paths.  Split
     # up the query to avoid SQLite's host parametrs limit
     for paths in util.split_values_for_sqlite(all_paths):
-        placeholders = ', '.join('?' for i in xrange(len(paths)))
-        view = Item.make_view('lower(filename) IN (%s)' % placeholders, paths)
+        placeholders = ', '.join('LOWER(?)' for i in xrange(len(paths)))
+        view = Item.make_view('LOWER(filename) IN (%s)' % placeholders, paths)
         for i in view:
             path_map[i.filename].append(i)
 

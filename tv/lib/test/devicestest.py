@@ -818,10 +818,10 @@ class DeviceItemTest(MiroTestCase):
         self.assertEquals(mock_make_view.call_count, 1)
         sql, params = mock_make_view.call_args[0]
         self.assertEquals(type(params[0]), unicode)
-        if 'lower' not in sql:
+        if 'LOWER' not in sql:
             raise AssertionError("this doesn't look like lower case "
                                  "comparison: %s " % sql)
-        self.assertEquals(params[0], 'foo.mp3')
+        self.assertEquals(params[0], 'Foo.mp3')
         self.assertEquals(type(mock_make_view.call_args[0][1][0]), unicode)
         mock_make_view.reset_mock() 
 
@@ -830,7 +830,7 @@ class DeviceItemTest(MiroTestCase):
         item.DeviceItem.items_for_paths([path], self.device.db_info)
         sql, params = mock_make_view.call_args[0]
         self.assertEquals(type(params[0]), unicode)
-        if 'lower' not in sql:
+        if 'LOWER' not in sql:
             raise AssertionError("this doesn't look like lower case "
                                  "comparison: %s " % sql)
-        self.assertEquals(params[0], 'foo.mp3')
+        self.assertEquals(params[0], 'Foo.mp3')

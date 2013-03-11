@@ -325,6 +325,12 @@ class HaveItemForPathTest(MiroTestCase):
         self.remove_item(u'VIDEO\xe4-3')
         self.check_have_item_for_path()
 
+    def test_19929(self):
+        # Test have_item_for_path when sqlite and python have different values
+        # for LOWER()
+        self.add_item(u'\xd0')
+        self.check_have_item_for_path()
+
 class ItemMetadataTest(MiroTestCase):
     # Test integration between the item and metadata modules.
     def setUp(self):
