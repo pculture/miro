@@ -288,7 +288,7 @@ echo "using python : : $PYTHON_ROOT/bin/python$PYTHON_VERSION ;" >> $USER_CONFIG
 
 tar -xvf $BKIT_DIR/libtorrent-rasterbar-*
 pushd libtorrent-rasterbar-*
-patch -p1 < $BKIT_DIR/patches/libtorrent-rasterbar-0.15.5/libtorrent-boost-filesystem-version.patch
+patch -p1 < $BKIT_DIR/patches/libtorrent-rasterbar-0.16.9/libtorrent-boost-filesystem-version.patch
 popd
 cd libtorrent-rasterbar-*/bindings/python
 $SBOX_DIR/bin/bjam dht-support=on \
