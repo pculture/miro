@@ -347,6 +347,7 @@ class _ItemsForPathCountTracker(object):
         counts = collections.defaultdict(int)
         app.db.cursor.execute("SELECT filename, COUNT(*) "
                               "FROM item "
+                              "WHERE filename IS NOT NULL "
                               "GROUP BY LOWER(filename)")
         counts.update((filename.lower(), count)
                       for filename, count in app.db.cursor)
