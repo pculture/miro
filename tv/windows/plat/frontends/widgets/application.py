@@ -426,8 +426,15 @@ class WindowsApplication(Application):
         if value:
             filename = self._get_exe_location()
 
-            _winreg.SetValueEx(folder, app.config.get(prefs.LONG_APP_NAME), 0,
-                               _winreg.REG_SZ, filename)
+            try:
+                _winreg.SetValueEx(folder, app.config.get(prefs.LONG_APP_NAME), 0,
+                                   _winreg.REG_SZ, filename)
+            except WindowsError, e:
+                # bz19936: permissions error when setting the registry key.  I
+                # guess we can't do it.
+                logging.warn("Error setting run at startup registry key: %s",
+                             e)
+                return
 
         else:
             try:
