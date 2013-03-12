@@ -296,6 +296,7 @@ def startup_for_frontend(obj, thread):
     app.sharing_manager = sharing.SharingManager()
     app.download_state_manager = downloader.DownloadStateManager()
     item.setup_change_tracker()
+    item.setup_metadata_manager()
 
     _startup_checker.run_checks()
 
@@ -471,7 +472,6 @@ def on_frontend_started():
     could take a while to run, we yield to other eventloop callbacks.
     """
     conversions.conversion_manager.startup()
-    item.setup_metadata_manager()
 
     app.sharing_tracker = sharing.SharingTracker()
     app.sharing_manager.startup()
