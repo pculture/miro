@@ -121,6 +121,9 @@ class PlaybackManager (signals.SignalEmitter):
 
     def start_with_items(self, item_infos):
         """Start playback, playing a static list of ItemInfos."""
+        # call stop before anything so that we release our existing
+        # manual_item_list (#19932)
+        self.stop()
         id_list = [i.id for i in item_infos]
         item_list = app.item_list_pool.get(u'manual', id_list)
         self.manual_item_list = item_list
