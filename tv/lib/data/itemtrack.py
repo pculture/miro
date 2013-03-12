@@ -1054,9 +1054,9 @@ class BackendItemTracker(signals.SignalEmitter):
         removed_ids = old_item_ids - self.item_ids
         if changed_ids:
             # remove ids from changed that aren't on the list
-            changed_ids.intersection_update(self.item_ids)
+            changed_ids = changed_ids.intersection(self.item_ids)
             # remove ids from changed that were just added
-            changed_ids.difference_update(added_ids)
+            changed_ids = changed_ids.difference(added_ids)
         else:
             changed_ids = []
         self.emit('items-changed',

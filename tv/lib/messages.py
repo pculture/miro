@@ -1224,10 +1224,10 @@ class ItemChanges(FrontendMessage):
     """
     def __init__(self, added, changed, removed, changed_columns,
                  dlstats_changed, playlists_changed):
-        self.added = added
-        self.changed = changed
-        self.removed = removed
-        self.changed_columns = changed_columns
+        self.added = frozenset(added)
+        self.changed = frozenset(changed)
+        self.removed = frozenset(removed)
+        self.changed_columns = frozenset(changed_columns)
         self.dlstats_changed = dlstats_changed
         self.playlists_changed = playlists_changed
 
