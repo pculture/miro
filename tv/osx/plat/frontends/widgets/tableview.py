@@ -1300,6 +1300,10 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         if custom_headers:
             self._enable_custom_headers()
 
+    def place(self, rect, containing_view):
+        logging.stacktrace("TableView.place: %s (%s)", rect, self)
+        Widget.place(self, rect, containing_view)
+
     def unset_model(self):
         for signal_id in self.model_signal_ids:
             self.model.disconnect(signal_id)
