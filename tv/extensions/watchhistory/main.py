@@ -74,7 +74,7 @@ class WatchHistory():
         if self.csv_writer and self.item_info:
             row = [
                 time.ctime(),
-                self.item_info.name,
+                self.item_info.title,
                 self.item_info.duration]
             self.csv_writer.writerow(row)
             # we wipe out self.item_info because will-play gets called
