@@ -41,10 +41,9 @@ class StartsWithVowelItemFilter(widgetsapi.ExtensionItemFilter):
     # really have support for that in extensions.
     user_label = 'Vowel'
 
-    def filter(self, item_info):
-        # return True if the first char of name is a vowel
-        return (len(item_info.name) > 0 and
-                item_info.name[0].lower() in ('a', 'e', 'i', 'o', 'u'))
+    def add_to_query(self, query):
+        sql = "LOWER(SUBSTR(title, 1, 1)) IN ('a', 'e', 'i', 'o', 'u')"
+        query.add_complex_condition(['title'], sql)
 
 def get_item_list_filters(type_, id_):
     # Implement the item_list_filter hook by adding the

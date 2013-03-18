@@ -80,6 +80,12 @@ class ItemFilter(object):
         for cls in util.all_subclasses(ItemFilter):
             if cls.key == key:
                 return cls
+        hook_results = api.hook_invoke('item_list_filters', self.type,
+                self.id)
+        for filter_list in hook_results:
+            for filter_ in filter_list:
+                if filter_.key == key:
+                    return filter_
         raise KeyError(key)
 
     # maps keys to ItemFilter objects
