@@ -83,7 +83,8 @@ class TabListView(widgetset.TableView):
     """TableView for a tablist."""
     draws_selection = True
 
-    def __init__(self, renderer, table_model_class=None):
+    def __init__(self, name, renderer, table_model_class=None):
+        self.name = name
         if table_model_class is None:
             table_model_class = widgetset.TreeTableModel
         table_model = table_model_class('object', 'boolean', 'integer')
@@ -101,6 +102,9 @@ class TabListView(widgetset.TableView):
         self.set_background_color(style.TAB_LIST_BACKGROUND_COLOR)
         self.set_fixed_height(False)
         self.set_auto_resizes(True)
+
+    def __str__(self):
+        return "TabList(%s)" % (self.name)
 
     def append_tab(self, tab_info):
         """Add a new tab with no parent."""
@@ -389,7 +393,7 @@ class StaticTabList(TabUpdaterMixin, TabList):
         app.search_manager.connect('search-complete', self._on_search_complete)
 
     def _make_view(self):
-        view = TabListView(style.StaticTabRenderer())
+        view = TabListView('static', style.StaticTabRenderer())
         view.allow_multiple_select = False
         return view
 
@@ -417,7 +421,7 @@ class LibraryTabList(TabBlinkerMixin, TabUpdaterMixin, TabList):
         self.auto_tabs_to_show = set()
 
     def _make_view(self):
-        view = TabListView(style.StaticTabRenderer())
+        view = TabListView('library', style.StaticTabRenderer())
         view.allow_multiple_select = False
         view.set_drag_dest(MediaTypeDropHandler())
         view.connect('selection-changed', self.on_selection_changed)
@@ -561,7 +565,7 @@ class HideableTabList(TabList):
         return super(HideableTabList, self).changing or not self._set_up
 
     def _make_view(self):
-        view = TabListView(self.render_class())
+        view = TabListView(self.name, self.render_class())
         view.allow_multiple_select = self.ALLOW_MULTIPLE
         view.connect('row-clicked', self.on_row_clicked)
         view.connect('row-expanded', self.on_row_expanded_change, True)

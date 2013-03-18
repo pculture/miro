@@ -382,6 +382,8 @@ class CustomTableCell(NSCell):
         return DrawingStyle(text_color=text_color)
 
     def drawInteriorWithFrame_inView_(self, frame, view):
+        logging.warn("CustomTableCell.drawInteriorWithFrame_inView_: %s (%s)",
+                     frame, wrappermap.wrapper(view))
         NSGraphicsContext.currentContext().saveGraphicsState()
         if not self.wrapper.IGNORE_PADDING:
             # adjust frame based on the cell spacing. We also have to adjust
@@ -1300,6 +1302,10 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         if custom_headers:
             self._enable_custom_headers()
 
+    def place(self, rect, containing_view):
+        logging.warn("TableView.place: %s (%s)", rect, self)
+        Widget.place(self, rect, containing_view)
+
     def unset_model(self):
         for signal_id in self.model_signal_ids:
             self.model.disconnect(signal_id)
@@ -1347,6 +1353,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
             self.tableview.hotspot_tracker = None
 
     def on_expanded(self, notification):
+        logging.warn("Row expanded: %s", self)
         self.invalidate_size_request()
         item = notification.userInfo()['NSObject']
         iter_ = self.model.iter_for_item[item]
