@@ -551,8 +551,9 @@ class DeviceDisplay(DeviceDisplayMixin, TabDisplay):
             self.controller.handle_device_sync_changed(message)
 
     def on_activate(self, is_push):
-        message = messages.QuerySyncInformation(self.controller.device)
-        message.send_to_backend()
+        if self.controller.device.mount:
+            message = messages.QuerySyncInformation(self.controller.device)
+            message.send_to_backend()
 
 class DeviceItemDisplay(DeviceDisplayMixin, ItemListDisplay):
     @staticmethod
