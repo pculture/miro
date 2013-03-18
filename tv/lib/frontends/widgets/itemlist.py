@@ -39,6 +39,7 @@ in the interface.
 import collections
 
 from miro import app
+from miro import prefs
 from miro.data import item
 from miro.data import itemtrack
 from miro.frontends.widgets import itemfilter
@@ -132,7 +133,11 @@ class ItemList(itemtrack.ItemTracker):
         if tab_type == 'videos':
             query.add_condition('file_type', '=', 'video')
             query.add_condition('deleted', '=', False)
+            if not app.config.get(prefs.SHOW_PODCASTS_IN_VIDEO):
+                self.add_in_podcast_to_query(query)
         elif tab_type == 'music':
+            if not app.config.get(prefs.SHOW_PODCASTS_IN_MUSIC):
+                self.add_in_podcast_to_query(query)
             query.add_condition('file_type', '=', 'audio')
             query.add_condition('deleted', '=', False)
         elif tab_type == 'others':
@@ -141,8 +146,6 @@ class ItemList(itemtrack.ItemTracker):
         elif tab_type == 'search':
             query.add_condition('feed.orig_url', '=', 'dtv:search')
         elif tab_type == 'downloading':
-            # FIXME: this should also include failed downloads from the manual
-            # feed
             sql = ("((remote_downloader.state IN ('downloading', 'uploading', "
                    "'paused', 'uploading-paused', 'offline')) OR "
                    "(remote_downloader.state = 'failed' AND "
@@ -217,6 +220,12 @@ class ItemList(itemtrack.ItemTracker):
             raise ValueError("Can't handle tab (%r, %r)" % (tab_type, tab_id))
         return query
 
+    def add_in_podcast_to_query(self, query):
+        columns = ['feed.orig_url', 'is_file_item']
+        sql = ("feed.orig_url IN ('dtv:manualFeed', 'dtv:searchDownloads', "
+               "'dtv:search') OR is_file_item")
+        query.add_complex_condition(columns, sql)
+
     def _make_item_source(self):
         if self.is_for_device():
             device_info = app.tabs['connect'].get_tab(self.device_id())
@@ -257,6 +266,10 @@ class ItemList(itemtrack.ItemTracker):
 
     def set_search(self, search_text):
         self.search_text = search_text
+        self._update_query()
+
+    def refresh_query(self):
+        self.base_query = self._make_base_query(self.tab_type, self.tab_id)
         self._update_query()
 
     # attributes

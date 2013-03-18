@@ -1231,6 +1231,11 @@ class VideoItemsController(AudioVideoItemsController):
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=True, wide_image=True)
 
+    def on_config_change(self, obj, key, value):
+        if key == prefs.SHOW_PODCASTS_IN_VIDEO.key:
+            self.item_list.refresh_query()
+        AudioVideoItemsController.on_config_change(self, obj, key, value)
+
     def get_item_list_grouping(self):
         return itemlist.video_grouping
 
@@ -1245,6 +1250,11 @@ class AudioItemsController(AudioVideoItemsController):
 
     def build_renderer(self):
         return itemrenderer.ItemRenderer(display_channel=True)
+
+    def on_config_change(self, obj, key, value):
+        if key == prefs.SHOW_PODCASTS_IN_MUSIC.key:
+            self.item_list.refresh_query()
+        AudioVideoItemsController.on_config_change(self, obj, key, value)
 
 class OtherItemsController(SimpleItemListController):
     type = u'others'
