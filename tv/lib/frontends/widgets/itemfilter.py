@@ -216,6 +216,30 @@ class ItemFilterAudio(ItemFilterAudioVideo):
     def add_to_query(self, query):
         query.add_condition('file_type', '=', 'audio')
 
+class ItemFilterWatchedFolderVideo(ItemFilter):
+    """Filter for video items in watch folders.
+
+    This works like the Video filter, but it doesn't automatically select
+    other filters when selected
+    """
+    key = u'wf-video'
+    user_label = _('Video')
+
+    def add_to_query(self, query):
+        query.add_condition('file_type', '=', 'video')
+
+class ItemFilterAudio(ItemFilter):
+    """Filter for audio items in watch folders.
+
+    This works like the Audio filter, but it doesn't automatically select
+    other filters when selected
+    """
+    key = u'wf-audio'
+    user_label = _('Audio')
+
+    def add_to_query(self, query):
+        query.add_condition('file_type', '=', 'audio')
+
 class ItemFilterMovies(ItemFilter):
     """Filter for movie items."""
     key = u'movies'

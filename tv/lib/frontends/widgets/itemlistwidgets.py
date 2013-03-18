@@ -838,7 +838,7 @@ class WatchedFolderTitlebar(ItemListTitlebar):
     uses_resume_button = True
 
     def get_filters(self):
-        return ('all', 'unplayed', 'video', 'audio')
+        return ('all', 'unplayed', 'wf-video', 'wf-audio')
 
 class SearchListTitlebar(SearchTitlebar):
     """Titlebar for the search page.
