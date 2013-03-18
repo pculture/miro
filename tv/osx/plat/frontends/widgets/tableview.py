@@ -1360,6 +1360,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.emit('row-expanded', iter_, self.model.get_path(iter_))
 
     def on_collapsed(self, notification):
+        logging.warn("Row collapsed: %s", self)
         self.invalidate_size_request()
         item = notification.userInfo()['NSObject']
         iter_ = self.model.iter_for_item[item]
@@ -1400,6 +1401,7 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
     def calc_size_request(self):
         self.tableview.tile()
         height = self.tableview.frame().size.height
+        logging.warn("TableView.calc_size_request: %s (%s)", height, self)
         if self._show_headers:
             height += self.header_height
         return self.calc_width(), height
