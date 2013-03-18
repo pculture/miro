@@ -1391,11 +1391,24 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         return self.tableview.isItemExpanded_(iter.value())
 
     def calc_size_request(self):
-        self.tableview.tile()
-        height = self.tableview.frame().size.height
+        return self.calc_width(), self.calc_height()
+
+    def calc_height(self):
         if self._show_headers:
-            height += self.header_height
-        return self.calc_width(), height
+            height = self.header_height
+        else:
+            height = 0
+        if self.tableview.numberOfRows() == 0:
+            # No rows in the table, NSTableView uses 4px of height in this
+            # case.
+            return height + 4
+        if self.fixed_height:
+            height += self.tableview.rowHeight() * self.tableview.numberOfRows()
+        else:
+            for i in xrange(self.tableview.numberOfRows()):
+                it = self.model.iter_for_row(self.tableview, i)
+                height += calc_row_height(self.tableview, self.model[it])
+        return height
 
     def viewport_repositioned(self):
         self._do_layout()
