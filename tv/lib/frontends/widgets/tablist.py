@@ -633,7 +633,7 @@ class HideableTabList(TabList):
                 self.expand(self.info.id)
                 self.view.model_changed()
 
-    def on_row_expanded_change(self, view, iter_, path, expanded):
+    def on_row_expanded_change(self, view, iter_, expanded):
         info = self.view.model[iter_][0]
         if info == self.info:
             message = messages.TabExpandedChange(self.type, expanded)

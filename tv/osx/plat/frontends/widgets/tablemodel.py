@@ -403,13 +403,6 @@ class TreeTableModel(TableModelBase):
             raise LookupError("%s is not in this table" % repr(item))
         return row
 
-    def get_path(self, iter_):
-        """Not implemented (yet?) for Cocoa. Currently the only place this is
-        needed is tablistmanager, where the situation that uses paths results
-        from GTK peculiarities.
-        """
-        return NotImplemented
-
 class DataSourceBase(NSObject):
     def initWithModel_(self, model):
         self.model = model
