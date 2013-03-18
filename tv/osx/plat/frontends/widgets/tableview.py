@@ -1402,20 +1402,29 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         return self.calc_width(), self.calc_height()
 
     def calc_height(self):
+        logging.warn("calc_height rows: %s (%s)", self.tableview.numberOfRows,
+                     self)
         if self._show_headers:
+            logging.warn("show headers: %s", self.header_height)
             height = self.header_height
         else:
+            logging.warn("no show headers")
             height = 0
         if self.tableview.numberOfRows() == 0:
             # No rows in the table, NSTableView uses 4px of height in this
             # case.
+            logging.warn("no rows, returning: %s", height +4)
             return height + 4
         if self.fixed_height:
+            logging.warn("fixed height: %s", self.tableview.rowHeight())
             height += self.tableview.rowHeight() * self.tableview.numberOfRows()
         else:
             for i in xrange(self.tableview.numberOfRows()):
                 it = self.model.iter_for_row(self.tableview, i)
-                height += calc_row_height(self.tableview, self.model[it])
+                row_height = calc_row_height(self.tableview, self.model[it])
+                logging.warn("row height %s: %s", i, row_height)
+                height += row_height
+        logging.warn("total: %s", height)
         return height
 
     def viewport_repositioned(self):
