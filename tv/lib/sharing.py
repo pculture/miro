@@ -136,6 +136,9 @@ class Share(object):
             fileutil.delete(self.db_path)
         self.db = self.db_info = self.db_path = None
 
+    def is_closed(self):
+        return self.db is None
+
     def find_unused_db(self):
         """Find a DB path for our share that's not being used.
 
@@ -898,14 +901,14 @@ class SharingItemTrackerImpl(object):
 
     def client_update_callback(self, result):
         logging.debug('CLIENT UPDATE CALLBACK')
-        if self.share.db.is_closed():
+        if self.share.is_closed():
             logging.warn("client_update_callback: database is closed")
             return
         self.update_sharing_items(result)
         self.update_playlists(result)
 
     def client_update_error_callback(self, unused):
-        if self.share.db.is_closed():
+        if self.share.is_closed():
             logging.stacktrace("client_update_error_callback: "
                                "database is closed")
             return
@@ -914,7 +917,7 @@ class SharingItemTrackerImpl(object):
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, result):
         # ignore deleted items for the first run
-        if self.share.db.is_closed():
+        if self.share.is_closed():
             logging.warn("client_connect_callback: database is closed")
             return
         result.deleted_items = []
