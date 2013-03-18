@@ -49,7 +49,6 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.update_buttons()
 
     def build_widget(self):
-        self.titlebar = self.make_titlebar()
         self.widget.titlebar_vbox.pack_start(self.titlebar)
 
         self.status_toolbar = DownloadStatusToolbar()

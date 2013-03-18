@@ -437,6 +437,7 @@ class ItemFilterBox(widgetset.HBox):
         self.create_signal('filter-clicked')
         # map filter keys -> FilterButton objects
         self.button_map = {}
+        self.filters = set()
 
     def set_filters(self, filter_set):
         for key, button in self.button_map.iteritems():
@@ -444,6 +445,8 @@ class ItemFilterBox(widgetset.HBox):
             self.button_map[key].set_enabled(enabled)
 
     def add_filter(self, key):
+        if key in self.filters:
+            raise ValueError("Already added filter %s" % key)
         # lookup label using itemfilter
         try:
             label = itemfilter.get_label(key)
@@ -459,6 +462,7 @@ class ItemFilterBox(widgetset.HBox):
         button.connect('clicked', self._on_filter_clicked, key)
         self.pack_start(button)
         self.button_map[key] = button
+        self.filters.add(key)
 
     def add_filters(self, key_list):
         for key in key_list:

@@ -60,7 +60,6 @@ class FeedController(itemlistcontroller.ItemListController):
     def build_widget(self):
         feed_info = widgetutil.get_feed_info(self.id)
 
-        self.titlebar = self.make_titlebar(feed_info)
         self.titlebar.connect('filter-clicked', self.on_filter_clicked)
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.titlebar.connect('search-changed', self._on_search_changed)
@@ -80,7 +79,8 @@ class FeedController(itemlistcontroller.ItemListController):
         return itemrenderer.ItemRenderer(display_channel=self.is_folder,
                 is_podcast=(not feed_info.is_directory_feed))
 
-    def make_titlebar(self, feed_info):
+    def make_titlebar(self):
+        feed_info = widgetutil.get_feed_info(self.id)
         if feed_info.is_directory_feed:
             titlebar = itemlistwidgets.WatchedFolderTitlebar()
         elif feed_info.is_folder:
@@ -215,7 +215,7 @@ class AllFeedsController(FeedController):
     def __init__(self):
         FeedController.__init__(self, u'feed-base-tab', True, True)
 
-    def make_titlebar(self, feed_info):
+    def make_titlebar(self):
         return itemlistwidgets.AllFeedsTitlebar()
 
     def get_item_list_grouping(self):

@@ -233,6 +233,7 @@ class ItemListController(object):
         self._selection_to_restore = None
         self.config_change_handle = None
         self.show_resume_playing_button = False
+        self.titlebar = self.make_titlebar()
         self.add_extension_filters()
         self.item_list = self.build_item_list()
         self.model = widgetset.ItemListModel(self.item_list)
@@ -592,11 +593,28 @@ class ItemListController(object):
         return itemlistwidgets.HeaderToolbar(sorts_enabled)
 
     def build_item_list(self):
-        filters = app.widget_state.get_filters(self.type, self.id)
+        filters = self.get_initial_filters()
         sorter = self.get_sorter()
         group_func = self.get_item_list_grouping()
         return app.item_list_pool.get(self.type, self.id, sorter, group_func,
                                       filters, self._search_text)
+
+    def get_initial_filters(self):
+        filters = app.widget_state.get_filters(self.type, self.id)
+        # check that the filters are valid for this view (see #19948)
+        valid_filters = self.titlebar.filter_box.filters
+        invalid_filters = []
+        for key in filters:
+            if key not in valid_filters:
+                invalid_filters.append(key)
+        if invalid_filters:
+            logging.warn("ItemListController.get_initial_filters: removing "
+                         "invalid filters: %s", invalid_filters)
+            filters.difference_update(invalid_filters)
+        if not filters: # handle the case where we removed all filters
+            return None
+        return filters
+
     def get_item_list_grouping(self):
         return itemlist.album_grouping
 
@@ -1152,7 +1170,6 @@ class SimpleItemListController(ItemListController):
         ItemListController.__init__(self, self.type, self.id)
 
     def build_widget(self):
-        self.titlebar = self.make_titlebar()
         self.titlebar.switch_to_view(self.widget.selected_view)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
 
