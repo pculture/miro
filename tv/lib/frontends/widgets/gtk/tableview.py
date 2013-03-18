@@ -1320,10 +1320,10 @@ class TableView(Widget, GTKSelectionOwnerMixin, DNDHandlerMixin,
         return
 
     def on_row_expanded(self, _widget, iter_, path):
-        self.emit('row-expanded', iter_, path)
+        self.emit('row-expanded', iter_)
 
     def on_row_collapsed(self, _widget, iter_, path):
-        self.emit('row-collapsed', iter_, path)
+        self.emit('row-collapsed', iter_)
 
     def on_button_press(self, treeview, event):
         """Handle a mouse button press"""

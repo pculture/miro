@@ -1350,13 +1350,13 @@ class TableView(CocoaSelectionOwnerMixin, CocoaScrollbarOwnerMixin, Widget):
         self.invalidate_size_request()
         item = notification.userInfo()['NSObject']
         iter_ = self.model.iter_for_item[item]
-        self.emit('row-expanded', iter_, self.model.get_path(iter_))
+        self.emit('row-expanded', iter_)
 
     def on_collapsed(self, notification):
         self.invalidate_size_request()
         item = notification.userInfo()['NSObject']
         iter_ = self.model.iter_for_item[item]
-        self.emit('row-collapsed', iter_, self.model.get_path(iter_))
+        self.emit('row-collapsed', iter_)
 
     def on_column_resize(self, notification):
         if self.auto_resizing or self._resizing:
