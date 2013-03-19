@@ -966,6 +966,7 @@ class MenuManager(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, 'menus-updated')
         self.menu_item_fetcher = MenuItemFetcher()
         self.subtitle_encoding_updater = SubtitleEncodingMenuUpdater()
+        self.converter_list = []
 
     def setup_menubar(self, menubar):
         """Setup the main miro menubar.
@@ -1012,6 +1013,16 @@ class MenuManager(signals.SignalEmitter):
                                 groups=["LocalPlayablesSelected"])
                 menu.insert(position.next(), item)
             menu.insert(position.next(), Separator())
+        for i, group_list in enumerate(converters):
+            self.converter_list.insert(i, group_list)
+
+    def get_converters(self):
+        """Get the current list of converters
+
+        :returns: list of converter groups.  Each group will be a list of
+        (identifier, title) tuples.
+        """
+        return self.converter_list
 
     def select_subtitle_encoding(self, encoding):
         if not self.subtitle_encoding_updater.has_encodings():

@@ -30,6 +30,8 @@
 """itemcontextmenu.py -- Handle popping up a context menu for an item
 """
 
+import functools
+
 from miro import api
 from miro import app
 from miro import displaytext
@@ -470,15 +472,13 @@ class ItemContextMenuHandler(object):
 
     def _make_convert_menu(self):
         convert_menu = []
-        sections = conversion_manager.get_converters()
-        for index, section in enumerate(sections):
-            for converter in section[1]:
-                def convert(converter=converter.identifier):
-                    app.widgetapp.convert_items(converter)
-                convert_menu.append((converter.displayname, convert))
-            if index+1 < len(sections):
-                convert_menu.append(None)
-        convert_menu.append(None)
+        sections = app.menu_manager.get_converters()
+        for index, converter_list in enumerate(sections):
+            for (identifier, title) in converter_list:
+                func = functools.partial(app.widgetapp.convert_items,
+                                         identifier)
+                convert_menu.append((title, func))
+            convert_menu.append(None)
         convert_menu.append((_("Show Conversion Folder"),
                              app.widgetapp.reveal_conversions_folder))
         return convert_menu
