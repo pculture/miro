@@ -49,6 +49,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.update_buttons()
 
     def build_widget(self):
+        self.titlebar.switch_to_view(self.widget.selected_view)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
 
         self.status_toolbar = DownloadStatusToolbar()
@@ -70,7 +71,6 @@ class DownloadsController(itemlistcontroller.ItemListController):
         titlebar.connect("resume-all", self._on_resume_all)
         titlebar.connect("cancel-all", self._on_cancel_all)
         titlebar.connect("settings", self._on_settings)
-        titlebar.switch_to_view(self.widget.selected_view)
         titlebar.hide_album_view_button()
         return titlebar
 
