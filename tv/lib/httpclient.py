@@ -603,7 +603,10 @@ class CurlTransfer(object):
                 # doing a redirect, clear out the headers
                 redirect_url = self.headers['location']
                 scheme, _, _, _ = download_utils.parse_url(redirect_url)
-                if scheme not in ('http', 'https'):
+                if not scheme:
+                    logging.warn("%s: Non-absolute redirect URL: %s",
+                                 self.options.url, redirect_url)
+                elif scheme not in ('http', 'https'):
                     self.cancel(remove_file=True)
                     self.call_errback(InvalidRedirect(redirect_url))
                     return
