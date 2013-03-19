@@ -234,8 +234,8 @@ class ItemListController(object):
         self.config_change_handle = None
         self.show_resume_playing_button = False
         self.titlebar = self.make_titlebar()
-        self.add_extension_filters()
         self.item_list = self.build_item_list()
+        self.add_extension_filters()
         self.model = widgetset.ItemListModel(self.item_list)
         self._init_widget()
         self.restore_scroll_positions()
@@ -270,6 +270,7 @@ class ItemListController(object):
                 logging.exception("Error adding extension item filter")
 
     def _add_extension_filter_list(self, filter_list):
+        self.item_list.add_extension_filters(filter_list)
         for filter_ in filter_list:
             self.titlebar.filter_box.add_filter(filter_.key)
 

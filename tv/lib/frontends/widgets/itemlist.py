@@ -260,6 +260,9 @@ class ItemList(itemtrack.ItemTracker):
     def get_filters(self):
         return self.filter_set.active_filters
 
+    def add_extension_filters(self, filters):
+        return self.filter_set.add_extension_filters(filters)
+
     def set_sort(self, sorter):
         self.sorter = sorter
         self._update_query()

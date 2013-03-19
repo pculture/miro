@@ -80,12 +80,6 @@ class ItemFilter(object):
         for cls in util.all_subclasses(ItemFilter):
             if cls.key == key:
                 return cls
-        hook_results = api.hook_invoke('item_list_filters', self.type,
-                self.id)
-        for filter_list in hook_results:
-            for filter_ in filter_list:
-                if filter_.key == key:
-                    return filter_
         raise KeyError(key)
 
     # maps keys to ItemFilter objects
@@ -110,8 +104,18 @@ class ItemFilterSet(object):
         self.active_filters = set()
         # list of ItemFilter objects currently active
         self.active_filter_objects = []
+        self.extension_filters = []
         # select the 'all' filter
         self.select('all')
+
+    def add_extension_filters(self, filter_list):
+        self.extension_filters.extend(filter_list)
+
+    def _lookup_filter(self, key):
+        for filter in self.extension_filters:
+            if filter.key == key:
+                return filter
+        return ItemFilter.get_filter(key)
 
     def select(self, key):
         """Select a new filter
@@ -122,7 +126,7 @@ class ItemFilterSet(object):
         """
 
         # get the filter we want to add
-        filter_ = ItemFilter.get_filter(key)
+        filter_ = self._lookup_filter(key)
         # let the filter figure out what other filters to select/deselect
         new_active_filters = filter_.switch_to_filter(self.active_filters)
         self.set_filters(new_active_filters)
