@@ -1337,6 +1337,18 @@ class UnwatchedCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
+class ConverterList(FrontendMessage):
+    """Sends the list of converters to the frontend
+
+    :attribute converters: list of converter groups.  Each group will contain
+    a sublist of (identifier, name) tuples.
+    """
+    def __init__(self, converter_list):
+        self.converters = []
+        for name, converters in converter_list:
+            self.converters.append([(info.identifier, info.name)
+                                    for info in converters])
+
 class ConversionTaskInfo(object):
     """Tracks the state of an conversion task.
 

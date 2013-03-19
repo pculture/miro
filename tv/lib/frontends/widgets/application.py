@@ -1611,6 +1611,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.unwatched_count = message.count
         app.widgetapp.handle_unwatched_count_changed()
 
+    def handle_converter_list(self, message):
+        app.menu_manager.add_converters(message.converters)
+
     def handle_conversions_count_changed(self, message):
         library_tab_list = app.tabs['library']
         library_tab_list.update_converting_count(message.running_count,

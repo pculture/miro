@@ -293,7 +293,9 @@ def get_app_menu():
     playback_menu.find("SubtitleEncodingMenu").hide()
 
     sorts_menu = Menu(_("Sorts"), "SortsMenu", [])
-    convert_menu = Menu(_("_Convert"), "ConvertMenu", _get_convert_menu())
+    convert_menu = Menu(_("_Convert"), "ConvertMenu", [
+        MenuItem(_("Show Conversion Folder"), "RevealConversionFolder")
+    ])
     help_menu = Menu(_("_Help"), "HelpMenu", [
                     MenuItem(_("About %(name)s",
                                {'name': app.config.get(prefs.SHORT_APP_NAME)}),
@@ -320,21 +322,6 @@ def get_app_menu():
     if app.debugmode:
         all_menus.append(DevMenu())
     return all_menus
-
-def _get_convert_menu():
-    menu = list()
-    sections = conversions.conversion_manager.get_converters()
-    for index, section in enumerate(sections):
-        for converter in section[1]:
-            handler_name = make_convert_handler(converter)
-            item = MenuItem(converter.displayname, handler_name,
-                            groups=["LocalPlayablesSelected"])
-            menu.append(item)
-        if index+1 < len(sections):
-            menu.append(Separator())
-    menu.append(Separator())
-    menu.append(MenuItem(_("Show Conversion Folder"), "RevealConversionFolder"))
-    return menu
 
 class DevMenu(Menu):
     def __init__(self):
@@ -1015,6 +1002,16 @@ class MenuManager(signals.SignalEmitter):
             VideoDisplay.select_subtitle_encoding()
         """
         self.subtitle_encoding_updater.add_menu(category_label, encodings)
+
+    def add_converters(self, converters):
+        menu = app.widgetapp.menubar.find("ConvertMenu")
+        position = itertools.count()
+        for group_list in converters:
+            for (identifier, title) in group_list:
+                item = MenuItem(title, "ConvertItemTo-" + identifier,
+                                groups=["LocalPlayablesSelected"])
+                menu.insert(position.next(), item)
+            menu.insert(position.next(), Separator())
 
     def select_subtitle_encoding(self, encoding):
         if not self.subtitle_encoding_updater.has_encodings():

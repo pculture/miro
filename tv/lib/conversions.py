@@ -317,6 +317,7 @@ class ConverterManager(object):
                 self.converters.append((defaults['name'], group_converters))
             finally:
                 definition_file.close()
+        messages.ConverterList(self.converters).send_to_frontend()
 
     def lookup_converter(self, converter_id):
         """Looks up and returns a ConverterInfo object by id.
