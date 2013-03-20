@@ -40,6 +40,7 @@ http://code.google.com/p/pywebkitgtk/
 from miro import app
 from miro import prefs
 
+import gobject
 import gtk
 import webkit
 
@@ -78,6 +79,26 @@ class WebKitEmbed(webkit.WebView):
 
         self.connect_after("populate-popup", self.handle_populate_popup)
 
+        self.doing_unmap_hack = False
+
+    def do_map(self):
+        if self.doing_unmap_hack:
+            self.reload()
+            self.doing_unmap_hack = False
+        webkit.WebView.do_map(self)
+
+    def do_unmap(self):
+        uri = self.get_property("uri")
+        if not self.doing_unmap_hack and uri:
+            # If the current page is running flash, then we can get a segfault
+            # when switching away from the browser (#19905).  So the hack to
+            # avoid that is to load a blank page, and go back when we see the
+            # map event again.  (we use the current URI as the base_uri so
+            # that reload() works correctly).
+            self.load_string("", "text/html", "utf-8", uri)
+            self.doing_unmap_hack = True
+        webkit.WebView.do_unmap(self)
+
     def get_frame(self):
         # our browser isn't tabbed, so we always get the main
         # frame and operate on that.
@@ -113,3 +134,5 @@ class WebKitEmbed(webkit.WebView):
 
         menu.show_all()
         return False
+
+gobject.type_register(WebKitEmbed)
