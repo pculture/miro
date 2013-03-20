@@ -1903,3 +1903,16 @@ class DeviceMetadataManager(MetadataManagerBase):
     def _send_net_lookup_counts(self):
         # This isn't supported for devices yet
         pass
+
+def remove_invalid_device_metadata(device):
+    """Remove Metadata objects that don't correspond to DeviceItems.
+
+    If we have a path in the metadata_status table, but not in the device_item
+    table, then we get an error when trying to add the device item (see
+    #19847).  So remove the metadata status objects.
+    """
+    where = 'path not in (SELECT filename FROM device_item)'
+    for status in MetadataStatus.make_view(where, db_info=device.db_info):
+        logging.warn("removing invalid metadata status (%s, %s)", device.mount,
+                     status.path)
+        status.remove()

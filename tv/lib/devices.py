@@ -1542,6 +1542,8 @@ def clean_database(device):
 
     :returns: list of paths that are still valid
     """
+    metadata.remove_invalid_device_metadata(device)
+
     known_files = set()
     to_remove = []
     # Use select_paths() since it avoids constructing DeviceItem objects
@@ -1645,10 +1647,14 @@ def _create_items_for_files(device, path_iter, timeout):
     try:
         while time.time() - start < 0.4:
             try:
-                item.DeviceItem(device, path_iter.next())
+                path = path_iter.next()
             except StopIteration:
                 # path_iter has been exhausted, return True
                 return True
+            try:
+                item.DeviceItem(device, path)
+            except StandardError:
+                logging.exception("Error adding DeviceItem: %r", path)
         # we timed out, return False
         return False
     finally:
