@@ -344,7 +344,7 @@ class MovieDataTest(WorkerProcessTest):
         source_path = resources.path("testdata/metadata/" + filename)
         msg = workerprocess.MovieDataProgramTask(source_path, self.tempdir)
         workerprocess.send(msg, self.callback, self.errback)
-        self.runEventLoop(10.0)
+        self.runEventLoop(30.0)
         self.check_successful_result()
         self.assertEquals(self.get_from_result('source_path'), source_path)
         if file_type is not None:
