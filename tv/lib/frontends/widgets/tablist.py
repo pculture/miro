@@ -1033,10 +1033,10 @@ class ConnectList(TabUpdaterMixin, HideableTabList):
         self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         self.view.set_drag_dest(DeviceDropHandler(self))
 
-    def on_row_expanded_change(self, view, iter_, path, expanded):
+    def on_row_expanded_change(self, view, iter_, expanded):
         info = self.view.model[iter_][0]
         if info is self.info:
-            HideableTabList.on_row_expanded_change(self, view, iter_, path,
+            HideableTabList.on_row_expanded_change(self, view, iter_,
                                                    expanded)
 
     def on_delete_key_pressed(self):
