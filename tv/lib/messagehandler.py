@@ -1485,13 +1485,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_query_sync_information(self, message):
         dsm = app.device_manager.get_sync_for_device(message.device)
-        infos, expired = dsm.get_sync_items(dsm.max_sync_size())
-        count, size = dsm.get_sync_size(infos, expired)
-        dsm.last_sync_info = (infos, expired, count, size)
-        message = messages.CurrentSyncInformation(message.device,
-                                                  count,
-                                                  size)
-        message.send_to_frontend()
+        dsm.query_sync_information()
 
     def handle_device_sync_feeds(self, message):
         dsm = app.device_manager.get_sync_for_device(message.device)

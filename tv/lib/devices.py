@@ -872,6 +872,16 @@ class DeviceSyncManager(object):
         return sum(i.size for i in 
                    item.DeviceItem.auto_sync_view(self.device.db_info))
 
+    def query_sync_information(self):
+        if self.device.db_info.db.is_closed():
+            logging.warn("query_sync_information: device closed")
+            return
+        infos, expired = self.get_sync_items(self.max_sync_size())
+        count, size = self.get_sync_size(infos, expired)
+        self.last_sync_info = (infos, expired, count, size)
+        message = messages.CurrentSyncInformation(self.device, count, size)
+        message.send_to_frontend()
+
     def start(self):
         if self.started:
             return
