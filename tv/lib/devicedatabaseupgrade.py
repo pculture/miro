@@ -158,6 +158,12 @@ class OldItemImporter(object):
         self.cursor.execute("BEGIN TRANSACTION")
         try:
             for file_type, path, old_item in self.old_device_items:
+                if isinstance(path, unicode):
+                    # when we use the json module instead of the simplejson
+                    # module, paths are unicode rather than bytestrings.
+                    # There's no great solution here, but the best practice is
+                    # probably to force them to be utf-8.  (see #19507)
+                    path = path.encode('utf-8')
                 try:
                     self.add_device_item(file_type, path, old_item,
                                          metadata_manager)
