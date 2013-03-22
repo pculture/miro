@@ -219,7 +219,9 @@ class MiroBuild (py2app):
         ("keep-tests",   "u", "keep the unit tests module"),
         ("make-dmg",     "d", "produce a disk image"),
         ("force-update", "f", "force resource update"),
-        ("theme=",       "t", "theme file to use")]
+        ("theme=",       "t", "theme file to use"),
+        ("sign=",        "s", "identity to sign app with"),
+    ]
 
     boolean_options = py2app.boolean_options + ["make-dmg", "force-update", "keep-tests"]
         
@@ -227,6 +229,7 @@ class MiroBuild (py2app):
         self.keep_tests = False
         self.make_dmg = False
         self.force_update = False
+        self.sign = None
         self.theme = None
         py2app.initialize_options(self)
         
@@ -405,6 +408,9 @@ class MiroBuild (py2app):
         
         self.clean_up_incomplete_lproj()
         self.clean_up_unwanted_data()
+
+        if self.sign is not None:
+            self.sign_app()
 
         if self.make_dmg:
             self.make_disk_image()
@@ -648,9 +654,7 @@ class MiroBuild (py2app):
                 shutil.rmtree(lproj)
         
     def clean_up_unwanted_data(self):
-        """docstring for clean_up_unwanted_data"""
-        pass
-        # Check that we haven't left some turds in the application bundle.
+        """Remove turds from the application bundle."""
         
         excluded_folders = ['.svn']
         if not self.keep_tests:
@@ -662,9 +666,12 @@ class MiroBuild (py2app):
                 if excluded in dirs:
                     dirs.remove(excluded)
                     wipeList.append(os.path.join(root, excluded))
-            for excluded in ('.DS_Store', 'info.nib', 'classes.nib'):
+            for excluded in ('.DS_Store', 'info.nib', 'classes.nib', 'site.py'):
                 if excluded in files:
                     wipeList.append(os.path.join(root, excluded))
+            for f in files:
+                if f.startswith("._"):
+                    wipeList.append(os.path.join(root, f))
         
         if len(wipeList) > 0:
             print "Wiping out unwanted data from the application bundle."
@@ -674,6 +681,37 @@ class MiroBuild (py2app):
                     shutil.rmtree(item)
                 else:
                     os.remove(item)
+
+    def sign_app(self):
+        self.sign_directory_contents('Components')
+        self.sign_directory_contents('Helpers')
+        self.sign_directory_contents('Frameworks', skip=['Python.framework'])
+        self.sign_component(os.path.join(self._get_app_root(), 'Contents',
+                                         'Frameworks', 'Python.framework',
+                                         'Versions', '2.7', 'bin', 'python'))
+        self.sign_component(os.path.join(self._get_app_root(), 'Contents',
+                                         'Frameworks', 'Python.framework',
+                                         'Versions', '2.7'))
+        self.sign_all_libraries()
+        self.sign_component(self._get_app_root())
+
+    def sign_directory_contents(self, directory, skip=None):
+        directory = os.path.join(self._get_app_root(), 'Contents', directory)
+        for f in os.listdir(directory):
+            if skip and f in skip:
+                continue
+            path = os.path.join(directory, f)
+            if not os.path.islink(path):
+                self.sign_component(path)
+
+    def sign_all_libraries(self):
+        for root, dirs, files in os.walk(self._get_app_root()):
+            for f in files:
+                if f.endswith(".so"):
+                    self.sign_component(os.path.join(root, f))
+
+    def sign_component(self, path):
+        subprocess.check_call(['codesign', '-fs', self.sign, path])
 
     def make_disk_image(self):
         print "Building disk image..."
