@@ -43,6 +43,7 @@ from miro import metadata
 from miro import prefs
 from miro import schema
 from miro import storedatabase
+from miro.plat.utils import filename_to_unicode
 
 class OldItemImporter(object):
     """Import items from the database of old versions.
@@ -286,7 +287,7 @@ class OldItemImporter(object):
             if name == 'id':
                 value = self.id_counter.next()
             elif name == 'filename':
-                value = path
+                value = filename_to_unicode(path)
             elif name == 'file_type':
                 value = file_type
             elif name == 'net_lookup_enabled':
