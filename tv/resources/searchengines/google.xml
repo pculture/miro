@@ -1,6 +1,0 @@
-<searchengine>
-   <id>google</id>
-   <displayname>Google Video</displayname>
-   <url>http://video.google.com/videofeed?type=search&amp;q=%s+is:free&amp;num=%l&amp;format=any&amp;output=rss</url>
-   <sort>2</sort>
-</searchengine>
