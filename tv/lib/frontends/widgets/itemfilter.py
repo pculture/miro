@@ -232,7 +232,7 @@ class ItemFilterWatchedFolderVideo(ItemFilter):
     def add_to_query(self, query):
         query.add_condition('file_type', '=', 'video')
 
-class ItemFilterAudio(ItemFilter):
+class ItemFilterWatchedFolderAudio(ItemFilter):
     """Filter for audio items in watch folders.
 
     This works like the Audio filter, but it doesn't automatically select
