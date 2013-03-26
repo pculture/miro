@@ -220,7 +220,15 @@ class ItemFilterAudio(ItemFilterAudioVideo):
     def add_to_query(self, query):
         query.add_condition('file_type', '=', 'audio')
 
-class ItemFilterWatchedFolderVideo(ItemFilter):
+class ItemFilterWatchedFolderAudioVideo(ItemFilter):
+    def switch_to_filter(self, previous_filters):
+        # allow unplayed filter to remain
+        rv = set((self.key,))
+        if u'unplayed' in previous_filters:
+            rv.add(u'unplayed')
+        return rv
+
+class ItemFilterWatchedFolderVideo(ItemFilterWatchedFolderAudioVideo):
     """Filter for video items in watch folders.
 
     This works like the Video filter, but it doesn't automatically select
@@ -232,7 +240,7 @@ class ItemFilterWatchedFolderVideo(ItemFilter):
     def add_to_query(self, query):
         query.add_condition('file_type', '=', 'video')
 
-class ItemFilterWatchedFolderAudio(ItemFilter):
+class ItemFilterWatchedFolderAudio(ItemFilterWatchedFolderAudioVideo):
     """Filter for audio items in watch folders.
 
     This works like the Audio filter, but it doesn't automatically select
