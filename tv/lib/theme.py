@@ -187,6 +187,7 @@ class ThemeHistory(DDBObject):
             (u"http://video.pbs.org/", u"PBS", False),
             (u"http://www.youtorrent.com/", u"YouTorrent", False),
             (u"http://www.clearbits.net/", u"ClearBits", False),
+            (u"http://www.amara.org/", u"Amara", False),
             (u'http://www.amazon.com/b?_encoding=UTF8&site-redirect=&'
              'node=163856011&tag=pcultureorg-20&linkCode=ur2&camp=1789&'
              'creative=9325', u"Amazon MP3 Store", True),
