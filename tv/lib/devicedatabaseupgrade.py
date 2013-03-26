@@ -138,10 +138,13 @@ class OldItemImporter(object):
         self.cursor.execute("BEGIN TRANSACTION")
         try:
             for file_type, path, old_item in self.old_device_items:
+                logging.debug("Adding %r to metadata", path)
                 try:
                     if path not in self.paths_in_metadata_table:
                         self.add_metadata_to_db(file_type, path, old_item)
                         self.fix_json_data(old_item)
+                    else:
+                        logging.debug("path already in metadata table")
                 except StandardError, e:
                     logging.warn("error converting device item for %r ", path,
                                  exc_info=True)
@@ -165,6 +168,7 @@ class OldItemImporter(object):
                     # There's no great solution here, but the best practice is
                     # probably to force them to be utf-8.  (see #19507)
                     path = path.encode('utf-8')
+                logging.debug("adding %r to device_item", path)
                 try:
                     self.add_device_item(file_type, path, old_item,
                                          metadata_manager)
@@ -182,6 +186,8 @@ class OldItemImporter(object):
         """
         self.cursor.execute("SELECT path FROM metadata_status")
         self.paths_in_metadata_table = set(row[0] for row in self.cursor)
+        logging.debug("paths_in_metadata_table: %r",
+                      self.paths_in_metadata_table)
 
         self.cursor.execute("SELECT filename FROM device_item")
         self.paths_in_device_items_table = set(row[0] for row in self.cursor)
@@ -199,7 +205,9 @@ class OldItemImporter(object):
             if file_type not in json_db:
                 continue
             for path, data in json_db[file_type].iteritems():
+                logging.debug("found item: %r", path)
                 if path in paths_added:
+                    logging.debug("already added")
                     # duplicate filename, just skip this data
                     continue
                 paths_added.add(path)
@@ -264,6 +272,7 @@ class OldItemImporter(object):
                "moviedata_status, echonest_status, net_lookup_enabled, "
                "mutagen_thinks_drm, max_entry_priority) "
                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        logging.debug("metadata_status insert, path: %r", path)
 
         self.cursor.execute(sql, (status_id, path, file_type, finished_status,
                              mutagen_status, moviedata_status,

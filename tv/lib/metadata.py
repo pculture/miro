@@ -93,6 +93,7 @@ class MetadataStatus(database.DDBObject):
     }
 
     def setup_new(self, path, net_lookup_enabled):
+        logging.debug("new MetadataStatus: %r", path)
         self.path = path
         self.net_lookup_enabled = net_lookup_enabled
         self.file_type = u'other'
