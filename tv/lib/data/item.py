@@ -517,6 +517,10 @@ class ItemInfoBase(object):
                              "feed_expire_timedelta is None")
                 return None
             expire_time = self.feed_expire_time_parsed
+            if expire_time is None:
+                logging.warn("feed_expire is 'feed', but "
+                             "feed_expire_time_parsed failed")
+                return None
         elif self.feed_expire == u"system":
             days = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
             if days <= 0:
@@ -532,7 +536,7 @@ class ItemInfoBase(object):
             return None
         try:
             expire_time_split = self.feed_expire_timedelta.split(":")
-            return datetime.timedelta(int(c) for c in expire_time_split)
+            return datetime.timedelta(*(int(c) for c in expire_time_split))
         except StandardError:
             logging.warn("Error parsing feed_expire_timedelta", exc_info=True)
             return None
