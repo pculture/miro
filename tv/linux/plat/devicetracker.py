@@ -184,7 +184,11 @@ class DeviceTracker(object):
         if drive is None:  # can be None on force-disconnect
             return
         drive_id = drive .get_identifier('unix-device')
-        self._drive_has_volumes[drive_id] -= 1
+        try:
+            self._drive_has_volumes[drive_id] -= 1
+        except KeyError:
+            logging.warn("KeyError in _volume_removed", exc_info=True)
+            return
         if self._drive_has_volumes[drive_id] == 0:
             # re-add the bare device
             del self._drive_has_volumes[drive_id]
