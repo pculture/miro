@@ -177,16 +177,17 @@ class PlaybackPlaylistTest(MiroTestCase):
         self.assertEquals(mock_handler.call_count, 1)
         self.assertEquals(playlist.currently_playing, None)
 
-    def test_delete(self):
+    def test_remove_from_list(self):
         playlist = playback.PlaybackPlaylist(self.item_list, 0, False, False)
         mock_handler = mock.Mock()
         playlist.connect("playing-info-changed", mock_handler)
         self.check_currently_playing(playlist, 0)
-        # simulate an item getting deleted
-        del self.item_list.items[0]
+        # simulate an item getting removed from the list, we should still keep
+        # playing the item
+        removed = self.item_list.items.pop(0)
         self.item_list.emit('list-changed')
-        self.assertEquals(mock_handler.call_count, 1)
-        self.assertEquals(playlist.currently_playing, None)
+        self.assertEquals(mock_handler.call_count, 0)
+        self.assertEquals(playlist.currently_playing, removed)
 
     def test_empty_item_list(self):
         empty_list = MockItemList([])

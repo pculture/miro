@@ -969,9 +969,6 @@ class PlaybackPlaylist(signals.SignalEmitter):
                     else:
                         self.currently_playing = None
                     self.emit("playing-info-changed")
-            else:
-                self.currently_playing = None
-                self.emit("playing-info-changed")
 
     def _change_currently_playing(self, new_info):
         self.currently_playing = new_info
