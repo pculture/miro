@@ -170,6 +170,8 @@ audio_renderer = None
 # gtk/windows item type sniffer
 get_item_type = None
 
+# Tracks ItemLists that are in-use
+item_list_pool = None
 
 # cli frontend adds these
 # -----------------------

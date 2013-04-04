@@ -89,6 +89,7 @@ from miro.test.itemlisttest import *
 from miro.test.itemrenderertest import *
 from miro.test.sharingtest import *
 from miro.test.databaseerrortest import *
+from miro.test.playbacktest import *
 
 # platform specific tests
 

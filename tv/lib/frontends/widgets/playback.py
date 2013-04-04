@@ -196,18 +196,14 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _on_playing_changed(self, playlist):
         new_info = self.get_playing_item()
+        if new_info is None or not new_info.is_playable:
+            self.stop()
+            return
         if self.detached_window:
             if self.detached_window.get_title() != new_info.title:
                 self.detached_window.set_title(new_info.title)
-        if app.config.get(prefs.PLAY_IN_MIRO) and new_info:
-            # if playlist is None, new_info will be none as well.
-            # Since emitting playing-info-changed with a "None"
-            # argument will cause a crash, we only emit it if
-            # new_info has a value
+        if app.config.get(prefs.PLAY_IN_MIRO):
             self.emit('playing-info-changed', new_info)
-        else:
-            logging.warning("trying to update playback info "
-                            "even though playback has stopped")
 
     def prepare_attached_playback(self):
         self.emit('will-play-attached')
@@ -964,14 +960,18 @@ class PlaybackPlaylist(signals.SignalEmitter):
         self.handle_changes()
 
     def handle_changes(self):
-        # FIXME: we should check if the current item is still playable.  If
-        # not, we should stop playback.
         if self.currently_playing is not None:
             if self.item_list.item_in_list(self.currently_playing.id):
                 new_item = self.item_list.get_item(self.currently_playing.id)
                 if new_item != self.currently_playing:
-                    self.currently_playing = new_item
+                    if new_item.is_playable:
+                        self.currently_playing = new_item
+                    else:
+                        self.currently_playing = None
                     self.emit("playing-info-changed")
+            else:
+                self.currently_playing = None
+                self.emit("playing-info-changed")
 
     def _change_currently_playing(self, new_info):
         self.currently_playing = new_info
@@ -1022,19 +1022,37 @@ class LinearNavigationStrategy(PlaylistNavigationStrategy):
             # item no longer in item list.  Return None to stop playback
             self.current_item = None
             return None
-        row = self.item_list.get_index(self.current_item.id)
+        current_item = self.current_item
+        while True:
+            canditate = self._next_candidate_item(current_item, delta)
+            if canditate is None:
+                # no more items to choose from, select None to stop playback
+                self.current_item = None
+                return None
+            if canditate.is_playable:
+                # found an item, select it
+                self.current_item = canditate
+                return self.current_item
+            if canditate is self.current_item:
+                # we've wrapped around the list without finding an item,
+                # return None
+                self.current_item = None
+                return None
+            # candidate item isn't playable, continue searching
+            current_item = canditate
+
+    def _next_candidate_item(self, current_item, delta):
+        row = self.item_list.get_index(current_item.id)
         new_row = row + delta
         if 0 <= new_row < len(self.item_list):
             # normal case, play the next item
-            self.current_item = self.item_list.get_row(new_row)
+            return self.item_list.get_row(new_row)
         elif self.repeat and len(self.item_list) > 0:
             # if we are in repeat mode, wrap around
-            self.current_item = self.item_list.get_row(new_row %
-                                                       len(self.item_list))
+            return self.item_list.get_row(new_row % len(self.item_list))
         else:
             # no items left to pick, return None to stop playback
-            self.current_item = None
-        return self.current_item
+            return None
 
 class ShuffleNavigationStrategy(PlaylistNavigationStrategy):
     """Play items in shuffle mode."""
@@ -1045,24 +1063,23 @@ class ShuffleNavigationStrategy(PlaylistNavigationStrategy):
         self.history = []
         # history of items that we've already played, then skipped back to
         self.forward_history = []
-        if initial_item is not None:
-            self.history.append(initial_item)
+        self.current_item = initial_item
 
     def next_item(self):
-        retval = self._next_from_history_list(self.forward_history)
-        if retval is None:
-            retval = self._random_item()
-        if retval is not None:
-            self.history.append(retval)
-        return retval
+        if self.current_item is not None:
+            self.history.append(self.current_item)
+        self.current_item = self._next_from_history_list(self.forward_history)
+        if self.current_item is None:
+            self.current_item = self._random_item()
+        return self.current_item
 
     def previous_item(self):
-        retval = self._next_from_history_list(self.history)
-        if retval is None:
-            retval = self._random_item()
-        if retval is not None:
-            self.forward_history.append(retval)
-        return retval
+        if self.current_item is not None:
+            self.forward_history.append(self.current_item)
+        self.current_item = self._next_from_history_list(self.history)
+        if self.current_item is None:
+            self.current_item = self._random_item()
+        return self.current_item
 
     def _random_item(self):
         choices = self.item_list.get_playable_ids()
