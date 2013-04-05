@@ -164,7 +164,6 @@ class ThemeHistory(DDBObject):
             (u"http://revision3.com/lifehacker/feed/MP4-hd30", False),
             (u"http://feeds.thisamericanlife.org/talpodcast", False),
             (u"http://feeds.themoth.org/themothpodcast", False),
-            (u"http://feeds.feedburner.com/VodoPromotedWorks", False),
             ]
 
         for default in default_feeds:
