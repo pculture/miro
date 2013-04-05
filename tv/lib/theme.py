@@ -185,7 +185,6 @@ class ThemeHistory(DDBObject):
             (u"http://www.archive.org", u"Internet Archive", False),
             (u"http://www.hulu.com/", u"Hulu", False),
             (u"http://video.pbs.org/", u"PBS", False),
-            (u"http://www.youtorrent.com/", u"YouTorrent", False),
             (u"http://www.clearbits.net/", u"ClearBits", False),
             (u"http://www.amara.org/", u"Amara", False),
             (u'http://www.amazon.com/b?_encoding=UTF8&site-redirect=&'
