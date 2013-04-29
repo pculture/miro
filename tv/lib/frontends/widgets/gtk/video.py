@@ -219,6 +219,7 @@ class VideoDetailsWidget(Background):
     def __init__(self):
         Background.__init__(self)
         self.item_info = None
+        self._menu = None
         self.rebuild_video_details()
         self._delete_link = self._delete_image = None
         self._keep_link = self._keep_image = None
@@ -370,7 +371,7 @@ class VideoDetailsWidget(Background):
 
     def handle_subtitles(self, widget):
         tracks = []
-        menu = gtk.Menu()
+        self._menu = gtk.Menu()
 
         tracks = app.video_renderer.get_subtitle_tracks()
 
@@ -378,7 +379,7 @@ class VideoDetailsWidget(Background):
             child = gtk.MenuItem(_("None Available"))
             child.set_sensitive(False)
             child.show()
-            menu.append(child)
+            self._menu.append(child)
         else:
             enabled_track = app.video_renderer.get_enabled_subtitle_track()
 
@@ -389,32 +390,35 @@ class VideoDetailsWidget(Background):
                     child.set_active(True)
                 child.connect('activate', self.handle_subtitle_change, i)
                 child.show()
-                menu.append(child)
+                self._menu.append(child)
                 if first_child == None:
                     first_child = child
 
             sep = gtk.SeparatorMenuItem()
             sep.show()
-            menu.append(sep)
+            self._menu.append(sep)
 
             child = gtk.RadioMenuItem(first_child, _("Disable Subtitles"))
             if enabled_track == -1:
                 child.set_active(True)
             child.connect('activate', self.handle_disable_subtitles)
             child.show()
-            menu.append(child)
+            self._menu.append(child)
 
         sep = gtk.SeparatorMenuItem()
         sep.show()
-        menu.append(sep)
+        self._menu.append(sep)
 
         child = gtk.MenuItem(_("Select a Subtitles file..."))
         child.set_sensitive(app.playback_manager.is_playing_video)
         child.connect('activate', self.handle_select_subtitle_file)
         child.show()
-        menu.append(child)
+        self._menu.append(child)
 
-        menu.popup(None, None, None, 1, gtk.get_current_event_time())
+        self._menu.popup(None, None, None, 1, gtk.get_current_event_time())
+
+    def subtitles_menu_shown(self):
+        return self._menu and self._menu.get_property('visible')
 
     def handle_disable_subtitles(self, widget):
         if widget.active:
@@ -668,6 +672,10 @@ class VideoPlayer(player.GTKPlayer, VBox):
 
     def on_hide_controls_timeout(self):
         # Check if the mouse moved before the timeout
+        if self._video_details.subtitles_menu_shown():
+            self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
+            return
+
         time_since_motion = int((time.time() - self.last_motion_time) * 1000)
         timeout_left = self.HIDE_CONTROLS_TIMEOUT - time_since_motion
         if timeout_left <= 0:
