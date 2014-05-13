@@ -354,7 +354,7 @@ def _app_command_line():
     # If we are running in 32 bit mode we want our spawned stuff to be
     # 32-bit too.  Otherwise we running in the "best" mode so do nothing.
     if bits_32():
-        return ['/usr/bin/arch', '-32', exe]
+        return ['/usr/bin/arch', '-i386', exe]
     else:
         return [exe]
 
