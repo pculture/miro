@@ -92,6 +92,7 @@ BT_MIN_PORT                 = Pref(key='BitTorrentMinPort',     default=8500,  p
 BT_MAX_PORT                 = Pref(key='BitTorrentMaxPort',     default=8600,  platformSpecific=False)
 UPLOAD_RATIO                = Pref(key='uploadRatio',           default=2.0,   platformSpecific=False)
 LIMIT_UPLOAD_RATIO          = Pref(key='limitUploadRatio',      default=False, platformSpecific=False)
+HIGH_QUALITY_DOWNLOADS      = Pref(key='HighQualityDownloads',  default=True,  platformSpecific=False)
 STARTUP_TASKS_DONE          = Pref(key='startupTasksDone',      default=False, platformSpecific=False)
 CONTINUOUS_VIDEO_PLAYBACK_MODE  = Pref(key='continuousVideoPlaybackMode', default=True, platformSpecific=False)
 CONTINUOUS_MUSIC_PLAYBACK_MODE  = Pref(key='continuousMusicPlaybackMode', default=True, platformSpecific=False)

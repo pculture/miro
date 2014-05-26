@@ -18,7 +18,7 @@
 #
 # In addition, as a special exception, the copyright holders give
 # permission to link the code of portions of this program with the OpenSSL
-# library.
+# library.2
 #
 # You must obey the GNU General Public License in all respects for all of
 # the code used other than OpenSSL. If you modify file(s) with this
@@ -34,6 +34,8 @@ to a media url.
 import logging
 import re
 from miro import httpclient
+from miro import app
+from miro import prefs
 import urlparse
 import cgi
 from xml.dom import minidom
@@ -144,8 +146,15 @@ def _youtube_callback_step2(info, video_id, callback):
 
         logging.debug("fmt_url_map keys: %s", fmt_url_map.keys())
 
+        high_quality_downloads = app.config.get(
+                prefs.HIGH_QUALITY_DOWNLOADS)
+
+        highest_quality = "22"
+        if high_quality_downloads is False:
+            highest_quality = "18"
+
         # http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs
-        for fmt, content_type in [("22", u"video/mp4"),
+        for fmt, content_type in [(highest_quality, u"video/mp4"),
                                   ("18", u"video/mp4"),
                                   ("5", u"video/x-flv")]:
             if fmt in fmt_url_map:

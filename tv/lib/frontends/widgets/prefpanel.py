@@ -851,6 +851,10 @@ class DownloadsPanel(PanelBuilder):
         grid.end_line(spacing=6)
         vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
+        cbx = widgetset.Checkbox(_('Download HD video from YouTube'))
+        attach_boolean(cbx, prefs.HIGH_QUALITY_DOWNLOADS)
+        vbox.pack_start(cbx, padding=4)
+
         return vbox
 
 class _MovieDirectoryHelper(object):
