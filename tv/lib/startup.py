@@ -333,7 +333,7 @@ class StartupChecker(object):
 
         self.check_movies_gone()
 
-    def first_time_handler(callback):
+    def first_time_handler(self, callback):
         """Default handler for first-time startup
 
         install_first_time_handler() replaces this method with the
