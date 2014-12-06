@@ -762,9 +762,9 @@ class DeviceMountedView(widgetset.VBox):
         longest = max(names, key=lambda x: len(x[0]))[0]
         width = widgetset.Label(longest).get_width()
         less_label = widgetset.Label(_('Less').upper())
-        less_label.set_size(tabcontroller.ConnectTab.TEXT_SIZE / 2)
+        less_label.set_size(tabcontroller.ConnectTab.TEXT_SIZE)
         more_label = widgetset.Label(_('More').upper())
-        more_label.set_size(tabcontroller.ConnectTab.TEXT_SIZE / 2)
+        more_label.set_size(tabcontroller.ConnectTab.TEXT_SIZE)
         label_hbox = widgetutil.build_hbox([
                 less_label,
                 widgetutil.pad(more_label,
