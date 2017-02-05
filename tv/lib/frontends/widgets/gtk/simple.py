@@ -178,7 +178,12 @@ class Label(Widget):
         return self._widget.get_layout().get_pixel_size()[0]
 
     def set_text(self, text):
-        self._widget.set_text(text.encode('utf-8'))
+        if isinstance(text, basestring):
+            self._widget.set_text(text.encode('utf-8'))
+        elif text is None:
+            self._widget.set_text("Title Unknown")
+        else:
+            self._widget.set_text(text)
 
     def get_text(self):
         return self._widget.get_text().decode('utf-8')

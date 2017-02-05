@@ -1066,6 +1066,14 @@ class LiveStorage(signals.SignalEmitter):
 
     def query_ids(self, table_name, where, values=None, order_by=None,
             joins=None, limit=None):
+        # The values need to be converted to unicode in oder to work with
+        # Sqlalchemy. Therefore the tuple must first be converted to a list
+        values = list(values)
+        for x in range(len(values)):
+            if isinstance(values[x], basestring):  # if its a string
+                values[x] = values[x].decode("utf-8")
+        values = tuple(values)
+
         sql = StringIO()
         sql.write("SELECT %s.id " % table_name)
         sql.write(self._get_query_bottom(table_name, where, joins,
